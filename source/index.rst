@@ -2,15 +2,44 @@
 Python Dev Accelerator
 **********************
 
-Contents:
+In This Course
+==============
 
-.. toctree::
-   :maxdepth: 2
+.. ifslides::
+
+    +----------------------+-----------------------+
+    | Lectures:            | Assignments:          |
+    +======================+=======================+
+    |                      |                       |
+    | .. toctree::         | .. toctree::          |
+    |     :maxdepth: 1     |     :maxdepth: 1      |
+    |                      |                       |
+    |     lectures/index   |     assignments/index |
+    |                      |                       |
+    +----------------------+-----------------------+
+
+.. ifnotslides::
+
+    Lectures:
+    ---------
+    
+    .. toctree::
+        :maxdepth: 1
+
+        lectures/index
+
+    Assignments:
+    ------------
+
+    .. toctree::
+        :maxdepth: 2
+
+        assignments/index
+
 
 
 The materials in this documentation support the Python Dev Accelerator program
 at Code Fellows in Seattle, WA.
-
 
 Overview
 ========
@@ -48,6 +77,8 @@ Learning Philosophy
 
     Review: http://www.simplypsychology.org/learning-kolb.html
 
+.. nextslide::
+
 - Kathy Sierra's Badass User Talk and Edge Practice
 
   - Practice Makes Permanent
@@ -64,6 +95,8 @@ Learning Philosophy
   - Optional further reading:
     http://justingoeres.tumblr.com/post/32669772969/live-from-bos2012-building-a-minimum-badass-user
 
+.. nextslide::
+
 - Chunking
 
   - Break down a given skill into smaller and smaller pieces
@@ -72,11 +105,15 @@ Learning Philosophy
   - Optional further reading:
     http://www.theatlantic.com/health/archive/2012/09/using-pattern-recognition-to-enhance-memory-and-creativity/261925/
 
+.. nextslide::
+
 - Tight feedback loops
 
   - The sooner you know you are off course, the quicker you can correct
   - Spending time practicing the *right* things will most effectively improve
     your skills
+
+.. nextslide::
 
 - Approach this bootcamp like a Graduate Seminar
 
@@ -87,9 +124,13 @@ Learning Philosophy
   - I will show you a door, but I expect you to go through it and journey on
     beyond
 
+.. nextslide::
+
 - Code Fellows Values
 
   - Best practices
+
+.. ifnotslides::
 
     Learning to program in Python is about more than just learning logic,
     algorithms and data structures.  It's about learning to write idiomatic
@@ -101,6 +142,8 @@ Learning Philosophy
     to evaluate what is pythonic.
 
   - BDD
+
+.. ifnotslides::
 
     Behavior Driven Development outlines an application's expected features and
     functionality first, before the coding begins. As Dan North says "Behavior
@@ -115,12 +158,16 @@ Learning Philosophy
 
   - Engaging communication. We help people pay attention. 
 
+.. ifnotslides::
+
     "Activities are designed to fully engage the learning process. We encourage
     reflection, experimentation, play, communication and professional growth."
 
   - Build upon fundamentals. Break it in to pieces, put the pieces together.
 
   - Paths and Sandboxes
+
+.. ifnotslides::
 
     "A path is a prescribed series of steps that get completed one after
     another. It's your classic tutorial. A sandbox is a collaborative learning
@@ -133,7 +180,7 @@ Learning Philosophy
     - http://assets.codefellows.org/paths_vs_sandboxes_stephen_p_anderson.png
 
 The Honor Code:
-+++++++++++++++
+---------------
 
 As members of the Code Fellows community, each of us upholds and supports a
 high standard of personal, and community, honesty and integrity.  We believe
@@ -141,6 +188,8 @@ these values are critical to a community dedicated to learning, personal
 development, and a search for understanding. We consider them essential in
 promoting personal responsibility, moral and intellectual leadership, and pride
 in ourselves and our organization.
+
+.. nextslide::
 
 Therefore, each of us agrees to represent ourselves truthfully, claim only work
 that is our own, properly attribute collaborations, and engage honestly in all
@@ -152,6 +201,8 @@ another of such misrepresentation are expected to follow the Reporting
 Procedures outlined. Code Fellows instructors and leaders reserve the right to
 remove any students or graduates who fail to live up to these standards from
 bootcamps, classes, or other parts of community membership, as appropriate.
+
+.. nextslide::
 
 Consistent with the basic expectations of the Honor Code, students who believe
 they may have violated Code Fellows’ standards of integrity are expected to
@@ -170,20 +221,22 @@ instructor believes that the Honor Code has been violated, he or she will
 contact a member of Code Fellows management, who will take appropriate action.
 
 Diversity and Equality
-++++++++++++++++++++++
+----------------------
 
 Don't be a hater, we are all here in this together, and want to create a
 welcoming environment for everyone here. A Code Fellow works to widen access to
 computer science education and ensure it is open to all.
 
 Non-discrimination policy:
-++++++++++++++++++++++++++
+--------------------------
 
 As a part of our honor code, in order to maintain personal and communal
 integrity, Code Fellows is committed to the principle that all persons shall
 have equal access to programs, facilities, services, and employment without
 regard to personal characteristics not related to ability, performance, or
 qualifications as determined by Code Fellows policy and/or applicable laws.
+
+.. nextslide::
 
 Code Fellows prohibits discrimination, harassment and bullying against any
 person because of age, ancestry, color, disability or handicap, national
