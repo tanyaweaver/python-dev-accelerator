@@ -12,7 +12,7 @@ In This Course
     +======================+=======================+
     |                      |                       |
     | .. toctree::         | .. toctree::          |
-    |     :maxdepth: 1     |     :maxdepth: 1      |
+    |     :maxdepth: 3     |     :maxdepth: 3      |
     |                      |                       |
     |     lectures/index   |     assignments/index |
     |                      |                       |
@@ -24,7 +24,7 @@ In This Course
     ---------
     
     .. toctree::
-        :maxdepth: 1
+        :maxdepth: 3
 
         lectures/index
 
@@ -32,7 +32,7 @@ In This Course
     ------------
 
     .. toctree::
-        :maxdepth: 2
+        :maxdepth: 3
 
         assignments/index
 
