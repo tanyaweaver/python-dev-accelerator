@@ -586,7 +586,7 @@ take this next set of actions.
 When all is squared away, in your terminal, type the following:
 
 
-.. code-block:: base
+.. code-block:: bash
 
     [learning_journal]
     [step1=]
