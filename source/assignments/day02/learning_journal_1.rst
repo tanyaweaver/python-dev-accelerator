@@ -673,7 +673,8 @@ When all is squared away, in your terminal, type the following:
        0774bf1..179e695  master -> master
 
 By merging locally and then pushing, you have just closed the pull request you
-opened a moment ago.  That's okay. It is still available for viewing.
+opened a moment ago.  That's okay. It is still available for viewing and
+comments, and that was the point of it.
 
 At this point, then you have merged your ``step1`` work back into ``master``
 and are ready to deploy your code.

@@ -974,3 +974,87 @@ And now, all your tests should pass:
     =========================== 5 passed in 0.22 seconds ===========================
 
 
+Deploying Your Work
+===================
+
+It's no fun to do all this work without seeing what you've done.
+
+Check it locally first, to ensure that everything is smooth. At your command
+line, start up the app using foreman:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [step2=]
+    192:learning_journal cewing$ foreman start
+    01:11:05 web.1  | started with pid 33594
+    01:11:06 web.1  | 2014-05-31 01:11:06 [33594] [INFO] Starting gunicorn 18.0
+    01:11:06 web.1  | 2014-05-31 01:11:06 [33594] [INFO] Listening at: http://0.0.0.0:5000 (33594)
+    01:11:06 web.1  | 2014-05-31 01:11:06 [33594] [INFO] Using worker: sync
+    01:11:06 web.1  | 2014-05-31 01:11:06 [33597] [INFO] Booting worker with pid: 33597
+
+You should be able to open a web browser and point it at http://127.0.0.1:5000
+and see your app.  It should look like this:
+
+.. image:: /_static/lj_localhost.png
+    :width: 90%
+
+If you see something like that, then all is well. You're ready to submit your
+work and deploy to Heroku.
+
+Repeat the steps you performed for the previous assignment to submit your work
+and prepare for deployment. As a reminder, here's the outline:
+
+
+1. push all local work on the ``step2`` branch up to GitHub
+2. create a pull request in your GitHub repository from ``step2`` to
+   ``master``
+3. copy the URL for that pull request and submit your assignment in Canvas
+4. locally, checkout ``master`` and merge your work from ``step2`` (remember,
+   this will close your pull request, but that's fine)
+5. push master to the heroku remote
+
+Create an Entry on Heroku
+-------------------------
+
+You really do want to see your first journal entry, don't you?
+
+Go ahead and create one. Start by opening a python session with Heroku:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [master=]
+    192:learning_journal cewing$ heroku run python
+    Running `python` attached to terminal... up, run.9416
+    Python 2.7.6 (default, Jan 16 2014, 02:39:37)
+    [GCC 4.4.3] on linux2
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>>
+
+And now, create a first entry using your controller API:
+
+.. code-block:: python
+
+    >>> from journal import app
+    >>> from journal import write_entry
+    >>> with app.test_request_context('/'):
+    ...     title = "A Manual Entry"
+    ...     text = """
+    ... Today, I learned that you can manually create learning
+    ... journal entries through the Python shell in Heroku.  That's
+    ... pretty interesting.
+    ... """
+    ...     write_entry(title, text)
+    ...
+    >>>
+
+And now you should be able to load up the URL Heroku has given you for your app
+in a browser. This is what I see:
+
+.. image:: /_static/lj_heroku.png
+    :width: 90%
+
+Again, use the standard ``^D`` to detach from the Python terminal on Heroku. At
+this point you are good to go. Well done!
+
