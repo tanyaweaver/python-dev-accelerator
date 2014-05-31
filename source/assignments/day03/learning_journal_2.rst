@@ -94,7 +94,8 @@ functions:
 Context in Flask
 ----------------
 
-Consider the following functions:
+Consider the following simple functions, meant to create and destroy a database
+connection:
 
 .. code-block:: python
 
@@ -111,35 +112,26 @@ isn't bound at module scope. Where does ``teardown_request`` find it?
 
 
 You might be tempted to say "attach it to the Flask ``app`` since that's
-global." But the Flask ``app`` is only really instantiated once. This means
-that anything you attach to it will be shared **across all requests**.
+global." But the Flask ``app`` is a *global* context, shared **across all
+requests**. This won't work for a database connection.
 
-This is called ``global`` context.
+Flask solves this problem by providing what it calls *local globals*. These
+objects can be imported, as if they were part of the *global* context. But in
+reality they are constructed *locally* for to each request.
 
-What happens if two clients make a request at the same time? Do they share a
-connection? Who's data gets written first? Yikes!
+The local global most useful for us in this situation is `flask.g`_. You can
+set attributes on this object and since it can be imported anywhere, they can
+be passed from function to function. Perfect for things like a database
+connection.
 
-Flask solves this problem by providing a construct it calls a ``local global``.
-Each of these objects can be imported, as if it were part of the **global
-context**. But in reality they are connected directly to each request, and so
-they are really **local**.
-
-There are a number of these objects built into Flask: ``flask.request``,
-``flask.session``, and--most useful for us in this situation-- `flask.g`_.
-
-.. _flask.g: http://flask.pocoo.org/docs/api/#flask.g, 
-
-This is an object that *looks* global (you can import it anywhere). But in
-reality, it is *local* to a single request. Resources tied to this object are
-*not* shared among requests. Perfect for things like a database connection.
+.. _flask.g: http://flask.pocoo.org/docs/api/#flask.g,
 
 
 Getting and Releasing A Connection
 ----------------------------------
 
-Knowing that we have such a place to put our database connection, we can now
-write the functions we'll use to connect to our database. In ``journal.py`` add
-the following code:
+With ``flask.g`` as a place to hold a connection, you're ready to rock. In
+``journal.py`` add the following code:
 
 .. code-block:: python
 
@@ -170,36 +162,17 @@ what you've just done. "Commit early and commit often" is a good programmer's
 motto.
 
 
-Writing and Reading Entries
-===========================
+Setting Up Testing
+==================
 
-Your journal's *data model* consists of *entries*. You've set up a simple
-database schema to represent them:
-
-.. code-block:: psql
-
-    CREATE TABLE entries (
-        id serial PRIMARY KEY,
-        title VARCHAR (127) NOT NULL,
-        text TEXT NOT NULL,
-        created TIMESTAMP NOT NULL
-    )
-
-To write an entry, what would you need to do?
-
-* Provide a title
-* Provide some body text
-* Set a date/time
-* Write them to a row in the database
-
-Creating Tests
---------------
-
-In Test-Driven Development, you start by writing tests that demonstrate the
+In `Test Drive Development`_ you start by writing tests that demonstrate the
 functionality you want to build. Once a test is written, you run it and see
 that it fails. This proves that your application hasn't sneakily already
 provided that functionality and robbed you of a job. Then you implement the
 code needed to make the test pass.
+
+.. _Test Drive Development: http://en.wikipedia.org/wiki/Test-driven_development,
+
 
 Before you can write tests, though, you'll need to add a new package you'll be
 using to run your tests: `pytest`_.  In your terminal, with your
@@ -248,25 +221,14 @@ At this point, your project directory structure should look like this::
         ├── requirements.txt
         └── test_journal.py
 
-
-Setting Up Tests
-----------------
-
 The ``pytest`` module provides a new command, ``py.test``.  When you execute
-that command in your terminal, the package uses a configurable heuristic to
-locate tests to run.
+that command in your terminal, the package uses a standard heuristic to find
+tests.
 
-By default, it starts in whatever directory you happen to be in and searches
-for files that begin with ``test_``. Once such files have been found, it
-imports them and looks for functions in the namespace of the module that start
-with the name ``test_``. It runs each of these functions as a test.
-
-The ``pytest`` module also allows you to create `fixtures`_ that can help you
-to set up required resources for your tests (a process called dependency
-injection). We'll be using these to control the setup of our Flask app and our
-database for testing.
-
-.. _fixtures: http://pytest.org/latest/fixture.html
+* It starts in the directory where the command is invoked.
+* It searches for Python files that start with ``test_``.
+* It imports these files and finds functions that start with ``test_``.
+* It executes those functions and reports the results.
 
 To begin, add the following code in your ``test_journal.py`` file:
 
@@ -290,12 +252,11 @@ To begin, add the following code in your ``test_journal.py`` file:
             db.cursor().execute("DROP TABLE entries")
             db.commit()
 
-Again, you won't want to use my name for your database connection. Please use
-the name of whatever user you have for connecting to your database.
+**Notes**
 
-Also, notice that you've specified a different ``dbname`` from the one in your
-``journal.py`` file. You don't want to wreck your local development database by
-testing, so you'll want a different one to test on.
+* Remember to use the correct name for the user, mine is just an example.
+* Notice that you'll be using a different ``dbname`` for testing. This prevents
+  overwriting data you might want to save.
 
 Take a moment to create that new database:
 
@@ -305,20 +266,22 @@ Take a moment to create that new database:
     [step2]
     192:learning_journal cewing$ createdb test_learning_journal
 
-Finally, notice that you've created a ``clear_db`` function that is pretty much
-the reverse of the ``init_db`` function you wrote previously. It will be used
-for removing your test database table when the tests are finished. This helps
-to ensure complete isolation between test runs.
+You've created a ``clear_db`` function. It will be used for removing your test
+database table when the tests are finished for isolation.
 
-Now we're ready to begin writing our ``fixtures``. Each one will be a function.
-Fixtures are designed to be modular, so we want to do as little as possible in
-each.
+Creating Fixtures
+-----------------
 
-Set Up the App for Testing
---------------------------
+The ``pytest`` module does more than just test discovery. It supports
+`fixtures`_. 
 
-Our first fixture will be responsible for fixing the configuration of our
-application for testing.  Add this code to ``test_journal.py``:
+Fixtures help you to manage resources needed for your tests. You'll add a few
+fixtures to help test your Flask app.
+
+.. _fixtures: http://pytest.org/latest/fixture.html
+
+The first fixture is responsible for configuring your Flask app for testing.
+Add this code to ``test_journal.py``:
 
 .. code-block:: python
 
@@ -328,37 +291,25 @@ application for testing.  Add this code to ``test_journal.py``:
         app.config['DATABASE'] = TEST_DSN
         app.config['TESTING'] = True
 
-A few notes. 
+**NOTES**: 
 
-The ``pytext.fixture`` decorator registers the ``test_app`` function as a
-fixture with pytest.  This allows you to use the function name in a few special
-ways.  You'll see that in a moment.
+* The ``pytext.fixture`` decorator registers the ``test_app`` function as a
+  fixture with pytest.
+* The ``scope`` argument passed to the decorator determines how often a fixture
+  is run.
 
-The ``scope='session'`` argument passed to the decorator determines how often
-this particular fixture is re-run.  There are a few available scopes:
+  * ``session`` scope is run only once each time ``py.test`` is invoked.
+  * ``module`` scope is run once for each module of tests (once per Python
+    file).
+  * ``function`` scope is run once for each test function.
 
-* fixtures scoped to ``session`` will be run only once each time ``py.test`` is
-  run.
-* fixtures scoped to ``module`` will be run once for each module of tests that
-  run.
-* fixtures scoped to ``function`` will be run once for each test function that
-  is executed.
+* Configuration like this applies across all tests, so scope this fixture to
+  ``session``.
+* This fixture requires no teardown so there's no code written to clean up
+  after tests are done.
 
-Your first fixture is pretty simple, all it does is alter the configuration of
-our application to use the ``TEST_DSN`` and to let Flask know that you are in
-fact running tests.  These types of actions need not happen more than once, so
-you can scope this fixture to ``session``.
-
-This first fixture also requires no teardown at the end of the testing session.
-Since configuration happens each time the ``journal.py`` module is loaded, the
-configuration will return to normal when you next run your app.
-
-
-Set Up the Database for Testing
--------------------------------
-
-The next fixture you'll write is a bit different.  Add the following to
-``test_journal.py``:
+The next fixture you'll write will handle initializing the database tables and
+removing them after. Add the following to ``test_journal.py``:
 
 .. code-block:: python
 
@@ -372,29 +323,20 @@ The next fixture you'll write is a bit different.  Add the following to
 
         request.addfinalizer(cleanup)
 
-Notice that this time, our fixture function is defined with parameters. One of
-these is the fixture we defined previously. This is one of the special things
-that happen when you use the decorator to register a fixture.  It becomes
-available to be used as a parameter for other fixtures or for test functions.
+**Notes**:
 
-By using your first fixture as a parameter for the second, you are telling
-``pytest`` that you want the first fixture to run prior to every time this
-fixture is run. Providing ``test_app`` here ensures that the configuration
-changes you made in that fixture are in place when the database is initialized.
+* The fixture function is defined with parameters.
+* The names of the parameters must match *registered fixtures*.
+* The fixtures named as parameters will be run surrounding the new fixture.
+* You name ``test_app`` to ensure that configuration changes are in place when
+  the database is set up.
+* The ``request`` parameter is a fixture that ``pytest`` registers.
+* You use it to connect the ``cleanup`` function to the ``db`` fixture.
+* This means that ``cleanup`` will be run after tests are complete as a
+  tear-down action.
 
-You may wonder about the ``request`` parameter. That is a special fixture that
-``pytest`` registers for a few special purposes.
-
-You are using the ``request`` fixture here to connect the ``cleanup`` function
-to the ``db`` fixture as the function to be run when the ``session`` scope is
-complete. It contains your cleaup code removing the database table.
-
-
-Set Up a Request for Testing
-----------------------------
-
-The last fixture you will need helps to prepare each test to run in isolation
-from other tests. Add the following code to ``test_journal.py``:
+The last fixture helps each test to run in isolation from other tests. Add the
+following code to ``test_journal.py``:
 
 .. code-block:: python
 
@@ -406,53 +348,51 @@ from other tests. Add the following code to ``test_journal.py``:
             con = get_database_connection()
             con.rollback()
 
-Remember that in a data-driven web application, you want to bind the lifecycle
-of the connection you make with your database to the lifecycle of the HTTP
-request/response cycle. To accomplish this goal, you wrote a pair of functions
-earlier: ``get_database_connection`` and ``teardown_request``.
+* Remember that your database lifecycle is bound to the *request/response
+  cycle* 
+* The database connection will be attached to ``flask.g``
+* Flask creates ``g`` when a cycle begines, but tests **have no
+  request/response cycle**.
+* Flask's ``app.test_request_context`` is a *context provider*.
+  * Used in a ``with``statement it creates a mock request/response cycle.
+* The request only exists *inside* the ``with`` block, so the callback pattern
+  used in the ``db`` fixture would not work.
+* The `yield_fixture decorator`_ allows fixtures made from *generator functions*
+* Because ``yield`` preserves internal state, the entire test happens **inside
+  the context manager scope**!
+* When control returns to the fixture, code after the ``yield`` statement is
+  executed as the tear-down action.
 
-The purpose of the ``get_database_connection`` was to attach a connection to
-the ``flask.g`` object so that it would be available during the request. The
-purpose of ``teardown_request`` was to finish the transaction bound to that
-connection and close the connection.
+.. _yield_fixture decorator: http://pytest.org/latest/yieldfixture.html
 
-When you are running your application, the ``flask.g`` object is created as
-soon as a request/response cycle begins. But it testing **there is no
-request**.
 
-Flask provides you with the ``app.test_request_context`` method to solve this
-problem. The method is a *context provider*, so it can be used in a ``with``
-statement.  When execution enters the block defined by ``with``, a request will
-be generated and the ``flask.g`` object will come into being. And when
-execution leaves that block, the end of the request/response cycle will be
-signaled, and your ``teardown_request`` method will be called.
+Writing and Reading Entries
+===========================
 
-This is great, but if you had to use the method for writing cleanup code you
-used in the ``db`` fixture to write this fixture, you'd be out of luck. There's
-no way to maintain containment in the ``with`` block under that scenario.
+Your journal's *data model* consists of *entries*. You've set up a simple
+database schema to represent them:
 
-Happily, ``pytest`` `solves this problem`_ by allowing you to use a ``generator
-function`` as a fixture. The ``yield`` above passes execution back to the
-context where this fixture was called, but because it's a ``yield``, *the
-internal state of the fixture is maintained*!  This means that you can use this
-form with the context manager Flask gives you and have the tests that use this
-fixture take place while contained in the ``with`` block.
+.. code-block:: psql
 
-.. _solves this problem: http://pytest.org/latest/yieldfixture.html
+    CREATE TABLE entries (
+        id serial PRIMARY KEY,
+        title VARCHAR (127) NOT NULL,
+        text TEXT NOT NULL,
+        created TIMESTAMP NOT NULL
+    )
 
-Nice!
+To write an entry, what would you need to do?
 
-When control returns to the fixture, the cleanup code after ``yield`` will be
-called. Here, you can grab the local database connection and rollback the
-transaction, wiping out the work done in a test so the next one can happen in a
-fresh table.
+* Provide a title
+* Provide some body text
+* Set a date/time
+* Write them to a row in the database
 
 
 Test Writing An Entry
 ---------------------
 
-Now you're ready to write your first test. This test will ensure that writing
-an entry works properly when the right parameters are passed. In
+Start by writing a test that demonstrates the desired functionality. In
 ``test_journal.py``, add the following:
 
 .. code-block:: python
@@ -473,15 +413,12 @@ an entry works properly when the right parameters are passed. In
         for val in expected:
             assert val in rows[0]
 
-Remember that ``pytest`` will only run function that start with ``test_`` as
-tests.  This allows you to create *helper functions* like
-``run_independent_query`` that you can use in more than one test. Here you are
-using it to select the entry you just wrote back from the database to ensure it
-was correct.
+**NOTES**
 
-The Test Driven Development philosophy states that you should write a test
-first. You have. It also states that you should run that test and see it fail.
-Do that now.  In your terminal, run the ``py.test`` command:
+* ``pytest`` will only run functions that start with ``test_`` as tests.
+* The ``run_independent_query`` is a *helper functions* you can re-use.
+
+In your terminal, run the ``py.test`` command to see the expected failure:
 
 .. code-block:: bash
 
@@ -506,14 +443,11 @@ Do that now.  In your terminal, run the ``py.test`` command:
     test_journal.py:55: ImportError
     =========================== 1 failed in 0.16 seconds ===========================
 
-Fantastic!  Your test failed, just as you expected. Next you need to make it
-pass.
-
-
 Implement ``write_entry``
 -------------------------
 
-Return to ``journal.py`` and add the following:
+Next you need to make the test pass. Return to ``journal.py`` and add the
+following:
 
 .. code-block:: python
 
@@ -534,31 +468,27 @@ Return to ``journal.py`` and add the following:
         now = datetime.datetime.utcnow()
         cur.execute(DB_ENTRY_INSERT, [title, text, now])
 
-You've now written an SQL statement that will insert a new entry into your
-``entries`` table. Notice the ``%s`` placeholders in the SQL string. **Do not
-be fooled** into thinking that these are for standard Python string formatting.
+**NOTES**
 
-In fact, these are special placeholders that ``psycopg2`` uses to insert Python
-values into an SQL string with proper escaping. If you use the ``%`` string
-formatting operator to insert Python values into this string, you will be
-opening yourself to SQL injection attacks.
+* The SQL statement will insert a new entry into your ``entries`` table.
+* Although the ``%s`` placeholders in the SQL look like *string formatting*
+  they are not.
+* The call signature for ``.execute(query, params)`` calls for a second
+  paramter that is a sequence of values to insert.
+* Parameters passed this way are properly escaped and safe from SQL Injection.
+* Only ever use this form to parameterize SQL queries in Python.
 
 **NEVER USE PYTHON STRING FORMATTING WITH A SQL STRING**.
 
-Instead, pass a sequence of paramters as the second argument to
-``cursor.execute`` and ``psycopg2`` will take care of the rest. You'll be safe
-and sound and no kittens will die.
-
-Also notice that you are not requiring the caller of ``write_entry`` to pass a
-datetime value for your ``created`` field. You are creating that on your own.
-Moreover, you are creating a time value in UTC or `Coordinated Universal
-Time`_. It is a good idea to store time values in a database in this fashion,
-as it implies no Time Zone and can easily be localized to any time zone.
+* Notice that ``write_entry`` does not require a value for the ``created``
+  field.
+* The field is required, so you build and provide it *inside* the function.
+* You are creating a time value in UTC or `Coordinated Universal Time`_.
+* It is best practice to store time values in UTC.
 
 .. _Coordinated Universal Time: http://en.wikipedia.org/wiki/Coordinated_Universal_Time
 
-Now that you have the ``write_entry`` method implemented, you should be able to
-run your tests successfully.  Try it:
+Re-run your tests and verify that your work is correct:
 
 .. code-block:: bash
 
@@ -573,25 +503,23 @@ run your tests successfully.  Try it:
 
     =========================== 1 passed in 0.17 seconds ===========================
 
-Outstanding!
+What other tests might you implement here?
 
 
 Test Reading Entries
 --------------------
 
-You might also like to be able to read the entries in your journal. You'll need
-a method that returns all of them for a simple listing page.
+To read your journal, you'll need a method that returns entries. For now, the
+controller function can return all of them for a simple listing page. Your
+specs:
 
-* The return value should be a list of entries
-* If there are none, it should return an empty list
-* Each entry in the list should be a dictionary of 'title', 'text' and
+* The return value should be a list of entries.
+* If there are no entries, the function should return an empty list.
+* Each entry in the list should be a dictionary of at least 'title', 'text' and
   'created'
-* The list should be ordered by the datetime each entry was created such that
-  the most recently created entries are listed first.
+* The list should be ordered with the most recently created entries first.
 
-Again, begin by writing tests.
-
-Back in ``test_journal.py`` add the following two tests:
+Again, begin with tests. Back in ``test_journal.py`` add the following code:
 
 .. code-block:: python
 
@@ -610,7 +538,7 @@ Back in ``test_journal.py`` add the following two tests:
                 self.assertEquals(expected[0], entry['title'])
                 self.assertEquals(expected[1], entry['text'])
 
-Try running your tests now to ensure that these two new tests fail as expected:
+Run your tests now to ensure that the two new tests fail:
 
 .. code-block:: bash
 
@@ -648,7 +576,7 @@ Try running your tests now to ensure that these two new tests fail as expected:
 Implement ``get_all_entries``
 -----------------------------
 
-You are ready to implement ``get_all_entries``. Back in ``journal.py`` add the
+You need to implement ``get_all_entries``. Back in ``journal.py`` add the
 following:
 
 .. code-block:: python
@@ -666,7 +594,16 @@ following:
         keys = ('id', 'title', 'text', 'created')
         return [dict(zip(keys, row)) for row in cur.fetchall()]
 
-And back in your terminal, your tests should now pass:
+**NOTES**
+
+* You run a query using the database *cursor*, not the *connection*.
+* After running the query, you must read the results.
+  * Get all results with ``cursor.fetchall()``.
+  * Get *n* results with ``cursor.fetchmany(size=n)``.
+  * Get one result with ``cursor.fetchone()``.
+* ``dict(zip(keys, vals))`` creates a dictionary from a pair of sequences.
+
+Back in your terminal, your tests should now pass:
     
 .. code-block:: bash
 
@@ -693,3 +630,347 @@ Flask.
   it does.
 
 The next step will be to add a visible face to the journal.
+
+Viewing Your Journal
+====================
+
+The last step in the second part of this tutorial is to put a view on the front
+page of this journal so we can see it online.
+
+You'll use `the Jinja2 templating language`_ and create a basic Flask view
+function.
+
+.. _the Jinja2 templating language: http://jinja.pocoo.org/docs/templates/
+
+Templates In Flask
+------------------
+
+First, a detour into templates as they work in Flask.
+
+Jinja2 templates use the concept of an *Environment* to:
+
+* Figure out where to look for templates
+* Set configuration for the templating system
+* Add some commonly used functionality to the template *context*
+
+Flask sets up a proper Jinja2 Environment when you instantiate your ``app``. It
+uses the value you pass to the ``app`` constructor to calculate the root of
+your application on the filesystem.
+
+From that root, it expects to find templates in a directory name ``templates``.
+This allows you to use the ``render_template`` command from ``flask`` like so:
+
+.. code-block:: python
+
+    from flask import render_template
+    page_html = render_template('hello_world.html', name="Cris")
+
+Keyword arguments you pass to ``render_template`` become the *context* passed
+to the template for rendering (like the ``name`` keyword above).
+
+Flask will add a few name/value pairs to this context.
+
+* **config**: the current configuration object
+* **request**: the current request object
+* **session**: any session data that might be available
+* **g**: the request-local object to which global variables are bound
+* **url_for**: a function to *reverse* urls from within your templates
+* **get_flashed_messages**: a function that returns messages you *flash* to
+  your users (more on this later).
+
+
+Set Up Your Templates
+---------------------
+
+In your ``learning_journal`` repository, add a new ``templates`` directory:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [step2]
+    heffalump:learning_journal cewing$ mkdir templates
+    [learning_journal]
+    [step2]
+    heffalump:learning_journal cewing$
+
+In this directory create a new file ``base.html``:
+
+.. code-block:: jinja
+
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <title>Python Learning Journal</title>
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+      </head>
+      <body>
+        <header>
+          <nav>
+            <ul>
+              <li><a href="/">Home</a></li>
+            </ul>
+          </nav>
+        </header>
+        <main>
+          <h1>My Python Journal</h1>
+          <section id="content">
+          {% block body %}{% endblock %}
+          </section>
+        </main>
+        <footer>
+          <p>Created in the Code Fellows Python Dev Accelerator</p>
+        </footer>
+      </body>
+    </html>
+
+Template Inheritance
+--------------------
+
+You can combine templates in a number of different ways.
+
+* you can make replaceable blocks in templates with blocks
+
+  * ``{% block foo %}{% endblock %}``
+
+* you can build on a template in a second template by extending
+
+  * ``{% extends "layout.html" %}`` 
+  * this *must* be the first text in the template
+
+* you can re-use common structure with *include*:
+
+  * ``{% include "footer.html" %}``
+
+
+Displaying an Entries List
+--------------------------
+
+Keep it simple for now, create a new file, ``list_entries.html`` in
+``templates``.  This will *extend* your ``base.html`` file, filling the *body*
+block you created:
+
+.. code-block:: jinja
+
+    {% extends "base.html" %}
+    {% block body %}
+      <h2>Entries</h2>
+      {% for entry in entries %}
+      <article class="entry" id="entry={{entry.id}}">
+        <h3>{{ entry.title }}</h3>
+        <p class="dateline">{{ entry.created.strftime(%b. %d, %Y) }}
+        <div class="entry_body">
+          {{ entry.text|safe }}
+        </div>
+      </article>
+      {% else %}
+      <div class="entry">
+        <p><em>No entries here so far</em></p>
+      </div>
+      {% endfor %}
+    {% endblock %}
+
+The template will loop over a set of ``entries``, showing each in an HTML5
+``<article/>`` tag.
+
+At this point, your project directory should look like this::
+
+    /learning_journal
+    └── learning_journal
+        ├── .gitignore
+        ├── LICENSE
+        ├── Procfile
+        ├── README.md
+        ├── journal.py
+        ├── requirements.txt
+        ├── templates
+        │   ├── base.html
+        │   └── list_entries.html
+        └── test_journal.py
+
+
+To get entries to your template, you'll need to create a Python function that
+will:
+
+* build a list of entries
+* pass the list to our template to be rendered
+* return the result to a client's browser
+
+In most web frameworks, a function that returns a response to the client is
+called a **view**. So this new function will be the first element in the view
+layer of our web app.
+
+
+Test Viewing Entries
+--------------------
+
+As usual, you'll start by writing tests. First, you'll test to see that having
+no entries results in the expected HTML. Add the following to
+``test_journal.py``:
+
+.. code-block:: python
+
+    def test_empty_listing(db):
+        actual = app.test_client().get('/').data
+        expected = 'No entries here so far'
+        assert expected in actual
+
+**NOTES**
+
+* ``app.test_client()`` returns a mock HTTP client, like a web browser for us
+  to use.
+* Because this test actually creates a request, we don't need to use the
+  ``req_context`` fixture. Having an initialized database is enough
+* The ``data`` attribute of the *response* returned by ``client.get()`` holds
+  the full rendered HTML of our page, but we are only checking for the one
+  thing we want to see.
+
+
+Next, you'll test what happens when you have some entries. But to do so, you'll
+need to create entries.
+
+Remember, you want each test to be fully isolated from the rest, and so far
+you've done fine by simply rolling back your database transaction between
+tests. This test requires that data be written, because the test client will
+get a connection of its own, separate from the one you use for writing.
+
+The simplest solution is to write the entry and commit it, then delete it when
+the test is over.
+
+Let's make a ``function`` scoped fixture that will do that. Add this below the
+other fixtures in your ``test_journal.py`` file:
+
+.. code-block:: python
+
+    @pytest.fixture(scope='function')
+    def with_entry(db, request):
+        from journal import write_entry
+        expected = (u'Test Title', u'Test Text')
+        with app.test_request_context('/'):
+            write_entry(*expected)
+            # manually commit transaction here to avoid rollback due to
+            # handled exceptions
+            get_database_connection().commit()
+
+        def cleanup():
+            with app.test_request_context('/'):
+                con = get_database_connection()
+                cur = con.cursor()
+                cur.execute("DELETE FROM entries")
+                # and here as well
+                con.commit()
+        request.addfinalizer(cleanup)
+
+        return expected
+
+**NOTES**
+
+* You use a ``test_request_context`` in both setup and teardown to ensure that
+  ``g`` exists.
+* You allow the ``with`` blocks to close, committing the transactions for each
+  test context.
+
+Now, use this new fixture in a test of retrieving a listing of entries:
+
+.. code-block:: python
+
+    def test_listing(with_entry):
+        expected = with_entry
+        actual = app.test_client().get('/').data
+        for value in expected:
+            assert value in actual
+
+If you run your tests with these two new ones added, you should see both fail:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [step2 *]
+    192:learning_journal cewing$ py.test
+    ============================= test session starts ==============================
+    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+    collected 5 items
+
+    test_journal.py ...FF
+
+    =================================== FAILURES ===================================
+    ______________________________ test_empty_listing ______________________________
+
+    db = None
+
+        def test_empty_listing(db):
+            actual = app.test_client().get('/').data
+            expected = 'No entries here so far'
+    >       assert expected in actual
+    E       assert 'No entries here so far' in 'Hello world!'
+
+    test_journal.py:102: AssertionError
+    _________________________________ test_listing _________________________________
+
+    with_entry = ('Test Title', 'Test Text')
+
+        def test_listing(with_entry):
+            expected = with_entry
+            actual = app.test_client().get('/').data
+            for value in expected:
+    >           assert value in actual
+    E           assert 'Test Title' in 'Hello world!'
+
+    test_journal.py:109: AssertionError
+    ====================== 2 failed, 3 passed in 0.21 seconds ======================
+    [learning_journal]
+    [step2 *]
+    192:learning_journal cewing$
+
+
+Writing the List View
+---------------------
+
+Interesting. Your tests fail, but not because you haven't implemented a view
+yet. Instead they fail because there *is* a view that is returning the wrong
+thing.
+
+You wrote this view in the previous tutorial step. Remember this:
+
+.. code-block:: python
+
+    @app.route('/')
+    def hello():
+        return u'Hello world!'
+
+That's a *view*.  It's a simple function that returns something to the client.
+You used the ``@app.route()`` decorator to say "show this view when the user
+requests the url '/'".
+
+You need to replace that stub view with a real one that fits your specs above.
+Add this to ``journal.py``:
+
+.. code-block:: python
+
+    # at the top, import
+    from flask import render_template
+
+    # and replacing the 'hello' function from the previous step
+    @app.route('/')
+    def show_entries():
+        entries = get_all_entries()
+        return render_template('list_entries.html', entries=entries)
+
+And now, all your tests should pass:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [step2 *]
+    192:learning_journal cewing$ py.test
+    ============================= test session starts ==============================
+    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+    collected 5 items
+
+    test_journal.py .....
+
+    =========================== 5 passed in 0.22 seconds ===========================
+
+

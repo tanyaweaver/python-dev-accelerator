@@ -2,7 +2,7 @@
 Python Learning Journal: Step 1
 *******************************
 
-In this walk-through we will begin the process of creating an online learning
+In this tutorial we will begin the process of creating an online learning
 journal using Python and the Flask web framework.
 
 The walk-through is intended to get you to a working application as quickly as
@@ -119,7 +119,7 @@ cloning your repository at the bottom of the menu on the right-hand side of the
 page.
 
 .. image:: /_static/learning_journal_clone_url.png
-    :width: 25%
+    :width: 35%
 
 There are two versions of this URL, one for HTTPS and the other for SSH.
 
@@ -570,6 +570,62 @@ With that process running in your terminal, start up your web browser and load
 If you do, then your ``Procfile`` is correct, and you are ready to go.
 
 
+Submit a Pull Request
+---------------------
+
+For the class submission process, you will use GitHub pull requests. This
+allows your instructors and TAs to easily find the work you did for any given
+assignment.
+
+Before you can make a pull request, you must first push the branch you created
+for this assignment up to GitHub.  In your terminal, from inside your
+``learning_journal`` repository, take the following steps:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [step1]
+    192:learning_journal cewing$ git push -u origin step1
+    Counting objects: 32, done.
+    Delta compression using up to 8 threads.
+    Compressing objects: 100% (23/23), done.
+    Writing objects: 100% (23/23), 3.41 KiB | 0 bytes/s, done.
+    Total 23 (delta 14), reused 0 (delta 0)
+    To git@github.com:cewing/learning_journal.git
+     * [new branch]      step1 -> step1
+    Branch step1 set up to track remote branch step1 from origin.
+    [learning_journal]
+    [step1=]
+    192:learning_journal cewing$
+
+Now, open a web browser and point it at your ``learning_journal`` repository in
+GitHub.
+
+On the right side of the homepage, find the **Pull Requests** menu item and
+click it.
+
+.. image:: /_static/lj_pull_request_menu.png
+    :width: 35%
+
+The page that opens should have a big green button for creating a new pull
+request.  Click it.
+
+
+.. image:: /_static/lj_new_pull_request.png
+    :width: 90%
+
+Next, in the page that opens, choose your ``master`` branch as the base and
+your ``step1`` branch to compare (You may have to click an **edit** button in
+the grey area to be able to change what is automatically selected).
+
+.. image:: /_static/lj_editing_pull_request.png
+
+When you have the right values selected, go ahead and click the big green
+button to create your pull request.
+
+Copy the URL for that pull request and use it to submit this assignment in
+Canvas.
+
 Merge to Master
 ---------------
 
@@ -615,6 +671,9 @@ When all is squared away, in your terminal, type the following:
     Total 3 (delta 2), reused 0 (delta 0)
     To git@github.com:cewing/learning_journal.git
        0774bf1..179e695  master -> master
+
+By merging locally and then pushing, you have just closed the pull request you
+opened a moment ago.  That's okay. It is still available for viewing.
 
 At this point, then you have merged your ``step1`` work back into ``master``
 and are ready to deploy your code.

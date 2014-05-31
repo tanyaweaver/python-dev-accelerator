@@ -2,21 +2,25 @@
 Python Dev Accelerator
 **********************
 
+The materials in this documentation support the Python Dev Accelerator program
+at Code Fellows in Seattle, WA.
+
+
 In This Course
 ==============
 
 .. ifslides::
 
-    +----------------------+-----------------------+
-    | Lectures:            | Assignments:          |
-    +======================+=======================+
-    |                      |                       |
-    | .. toctree::         | .. toctree::          |
-    |     :maxdepth: 3     |     :maxdepth: 3      |
-    |                      |                       |
-    |     lectures/index   |     assignments/index |
-    |                      |                       |
-    +----------------------+-----------------------+
+    +----------------------+-----------------------+--------------------+
+    | Lectures:            | Assignments:          | Readings:          |
+    +======================+=======================+====================+
+    |                      |                       |                    |
+    | .. toctree::         | .. toctree::          | .. toctree::       |
+    |     :maxdepth: 3     |     :maxdepth: 3      |     :maxdepth: 3   |
+    |                      |                       |                    |
+    |     lectures/index   |     assignments/index |     readings/index |
+    |                      |                       |                    |
+    +----------------------+-----------------------+--------------------+
 
 .. ifnotslides::
 
@@ -36,10 +40,14 @@ In This Course
 
         assignments/index
 
+    Readings:
+    ---------
 
+    .. toctree::
+        :maxdepth: 3
 
-The materials in this documentation support the Python Dev Accelerator program
-at Code Fellows in Seattle, WA.
+        readings/index
+
 
 Overview
 ========

@@ -6,7 +6,7 @@ Materials in support of homework assignments in the Python Dev Accelerator
 
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
 
     day01/index
     day02/index
