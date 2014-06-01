@@ -53,7 +53,8 @@ User``. This will create an empty file, you can then copy the settings you want
 to override from the default set into your personal settings.
 
 Here's a reasonable set of preliminary settings (theme, color scheme and font
-are quite personal, find ones that suit you.):
+are quite personal, find ones that suit you and remember the ones listed here
+likely need to be installed if you want to use them):
 
 .. code-block:: json
 
@@ -84,7 +85,7 @@ are quite personal, find ones that suit you.):
         "wrap_width": 79 // This is used by a plugin elsewhere
         "tab_size": 4,
         "translate_tabs_to_spaces": true,
-        "use_tab_stops": true,
+        "use_tab_stops": true
     }
 
 
