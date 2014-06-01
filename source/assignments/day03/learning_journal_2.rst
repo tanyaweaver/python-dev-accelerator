@@ -135,27 +135,27 @@ With ``flask.g`` as a place to hold a connection, you're ready to rock. In
 
 .. code-block:: python
 
-        # add this import at the top:
-        from flask import g
+    # add this import at the top:
+    from flask import g
 
-        # add these function after init_db
-        def get_database_connection():
-            db = getattr(g, 'db', None)
-            if db is None:
-                g.db = db = connect_db()
-            return db
+    # add these function after init_db
+    def get_database_connection():
+        db = getattr(g, 'db', None)
+        if db is None:
+            g.db = db = connect_db()
+        return db
 
-        @app.teardown_request
-        def teardown_request(exception):
-            db = getattr(g, 'db', None)
-            if db is not None:
-                if exception:
-                    # if there was a problem, rollback any existing transaction
-                    db.rollback()
-                else:
-                    # otherwise, commit
-                    db.commit()
-                db.close()
+    @app.teardown_request
+    def teardown_request(exception):
+        db = getattr(g, 'db', None)
+        if db is not None:
+            if exception:
+                # if there was a problem, rollback any existing transaction
+                db.rollback()
+            else:
+                # otherwise, commit
+                db.commit()
+            db.close()
 
 Once you've written these functions, commit your changes with a comment about
 what you've just done. "Commit early and commit often" is a good programmer's
@@ -980,24 +980,21 @@ Deploying Your Work
 It's no fun to do all this work without seeing what you've done.
 
 Check it locally first, to ensure that everything is smooth. At your command
-line, start up the app using foreman:
+line, start up the app:
 
 .. code-block:: bash
 
     [learning_journal]
-    [step2=]
-    192:learning_journal cewing$ foreman start
-    01:11:05 web.1  | started with pid 33594
-    01:11:06 web.1  | 2014-05-31 01:11:06 [33594] [INFO] Starting gunicorn 18.0
-    01:11:06 web.1  | 2014-05-31 01:11:06 [33594] [INFO] Listening at: http://0.0.0.0:5000 (33594)
-    01:11:06 web.1  | 2014-05-31 01:11:06 [33594] [INFO] Using worker: sync
-    01:11:06 web.1  | 2014-05-31 01:11:06 [33597] [INFO] Booting worker with pid: 33597
+    [step3 *]
+    heffalump:learning_journal cewing$ python journal.py
+     * Running on http://127.0.0.1:5000/
+     * Restarting with reloader
 
 You should be able to open a web browser and point it at http://127.0.0.1:5000
 and see your app.  It should look like this:
 
 .. image:: /_static/lj_localhost.png
-    :width: 90%
+    :width: 45%
 
 If you see something like that, then all is well. You're ready to submit your
 work and deploy to Heroku.

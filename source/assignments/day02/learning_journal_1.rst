@@ -690,8 +690,8 @@ Use the ``create`` command from the Heroku toolbelt to accomplish this:
     [learning_journal]
     [master=]
     192:learning_journal cewing$ heroku create
-    Creating salty-ridge-1304... done, stack is cedar
-    http://salty-ridge-1304.herokuapp.com/ | git@heroku.com:salty-ridge-1304.git
+    Creating fizzy-fairy-1234... done, stack is cedar
+    http://fizzy-fairy-1234.herokuapp.com/ | git@heroku.com:fizzy-fairy-1234.git
     Git remote heroku added
 
 This accomplishes a few things.  First, a special ``heroku`` remote is added to
@@ -702,8 +702,8 @@ your git repository.  You can see this:
     [learning_journal]
     [master=]
     192:learning_journal cewing$ git remote -v
-    heroku  git@heroku.com:salty-ridge-1304.git (fetch)
-    heroku  git@heroku.com:salty-ridge-1304.git (push)
+    heroku  git@heroku.com:fizzy-fairy-1234.git (fetch)
+    heroku  git@heroku.com:fizzy-fairy-1234.git (push)
     origin  git@github.com:cewing/learning_journal.git (fetch)
     origin  git@github.com:cewing/learning_journal.git (push)
 
@@ -732,7 +732,7 @@ deployment. The Heroku toolbelt provides a command for this as well:
     [learning_journal]
     [master=]
     192:learning_journal cewing$ heroku addons:add heroku-postgresql:dev
-    Adding heroku-postgresql:dev on salty-ridge-1304... done, v4 (free)
+    Adding heroku-postgresql:dev on fizzy-fairy-1234... done, v4 (free)
     Attached as HEROKU_POSTGRESQL_ONYX_URL
     Database has been created and is available
      ! This database is empty. If upgrading, you can transfer
@@ -793,9 +793,9 @@ remote:
 
     -----> Compressing... done, 31.5MB
     -----> Launching... done, v5
-           http://salty-ridge-1304.herokuapp.com/ deployed to Heroku
+           http://fizzy-fairy-1234.herokuapp.com/ deployed to Heroku
 
-    To git@heroku.com:salty-ridge-1304.git
+    To git@heroku.com:fizzy-fairy-1234.git
      * [new branch]      master -> master
 
 Load up the URL above (the one that was "deployed to Heroku").  You should see
