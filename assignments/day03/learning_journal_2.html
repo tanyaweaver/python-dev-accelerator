@@ -180,8 +180,9 @@ connection.</p>
 <span class="k">def</span> <span class="nf">teardown_request</span><span class="p">(</span><span class="n">exception</span><span class="p">):</span>
     <span class="n">db</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">db</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">exception</span><span class="p">:</span>
-            <span class="c"># if there was a problem, rollback any existing transaction</span>
+        <span class="k">if</span> <span class="n">exception</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exception</span><span class="p">,</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
+            <span class="c"># if there was a problem with the database, rollback any</span>
+            <span class="c"># existing transaction</span>
             <span class="n">db</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c"># otherwise, commit</span>

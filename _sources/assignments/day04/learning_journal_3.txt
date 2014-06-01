@@ -1073,3 +1073,148 @@ And that, my friends, is a complete journal app in three steps!
 Deploying Your Work
 ===================
 
+The final reward for all this hard work is to see your app running live.
+
+Repeat the steps you performed for the previous assignment to submit your work
+and prepare for deployment. As a reminder, here's the outline:
+
+
+1. push all local work on the ``step3`` branch up to GitHub
+2. create a pull request in your GitHub repository from ``step3`` to
+   ``master``
+3. copy the URL for that pull request and submit your assignment in Canvas
+4. locally, checkout ``master`` and merge your work from ``step2`` (remember,
+   this will close your pull request, but that's fine)
+5. push master to the heroku remote
+
+
+That's well and good, but there's a bit more you need to do this time in order
+to have full login and session capability on Heroku.
+
+Remember, the username and password for your admin user, and the secret key
+needed for using sessions are all supposed to be held in environment variables.
+You'll need to set those in order for everything to work as expected.
+
+The Heroku toolbelt provides a tool for setting, getting and unsetting
+environment variables. The values are sent to the server via SSH, and so are
+safe in transmission.
+
+Use these tools now to set a username for your app:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [step3]
+    heffalump:learning_journal cewing$ heroku config:set ADMIN_USERNAME=cewing
+    Setting config vars and restarting fizzy-fairy-1234... done, v8
+    ADMIN_USERNAME: cewing
+    [learning_journal]
+    [step3]
+    heffalump:learning_journal cewing$
+
+Next, you'll want to set your password.  Remember that you want it encrypted
+using the same algorithm as in your app.  Use python to help. In your terminal,
+fire up a Python interpreter:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [step3]
+    heffalump:learning_journal cewing$ python
+    Python 2.7.5 (default, Mar  9 2014, 22:15:05)
+    [GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)] on darwin
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>>
+
+Then, import the hashing algorithm and encrypt your password:
+
+.. code-block:: pycon
+
+    >>> from passlib.hash import pbkdf2_sha256 as hasher
+    >>> my_password = 'secret password'
+    >>> hasher.encrypt(my_password)
+    '$pbkdf2-sha256$20000$FmLsPcd4D.Fcq5WyFkII4Q$6ykWQ1p5serGo.J3vzggeC8ebckL4xE0gXKbQ4SMzJE'
+    >>> ^D
+
+Copy that value and then use it to set the environment variable in Heroku
+(remember, don't actually use 'secret password' for your password, please):
+
+.. code-block:: bash
+
+    [learning_journal]
+    [step3]
+    heffalump:learning_journal cewing$ heroku config:set ADMIN_PASSWORD='$pbkdf2-sha256$20000$FmLsPcd4D.Fcq5WyFkII4Q$6ykWQ1p5serGo.J3vzggeC8ebckL4xE0gXKbQ4SMzJE'
+    Setting config vars and restarting fizzy-fairy-1234... done, v9
+    ADMIN_PASSWORD: $pbkdf2-sha256$20000$FmLsPcd4D.Fcq5WyFkII4Q$6ykWQ1p5serGo.J3vzggeC8ebckL4xE0gXKbQ4SMzJE
+    [learning_journal]
+    [step3]
+    heffalump:learning_journal cewing$
+
+Finally, let's also use Python to set up a really nice, random value for the
+secret key.  Fire up your interpreter again:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [step3]
+    heffalump:learning_journal cewing$ python
+    Python 2.7.5 (default, Mar  9 2014, 22:15:05)
+    [GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)] on darwin
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>>
+
+Now, use some convenient constants from the ``string`` module and a bit of
+``set`` magic combined with ``random`` to generate a 128-character random
+secret key:
+
+.. code-block:: pycon
+
+    >>> import string
+    >>> import random
+    >>> chars = string.letters + string.digits
+    >>> specials = "".join(set(string.punctuation) - set("'`\""))
+    >>> specials
+    '!#%$&)(+*-,/.;:=<?>@[]\\_^{}|~'
+    >>> chars += specials
+    >>> chars
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#%$&)(+*-,/.;:=<?>@[]\\_^{}|~'
+    >>> secret_key = "".join(random.choice(chars) for _ in xrange(128))
+    >>> secret_key
+    'Xtkm!VU+Q5kYyjU{[N]r\\S.n2T&xSnxYF;Qu6JvygYi{T.ZM>nnW+hf6@2oyiB2Qp<XDv%4=KM!2S;#lNAfy8<=<RRbu7ST[B!)^OhA6(uQf-nclu22!tKgb=d8OI6v4'
+    >>> ^D
+
+Again, copy that value and use it to set the environment variable in Heroku:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [step3]
+    heffalump:learning_journal cewing$ heroku config:set SECRET_KEY='Xtkm!VU+Q5kYyjU{[N]r\\S.n2T&xSnxYF;Qu6JvygYi{T.ZM>nnW+hf6@2oyiB2Qp<XDv%4=KM!2S;#lNAfy8<=<RRbu7ST[B!)^OhA6(uQf-nclu22!tKgb=d8OI6v4'
+    Setting config vars and restarting fizzy-fairy-1234... done, v10
+    SECRET_KEY: Xtkm!VU+Q5kYyjU{[N]r\\S.n2T&xSnxYF;Qu6JvygYi{T.ZM>nnW+hf6@2oyiB2Qp<XDv%4=KM!2S;#lNAfy8<=<RRbu7ST[B!)^OhA6(uQf-nclu22!tKgb=d8OI6v4
+    [learning_journal]
+    [step3]
+    heffalump:learning_journal cewing$
+
+And that should do it.  You are now able to view your app live on Heroku, log
+in, add posts, the whole nine yards!
+
+
+Point DNS at Heroku
+-------------------
+
+Now that your app is ready, you should go ahead and point a real domain at it.
+
+Use your DNS provider to set up a nice name.  I used
+``pyjournal.crisewing.com``.
+
+Once you've chosen and set up a good domain name,
+`follow the instructions here`_ to set up a custom subdomain and point it at
+your app on Heroku.
+
+.. _follow the instructions here: https://devcenter.heroku.com/articles/custom-domains#custom-subdomains
+
+When you're done, give the worlds DNS servers a few minutes to respond to your
+chages (the exact amount of time will depend on your DNS settings) and then
+visit your running Python Learning Journal at your very own domain.
+

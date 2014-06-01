@@ -1013,6 +1013,123 @@ something like this:</p>
 </div>
 <div class="section" id="deploying-your-work">
 <h2>Deploying Your Work<a class="headerlink" href="#deploying-your-work" title="Permalink to this headline">¶</a></h2>
+<p>The final reward for all this hard work is to see your app running live.</p>
+<p>Repeat the steps you performed for the previous assignment to submit your work
+and prepare for deployment. As a reminder, here&#8217;s the outline:</p>
+<ol class="arabic simple">
+<li>push all local work on the <tt class="docutils literal"><span class="pre">step3</span></tt> branch up to GitHub</li>
+<li>create a pull request in your GitHub repository from <tt class="docutils literal"><span class="pre">step3</span></tt> to
+<tt class="docutils literal"><span class="pre">master</span></tt></li>
+<li>copy the URL for that pull request and submit your assignment in Canvas</li>
+<li>locally, checkout <tt class="docutils literal"><span class="pre">master</span></tt> and merge your work from <tt class="docutils literal"><span class="pre">step2</span></tt> (remember,
+this will close your pull request, but that&#8217;s fine)</li>
+<li>push master to the heroku remote</li>
+</ol>
+<p>That&#8217;s well and good, but there&#8217;s a bit more you need to do this time in order
+to have full login and session capability on Heroku.</p>
+<p>Remember, the username and password for your admin user, and the secret key
+needed for using sessions are all supposed to be held in environment variables.
+You&#8217;ll need to set those in order for everything to work as expected.</p>
+<p>The Heroku toolbelt provides a tool for setting, getting and unsetting
+environment variables. The values are sent to the server via SSH, and so are
+safe in transmission.</p>
+<p>Use these tools now to set a username for your app:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3]
+heffalump:learning_journal cewing$ heroku config:set ADMIN_USERNAME=cewing
+Setting config vars and restarting fizzy-fairy-1234... done, v8
+ADMIN_USERNAME: cewing
+[learning_journal]
+[step3]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p>Next, you&#8217;ll want to set your password.  Remember that you want it encrypted
+using the same algorithm as in your app.  Use python to help. In your terminal,
+fire up a Python interpreter:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step3<span class="o">]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>python
+Python 2.7.5 <span class="o">(</span>default, Mar  9 2014, 22:15:05<span class="o">)</span>
+<span class="o">[</span>GCC 4.2.1 Compatible Apple LLVM 5.0 <span class="o">(</span>clang-500.0.68<span class="o">)]</span> on darwin
+Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for </span>more information.
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>Then, import the hashing algorithm and encrypt your password:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">passlib.hash</span> <span class="kn">import</span> <span class="n">pbkdf2_sha256</span> <span class="k">as</span> <span class="n">hasher</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_password</span> <span class="o">=</span> <span class="s">&#39;secret password&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hasher</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">my_password</span><span class="p">)</span>
+<span class="go">&#39;$pbkdf2-sha256$20000$FmLsPcd4D.Fcq5WyFkII4Q$6ykWQ1p5serGo.J3vzggeC8ebckL4xE0gXKbQ4SMzJE&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">^</span><span class="n">D</span>
+</pre></div>
+</div>
+<p>Copy that value and then use it to set the environment variable in Heroku
+(remember, don&#8217;t actually use &#8216;secret password&#8217; for your password, please):</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3]
+heffalump:learning_journal cewing$ heroku config:set ADMIN_PASSWORD=&#39;$pbkdf2-sha256$20000$FmLsPcd4D.Fcq5WyFkII4Q$6ykWQ1p5serGo.J3vzggeC8ebckL4xE0gXKbQ4SMzJE&#39;
+Setting config vars and restarting fizzy-fairy-1234... done, v9
+ADMIN_PASSWORD: $pbkdf2-sha256$20000$FmLsPcd4D.Fcq5WyFkII4Q$6ykWQ1p5serGo.J3vzggeC8ebckL4xE0gXKbQ4SMzJE
+[learning_journal]
+[step3]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p>Finally, let&#8217;s also use Python to set up a really nice, random value for the
+secret key.  Fire up your interpreter again:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step3<span class="o">]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>python
+Python 2.7.5 <span class="o">(</span>default, Mar  9 2014, 22:15:05<span class="o">)</span>
+<span class="o">[</span>GCC 4.2.1 Compatible Apple LLVM 5.0 <span class="o">(</span>clang-500.0.68<span class="o">)]</span> on darwin
+Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for </span>more information.
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>Now, use some convenient constants from the <tt class="docutils literal"><span class="pre">string</span></tt> module and a bit of
+<tt class="docutils literal"><span class="pre">set</span></tt> magic combined with <tt class="docutils literal"><span class="pre">random</span></tt> to generate a 128-character random
+secret key:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chars</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">letters</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">specials</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="s">&quot;&#39;`</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">specials</span>
+<span class="go">&#39;!#%$&amp;)(+*-,/.;:=&lt;?&gt;@[]\\_^{}|~&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chars</span> <span class="o">+=</span> <span class="n">specials</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chars</span>
+<span class="go">&#39;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#%$&amp;)(+*-,/.;:=&lt;?&gt;@[]\\_^{}|~&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">secret_key</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">128</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">secret_key</span>
+<span class="go">&#39;Xtkm!VU+Q5kYyjU{[N]r\\S.n2T&amp;xSnxYF;Qu6JvygYi{T.ZM&gt;nnW+hf6@2oyiB2Qp&lt;XDv%4=KM!2S;#lNAfy8&lt;=&lt;RRbu7ST[B!)^OhA6(uQf-nclu22!tKgb=d8OI6v4&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">^</span><span class="n">D</span>
+</pre></div>
+</div>
+<p>Again, copy that value and use it to set the environment variable in Heroku:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3]
+heffalump:learning_journal cewing$ heroku config:set SECRET_KEY=&#39;Xtkm!VU+Q5kYyjU{[N]r\\S.n2T&amp;xSnxYF;Qu6JvygYi{T.ZM&gt;nnW+hf6@2oyiB2Qp&lt;XDv%4=KM!2S;#lNAfy8&lt;=&lt;RRbu7ST[B!)^OhA6(uQf-nclu22!tKgb=d8OI6v4&#39;
+Setting config vars and restarting fizzy-fairy-1234... done, v10
+SECRET_KEY: Xtkm!VU+Q5kYyjU{[N]r\\S.n2T&amp;xSnxYF;Qu6JvygYi{T.ZM&gt;nnW+hf6@2oyiB2Qp&lt;XDv%4=KM!2S;#lNAfy8&lt;=&lt;RRbu7ST[B!)^OhA6(uQf-nclu22!tKgb=d8OI6v4
+[learning_journal]
+[step3]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p>And that should do it.  You are now able to view your app live on Heroku, log
+in, add posts, the whole nine yards!</p>
+<div class="section" id="point-dns-at-heroku">
+<h3>Point DNS at Heroku<a class="headerlink" href="#point-dns-at-heroku" title="Permalink to this headline">¶</a></h3>
+<p>Now that your app is ready, you should go ahead and point a real domain at it.</p>
+<p>Use your DNS provider to set up a nice name.  I used
+<tt class="docutils literal"><span class="pre">pyjournal.crisewing.com</span></tt>.</p>
+<p>Once you&#8217;ve chosen and set up a good domain name,
+<a class="reference external" href="https://devcenter.heroku.com/articles/custom-domains#custom-subdomains">follow the instructions here</a> to set up a custom subdomain and point it at
+your app on Heroku.</p>
+<p>When you&#8217;re done, give the worlds DNS servers a few minutes to respond to your
+chages (the exact amount of time will depend on your DNS settings) and then
+visit your running Python Learning Journal at your very own domain.</p>
+</div>
 </div>
 </div>
 
@@ -1042,7 +1159,10 @@ something like this:</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#adding-style">Adding Style</a></li>
-<li><a class="reference internal" href="#deploying-your-work">Deploying Your Work</a></li>
+<li><a class="reference internal" href="#deploying-your-work">Deploying Your Work</a><ul>
+<li><a class="reference internal" href="#point-dns-at-heroku">Point DNS at Heroku</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
