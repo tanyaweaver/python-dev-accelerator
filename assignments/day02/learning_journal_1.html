@@ -1,0 +1,810 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python Learning Journal: Step 1 &mdash; Python Dev Accelerator 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Day 02 Assignments" href="index.html" />
+    <link rel="next" title="Day 03 Assignments" href="../day03/index.html" />
+    <link rel="prev" title="Day 02 Assignments" href="index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+<div class="header">
+  <div class="logo">
+    <a href="../../index.html">
+      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../day03/index.html" title="Day 03 Assignments"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Day 02 Assignments"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Day 02 Assignments</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="python-learning-journal-step-1">
+<h1>Python Learning Journal: Step 1<a class="headerlink" href="#python-learning-journal-step-1" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial we will begin the process of creating an online learning
+journal using Python and the Flask web framework.</p>
+<p>The walk-through is intended to get you to a working application as quickly as
+possible. There will be many questions left unanswered as we proceed. Fear not.
+The answers will come as this course progresses. For now, simply focus on the
+process and getting to a working application.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>In order to follow this tutorial, you will need to have several tools in place
+before you begin.</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="https://www.python.org/download/">Python 2.7.x</a></li>
+<li><a class="reference external" href="../../lectures/day01/virtualenv.html">Virtualenv and Virtualenvwrapper</a> installed and properly configured</li>
+<li>The <a class="reference external" href="https://www.codefellows.org/blogs/how-to-install-postgresql">PostgreSQL Database Engine</a> installed and properly configured</li>
+<li>A c compiler and Python development headers</li>
+<li>An account with <a class="reference external" href="https://github.com">GitHub</a></li>
+<li>An account with <a class="reference external" href="https://heroku.com">Heroku</a> (and the heroku toolbelt installed)</li>
+</ol>
+</div>
+<div class="section" id="create-your-environment">
+<h2>Create Your Environment<a class="headerlink" href="#create-your-environment" title="Permalink to this headline">¶</a></h2>
+<p>If all the pieces are in place, you are ready to proceed to the next level.</p>
+<div class="section" id="set-up-the-project-environment">
+<h3>Set Up the Project Environment<a class="headerlink" href="#set-up-the-project-environment" title="Permalink to this headline">¶</a></h3>
+<p>Since you&#8217;ve installed and configured <tt class="docutils literal"><span class="pre">virtualenv</span></tt> and <tt class="docutils literal"><span class="pre">virtualenvwrapper</span></tt>
+properly, this step is simple. Open a command shell and type the following:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>mkproject learning_journal
+</pre></div>
+</div>
+<p>You should see output that looks like this (though your prompt and path names
+will look different):</p>
+<div class="highlight-bash"><div class="highlight"><pre>192:~ cewing$ mkproject learning_journal
+New python executable in learning_journal/bin/python
+Installing setuptools, pip...done.
+Creating /Users/cewing/projects/learning_journal
+Setting project for learning_journal to /Users/cewing/projects/learning_journal
+[learning_journal]
+192:learning_journal cewing$
+</pre></div>
+</div>
+<p>This command will do a couple of things for you:</p>
+<ul class="simple">
+<li>create a new Python virtual environment called <tt class="docutils literal"><span class="pre">learning_journal</span></tt> in your
+configured <tt class="docutils literal"><span class="pre">$WORKON_HOME</span></tt></li>
+<li>install <tt class="docutils literal"><span class="pre">pip</span></tt> and <tt class="docutils literal"><span class="pre">setuptools</span></tt> in the new environment</li>
+<li>activate the new environment</li>
+<li>create a new project directory called <tt class="docutils literal"><span class="pre">learning_journal</span></tt> in your configured
+<tt class="docutils literal"><span class="pre">$PROJECT_HOME</span></tt></li>
+<li>change your current working directory to the new project directory</li>
+</ul>
+<p>Now you have a clean and isolated environment in which to do your work.</p>
+</div>
+<div class="section" id="create-a-github-project-repository">
+<h3>Create a GitHub Project Repository<a class="headerlink" href="#create-a-github-project-repository" title="Permalink to this headline">¶</a></h3>
+<p>Open a web browser and go to <a class="reference external" href="https://github.com">GitHub</a>. If you are not logged in, do so.</p>
+<p>At the top left, find the small <tt class="docutils literal"><span class="pre">+</span></tt> icon next to your name and click it.
+Select <strong>New Repository</strong> from the drop-down menu.</p>
+<p>A form will load, allowing you to enter some information about your new
+repository.</p>
+<a class="reference internal image-reference" href="../../_images/learning_journal_repo_setup.png"><img alt="../../_images/learning_journal_repo_setup.png" src="../../_images/learning_journal_repo_setup.png" style="width: 90%;" /></a>
+<p>Enter the following values:</p>
+<dl class="docutils">
+<dt>Repository Name:</dt>
+<dd><tt class="docutils literal"><span class="pre">learning_journal</span></tt></dd>
+<dt>Description:</dt>
+<dd>A lightweight Flask web journal.</dd>
+</dl>
+<p>Leave the new repository as <strong>Public</strong></p>
+<p>Check the box for initializing the repository with a README.</p>
+<p>Select a Python <tt class="docutils literal"><span class="pre">.gitignore</span></tt> file from the first drop-down at the bottom.</p>
+<p>Choose a reasonable license from the second drop-down (I used MIT).</p>
+<p>Finally, click the <strong>Create Repository</strong> button.</p>
+</div>
+<div class="section" id="clone-your-repository">
+<h3>Clone Your Repository<a class="headerlink" href="#clone-your-repository" title="Permalink to this headline">¶</a></h3>
+<p>Now that you have a repository for the application you will be writing, you&#8217;ll
+want to get a copy of that code to your local machine.</p>
+<p>On <tt class="docutils literal"><span class="pre">GitHub</span></tt>, while looking at your newly created repository, find the URL for
+cloning your repository at the bottom of the menu on the right-hand side of the
+page.</p>
+<a class="reference internal image-reference" href="../../_images/learning_journal_clone_url.png"><img alt="../../_images/learning_journal_clone_url.png" src="../../_images/learning_journal_clone_url.png" style="width: 35%;" /></a>
+<p>There are two versions of this URL, one for HTTPS and the other for SSH.</p>
+<p>If you have <a class="reference external" href="https://help.github.com/articles/generating-ssh-keys">set up public key authentication</a> for your GitHub account, you
+will want to copy the SSH version of the URL.  Otherwise, you&#8217;ll need to copy
+the HTTPS version.</p>
+<p>Back in your terminal, make sure you are in your <tt class="docutils literal"><span class="pre">learning_journal</span></tt> project
+directory:</p>
+<div class="highlight-bash"><div class="highlight"><pre>192:learning_journal cewing$ pwd
+/Users/cewing/projects/learning_journal
+[learning_journal]
+192:learning_journal cewing$
+</pre></div>
+</div>
+<p>Then, use the <tt class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span></tt> command to make a local copy of your new repository:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>git clone &lt;paste-your-copied-github-url-here&gt;
+</pre></div>
+</div>
+<p>Once that is complete, you should have a new directory called
+<tt class="docutils literal"><span class="pre">learning_journal</span></tt> inside the project directory you created earlier.  Your
+filesystem should look something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>./learning_journal/   # &lt;- Your project directory
+├── learning_journal  # &lt;- Your repository root
+│   ├── LICENSE       # &lt;- Initial files from GitHub
+│   ├── README.md
+│   ├── .gitignore
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-branch-for-today-s-work">
+<h3>Create a Branch for Today&#8217;s Work<a class="headerlink" href="#create-a-branch-for-today-s-work" title="Permalink to this headline">¶</a></h3>
+<p>We want to maintain a clean <tt class="docutils literal"><span class="pre">master</span></tt> branch in our repository.  Any work you
+do on adding features to a project should be done on a branch, evaluated and
+tested there, and only merged to master once the work is complete.</p>
+<p>To create a branch called <tt class="docutils literal"><span class="pre">step1</span></tt> for todays work, follow these steps:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span><span class="nb">cd </span>learning_journal/
+<span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+192:learning_journal cewing<span class="nv">$ </span>git branch
+* master
+<span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+192:learning_journal cewing<span class="nv">$ </span>git checkout -b step1
+Switched to a new branch <span class="s1">&#39;step1&#39;</span>
+<span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step1<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>git branch
+  master
+* step1
+</pre></div>
+</div>
+<p>You have created and checked out a new branch called <tt class="docutils literal"><span class="pre">step1</span></tt>. You&#8217;ll do your
+day&#8217;s work here.</p>
+<p>This new branch exists only on your local machine. When you finish today&#8217;s
+assignment you&#8217;ll need to push this branch up to your GitHub repository. More
+on that later.</p>
+</div>
+<div class="section" id="install-required-software">
+<h3>Install Required Software<a class="headerlink" href="#install-required-software" title="Permalink to this headline">¶</a></h3>
+<p>Before we begin, we&#8217;ll need to install some Python packages to get the tools
+we&#8217;ll need to complete our project.</p>
+<p>Make sure that your <tt class="docutils literal"><span class="pre">learning_journal</span></tt> virtual environment is active, and
+that the <tt class="docutils literal"><span class="pre">pip</span></tt> command points to that environment (note the
+<tt class="docutils literal"><span class="pre">learning_journal</span></tt> in the pathname below):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>which pip
+/Users/cewing/virtualenvs/learning_journal/bin/pip
+</pre></div>
+</div>
+<p>Using the <tt class="docutils literal"><span class="pre">pip</span></tt> command, install the required software as follows:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>pip install flask psycopg2 gunicorn
+Downloading/unpacking flask
+...
+Successfully installed flask psycopg2 Werkzeug Jinja2 itsdangerous markupsafe gunicorn
+Cleaning up...
+</pre></div>
+</div>
+<p>If you are using Mac OS X you may see an error when installing Python code with
+C extensions (like <tt class="docutils literal"><span class="pre">psycopg2</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre>.. code-block:: bash
+</pre></div>
+</div>
+<blockquote>
+<div>clang: error: unknown argument: &#8216;-mno-fused-madd&#8217; [-Wunused-command-line-argument-hard-error-in-future]</div></blockquote>
+<p>If you see this, you may need to <a class="reference external" href="http://stackoverflow.com/questions/22313407/clang-error-unknown-argument-mno-fused-madd-python-package-installation-fa">follow the instructions here</a> due to a
+issue in how the OS X command-line c compiler is configured.</p>
+</div>
+<div class="section" id="preserve-your-installed-dependencies">
+<h3>Preserve Your Installed Dependencies<a class="headerlink" href="#preserve-your-installed-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>In order to make it easier to work with others, you want to create a record of
+the additional packages you&#8217;ve installed.  You&#8217;ll use <tt class="docutils literal"><span class="pre">pip</span></tt> to do that:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step1<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>pip freeze &gt; requirements.txt
+</pre></div>
+</div>
+<p>Add that new file to your repository on this branch and commit the changes
+locally:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step1<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>git add requirements.txt
+<span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step1<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>git commit -m <span class="s2">&quot;add a requirements file&quot;</span>
+<span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step1<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>git status
+On branch step1
+nothing to commit, working directory clean
+</pre></div>
+</div>
+<p>After creating this new file, you&#8217;re file system layout should look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>./learning_journal/
+└── learning_journal
+    ├── .gitignore
+    ├── LICENSE
+    ├── README.md
+    └──  requirements.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-database">
+<h3>Create a Database<a class="headerlink" href="#create-a-database" title="Permalink to this headline">¶</a></h3>
+<p>Finally, in order to preserve the journal entries you&#8217;ll write throughout the
+class, you&#8217;ll need to have a database. You can use the <tt class="docutils literal"><span class="pre">createdb</span></tt> command
+provided by <tt class="docutils literal"><span class="pre">PostgreSQL</span></tt> to accomplish this task. For development purposes it
+is fine for you to own the database yourself.</p>
+<p>Make sure that your database engine is running and then issue the following
+command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step1<span class="o">]</span>
+192:projects cewing<span class="nv">$ </span>createdb learning_journal
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="building-the-data-layer">
+<h2>Building the Data Layer<a class="headerlink" href="#building-the-data-layer" title="Permalink to this headline">¶</a></h2>
+<p>You&#8217;ll start your learning journal by building the data layer.  This layer of
+the application will be responsible for persisting entries to and retrieving
+entries from the database you just created.</p>
+<div class="section" id="the-entries-table">
+<h3>The <tt class="docutils literal"><span class="pre">entries</span></tt> Table<a class="headerlink" href="#the-entries-table" title="Permalink to this headline">¶</a></h3>
+<p>You need first to define what an <em>entry</em> for our microblog might look like.
+Keep it simple for now.</p>
+<p>In your <tt class="docutils literal"><span class="pre">learning_journal</span></tt> repository root, right where you see
+<tt class="docutils literal"><span class="pre">README.md</span></tt>, add a new file called <tt class="docutils literal"><span class="pre">journal.py</span></tt>.  In it, add the following
+lines:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="n">DB_SCHEMA</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">DROP TABLE IF EXISTS entries;</span>
+<span class="s">CREATE TABLE entries (</span>
+<span class="s">    id serial PRIMARY KEY,</span>
+<span class="s">    title VARCHAR (127) NOT NULL,</span>
+<span class="s">    text TEXT NOT NULL,</span>
+<span class="s">    created TIMESTAMP NOT NULL</span>
+<span class="s">)</span>
+<span class="s">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>This will create a single database table called <tt class="docutils literal"><span class="pre">entries</span></tt> that has four
+columns.  There will be a primary key, a title and some text, and a <tt class="docutils literal"><span class="pre">created</span></tt>
+column that will hold a timestamp.</p>
+</div>
+<div class="section" id="the-app-skeleton">
+<h3>The App Skeleton<a class="headerlink" href="#the-app-skeleton" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;ll also need a basic Flask app skeleton to work from.</p>
+<p>Still in <tt class="docutils literal"><span class="pre">journal.py</span></tt>, add the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># add this at the top, just below the &#39;coding&#39; line</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+
+<span class="c"># add this just below the SQL table definition we just created</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">u&#39;Hello world!&#39;</span>
+
+<span class="c"># put this at the very bottom of the file.</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="app-configuration">
+<h3>App Configuration<a class="headerlink" href="#app-configuration" title="Permalink to this headline">¶</a></h3>
+<p>For any but the most trivial applications, you&#8217;ll need configuration. It&#8217;s a
+way of letting your app know about the world around it.</p>
+<p>In your case, you have one thing you need to configure: a way to connect to the
+database.</p>
+<p>Flask gives many options for dealing with configuration, but in this case you
+are going to set values directly in the Flask app&#8217;s <tt class="docutils literal"><span class="pre">config</span></tt>. Add the
+following to your <tt class="docutils literal"><span class="pre">journal.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># add this import at the top of your file:</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c"># add this after app is defined</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;DATABASE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s">&#39;DATABASE_URL&#39;</span><span class="p">,</span> <span class="s">&#39;dbname=learning_journal user=cewing&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>In your own project, you won&#8217;t want to use my name, but rather the name of the
+user on your local server who will connect to the database. Other values such
+as a password may be required in order to make this work. This value is called
+a <tt class="docutils literal"><span class="pre">libpq</span> <span class="pre">connection</span> <span class="pre">string</span></tt> and you can <a class="reference external" href="http://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING`">read more about it</a> and
+<a class="reference external" href="http://initd.org/psycopg/docs/module.html">how it is used to make a connection to the database</a>.</p>
+</div>
+<div class="section" id="initialize-the-database">
+<h3>Initialize the Database<a class="headerlink" href="#initialize-the-database" title="Permalink to this headline">¶</a></h3>
+<p>Now that you have an app skeleton and the configuration you require, you are
+ready to initialize the database. Above, you created an empty database using
+the <tt class="docutils literal"><span class="pre">createdb</span></tt> command. Initializing it will create the required table and
+index needed to store your journal entries.</p>
+<p>The first step is to connect to the database. You&#8217;ll add a function that opens
+a connection and returns it for use by other functions. In <tt class="docutils literal"><span class="pre">journal.py</span></tt> add
+the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># add this up at the top</span>
+<span class="kn">import</span> <span class="nn">psycopg2</span>
+
+<span class="c"># add the rest of this below the app.config statement</span>
+<span class="k">def</span> <span class="nf">connect_db</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return a connection to the configured database&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;DATABASE&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Now that you can get an open connection to the database, you&#8217;ll set up a
+function that can initialize the database by running the SQL you added above.
+Add this code to <tt class="docutils literal"><span class="pre">journal.py</span></tt> next:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># add this import at the top</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">closing</span>
+
+<span class="c"># add this function after the connect_db function</span>
+<span class="k">def</span> <span class="nf">init_db</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Initialize the database using DB_SCHEMA</span>
+
+<span class="sd">    WARNING: executing this function will drop existing tables.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">connect_db</span><span class="p">())</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">DB_SCHEMA</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You&#8217;ll need to have a working database for our app, so go ahead and run this
+function &#8220;in real life&#8221;. With your project virtual environment active, fire up
+a python interpreter:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step1 *<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>python
+Python 2.7.5 <span class="o">(</span>default, Mar  9 2014, 22:15:05<span class="o">)</span>
+<span class="o">[</span>GCC 4.2.1 Compatible Apple LLVM 5.0 <span class="o">(</span>clang-500.0.68<span class="o">)]</span> on darwin
+Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for </span>more information.
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>Then, at the prompt, import your app to set up the configuration, and run the
+<tt class="docutils literal"><span class="pre">init_db</span></tt> function:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">init_db</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">init_db</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">^</span><span class="n">D</span>
+</pre></div>
+</div>
+<p>If that function returns silently, you&#8217;ve succeeded. Exit the interpreter with
+<tt class="docutils literal"><span class="pre">^D</span></tt>.</p>
+<p>Next, take a look at the database directly. Use the <tt class="docutils literal"><span class="pre">psql</span></tt> command to open an
+interactive session with your database:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step1 *<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>psql -U cewing -d learning_journal
+psql <span class="o">(</span>9.3.2<span class="o">)</span>
+Type <span class="s2">&quot;help&quot;</span> <span class="k">for </span>help.
+
+<span class="nv">learning_journal</span><span class="o">=</span><span class="c">#</span>
+</pre></div>
+</div>
+<p>Again, you may require more, or different connection parameters to connect to
+your database.</p>
+<p>Use the <tt class="docutils literal"><span class="pre">\d</span></tt> command in the psql shell to see a list of the <em>relations</em> in
+your database:</p>
+<div class="highlight-psql"><div class="highlight"><pre><span class="gp">learning_journal=#</span> <span class="kp">\d</span>
+<span class="go">              List of relations</span>
+<span class="go"> Schema |      Name      |   Type   | Owner</span>
+<span class="go">--------+----------------+----------+--------</span>
+<span class="go"> public | entries        | table    | cewing</span>
+<span class="go"> public | entries_id_seq | sequence | cewing</span>
+<span class="go">(2 rows)</span>
+</pre></div>
+</div>
+<p>You can provide a table name argument to that command to see the information
+about the <tt class="docutils literal"><span class="pre">entries</span></tt> table</p>
+<div class="highlight-psql"><div class="highlight"><pre><span class="gp">learning_journal=#</span> <span class="kp">\d</span> <span class="ss">entries</span>
+<span class="go">                                    Table &quot;public.entries&quot;</span>
+<span class="go"> Column  |            Type             |                      Modifiers</span>
+<span class="go">---------+-----------------------------+------------------------------------------------------</span>
+<span class="go"> id      | integer                     | not null default nextval(&#39;entries_id_seq&#39;::regclass)</span>
+<span class="go"> title   | character varying(127)      | not null</span>
+<span class="go"> text    | text                        | not null</span>
+<span class="go"> created | timestamp without time zone | not null</span>
+<span class="go">Indexes:</span>
+<span class="go">    &quot;entries_pkey&quot; PRIMARY KEY, btree (id)</span>
+</pre></div>
+</div>
+<p>If your results look more-or-less like this, then you&#8217;ve succeeded. Now it is
+time to connect this app to Heroku.</p>
+</div>
+</div>
+<div class="section" id="app-deployment">
+<h2>App Deployment<a class="headerlink" href="#app-deployment" title="Permalink to this headline">¶</a></h2>
+<p>You are going to put your learning journal online using <a class="reference external" href="https://heroku.com">Heroku</a>, a service
+that simplifies deploying web applications in a number of languages.</p>
+<p>Moving on from here assumes that you have already created a Heroku account,
+downloaded and installed the toolbelt, and successfully logged in to Heroku
+from your command line. If that is not the case. Please <a class="reference external" href="https://devcenter.heroku.com/articles/quickstart">follow this tutorial</a>
+to get up to speed.</p>
+<div class="section" id="add-a-procfile">
+<h3>Add a Procfile<a class="headerlink" href="#add-a-procfile" title="Permalink to this headline">¶</a></h3>
+<p>Heroku uses a standard file to control how your app is built and served. This
+file <strong>must</strong> be named <tt class="docutils literal"><span class="pre">Procfile</span></tt> (and capitalization counts). Go ahead and
+create a new file by that name in your journal repository root.</p>
+<p>Now your filesystem should look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>learning_journal
+└── learning_journal
+    ├── .gitignore
+    ├── LICENSE
+    ├── Procfile
+    ├── README.md
+    ├── journal.py
+    └── requirements.txt
+</pre></div>
+</div>
+<p>In your new <tt class="docutils literal"><span class="pre">Procfile</span></tt>, type the following line of code:</p>
+<div class="highlight-text"><div class="highlight"><pre>web: gunicorn journal:app
+</pre></div>
+</div>
+<p>This tells heroku that you will be running a <tt class="docutils literal"><span class="pre">web</span></tt> service using the
+<tt class="docutils literal"><span class="pre">gunicorn</span></tt> WSGI server and that your WSGI application is called <tt class="docutils literal"><span class="pre">app</span></tt> and
+can be found in the <tt class="docutils literal"><span class="pre">journal</span></tt> python module.</p>
+<p>Once you&#8217;ve got that created, you should be able to use <tt class="docutils literal"><span class="pre">foreman</span></tt>, provided
+by the Heroku Toolbelt, to start up your application:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step1<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>foreman start
+23:26:33 web.1  | started with pid 68019
+23:26:33 web.1  | 2014-05-27 23:26:33 <span class="o">[</span>68019<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Starting gunicorn 18.0
+23:26:33 web.1  | 2014-05-27 23:26:33 <span class="o">[</span>68019<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Listening at: http://0.0.0.0:5000 <span class="o">(</span>68019<span class="o">)</span>
+23:26:33 web.1  | 2014-05-27 23:26:33 <span class="o">[</span>68019<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Using worker: sync
+23:26:33 web.1  | 2014-05-27 23:26:33 <span class="o">[</span>68022<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Booting worker with pid: 68022
+</pre></div>
+</div>
+<p>With that process running in your terminal, start up your web browser and load
+<tt class="docutils literal"><span class="pre">http://127.0.0.1:5000</span></tt>.  You should be able to see this:</p>
+<a class="reference internal image-reference" href="../../_images/learning_journal_helloworld.png"><img alt="../../_images/learning_journal_helloworld.png" src="../../_images/learning_journal_helloworld.png" style="width: 90%;" /></a>
+<p>If you do, then your <tt class="docutils literal"><span class="pre">Procfile</span></tt> is correct, and you are ready to go.</p>
+</div>
+<div class="section" id="submit-a-pull-request">
+<h3>Submit a Pull Request<a class="headerlink" href="#submit-a-pull-request" title="Permalink to this headline">¶</a></h3>
+<p>For the class submission process, you will use GitHub pull requests. This
+allows your instructors and TAs to easily find the work you did for any given
+assignment.</p>
+<p>Before you can make a pull request, you must first push the branch you created
+for this assignment up to GitHub.  In your terminal, from inside your
+<tt class="docutils literal"><span class="pre">learning_journal</span></tt> repository, take the following steps:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step1]
+192:learning_journal cewing$ git push -u origin step1
+Counting objects: 32, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (23/23), done.
+Writing objects: 100% (23/23), 3.41 KiB | 0 bytes/s, done.
+Total 23 (delta 14), reused 0 (delta 0)
+To git@github.com:cewing/learning_journal.git
+ * [new branch]      step1 -&gt; step1
+Branch step1 set up to track remote branch step1 from origin.
+[learning_journal]
+[step1=]
+192:learning_journal cewing$
+</pre></div>
+</div>
+<p>Now, open a web browser and point it at your <tt class="docutils literal"><span class="pre">learning_journal</span></tt> repository in
+GitHub.</p>
+<p>On the right side of the homepage, find the <strong>Pull Requests</strong> menu item and
+click it.</p>
+<a class="reference internal image-reference" href="../../_images/lj_pull_request_menu.png"><img alt="../../_images/lj_pull_request_menu.png" src="../../_images/lj_pull_request_menu.png" style="width: 35%;" /></a>
+<p>The page that opens should have a big green button for creating a new pull
+request.  Click it.</p>
+<a class="reference internal image-reference" href="../../_images/lj_new_pull_request.png"><img alt="../../_images/lj_new_pull_request.png" src="../../_images/lj_new_pull_request.png" style="width: 90%;" /></a>
+<p>Next, in the page that opens, choose your <tt class="docutils literal"><span class="pre">master</span></tt> branch as the base and
+your <tt class="docutils literal"><span class="pre">step1</span></tt> branch to compare (You may have to click an <strong>edit</strong> button in
+the grey area to be able to change what is automatically selected).</p>
+<img alt="../../_images/lj_editing_pull_request.png" src="../../_images/lj_editing_pull_request.png" />
+<p>When you have the right values selected, go ahead and click the big green
+button to create your pull request.</p>
+<p>Copy the URL for that pull request and use it to submit this assignment in
+Canvas.</p>
+</div>
+<div class="section" id="merge-to-master">
+<h3>Merge to Master<a class="headerlink" href="#merge-to-master" title="Permalink to this headline">¶</a></h3>
+<p>Heroku prefers you to deploy from your <tt class="docutils literal"><span class="pre">master</span></tt> branch. That makes sense.
+It&#8217;s in keeping with standard gitflow to have <tt class="docutils literal"><span class="pre">master</span></tt> be the deployable
+branch in your repository.</p>
+<p>You&#8217;ve been doing your work on a branch, <tt class="docutils literal"><span class="pre">step1</span></tt>.  Now that you are ready to
+deploy, it&#8217;s time to merge that work.</p>
+<p>Make sure that you&#8217;ve committed and pushed all your work to-date before you
+take this next set of actions.</p>
+<p>When all is squared away, in your terminal, type the following:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">step1</span><span class="o">=]</span>
+192:learning_journal cewing<span class="nv">$ </span>git checkout master
+Switched to branch <span class="s1">&#39;master&#39;</span>
+Your branch is up-to-date with <span class="s1">&#39;origin/master&#39;</span>.
+<span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+192:learning_journal cewing<span class="nv">$ </span>git merge step1
+Adding journal.py
+Adding Procfile
+<span class="o">[</span>master 179e695<span class="o">]</span> Merge branch <span class="s1">&#39;step1&#39;</span>
+192:learning_journal cewing<span class="nv">$ </span>git status
+On branch master
+Your branch is ahead of <span class="s1">&#39;origin/master&#39;</span> by 7 commits.
+  <span class="o">(</span>use <span class="s2">&quot;git push&quot;</span> to publish your <span class="nb">local </span>commits<span class="o">)</span>
+
+nothing to commit, working directory clean
+<span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>master&gt;<span class="o">]</span>
+192:learning_journal cewing<span class="nv">$ </span>git push origin master
+Counting objects: 7, <span class="k">done</span>.
+Delta compression using up to 8 threads.
+Compressing objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, <span class="k">done</span>.
+Writing objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, 342 bytes | 0 bytes/s, <span class="k">done</span>.
+Total 3 <span class="o">(</span>delta 2<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+To git@github.com:cewing/learning_journal.git
+   0774bf1..179e695  master -&gt; master
+</pre></div>
+</div>
+<p>By merging locally and then pushing, you have just closed the pull request you
+opened a moment ago.  That&#8217;s okay. It is still available for viewing and
+comments, and that was the point of it.</p>
+<p>At this point, then you have merged your <tt class="docutils literal"><span class="pre">step1</span></tt> work back into <tt class="docutils literal"><span class="pre">master</span></tt>
+and are ready to deploy your code.</p>
+</div>
+<div class="section" id="create-a-heroku-app">
+<h3>Create a Heroku App<a class="headerlink" href="#create-a-heroku-app" title="Permalink to this headline">¶</a></h3>
+<p>The first step in deployment is to create a Heroku app to which you can deploy.
+Use the <tt class="docutils literal"><span class="pre">create</span></tt> command from the Heroku toolbelt to accomplish this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+192:learning_journal cewing<span class="nv">$ </span>heroku create
+Creating salty-ridge-1304... <span class="k">done</span>, stack is cedar
+http://salty-ridge-1304.herokuapp.com/ | git@heroku.com:salty-ridge-1304.git
+Git remote heroku added
+</pre></div>
+</div>
+<p>This accomplishes a few things.  First, a special <tt class="docutils literal"><span class="pre">heroku</span></tt> remote is added to
+your git repository.  You can see this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+192:learning_journal cewing<span class="nv">$ </span>git remote -v
+heroku  git@heroku.com:salty-ridge-1304.git <span class="o">(</span>fetch<span class="o">)</span>
+heroku  git@heroku.com:salty-ridge-1304.git <span class="o">(</span>push<span class="o">)</span>
+origin  git@github.com:cewing/learning_journal.git <span class="o">(</span>fetch<span class="o">)</span>
+origin  git@github.com:cewing/learning_journal.git <span class="o">(</span>push<span class="o">)</span>
+</pre></div>
+</div>
+<p>Notice that the URL for this new remote is the same as the subdomain name
+Heroku assigned to your app. You <em>can</em> control what this name is, but there&#8217;s
+no real need as you will be pointing your own URL at the app soon enough.  The
+goofy names automatically created are just fine. for now.</p>
+<p>Second, a place is created in Heroku&#8217;s infrastructure for your application to
+live.  When you push to the heroku remote, your app will be uploaded, built and
+deployed so that it is visible online.</p>
+<p>Before we&#8217;re ready to do that, though we have to do one more thing.</p>
+</div>
+<div class="section" id="add-postgresql-to-heroku">
+<h3>Add PostgreSQL to Heroku<a class="headerlink" href="#add-postgresql-to-heroku" title="Permalink to this headline">¶</a></h3>
+<p>Heroku provides a number of different options for data stores. In order to use
+any of them, you&#8217;ll need to set them up. Our app is designed to use PostgreSQL,
+so we need to set up the Heroku add-on that allows us to use that database in
+deployment. The Heroku toolbelt provides a command for this as well:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+192:learning_journal cewing<span class="nv">$ </span>heroku addons:add heroku-postgresql:dev
+Adding heroku-postgresql:dev on salty-ridge-1304... <span class="k">done</span>, v4 <span class="o">(</span>free<span class="o">)</span>
+Attached as HEROKU_POSTGRESQL_ONYX_URL
+Database has been created and is available
+ ! This database is empty. If upgrading, you can transfer
+ ! data from another database with pgbackups:restore.
+Use <span class="sb">`</span>heroku addons:docs heroku-postgresql<span class="sb">`</span> to view documentation.
+</pre></div>
+</div>
+<p>Now our app on Heroku is set up to use a PostgreSQL database. A URL has been
+created for us to connect to. The connection string is stored on Heroku as
+<tt class="docutils literal"><span class="pre">HEROKU_POSTGRESQL_ONYX_URL</span></tt> (yours will be different).</p>
+<p>Our app expects something called <tt class="docutils literal"><span class="pre">DATABASE_URL</span></tt> to exist in our environment.
+The Heroku toolbelt provides another tool that allows us to connect the value
+they have us to the name we require.  Again, type this at your command line:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+192:learning_journal cewing<span class="nv">$ </span>heroku pg:promote HEROKU_POSTGRESQL_ONYX_URL
+Promoting HEROKU_POSTGRESQL_ONYX_URL <span class="o">(</span>DATABASE_URL<span class="o">)</span> to DATABASE_URL... <span class="k">done</span>
+</pre></div>
+</div>
+<p>Great, now the connection URL for your Heroku database is available in the
+environment variable you are expecting. That&#8217;s it.  You&#8217;re ready to deploy.</p>
+</div>
+<div class="section" id="deploy-to-heroku">
+<h3>Deploy to Heroku<a class="headerlink" href="#deploy-to-heroku" title="Permalink to this headline">¶</a></h3>
+<p>To deploy, simply use <tt class="docutils literal"><span class="pre">git</span></tt> to push your master branch to the <tt class="docutils literal"><span class="pre">heroku</span></tt>
+remote:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+192:learning_journal cewing<span class="nv">$ </span>git push heroku master
+Initializing repository, <span class="k">done</span>.
+Counting objects: 79, <span class="k">done</span>.
+Delta compression using up to 8 threads.
+Compressing objects: 100% <span class="o">(</span>52/52<span class="o">)</span>, <span class="k">done</span>.
+Writing objects: 100% <span class="o">(</span>79/79<span class="o">)</span>, 11.37 KiB | 0 bytes/s, <span class="k">done</span>.
+Total 79 <span class="o">(</span>delta 37<span class="o">)</span>, reused 55 <span class="o">(</span>delta 24<span class="o">)</span>
+
+-----&gt; Python app detected
+-----&gt; No runtime.txt provided; assuming python-2.7.6.
+-----&gt; Preparing Python runtime <span class="o">(</span>python-2.7.6<span class="o">)</span>
+-----&gt; Installing Setuptools <span class="o">(</span>2.1<span class="o">)</span>
+-----&gt; Installing Pip <span class="o">(</span>1.5.4<span class="o">)</span>
+-----&gt; Installing dependencies using Pip <span class="o">(</span>1.5.4<span class="o">)</span>
+       Downloading/unpacking <span class="nv">Flask</span><span class="o">==</span>0.10.1 <span class="o">(</span>from -r requirements.txt <span class="o">(</span>line 1<span class="o">))</span>
+
+       ....
+
+       Successfully installed Flask Jinja2 MarkupSafe Werkzeug gunicorn itsdangerous psycopg2
+       Cleaning up...
+-----&gt; Discovering process types
+       Procfile declares types -&gt; web
+
+-----&gt; Compressing... <span class="k">done</span>, 31.5MB
+-----&gt; Launching... <span class="k">done</span>, v5
+       http://salty-ridge-1304.herokuapp.com/ deployed to Heroku
+
+To git@heroku.com:salty-ridge-1304.git
+ * <span class="o">[</span>new branch<span class="o">]</span>      master -&gt; master
+</pre></div>
+</div>
+<p>Load up the URL above (the one that was &#8220;deployed to Heroku&#8221;).  You should see
+your &#8220;Hello world!&#8221;.</p>
+<p>If you do, then hoorah.  All that remains is to initialize your database on
+Heroku.</p>
+<p>You can attach to a Python terminal running in your deployed environment using
+the Heroku toolbelt:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+192:learning_journal cewing<span class="nv">$ </span>heroku run python
+Running <span class="sb">`</span>python<span class="sb">`</span> attached to terminal... up, run.8229
+Python 2.7.6 <span class="o">(</span>default, Jan 16 2014, 02:39:37<span class="o">)</span>
+<span class="o">[</span>GCC 4.4.3<span class="o">]</span> on linux2
+Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for </span>more information.
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>From there, it&#8217;s just like what you did locally a short while ago:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">init_db</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">init_db</span><span class="p">()</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Use the standard <tt class="docutils literal"><span class="pre">^D</span></tt> to detatch from the terminal.  At this point you&#8217;re
+safely done for the day.  Good work!</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python Learning Journal: Step 1</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#create-your-environment">Create Your Environment</a><ul>
+<li><a class="reference internal" href="#set-up-the-project-environment">Set Up the Project Environment</a></li>
+<li><a class="reference internal" href="#create-a-github-project-repository">Create a GitHub Project Repository</a></li>
+<li><a class="reference internal" href="#clone-your-repository">Clone Your Repository</a></li>
+<li><a class="reference internal" href="#create-a-branch-for-today-s-work">Create a Branch for Today&#8217;s Work</a></li>
+<li><a class="reference internal" href="#install-required-software">Install Required Software</a></li>
+<li><a class="reference internal" href="#preserve-your-installed-dependencies">Preserve Your Installed Dependencies</a></li>
+<li><a class="reference internal" href="#create-a-database">Create a Database</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-the-data-layer">Building the Data Layer</a><ul>
+<li><a class="reference internal" href="#the-entries-table">The <tt class="docutils literal"><span class="pre">entries</span></tt> Table</a></li>
+<li><a class="reference internal" href="#the-app-skeleton">The App Skeleton</a></li>
+<li><a class="reference internal" href="#app-configuration">App Configuration</a></li>
+<li><a class="reference internal" href="#initialize-the-database">Initialize the Database</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#app-deployment">App Deployment</a><ul>
+<li><a class="reference internal" href="#add-a-procfile">Add a Procfile</a></li>
+<li><a class="reference internal" href="#submit-a-pull-request">Submit a Pull Request</a></li>
+<li><a class="reference internal" href="#merge-to-master">Merge to Master</a></li>
+<li><a class="reference internal" href="#create-a-heroku-app">Create a Heroku App</a></li>
+<li><a class="reference internal" href="#add-postgresql-to-heroku">Add PostgreSQL to Heroku</a></li>
+<li><a class="reference internal" href="#deploy-to-heroku">Deploy to Heroku</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Day 02 Assignments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../day03/index.html"
+                        title="next chapter">Day 03 Assignments</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../day03/index.html" title="Day 03 Assignments"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Day 02 Assignments"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li><a href="index.html" >Day 02 Assignments</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

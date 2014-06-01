@@ -1,0 +1,1095 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python Learning Journal: Step 3 &mdash; Python Dev Accelerator 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Day 04 Assignments" href="index.html" />
+    <link rel="next" title="Readings" href="../../readings/index.html" />
+    <link rel="prev" title="Day 04 Assignments" href="index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+<div class="header">
+  <div class="logo">
+    <a href="../../index.html">
+      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../readings/index.html" title="Readings"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Day 04 Assignments"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Day 04 Assignments</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="python-learning-journal-step-3">
+<h1>Python Learning Journal: Step 3<a class="headerlink" href="#python-learning-journal-step-3" title="Permalink to this headline">¶</a></h1>
+<p>In part one of this tutorial, you built the <em>data model</em> for a simple learning
+journal web application using Flask and PostgreSQL. You deployed this work to
+Heroku and confirmed that you could see a simple page.</p>
+<p>In part two, you constructed the <em>control layer</em> needed to read and write
+journal entries, and added the part of the <em>view layer</em> needed to read entries.
+You also implemented a <em>testing harness</em> for your code so that you can use Test
+Driven Development practices while creating your code. Again, you deployed the
+work to Heroku and confirmed that you could view an entry created through the
+Python command line.</p>
+<p>Here in part three you&#8217;ll implement the remaining portions of the <em>view layer</em>
+allowing you to edit journal entries directly through the web. You&#8217;ll also add
+simple <em>authentication</em> to ensure that only you can write entries in your own
+journal. Finally, you&#8217;ll add a bit of <em>CSS</em> to begin making your journal your
+own.</p>
+<p>Ready?  Let&#8217;s begin!</p>
+<div class="section" id="preparing-to-work">
+<h2>Preparing to Work<a class="headerlink" href="#preparing-to-work" title="Permalink to this headline">¶</a></h2>
+<p>In part 1, you created a <em>virtualenv project</em> to work in.  The first step for
+starting a new work day on the app will be to return to that environment:</p>
+<div class="highlight-bash"><div class="highlight"><pre>cewing$ workon learning_journal
+[learning_journal]
+192:learning_journal cewing$
+</pre></div>
+</div>
+<p>Next, you&#8217;ll want to change directories into your <tt class="docutils literal"><span class="pre">git</span></tt> repository and make a
+new branch for the work in this part of the tutorial:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+192:learning_journal cewing$ cd learning_journal/
+[learning_journal]
+[master=]
+192:learning_journal cewing$ git checkout -b step3
+Switched to a new branch &#39;step3&#39;
+[learning_journal]
+[step3]
+192:learning_journal cewing$
+</pre></div>
+</div>
+<p>You&#8217;ll do your work for this part of the tutorial in this branch, and then when
+your tests are passing, merge it back to your <tt class="docutils literal"><span class="pre">master</span></tt> branch. Building this
+habit ensures that your <tt class="docutils literal"><span class="pre">master</span></tt> branch always contains code that is
+deployable.</p>
+</div>
+<div class="section" id="adding-journal-entries">
+<h2>Adding Journal Entries<a class="headerlink" href="#adding-journal-entries" title="Permalink to this headline">¶</a></h2>
+<p>After deploying in the last part, you creted an entry by using your <em>controller
+api</em> directly at the Python command line. Not so convenient, honestly. You need
+a view that will:</p>
+<ul class="simple">
+<li>Accept incoming form data from a request</li>
+<li>Get the data for <tt class="docutils literal"><span class="pre">title</span></tt> and <tt class="docutils literal"><span class="pre">text</span></tt></li>
+<li>Create a new entry in the database</li>
+<li>Throw an appropriate HTTP error if that fails</li>
+<li>Show the user the list of entries when done.</li>
+</ul>
+<div class="section" id="testing-add-an-entry">
+<h3>Testing Add an Entry<a class="headerlink" href="#testing-add-an-entry" title="Permalink to this headline">¶</a></h3>
+<p>Again, first come the tests. Add this new code to <tt class="docutils literal"><span class="pre">test_journal.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_add_entries</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="n">entry_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">u&#39;title&#39;</span><span class="p">:</span> <span class="s">u&#39;Hello&#39;</span><span class="p">,</span>
+        <span class="s">u&#39;text&#39;</span><span class="p">:</span> <span class="s">u&#39;This is a post&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">actual</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">()</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+        <span class="s">&#39;/add&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">entry_data</span><span class="p">,</span> <span class="n">follow_redirects</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">data</span>
+    <span class="k">assert</span> <span class="s">&#39;No entries here so far&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">actual</span>
+    <span class="k">for</span> <span class="n">expected</span> <span class="ow">in</span> <span class="n">entry_data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">assert</span> <span class="n">expected</span> <span class="ow">in</span> <span class="n">actual</span>
+</pre></div>
+</div>
+<p><strong>NOTES</strong></p>
+<ul class="simple">
+<li>You are using the <tt class="docutils literal"><span class="pre">db</span></tt> fixture to ensure that an initialized database is
+present.</li>
+<li>The <tt class="docutils literal"><span class="pre">post</span></tt> method of the Flask <tt class="docutils literal"><span class="pre">test_client</span></tt> sends an <tt class="docutils literal"><span class="pre">HTTP</span> <span class="pre">POST</span></tt>
+request to the provided URL.</li>
+<li>The <tt class="docutils literal"><span class="pre">data</span></tt> argument provided represents form input data. In real life, the
+user would have entered data into HTML form elements.</li>
+</ul>
+<p>Verify that your test fails as expected:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 6 items
+
+test_journal.py .....F
+
+=================================== FAILURES ===================================
+_______________________________ test_add_entries _______________________________
+
+db = None
+
+    def test_add_entries(db):
+        entry_data = {
+            u&#39;title&#39;: u&#39;Hello&#39;,
+            u&#39;text&#39;: u&#39;This is a post&#39;,
+        }
+        actual = app.test_client().post(
+            &#39;/add&#39;, data=entry_data, follow_redirects=True
+        ).data
+        assert &#39;No entries here so far&#39; not in actual
+        for expected in entry_data.values():
+&gt;           assert expected in actual
+E           assert &#39;This is a post&#39; in &#39;&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 3.2 Final//EN&quot;&gt;\n&lt;title&gt;404 Not Found&lt;/title&gt;\n&lt;h1&gt;Not Found&lt;/h1&gt;\n&lt;p&gt;The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.&lt;/p&gt;\n&#39;
+
+test_journal.py:125: AssertionError
+====================== 1 failed, 5 passed in 0.27 seconds ======================
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+</div>
+<div class="section" id="implement-adding-an-entry">
+<h3>Implement Adding An Entry<a class="headerlink" href="#implement-adding-an-entry" title="Permalink to this headline">¶</a></h3>
+<p>You&#8217;ve already created the controller you need to write entries. All you lack
+is a <strong>view</strong> function to do the work (in <tt class="docutils literal"><span class="pre">journal.py</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># add imports</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">abort</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">url_for</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">redirect</span>
+
+<span class="c"># and then down by the l</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/add&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">add_entry</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">write_entry</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">],</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">])</span>
+    <span class="k">except</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
+        <span class="c"># this will catch any errors generated by the database</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s">&#39;show_entries&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>NOTES</strong></p>
+<ul class="simple">
+<li>You can specify the HTTP methods that Flask will allow for any view. By
+default these are <tt class="docutils literal"><span class="pre">GET</span></tt> and <tt class="docutils literal"><span class="pre">HEAD</span></tt>.</li>
+<li>Here you explicitly allow only <tt class="docutils literal"><span class="pre">POST</span></tt> requests.</li>
+<li>You can use the <tt class="docutils literal"><span class="pre">flask.abort()</span></tt> function to return an HTTP error response.</li>
+<li>You catch any errors generated by the database and use the HTTP error code
+<tt class="docutils literal"><span class="pre">500</span> <span class="pre">Internal</span> <span class="pre">Server</span> <span class="pre">Error</span></tt> to signal the user that an unrecoverable
+problem occurred.</li>
+<li>The <tt class="docutils literal"><span class="pre">redirect</span></tt> method takes the URL of the page where you want your users
+to end up.</li>
+<li>The <tt class="docutils literal"><span class="pre">url_for</span></tt> method generates the correct URL for a given <em>view</em>,
+decoupling your code from specific URLs.</li>
+</ul>
+<p>Try running your tests again.  This time they should all pass:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 6 items
+
+test_journal.py ......
+
+=========================== 6 passed in 0.21 seconds ===========================
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p><strong>Hooray!</strong></p>
+<p>You&#8217;re almost done. You can add entries and view them. But look at that
+last view. Do you see a call to <tt class="docutils literal"><span class="pre">render_template</span></tt> in there at all?</p>
+<p>There isn&#8217;t one. That&#8217;s because that view is never meant to be be visible.
+Look carefully at the logic. What happens?</p>
+<p>So where do the form values come from?</p>
+</div>
+<div class="section" id="create-the-form">
+<h3>Create the Form<a class="headerlink" href="#create-the-form" title="Permalink to this headline">¶</a></h3>
+<p>There&#8217;s only one visible page in your app so far. Why not add a form there?
+Open <tt class="docutils literal"><span class="pre">list_entries.html</span></tt> and add the following code:</p>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span><span class="x">  &lt;!-- already there --&gt;</span>
+<span class="x">&lt;aside&gt;</span>
+<span class="x">&lt;form action=&quot;</span><span class="cp">{{</span> <span class="nv">url_for</span><span class="o">(</span><span class="s1">&#39;add_entry&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot; method=&quot;POST&quot; class=&quot;add_entry&quot;&gt;</span>
+<span class="x">  &lt;div class=&quot;field&quot;&gt;</span>
+<span class="x">    &lt;label for=&quot;title&quot;&gt;Title&lt;/label&gt;</span>
+<span class="x">    &lt;input type=&quot;text&quot; size=&quot;30&quot; name=&quot;title&quot; id=&quot;title&quot;/&gt;</span>
+<span class="x">  &lt;/div&gt;</span>
+<span class="x">  &lt;div class=&quot;field&quot;&gt;</span>
+<span class="x">    &lt;label for=&quot;text&quot;&gt;Text&lt;/label&gt;</span>
+<span class="x">    &lt;textarea name=&quot;text&quot; id=&quot;text&quot; rows=&quot;5&quot; cols=&quot;80&quot;&gt;&lt;/textarea&gt;</span>
+<span class="x">  &lt;/div&gt;</span>
+<span class="x">  &lt;div class=&quot;control_row&quot;&gt;</span>
+<span class="x">    &lt;input type=&quot;submit&quot; value=&quot;Share&quot; name=&quot;Share&quot;/&gt;</span>
+<span class="x">  &lt;/div&gt;</span>
+<span class="x">&lt;/form&gt;</span>
+<span class="x">&lt;/aside&gt;</span>
+<span class="x">&lt;h2&gt;Entries&lt;/h2&gt;  &lt;!-- already there --&gt;</span>
+</pre></div>
+</div>
+<p><strong>NOTES</strong></p>
+<ul class="simple">
+<li>Remember that Flask provides access to <tt class="docutils literal"><span class="pre">url_for()</span></tt> in templates.</li>
+<li>You can use the <tt class="docutils literal"><span class="pre">method</span></tt> attribute of a <tt class="docutils literal"><span class="pre">&lt;form&gt;</span></tt> tag to determine what
+HTTP method will be used when the form is submitted.</li>
+<li>You use the HTML5 <tt class="docutils literal"><span class="pre">&lt;aside&gt;</span></tt> tag to indicate that the form is not part of
+the main content of this page.</li>
+</ul>
+<p>And that&#8217;s it.  Your app is now finished (for now, at least). Start the app on
+your local machine and make an entry or two to try it out:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step3 *<span class="o">]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>python journal.py
+ * Running on http://127.0.0.1:5000/
+ * Restarting with reloader
+</pre></div>
+</div>
+<p>When you&#8217;re done testing it, use <tt class="docutils literal"><span class="pre">^C</span></tt> to quit.</p>
+</div>
+</div>
+<div class="section" id="authenticating-a-user">
+<h2>Authenticating a User<a class="headerlink" href="#authenticating-a-user" title="Permalink to this headline">¶</a></h2>
+<p>One thing you may have noticed while testing your app in a browser is that you
+did not have to log in. Convenient, but not really all that safe. You probably
+don&#8217;t want to allow just anyone to post journal entries in your journal.</p>
+<p>The process of verifying the identity of a user visiting your website is called
+<strong>authentication</strong> (AuthN for short). The closely related, but different
+process of determining what <em>rights</em> an authenticated user has in your website
+is called <strong>authorization</strong> (AuthZ).</p>
+<p>Next, you&#8217;ll be adding <em>authentication</em> to your journal.  This will allow you
+to display entries to the general public while reserving the ability to write
+new entries to a known user (you).</p>
+<div class="section" id="storing-a-user">
+<h3>Storing a User<a class="headerlink" href="#storing-a-user" title="Permalink to this headline">¶</a></h3>
+<p>You could implement an entire database table for the purpose of storing your
+user information, but really that&#8217;s overkill for a system that only has one
+user. You should never implement more code than you need.</p>
+<p>So how can you solve the problem of storing the data needed to authenticate a
+user?</p>
+<p>How about <em>configuration</em>?</p>
+<p>Add the following lines to <tt class="docutils literal"><span class="pre">journal.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># this configuratin setting is already there</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;DATABASE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s">&#39;DATABASE_URL&#39;</span><span class="p">,</span> <span class="s">&#39;dbname=learning_journal user=cewing&#39;</span>
+<span class="p">)</span>
+<span class="c"># add the following two new settings just below</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_USERNAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s">&#39;ADMIN_USERNAME&#39;</span><span class="p">,</span> <span class="s">&#39;admin&#39;</span>
+<span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_PASSWORD&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s">&#39;ADMIN_PASSWORD&#39;</span><span class="p">,</span> <span class="s">&#39;admin&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>After this, your app will have configuration settings that represent the
+<em>username</em> and <em>password</em> for your administrative user.</p>
+<p>Because you are using the same pattern for this configuration as for the
+database connection string, you&#8217;ll be able to use <em>Environment Variables</em> on
+your Heroku machine to store the username and password for your live site in a
+reasonably secure fashion.</p>
+<p>And when you are working locally, developing your app, you&#8217;ve got a nice,
+simple fallback mechanism.</p>
+</div>
+<div class="section" id="logging-in">
+<h3>Logging In<a class="headerlink" href="#logging-in" title="Permalink to this headline">¶</a></h3>
+<p>To authenticate a user, the most basic pattern is to confirm a username and
+password. You&#8217;ll need some sort of <em>controller</em> that will do this. It should:</p>
+<ul class="simple">
+<li>accept a username and password as arguments</li>
+<li>raise an appropriate error if either is missing</li>
+<li>raise an appropriate error if they cannot be confirmed to be correct</li>
+<li>persist the fact that the user is authenticated</li>
+</ul>
+<p>HTTP is a <strong>stateless</strong> protocol.  That means that no individual request can
+know anything about any other request. So how do you accomplish that fourth
+goal?  The usual method is to send an encrypted <em>cookie</em> back to the user in an
+HTTP response. This cookie is saved and re-transmitted to the server with each
+successive request. This gets around the <em>stateless</em> nature of HTTP by sending
+the required information back and forth.</p>
+<p>Flask provides a mechanism for accomplishing this task, the <tt class="docutils literal"><span class="pre">flask.session</span></tt>
+object. This is another <em>local global</em> like <tt class="docutils literal"><span class="pre">flask.g</span></tt> that can hold
+informatino that should be persisted between requests.</p>
+<p>Start by writing a test for a controller method that meets this specification.
+In <tt class="docutils literal"><span class="pre">test_journal.py</span></tt> add the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># at the top, add an import</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">session</span>
+
+<span class="c"># at the end, add new tests</span>
+<span class="k">def</span> <span class="nf">test_do_login_success</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
+    <span class="n">username</span><span class="p">,</span> <span class="n">password</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;admin&#39;</span><span class="p">,</span> <span class="s">&#39;admin&#39;</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">do_login</span>
+    <span class="k">assert</span> <span class="s">&#39;logged_in&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">session</span>
+    <span class="n">do_login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s">&#39;logged_in&#39;</span> <span class="ow">in</span> <span class="n">session</span>
+
+
+<span class="k">def</span> <span class="nf">test_do_login_bad_password</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="s">&#39;admin&#39;</span>
+    <span class="n">bad_password</span> <span class="o">=</span> <span class="s">&#39;wrongpassword&#39;</span>
+    <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">do_login</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="n">do_login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">bad_password</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">test_do_login_bad_username</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">admin</span>
+    <span class="n">bad_username</span> <span class="o">=</span> <span class="s">&#39;wronguser&#39;</span>
+    <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">do_login</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+        <span class="n">do_login</span><span class="p">(</span><span class="n">bad_username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run your tests, and you should see that they fail:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step3 *<span class="o">]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>py.test
+<span class="o">=============================</span> <span class="nb">test </span>session <span class="nv">starts</span> <span class="o">==============================</span>
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 9 items
+
+test_journal.py ......FFF
+
+<span class="o">===================================</span> <span class="nv">FAILURES</span> <span class="o">===================================</span>
+____________________________ test_do_login_success _____________________________
+
+<span class="nv">req_context</span> <span class="o">=</span> None
+
+    def test_do_login_success<span class="o">(</span>req_context<span class="o">)</span>:
+        username, <span class="nv">password</span> <span class="o">=</span> <span class="o">(</span><span class="s1">&#39;admin&#39;</span>, <span class="s1">&#39;admin&#39;</span><span class="o">)</span>
+&gt;       from journal import do_login
+E       ImportError: cannot import name do_login
+
+test_journal.py:132: ImportError
+__________________________ test_do_login_bad_password __________________________
+
+<span class="nv">req_context</span> <span class="o">=</span> None
+
+    def test_do_login_bad_password<span class="o">(</span>req_context<span class="o">)</span>:
+        <span class="nv">username</span> <span class="o">=</span> <span class="s1">&#39;admin&#39;</span>
+        <span class="nv">bad_password</span> <span class="o">=</span> <span class="s1">&#39;wrongpassword&#39;</span>
+&gt;       from journal import do_login
+E       ImportError: cannot import name do_login
+
+test_journal.py:141: ImportError
+__________________________ test_do_login_bad_username __________________________
+
+<span class="nv">req_context</span> <span class="o">=</span> None
+
+    def test_do_login_bad_username<span class="o">(</span>req_context<span class="o">)</span>:
+        <span class="nv">password</span> <span class="o">=</span> <span class="s1">&#39;admin&#39;</span>
+        <span class="nv">bad_username</span> <span class="o">=</span> <span class="s1">&#39;wronguser&#39;</span>
+&gt;       from journal import do_login
+E       ImportError: cannot import name do_login
+
+test_journal.py:149: <span class="nv">ImportError</span>
+<span class="o">======================</span> 3 failed, 6 passed in 0.24 <span class="nv">seconds</span> <span class="o">======================</span>
+</pre></div>
+</div>
+<p>Now, we need to implement the <tt class="docutils literal"><span class="pre">do_login</span></tt> function. Back in <tt class="docutils literal"><span class="pre">journal.py</span></tt> add
+the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import at the top</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">session</span>
+
+<span class="k">def</span> <span class="nf">do_login</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">passwd</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">username</span> <span class="o">!=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_USERNAME&#39;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+    <span class="k">if</span> <span class="n">passwd</span> <span class="o">!=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_PASSWORD&#39;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+    <span class="n">session</span><span class="p">[</span><span class="s">&#39;logged_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p><strong>NOTES</strong></p>
+<ul class="simple">
+<li>Do not distinguish between a bad password and a bad username. To do so is to
+leak sensitive information.</li>
+<li>Do not store more information than is absolutely required in a session.</li>
+<li>The <tt class="docutils literal"><span class="pre">flask.session</span></tt> local global functions just like a dictionary.</li>
+</ul>
+<p>Try running your tests again to see if they work:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 9 items
+
+test_journal.py ......F..
+
+=================================== FAILURES ===================================
+____________________________ test_do_login_success _____________________________
+
+req_context = None
+
+    def test_do_login_success(req_context):
+        username, password = (&#39;admin&#39;, &#39;admin&#39;)
+        from journal import do_login
+        assert &#39;logged in&#39; not in session
+&gt;       do_login(username, password)
+
+test_journal.py:134:
+
+...
+
+E       RuntimeError: the session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
+
+../../../virtualenvs/learning_journal/lib/python2.7/site-packages/flask/sessions.py:126: RuntimeError
+====================== 1 failed, 8 passed in 0.41 seconds ======================
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p>As it turns out, Flask will not allow using the session without having a
+<strong>secret key</strong> configured.  This key is used to perform the encryption of the
+cookie sent back to the user. Preventing you from using a session without one
+is a good example of <em>secure by default</em>.</p>
+<p>Back in <tt class="docutils literal"><span class="pre">journal.py</span></tt> go ahead and add a new configuration setting:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;SECRET_KEY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s">&#39;FLASK_SECRET_KEY&#39;</span><span class="p">,</span> <span class="s">&#39;sooperseekritvaluenooneshouldknow&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>And now running your tests will work:</p>
+<div class="highlight-python"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 9 items
+
+test_journal.py .........
+
+=========================== 9 passed in 0.24 seconds ===========================
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+</div>
+<div class="section" id="security">
+<h3>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h3>
+<p>Now you have a way to authenticate a user, but there&#8217;s still something a bit
+problematic here.</p>
+<p>Notice that in your <tt class="docutils literal"><span class="pre">do_login</span></tt> function you compare the password received from the
+user directly against the one stored:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">passwd</span> <span class="o">!=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_PASSWORD&#39;</span><span class="p">]:</span>
+</pre></div>
+</div>
+<p>This implies that the password you have stored on the server is in plain text.
+<strong>THIS IS A TERRIBLE IDEA</strong>. Even when using environment variables to store a
+password, plain text should never be an option.</p>
+<p>For clarity:</p>
+<p><strong>NEVER EVER EVER STORE PLAIN TEXT PASSWORDS IN ANY FORMAT ANYWHERE</strong></p>
+<p>Instead, you should be hashing passwords for storage using a secure, one-way
+algorithm, and comparing that value against the hash of the value the user
+provides.</p>
+<p>Python comes with a number of reasonable hashing algorithms, but I suggest
+instead using an external library called <a class="reference external" href="http://pythonhosted.org/passlib/">passlib</a>. It provides
+implementations of a large number of hashing algorithms, with a single unified
+interface for interacting with them. It makes changing from one hashing
+algorithm to another very simple.</p>
+<p>Start by installing the library in your virtual environment for this project:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ pip install passlib
+Downloading/unpacking passlib
+  Downloading passlib-1.6.2.tar.gz (408kB): 408kB downloaded
+  Running setup.py (path:/Users/cewing/virtualenvs/learning_journal/build/passlib/setup.py) egg_info for package passlib
+
+Installing collected packages: passlib
+  Running setup.py install for passlib
+
+Successfully installed passlib
+Cleaning up...
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p>Next, you&#8217;ll upgrade how you calculate the password for <tt class="docutils literal"><span class="pre">app.config</span></tt> in
+<tt class="docutils literal"><span class="pre">journal.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># at the top, add a new import</span>
+<span class="kn">from</span> <span class="nn">passlib.hash</span> <span class="kn">import</span> <span class="n">pbkdf2_sha256</span>
+
+<span class="c"># then update the ADMIN_PASSWORD config setting:</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_PASSWORD&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="s">&#39;ADMIN_PASSWORD&#39;</span><span class="p">,</span> <span class="n">pbkdf2_sha256</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="s">&#39;admin&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>NOTES</strong></p>
+<ul class="simple">
+<li>You import the hashing algorithm you want to use from <tt class="docutils literal"><span class="pre">passlib.hash</span></tt></li>
+<li>Then you call the <tt class="docutils literal"><span class="pre">encrypt</span></tt> method passing the value you wish to hash</li>
+<li>Many hashing algorithms have options you can pass as additional arguments to
+<tt class="docutils literal"><span class="pre">&lt;hash&gt;.encrypt</span></tt>, <a class="reference external" href="http://pythonhosted.org/passlib/">read the documentation to see what&#8217;s available</a>.</li>
+</ul>
+<p>If you run your tests at this point, you&#8217;ll see that the successful login test
+will now fail:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ py.test -k &quot;do_login_success&quot;
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 9 items
+
+test_journal.py F
+
+=================================== FAILURES ===================================
+____________________________ test_do_login_success _____________________________
+
+req_context = None
+
+    def test_do_login_success(req_context):
+        username, password = (&#39;admin&#39;, &#39;admin&#39;)
+        from journal import do_login
+        assert &#39;logged_in&#39; not in session
+&gt;       do_login(username, password)
+
+test_journal.py:133:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+username = &#39;admin&#39;, passwd = &#39;admin&#39;
+
+    def do_login(username=&#39;&#39;, passwd=&#39;&#39;):
+        if username != app.config[&#39;ADMIN_USERNAME&#39;]:
+            raise ValueError
+        if passwd != app.config[&#39;ADMIN_PASSWORD&#39;]:
+&gt;           raise ValueError
+E           ValueError
+
+journal.py:108: ValueError
+================== 8 tests deselected by &#39;-kdo_login_success&#39; ==================
+==================== 1 failed, 8 deselected in 0.34 seconds ====================
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p>Updating the <tt class="docutils literal"><span class="pre">do_login</span></tt> function to use the same hashing algorithm should do
+the trick:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">do_login</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">passwd</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+<span class="k">if</span> <span class="n">username</span> <span class="o">!=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_USERNAME&#39;</span><span class="p">]:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">pbkdf2_sha256</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">passwd</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_PASSWORD&#39;</span><span class="p">]):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span>
+<span class="n">session</span><span class="p">[</span><span class="s">&#39;logged_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p><strong>NOTES</strong></p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&lt;hash&gt;.verify</span></tt> is the other half of the passlib API</li>
+<li>The first argument is the unhashed value from the user, the second is the
+stored value</li>
+<li>The method returns <tt class="docutils literal"><span class="pre">True</span></tt> if they match, and <tt class="docutils literal"><span class="pre">False</span></tt> if not.</li>
+</ul>
+<p>Now try that test again:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ py.test -k &quot;do_login_success&quot;
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 9 items
+
+test_journal.py .
+
+================== 8 tests deselected by &#39;-kdo_login_success&#39; ==================
+==================== 1 passed, 8 deselected in 0.51 seconds ====================
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p>Sweeeeeet!</p>
+</div>
+<div class="section" id="implement-a-front-end">
+<h3>Implement a Front-End<a class="headerlink" href="#implement-a-front-end" title="Permalink to this headline">¶</a></h3>
+<p>Next, you&#8217;ll need to provide a pair of <em>views</em> that will allow a user to log in
+and log out. Start with the log in view. This view should:</p>
+<ul class="simple">
+<li>provide a form to fill in username and password</li>
+<li>reload with an error message if login fails</li>
+<li>redirect to the journal home page if login succeeds</li>
+</ul>
+<p>Moreover, you&#8217;ll want to update the journal home page to only show the form for
+adding entries if the user is logged in.</p>
+<p>Start with tests.  In <tt class="docutils literal"><span class="pre">test_journal.py</span></tt> add the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_start_as_anonymous</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">()</span>
+    <span class="n">anon_home</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+    <span class="k">assert</span> <span class="n">SUBMIT_BTN</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">anon_home</span>
+
+
+<span class="k">def</span> <span class="nf">test_login_success</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="n">username</span><span class="p">,</span> <span class="n">password</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;admin&#39;</span><span class="p">,</span> <span class="s">&#39;admin&#39;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">login_helper</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">SUBMIT_BTN</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">data</span>
+
+
+<span class="k">def</span> <span class="nf">test_login_fails</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="n">username</span><span class="p">,</span> <span class="n">password</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;admin&#39;</span><span class="p">,</span> <span class="s">&#39;wrong&#39;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">login_helper</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s">&#39;Login Failed&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+<p>If you run your tests now, you&#8217;ll see three failures:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 12 items
+
+test_journal.py .........FFF
+
+=================================== FAILURES ===================================
+___________________________ test_start_as_anonymous ____________________________
+
+db = None
+
+    def test_start_as_anonymous(db):
+        client = app.test_client()
+        anon_home = client.get(&#39;/&#39;).data
+&gt;       assert SUBMIT_BTN not in anon_home
+
+...
+
+test_journal.py:170: AssertionError
+______________________________ test_login_success ______________________________
+
+db = None
+
+    def test_login_success(db):
+        username, password = (&#39;admin&#39;, &#39;admin&#39;)
+        response = login_helper(username, password)
+&gt;       assert SUBMIT_BTN in response.data
+
+...
+
+test_journal.py:176: AssertionError
+_______________________________ test_login_fails _______________________________
+
+db = None
+
+    def test_login_fails(db):
+        username, password = (&#39;admin&#39;, &#39;wrong&#39;)
+        response = login_helper(username, password)
+&gt;       assert &#39;Login Failed&#39; in response.data
+
+...
+
+test_journal.py:183: AssertionError
+====================== 3 failed, 9 passed in 0.89 seconds ======================
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p>Fix these one at a time.  First, ensure that the form for adding an entry does
+not appear when you are not logged in.  Add the following to
+<tt class="docutils literal"><span class="pre">list_entries.html</span></tt>:</p>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">if</span> <span class="nv">session.logged_in</span> <span class="cp">%}</span><span class="x"> &lt;!-- ADD THIS LINE --&gt;</span>
+<span class="x">&lt;aside&gt;</span>
+<span class="x">&lt;form action=&quot;</span><span class="cp">{{</span> <span class="nv">url_for</span><span class="o">(</span><span class="s1">&#39;add_entry&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot; method=&quot;POST&quot; class=&quot;add_entry&quot;&gt;</span>
+<span class="x">  ...</span>
+<span class="x">&lt;/form&gt;</span>
+<span class="x">&lt;/aside&gt;</span>
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="x"> &lt;!-- AND THIS ONE --&gt;</span>
+</pre></div>
+</div>
+<p>Re-run your tests:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 12 items
+
+test_journal.py ..........FF
+
+=================================== FAILURES ===================================
+______________________________ test_login_success ______________________________
+
+...
+
+test_journal.py:176: AssertionError
+_______________________________ test_login_fails _______________________________
+
+...
+
+test_journal.py:183: AssertionError
+===================== 2 failed, 10 passed in 0.83 seconds ======================
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p>Great, that first failure is fixed.</p>
+<p>Next you&#8217;ll implement the login view to fix the remaining two failures. In
+<tt class="docutils literal"><span class="pre">journal.py</span></tt> add the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/login&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="s">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">do_login</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;username&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">),</span>
+                     <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;password&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="s">&quot;Login Failed&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s">&#39;show_entries&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;login.html&#39;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>NOTES</strong></p>
+<ul class="simple">
+<li>This view is available <em>both</em> for <tt class="docutils literal"><span class="pre">GET</span></tt> and <tt class="docutils literal"><span class="pre">POST</span></tt> requests</li>
+<li>Any form that changes application state should only be processed on a
+<tt class="docutils literal"><span class="pre">POST</span></tt> request.</li>
+<li>On a simple <tt class="docutils literal"><span class="pre">GET</span></tt> just render the empty form</li>
+<li>On error, the login form is rendered again, passing the error to the user.</li>
+<li>On success, you redirect to the <tt class="docutils literal"><span class="pre">show_entries</span></tt> view.</li>
+</ul>
+<p>In order for this view to work, you&#8217;ll need also to have a <tt class="docutils literal"><span class="pre">login.html</span></tt>
+template. Add a new file by that name to your <tt class="docutils literal"><span class="pre">templates</span></tt> directory and write
+the following to the new file:</p>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;base.html&quot;</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  &lt;h2&gt;Login&lt;/h2&gt;</span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">error</span> -<span class="cp">%}</span><span class="x"></span>
+<span class="x">  &lt;p class=&quot;error&quot;&gt;&lt;strong&gt;Error&lt;/strong&gt; </span><span class="cp">{{</span> <span class="nv">error</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{%</span>- <span class="k">endif</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  &lt;form action=&quot;</span><span class="cp">{{</span> <span class="nv">url_for</span><span class="o">(</span><span class="s1">&#39;login&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot; method=&quot;POST&quot;&gt;</span>
+<span class="x">    &lt;div class=&quot;field&quot;&gt;</span>
+<span class="x">      &lt;label for=&quot;username&quot;&gt;Username&lt;/label&gt;</span>
+<span class="x">      &lt;input type=&quot;text&quot; name=&quot;username&quot; id=&quot;username&quot;/&gt;</span>
+<span class="x">    &lt;/div&gt;</span>
+<span class="x">    &lt;div class=&quot;field&quot;&gt;</span>
+<span class="x">      &lt;label for=&quot;password&quot;&gt;Password&lt;/label&gt;</span>
+<span class="x">      &lt;input type=&quot;password&quot; name=&quot;password&quot; id=&quot;password&quot;/&gt;</span>
+<span class="x">    &lt;/div&gt;</span>
+<span class="x">    &lt;div class=&quot;control_row&quot;&gt;</span>
+<span class="x">      &lt;input type=&quot;submit&quot; name=&quot;Login&quot; value=&quot;Login&quot;/&gt;</span>
+<span class="x">    &lt;/div&gt;</span>
+<span class="x">  &lt;/form&gt;</span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>Now you should be able to run your tests with success:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 12 items
+
+test_journal.py ............
+
+========================== 12 passed in 1.19 seconds ===========================
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging-out">
+<h3>Logging Out<a class="headerlink" href="#logging-out" title="Permalink to this headline">¶</a></h3>
+<p>Logout is a much simpler prospect.  Just one simple view.  It should:</p>
+<ul class="simple">
+<li>remove the session data indicating that the user is logged in</li>
+<li>redirect the user back to the journal home page</li>
+</ul>
+<p>Start with a test in <tt class="docutils literal"><span class="pre">test_journal.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_logout</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="n">home</span> <span class="o">=</span> <span class="n">login_helper</span><span class="p">(</span><span class="s">&#39;admin&#39;</span><span class="p">,</span> <span class="s">&#39;admin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+    <span class="k">assert</span> <span class="n">SUBMIT_BTN</span> <span class="ow">in</span> <span class="n">home</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">()</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/logout&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">SUBMIT_BTN</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">data</span>
+    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">302</span>
+</pre></div>
+</div>
+<p>Run your test to see it fail:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 13 items
+
+test_journal.py ............F
+
+=================================== FAILURES ===================================
+_________________________________ test_logout __________________________________
+
+...
+
+E       assert 404 == 200
+E        +  where 404 = &lt;Response 233 bytes [404 NOT FOUND]&gt;.status_code
+
+test_journal.py:191: AssertionError
+===================== 1 failed, 12 passed in 1.42 seconds ======================
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p>And then implement the view in <tt class="docutils literal"><span class="pre">journal.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/logout&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;logged_in&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s">&#39;show_entries&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>And the tests will pass:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+collected 13 items
+
+test_journal.py .............
+
+========================== 13 passed in 1.40 seconds ===========================
+[learning_journal]
+[step3 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+</div>
+<div class="section" id="moving-around">
+<h3>Moving Around<a class="headerlink" href="#moving-around" title="Permalink to this headline">¶</a></h3>
+<p>Finally, though you now have views that can log you in and out, there is no way
+for you to get to them without just typing the URLs in your browser. You should
+add some UI in the page that lets you move around easily.</p>
+<p>Open <tt class="docutils literal"><span class="pre">base.html</span></tt> and add the following:</p>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="x">&lt;header&gt; &lt;!-- this is already in the file --&gt;</span>
+<span class="x">  &lt;aside id=&quot;user-controls&quot;&gt;</span>
+<span class="x">    &lt;ul&gt;</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">if</span> <span class="k">not</span> <span class="nv">session.logged_in</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">      &lt;li&gt;&lt;a href=&quot;</span><span class="cp">{{</span> <span class="nv">url_for</span><span class="o">(</span><span class="s1">&#39;login&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot;&gt;log in&lt;/a&gt;&lt;/li&gt;</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">else</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">      &lt;li&gt;&lt;a href=&quot;</span><span class="cp">{{</span> <span class="nv">url_for</span><span class="o">(</span><span class="s1">&#39;logout&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot;&gt;log out&lt;/a&gt;&lt;/li&gt;</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    &lt;/ul&gt;</span>
+<span class="x">  &lt;/aside&gt;</span>
+<span class="x">  &lt;nav&gt; &lt;!-- so is this --&gt;</span>
+</pre></div>
+</div>
+<p>At this point you should be able to start up the app, log in through your
+browser, add an entry or two and then log back out.  Try it:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>step3<span class="o">]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>python journal.py
+ * Running on http://127.0.0.1:5000/
+ * Restarting with reloader
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="adding-style">
+<h2>Adding Style<a class="headerlink" href="#adding-style" title="Permalink to this headline">¶</a></h2>
+<p>Great.  That worked.  Not very nice looking though, is it.</p>
+<p>The last step is to add a minimal CSS stylesheet that will help out a bit.</p>
+<p>Flask looks for <strong>static resources</strong> like stylesheets and javascript files in
+much the same way it finds templates.  It looks for a <tt class="docutils literal"><span class="pre">static</span></tt> directory
+located relative to the location of the flask app.</p>
+<p>Go ahead and create a new directory, called <tt class="docutils literal"><span class="pre">static</span></tt> right in your repository
+root, next to the <tt class="docutils literal"><span class="pre">journal.py</span></tt> file and the <tt class="docutils literal"><span class="pre">templates</span></tt> directory.</p>
+<p>Inside that directory, add a new file called <tt class="docutils literal"><span class="pre">style.css</span></tt> and add the
+following structural CSS rules:</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="nt">body</span><span class="p">{</span>
+    <span class="k">color</span><span class="o">:</span><span class="m">#111</span><span class="p">;</span>
+    <span class="k">padding</span><span class="o">:</span><span class="m">0</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span><span class="m">0</span><span class="p">}</span>
+<span class="nt">header</span><span class="p">{</span>
+    <span class="k">margin</span><span class="o">:</span><span class="m">0</span><span class="p">;</span>
+    <span class="k">padding</span><span class="o">:</span><span class="m">0</span> <span class="m">0.75em</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span><span class="m">100</span><span class="o">%</span><span class="p">;}</span>
+<span class="nt">header</span><span class="nd">:after</span><span class="p">{</span>
+    <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+    <span class="k">display</span><span class="o">:</span><span class="n">table</span><span class="p">;</span>
+    <span class="k">clear</span><span class="o">:</span><span class="k">both</span><span class="p">;}</span>
+<span class="nt">header</span> <span class="nt">a</span><span class="p">{</span>
+    <span class="k">text-decoration</span><span class="o">:</span><span class="k">none</span><span class="p">}</span>
+<span class="nt">header</span> <span class="nt">aside</span><span class="p">{</span>
+    <span class="k">float</span><span class="o">:</span><span class="k">right</span><span class="p">;</span>
+    <span class="k">text-align</span><span class="o">:</span><span class="k">right</span><span class="p">;</span>
+    <span class="k">padding-right</span><span class="o">:</span><span class="m">0.75em</span><span class="p">}</span>
+<span class="nt">header</span> <span class="nt">ul</span><span class="p">{</span>
+    <span class="k">list-style</span><span class="o">:</span><span class="k">none</span><span class="p">;</span>
+    <span class="k">list-style-type</span><span class="o">:</span><span class="k">none</span><span class="p">;</span>
+    <span class="k">display</span><span class="o">:</span><span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">}</span>
+<span class="nt">header</span> <span class="nt">ul</span> <span class="nt">li</span><span class="p">{</span>
+    <span class="k">margin</span><span class="o">:</span><span class="m">0</span> <span class="m">0.25em</span> <span class="m">0</span> <span class="m">0</span><span class="p">}</span>
+<span class="nt">header</span> <span class="nt">ul</span> <span class="nt">li</span> <span class="nt">a</span><span class="p">{</span>
+    <span class="k">padding</span><span class="o">:</span><span class="m">0</span><span class="p">;</span>
+    <span class="k">display</span><span class="o">:</span><span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">}</span>
+<span class="nt">main</span><span class="p">{</span><span class="k">padding</span><span class="o">:</span><span class="m">0</span> <span class="m">0.75em</span> <span class="m">1em</span><span class="p">}</span>
+<span class="nt">main</span><span class="nd">:after</span><span class="p">{</span>
+    <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+    <span class="k">display</span><span class="o">:</span><span class="n">table</span><span class="p">;</span>
+    <span class="k">clear</span><span class="o">:</span><span class="k">both</span><span class="p">}</span>
+<span class="nt">main</span> <span class="nt">article</span><span class="p">{</span>
+    <span class="k">margin-bottom</span><span class="o">:</span><span class="m">1em</span><span class="p">;</span>
+    <span class="k">padding-left</span><span class="o">:</span><span class="m">0.5em</span><span class="p">}</span>
+<span class="nt">main</span> <span class="nt">article</span> <span class="nt">h3</span><span class="p">{</span><span class="k">margin-top</span><span class="o">:</span><span class="m">0</span><span class="p">}</span>
+<span class="nt">main</span> <span class="nt">article</span> <span class="nc">.entry_body</span><span class="p">{</span>
+    <span class="k">margin</span><span class="o">:</span><span class="m">0.5em</span><span class="p">}</span>
+<span class="nt">main</span> <span class="nt">aside</span><span class="p">{</span><span class="k">float</span><span class="o">:</span><span class="k">right</span><span class="p">}</span>
+<span class="nt">main</span> <span class="nt">aside</span> <span class="nc">.field</span><span class="p">{</span>
+    <span class="k">margin-bottom</span><span class="o">:</span><span class="m">1em</span><span class="p">}</span>
+<span class="nt">main</span> <span class="nt">aside</span> <span class="nc">.field</span> <span class="nt">input</span><span class="o">,</span>
+<span class="nt">main</span> <span class="nt">aside</span> <span class="nc">.field</span> <span class="nt">label</span><span class="o">,</span>
+<span class="nt">main</span> <span class="nt">aside</span> <span class="nc">.field</span> <span class="nt">textarea</span><span class="p">{</span>
+    <span class="k">vertical-align</span><span class="o">:</span><span class="k">top</span><span class="p">}</span>
+<span class="nt">main</span> <span class="nt">aside</span> <span class="nc">.field</span> <span class="nt">label</span><span class="p">{</span>
+    <span class="k">display</span><span class="o">:</span><span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span><span class="m">15</span><span class="o">%</span><span class="p">;</span>
+    <span class="k">padding-top</span><span class="o">:</span><span class="m">2px</span><span class="p">}</span>
+<span class="nt">main</span> <span class="nt">aside</span> <span class="nc">.field</span> <span class="nt">input</span><span class="o">,</span>
+<span class="nt">main</span> <span class="nt">aside</span> <span class="nc">.field</span> <span class="nt">textarea</span><span class="p">{</span>
+    <span class="k">width</span><span class="o">:</span><span class="m">83</span><span class="o">%</span><span class="p">}</span>
+<span class="nt">main</span> <span class="nt">aside</span> <span class="nc">.control_row</span> <span class="nt">input</span><span class="p">{</span>
+    <span class="k">margin-left</span><span class="o">:</span><span class="m">16</span><span class="o">%</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally, you&#8217;ll need to tell <tt class="docutils literal"><span class="pre">base.html</span></tt> to look for this new stylesheet.
+Make the following change to that file:</p>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="x">&lt;head&gt;</span>
+<span class="x">  &lt;meta charset=&quot;utf-8&quot;&gt;</span>
+<span class="x">  &lt;title&gt;Python Learning Journal&lt;/title&gt;</span>
+<span class="x">  &lt;!--[if lt IE 9]&gt;</span>
+<span class="x">  &lt;script src=&quot;http://html5shiv.googlecode.com/svn/trunk/html5.js&quot;&gt;&lt;/script&gt;</span>
+<span class="x">  &lt;![endif]--&gt;</span>
+
+<span class="x">  &lt;!-- ADD THE FOLLOWING LINE ONLY --&gt;</span>
+<span class="x">  &lt;link href=&quot;</span><span class="cp">{{</span> <span class="nv">url_for</span><span class="o">(</span><span class="s1">&#39;static&#39;</span><span class="o">,</span> <span class="nv">filename</span><span class="o">=</span><span class="s1">&#39;style.css&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</span>
+<span class="x">&lt;/head&gt;</span>
+</pre></div>
+</div>
+<p>Now, if you go ahead and reload your journal in your browser, you should see
+something like this:</p>
+<a class="reference internal image-reference" href="../../_images/lj-final.png"><img alt="../../_images/lj-final.png" src="../../_images/lj-final.png" style="width: 90%;" /></a>
+<p>And that, my friends, is a complete journal app in three steps!</p>
+</div>
+<div class="section" id="deploying-your-work">
+<h2>Deploying Your Work<a class="headerlink" href="#deploying-your-work" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python Learning Journal: Step 3</a><ul>
+<li><a class="reference internal" href="#preparing-to-work">Preparing to Work</a></li>
+<li><a class="reference internal" href="#adding-journal-entries">Adding Journal Entries</a><ul>
+<li><a class="reference internal" href="#testing-add-an-entry">Testing Add an Entry</a></li>
+<li><a class="reference internal" href="#implement-adding-an-entry">Implement Adding An Entry</a></li>
+<li><a class="reference internal" href="#create-the-form">Create the Form</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#authenticating-a-user">Authenticating a User</a><ul>
+<li><a class="reference internal" href="#storing-a-user">Storing a User</a></li>
+<li><a class="reference internal" href="#logging-in">Logging In</a></li>
+<li><a class="reference internal" href="#security">Security</a></li>
+<li><a class="reference internal" href="#implement-a-front-end">Implement a Front-End</a></li>
+<li><a class="reference internal" href="#logging-out">Logging Out</a></li>
+<li><a class="reference internal" href="#moving-around">Moving Around</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#adding-style">Adding Style</a></li>
+<li><a class="reference internal" href="#deploying-your-work">Deploying Your Work</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Day 04 Assignments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../readings/index.html"
+                        title="next chapter">Readings</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../readings/index.html" title="Readings"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Day 04 Assignments"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li><a href="index.html" >Day 04 Assignments</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
