@@ -149,8 +149,9 @@ With ``flask.g`` as a place to hold a connection, you're ready to rock. In
     def teardown_request(exception):
         db = getattr(g, 'db', None)
         if db is not None:
-            if exception:
-                # if there was a problem, rollback any existing transaction
+            if exception and isinstance(exception, psycopg2.Error):
+                # if there was a problem with the database, rollback any
+                # existing transaction
                 db.rollback()
             else:
                 # otherwise, commit
