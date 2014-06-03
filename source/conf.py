@@ -282,7 +282,7 @@ slide_levels = 3
 # the following lines to include them
 
 slide_theme_options = {
-    'subtitle': 'Fundamentals of Python Programming',
+    'subtitle': 'Code Fellows - Seattle',
     'custom_css': 'custom.css',
     # 'custom_js': 'custom.js',
     'presenters': [
