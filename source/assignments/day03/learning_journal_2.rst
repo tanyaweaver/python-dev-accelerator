@@ -355,7 +355,9 @@ following code to ``test_journal.py``:
 * Flask creates ``g`` when a cycle begines, but tests **have no
   request/response cycle**.
 * Flask's ``app.test_request_context`` is a *context provider*.
-  * Used in a ``with``statement it creates a mock request/response cycle.
+
+  * Used in a ``with`` statement it creates a mock request/response cycle.
+
 * The request only exists *inside* the ``with`` block, so the callback pattern
   used in the ``db`` fixture would not work.
 * The `yield_fixture decorator`_ allows fixtures made from *generator functions*
