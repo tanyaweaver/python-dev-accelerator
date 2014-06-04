@@ -218,8 +218,8 @@ Fire up a python interpreter in the same directory where you've created
     >>> from flask_intro import app
     >>> from flask import url_for
     >>> with app.test_request_context():
-    ...     print url_for('hello_world');
-    ...     print url_for('homepage');
+    ...     print url_for('hello_world')
+    ...     print url_for('homepage')
     ...
     /
     /foo
