@@ -524,20 +524,22 @@ Again, begin with tests. Back in ``test_journal.py`` add the following code:
 
 .. code-block:: python
 
-    def test_get_all_entries_empty(self):
-        with self.app.test_request_context('/'):
-            entries = microblog.get_all_entries()
-            self.assertEquals(len(entries), 0)
-    
-    def test_get_all_entries(self):
+    def test_get_all_entries_empty(req_context):
+        from journal import get_all_entries
+        entries = get_all_entries()
+        assert len(entries) == 0
+
+
+    def test_get_all_entries(req_context):
+        from journal import get_all_entries, write_entry
         expected = ("My Title", "My Text")
-        with self.app.test_request_context('/'):
-            microblog.write_entry(*expected)
-            entries = microblog.get_all_entries()
-            self.assertEquals(len(entries), 1)
-            for entry in entries:
-                self.assertEquals(expected[0], entry['title'])
-                self.assertEquals(expected[1], entry['text'])
+        write_entry(*expected)
+        entries = get_all_entries()
+        assert len(entries) == 1
+        for entry in entries:
+            assert expected[0] == entry['title']
+            assert expected[1] == entry['text']
+            assert 'created' in entry
 
 Run your tests now to ensure that the two new tests fail:
 
