@@ -202,7 +202,7 @@ Each of these columns is marked as ``NOT NULL``, meaning that a value is
 required.
 
 Finally, in the ``book`` table there is an ``INTEGER`` column which
-``REFEREMCES`` a column in the other table. This creates a *Foreign Key*
+``REFERENCES`` a column in the other table. This creates a *Foreign Key*
 relationship between the two tables.
 
 Relations such as this are central to SQL databases and are the primary reason
@@ -352,7 +352,7 @@ Use your cursor to insert a new record into the ``author`` table:
     >>> 
 
 Notice that we ``execute`` a statement using the cursor. After this is done, we
-can interrogate the curosr to find out what happened. In this case, we can
+can interrogate the cursor to find out what happened. In this case, we can
 learn that one row was inserted.
 
 **NOTE**:
@@ -395,17 +395,17 @@ a ``SELECT`` statement:
 
 You'll see that our select query found one row in the database.  The row is
 returned as a tuple with as many values as there are columns in the query. We
-asked for all columns (\*) and so we get two. 
+asked for all columns (\*) and so we got two. 
 
 The order of the values in each tuple is dependent on the query. In this case
-we asked for all columns so we get them in the database order (id, name).
+we asked for all columns so we got them in the database order (id, name).
 
 Parameterized Statements
 ------------------------
 
 Inserting static data one row at a time is tedious.
 
-We are software engineers, we can do better than that.
+We are software engineers. We can do better than that.
 
 In order to repeat a statement a number of times, with different values, we
 must use *parameters*.
@@ -414,7 +414,7 @@ In DBAPI2 packages, these parameters are specialized forms of *placeholders*
 used in the strings passed to the ``execute`` command. Each database system
 uses its own format, but the general idea is the same. You create an SQL
 statement with placeholders where you want values to be inserted. Then you call
-the 'execute' command with *two* arguments.  Your parameterized statement, and
+the 'execute' command with *two* arguments: your parameterized statement, and
 a tuple containing as many values as you have parameters.
 
 There is also an ``executemany`` method on a cursor object that supports
@@ -609,7 +609,7 @@ Add the following code:
 
 These module-level constants will let us write a bit less code below.  We have
 a dictionary that represents the parameters we will use to connect to the
-database, A number of useful SQL statements for inserting and querying data,
+database, a number of useful SQL statements for inserting and querying data,
 and a set of data we will use.
 
 You might see an error in the SQL above.  Leave it where it is.  We will fix it

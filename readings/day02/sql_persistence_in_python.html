@@ -224,7 +224,7 @@ requires that we designate the maximum size of the data that will be held here.
 Each of these columns is marked as <tt class="docutils literal"><span class="pre">NOT</span> <span class="pre">NULL</span></tt>, meaning that a value is
 required.</p>
 <p>Finally, in the <tt class="docutils literal"><span class="pre">book</span></tt> table there is an <tt class="docutils literal"><span class="pre">INTEGER</span></tt> column which
-<tt class="docutils literal"><span class="pre">REFEREMCES</span></tt> a column in the other table. This creates a <em>Foreign Key</em>
+<tt class="docutils literal"><span class="pre">REFERENCES</span></tt> a column in the other table. This creates a <em>Foreign Key</em>
 relationship between the two tables.</p>
 <p>Relations such as this are central to SQL databases and are the primary reason
 such systems are called <strong>RDBMSs</strong>, or Relational Database Management Systems.</p>
@@ -355,7 +355,7 @@ disk.</p>
 </pre></div>
 </div>
 <p>Notice that we <tt class="docutils literal"><span class="pre">execute</span></tt> a statement using the cursor. After this is done, we
-can interrogate the curosr to find out what happened. In this case, we can
+can interrogate the cursor to find out what happened. In this case, we can
 learn that one row was inserted.</p>
 <p><strong>NOTE</strong>:</p>
 <p>Every so often, you will make an error in typing an SQL command. When you try
@@ -388,21 +388,21 @@ a <tt class="docutils literal"><span class="pre">SELECT</span></tt> statement:</
 </div>
 <p>You&#8217;ll see that our select query found one row in the database.  The row is
 returned as a tuple with as many values as there are columns in the query. We
-asked for all columns (*) and so we get two.</p>
+asked for all columns (*) and so we got two.</p>
 <p>The order of the values in each tuple is dependent on the query. In this case
-we asked for all columns so we get them in the database order (id, name).</p>
+we asked for all columns so we got them in the database order (id, name).</p>
 </div>
 <div class="section" id="parameterized-statements">
 <h3>Parameterized Statements<a class="headerlink" href="#parameterized-statements" title="Permalink to this headline">¶</a></h3>
 <p>Inserting static data one row at a time is tedious.</p>
-<p>We are software engineers, we can do better than that.</p>
+<p>We are software engineers. We can do better than that.</p>
 <p>In order to repeat a statement a number of times, with different values, we
 must use <em>parameters</em>.</p>
 <p>In DBAPI2 packages, these parameters are specialized forms of <em>placeholders</em>
 used in the strings passed to the <tt class="docutils literal"><span class="pre">execute</span></tt> command. Each database system
 uses its own format, but the general idea is the same. You create an SQL
 statement with placeholders where you want values to be inserted. Then you call
-the &#8216;execute&#8217; command with <em>two</em> arguments.  Your parameterized statement, and
+the &#8216;execute&#8217; command with <em>two</em> arguments: your parameterized statement, and
 a tuple containing as many values as you have parameters.</p>
 <p>There is also an <tt class="docutils literal"><span class="pre">executemany</span></tt> method on a cursor object that supports
 passing an iterable of tuples. The SQL statement will be run one time for each
@@ -563,7 +563,7 @@ Add the following code:</p>
 </div>
 <p>These module-level constants will let us write a bit less code below.  We have
 a dictionary that represents the parameters we will use to connect to the
-database, A number of useful SQL statements for inserting and querying data,
+database, a number of useful SQL statements for inserting and querying data,
 and a set of data we will use.</p>
 <p>You might see an error in the SQL above.  Leave it where it is.  We will fix it
 after demonstrating rollback.</p>

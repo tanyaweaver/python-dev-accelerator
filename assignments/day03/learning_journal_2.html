@@ -360,8 +360,10 @@ cycle</em></li>
 <li>The database connection will be attached to <tt class="docutils literal"><span class="pre">flask.g</span></tt></li>
 <li>Flask creates <tt class="docutils literal"><span class="pre">g</span></tt> when a cycle begines, but tests <strong>have no
 request/response cycle</strong>.</li>
-<li>Flask&#8217;s <tt class="docutils literal"><span class="pre">app.test_request_context</span></tt> is a <em>context provider</em>.
-* Used in a <a href="#id1"><span class="problematic" id="id2">``</span></a>with``statement it creates a mock request/response cycle.</li>
+<li>Flask&#8217;s <tt class="docutils literal"><span class="pre">app.test_request_context</span></tt> is a <em>context provider</em>.<ul>
+<li>Used in a <tt class="docutils literal"><span class="pre">with</span></tt> statement it creates a mock request/response cycle.</li>
+</ul>
+</li>
 <li>The request only exists <em>inside</em> the <tt class="docutils literal"><span class="pre">with</span></tt> block, so the callback pattern
 used in the <tt class="docutils literal"><span class="pre">db</span></tt> fixture would not work.</li>
 <li>The <a class="reference external" href="http://pytest.org/latest/yieldfixture.html">yield_fixture decorator</a> allows fixtures made from <em>generator functions</em></li>
@@ -509,20 +511,22 @@ specs:</p>
 <li>The list should be ordered with the most recently created entries first.</li>
 </ul>
 <p>Again, begin with tests. Back in <tt class="docutils literal"><span class="pre">test_journal.py</span></tt> add the following code:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_get_all_entries_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">test_request_context</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">):</span>
-        <span class="n">entries</span> <span class="o">=</span> <span class="n">microblog</span><span class="o">.</span><span class="n">get_all_entries</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_get_all_entries_empty</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">get_all_entries</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="n">get_all_entries</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
 
-<span class="k">def</span> <span class="nf">test_get_all_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">test_get_all_entries</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">get_all_entries</span><span class="p">,</span> <span class="n">write_entry</span>
     <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;My Title&quot;</span><span class="p">,</span> <span class="s">&quot;My Text&quot;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">test_request_context</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">):</span>
-        <span class="n">microblog</span><span class="o">.</span><span class="n">write_entry</span><span class="p">(</span><span class="o">*</span><span class="n">expected</span><span class="p">)</span>
-        <span class="n">entries</span> <span class="o">=</span> <span class="n">microblog</span><span class="o">.</span><span class="n">get_all_entries</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">expected</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">expected</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">])</span>
+    <span class="n">write_entry</span><span class="p">(</span><span class="o">*</span><span class="n">expected</span><span class="p">)</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="n">get_all_entries</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">expected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">entry</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">expected</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">entry</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="s">&#39;created&#39;</span> <span class="ow">in</span> <span class="n">entry</span>
 </pre></div>
 </div>
 <p>Run your tests now to ensure that the two new tests fail:</p>
