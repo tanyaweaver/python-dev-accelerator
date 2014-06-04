@@ -718,23 +718,23 @@ heffalump:learning_journal cewing$
 <p>Keep it simple for now, create a new file, <tt class="docutils literal"><span class="pre">list_entries.html</span></tt> in
 <tt class="docutils literal"><span class="pre">templates</span></tt>.  This will <em>extend</em> your <tt class="docutils literal"><span class="pre">base.html</span></tt> file, filling the <em>body</em>
 block you created:</p>
-<div class="highlight-jinja"><div class="highlight"><pre>{% extends &quot;base.html&quot; %}
-{% block body %}
-  &lt;h2&gt;Entries&lt;/h2&gt;
-  {% for entry in entries %}
-  &lt;article class=&quot;entry&quot; id=&quot;entry={{entry.id}}&quot;&gt;
-    &lt;h3&gt;{{ entry.title }}&lt;/h3&gt;
-    &lt;p class=&quot;dateline&quot;&gt;{{ entry.created.strftime(%b. %d, %Y) }}
-    &lt;div class=&quot;entry_body&quot;&gt;
-      {{ entry.text|safe }}
-    &lt;/div&gt;
-  &lt;/article&gt;
-  {% else %}
-  &lt;div class=&quot;entry&quot;&gt;
-    &lt;p&gt;&lt;em&gt;No entries here so far&lt;/em&gt;&lt;/p&gt;
-  &lt;/div&gt;
-  {% endfor %}
-{% endblock %}
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;base.html&quot;</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  &lt;h2&gt;Entries&lt;/h2&gt;</span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">entry</span> <span class="k">in</span> <span class="nv">entries</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  &lt;article class=&quot;entry&quot; id=&quot;entry=</span><span class="cp">{{</span><span class="nv">entry.id</span><span class="cp">}}</span><span class="x">&quot;&gt;</span>
+<span class="x">    &lt;h3&gt;</span><span class="cp">{{</span> <span class="nv">entry.title</span> <span class="cp">}}</span><span class="x">&lt;/h3&gt;</span>
+<span class="x">    &lt;p class=&quot;dateline&quot;&gt;</span><span class="cp">{{</span> <span class="nv">entry.created.strftime</span><span class="o">(</span><span class="s1">&#39;%b. %d, %Y&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    &lt;div class=&quot;entry_body&quot;&gt;</span>
+<span class="x">      </span><span class="cp">{{</span> <span class="nv">entry.text</span><span class="o">|</span><span class="nf">safe</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    &lt;/div&gt;</span>
+<span class="x">  &lt;/article&gt;</span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">else</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  &lt;div class=&quot;entry&quot;&gt;</span>
+<span class="x">    &lt;p&gt;&lt;em&gt;No entries here so far&lt;/em&gt;&lt;/p&gt;</span>
+<span class="x">  &lt;/div&gt;</span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
 </pre></div>
 </div>
 <p>The template will loop over a set of <tt class="docutils literal"><span class="pre">entries</span></tt>, showing each in an HTML5

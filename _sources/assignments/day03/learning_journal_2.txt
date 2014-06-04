@@ -765,7 +765,7 @@ block you created:
       {% for entry in entries %}
       <article class="entry" id="entry={{entry.id}}">
         <h3>{{ entry.title }}</h3>
-        <p class="dateline">{{ entry.created.strftime(%b. %d, %Y) }}
+        <p class="dateline">{{ entry.created.strftime('%b. %d, %Y') }}
         <div class="entry_body">
           {{ entry.text|safe }}
         </div>
