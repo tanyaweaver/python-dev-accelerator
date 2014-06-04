@@ -352,7 +352,7 @@ Use your cursor to insert a new record into the ``author`` table:
     >>> 
 
 Notice that we ``execute`` a statement using the cursor. After this is done, we
-can interrogate the curosr to find out what happened. In this case, we can
+can interrogate the cursor to find out what happened. In this case, we can
 learn that one row was inserted.
 
 **NOTE**:
