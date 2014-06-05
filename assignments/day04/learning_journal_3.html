@@ -606,11 +606,11 @@ heffalump:learning_journal cewing$
 <p>Updating the <tt class="docutils literal"><span class="pre">do_login</span></tt> function to use the same hashing algorithm should do
 the trick:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">do_login</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">passwd</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
-<span class="k">if</span> <span class="n">username</span> <span class="o">!=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_USERNAME&#39;</span><span class="p">]:</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">pbkdf2_sha256</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">passwd</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_PASSWORD&#39;</span><span class="p">]):</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span>
-<span class="n">session</span><span class="p">[</span><span class="s">&#39;logged_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">if</span> <span class="n">username</span> <span class="o">!=</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_USERNAME&#39;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">pbkdf2_sha256</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">passwd</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ADMIN_PASSWORD&#39;</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+    <span class="n">session</span><span class="p">[</span><span class="s">&#39;logged_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p><strong>NOTES</strong></p>
