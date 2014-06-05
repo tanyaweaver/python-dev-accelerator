@@ -352,7 +352,7 @@ In ``test_journal.py`` add the following:
 
 
     def test_do_login_bad_username(req_context):
-        password = admin
+        password = 'admin'
         bad_username = 'wronguser'
         from journal import do_login
         with pytest.raises(ValueError):

@@ -369,7 +369,7 @@ In <tt class="docutils literal"><span class="pre">test_journal.py</span></tt> ad
 
 
 <span class="k">def</span> <span class="nf">test_do_login_bad_username</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
-    <span class="n">password</span> <span class="o">=</span> <span class="n">admin</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="s">&#39;admin&#39;</span>
     <span class="n">bad_username</span> <span class="o">=</span> <span class="s">&#39;wronguser&#39;</span>
     <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">do_login</span>
     <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
