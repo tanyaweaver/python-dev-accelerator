@@ -234,7 +234,7 @@ so:
 .. code-block:: pycon
     
     from flask import render_template
-    page_html = render_template('hello_world.html', name="Cris")
+    page_html = render_template('hello_world.html')
 
 In this case, Flask would expect to find a file called ``hello_world.html`` in
 a directory called ``templates`` in the app where this call appeared.
