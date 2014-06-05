@@ -621,11 +621,11 @@ the trick:
 .. code-block:: python
 
     def do_login(username='', passwd=''):
-    if username != app.config['ADMIN_USERNAME']:
-        raise ValueError
-    if not pbkdf2_sha256.verify(passwd, app.config['ADMIN_PASSWORD']):
-        raise ValueError
-    session['logged_in'] = True
+        if username != app.config['ADMIN_USERNAME']:
+            raise ValueError
+        if not pbkdf2_sha256.verify(passwd, app.config['ADMIN_PASSWORD']):
+            raise ValueError
+        session['logged_in'] = True
 
 **NOTES**
 
