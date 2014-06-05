@@ -24,30 +24,36 @@ In This Course
 
 .. ifnotslides::
 
-    Lectures:
-    ---------
+    Lectures
+    --------
     
     .. toctree::
         :maxdepth: 3
 
         lectures/index
 
-    Assignments:
-    ------------
+    Assignments
+    -----------
 
     .. toctree::
         :maxdepth: 3
 
         assignments/index
 
-    Readings:
-    ---------
+    Readings
+    --------
 
     .. toctree::
         :maxdepth: 3
 
         readings/index
 
+    Code Examples
+    -------------
+
+    Sample code used or referenced during classroom lectures.
+
+    * :download:`Day 3: Pytest Fixtures Demo <downloads/pytest.tgz>`
 
 Overview
 ========
