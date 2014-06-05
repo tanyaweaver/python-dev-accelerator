@@ -651,7 +651,20 @@ and log out. Start with the log in view. This view should:</p>
 <p>Moreover, you&#8217;ll want to update the journal home page to only show the form for
 adding entries if the user is logged in.</p>
 <p>Start with tests.  In <tt class="docutils literal"><span class="pre">test_journal.py</span></tt> add the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_start_as_anonymous</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SUBMIT_BTN</span> <span class="o">=</span> <span class="s">&#39;&lt;input type=&quot;submit&quot; value=&quot;Share&quot; name=&quot;Share&quot;/&gt;&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">login_helper</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="n">login_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;username&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">:</span> <span class="n">password</span>
+    <span class="p">}</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+        <span class="s">&#39;/login&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">login_data</span><span class="p">,</span> <span class="n">follow_redirects</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">test_start_as_anonymous</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">()</span>
     <span class="n">anon_home</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
     <span class="k">assert</span> <span class="n">SUBMIT_BTN</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">anon_home</span>

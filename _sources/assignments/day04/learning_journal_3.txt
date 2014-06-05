@@ -673,6 +673,19 @@ Start with tests.  In ``test_journal.py`` add the following:
 
 .. code-block:: python
 
+    SUBMIT_BTN = '<input type="submit" value="Share" name="Share"/>'
+
+
+    def login_helper(username, password):
+        login_data = {
+            'username': username, 'password': password
+        }
+        client = app.test_client()
+        return client.post(
+            '/login', data=login_data, follow_redirects=True
+        )
+
+
     def test_start_as_anonymous(db):
         client = app.test_client()
         anon_home = client.get('/').data
