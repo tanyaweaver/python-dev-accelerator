@@ -48,6 +48,12 @@ In This Course
 
         readings/index
 
+    Code Examples:
+    --------------
+
+    .. toctree::
+
+      :download:`Pytest Fixtures Demo <downloads/pytest.tgz>`
 
 Overview
 ========
