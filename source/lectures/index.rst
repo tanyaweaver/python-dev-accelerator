@@ -9,5 +9,3 @@ Materials presented in class during the Python Dev Accelerator
 
     day01/index
     day02/index
-    day03/index
-    day04/index
