@@ -2,7 +2,7 @@
 Jinja2 Template Introduction
 ****************************
 
-When you install ``flask`` into a virtualenv, it came along with a Python-based
+When you install ``flask`` into a virtualenv, it comes along with a Python-based
 templating engine called ``Jinja2``.
 
 In this walkthrough, you'll see some basics about how templates work, and get
@@ -20,10 +20,10 @@ A good framework will provide some way of generating HTML with a templating
 system.
 
 There are nearly as many templating systems as there are frameworks. Each comes
-with advantages and disadvantages. advantages and disadvantages.
+with advantages and disadvantages.
 
 Flask includes the *Jinja2* templating system (perhaps because it's built by
-the same folks)
+the same folks).
 
 
 Jinja2 Template Basics
