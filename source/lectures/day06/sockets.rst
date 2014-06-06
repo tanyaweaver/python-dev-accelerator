@@ -5,14 +5,16 @@ TCP/IP and Sockets
 Network Basics
 ==============
 
+.. image:: /_static/network_topology.png
+    :align: center
+    :width: 45%
+
+image: http://en.wikipedia.org/wiki/Internet_Protocol_Suite
+
 Computer Communications
 -----------------------
 
-.. image:: /_static/network_topology.png
-    :align: center
-    :width: 50%
-
-image: http://en.wikipedia.org/wiki/Internet_Protocol_Suite
+.. rst-class:: build
 
 * processes can communicate
 
@@ -31,6 +33,8 @@ image: http://en.wikipedia.org/wiki/Internet_Protocol_Suite
 
 image: http://en.wikipedia.org/wiki/Internet_Protocol_Suite
 
+.. rst-class:: build
+
 * This communications is divided into 'layers'
 
 * 'Layers' are mostly arbitrary
@@ -44,6 +48,8 @@ The TCP/IP Stack - Link
 -----------------------
 
 The bottom layer is the 'Link Layer'
+
+.. rst-class:: build
 
 * Deals with the physical connections between machines, 'the wire'
 
@@ -61,6 +67,8 @@ The TCP/IP Stack - Internet
 
 Moving up, we have the 'Internet Layer'
 
+.. rst-class:: build
+
 * Deals with addressing and routing
 
   * Where are we going and how do we get there?
@@ -71,7 +79,6 @@ Moving up, we have the 'Internet Layer'
 
 * Two addressing systems
 
-
   * IPv4 (current, limited '192.168.1.100')
 
   * IPv6 (future, 3.4 x 10^38 addresses, '2001:0db8:85a3:0042:0000:8a2e:0370:7334')
@@ -81,6 +88,8 @@ The TCP/IP Stack - Transport
 ----------------------------
 
 Next up is the 'Transport Layer'
+
+.. rst-class:: build
 
 * Deals with transmission and reception of data
 
@@ -104,6 +113,8 @@ Next up is the 'Transport Layer'
 
 The 'Transport Layer' also establishes the concept of a **port**
 
+.. rst-class:: build
+
 * IP Addresses designate a specific *machine* on the network
 
 * A **port** provides addressing for individual *applications* in a single host
@@ -112,8 +123,11 @@ The 'Transport Layer' also establishes the concept of a **port**
 
 * [2001:db8:85a3:8d3:1319:8a2e:370:7348]:443 (*:443* is the **port**)
 
-This means that you don't have to worry about information intended for your
-web browser being accidentally read by your email client.
+.. rst-class:: build
+.. container::
+
+    This means that you don't have to worry about information intended for your
+    web browser being accidentally read by your email client.
 
 
 Ports
@@ -122,6 +136,8 @@ Ports
 There are certain **ports** which are commonly understood to belong to given
 applications or protocols:
 
+.. rst-class:: build
+
 * 80/443 - HTTP/HTTPS
 * 20 - FTP
 * 22 - SSH
@@ -129,11 +145,18 @@ applications or protocols:
 * 25 - SMTP
 * ...
 
-These ports are often referred to as **well-known ports**
+.. rst-class:: build
+.. container::
 
-(see http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers)
+    These ports are often referred to as **well-known ports**
+
+    (see http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers)
+
+.. nextslide::
 
 Ports are grouped into a few different classes
+
+.. rst-class:: build
 
 * Ports numbered 0 - 1023 are *reserved*
 
