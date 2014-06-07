@@ -2,6 +2,12 @@
 TCP/IP and Sockets
 ******************
 
+.. ifnotslides::
+
+    This lecture has some longer code samples which you might want to have on
+    hand.  They are reproduced in :download:`socket_exercises.py
+    <../../downloads/socket_exercises.py>`
+
 Network Basics
 ==============
 
@@ -172,6 +178,10 @@ The TCP/IP Stack - Application
 
 The topmost layer is the 'Application Layer'
 
+this is where we live and work
+
+.. rst-class:: build
+
 * Deals directly with data produced or consumed by an application
 
 * Reads or writes data using a set of understood, well-defined **protocols**
@@ -182,13 +192,13 @@ The topmost layer is the 'Application Layer'
 
   * The exception to this rule is **endpoint** data (or IP:Port)
 
-this is where we live and work
-
 
 Sockets
 =======
 
 Think back for a second to what we just finished discussing, the TCP/IP stack.
+
+.. rst-class:: build left
 
 * The *Internet* layer gives us an **IP Address**
 
@@ -198,25 +208,33 @@ Think back for a second to what we just finished discussing, the TCP/IP stack.
 
 * *Except for* **endpoint data** (IP:Port)
 
-A **Socket** is the software representation of that endpoint.
+.. rst-class:: build left
+.. container::
 
-Opening a **socket** creates a kind of transceiver that can send and/or
-receive *bytes* at a given IP address and Port.
+    A **Socket** is the software representation of that endpoint.
+
+    Opening a **socket** creates a kind of transceiver that can send and/or
+    receive *bytes* at a given IP address and Port.
 
 
 Sockets in Python
 -----------------
 
-Python provides a standard library module which provides socket functionality.
-It is called **socket**.  
+.. rst-class:: build
+.. container::
 
-The library is really just a very thin wrapper around the system
-implementation of *BSD Sockets*
+    Python provides a standard library module which provides socket functionality.
+    It is called **socket**.
 
-Let's spend a few minutes getting to know this module.
+    The library is really just a very thin wrapper around the system
+    implementation of *BSD Sockets*
 
-We're going to do this next part together, so open up a terminal and start a
-python interpreter
+    Let's spend a few minutes getting to know this module.
+
+    We're going to do this next part together, so open up a terminal and start a
+    python interpreter
+
+.. nextslide::
 
 The Python sockets library allows us to find out what port a *service* uses:
 
@@ -233,6 +251,8 @@ small
 
     >>> socket.getservbyport(80)
     'http'
+
+.. nextslide::
 
 The sockets library also provides tools for finding out information about
 *hosts*. For example, you can find out about the hostname and IP address of
@@ -257,6 +277,8 @@ know their hostname. For example:
     >>> socket.gethostbyname('crisewing.com')
     '108.59.11.99'
 
+.. nextslide::
+
 The ``gethostbyname_ex`` method of the ``socket`` library provides more
 information about the machines we are exploring:
 
@@ -274,6 +296,10 @@ information about the machines we are exploring:
      ['www.rad.washington.edu'], # <- any machine aliases
      ['128.95.247.84']) # <- all active IP addresses
 
+
+Constructing a Socket
+---------------------
+
 To create a socket, you use the **socket** method of the ``socket`` library.
 It takes up to three optional positional arguments (here we use none to get
 the default behavior):
@@ -284,8 +310,12 @@ the default behavior):
     >>> foo
     <socket._socketobject object at 0x10046cec0>
 
+.. nextslide::
+
 A socket has some properties that are immediately important to us. These
-include the *family*, *type* and *protocol* of the socket::
+include the *family*, *type* and *protocol* of the socket:
+
+.. code-block:: pycon
 
     >>> foo.family
     2
@@ -294,7 +324,7 @@ include the *family*, *type* and *protocol* of the socket::
     >>> foo.proto
     0
 
-You might notice that the values for these properties are integers.  In fact, 
+You might notice that the values for these properties are integers.  In fact,
 these integers are **constants** defined in the socket library.
 
 
@@ -303,6 +333,10 @@ A quick utility method
 
 Let's define a method in place to help us see these constants. It will take a
 single argument, the shared prefix for a defined set of constants:
+
+.. ifnotslides::
+
+    :download:`see socket_exercises.py <../../downloads/socket_exercises.py>`
 
 .. code-block:: pycon
 
@@ -316,8 +350,12 @@ single argument, the shared prefix for a defined set of constants:
     ...
     >>>
 
+
 Socket Families
 ===============
+
+Socket Families
+---------------
 
 Think back a moment to our discussion of the *Internet* layer of the TCP/IP
 stack.  There were a couple of different types of IP addresses:
@@ -328,6 +366,8 @@ stack.  There were a couple of different types of IP addresses:
 
 The **family** of a socket corresponds to the *addressing system* it uses for
 connecting.
+
+.. nextslide::
 
 Families defined in the ``socket`` library are prefixed by ``AF_``:
 
@@ -341,15 +381,17 @@ Families defined in the ``socket`` library are prefixed by ``AF_``:
 
 *Your results may vary*
 
-Of all of these, the ones we care most about are ``2`` (IPv4) and ``30`` (IPv6).
+Of all of these, the ones we care most about are ``2`` (IPv4) and ``30``
+(IPv6).
 
 
-Unix Domain Sockets
--------------------
+.. nextslide:: Unix Domain Sockets
 
 When you are on a machine with an operating system that is Unix-like, you will
 find another generally useful socket family: ``AF_UNIX``, or Unix Domain
 Sockets. Sockets in this family:
+
+.. rst-class:: build
 
 * connect processes **on the same machine**
 
@@ -373,6 +415,9 @@ How did you figure this out?
 
 Socket Types
 ============
+
+Socket Types
+------------
 
 The socket *type* determines the semantics of socket communications.
 
@@ -438,17 +483,24 @@ profiles:
     >>> bar
     <socket._socketobject object at 0x1005b8b40>
 
+
 Address Information
 ===================
 
-When you are creating a socket to communicate with a remote service, the
-remote socket will have a specific communications profile.
+.. rst-class:: left
+.. container::
 
-The local socket you create must match that communications profile.
+    When you are creating a socket to communicate with a remote service, the
+    remote socket will have a specific communications profile.
 
-How can you determine the *correct* values to use? center
+    The local socket you create must match that communications profile.
 
-You ask.
+    How can you determine the *correct* values to use? center
+
+    You ask.
+
+``getaddrinfo``
+---------------
 
 The function ``socket.getaddrinfo`` provides information about available
 connections on a given host.
@@ -460,6 +512,8 @@ connections on a given host.
 This provides all you need to make a proper connection to a socket on a remote
 host. The value returned is a tuple of:
 
+.. rst-class:: build
+
 * socket family
 * socket type
 * socket protocol
@@ -467,8 +521,7 @@ host. The value returned is a tuple of:
 * socket address (tuple of IP and Port)
 
 
-On Your Own Machine
--------------------
+.. nextslide:: On Your Own Machine
 
 Now, ask your own machine what possible connections are available for 'http':
 
@@ -486,8 +539,7 @@ Now, ask your own machine what possible connections are available for 'http':
 What answers do you get?
 
 
-On the Internet
----------------
+.. nextslide:: On the Internet
 
 .. code-block:: pycon
 
@@ -497,15 +549,29 @@ On the Internet
 
 Try a few other servers you know about.
 
+
 Communicating
 =============
 
-Sockets communicate by sending a receiving messages.
+.. rst-class:: left
+.. container::
 
-Let's test this by building a client socket and communicating with a server.
+    Sockets communicate by sending a receiving messages.
+
+    Let's test this by building a client socket and communicating with a
+    server.
 
 Client Side Communications
 --------------------------
+
+.. ifnotslides::
+
+    .. warning::
+
+        Typing this next bit can take some time, and if you aren't careful, the
+        connection you open might time out before you get to the end. The
+        exercise is reproduced in :download:`socket_exercises.py
+        <../../downloads/socket_exercises.py>`
 
 First, connect and send a message:
 
@@ -521,6 +587,9 @@ First, connect and send a message:
     >>> msg += "Host: crisewing.com\r\n\r\n"
     >>> cewing_socket.sendall(msg)
     >>> cewing_socket.shutdown(socket.SHUT_WR)
+
+
+.. nextslide::
 
 Then, receive a reply, iterating until it is complete:
 
@@ -541,11 +610,13 @@ Then, receive a reply, iterating until it is complete:
     >>> cewing_socket.shutdown(socket.SHUT_RD)
     >>> cewing_socket.close()
 
-Sending Messages
-----------------
+
+.. nextslide:: Sending Messages
 
 There are two basic methods on a socket for sending messages, ``send`` and
 ``sendall``. We're using the latter here.
+
+.. rst-class:: build
 
 * the transmission continues until all data is sent or an error occurs
 
@@ -562,10 +633,12 @@ With ``send``, you send the message one chunk at a time.  You are responsible
 for checking if a particular chunk succeeded or not, and you are also
 responsible for determining when the full transmission is done.
 
-Receiving Messages
-------------------
+
+.. nextslide:: Receiving Messages
 
 The ``recv`` method handles incoming messages in buffers.
+
+.. rst-class:: build
 
 * The sole required argument is ``buffer_size`` (an integer). It should be a
   power of 2 and smallish (~4096)
@@ -575,8 +648,7 @@ The ``recv`` method handles incoming messages in buffers.
   repeatedly. The last bunch will be less than ``buffer size``.
 
 
-Accumulators
-------------
+.. nextslide:: Accumulators
 
 Hotice that receiving a message is not a one-and-done kind of thing
 
@@ -588,8 +660,7 @@ buffers of the message until there is no more to get.
 The ``recv`` method will return a string less than ``buffsize`` if there isn't
 any more to come.
 
-The EOT Problem
----------------
+.. nextslide:: The EOT Problem
 
 Sockets do not have a concept of the "End Of Transmission".
 
@@ -609,6 +680,29 @@ know that you are finished.
 For more information, read the `Python Socket Programming How-To`_.
 
 .. _Python Socket Programming How-To: http://docs.python.org/2/howto/sockets.html
+
+
+Sockets, Bytes and Unicode
+--------------------------
+
+.. rst-class:: build
+.. container::
+
+    A socket in Python represents an I/O boundary.
+
+    That is to say that a socket is a point where data *comes into* or *exits out
+    from* Python.
+
+    Best practice is to maintain *text* internally in Python as **unicode**.
+
+    But sockets can only transmit and receive *bytes*.
+
+    You must, therefore, *encode* unicode objects before attempting to send them
+    through a socket.
+
+    Similarly, you should *decode* data you've received from a socket if you know
+    it is meant to be text.
+
 
 Exercises
 =========
