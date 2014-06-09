@@ -54,6 +54,7 @@ In This Course
     Sample code used or referenced during classroom lectures.
 
     * :download:`Day 3: Pytest Fixtures Demo <downloads/pytest.tgz>`
+    * :download:`Day 6: Lettuce Demo <downloads/fizzbuzz.tgz>`
 
 Overview
 ========

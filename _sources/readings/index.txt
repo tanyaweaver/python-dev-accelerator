@@ -11,4 +11,3 @@ Readings to help explain some of the concepts in class
     day01/index
     day02/index
     day03/index
-    day04/index
