@@ -539,7 +539,7 @@ Use What You've Learned
 
     I've attached samples of a working version of the echo server implemented
     in blocking style, using ``select`` and using ``gevent`` to this lecture as
-    :download:`echo_server_sync.tgz`. 
+    :download:`echo_server_sync.tgz </downloads/echo_server_sync.tgz>`. 
 
     Your task is to update your HTTP server using one of the techniques
     described above: ``select``, ``threading``, ``multiprocessing`` or
