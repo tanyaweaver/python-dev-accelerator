@@ -106,6 +106,12 @@ article .toctree-wrapper li a {
   border-bottom: none; }
 article table.docutils tr td {
   vertical-align: top; }
+article .figure .caption {
+  font-size: 75%;
+}
+article .figure a {
+  border: none;
+}
 
 .level-1 h1 {
   font-size: 65px;
@@ -136,4 +142,5 @@ article table.docutils tr td {
   font-weight: bold; }
 .level-3 article {
   text-align: left; }
+
 
