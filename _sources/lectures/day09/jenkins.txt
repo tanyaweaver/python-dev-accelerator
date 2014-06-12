@@ -17,97 +17,200 @@ Automate Tests with Travis CI
 
     So give up trying.
 
-    No, really.
+    .. rst-class:: centered
+
+    **No, really.**
 
 Automation to the Rescue
 ========================
 
-Instead, allow your repository to run your tests for you.
+.. rst-class:: build left
+.. container::
 
-Github provides simple integration with `a service called Travis CI`_.
+    Instead, allow your repository to run your tests for you.
+
+    Github provides simple integration with `a service called Travis CI`_.
+
+    .. ifnotslides::
+
+        Travis leverages the power of `an automated build tool called
+        Jenkins`_. This tool allows you to cofigure *jobs* that can involve
+        pretty much all aspects of setting up software, including running
+        tests.
+
+        You can download and install ``Jenkins`` on your own, but unless you
+        are a development team with complex needs, it's probably overkill to do
+        so. ``Travis CI`` provides access to the test-running abilities of
+        ``Jenkins`` with a minimum of fuss and difficulty.
+
+    .. ifslides::
+
+        Travis uses `an automated build tool called Jenkins`_
+
+        You use it to automate *jobs*, including running tests.
+
+        You can install it on your own server, but that's too much for most.
+
+        **Travis CI** provides access to the test-running power of Jenkins with
+        minimal fuss.
 
 .. _a service called Travis CI: https://travis-ci.org/.
-
-Travis leverages the power of `an automated build tool called Jenkins`_. This
-tool allows you to cofigure *jobs* that can involve pretty much all aspects of
-setting up software, including running tests.
-
 .. _an automated build tool called Jenkins: http://jenkins-ci.org
-
-You can download and install ``Jenkins`` on your own, but unless you are a
-development team with complex needs, it's probably overkill to do so. ``Travis
-CI`` provides access to the test-running abilities of ``Jenkins`` with a
-minimum of fuss and difficulty.
 
 Getting Started
 ---------------
 
-So long as your project *has tests* that can be run with a command, Travis is
-great for you.
+.. rst-class:: build
+.. container::
 
-Let's start with one of our early repositories, fizzbuzz.
+    So long as your project *has tests* that can be run with a command, Travis
+    is great for you.
 
-The first step is to sign in to Travis.  Luckily, you can simply sign in using
-the account you already have with github (no new account required!).
+    I'll start with a simple example, the FizzBuzz repository we build BDD
+    tests for earlier.
 
-Once you've signed in, click on the *docs* link in the top and then click the
-big red *Get Started* button.
+    The first step is to `sign in to Travis`_ Luckily, you can simply sign in
+    using the account you already have with github (no new account required!).
 
-The steps that are outlined on that page will tell you to go to your **profile
-page**. The link there is the easiest way to do so. Click it.
+.. _sign in to Travis: https://travis-ci.org.
 
-When the page loads, it will contain a list of all the repositories that you
-have in your ``GitHub`` account. For each, there is an on/off switch. Find your
-fizzbuzz repository and turn it on.
+.. nextslide::
+
+.. rst-class:: centered
+.. container::
+
+    .. figure:: /_static/sign_in_to_github.png
+        :width: 48%
+
+        *Travis will request rights to your repository*
+
+    .. rst-class:: left
+
+    You'll need to authorize Travis to allow it to access your repositories.
+
+
+.. nextslide::
+
+.. rst-class:: centered
+.. container::
+
+    .. figure:: /_static/help_docs.png
+        :width: 75%
+
+        *The docs link is found under the Help tab*
+
+    .. rst-class:: left
+
+    Once you've signed in, click on the *Help* > *docs* link in the top and
+    then click the big red *Get Started* button.
+
+.. nextslide::
+
+.. rst-class:: centered
+.. container::
+
+    .. figure:: /_static/link_to_profile.png
+        :width: 75%
+
+        *profile page link*
+
+    .. rst-class:: left
+
+    The steps that are outlined on that page will tell you to go to your
+    **profile page**. The link there is the easiest way to do so. Click it.
+
+.. nextslide::
+
+.. rst-class:: centered
+.. container::
+
+    .. figure:: /_static/project_list.png
+        :width: 43%
+
+        *The repository list in TravisCI*
+
+    .. rst-class:: left
+
+    When the page loads, it will contain a list of all the repositories that
+    you have in your ``GitHub`` account. For each, there is an on/off switch.
+    Find your fizzbuzz repository and turn it on.
+
+.. nextslide::
 
 Once this is done, you need to let ``GitHub`` know that you want ``Travis CI``
 to have access to your repositories. You do this by enabling the **Travis
 Commit Hook**.
 
-For this operation, you'll need your **Travis Token**. You can get this from
-your ``Travis CI`` profile page by clickin on the *Profile* tab at the top of
-the page. Copy the token then open your GitHub repository in a new browser tab.
+.. ifnotslides::
 
-In ``GitHub``, find your fizzbuzz repository and on the right side of the page
-find the *repsitory settings* (a little wrench and screwdriver icon). Click it,
-and then on the left side of the page, find the *Webhooks & Services* menu
-item and click that.
+    In ``GitHub``, find your fizzbuzz repository and on the right side of the
+    page find the *repsitory settings* (a little wrench and screwdriver icon).
+    Click it, and then on the left side of the page, find the *Webhooks &
+    Services* menu item and click that.
 
-You want to configure a third-party service, so click on the blue *Configure
-services* button and find the **Travis** service in the long, alphabetical
-list. Click it to open the settings for ``Travis CI``.
+    Check first to see if *Travis CI* is already listed in the *Services* pane
+    on that page. If so, you can skip to :ref:`Configuring Travis` below.
 
-You can configure a number of options, but to get started, all you *have to*
-provide is your **Travis Token**.  Paste it in the provided text box.
+    If not, you want to configure a third-party service, so click on the *Add
+    services* button and find the **Travis** service in the long, alphabetical
+    list. Click it to open the settings for ``Travis CI``.
 
-After you've pasted your token, check the 'active' box, then click *Update
-settings*.
+    You can configure a number of options, but to get started, all you *have
+    to* provide is your **Travis Token**.  You can get this from your ``Travis
+    CI`` profile page by clickin on the *Profile* tab at the top of the page.
+    Paste it in the provided text box.
 
-Once the page reloads, you can verify that the token is right by clicking on
-*Test Hook*. If you see "Test payload deployed!" then you're all set.
+    After you've pasted your token, check the 'active' box, then click *Update
+    settings*.
+
+    Once the page reloads, you can verify that the token is right by clicking
+    on *Test Hook*. If you see "Okay, the test payload is on its way." then
+    you're all set.
+
+.. ifslides::
+
+    .. rst-class:: build
+
+    * Open the *Webhooks & Services* page from your repository *settings*.
+    * Check for *Travis CI* in the services pane. If it's there, you're done.
+    * If not, click *Add services* and find and select ``Travis CI``.
+    * Paste your **Travis Token**, found on your Travis CI *Profile* page.
+    * Activate the service and save your changes.
+    * You can test by clicking *Test Hook* at the top of the service page.
+    * If the payload is sent, you're good to go.
 
 Configuring Travis
-------------------
+==================
 
-``Travis CI`` needs to know how *your* tests should be run. It does this using
-a configuration file written in `YAML`_.
+.. rst-class:: left
+.. container::
 
-.. _YAML: http://www.yaml.org
+    ``Travis CI`` needs to know how *your* tests should be run. It does this
+    using a configuration file written in `YAML`_.
 
-For a Python project there are a couple of things to set up:
+    .. _YAML: http://www.yaml.org
 
-* You must inform Travis that your project uses Python.
-* You must inform Travis which versions of Python are used.
-* You must inform Travis wnat command to run to execute your tests.
-* You can tell Travis what extra software needs to be installed.
+    For a Python project there are a couple of things to set up:
 
-For our fizzbuzz project, we want to test in Python 2.7.
+    .. rst-class:: build
 
-We'll also need to install the ``lettuce`` package so that we can use it for
-our tests.
+    * You must inform Travis that your project uses Python.
+    * You must inform Travis which versions of Python are used.
+    * You must inform Travis wnat command to run to execute your tests.
+    * You can tell Travis what extra software needs to be installed.
 
-Finally, we need to provide the command to be executed in order to run our
-tests.
+    .. rst-class:: build
+    .. container::
+
+        For the fizzbuzz project, we want to test in Python 2.7.
+
+        We'll also need to install the ``lettuce`` package so that we can use
+        it for our tests.
+
+        Finally, we need to provide the command to be executed in order to run
+        our tests.
+
+.. nextslide::
 
 Here's what the ``YAML`` file will look like:
 
@@ -120,6 +223,10 @@ Here's what the ``YAML`` file will look like:
     install: "pip install -r requirements.txt"
     # command to run tests
     script: lettuce
+
+Formatting is important, in particular for list entries like ``python:``
+
+.. nextslide::
 
 To set this up, we need to add a new file to our fizzbuzz repository with that
 content.
@@ -141,9 +248,12 @@ content.
     [master *=]
     heffalump:fizzbuzz cewing$
 
+.. nextslide::
+
 Once you've entered the above content, you're nearly there. You've told
 ``Travis CI`` what it will need to build your project and test it. But there's
 still one thing missing, **requirements.txt**.
+
 
 Installing Python Packages
 --------------------------
@@ -160,6 +270,8 @@ there were some other packages that were automatically installed because
 Do you remember what they were?
 
 You don't need to.
+
+.. nextslide:: Creating ``requirements.txt``
 
 Run the following command in your terminal, while you are in the root directory
 of your fizzbuzz repository **and** while your fizzbuzz virtualenv is active:
@@ -201,6 +313,11 @@ them:
     #   new file:   .travis.yml
     #   new file:   requirements.txt
     #
+
+.. nextslide::
+
+.. code-block:: bash
+
     [fizzbuzz]
     [master +=]
     heffalump:fizzbuzz cewing$ git commit
@@ -209,17 +326,14 @@ them:
     [master>]
     heffalump:fizzbuzz cewing$ git push origin master
     Counting objects: 10, done.
-    Delta compression using up to 8 threads.
-    Compressing objects: 100% (6/6), done.
-    Writing objects: 100% (6/6), 670 bytes | 0 bytes/s, done.
-    Total 6 (delta 2), reused 0 (delta 0)
+    ...
     To git@github.com:cewing/fizzbuzz.git
        68482be..3e3d283  master -> master
     [fizzbuzz]
     [master=]
     heffalump:fizzbuzz cewing$
 
-If all is well, you should be able to look at the main page in ``Travis CI``
+If all is well, you should be able to look at your main page in ``Travis CI``
 and see your tests start, run and pass.
 
 Advertise Your Awesome
@@ -240,9 +354,13 @@ And that's it.
 Next Steps
 ==========
 
-For your assignment outside of class, repeat this process for your
-``data-structures`` repository.
+.. rst-class:: left
+.. container::
 
-The more often you repeat a process like this, the better you will get at doing
-it. From now on, make sure to do it for each repository you create.
+    For your assignment outside of class, repeat this process for your other
+    repositories.
+
+    The more often you repeat a process like this, the better you will get at doing
+    it. From now on, make sure to do it from the start for each repository you
+    create.
 
