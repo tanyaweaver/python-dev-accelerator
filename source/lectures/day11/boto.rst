@@ -1,47 +1,78 @@
-************************************
-Managing AWS EC2 Instances with Boto
-************************************
+******************************
+Manage AWS Resources with Boto
+******************************
 
-Amazon Web Services provides an API for interacting directly with cloud
-resources from the command line. Using this API allows you to automate
-deployment tasks.
+.. ifslides::
 
-Automated tasks are easy.
+    | Using the AWS
+    | (*Amazon Web Services*) API
+    | to manage cloud resources
 
-Easy tasks get done more often.
 
-Therefore, using the API means you can and will perform deployment tasks like
-setting up and running a testing environment with a much higher frequency. This
-will improve the quality of your work.
+AWS API
+=======
+
+.. ifnotslides::
+
+    Amazon Web Services provides an API for interacting directly with cloud
+    resources from the command line. Using this API allows you to automate
+    deployment tasks.
+
+    Automated tasks are easy.
+
+    Easy tasks get done more often.
+
+    Therefore, using the API means you can and will perform deployment tasks
+    like setting up and running a testing environment with a much higher
+    frequency. This will improve the quality of your work.
+
+.. ifslides::
+
+    .. rst-class:: left build
+
+    * AWS provides an API to manage cloud resources
+    * This allows common tasks to be automated
+    * Automated tasks are easy to do
+    * Easy things are done more often than hard things
+    * Therefore you will do things that should be done more often if you
+      automate them
+
 
 AWS in Python
-=============
+-------------
 
-`Boto`_ is the Python binding of the AWS API. It's a solid, well-built package
-that provides control over most of the available services in AWS.
+.. ifnotslides::
+
+    `Boto`_ is the Python binding of the AWS API. It's a solid, well-built
+    package that provides control over most of the available services in AWS.
+
+    In this lesson, we'll spend some time learning a basic interaction with AWS
+    EC2 (*Elastic Compute Cluster*) using boto.
+
+.. ifslides::
+
+    .. rst-class:: build
+
+    * `Boto`_ is the Python binding of the AWS API
+    * Solid, well-built, reliable and secure.
+    * Provides control over most AWS services
 
 .. _Boto: http://boto.readthedocs.org/
 
-Today, we'll spend some time learning a basic interaction with AWS EC2 using
-boto.
+.. nextslide:: Practice Safe Development
 
-Practice Safe Development
--------------------------
-
-To get started, let's install boto in a virtual environment:
+To get started, install boto in a virtual environment:
 
 .. code-block:: pycon
 
     $ mkproject bototests
     New python executable in bototests/bin/python
     Installing setuptools, pip...done.
-    Creating /Users/cewing/projects/bototests
-    Setting project for bototests to /Users/cewing/projects/bototests
+    ...
     [bototests]
     heffalump:bototests cewing$ pip install boto
     Downloading/unpacking boto
-      Downloading boto-2.25.0-py2.py3-none-any.whl (1.1MB): 1.1MB downloaded
-    Installing collected packages: boto
+      ...
     Successfully installed boto
     Cleaning up...
     [bototests]
@@ -53,57 +84,109 @@ To get started, let's install boto in a virtual environment:
 Configuration
 -------------
 
-Next, we want to configure boto so that it has access to the security
-credentials it needs.
+.. ifnotslides::
 
-Boto will look for configuration in a configuration file in your home
-directory.  This file is called ``.boto``. Create it, if it doesn't exist:
+    Next, we want to configure boto so that it has access to the security
+    credentials it needs.
 
-.. code-block:: bash
+    Boto will look for configuration in a configuration file in your home
+    directory.  This file is called ``.boto``. Create it, if it doesn't exist:
 
-    $ ls ~/.b*
-    /Users/cewing/.bash_history
+.. ifslides::
 
-    /Users/cewing/.buildout:
-    default.cfg downloads   eggs        extends
+    .. rst-class:: build
 
-    /Users/cewing/.bundler:
-    tmp
-    [bototests]
-    heffalump:bototests cewing$ touch ~/.boto
+    * Boto requires access to your security credentials
+    * It will look for configuration in your home directory
+    * You must create a .boto file there
+
+.. rst-class:: build
+.. container::
+
+    .. code-block:: bash
+
+        $ ls ~/.b*
+        /Users/cewing/.bash_history
+
+        /Users/cewing/.buildout:
+        default.cfg downloads   eggs        extends
+
+        /Users/cewing/.bundler:
+        tmp
+
+    .. ifnotslides::
+
+        Since that file does not exist in my home directory, I create it:
+
+    .. code-block:: bash
+
+        [bototests]
+        heffalump:bototests cewing$ touch ~/.boto
+
+.. nextslide::
 
 Open this file in your text editor and add the following lines:
 
-.. code-block:: ini
 
-    [Credentials]
-    aws_access_key_id = YOURACCESSKEY
-    aws_secret_access_key = YOURSECRETKEY
+.. rst-class:: build
+.. container::
 
-You will want to secure that file from easy access by making it readable and
-writable only by yourself:
+    .. code-block:: ini
 
-.. code-block:: bash
+        [Credentials]
+        aws_access_key_id = YOURACCESSKEY
+        aws_secret_access_key = YOURSECRETKEY
 
-    [bototests]
-    heffalump:bototests cewing$ chmod 600 ~/.boto
+    Use the credentials you set up for your IAM user when you registered for
+    AWS.
+
+    .. ifnotslides::
+
+        .. warning:: 
+
+            You should never use root AWS credentials for anything other than
+            managing IAM users.  Always set up an IAM user and grant the
+            required privileges to that user.  If that account is compromised
+            you can delete it. You cannot delete your root account without
+            losing all your AWS resources.
+
+    You will want to secure that file from easy access by making it readable
+    and writable only by yourself:
+
+    .. code-block:: bash
+
+        [bototests]
+        heffalump:bototests cewing$ chmod 600 ~/.boto
 
 
 Create Your First EC2 Instance
 ==============================
+
+.. rst-class:: left
 
 You are ready now to create your first instance.
 
 Getting Connected
 -----------------
 
-First, we are going to make a connection to the EC2 service.  When we do so, we
-have to designate the AWS region to which we are connecting.  All AWS resources
-are tied to a region in some fashion.
+.. ifnotslides::
 
-We'll set up stream logging so that we can see more information about what is
-happening:
+    First, we are going to make a connection to the EC2 service.  When we do
+    so, we have to designate the AWS region to which we are connecting.  All
+    AWS resources are tied to a region in some fashion.
 
+    We'll set up stream logging so that we can see more information about what
+    is happening:
+
+.. ifslides::
+
+    .. rst-class:: build
+
+    * We'll make a connection to the EC2 service.
+    * We must designate the *AWS region* we will connect to.
+    * We'll set up *stream logging* so we can see what's happening.
+
+.. rst-class:: build
 .. code-block:: pycon
 
     [bototests]
@@ -119,38 +202,92 @@ happening:
     EC2Connection:ec2.us-west-1.amazonaws.com
     >>> 
 
-The next step is to find an AMI that you want to use. AMIs are machine images
-that Amazon uses in order to create a cloud server of a particular type.
+Configuring an Instance
+-----------------------
 
-I generally use Ubuntu Linux when creating cloud servers with AWS, and I like
-to choose images from `Alestic`_, which is sort of the 'official' face of Ubuntu
-in EC2.
+Next we must set up some configuration values for our server-to-be.
+
+.. ifnotslides::
+
+    The first step is to find an AMI that you want to use. AMIs are machine
+    images that Amazon uses in order to create a cloud server of a particular
+    type.
+
+    I generally use Ubuntu Linux when creating cloud servers with AWS, and I
+    like to choose images from `Alestic`_, which is sort of the 'official' face
+    of Ubuntu in EC2.
+
+    At the top right of the Alestic homepage is a tool for finding AMI ids in a
+    given AWS region.  We've connected to us-west-2, so we need one for that
+    region. The tool reports that an EBS-store image for Ubuntu 12.04 Precise
+    is 'ami-bf582a8f'. Let's use that.
+
+.. ifslides::
+
+    .. rst-class:: build
+
+    * We need an *AMI* (*Amazon Machine Image*) for our server
+
+      * This determines what OS and pre-installed software our server will
+        have.
+
+    * I use Ubuntu Linux for cloud servers.
+    * You can choose bare-bones images from `Alestic`_.
+    * At the top right of the Alestic homepage is a tool to choose AMIs
+    * Select the **us-west-2** region
+    * Find an image for Ubuntu Precise 12.04
+    * Use an EBS store (the OS disk is persisted when you *stop* your instance)
+
+.. rst-class:: build
+.. code-block:: pycon
+
+    >>> image_id = 'ami-bf582a8f'
 
 .. _Alestic: http://alestic.com
 
-At the top right of the Alestic homepage is a tool for finding AMI ids in a
-given AWS region.  We've connected to us-west-2, so we need one for that
-region. The tool reports that an EBS-store image for Ubuntu 12.04 Precise is
-'ami-d0d8b8e0'. Let's use that.
+.. nextslide::
 
-.. code-block:: pycon
+.. ifnotslides::
 
-    >>> image_id = 'ami-d0d8b8e0'
+    We also need to designate a key pair name and the name of a security group. Use
+    the key pair name and security group you created as part of the assignment to
+    get an AWS account. If you followed the instructions explicitly, these should
+    be ``pk-aws`` and ``ssh-access``.
 
-We also need to designate a key pair name and the name of a security group. Use
-the key pair name and security group you created as part of the assignment to
-get an AWS account. If you followed the instructions explicitly, these should
-be ``pk-aws`` and ``ssh-access``.
+.. ifslides::
 
+    .. rst-class:: build
+
+    * We must also provide a public/private keypair.
+    * And a security group, which determines firewall rules (access via ports).
+    * You created these when you signed up for AWS.
+    * If you followed the instructions, they are called ``pk-aws`` and
+      ``ssh-access``.
+
+.. rst-class:: build
 .. code-block:: pycon
 
     >>> key_pair = 'pk-aws'
     >>> security_group = 'ssh-access'
 
-Finally, we need to designate exactly what type of instance to create. AWS
-instances come in all shapes and sizes, but the only on that is in the free
-usage tier is the ``t1.micro`` instance.
+.. nextslide::
 
+.. ifnotslides::
+
+    Finally, we need to designate exactly what type of instance to create. AWS
+    instances come in all shapes and sizes, but the only on that is in the free
+    usage tier is the ``t1.micro`` instance.
+
+.. ifslides::
+
+    .. rst-class:: build
+
+    * Finally, we pick an instance type
+    * These control how much CPU power, RAM and disk space you have
+    * We'll start out with a ``t1.micro`` instance
+    * If you use only one of these, they are on the **free usage tier**
+
+.. rst-class:: build
 .. code-block:: pycon
 
     >>> instance_type = 't1.micro'
@@ -161,6 +298,7 @@ Starting an Instance
 Finally we are ready to run an instance. Using your open ec2 connection object,
 run the following command:
 
+.. rst-class:: build
 .. code-block:: pycon
 
     >>> reservations = ec2.run_instances(
@@ -168,11 +306,13 @@ run the following command:
     ...     key_name=key_name,
     ...     instance_type=instance_type,
     ...     security_groups=[security_group])
-    >>> 
+    >>>
+
+
+.. nextslide::
 
 When the command returns, ``reservations`` will hold a list of all the
-instances we have just created (there should be only one). We can pull that
-instance out and check its status:
+instances we have just created (there should be only one).
 
 .. code-block:: pycon
 
@@ -182,6 +322,14 @@ instance out and check its status:
     [Instance:i-d0d558d9]
     >>> len(reservations.instances)
     1
+
+
+.. nextslide::
+
+We can pull that instance out and check its status:
+
+.. code-block:: pycon
+
     >>> instance = reservations.instances[0]
     >>> instance
     Instance:i-d0d558d9>>> instance.id
@@ -194,6 +342,9 @@ instance out and check its status:
     >>> instance.state
     u'running'
 
+
+.. nextslide::
+
 You may need to update a couple of times until you see the state change to
 ``running``. Once it does, you can get the public DNS name of the instance:
 
@@ -202,65 +353,85 @@ You may need to update a couple of times until you see the state change to
     >>> instance.public_dns_name
     u'ec2-54-203-88-113.us-west-2.compute.amazonaws.com'
 
+
 SSH Into the New Instance
 -------------------------
 
-You can use that DNS name to ssh into the running instance.  **In another
-terminal**, run the following command:
+You can use that DNS name to ssh into the running instance.
 
-.. code-block:: bash
+**In another terminal**, run the following command:
 
-    $ ssh -i ~/.ssh/pk-aws.pem ubuntu@ec2-your.dns.name.amazonaws.com
-    The authenticity of host 'ec2-54-203-88-113.us-west-2.compute.amazonaws.com (54.203.88.113)' can't be established.
-    RSA key fingerprint is 56:3e:9c:b3:75:96:4f:11:44:e9:2b:14:3a:02:f8:f2.
-    Are you sure you want to continue connecting (yes/no)? yes
-    Warning: Permanently added 'ec2-54-203-88-113.us-west-2.compute.amazonaws.com,54.203.88.113' (RSA) to the list of known hosts.
-    Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.2.0-58-virtual x86_64)
+.. ifnotslides::
 
-     * Documentation:  https://help.ubuntu.com/
+    .. code-block:: bash
 
-      System information as of Sat Feb 15 06:20:44 UTC 2014
+        $ ssh -i ~/.ssh/pk-aws.pem ubuntu@ec2-your.dns.name.amazonaws.com
+        The authenticity of host 'ec2-54-203-88-113.us-west-2.compute.amazonaws.com (54.203.88.113)' can't be established.
+        RSA key fingerprint is 56:3e:9c:b3:75:96:4f:11:44:e9:2b:14:3a:02:f8:f2.
+        Are you sure you want to continue connecting (yes/no)? yes
+        Warning: Permanently added 'ec2-54-203-88-113.us-west-2.compute.amazonaws.com,54.203.88.113' (RSA) to the list of known hosts.
+        Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.2.0-58-virtual x86_64)
 
-      System load:  0.0               Processes:           58
-      Usage of /:   11.1% of 7.87GB   Users logged in:     0
-      Memory usage: 8%                IP address for eth0: 10.235.47.92
-      Swap usage:   0%
+         * Documentation:  https://help.ubuntu.com/
 
-      Graph this data and manage this system at:
-        https://landscape.canonical.com/
+          System information as of Sat Feb 15 06:20:44 UTC 2014
 
-      Get cloud support with Ubuntu Advantage Cloud Guest:
-        http://www.ubuntu.com/business/services/cloud
+          System load:  0.0               Processes:           58
+          Usage of /:   11.1% of 7.87GB   Users logged in:     0
+          Memory usage: 8%                IP address for eth0: 10.235.47.92
+          Swap usage:   0%
 
-    0 packages can be updated.
-    0 updates are security updates.
+          Graph this data and manage this system at:
+            https://landscape.canonical.com/
+
+          Get cloud support with Ubuntu Advantage Cloud Guest:
+            http://www.ubuntu.com/business/services/cloud
+
+        0 packages can be updated.
+        0 updates are security updates.
 
 
-    The programs included with the Ubuntu system are free software;
-    the exact distribution terms for each program are described in the
-    individual files in /usr/share/doc/*/copyright.
+        The programs included with the Ubuntu system are free software;
+        the exact distribution terms for each program are described in the
+        individual files in /usr/share/doc/*/copyright.
 
-    Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
-    applicable law.
+        Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+        applicable law.
 
-    To run a command as administrator (user "root"), use "sudo <command>".
-    See "man sudo_root" for details.
+        To run a command as administrator (user "root"), use "sudo <command>".
+        See "man sudo_root" for details.
 
-    ubuntu@ip-10-235-47-92:~$
+        ubuntu@ip-10-235-47-92:~$
 
-At this point, you are now working in a shell *on the server you just created*!
+.. ifslides::
 
-Go ahead and run a few simple shell commands and look around a bit.  Not much
-to see, but it's fun to prove that you're there.
+    .. code-block:: bash
 
-Finally, disconnect by typing the ``exit`` command and return to your Python
-interpreter.
+        $ ssh -i ~/.ssh/pk-aws.pem ubuntu@ec2-your.dns.name.amazonaws.com
+        ...
+        Are you sure you want to continue connecting (yes/no)? yes
+        ...
+        To run a command as administrator (user "root"), use "sudo <command>".
+        See "man sudo_root" for details.
+
+        ubuntu@ip-10-235-47-92:~$
+
+.. rst-class:: build
+.. container::
+
+    You are now working in a shell *on the server you just created*!
+
+    Run a few simple shell commands and look around a bit.
+
+    Disconnect by typing the ``exit`` command and return to your Python
+    interpreter.
+
 
 Stop the Instance
 -----------------
 
-Okay, that's enough for one day. Now it's time to clean up our toys. Let's
-begin by requesting that our instance be stopped:
+Okay, that's enough for now. It's time to clean up our toys. Let's begin by
+requesting that our instance be stopped:
 
 .. code-block:: pycon
 
@@ -275,6 +446,8 @@ begin by requesting that our instance be stopped:
     >>> instance.state
     u'stopped'
 
+.. nextslide:: Termination
+
 Once the instance is cleanly stopped, we can terminate it, which will
 completely destroy it and leave us ready to play again another day:
 
@@ -285,21 +458,36 @@ completely destroy it and leave us ready to play again another day:
     ... 
     >>> instance.state
     u'terminated'
-    >>> 
+    >>>
 
 
 Wrap-up
 =======
 
-Boto, the Python wrapper for the AWS API allows us to automate the management
-of cloud resources. This type of automation makes the typical tasks of creating
-deployments (whether to production, staging or testing) easy and quick. This in
-turn lowers the bar to doing what we should all be doing, deploying
-consistently and often.
+.. ifnotslides::
 
-There's much more to learn about AWS and boto, but that's all we have time for
-for now.
+    Boto, the Python wrapper for the AWS API allows us to automate the
+    management of cloud resources. This type of automation makes the typical
+    tasks of creating deployments (whether to production, staging or testing)
+    easy and quick. This in turn lowers the bar to doing what we should all be
+    doing, deploying consistently and often.
 
-Please read more in the `boto documentation`_.
+.. ifslides::
 
-.. _boto documentation: http://boto.readthedocs.org/
+    .. rst-class:: build left
+
+    * Boto allows us to automate the management of cloud resources.
+    * This makes the tasks of deployment easier and faster.
+    * That lowers the bar to doing such tasks frequently.
+    * Which increases the velocity with which we can make updates to projects.
+
+.. rst-class:: build left
+.. container::
+
+    There's much more to learn about AWS and boto, but that's all we have time
+    for now.
+
+    Please read more in the `boto documentation`_.
+
+    .. _boto documentation: http://boto.readthedocs.org/
+

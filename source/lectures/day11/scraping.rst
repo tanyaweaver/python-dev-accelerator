@@ -2,30 +2,34 @@
 Extracting Data from the Web
 ****************************
 
-Web Scraping
-============
+.. rst-class:: left
+.. container::
 
-The internet makes a vast quantity of data available.
+    The internet makes a vast quantity of data available.
 
-But not always in the form or combination you want.
+    But not always in the form or combination you want.
 
-It can be nice to combine data from different sources to create *meaning*.
+    It can be nice to combine data from different sources to create *meaning*.
 
 
-Data Sources
-------------
+Part 1: Web Scraping
+====================
 
-Data online comes in many different formats:
+.. rst-class:: left
+.. container::
 
-* Simple websites with data in HTML
-* Web services providing structured data
-* Web services providing tranformative service (geocoding)
-* Web services providing presentation (mapping)
+    Data online comes in many different formats:
 
-Let's concentrate on that first class of data, HTML.
+    * Simple websites with static (or perhaps dynamic) data in HTML
+    * Web services providing structured data
+    * Web services providing tranformative service (geocoding)
+    * Web services providing presentation (mapping)
+
+    Let's concentrate for now on that first class of data, HTML.
+
 
 HTML Data
-=========
+---------
 
 Ideally HTML would be well-formed and strictly correct in it's structure:
 
@@ -41,6 +45,7 @@ Ideally HTML would be well-formed and strictly correct in it's structure:
       </body>
     </html>
 
+.. nextslide::
 
 But in fact, it usually ends up looking more like this:
 
@@ -56,15 +61,20 @@ But in fact, it usually ends up looking more like this:
      </body>
     </html>
 
+This is the result of one of the fundamental laws of the internet:
 
-An Internet Law: "Be strict in what you send and tolerant in what you receive"
+**"Be strict in what you send and tolerant in what you receive"**
 
+.. nextslide::
 
-.. image:: /_static/scream.jpg
-    :align: center
-    :width: 60%
+.. rst-class:: centered
+.. container::
 
-Photo by Matthew via Flickr (http://www.flickr.com/photos/purplemattfish/3918004964/) - CC-BY-NC-ND
+    .. figure:: /_static/scream.jpg
+        :align: center
+        :width: 35%
+
+        Photo by Matthew via Flickr (http://www.flickr.com/photos/purplemattfish/3918004964/) - CC-BY-NC-ND
 
 
 Cleaning Up the Mess
@@ -86,6 +96,8 @@ a bit:
     [souptests]
     heffalump:souptests cewing$
 
+.. nextslide:: Install BeautifulSoup
+
 Then, install the correct version of BeautifulSoup (you want 4, not 3):
 
 .. code-block:: bash
@@ -104,11 +116,15 @@ Then, install the correct version of BeautifulSoup (you want 4, not 3):
     [souptests]
     heffalump:souptests cewing$
 
+.. nextslide:: HTML Parsers
+
 BeautifulSoup can use the Python HTMLParser.
 
-*PRO* Batteries Included.  It's already there
+PRO:
+  Batteries Included.  It's already there
 
-*CON* It's not great, especially before Python 2.7.3
+CON:
+  It's not great, especially before Python 2.7.3
 
 BeautifulSoup also supports using other parsers.
 
@@ -117,6 +133,7 @@ There are two good choices: `lxml`_  and `html5lib`_.
 .. _lxml: http://lxml.de
 .. _html5lib: http://html5lib.readthedocs.org.
 
+.. nextslide:: Install ``html5lib``
 
 ``lxml`` is better, but it can be much harder to install.  For our exercise,
 Let's use ``html5lib``:
@@ -139,18 +156,20 @@ Let's use ``html5lib``:
     [souptests]
     heffalump:souptests cewing$
 
-Once installed, BeautifulSoup will choose it automatically. Actually,
+.. nextslide:: Defaults and Configuration
+
+Once installed, BeautifulSoup will choose ``html5lib`` automatically. Actually,
 BeautifulSoup will choose the "best" available.
 
-You can specify the parser if you need to control it and you have more than one
-available.
+You can specify the parser if you need to control it *and* you have more than
+one parser available.
 
 
 Getting Webpages
 ----------------
 
-Python provides tools for opening urls and communicating with servers. It's
-spread across the ``urllib`` and ``urllib2`` packages.
+As with IMAP, FTP and other web protocols, Python provides tools for using HTTP
+as a client. They are spread across the ``urllib`` and ``urllib2`` packages.
 
 These packages have pretty unintuitive APIs.
 
@@ -169,20 +188,33 @@ work.  Let's install it too.
     [souptests]
     heffalump:souptests cewing$
 
+.. nextslide:: The ``requests`` API
+
 In ``requests``, each HTTP method is provided by a module-level function:
+
+.. rst-class:: build
 
 * ``GET`` == ``requests.get(url, **kwargs)``
 * ``POST`` == ``requests.post(url, **kwargs)``
 * ...
 
-Those unspecified ``kwargs`` represent other parts of an HTTP request:
+.. rst-class:: build
+.. container::
 
-* ``params``: a dict of url query parameters (?foo=bar&baz=bim)
-* ``headers``: a dict of headers to send with the request
-* ``data``: the body of the request, if any (form data for POST goes here)
-* ...
+    Those unspecified ``kwargs`` represent other parts of an HTTP request:
+
+    .. rst-class:: build
+
+    * ``params``: a dict of url query parameters (?foo=bar&baz=bim)
+    * ``headers``: a dict of headers to send with the request
+    * ``data``: the body of the request, if any (form data for POST goes here)
+    * ...
+
+.. nextslide::
 
 The return value from one of these functions is a ``response`` which provides:
+
+.. rst-class:: build
 
 * ``response.status_code``: see the HTTP Status Code returned
 * ``response.ok``: True if ``response.status_code`` is not an error
@@ -192,27 +224,38 @@ The return value from one of these functions is a ``response`` which provides:
 * ``response.encoding``: The encoding used to decode
 * ``response.content``: The original encoded response body as bytes
 
-You can `read more about this library`_ on your own. I urge you to do so.
+.. rst-class:: build
+.. container::
 
-.. _read more about this library: http://requests.readthedocs.org
+    You can `read more about this library`_ on your own.
+
+    I urge you to do so.
+
+    .. _read more about this library: http://requests.readthedocs.org
 
 
 An Example: Scraping Blog Posts
 ===============================
 
-Let's use the tools we've set up here to play with scraping a simple structure,
-a list of blog posts.
+.. rst-class:: left
+.. container::
 
-Begin by firing up a Python interpreter:
+    Let's use the tools we've set up here to play with scraping a simple
+    structure, a list of blog posts.
 
-.. code-block:: bash
+    Begin by firing up a Python interpreter:
 
-    [souptests]
-    heffalump:souptests cewing$ python
-    Python 2.7.5 (default, Aug 25 2013, 00:04:04)
-    [GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)] on darwin
-    Type "help", "copyright", "credits" or "license" for more information.
-    >>> 
+    .. code-block:: bash
+
+        [souptests]
+        heffalump:souptests cewing$ python
+        Python 2.7.5 (default, Aug 25 2013, 00:04:04)
+        [GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)] on darwin
+        Type "help", "copyright", "credits" or "license" for more information.
+        >>> 
+
+Fetching a Page
+---------------
 
 Then, import the requests library and fetch our sample blog listing page:
 
@@ -231,6 +274,8 @@ Then, import the requests library and fetch our sample blog listing page:
     >>> type(foo)
     <type 'unicode'>
 
+.. nextslide::
+
 Let's prevent ourselves from having to repeat that step by writing our fetched
 webpage out to the filesystem:
 
@@ -244,8 +289,10 @@ webpage out to the filesystem:
     ...
     >>> import os
     >>> os.listdir(os.getcwd())
-    ['blog_list.html', 'scraper.py']
+    ['blog_list.html']
     >>>
+
+.. nextslide::
 
 You should now be able to open the new file in your web browser.  Do so.
 
@@ -259,17 +306,29 @@ container that wraps each one.
 Parsing HTML
 ------------
 
-When you look at the HTML from this webpage in your browser's devtools, it
-displays as a formatted structure of HTML tags.  We can interact with those
-tags in devtools because they are actually just representations of a DOM node.
-(DOM stands for `Document Object Model`_)
+.. ifnotslides::
 
-.. _Document Object Model: http://en.wikipedia.org/wiki/Document_Object_Model
+    When you look at the HTML from this webpage in your browser's devtools, it
+    displays as a formatted structure of HTML tags.  We can interact with those
+    tags in devtools because they are actually just representations of a DOM node.
+    (DOM stands for `Document Object Model`_)
 
-In order to work with the page in the same fashion in Python, we need to
-**parse** it into the same kind of structure.  That's what ``BeautifulSoup``
-does for us.
+    In order to work with the page in the same fashion in Python, we need to
+    **parse** it into the same kind of structure.  That's what ``BeautifulSoup``
+    does for us.
 
+.. ifslides::
+
+    * The ``devtools`` in Chrome or other browsers show a structure of HTML
+      tags
+    * You can interact with them because they are representations of a code
+      *object*, a *DOM Node*.
+    * The *DOM* (`Document Object Model`_) represents HTML as a tree of these
+      nodes.
+    * We must parse our big HTML string into a *DOM Tree*.
+    * This is what ``BeautifulSoup`` does for us:
+
+.. rst-class:: build
 .. code-block:: pycon
 
     >>> from bs4 import BeautifulSoup
@@ -278,41 +337,66 @@ does for us.
     2
     >>> 
 
+.. _Document Object Model: http://en.wikipedia.org/wiki/Document_Object_Model
+
+.. nextslide:: DOM Objects
+
 So parsing the document took the length from 601747 characters to 2 *??*. What
 are those two things?
 
+.. rst-class:: build
 .. code-block:: pycon
 
     >>> [type(t) for t in parsed]
     [<class 'bs4.element.Doctype'>, <class 'bs4.element.Tag'>]
     >>> 
 
-Once an html page has been parsed by ``BeautifulSoup``, everything becomes a
-``node``.  The parsed document itself is a ``node`` and ``nodes`` are iterable.
+.. rst-class:: build
+.. container::
 
-When you iterate over a node, you get the nodes that it contains in the DOM
-tree.
+    Once an html page has been parsed by ``BeautifulSoup``, everything becomes a
+    ``node``.  The parsed document itself is a ``node`` and ``nodes`` are iterable.
+
+    When you iterate over a node, you get the nodes that it contains in the DOM
+    tree.
+
+.. nextslide:: Node Types
 
 These nodes can be roughly classed into two types, ``NavigableString`` and
 ``Tag``
 
-The main difference is that ``Tag`` nodes can contain other nodes, where
-``NavigableStrings`` do not.
+.. rst-class:: build
+.. container::
 
-You can interact with these node types in a number of ways.  Let's start with a
-way of working with ``Tags``, *searching*.
+    The main difference is that ``Tag`` nodes can contain other nodes, where
+    ``NavigableStrings`` do not.
+
+    You can interact with these node types in a number of ways. 
+
+    The most common are  *Searching* and *Traversing* 
+
+    Let's start with the simpler of the two, *searching*.
+
 
 Searching HTML
 --------------
 
 A ``Tag`` in ``BeautifulSoup`` has a couple of methods that support searching:
-``find`` and ``find_all``. The former will find the first instance of a node
-that matches the search specification.  The second will find **all** instances.
 
-How do we build a specification for searching? The call signature for
+``tag.find()``:
+  will find the first instance of a node that matches the search specification
+
+``tag.find_all()``:
+  will find **all** instances that match the search specification.
+
+.. nextslide:: Search Specifications
+
+So, How do we build a specification for searching? The call signature for
 ``find_all`` helps a bit::
 
     tag.find_all(name, attrs, recursive, text, limit, **kwargs)
+
+.. rst-class:: build
 
 * ``name`` is the name of an html tag type ('a', 'p', 'div', etc.)
 * ``attrs`` is a dictionary of key-value pairs where the key is an html
@@ -322,13 +406,38 @@ How do we build a specification for searching? The call signature for
 * ``text`` allows you to find ``NavigableString`` nodes instead of ``Tag`` nodes.
 * ``limit`` controls how many to find, maximum.
 
-The last element **kwargs** allows you to pass arbitrary keyword arguments.  If
-the argument you pass is not recognized as one of the other arguments, it will
-be treated as the name of an *attribute* to filter on, so passing
-``id="my-div"`` would result in a search for any item with the id "my-div"
+.. nextslide:: Arbitrary Arguments
 
-**NOTE** because ``class`` is a keyword in python, you can't use it as a
-keyword argument.  Instead you should use ``class_`` (``class_="button"``)
+.. rst-class:: build
+.. container::
+
+    The last element **kwargs** allows you to pass arbitrary keyword arguments.
+
+    If the argument you pass is not recognized as one of the other arguments,
+    it will be treated as the name of an *HTML attribute* to filter on.
+
+    Passing ``id="my-div"`` would result in a search for any item with the id
+    "my-div":
+
+    .. code-block:: html
+
+        <div id="my-div">This is found</div>
+        <div id="other-div">This would not be</div>
+
+
+    .. ifslides::
+
+        **NOTE** ``class`` is a keyword in Python. You can't use it as a
+        symbol. You'll have to use ``class_`` instead: (``class_="button"``)
+
+.. ifnotslides::
+
+    .. note::
+
+        because ``class`` is a keyword in python, you can't use it as a keyword
+        argument.  Instead you should use ``class_`` (``class_="button"``)
+
+.. nextslide:: Building Our Search
 
 Looking at the blog listing, we can see that the container that is wrapped
 around each post shares a common *CSS class*: ``feedEntry``. Let's grab all of
@@ -342,6 +451,8 @@ them:
     >>> 
 
 Okay. That works.
+
+.. nextslide:: Extracting Titles
 
 Let's see if we can extract a list of the titles of each post.
 
@@ -360,9 +471,17 @@ and then extract the text it contains:
     105
     >>> 
 
-We can also find the set of possible sources for our blog posts.  The byline is
-contained in a ``<p>`` tag with the CSS class ``discreet``.  Let's gather up
-all of those and see what we have:
+.. nextslide:: Extracting Sources
+
+.. ifnotslides::
+
+    We can also find the set of possible sources for our blog posts.  The
+    byline is contained in a ``<p>`` tag with the CSS class ``discreet``.
+    Let's gather up all of those and see what we have:
+
+.. ifslides::
+
+    Find the ``<p class="discreet" />`` nodes that contain the bylines:
 
 .. code-block:: pycon
 
@@ -370,7 +489,8 @@ all of those and see what we have:
     >>> len(list(byline.children))
     3
     >>> [type(n) for n in list(byline.children)]
-    [<class 'bs4.element.NavigableString'>, <class 'bs4.element.Tag'>, <class 'bs4.element.NavigableString'>]
+    [<class 'bs4.element.NavigableString'>, <class 'bs4.element.Tag'>,
+     <class 'bs4.element.NavigableString'>]
     >>> classifier = list(byline.children)[0].strip()
     >>> classifier
     u'From Planet PostgreSQL.\n            \n            \n                Published on'
@@ -382,14 +502,19 @@ all of those and see what we have:
     105
     >>> all_classifiers[0]
     u'From Planet PostgreSQL.\n            \n            \n                Published on'
+
+.. nextslide:: Find Unique Sources
+
+.. ifslides::
+
+    There is a limited set of unique values in that pool of bylines:
+
+.. code-block:: pycon
+
     >>> unique_classifiers = set(all_classifiers)
     >>> len(unique_classifiers)
     30
     >>> import pprint
-    >>> pprint.ppirnt(unique_classifiers)
-    Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
-    AttributeError: 'module' object has no attribute 'ppirnt'
     >>> pprint.pprint(unique_classifiers)
     set([u'By Adrian Holovaty from Planet Django.\n ...
     >>>
@@ -398,8 +523,12 @@ If we look these over, we find that we have some from ``Planet Django``, some
 from ``Planet PostgreSQL`` and maybe some others as well (I get one from
 ``plope`` too).
 
+.. nextslide:: Categorizing Posts
+
 Let's take one more step, and divide our post titles into categories based on
-whether they are Django, PostgreSQL or other:
+whether they are Django, PostgreSQL or other.
+
+Start by defining a function to get the *classifier* for an entry:
 
 .. code-block:: pycon
 
@@ -409,12 +538,27 @@ whether they are Django, PostgreSQL or other:
     ...         if classifier in byline.text.lower():
     ...             return classifier
     ...     return 'other'
-    ...
+    ... 
+    >>>
+
+.. nextslide::
+
+Then use that function to find the unique set of classifiers
+
+.. code-block:: pycon
+
     >>> classifiers = [get_classifier(e) for e in entries]
     >>> len(set(classifiers))
     3
     >>> set(classifiers)
     set(['other', 'postgresql', 'django'])
+
+.. nextslide::
+
+We can also extract titles for each post with a function:
+
+.. code-block:: pycon
+
     >>> def get_title(entry):
     ...     return entry.find('a').find('h2').string.strip()
     ...
@@ -423,6 +567,11 @@ whether they are Django, PostgreSQL or other:
     105
     >>> titles[0]
     u'Dimitri Fontaine: PostgreSQL, Aggregates and Histograms'
+
+.. nextslide::
+
+Put it all together to build a dictionary of categorized post titles:
+
     >>> paired = [(get_classifier(e), get_title(e)) for e in entries]
     >>> paired[0]
     ('postgresql', u'Dimitri Fontaine: PostgreSQL, Aggregates and Histograms')
@@ -441,10 +590,7 @@ Neat!
 Going Farther
 =============
 
-Okay, so that's the basics. For your assignment, take this and build a list of
-apartment listings using Craigslist.
+.. rst-class:: left
 
-
-
-
-
+Okay, so that's the basics. For your assignment you'll take this a step farther
+and build a list of apartment listings using Craigslist.
