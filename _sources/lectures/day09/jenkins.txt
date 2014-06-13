@@ -149,7 +149,8 @@ Commit Hook**.
     Services* menu item and click that.
 
     Check first to see if *Travis CI* is already listed in the *Services* pane
-    on that page. If so, you can skip to :ref:`Configuring Travis` below.
+    on that page. If so, you can skip to
+    :ref:`Configuring Travis <configuring_travis>` below.
 
     If not, you want to configure a third-party service, so click on the *Add
     services* button and find the **Travis** service in the long, alphabetical
@@ -178,6 +179,8 @@ Commit Hook**.
     * Activate the service and save your changes.
     * You can test by clicking *Test Hook* at the top of the service page.
     * If the payload is sent, you're good to go.
+
+.. _configuring_travis:
 
 Configuring Travis
 ==================
