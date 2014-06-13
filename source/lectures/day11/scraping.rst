@@ -593,4 +593,7 @@ Going Farther
 .. rst-class:: left
 
 Okay, so that's the basics. For your assignment you'll take this a step farther
-and build a list of apartment listings using Craigslist.
+and
+:ref:`build a list of apartment listings <scraper_assignment>` 
+using Craigslist.
+
