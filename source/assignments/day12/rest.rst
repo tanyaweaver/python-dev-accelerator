@@ -1,3 +1,5 @@
+.. _rest_exercise:
+
 *****************************************
 Consuming Data from a RESTful Web Service
 *****************************************
@@ -7,7 +9,7 @@ list of apartment rentals from previous exercises.
 
 We'll use a common, public API provided by Google.
 
-.. class:: incremental center
+.. rst-class:: centered
 
 **Geocoding**
 

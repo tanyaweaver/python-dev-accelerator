@@ -1,3 +1,5 @@
+.. _xmlrpc_assignment:
+
 *****************************************
 Producing and Consuming XML-RPC in Python
 *****************************************
