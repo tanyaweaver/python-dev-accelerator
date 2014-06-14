@@ -15,3 +15,4 @@ Materials in support of homework assignments in the Python Dev Accelerator
     day06/index
     day11/index
     day12/index
+    day13/index
