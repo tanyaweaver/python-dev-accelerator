@@ -468,7 +468,7 @@ the user at run time.
     from fabric.api import prompt
 
     def select_instance(state='running'):
-        if env.active_instance:
+        if env.get('active_instance', False):
             return
 
         list_aws_instances(state=state)
