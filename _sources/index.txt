@@ -55,6 +55,10 @@ In This Course
 
     * :download:`Day 3: Pytest Fixtures Demo <downloads/pytest.tgz>`
     * :download:`Day 6: Lettuce Demo <downloads/fizzbuzz.tgz>`
+    * :download:`Day 6: In-class socket exercises <downloads/socket_exercises.py>`
+    * :download:`Day 9: Concurrency examples for the echo server <downloads/echo_server_sync.tgz>`
+    * :download:`Day 12: BDD Tests for the Learning Journal <downloads/learning_lettuce.tgz>`
+    * :download:`Day 12: Updated apartment scraper script with JSON craigslist search <downloads/scraper.py>`
 
 Overview
 ========
