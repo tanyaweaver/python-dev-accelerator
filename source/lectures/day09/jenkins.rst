@@ -350,7 +350,17 @@ CI``:
 
 .. code-block:: rst
 
-    [![Travis](https://api.travis-ci.org/<you>/<yourproject>)](https://api.travis-ci.org/<you>/<yourproject>)
+    [![Travis](<travis_badge_url>)](<travis_badge_url>)
+
+In order to determine the url for your travis badge, you'll go to the
+management page in travis for your project::
+
+    http://travis-ci.org/<your_github_name>/<your_project_name>
+
+In the upper right corner you'll see a small badge image showing the most
+recent status of your build.  If you click that image, a dialog box will open
+that contains the URL for the badge.  Copy it and replace the placeholder text
+in the model above.
 
 And that's it.
 
