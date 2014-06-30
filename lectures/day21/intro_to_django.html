@@ -1,0 +1,583 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>An Introduction To Django &mdash; Python Dev Accelerator 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Day 21 Lectures" href="index.html" />
+    <link rel="next" title="Homework Assignments" href="../../assignments/index.html" />
+    <link rel="prev" title="Introduction to Web Frameworks" href="frameworks_and_wsgi.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+<div class="header">
+  <div class="logo">
+    <a href="../../index.html">
+      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../assignments/index.html" title="Homework Assignments"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="frameworks_and_wsgi.html" title="Introduction to Web Frameworks"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Day 21 Lectures</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="an-introduction-to-django">
+<h1>An Introduction To Django<a class="headerlink" href="#an-introduction-to-django" title="Permalink to this headline">¶</a></h1>
+<p class="left">A quick introduction to the basics of Django projects, apps and Models.</p>
+<div class="section" id="starting-a-project">
+<h2>Starting a Project<a class="headerlink" href="#starting-a-project" title="Permalink to this headline">¶</a></h2>
+<div class="left container">
+<p>Everything in Django stems from the <em>project</em></p>
+<p>When you install Django into a virtualenv, it provides a utility script,
+<tt class="docutils literal"><span class="pre">django-admin.py</span></tt>.  This script can be used to create a new project:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>djangoenv<span class="o">)</span><span class="nv">$ </span>django-admin.py startproject mysite
+</pre></div>
+</div>
+</div>
+<div class="section" id="project-structure">
+<h3>Project Structure<a class="headerlink" href="#project-structure" title="Permalink to this headline">¶</a></h3>
+<p>Running this command will create a folder called &#8216;mysite&#8217;.  It contains the
+following structure:</p>
+<div class="highlight-bash"><div class="highlight"><pre>mysite
+├── manage.py
+└── mysite
+    ├── __init__.py
+    ├── settings.py
+    ├── urls.py
+    └── wsgi.py
+</pre></div>
+</div>
+<p>If after running the command you see a structure different than this, you&#8217;ll
+want to check the version of Django you installed.  It should be 1.6.5.</p>
+<p>Here&#8217;s what you have:</p>
+<ul class="simple">
+<li><strong>outer *mysite* folder</strong>: this is just a container and can be renamed or
+moved at will</li>
+<li><strong>inner *mysite* folder</strong>: this is your project directory. It should not be
+renamed.</li>
+<li><strong>__init__.py</strong>: magic file that makes <em>mysite</em> a python package.</li>
+<li><strong>settings.py</strong>: file which holds configuration for your project, more soon.</li>
+<li><strong>urls.py</strong>: file which holds top-level URL configuration for your project,
+more soon.</li>
+<li><strong>wsgi.py</strong>: binds a wsgi application created from your project to the
+symbol <tt class="docutils literal"><span class="pre">application</span></tt></li>
+<li><strong>manage.py</strong>: a management control script.</li>
+</ul>
+</div>
+<div class="section" id="django-admin-py-vs-manage-py">
+<h3><tt class="docutils literal"><span class="pre">django-admin.py</span></tt> vs. <tt class="docutils literal"><span class="pre">manage.py</span></tt><a class="headerlink" href="#django-admin-py-vs-manage-py" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">django-admin.py</span></tt> provides a hook for administrative tasks and abilities:</p>
+<div class="build container">
+<ul class="build simple">
+<li>creating a new project or app</li>
+<li>running the development server</li>
+<li>executing tests</li>
+<li>entering a python interpreter</li>
+<li>entering a database shell session with your database</li>
+<li>much much more (run <tt class="docutils literal"><span class="pre">django-admin.py</span></tt> without an argument)</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">manage.py</span></tt> wraps this functionality, <em>adding the full environment of your
+project</em>.</p>
+</div>
+<p>When you look in the <tt class="docutils literal"><span class="pre">manage.py</span></tt> script Django created for you. You&#8217;ll see
+this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">&quot;DJANGO_SETTINGS_MODULE&quot;</span><span class="p">,</span> <span class="s">&quot;mysite.settings&quot;</span><span class="p">)</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<div class="build container">
+<p>The environmental var <tt class="docutils literal"><span class="pre">DJANGO_SETTINGS_MODULE</span></tt> is how the <tt class="docutils literal"><span class="pre">manage.py</span></tt>
+script is made aware of your project&#8217;s environment.</p>
+<p>This is why you shouldn&#8217;t rename the project package.</p>
+</div>
+<p>Since <em>manage.py</em> contains information about your specific environment, it is
+the tool you should use to run the development server:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>djangoenv<span class="o">)</span><span class="nv">$ </span><span class="nb">cd </span>mysite
+<span class="o">(</span>djangoenv<span class="o">)</span><span class="nv">$ </span>python manage.py runserver
+...
+</pre></div>
+</div>
+<p>Django runs on port 8000 by default.  Once it starts, you can view a new
+project by loading <tt class="docutils literal"><span class="pre">http://localhost:8000/</span></tt>.  You should see this:</p>
+<a class="reference internal image-reference" href="../../_images/django-start.png"><img alt="../../_images/django-start.png" class="align-center" src="../../_images/django-start.png" style="width: 80%;" /></a>
+</div>
+<div class="section" id="django-and-databases">
+<h3>Django and Databases<a class="headerlink" href="#django-and-databases" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">Django</span></tt> is really strongly tied to the idea of a database-driven
+application.</p>
+<div class="build container">
+<p>You can create a Django site without a database, but that falls under the
+sin of <em>fighting the framework</em>, don&#8217;t do it.</p>
+<p>You must provide connection information for the database you use through
+<tt class="docutils literal"><span class="pre">Django</span></tt> <em>configuration</em>.</p>
+<p>All Django configuration takes place in <tt class="docutils literal"><span class="pre">settings.py</span></tt> in your project
+folder.</p>
+</div>
+<p>In settings.py, add the following to connect to a postgres DB via psycopg2:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s">&#39;django.db.backends.postgresql_psycopg2&#39;</span><span class="p">,</span>
+        <span class="s">&#39;NAME&#39;</span><span class="p">:</span> <span class="s">&#39;&lt;db_name&gt;&#39;</span><span class="p">,</span>
+        <span class="s">&#39;USER&#39;</span><span class="p">:</span> <span class="s">&#39;&lt;db_user_name&gt;&#39;</span><span class="p">,</span>
+        <span class="s">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s">&#39;&lt;db_user_password&gt;&#39;</span><span class="p">,</span>
+        <span class="s">&#39;HOST&#39;</span><span class="p">:</span> <span class="s">&#39;&lt;host_for_db&gt;&#39;</span><span class="p">,</span>
+        <span class="s">&#39;PORT&#39;</span><span class="p">:</span> <span class="s">&#39;&lt;port_for_db&gt;&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that you will need to use <tt class="docutils literal"><span class="pre">createdb</span></tt> to create the postgresql
+database you intend to use before <tt class="docutils literal"><span class="pre">Django</span></tt> can use it.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can designate more than one database, if needed.  The settings for all
+databases are formatted as a dictionary of dictionaries:</p>
+</div>
+</div></blockquote>
+<p>As with any other framework, you have to start by initializing the database so
+it has the right tables.</p>
+<p>In Django, this is done with the <tt class="docutils literal"><span class="pre">syncdb</span></tt> command:</p>
+<div class="highlight-bash"><div class="highlight"><pre>(djangoenv)$ python manage.py syncdb
+Creating tables ...
+Creating table auth_permission
+Creating table auth_group_permissions
+Creating table auth_group
+...
+You just installed Django&#39;s auth system,
+...
+Would you like to create one now? (yes/no):
+</pre></div>
+</div>
+<div class="build container">
+<p>You can (and should) add your <em>superuser</em> at this prompt.</p>
+<p>I usually use &#8216;admin&#8217; and &#8216;admin&#8217; for the username and password while
+playing.</p>
+</div>
+<p>If you choose a fancy name and password and then forget them, or if you forget
+to create one when initializing your database, you can always create a new
+<em>superuser</em> by using the <tt class="docutils literal"><span class="pre">createsuperuser</span></tt> manage.py subcommand:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[django16env]
+heffalump:foo cewing$ python manage.py createsuperuser
+Username (leave blank to use &#39;cewing&#39;):
+Email address: cris@crisewing.com
+Password:
+Password (again):
+Superuser created successfully.
+[django16env]
+heffalump:foo cewing$
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="django-apps">
+<h2>Django Apps<a class="headerlink" href="#django-apps" title="Permalink to this headline">¶</a></h2>
+<p class="left">The app is <tt class="docutils literal"><span class="pre">Django's</span></tt> top-level <em>unit of work</em>.</p>
+<div class="section" id="projects-vs-apps">
+<h3>Projects vs. Apps<a class="headerlink" href="#projects-vs-apps" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;ve created a Django <em>project</em>. In Django a project represents a whole
+website:</p>
+<ul class="build simple">
+<li>global configuration settings</li>
+<li>inclusion points for additional functionality</li>
+<li>master list of URL endpoints</li>
+</ul>
+<div class="build container">
+<p>A Django <em>app</em> encapsulates a unit of functionality:</p>
+<ul class="build simple">
+<li>A blog section</li>
+<li>A discussion forum</li>
+<li>A content tagging system</li>
+</ul>
+<p>One <em>project</em> can (and likely will) consist of many <em>apps</em>.  Apps are
+made available to a project by including them in the <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt>
+setting in the active <tt class="docutils literal"><span class="pre">settings.py</span></tt> file.</p>
+</div>
+<p>Django already includes some <em>apps</em> for you.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>You can extend your Django site by creating an <em>app</em> of your own or by
+installing <em>apps</em> created by other Django programmers.</p>
+<p>As stated above, an <em>app</em> represents a unit of work within a system, the
+<em>project</em>. Once you have a project, you can create an <em>app</em>. This is
+accomplished using <tt class="docutils literal"><span class="pre">manage.py</span></tt>.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>djangoenv<span class="o">)</span><span class="nv">$ </span>python manage.py startapp myapp
+</pre></div>
+</div>
+<p>This should leave you with the following structure:</p>
+<div class="highlight-bash"><div class="highlight"><pre>mysite
+├── manage.py
+├── myapp
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── models.py
+│   ├── tests.py
+│   └── views.py
+└── mysite
+    ├── __init__.py
+    ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-your-app">
+<h3>Installing Your App<a class="headerlink" href="#installing-your-app" title="Permalink to this headline">¶</a></h3>
+<p>Extending Django with your app is accomplished by <em>installing</em>. This is pretty
+simple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+    <span class="s">&#39;myapp&#39;</span><span class="p">,</span> <span class="c"># &lt;- YOU ADD THIS PART</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Once your app is in this list, you can begin defining your data model by adding
+the <em>models</em> you will want.</p>
+</div>
+</div>
+<div class="section" id="the-django-orm">
+<h2>The Django ORM<a class="headerlink" href="#the-django-orm" title="Permalink to this headline">¶</a></h2>
+<p class="left">As stated above, Django is predicated on interactions with a database.</p>
+<div class="left container">
+<p>To simplify those interactions, Django uses an <strong>ORM</strong> (Object Relational
+Mapper).</p>
+<p>The purpose of an <em>ORM</em> is to <em>map</em> the attributes of a software <em>object</em>
+onto the rows of a <em>relational database</em>.</p>
+<p>The <em>ORM</em> is an <em>abstraction</em> of the database itself, and having it allows
+you to:</p>
+<ul class="build simple">
+<li>Work with objects without needing to know SQL</li>
+<li>Use different databases without caring about syntax variations</li>
+</ul>
+</div>
+<div class="section" id="django-models">
+<h3>Django Models<a class="headerlink" href="#django-models" title="Permalink to this headline">¶</a></h3>
+<p>An <em>ORM</em> works by representing database tables as objects. In Django these are
+called <em>models</em>.</p>
+<div class="build container">
+<p>The other well-known Python <em>ORM</em>, <tt class="docutils literal"><span class="pre">sqlalchemy</span></tt>, uses the same concept,
+but calls it a <tt class="docutils literal"><span class="pre">declarative_base</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">Flask-Sqlalchemy</span></tt> masks this difference by returning the <em>model</em>
+language.</p>
+<p>Any Python class in Django that is meant to be persisted <em>must</em> inherit
+from the Django <tt class="docutils literal"><span class="pre">Model</span></tt> class.</p>
+<p>This base class hooks in to the ORM functionality converting Python code to
+SQL.</p>
+<p>Learn more about
+<a class="reference external" href="https://docs.djangoproject.com/en/1.6/topics/db/models/">models</a>.</p>
+</div>
+<p>Models <strong>must</strong> be defined in the <tt class="docutils literal"><span class="pre">models.py</span></tt> Python module in your <em>app</em>.</p>
+<div class="build container">
+<p>As an example, consider a model similar to the one you created for your
+<tt class="docutils literal"><span class="pre">learning</span> <span class="pre">journal</span></tt> project:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="k">class</span> <span class="nc">Entry</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">created_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This creates a subclass of the Django base <tt class="docutils literal"><span class="pre">Model</span></tt> class. These few first
+attributes are instances of types of Django <em>Model Fields</em>.</p>
+</div>
+</div>
+<div class="section" id="model-fields">
+<h3>Model Fields<a class="headerlink" href="#model-fields" title="Permalink to this headline">¶</a></h3>
+<ul class="build simple">
+<li><tt class="docutils literal"><span class="pre">Field</span></tt> classes are defined in Django (or in add-on packages)</li>
+<li>Field attributes on a model map to columns in a database table</li>
+<li>The arguments you provide to each Field customize how it works<ul>
+<li>This means <em>both</em> how it operates in Django <em>and</em> how it is defined in SQL</li>
+</ul>
+</li>
+<li>There are arguments shared by all Field types</li>
+<li>There are also arguments specific to individual types</li>
+<li>You can read much more about
+<a class="reference external" href="https://docs.djangoproject.com/en/1.6/ref/models/fields/">Model Fields and options</a>.</li>
+</ul>
+<p>There are some features of our fields worth mentioning in specific.</p>
+<p>For example, we have no field that is designated as the <em>primary key</em>.</p>
+<ul class="simple">
+<li>You <em>can</em> make a field the primary key by adding <tt class="docutils literal"><span class="pre">primary_key=True</span></tt> in the
+arguments</li>
+<li>If you do not, Django will <strong>automatically</strong> create one. This field is always
+called <tt class="docutils literal"><span class="pre">id</span></tt></li>
+<li>No matter what the primary key field is called, its value is always
+available on a model instance as the <tt class="docutils literal"><span class="pre">pk</span></tt> attribute.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="build container">
+<p>The required <tt class="docutils literal"><span class="pre">max_length</span></tt> argument is specific to <tt class="docutils literal"><span class="pre">CharField</span></tt> fields.</p>
+<p>It affects <em>both</em> the Python and SQL behavior of a field.</p>
+<p>In python, it is used to <em>validate</em> supplied values during <em>model
+validation</em></p>
+<p>In SQL it is used in the column definition: <tt class="docutils literal"><span class="pre">VARCHAR(128)</span></tt></p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="build container">
+<p>Django also models SQL <em>relationships</em> as specific field types.</p>
+<p>The required positional argument is the class of the related Model.</p>
+<p>By default, the reverse relation is implemented as the attribute
+<tt class="docutils literal"><span class="pre">&lt;fieldname&gt;_set</span></tt>.</p>
+<p>You can override this naming behavior by providing the <tt class="docutils literal"><span class="pre">related_name</span></tt>
+argument. You can also prevent the reverse lookup through customization.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">created_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="build container">
+<p><tt class="docutils literal"><span class="pre">auto_now_add</span></tt> is available on all date and time fields. It sets the
+value of the field to <em>now</em> when an instance is first saved.</p>
+<p><tt class="docutils literal"><span class="pre">auto_now</span></tt> is similar, but sets the value anew each time an instance is
+saved.</p>
+<p>Setting either of these will cause the <tt class="docutils literal"><span class="pre">editable</span></tt> attribute of a field to
+be set to <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="build container">
+<p>The argument <tt class="docutils literal"><span class="pre">blank</span></tt> is shared across all field types. The default is
+<tt class="docutils literal"><span class="pre">False</span></tt></p>
+<p>This argument affects only the Python behavior of a field, determining if
+the field is <em>required</em></p>
+<p>The related <tt class="docutils literal"><span class="pre">null</span></tt> argument affects the SQL definition of a field: is the
+column NULL or NOT NULL</p>
+<p>It is generally advised that you <strong>not use null</strong> for text-type fields.
+This allows Django to by-default provide an empty string if blank input is
+allowed.</p>
+</div>
+</div>
+<div class="section" id="initializing-your-tables">
+<h3>Initializing Your Tables<a class="headerlink" href="#initializing-your-tables" title="Permalink to this headline">¶</a></h3>
+<p>Once your models are set, you have to create the database tables they define.
+This is accomplished in the same basic way as for the pre-installed apps:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>djangoenv<span class="o">)</span><span class="nv">$ </span>python manage.py syncdb
+Creating tables ...
+Creating table myapp_entry
+Installing custom SQL ...
+Installing indexes ...
+Installed 0 object<span class="o">(</span>s<span class="o">)</span> from 0 fixture<span class="o">(</span>s<span class="o">)</span>
+</pre></div>
+</div>
+<p>Django has now created a table for the new model. Notice that the table name is
+a combination of the name of the app <em>and</em> the name of the model. You can
+manually determine the names of the tables, but it&#8217;s not suggested.</p>
+</div>
+</div>
+<div class="section" id="django-and-wsgi">
+<h2>Django and WSGI<a class="headerlink" href="#django-and-wsgi" title="Permalink to this headline">¶</a></h2>
+<p class="left">As with <tt class="docutils literal"><span class="pre">Flask</span></tt> and other modern Python web frameworks, Django operates as a
+WSGI application.</p>
+<p>Let&#8217;s take a moment to trace how that works.</p>
+<div class="section" id="wsgi-plumbing">
+<h3>WSGI Plumbing<a class="headerlink" href="#wsgi-plumbing" title="Permalink to this headline">¶</a></h3>
+<p>In your project, you&#8217;ll find a file called <tt class="docutils literal"><span class="pre">wsgi.py</span></tt>.  Open it and you&#8217;ll
+find the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">&quot;DJANGO_SETTINGS_MODULE&quot;</span><span class="p">,</span> <span class="s">&quot;mysite.settings&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">django.core.wsgi</span> <span class="kn">import</span> <span class="n">get_wsgi_application</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">get_wsgi_application</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>That points us to a functon called <tt class="docutils literal"><span class="pre">get_wsgi_application</span></tt> in the
+<tt class="docutils literal"><span class="pre">django.core</span></tt> package.</p>
+<div class="build container">
+Open that package and you&#8217;ll find this:</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.core.handlers.wsgi</span> <span class="kn">import</span> <span class="n">WSGIHandler</span>
+
+<span class="k">def</span> <span class="nf">get_wsgi_application</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">WSGIHandler</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Again, it would appear that the application is a class instance.  It must be
+callable.  Let&#8217;s look it up:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">WSGIHandler</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">BaseHandler</span><span class="p">):</span>
+    <span class="n">initLock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+    <span class="n">request_class</span> <span class="o">=</span> <span class="n">WSGIRequest</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="c"># ...</span>
+        <span class="n">signals</span><span class="o">.</span><span class="n">request_started</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_class</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+            <span class="c"># ...</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">HttpResponseBadRequest</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="c"># ...</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">reason_phrase</span><span class="p">)</span>
+        <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">response_headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="s">&#39;Set-Cookie&#39;</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">))))</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="n">force_str</span><span class="p">(</span><span class="n">status</span><span class="p">),</span> <span class="n">response_headers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>Tonight, you&#8217;ll explore the basics of Django further by walking through the
+<a class="reference external" href="https://docs.djangoproject.com/en/1.6/intro/tutorial01/">Django Tutorial</a>.</p>
+<p>As you go along, pay attention to how the steps you take are similar to (and
+different from) working in Flask.</p>
+<p>In our next session, we&#8217;ll begin defining models for our class Django project,
+a photo-sharing site with features like Flickr or Instagram.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">An Introduction To Django</a><ul>
+<li><a class="reference internal" href="#starting-a-project">Starting a Project</a><ul>
+<li><a class="reference internal" href="#project-structure">Project Structure</a></li>
+<li><a class="reference internal" href="#django-admin-py-vs-manage-py"><tt class="docutils literal"><span class="pre">django-admin.py</span></tt> vs. <tt class="docutils literal"><span class="pre">manage.py</span></tt></a></li>
+<li><a class="reference internal" href="#django-and-databases">Django and Databases</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#django-apps">Django Apps</a><ul>
+<li><a class="reference internal" href="#projects-vs-apps">Projects vs. Apps</a></li>
+<li><a class="reference internal" href="#installing-your-app">Installing Your App</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-django-orm">The Django ORM</a><ul>
+<li><a class="reference internal" href="#django-models">Django Models</a></li>
+<li><a class="reference internal" href="#model-fields">Model Fields</a></li>
+<li><a class="reference internal" href="#initializing-your-tables">Initializing Your Tables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#django-and-wsgi">Django and WSGI</a><ul>
+<li><a class="reference internal" href="#wsgi-plumbing">WSGI Plumbing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="frameworks_and_wsgi.html"
+                        title="previous chapter">Introduction to Web Frameworks</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../assignments/index.html"
+                        title="next chapter">Homework Assignments</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../assignments/index.html" title="Homework Assignments"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="frameworks_and_wsgi.html" title="Introduction to Web Frameworks"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li><a href="index.html" >Day 21 Lectures</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

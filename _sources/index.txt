@@ -59,6 +59,7 @@ In This Course
     * :download:`Day 9: Concurrency examples for the echo server <downloads/echo_server_sync.tgz>`
     * :download:`Day 12: BDD Tests for the Learning Journal <downloads/learning_lettuce.tgz>`
     * :download:`Day 12: Updated apartment scraper script with JSON craigslist search <downloads/scraper.py>`
+    * :download:`Day 22: Skeleton script, test data, and training data for Sentiment Analysis Data <downloads/student_sentiment.tar.gz>`
 
 Overview
 ========
