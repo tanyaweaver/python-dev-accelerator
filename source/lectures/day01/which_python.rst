@@ -88,16 +88,16 @@ Integer vs. Float Division
 In Python there are two division operators: ``/`` and ``//``. In Python 3 these
 are ``division`` and ``integer division`` (also known as ``floored division``):
 
-    .. code-block:: pycon
+.. code-block:: pycon
 
-        >>> 1 / 2
-        0.5
-        >>> 1 // 2
-        0
-        >>> 3 / 2
-        1.5
-        >>> 3 // 2
-        1
+    >>> 1 / 2
+    0.5
+    >>> 1 // 2
+    0
+    >>> 3 / 2
+    1.5
+    >>> 3 // 2
+    1
 
 .. nextslide::
 
@@ -107,16 +107,16 @@ completely different story. The return values for both depend on what you give
 them, and the ``/`` operator may work as floored division if you give use
 integers:
 
-    .. code-block:: pycon
-    
-        >>> 1 // 2
-        0
-        >>> 1 / 2
-        0
-        >>> 1.0 / 2
-        0.5
-        >>> 1.0 // 2
-        0.0
+.. code-block:: pycon
+
+    >>> 1 // 2
+    0
+    >>> 1 / 2
+    0
+    >>> 1.0 / 2
+    0.5
+    >>> 1.0 // 2
+    0.0
 
 .. nextslide:: Handling the Difference
 

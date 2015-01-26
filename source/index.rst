@@ -95,7 +95,7 @@ Learning Philosophy
     the next. It is possible to enter the cycle at any stage and follow it
     through around the circle."
 
-    Review: http://www.simplypsychology.org/learning-kolb.html
+Review: http://www.simplypsychology.org/learning-kolb.html
 
 .. nextslide::
 

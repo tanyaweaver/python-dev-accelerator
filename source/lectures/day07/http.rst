@@ -129,12 +129,12 @@ HTTP Methods
 * Every HTTP request must start with a *method*
 * There are four main HTTP methods:
 
-    .. rst-class:: build
+  .. rst-class:: build
 
-    * GET
-    * POST
-    * PUT
-    * DELETE
+  * GET
+  * POST
+  * PUT
+  * DELETE
 
 * There are others, notably HEAD, but you won't see them too much
 
@@ -161,13 +161,13 @@ they might *change something* on the server:
 
 * Safe HTTP Methods
 
-    * GET
+  * GET
 
 * Unsafe HTTP Methods
 
-    * POST
-    * PUT
-    * DELETE
+  * POST
+  * PUT
+  * DELETE
 
 This is a *normative* distinction, which is to say **be careful**
 
@@ -182,13 +182,13 @@ request will *always* have the same result:
 
 * Idempotent HTTP Methods
 
-    * GET
-    * PUT
-    * DELETE
+  * GET
+  * PUT
+  * DELETE
 
 * Non-Idempotent HTTP Methods
 
-    * POST
+  * POST
 
 .. rst-class:: build
 .. container::
@@ -330,7 +330,7 @@ Headers take the form ``<Name>: <Value>``
 It's well worth being familiar with the possible headers for HTTP.  You can
 `read more about them here`_.
 
- .. _read more about them here: http://www.cs.tut.fi/~jkorpela/http.html
+.. _read more about them here: http://www.cs.tut.fi/~jkorpela/http.html
 
 
 HTTP Headers
