@@ -3,12 +3,14 @@ Python Learning Journal: Step 1
 *******************************
 
 In this tutorial we will begin the process of creating an online learning
-journal using Python and the Flask web framework.
+journal using Python and the `Pyramid web framework`_.
 
 The walk-through is intended to get you to a working application as quickly as
 possible. There will be many questions left unanswered as we proceed. Fear not.
 The answers will come as this course progresses. For now, simply focus on the
 process and getting to a working application.
+
+.. _Pyramid web framework: http://www.pylonsproject.org
 
 Prerequisites
 =============
@@ -93,7 +95,7 @@ Repository Name:
   ``learning_journal``
 
 Description:
-  A lightweight Flask web journal.
+  A lightweight Pyramid web journal.
 
 Leave the new repository as **Public**
 
@@ -123,9 +125,9 @@ page.
 
 There are two versions of this URL, one for HTTPS and the other for SSH.
 
-If you have `set up public key authentication`_ for your GitHub account, you
-will want to copy the SSH version of the URL.  Otherwise, you'll need to copy
-the HTTPS version.
+If you have `set up public key authentication`_ for your GitHub account (and
+you really, really should), you will want to copy the SSH version of the URL.
+Otherwise, you'll need to copy the HTTPS version.
 
 .. _set up public key authentication: https://help.github.com/articles/generating-ssh-keys
 
@@ -150,11 +152,15 @@ Once that is complete, you should have a new directory called
 ``learning_journal`` inside the project directory you created earlier.  Your
 filesystem should look something like this::
 
-    ./learning_journal/   # <- Your project directory
-    ├── learning_journal  # <- Your repository root
-    │   ├── LICENSE       # <- Initial files from GitHub
-    │   ├── README.md
-    │   ├── .gitignore
+.. code-block:: bash
+
+    [learning_journal]
+    heffalump:learning_journal cewing$ tree -a -I .git .
+    .                       # <- Your project directory
+    └── learning_journal    # <- Your repository root
+        ├── .gitignore      # <- Initial files from GitHub
+        ├── LICENSE
+        └── README.md
 
 
 Create a Branch for Today's Work
@@ -214,10 +220,10 @@ Using the ``pip`` command, install the required software as follows:
 .. code-block:: bash
 
     [learning_journal]
-    192:learning_journal cewing$ pip install flask psycopg2 gunicorn
-    Downloading/unpacking flask
+    192:learning_journal cewing$ pip install pyramid psycopg2 waitress
+    Downloading/unpacking pyramid
     ...
-    Successfully installed flask psycopg2 Werkzeug Jinja2 itsdangerous markupsafe gunicorn
+    Successfully installed pyramid psycopg2 zope.interface translationstring PasteDeploy WebOb repoze.lru zope.deprecation venusian waitress
     Cleaning up...
 
 If you are using Mac OS X you may see an error when installing Python code with
@@ -271,6 +277,9 @@ After creating this new file, you're file system layout should look like this::
         ├── README.md
         └──  requirements.txt
 
+Don't forget to add ``requirements.txt`` to your repository and commit your
+changes.
+
 
 Create a Database
 -----------------
@@ -314,8 +323,7 @@ lines:
     # -*- coding: utf-8 -*-
 
     DB_SCHEMA = """
-    DROP TABLE IF EXISTS entries;
-    CREATE TABLE entries (
+    CREATE TABLE IF NOT EXISTS entries (
         id serial PRIMARY KEY,
         title VARCHAR (127) NOT NULL,
         text TEXT NOT NULL,
@@ -330,25 +338,49 @@ column that will hold a timestamp.
 The App Skeleton
 ----------------
 
-We'll also need a basic Flask app skeleton to work from.
+We'll also need a basic Pyramid app skeleton to work from.
 
 Still in ``journal.py``, add the following:
 
 .. code-block:: python
 
     # add this at the top, just below the 'coding' line
-    from flask import Flask
+    import os
+    import logging
+    from pyramid.config import Configurator
+    from pyramid.session import SignedCookieSessionFactory
+    from pyramid.view import view_config
+    from waitress import serve
 
     # add this just below the SQL table definition we just created
-    app = Flask(__name__)
+    logging.basicConfig()
+    log = logging.getLogger(__file__)
 
-    @app.route('/')
-    def hello():
-        return u'Hello world!'
 
-    # put this at the very bottom of the file.
+    @view_config(route_name='home', renderer='string')
+    def home(request):
+        return "Hello World"
+
+
     if __name__ == '__main__':
-        app.run(debug=True)
+        # configuration settings
+        settings = {}
+        settings['reload_all'] = True
+        settings['debug_all'] = True
+        # secret value for session signing:
+        secret = os.environ.get('JOURNAL_SESSION_SECRET', 'itsaseekrit')
+        session_factory = SignedCookieSessionFactory(secret)
+        # configuration setup
+        config = Configurator(
+            settings=settings,
+            session_factory=session_factory
+        )
+        config.add_route('home', '/')
+        config.scan()
+        # serve app
+        app = config.make_wsgi_app()
+        port = os.environ.get('PORT', 5000)
+        serve(app, host='0.0.0.0', port=port)
 
 
 
@@ -361,17 +393,17 @@ way of letting your app know about the world around it.
 In your case, you have one thing you need to configure: a way to connect to the
 database.
 
-Flask gives many options for dealing with configuration, but in this case you
-are going to set values directly in the Flask app's ``config``. Add the
+Pyramid gives many options for dealing with configuration, but in this case you
+are going to set values directly in the ``settings`` dictionary. Add the
 following to your ``journal.py``:
 
 .. code-block:: python
 
-    # add this import at the top of your file:
-    import os
-
-    # add this after app is defined
-    app.config['DATABASE'] = os.environ.get(
+    # in the "if name == __main__:" block:
+    settings['reload_all'] = True # <- ALREADY THERE
+    settings['debug_all'] = True # <- ALREADY THERE
+    # ADD THIS
+    settings['db'] = os.environ.get(
         'DATABASE_URL', 'dbname=learning_journal user=cewing'
     )
 
@@ -402,10 +434,10 @@ the following code:
     # add this up at the top
     import psycopg2
 
-    # add the rest of this below the app.config statement
-    def connect_db():
+    # add this function before the "if __name__ == '__main__':" block
+    def connect_db(settings):
         """Return a connection to the configured database"""
-        return psycopg2.connect(app.config['DATABASE'])
+        return psycopg2.connect(settings['db'])
 
 
 Now that you can get an open connection to the database, you'll set up a
@@ -419,11 +451,15 @@ Add this code to ``journal.py`` next:
 
     # add this function after the connect_db function
     def init_db():
-        """Initialize the database using DB_SCHEMA
+        """Create database dables defined by DB_SCHEMA
 
-        WARNING: executing this function will drop existing tables.
+        Warning: This function will not update existing table definitions
         """
-        with closing(connect_db()) as db:
+        settings = {}
+        settings['db'] = os.environ.get(
+            'DATABASE_URL', 'dbname=learning_journal user=cewing'
+        )
+        with closing(connect_db(settings)) as db:
             db.cursor().execute(DB_SCHEMA)
             db.commit()
 
@@ -447,10 +483,9 @@ Then, at the prompt, import your app to set up the configuration, and run the
 
 .. code-block:: pycon
 
-    >>> from journal import app
     >>> from journal import init_db
     >>> init_db()
-    >>> ^D
+    >>>
 
 If that function returns silently, you've succeeded. Exit the interpreter with
 ``^D``.
@@ -508,12 +543,13 @@ App Deployment
 ==============
 
 You are going to put your learning journal online using `Heroku`_, a service
-that simplifies deploying web applications in a number of languages. 
+that simplifies deploying web applications in a number of languages.
 
 Moving on from here assumes that you have already created a Heroku account,
 downloaded and installed the toolbelt, and successfully logged in to Heroku
 from your command line. If that is not the case. Please `follow this tutorial`_
-to get up to speed.
+to get up to speed. You only need to do the first two steps (Introduction and
+Set up)
 
 .. _follow this tutorial: https://devcenter.heroku.com/articles/quickstart
 .. _Heroku: https://heroku.com
@@ -541,11 +577,10 @@ In your new ``Procfile``, type the following line of code:
 
 .. code-block:: text
 
-    web: gunicorn journal:app
+    web: python journal.py
 
-This tells heroku that you will be running a ``web`` service using the
-``gunicorn`` WSGI server and that your WSGI application is called ``app`` and
-can be found in the ``journal`` python module.
+This tells heroku that you will be running a ``web`` service and that the
+service will be provided by executing the ``python journal.py``.
 
 Once you've got that created, you should be able to use ``foreman``, provided
 by the Heroku Toolbelt, to start up your application:
@@ -556,10 +591,6 @@ by the Heroku Toolbelt, to start up your application:
     [step1]
     192:learning_journal cewing$ foreman start
     23:26:33 web.1  | started with pid 68019
-    23:26:33 web.1  | 2014-05-27 23:26:33 [68019] [INFO] Starting gunicorn 18.0
-    23:26:33 web.1  | 2014-05-27 23:26:33 [68019] [INFO] Listening at: http://0.0.0.0:5000 (68019)
-    23:26:33 web.1  | 2014-05-27 23:26:33 [68019] [INFO] Using worker: sync
-    23:26:33 web.1  | 2014-05-27 23:26:33 [68022] [INFO] Booting worker with pid: 68022
 
 With that process running in your terminal, start up your web browser and load
 ``http://127.0.0.1:5000``.  You should be able to see this:
@@ -745,7 +776,8 @@ created for us to connect to. The connection string is stored on Heroku as
 
 Our app expects something called ``DATABASE_URL`` to exist in our environment.
 The Heroku toolbelt provides another tool that allows us to connect the value
-they have us to the name we require.  Again, type this at your command line:
+they have us to the name we require.  Again, type this at your command line
+(and don't forget to use *your* database color):
 
 .. code-block:: bash
 
@@ -827,6 +859,42 @@ From there, it's just like what you did locally a short while ago:
     >>> init_db()
     >>>
 
-Use the standard ``^D`` to detatch from the terminal.  At this point you're
-safely done for the day.  Good work!
+Use the standard ``^D`` to detatch from the terminal.
+
+You may wish to verify that your initialization worked.  You can use the
+``heroku pg`` command to connect to the database directly with ``psql``:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [master=]
+    heffalump:learning_journal cewing$ heroku pg:psql
+    ---> Connecting to HEROKU_POSTGRESQL_RED_URL (DATABASE_URL)
+    psql (9.3.2, server 9.3.5)
+    SSL connection (cipher: DHE-RSA-AES256-SHA, bits: 256)
+    Type "help" for help.
+
+    evening-brushlands-7955::RED=> \d
+                      List of relations
+     Schema |      Name      |   Type   |     Owner
+    --------+----------------+----------+----------------
+     public | entries        | table    | kaplujiadphtmg
+     public | entries_id_seq | sequence | kaplujiadphtmg
+    (2 rows)
+
+    evening-brushlands-7955::RED=> \d entries
+                                        Table "public.entries"
+     Column  |            Type             |                      Modifiers
+    ---------+-----------------------------+------------------------------------------------------
+     id      | integer                     | not null default nextval('entries_id_seq'::regclass)
+     title   | character varying(127)      | not null
+     text    | text                        | not null
+     created | timestamp without time zone | not null
+    Indexes:
+        "entries_pkey" PRIMARY KEY, btree (id)
+
+
+This shows that your database does in fact have the ``entries`` table, and the
+table is correctly configured. At this point you're safely done for the day.
+Good work!
 
