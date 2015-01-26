@@ -150,7 +150,7 @@ Then, use the ``git clone`` command to make a local copy of your new repository:
 
 Once that is complete, you should have a new directory called
 ``learning_journal`` inside the project directory you created earlier.  Your
-filesystem should look something like this::
+filesystem should look something like this:
 
 .. code-block:: bash
 
