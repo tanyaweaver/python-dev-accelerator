@@ -12,6 +12,13 @@ process and getting to a working application.
 
 .. _Pyramid web framework: http://www.pylonsproject.org
 
+Our application will be built using a `Model-View-Controller`_ `pattern`_ where
+each component in our design falls into one of those three categories.
+
+.. _Model-View-Controller: http://www.tomdalling.com/blog/software-design/model-view-controller-explained/
+.. _pattern: http://blog.codinghorror.com/understanding-model-view-controller/
+
+
 Prerequisites
 =============
 
@@ -362,11 +369,11 @@ Still in ``journal.py``, add the following:
         return "Hello World"
 
 
-    if __name__ == '__main__':
-        # configuration settings
+    def main():
+        """Create a configured wsgi app"""
         settings = {}
-        settings['reload_all'] = True
-        settings['debug_all'] = True
+        settings['reload_all'] = os.environ.get('DEBUG', True)
+        settings['debug_all'] = os.environ.get('DEBUG', True)
         # secret value for session signing:
         secret = os.environ.get('JOURNAL_SESSION_SECRET', 'itsaseekrit')
         session_factory = SignedCookieSessionFactory(secret)
@@ -377,8 +384,12 @@ Still in ``journal.py``, add the following:
         )
         config.add_route('home', '/')
         config.scan()
-        # serve app
         app = config.make_wsgi_app()
+        return app
+
+
+    if __name__ == '__main__':
+        app = main()
         port = os.environ.get('PORT', 5000)
         serve(app, host='0.0.0.0', port=port)
 
@@ -399,10 +410,10 @@ following to your ``journal.py``:
 
 .. code-block:: python
 
-    # in the "if name == __main__:" block:
-    settings['reload_all'] = True # <- ALREADY THERE
-    settings['debug_all'] = True # <- ALREADY THERE
-    # ADD THIS
+    # in the "main" function:
+    settings['reload_all'] = os.environ.get('DEBUG', True) # <- THERE NOW
+    settings['debug_all'] = os.environ.get('DEBUG', True) # <- THERE NOW
+    # ADD THIS  vvv
     settings['db'] = os.environ.get(
         'DATABASE_URL', 'dbname=learning_journal user=cewing'
     )
@@ -434,7 +445,7 @@ the following code:
     # add this up at the top
     import psycopg2
 
-    # add this function before the "if __name__ == '__main__':" block
+    # add this function before the "main" function
     def connect_db(settings):
         """Return a connection to the configured database"""
         return psycopg2.connect(settings['db'])
