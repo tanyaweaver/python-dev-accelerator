@@ -271,8 +271,8 @@ your local machine and make an entry or two to try it out:
 When you're done testing it, use ``^C`` to quit.
 
 
-Authenticating a User
-=====================
+Controlling Access
+==================
 
 One thing you may have noticed while testing your app in a browser is that you
 did not have to log in. Convenient, but not really all that safe. Knowing the
@@ -323,19 +323,11 @@ And when you are working locally, developing your app, you've got a nice,
 simple fallback mechanism.
 
 
-*****************
-FIXME STARTS HERE
-*****************
+Configuring AuthN/AuthZ
+-----------------------
 
-avoid render errors
-===================
-
-
-Logging In
-----------
-
-To authenticate a user, the most basic pattern is to confirm a username and
-password. You'll need some sort of *controller* that will do this. It should:
+To *authenticate* a user, the most basic pattern is to confirm a username and
+password. In general the steps are to:
 
 * accept a username and password as arguments
 * raise an appropriate error if either is missing
@@ -349,41 +341,151 @@ HTTP response. This cookie is saved and re-transmitted to the server with each
 successive request. This gets around the *stateless* nature of HTTP by sending
 the required information back and forth.
 
-Flask provides a mechanism for accomplishing this task, the ``flask.session``
-object. This is another *local global* like ``flask.g`` that can hold
-informatino that should be persisted between requests.
+In the Pyramid web framework, control of the process of *authentication* is
+given to a class that implements the attributes and methods of an
+**Authentication Policy**.  There are a few of these policies made available in
+the `pyramid.authentication`_ package.
 
-Start by writing a test for a controller method that meets this specification.
-In ``test_journal.py`` add the following:
+.. _pyramid.authentication: http://docs.pylonsproject.org/docs/pyramid/en/latest/api/authentication.html
+
+For our authentication policy we'll be using the
+``AuthTktAuthenticationPolicy``. This policy issues an encrypted,
+`specially formatted cookie`_ to the user's browser. Whenever a new request
+comes in, Pyramid unencrypts the cookie and establishes the identity of the
+user from the data it contains.
+
+.. _specially formatted cookie: http://stackoverflow.com/questions/1844623/what-is-the-auth-tkt-cookie-format
+
+To set up this policy, we need to add some new configuration to our
+application. In ``journal.py`` make the following changes:
 
 .. code-block:: python
 
-    # at the top, add an import
-    from flask import session
+    # at the top, add a new import
+    from pyramid.authentication import AuthTktAuthenticationPolicy
 
-    # at the end, add new tests
-    def test_do_login_success(req_context):
-        username, password = ('admin', 'admin')
+    # then in the "main" function add this
+    def main():
+        # ... the first two lines are already there
+        # secret value for session signing:
+        secret = os.environ.get('JOURNAL_SESSION_SECRET', 'itsaseekrit')
+        session_factory = SignedCookieSessionFactory(secret)
+        # add a secret value for auth tkt signing
+        auth_secret = os.environ.get('JOURNAL_AUTH_SECRET', 'anotherseekrit')
+        # and add a new value to the constructor for our Configurator:
+        config = Configuration(
+            settings=settings,
+            session_factory=session_factory,
+            authentication_policy=AuthTktAuthenticationPolicy(
+                secret=auth_secret,
+                hashalg='sha512'
+            ),
+        )
+
+Once you know *who* someone is, you will also want to know *what rights* they
+should be given in your website. Pyramid provides for this through an
+**Authorization Policy**. There is a version of such a policy made available in
+the `pyramid.authorization`_ package. It's called the
+``ACLAuthorizationPolicy`` and it works by allowing you to specify permissions
+that should be granted or denied to certain *principals*.
+
+.. _pyramid.authorization: http://docs.pylonsproject.org/docs/pyramid/en/latest/api/authorization.html
+
+To enable this policy we'll again need to update our configuration. Return to
+``journal.py`` and the ``main`` function:
+
+.. code-block:: python
+
+    # add an import at the top of the file:
+    from pyramid.authorization import ACLAuthorizationPolicy
+
+    # and update our Configurator constructor like so:
+    def main():
+        # ...
+        config = Configuration(
+            settings=settings,
+            session_factory=session_factory,
+            authentication_policy=AuthTktAuthenticationPolicy(
+                secret=auth_secret,
+                hashalg='sha512'
+            ),
+            authorization_policy=ACLAuthorizationPolicy(),
+        )
+
+
+Testing Login
+-------------
+
+Before we implement login, we'll want to write some tests to cover what we want
+to have happen. For login, remember, the steps are:
+
+* accept a username and password from an incoming ``request``
+* raise an appropriate error if either is missing
+* raise an appropriate error if they cannot be confirmed to be correct
+
+We'll need to have a fixture that provides a request with the proper settings
+to verify a username and password. We can reproduce that from the configuration
+in our ``main`` function.  In ``test_journal.py`` add the following:
+
+.. code-block:: python
+
+    @pytest.fixture(scope='function')
+    def auth_req(request):
+        settings = {
+            'auth.username': 'admin',
+            'auth.password': 'secret',
+        }
+        testing.setUp(settings=settings)
+        req = testing.DummyRequest()
+
+        def cleanup():
+            testing.tearDown()
+
+        request.addfinalizer(cleanup)
+
+        return req
+
+**NOTES**
+
+* The keys to our settings dictionary match those we use in the real
+  configuration of our application
+* The ``setUp`` function from `pyramid.testing`_ provides the setup needed to
+  make a ``DummyRequest`` act like a real one.
+* The ``tearDown`` function reverses that process for good test isolation.
+* The request we return will behave like a real request in that it will provide
+  access to the settings we generated.
+
+.. _pyramid.testing: http://docs.pylonsproject.org/docs/pyramid/en/latest/api/testing.html
+
+Next, we write a few tests that use our new fixture:
+
+.. code-block:: python
+
+    def test_do_login_success(auth_req):
         from journal import do_login
-        assert 'logged_in' not in session
-        do_login(username, password)
-        assert 'logged_in' in session
+        auth_req.params = {'username': 'admin', 'password': 'secret'}
+        assert do_login(auth_req)
 
 
-    def test_do_login_bad_password(req_context):
-        username = 'admin'
-        bad_password = 'wrongpassword'
+    def test_do_login_bad_pass(auth_req):
         from journal import do_login
-        with pytest.raises(ValueError):
-            do_login(username, bad_password)
+        auth_req.params = {'username': 'admin', 'password': 'wrong'}
+        assert not do_login(auth_req)
 
 
-    def test_do_login_bad_username(req_context):
-        password = 'admin'
-        bad_username = 'wronguser'
+    def test_do_login_bad_user(auth_req):
         from journal import do_login
-        with pytest.raises(ValueError):
-            do_login(bad_username, password)
+        auth_req.params = {'username': 'bad', 'password': 'secret'}
+        assert not do_login(auth_req)
+
+
+    def test_do_login_missing_params(auth_req):
+        from journal import do_login
+        for params in ({'username': 'admin'}, {'password': 'secret'}):
+            auth_req.params = params
+            with pytest.raises(ValueError):
+                do_login(auth_req)
+
 
 Run your tests, and you should see that they fail:
 
@@ -391,69 +493,62 @@ Run your tests, and you should see that they fail:
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ py.test
-    ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
-    collected 9 items
+    heffalump:learning_journal cewing$ py.test --tb=native
+    ============================== test session starts ==============================
+    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
+    collected 10 items
 
-    test_journal.py ......FFF
+    test_journal.py ......FFFF
 
-    =================================== FAILURES ===================================
-    ____________________________ test_do_login_success _____________________________
-
-    req_context = None
-
-        def test_do_login_success(req_context):
-            username, password = ('admin', 'admin')
-    >       from journal import do_login
-    E       ImportError: cannot import name do_login
-
-    test_journal.py:132: ImportError
-    __________________________ test_do_login_bad_password __________________________
-
-    req_context = None
-
-        def test_do_login_bad_password(req_context):
-            username = 'admin'
-            bad_password = 'wrongpassword'
-    >       from journal import do_login
-    E       ImportError: cannot import name do_login
-
-    test_journal.py:141: ImportError
-    __________________________ test_do_login_bad_username __________________________
-
-    req_context = None
-
-        def test_do_login_bad_username(req_context):
-            password = 'admin'
-            bad_username = 'wronguser'
-    >       from journal import do_login
-    E       ImportError: cannot import name do_login
-
-    test_journal.py:149: ImportError
-    ====================== 3 failed, 6 passed in 0.24 seconds ======================
+    =================================== FAILURES ====================================
+    _____________________________ test_do_login_success _____________________________
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 189, in test_do_login_success
+        from journal import do_login
+    ImportError: cannot import name do_login
+    ____________________________ test_do_login_bad_pass _____________________________
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 195, in test_do_login_bad_pass
+        from journal import do_login
+    ImportError: cannot import name do_login
+    ____________________________ test_do_login_bad_user _____________________________
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 201, in test_do_login_bad_user
+        from journal import do_login
+    ImportError: cannot import name do_login
+    _________________________ test_do_login_missing_params __________________________
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 207, in test_do_login_missing_params
+        from journal import do_login
+    ImportError: cannot import name do_login
+    ====================== 4 failed, 6 passed in 0.41 seconds =======================
+    [learning_journal]
+    [step3 *]
+    heffalump:learning_journal cewing$
 
 Now, we need to implement the ``do_login`` function. Back in ``journal.py`` add
 the following:
 
 .. code-block:: python
 
-    # add an import at the top
-    from flask import session
+    def do_login(request):
+        username = request.params.get('username', None)
+        password = request.params.get('password', None)
+        if not (username and password):
+            raise ValueError('both username and password are required')
 
-    def do_login(username='', passwd=''):
-        if username != app.config['ADMIN_USERNAME']:
-            raise ValueError
-        if passwd != app.config['ADMIN_PASSWORD']:
-            raise ValueError
-        session['logged_in'] = True
+        settings = request.registry.settings
+        if username == settings.get('auth.username', ''):
+            if password == settings.get('auth.password', ''):
+                return True
+        return False
 
 **NOTES**
 
 * Do not distinguish between a bad password and a bad username. To do so is to
   leak sensitive information.
-* Do not store more information than is absolutely required in a session.
-* The ``flask.session`` local global functions just like a dictionary.
+* You can always get hold of the settings for your application from
+  ``request.registry.settings``
 
 Try running your tests again to see if they work:
 
@@ -461,63 +556,14 @@ Try running your tests again to see if they work:
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ py.test
-    ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
-    collected 9 items
+    heffalump:learning_journal cewing$ py.test --tb=native
+    ============================== test session starts ==============================
+    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
+    collected 10 items
 
-    test_journal.py ......F..
+    test_journal.py ..........
 
-    =================================== FAILURES ===================================
-    ____________________________ test_do_login_success _____________________________
-
-    req_context = None
-
-        def test_do_login_success(req_context):
-            username, password = ('admin', 'admin')
-            from journal import do_login
-            assert 'logged in' not in session
-    >       do_login(username, password)
-
-    test_journal.py:134:
-
-    ...
-
-    E       RuntimeError: the session is unavailable because no secret key was set.  Set the secret_key on the application to something unique and secret.
-
-    ../../../virtualenvs/learning_journal/lib/python2.7/site-packages/flask/sessions.py:126: RuntimeError
-    ====================== 1 failed, 8 passed in 0.41 seconds ======================
-    [learning_journal]
-    [step3 *]
-    heffalump:learning_journal cewing$
-
-As it turns out, Flask will not allow using the session without having a
-**secret key** configured.  This key is used to perform the encryption of the
-cookie sent back to the user. Preventing you from using a session without one
-is a good example of *secure by default*.
-
-Back in ``journal.py`` go ahead and add a new configuration setting:
-
-.. code-block:: python
-
-    app.config['SECRET_KEY'] = os.environ.get(
-        'FLASK_SECRET_KEY', 'sooperseekritvaluenooneshouldknow'
-    )
-
-And now running your tests will work:
-
-.. code-block:: python
-
-    [learning_journal]
-    [step3 *]
-    heffalump:learning_journal cewing$ py.test
-    ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
-    collected 9 items
-
-    test_journal.py .........
-
-    =========================== 9 passed in 0.24 seconds ===========================
+    =========================== 10 passed in 0.42 seconds ===========================
     [learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$
@@ -534,7 +580,7 @@ user directly against the one stored:
 
 .. code-block:: python
 
-    if passwd != app.config['ADMIN_PASSWORD']:
+    if password == settings.get('auth.password', ''):
 
 This implies that the password you have stored on the server is in plain text.
 **THIS IS A TERRIBLE IDEA**. Even when using environment variables to store a
@@ -549,12 +595,11 @@ algorithm, and comparing that value against the hash of the value the user
 provides.
 
 Python comes with a number of reasonable hashing algorithms, but I suggest
-instead using an external library called `passlib`_. It provides
-implementations of a large number of hashing algorithms, with a single unified
-interface for interacting with them. It makes changing from one hashing
-algorithm to another very simple.
+instead using an external library called `cryptacular`_. It provides
+implementations of a couple of hashing algorithms, with a single unified
+interface for interacting with them.
 
-.. _passlib: http://pythonhosted.org/passlib/
+.. _cryptacular: https://pypi.python.org/pypi/cryptacular/
 
 Start by installing the library in your virtual environment for this project:
 
@@ -562,41 +607,55 @@ Start by installing the library in your virtual environment for this project:
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ pip install passlib
-    Downloading/unpacking passlib
-      Downloading passlib-1.6.2.tar.gz (408kB): 408kB downloaded
-      Running setup.py (path:/Users/cewing/virtualenvs/learning_journal/build/passlib/setup.py) egg_info for package passlib
+    heffalump:learning_journal cewing$ pip install cryptacular
+    Downloading/unpacking cryptacular
+    ...
 
-    Installing collected packages: passlib
-      Running setup.py install for passlib
-
-    Successfully installed passlib
+    Successfully installed cryptacular pbkdf2
     Cleaning up...
     [learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$
 
-Next, you'll upgrade how you calculate the password for ``app.config`` in
+Next, you'll upgrade how you calculate the password in ``main`` in
 ``journal.py``:
 
 .. code-block:: python
 
     # at the top, add a new import
-    from passlib.hash import pbkdf2_sha256
+    from cryptacular.bcrypt import BCRYPTPasswordManager
 
     # then update the ADMIN_PASSWORD config setting:
+    manager = BCRYPTPasswordManager()
     app.config['ADMIN_PASSWORD'] = os.environ.get(
-        'ADMIN_PASSWORD', pbkdf2_sha256.encrypt('admin')
+        'ADMIN_PASSWORD', manager.encode('secret')
     )
 
 **NOTES**
 
-* You import the hashing algorithm you want to use from ``passlib.hash``
-* Then you call the ``encrypt`` method passing the value you wish to hash
-* Many hashing algorithms have options you can pass as additional arguments to
-  ``<hash>.encrypt``, `read the documentation to see what's available`_.
+* You import the manager you want from one of the cryptacular modules
+  (``bcrypt`` or ``pbkdf2``)
+* Then you instantiate a manager instance
+* Finally, you call the ``encode`` method of the manager instance to encrypt
+  the value you pass in.
 
-.. _read the documentation to see what's available: http://pythonhosted.org/passlib/
+Finally, repeat that process for the settings you create for your ``auth_req``
+fixture in ``test_journal.py``:
+
+.. code-block:: python
+
+    # the import
+    from cryptacular.bcrypt import BCRYPTPasswordManager
+
+    # and the fixture:
+    @pytest.fixture(scope='function')
+    def auth_req(request):
+        manager = BCRYPTPasswordManager()
+        settings = {
+            'auth.username': 'admin',
+            'auth.password': manager.encode('secret'),
+        }
+        # ...
 
 If you run your tests at this point, you'll see that the successful login test
 will now fail:
@@ -605,60 +664,47 @@ will now fail:
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ py.test -k "do_login_success"
-    ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
-    collected 9 items
+    heffalump:learning_journal cewing$ py.test --tb=native
+    ============================== test session starts ==============================
+    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
+    collected 10 items
 
-    test_journal.py F
+    test_journal.py ......F...
 
-    =================================== FAILURES ===================================
-    ____________________________ test_do_login_success _____________________________
-
-    req_context = None
-
-        def test_do_login_success(req_context):
-            username, password = ('admin', 'admin')
-            from journal import do_login
-            assert 'logged_in' not in session
-    >       do_login(username, password)
-
-    test_journal.py:133:
-    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-    username = 'admin', passwd = 'admin'
-
-        def do_login(username='', passwd=''):
-            if username != app.config['ADMIN_USERNAME']:
-                raise ValueError
-            if passwd != app.config['ADMIN_PASSWORD']:
-    >           raise ValueError
-    E           ValueError
-
-    journal.py:108: ValueError
-    ================== 8 tests deselected by '-kdo_login_success' ==================
-    ==================== 1 failed, 8 deselected in 0.34 seconds ====================
+    =================================== FAILURES ====================================
+    _____________________________ test_do_login_success _____________________________
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 193, in test_do_login_success
+        assert do_login(auth_req)
+    AssertionError: assert <function do_login at 0x10cae3410>(<pyramid.testing.DummyRequest object at 0x10cd6a510>)
+    ====================== 1 failed, 9 passed in 1.06 seconds =======================
     [learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$
 
-Updating the ``do_login`` function to use the same hashing algorithm should do
-the trick:
+To fix the failure, we have to update the ``do_login`` function we wrote in
+``journal.py`` before:
 
 .. code-block:: python
 
-    def do_login(username='', passwd=''):
-        if username != app.config['ADMIN_USERNAME']:
-            raise ValueError
-        if not pbkdf2_sha256.verify(passwd, app.config['ADMIN_PASSWORD']):
-            raise ValueError
-        session['logged_in'] = True
+    def do_login(request):
+        username = request.params.get('username', None)
+        password = request.params.get('password', None)
+        if not (username and password):
+            raise ValueError('both username and password are required')
+
+        settings = request.registry.settings
+        # below here is changed
+        manager = BCRYPTPasswordManager()
+        if username == settings.get('auth.username', ''):
+            hashed = settings.get('auth.password', '')
+            return manager.check(hashed, password)
 
 **NOTES**
 
-* ``<hash>.verify`` is the other half of the passlib API
-* The first argument is the unhashed value from the user, the second is the
-  stored value
+* ``manager.check`` is the other half of the cryptacular manager API
+* The first argument is the hashed value (stored in our settings), the second
+  is the open value passed in from the request
 * The method returns ``True`` if they match, and ``False`` if not.
 
 Now try that test again:
@@ -667,20 +713,27 @@ Now try that test again:
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ py.test -k "do_login_success"
-    ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
-    collected 9 items
+    heffalump:learning_journal cewing$ py.test --tb=native
+    ============================== test session starts ==============================
+    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
+    collected 10 items
 
-    test_journal.py .
+    test_journal.py ..........
 
-    ================== 8 tests deselected by '-kdo_login_success' ==================
-    ==================== 1 passed, 8 deselected in 0.51 seconds ====================
+    =========================== 10 passed in 1.05 seconds ===========================
     [learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$
 
 Sweeeeeet!
+
+
+*****************
+FIXME STARTS HERE
+*****************
+
+avoid rendering errors
+======================
 
 
 Implement a Front-End
