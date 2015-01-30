@@ -3,7 +3,7 @@ Python Learning Journal: Step 3
 *******************************
 
 In part one of this tutorial, you built the *data model* for a simple learning
-journal web application using Flask and PostgreSQL. You deployed this work to
+journal web application using Pyramid and PostgreSQL. You deployed this work to
 Heroku and confirmed that you could see a simple page.
 
 In part two, you constructed the *control layer* needed to read and write
@@ -58,8 +58,8 @@ Adding Journal Entries
 ======================
 
 After deploying in the last part, you creted an entry by using your *controller
-api* directly at the Python command line. Not so convenient, honestly. You need
-a view that will:
+api* directly at the Python command line. Not so convenient, honestly. What you
+really want is a *view function* that will:
 
 * Accept incoming form data from a request
 * Get the data for ``title`` and ``text``
@@ -75,60 +75,64 @@ Again, first come the tests. Add this new code to ``test_journal.py``:
 
 .. code-block:: python
 
-    def test_add_entries(db):
+    def test_post_to_add_view(app):
         entry_data = {
-            u'title': u'Hello',
-            u'text': u'This is a post',
+            'title': 'Hello there',
+            'text': 'This is a post',
         }
-        actual = app.test_client().post(
-            '/add', data=entry_data, follow_redirects=True
-        ).data
-        assert 'No entries here so far' not in actual
+        response = app.post('/add', params=entry_data, status='3*')
+        redirected = response.follow()
+        actual = redirected.body
         for expected in entry_data.values():
             assert expected in actual
 
 **NOTES**
 
-* You are using the ``db`` fixture to ensure that an initialized database is
-  present.
-* The ``post`` method of the Flask ``test_client`` sends an ``HTTP POST``
+* You are using the ``app`` fixture because you want to ensure that you have an
+  application to interact with.
+* The ``post`` method of the WebTest ``app`` sends an ``HTTP POST``
   request to the provided URL.
-* The ``data`` argument provided represents form input data. In real life, the
+* The ``params`` argument provided represents form input data. In real life, the
   user would have entered data into HTML form elements.
+* The ``status`` argument asserts that the HTTP status code of the response
+  matches. Here we are looking for a *redirect* response (why?).
 
-Verify that your test fails as expected:
+
+Before you run this test, a word on the format of pytest output.  It's quite
+verbose by default.  Sometimes it's easier to see what's going wrong if you
+have less to look at. Luckily, pytest provides `a way to customize test
+output`_.  We can use the ``--tb`` flag to control how output is presented.
+The value ``native`` will simply print native Python tracebacks for a more
+familiar look:
+
+.. _a way to customize test output: http://pytest.org/latest/usage.html#modifying-python-traceback-printing
 
 .. code-block:: bash
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ py.test
-    ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+    heffalump:learning_journal cewing$ py.test --tb=native
+    ============================== test session starts ==============================
+    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
     collected 6 items
 
     test_journal.py .....F
 
-    =================================== FAILURES ===================================
-    _______________________________ test_add_entries _______________________________
-
-    db = None
-
-        def test_add_entries(db):
-            entry_data = {
-                u'title': u'Hello',
-                u'text': u'This is a post',
-            }
-            actual = app.test_client().post(
-                '/add', data=entry_data, follow_redirects=True
-            ).data
-            assert 'No entries here so far' not in actual
-            for expected in entry_data.values():
-    >           assert expected in actual
-    E           assert 'This is a post' in '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.</p>\n'
-
-    test_journal.py:125: AssertionError
-    ====================== 1 failed, 5 passed in 0.27 seconds ======================
+    =================================== FAILURES ====================================
+    _____________________________ test_post_to_add_view _____________________________
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 163, in test_post_to_add_view
+        response = app.post('/add', params=entry_data, status='3*')
+      File "/Users/cewing/virtualenvs/learning_journal/lib/python2.7/site-packages/webtest/app.py", line 370, in post
+        content_type=content_type)
+      File "/Users/cewing/virtualenvs/learning_journal/lib/python2.7/site-packages/webtest/app.py", line 735, in _gen_request
+        expect_errors=expect_errors)
+      File "/Users/cewing/virtualenvs/learning_journal/lib/python2.7/site-packages/webtest/app.py", line 631, in do_request
+        self._check_status(status, res)
+      File "/Users/cewing/virtualenvs/learning_journal/lib/python2.7/site-packages/webtest/app.py", line 666, in _check_status
+        "Bad response: %s (not %s)", res_status, status)
+    AppError: Bad response: 404 Not Found (not 3*)
+    ====================== 1 failed, 5 passed in 0.41 seconds =======================
     [learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$
@@ -138,39 +142,54 @@ Implement Adding An Entry
 -------------------------
 
 You've already created the controller you need to write entries. All you lack
-is a **view** function to do the work (in ``journal.py``):
+is a *view function* to do the work. Because a Pyramid view function must
+either pass data to a renderer or return a value suitable as an HTTP response,
+we cannot use the *controller* we wrote yesterday directly.  We need to add a
+new *view function* (in ``journal.py``) that will:
+
+* Pass the ``request`` to our ``write_entry`` function so that function can try
+  writing an entry.
+* Handle any exceptions raised by ``write_entry`` appropriately, returning a
+  useful HTTP response.
+* Send the viewer back to the home page if the entry was successfully written
+
+We'll also need to configure a *route* that will connect to this new *view
+function*.
 
 .. code-block:: python
 
     # add imports
-    from flask import abort
-    from flask import request
-    from flask import url_for
-    from flask import redirect
+    from pyramid.httpexceptions import HTTPFound, HTTPInternalServerError
 
-    # and then down by the l
-    @app.route('/add', methods=['POST'])
-    def add_entry():
+    # and then down below write_entry
+    @view_config(route_name='add', request_method='POST')
+    def add_entry(request):
         try:
-            write_entry(request.form['title'], request.form['text'])
+            write_entry(request)
         except psycopg2.Error:
             # this will catch any errors generated by the database
-            abort(500)
-        return redirect(url_for('show_entries'))
+            return HTTPInternalServerError
+        return HTTPFound(request.route_url('home'))
+
+    # finally, in the "main" function:
+    config.add_route('home', '/') # <- already present
+    config.add_route('add', '/add') # <- ADD THIS
+
 
 **NOTES**
 
-* You can specify the HTTP methods that Flask will allow for any view. By
-  default these are ``GET`` and ``HEAD``.
-* Here you explicitly allow only ``POST`` requests.
-* You can use the ``flask.abort()`` function to return an HTTP error response.
+* You can specify the HTTP methods that Pyramid will allow for any view. By
+  default any HTTP method will work, here you explicitly allow only ``POST``
+  requests.
+* The ``pyramid.httpexceptions`` module contains all sorts of useful HTTP
+  Response types.
 * You catch any errors generated by the database and use the HTTP error code
   ``500 Internal Server Error`` to signal the user that an unrecoverable
   problem occurred.
-* The ``redirect`` method takes the URL of the page where you want your users
-  to end up.
-* The ``url_for`` method generates the correct URL for a given *view*,
-  decoupling your code from specific URLs.
+* The ``HTTPFound`` response requires the URL of the page where you want your
+  users to end up.
+* The ``route_url`` method of the ``request`` generates the correct URL for a
+  given *route* by name, decoupling your code from specific URLs.
 
 Try running your tests again.  This time they should all pass:
 
@@ -178,30 +197,33 @@ Try running your tests again.  This time they should all pass:
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ py.test
-    ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+    heffalump:learning_journal cewing$ py.test --tb=native
+    ============================== test session starts ==============================
+    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
     collected 6 items
 
     test_journal.py ......
 
-    =========================== 6 passed in 0.21 seconds ===========================
+    =========================== 6 passed in 0.40 seconds ============================
     [learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$
 
-**Hooray!**
+This new view is a bit more complex than anything we've done before, but we
+have only one test on it.  What more might we test? What are possible failure
+modes for this view?  What happens if we try to use ``app.get('/add')``?  See
+if you can't write a few other tests that better cover the possibilities.
+
+HTML Forms
+----------
 
 You're almost done. You can add entries and view them. But look at that
-last view. Do you see a call to ``render_template`` in there at all?
+last view. Is there a *renderer* associated with it at all?
 
 There isn't one. That's because that view is never meant to be be visible.
 Look carefully at the logic. What happens?
 
 So where do the form values come from?
-
-Create the Form
----------------
 
 There's only one visible page in your app so far. Why not add a form there?
 Open ``list_entries.html`` and add the following code:
@@ -210,7 +232,7 @@ Open ``list_entries.html`` and add the following code:
 
     {% block body %}  <!-- already there -->
     <aside>
-    <form action="{{ url_for('add_entry') }}" method="POST" class="add_entry">
+    <form action="{{ request.route_url('add') }}" method="POST" class="add_entry">
       <div class="field">
         <label for="title">Title</label>
         <input type="text" size="30" name="title" id="title"/>
@@ -228,7 +250,9 @@ Open ``list_entries.html`` and add the following code:
 
 **NOTES**
 
-* Remember that Flask provides access to ``url_for()`` in templates.
+* The pyramid_jinja2 *renderer* provides access to the ``request`` instance.
+  You can use the same ``route_url`` method in a jinja2 template to create URLs
+  for form submission, links and so on.
 * You can use the ``method`` attribute of a ``<form>`` tag to determine what
   HTTP method will be used when the form is submitted.
 * You use the HTML5 ``<aside>`` tag to indicate that the form is not part of
@@ -239,11 +263,10 @@ your local machine and make an entry or two to try it out:
 
 .. code-block:: bash
 
-    [learning_journal]
+    learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$ python journal.py
-     * Running on http://127.0.0.1:5000/
-     * Restarting with reloader
+    serving on http://0.0.0.0:5000
 
 When you're done testing it, use ``^C`` to quit.
 
@@ -252,17 +275,18 @@ Authenticating a User
 =====================
 
 One thing you may have noticed while testing your app in a browser is that you
-did not have to log in. Convenient, but not really all that safe. You probably
-don't want to allow just anyone to post journal entries in your journal.
+did not have to log in. Convenient, but not really all that safe. Knowing the
+kind of place the internet is, you probably don't want to allow just anyone to
+post journal entries in your journal.
 
 The process of verifying the identity of a user visiting your website is called
 **authentication** (AuthN for short). The closely related, but different
 process of determining what *rights* an authenticated user has in your website
 is called **authorization** (AuthZ).
 
-Next, you'll be adding *authentication* to your journal.  This will allow you
-to display entries to the general public while reserving the ability to write
-new entries to a known user (you).
+Next, you'll be adding *authentication* and *authorization* to your journal.
+This will allow you to display entries to the general public while reserving
+the ability to write new entries to a known user (you).
 
 Storing a User
 --------------
@@ -276,21 +300,16 @@ user?
 
 How about *configuration*?
 
-Add the following lines to ``journal.py``:
+Add the following lines to ``journal.py`` in the "main" function:
 
 .. code-block:: python
 
     # this configuratin setting is already there
-    app.config['DATABASE'] = os.environ.get(
+    settings['db'] = os.environ.get(
         'DATABASE_URL', 'dbname=learning_journal user=cewing'
     )
-    # add the following two new settings just below
-    app.config['ADMIN_USERNAME'] = os.environ.get(
-        'ADMIN_USERNAME', 'admin'
-    )
-    app.config['ADMIN_PASSWORD'] = os.environ.get(
-        'ADMIN_PASSWORD', 'admin'
-    )
+    settings['auth.username'] = os.environ.get('AUTH_USERNAME', 'admin')
+    settings['auth.password'] = os.environ.get('AUTH_PASSWORD', 'secret')
 
 After this, your app will have configuration settings that represent the
 *username* and *password* for your administrative user.
@@ -302,6 +321,14 @@ reasonably secure fashion.
 
 And when you are working locally, developing your app, you've got a nice,
 simple fallback mechanism.
+
+
+*****************
+FIXME STARTS HERE
+*****************
+
+avoid render errors
+===================
 
 
 Logging In

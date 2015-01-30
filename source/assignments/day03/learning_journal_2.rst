@@ -448,7 +448,6 @@ Start by writing a test that demonstrates the desired functionality. In
         # manually commit so we can see the entry on query
         req_context.db.commit()
 
-        assert result == {}
         rows = run_query(req_context.db, "SELECT title, text FROM entries")
         assert len(rows) == 1
         actual = rows[0]
@@ -529,7 +528,6 @@ for more on this.
         text = request.params.get('text', None)
         created = datetime.datetime.utcnow()
         request.db.cursor().execute(INSERT_ENTRY, [title, text, created])
-        return {}
 
 The function we create here is a **controller**.  It takes information from a
 ``request``, passes it to the *data model* for persistence, and returns some
@@ -845,14 +843,6 @@ properly is in place.
 
 Once you are done, commit your changes to ``git`` and make a good commit
 message explaining what you've done and why.
-
-
-*******************
-FIXME STARTING HERE
-*******************
-
-just to save errors
-===================
 
 
 Set Up Your Templates
@@ -1234,33 +1224,63 @@ first step of this tutorial as well:
         return "Hello World"
 
 The ``view_config`` decorator is used by Pyramid to decorate some function that
-can serve as a *view*.  The sole hard-and-fast requirement of a view is that it
-take ``request`` as an argument.
+can serve as a *view function*.  The sole hard-and-fast requirement of a view
+function is that it take ``request`` as an argument.
 
 Do you have any other functions you've written so far in ``journal.py`` that
-might also serve as ``views``?
+might also serve as *view functions*?
 
 The ``view_config`` decorator can take a number of arguments. One that you must
-provide is ``route_name``. This parameter serves to connect a *view* to a
-*route*.
+provide is ``route_name``. This parameter serves to connect a *view function*
+to a *route*.
 
-When Pyramid matches the ``'home'`` route, it then seeks a view that is
-configured with that *route_name*. This ``home`` function is found, and it is
-executed.
+When Pyramid matches the ``'home'`` route, it then seeks a view function that
+is configured with that *route_name*. This ``home`` function is found, and it
+is executed.
 
 **Rendering a Response**
 
 After the view is executed, the return value of the function is passed on to
 any *renderer* configured by the ``view_config`` decorator.  That *renderer* is
-responsible for turning the data from the *view* function into a response
+responsible for turning the data from the *view function* into a response
 suitable for sending back to a client.  In this case, the ``'string'`` renderer
-takes whatever value is returned by a *view* and sends it back to the client as
-a plain text response.  This is why your test sees the body of the response as
-"Hello World"!
+takes whatever value is returned by the *view function* and sends it back to
+the client as a plain text response.  This is why your test sees the body of
+the response as "Hello World"!
 
 A view *can* be configured without a *renderer*.  If this is the case, the view
 itself is responsible for returning a value suitable for returning to the
 client.  We will see an example of this later.
+
+A Word on Terminology
+---------------------
+
+Although the MVC pattern is a useful abstraction, there are a few differences
+in how things are named in Python web frameworks:
+
+.. rst-class:: centered width-80%
+
++-------------------+-------------------------+
+|  MVC Terminology  |  Python Web Frameworks  |
++===================+=========================+
+| Model             | Model                   |
++-------------------+-------------------------+
+| Conroller         | - View Function         |
+|                   | - Class Based View      |
++-------------------+-------------------------+
+| View              | - Renderer              |
+|                   | - Template              |
+|                   | - HTTP Response         |
++-------------------+-------------------------+
+
+Note in particular that what *MVC* calls a *controller* is most directly
+analogous to what Python calls a *view*. This will be a source of confusion, so
+I will try to use the term *view function* to be more precise.
+
+For more on this difference and why it exists, you can `read this`_ from the
+Pyramid design documentation.
+
+.. _read this: http://docs.pylonsproject.org/projects/pyramid/en/latest/designdefense.html#pyramid-gets-its-terminology-wrong-mvc
 
 A Visual Exploration
 --------------------
