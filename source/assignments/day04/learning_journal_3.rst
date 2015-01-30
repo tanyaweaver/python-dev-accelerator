@@ -727,6 +727,17 @@ Now try that test again:
 
 Sweeeeeet!
 
+Finally, to ensure this works on Heroku as well, freeze your new requirement:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [step3 *]
+    heffalump:learning_journal cewing$ pip freeze > requirements.txt
+
+Now, go ahead and commit your changes to git with a good message about what
+you've done and why.
+
 
 *****************
 FIXME STARTS HERE
