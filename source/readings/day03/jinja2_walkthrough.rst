@@ -227,8 +227,7 @@ pyramid_jinja2 configuration. By default, templates will be searched for
 *relative* to the file in which they are called. Paths you use to reference
 templates will begin there unless you use `another referencing system`_.
 
-.. _another referencing system:
-http://docs.pylonsproject.org/projects/pyramid-jinja2/en/latest/#template-lookup-mechanisms
+.. _another referencing system: http://docs.pylonsproject.org/projects/pyramid-jinja2/en/latest/#template-lookup-mechanisms
 
 Once configured, you can use any file ending in ``.jinja2`` as a Pyramid
 *renderer*.  Needless to say, the file extension used is `also configurable`_.
