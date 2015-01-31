@@ -1248,11 +1248,6 @@ something like this:
 
 And that, my friends, is a complete journal app in three steps!
 
-*****************
-FIXME STARTS HERE
-*****************
-
-
 Deploying Your Work
 ===================
 
