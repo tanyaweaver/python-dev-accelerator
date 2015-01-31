@@ -226,7 +226,7 @@ Look carefully at the logic. What happens?
 So where do the form values come from?
 
 There's only one visible page in your app so far. Why not add a form there?
-Open ``list_entries.html`` and add the following code:
+Open ``list.html`` and add the following code:
 
 .. code-block:: jinja
 
@@ -625,11 +625,14 @@ Next, you'll upgrade how you calculate the password in ``main`` in
     # at the top, add a new import
     from cryptacular.bcrypt import BCRYPTPasswordManager
 
-    # then update the ADMIN_PASSWORD config setting:
-    manager = BCRYPTPasswordManager()
-    app.config['ADMIN_PASSWORD'] = os.environ.get(
-        'ADMIN_PASSWORD', manager.encode('secret')
-    )
+    # then update the AUTH_PASSWORD config setting:
+    def main():
+        # ...
+        settings['auth.username'] = os.environ.get('AUTH_USERNAME', 'admin')
+        manager = BCRYPTPasswordManager()
+        settings['auth.password'] = os.environ.get(
+            'AUTH_PASSWORD', manager.encode('secret')
+        )
 
 **NOTES**
 
@@ -739,23 +742,19 @@ Now, go ahead and commit your changes to git with a good message about what
 you've done and why.
 
 
-*****************
-FIXME STARTS HERE
-*****************
-
-avoid rendering errors
-======================
-
-
 Implement a Front-End
 ---------------------
 
-Next, you'll need to provide a pair of *views* that will allow a user to log in
-and log out. Start with the log in view. This view should:
+Next, you'll need to provide *view functions* and *renderers* that will allow a
+user to log in and log out. Start with the login *view function*. This should:
 
-* provide a form to fill in username and password
-* reload with an error message if login fails
-* redirect to the journal home page if login succeeds
+
+* Load a form with username and password inputs on any GET request
+* Verify the username and password from the ``request`` are correct (on
+  ``POST``).
+* Provide error feedback if either value is not correct (or missing).
+* Create the appropriate auth_tkt cookies if authentication succeeds
+* Redirect to the journal home page if authentication succeeds
 
 Moreover, you'll want to update the journal home page to only show the form for
 adding entries if the user is logged in.
@@ -767,14 +766,13 @@ Start with tests.  In ``test_journal.py`` add the following:
     SUBMIT_BTN = '<input type="submit" value="Share" name="Share"/>'
 
 
-    def login_helper(username, password):
-        login_data = {
-            'username': username, 'password': password
-        }
-        client = app.test_client()
-        return client.post(
-            '/login', data=login_data, follow_redirects=True
-        )
+    def login_helper(username, password, app):
+        """encapsulate app login for reuse in tests
+
+        Accept all status codes so that we can make assertions in tests
+        """
+        login_data = {'username': username, 'password': password}
+        return app.post('/login', params=login_data, status_code='*')
 
 
     def test_start_as_anonymous(db):
@@ -800,62 +798,67 @@ If you run your tests now, you'll see three failures:
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ py.test
+    heffalump:learning_journal cewing$ py.test --tb=native
     ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
-    collected 12 items
+    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
+    collected 13 items
 
-    test_journal.py .........FFF
+    test_journal.py ..........FFF
 
     =================================== FAILURES ===================================
     ___________________________ test_start_as_anonymous ____________________________
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 231, in test_start_as_anonymous
+        assert INPUT_BTN not in actual
+    AssertionError: assert '<input type...me="Share"/>' not in '<!DOCTYPE ht...dy>\n</html>'
+      '<input type="submi...are" name="Share"/>' is contained here:
+        >
+                <input type="submit" value="Share" name="Share"/>
+              </div>
+            </form>
+          </aside>
+          <h2>Entries</h2>
 
-    db = None
+          <article class="entry" id="entry=4">
+            <h3>Hello there</h3>
+            <p class="dateline">Jan. 30, 2015
+            <div class="entry_body">
+              This is a post
+            </div>
+          </article>
 
-        def test_start_as_anonymous(db):
-            client = app.test_client()
-            anon_home = client.get('/').data
-    >       assert SUBMIT_BTN not in anon_home
 
-    ...
-
-    test_journal.py:170: AssertionError
+              </section>
+            </main>
+            <footer>
+              <p>Created in the Code Fellows Python Dev Accelerator</p>
+            </footer>
+          </body>
+        </html>
     ______________________________ test_login_success ______________________________
-
-    db = None
-
-        def test_login_success(db):
-            username, password = ('admin', 'admin')
-            response = login_helper(username, password)
-    >       assert SUBMIT_BTN in response.data
-    
-    ...
-
-    test_journal.py:176: AssertionError
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 237, in test_login_success
+        assert redirect.status_code == 302
+    AssertionError: assert 404 == 302
+     +  where 404 = <404 Not Found text/plain body="404 Not F...\n\n"/397>.status_code
     _______________________________ test_login_fails _______________________________
-
-    db = None
-
-        def test_login_fails(db):
-            username, password = ('admin', 'wrong')
-            response = login_helper(username, password)
-    >       assert 'Login Failed' in response.data
-    
-    ...
-
-    test_journal.py:183: AssertionError
-    ====================== 3 failed, 9 passed in 0.89 seconds ======================
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 247, in test_login_fails
+        assert response.status_code == 200
+    AssertionError: assert 404 == 200
+     +  where 404 = <404 Not Found text/plain body="404 Not F...\n\n"/397>.status_code
+    ===================== 3 failed, 10 passed in 1.44 seconds ======================
     [learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$
 
 Fix these one at a time.  First, ensure that the form for adding an entry does
 not appear when you are not logged in.  Add the following to
-``list_entries.html``:
+``list.html``:
 
 .. code-block:: jinja
 
-    {% if session.logged_in %} <!-- ADD THIS LINE -->
+    {% if request.authenticated_userid %} <!-- ADD THIS LINE -->
     <aside>
     <form action="{{ url_for('add_entry') }}" method="POST" class="add_entry">
       ...
@@ -863,77 +866,112 @@ not appear when you are not logged in.  Add the following to
     </aside>
     {% endif %} <!-- AND THIS ONE -->
 
+
+**NOTES**
+
+* The ``authenticated_userid`` attribute of the Pyramid ``request`` will return
+  the verified userid of the authenticated user if one exists.
+* If authentication is not configured, or there is no authenticated user, it
+  returns ``None``
+
 Re-run your tests:
 
 .. code-block:: bash
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ py.test
+    heffalump:learning_journal cewing$ py.test --tb=native
     ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
-    collected 12 items
+    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
+    collected 13 items
 
-    test_journal.py ..........FF
+    test_journal.py ...........FF
 
     =================================== FAILURES ===================================
     ______________________________ test_login_success ______________________________
-
-    ...
-
-    test_journal.py:176: AssertionError
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 237, in test_login_success
+        assert redirect.status_code == 302
+    AssertionError: assert 404 == 302
+     +  where 404 = <404 Not Found text/plain body="404 Not F...\n\n"/397>.status_code
     _______________________________ test_login_fails _______________________________
-
-    ...
-
-    test_journal.py:183: AssertionError
-    ===================== 2 failed, 10 passed in 0.83 seconds ======================
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 247, in test_login_fails
+        assert response.status_code == 200
+    AssertionError: assert 404 == 200
+     +  where 404 = <404 Not Found text/plain body="404 Not F...\n\n"/397>.status_code
+    ===================== 2 failed, 11 passed in 1.36 seconds ======================
     [learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$
 
 Great, that first failure is fixed.
 
-Next you'll implement the login view to fix the remaining two failures. In
-``journal.py`` add the following:
+Next you'll implement the login *view function* to fix the remaining two
+failures. Remember the requirements from above:
 
-.. code-block:: python
+* Load a form with username and password inputs on any GET request
+* Verify the username and password from the ``request`` are correct (on
+  ``POST``).
+* Provide error feedback if either value is not correct (or missing).
+* Create the appropriate auth_tkt cookies if authentication succeeds
+* Redirect to the journal home page if authentication succeeds
 
-    @app.route('/login', methods=['GET', 'POST'])
-    def login():
-        error = None
+Try implementing this on your own in ``journal.py``.  You'll need to read a bit
+about the authentication API functions in Pyramid's `security API`_ to do the
+job right.
+
+.. _security API: http://docs.pylonsproject.org/docs/pyramid/en/latest/api/security.html
+
+.. hidden-code-block:: python
+    :label: Peek At A Solution
+
+    # add imports at the top
+    from pyramid.security import remember, forget
+
+    @view_config(route_name='login', renderer="templates/login.jinja2")
+    def login(request):
+        """authenticate a user by username/password"""
+        username = request.params.get('username', '')
+        error = ''
         if request.method == 'POST':
+            error = "Login Failed"
+            authenticated = False
             try:
-                do_login(request.form['username'].encode('utf-8'),
-                         request.form['password'].encode('utf-8'))
-            except ValueError:
-                error = "Login Failed"
-            else:
-                return redirect(url_for('show_entries'))
-        return render_template('login.html', error=error)
+                authenticated = do_login(request)
+            except ValueError as e:
+                error = str(e)
+
+            if authenticated:
+                headers = remember(request, username)
+                return HTTPFound(request.route_url('home'), headers=headers)
+
+        return {'error': error, 'username': username}
 
 **NOTES**
 
-* This view is available *both* for ``GET`` and ``POST`` requests
 * Any form that changes application state should only be processed on a
   ``POST`` request.
 * On a simple ``GET`` just render the empty form
 * On error, the login form is rendered again, passing the error to the user.
-* On success, you redirect to the ``show_entries`` view.
+* The ``remember`` function from the ``pyramid.security`` module produces a set
+  of headers suitable for creating the appropriate cookies for persisting
+  authentication. You are responsible for setting those headers on your
+  response.
 
-In order for this view to work, you'll need also to have a ``login.html``
+In order for this view to work, you'll need also to have a ``login.jinja2``
 template. Add a new file by that name to your ``templates`` directory and write
 the following to the new file:
 
 .. code-block:: jinja
 
-    {% extends "base.html" %}
+    {% extends "base.jinja2" %}
     {% block body %}
       <h2>Login</h2>
       {% if error -%}
-      <p class="error"><strong>Error</strong> {{ error }}
+      <p class="error"><strong>Error</strong>: {{ error }}
       {%- endif %}
-      <form action="{{ url_for('login') }}" method="POST">
+      <form action="{{ request.route_url('login') }}" method="POST">
         <div class="field">
           <label for="username">Username</label>
           <input type="text" name="username" id="username"/>
@@ -948,43 +986,46 @@ the following to the new file:
       </form>
     {% endblock %}
 
-Now you should be able to run your tests with success:
+You should now be able to run your tests and see them all pass:
 
 .. code-block:: bash
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ py.test
+    heffalump:learning_journal cewing$ py.test --tb=native
     ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
-    collected 12 items
+    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
+    collected 13 items
 
-    test_journal.py ............
+    test_journal.py .............
 
-    ========================== 12 passed in 1.19 seconds ===========================
+    ========================== 13 passed in 1.52 seconds ===========================
     [learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$
+
+
 
 Logging Out
 -----------
 
 Logout is a much simpler prospect.  Just one simple view.  It should:
 
-* remove the session data indicating that the user is logged in
+* Remove any authentication data using pyramid's security API.
 * redirect the user back to the journal home page
 
 Start with a test in ``test_journal.py``:
 
 .. code-block:: python
 
-    def test_logout(db):
-        home = login_helper('admin', 'admin').data
-        assert SUBMIT_BTN in home
-        client = app.test_client()
-        response = client.get('/logout')
-        assert SUBMIT_BTN not in response.data
-        assert response.status_code == 302
+    def test_logout(app):
+        # re-use existing code to ensure we are logged in when we begin
+        test_login_success(app)
+        redirect = app.get('/logout', status="3*")
+        response = redirect.follow()
+        assert response.status_code == 200
+        actual = response.body
+        assert INPUT_BTN not in actual
 
 Run your test to see it fail:
 
@@ -992,35 +1033,39 @@ Run your test to see it fail:
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ py.test
+    heffalump:learning_journal cewing$ py.test --tb=native
     ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
-    collected 13 items
+    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
+    collected 14 items
 
-    test_journal.py ............F
+    test_journal.py .............F
 
     =================================== FAILURES ===================================
     _________________________________ test_logout __________________________________
-
-    ...
-
-    E       assert 404 == 200
-    E        +  where 404 = <Response 233 bytes [404 NOT FOUND]>.status_code
-
-    test_journal.py:191: AssertionError
-    ===================== 1 failed, 12 passed in 1.42 seconds ======================
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/learning_journal/learning_journal/test_journal.py", line 256, in test_logout
+        redirect = app.get('/logout', status="3*")
+      File "/Users/cewing/virtualenvs/learning_journal/lib/python2.7/site-packages/webtest/app.py", line 322, in get
+        expect_errors=expect_errors)
+      File "/Users/cewing/virtualenvs/learning_journal/lib/python2.7/site-packages/webtest/app.py", line 631, in do_request
+        self._check_status(status, res)
+      File "/Users/cewing/virtualenvs/learning_journal/lib/python2.7/site-packages/webtest/app.py", line 666, in _check_status
+        "Bad response: %s (not %s)", res_status, status)
+    AppError: Bad response: 404 Not Found (not 3*)
+    ===================== 1 failed, 13 passed in 1.94 seconds ======================
     [learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$
 
-And then implement the view in ``journal.py``:
+And then implement the view in ``journal.py``.  Try it on your own:
 
-.. code-block:: python
+.. hidden-code-block:: python
+    :label: Peek At A Solution
 
-    @app.route('/logout')
-    def logout():
-        session.pop('logged_in', None)
-        return redirect(url_for('show_entries'))
+    @view_config(route_name='logout')
+    def logout(request):
+        headers = forget(request)
+        return HTTPFound(request.route_url('home'), headers=headers)
 
 And the tests will pass:
 
@@ -1028,14 +1073,14 @@ And the tests will pass:
 
     [learning_journal]
     [step3 *]
-    heffalump:learning_journal cewing$ py.test
+    heffalump:learning_journal cewing$ py.test --tb=native
     ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
-    collected 13 items
+    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
+    collected 14 items
 
-    test_journal.py .............
+    test_journal.py ..............
 
-    ========================== 13 passed in 1.40 seconds ===========================
+    ========================== 14 passed in 1.74 seconds ===========================
     [learning_journal]
     [step3 *]
     heffalump:learning_journal cewing$
@@ -1047,17 +1092,17 @@ Finally, though you now have views that can log you in and out, there is no way
 for you to get to them without just typing the URLs in your browser. You should
 add some UI in the page that lets you move around easily.
 
-Open ``base.html`` and add the following:
+Open ``base.jinja2`` and add the following:
 
 .. code-block:: jinja
 
     <header> <!-- this is already in the file -->
       <aside id="user-controls">
         <ul>
-        {% if not session.logged_in %}
-          <li><a href="{{ url_for('login') }}">log in</a></li>
+        {% if not request.authenticated_userid %}
+          <li><a href="{{ request.route_url('login') }}">log in</a></li>
         {% else %}
-          <li><a href="{{ url_for('logout') }}">log out</a></li>
+          <li><a href="{{ request.route_url('logout') }}">log out</a></li>
         {% endif %}
         </ul>
       </aside>
@@ -1069,10 +1114,9 @@ browser, add an entry or two and then log back out.  Try it:
 .. code-block:: bash
 
     [learning_journal]
-    [step3]
+    [step3 *]
     heffalump:learning_journal cewing$ python journal.py
-     * Running on http://127.0.0.1:5000/
-     * Restarting with reloader
+    serving on http://0.0.0.0:5000
 
 
 Adding Style
@@ -1082,9 +1126,41 @@ Great.  That worked.  Not very nice looking though, is it.
 
 The last step is to add a minimal CSS stylesheet that will help out a bit.
 
-Flask looks for **static resources** like stylesheets and javascript files in
-much the same way it finds templates.  It looks for a ``static`` directory
-located relative to the location of the flask app.
+Most web frameworks provide a mechanism for serving what they call **static
+files**. These types of files include javascript, CSS and images needed for the
+look-and-feel of the site.
+
+In Pyramid, we serve these files using a `static view`_ that you can add to
+configuration. You have to tell Pyramid two things:
+
+* The *name* that will be in URLs that should look for assets using this view
+* the *path* where the folder will be that will hold assets for this view
+
+.. _static view: http://docs.pylonsproject.org/docs/pyramid/en/latest/api/config.html#pyramid.config.Configurator.add_static_view
+
+Let's start by adding a *static view* to our application's configuration:
+
+.. code-block:: python
+
+    # at the top, below imports, add this line
+    here = os.path.dirname(os.path.abspath(__file__))
+
+    # in the "main" function:
+    def main():
+        # ...
+        # this line is already present
+        config.include('pyramid_jinja2')
+        # ADD THIS
+        config.add_static_view('static', os.path.join(here, 'static'))
+
+**NOTES**
+
+* Use the ``__file__`` global special attribute to get the Python object
+  corresponding to the current code file.
+* The ``os.path`` module contains many useful functions for dealing with
+  filesystem locations.
+* Our static view will look for a directory called ``static`` adjacent to the
+  ``journal.py`` file.
 
 Go ahead and create a new directory, called ``static`` right in your repository
 root, next to the ``journal.py`` file and the ``templates`` directory.
@@ -1149,8 +1225,7 @@ following structural CSS rules:
     main aside .control_row input{
         margin-left:16%}
 
-Finally, you'll need to tell ``base.html`` to look for this new stylesheet.
-Make the following change to that file:
+Finally, you'll need to tell ``base.jinja2`` to look for this new stylesheet:
 
 .. code-block:: jinja
 
@@ -1162,7 +1237,7 @@ Make the following change to that file:
       <![endif]-->
 
       <!-- ADD THE FOLLOWING LINE ONLY -->
-      <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css">
+      <link href="/static/style.css" rel="stylesheet" type="text/css">
     </head>
 
 Now, if you go ahead and reload your journal in your browser, you should see
@@ -1172,6 +1247,10 @@ something like this:
     :width: 90%
 
 And that, my friends, is a complete journal app in three steps!
+
+*****************
+FIXME STARTS HERE
+*****************
 
 
 Deploying Your Work
@@ -1234,10 +1313,10 @@ Then, import the hashing algorithm and encrypt your password:
 
 .. code-block:: pycon
 
-    >>> from passlib.hash import pbkdf2_sha256 as hasher
+    >>> from cryptacular.bcrypte import BCRYPTPasswordManager as manager
     >>> my_password = 'secret password'
-    >>> hasher.encrypt(my_password)
-    '$pbkdf2-sha256$20000$FmLsPcd4D.Fcq5WyFkII4Q$6ykWQ1p5serGo.J3vzggeC8ebckL4xE0gXKbQ4SMzJE'
+    >>> manager().encode(my_password)
+    '$2a$10$OnlTBinCMtbCO/PXht60D.ZQj1iZDupI8UYDpoz9R69pHV1Nafx56'
     >>> ^D
 
 Copy that value and then use it to set the environment variable in Heroku
@@ -1247,15 +1326,15 @@ Copy that value and then use it to set the environment variable in Heroku
 
     [learning_journal]
     [step3]
-    heffalump:learning_journal cewing$ heroku config:set ADMIN_PASSWORD='$pbkdf2-sha256$20000$FmLsPcd4D.Fcq5WyFkII4Q$6ykWQ1p5serGo.J3vzggeC8ebckL4xE0gXKbQ4SMzJE'
+    heffalump:learning_journal cewing$ heroku config:set AUTH_PASSWORD='$2a$10$OnlTBinCMtbCO/PXht60D.ZQj1iZDupI8UYDpoz9R69pHV1Nafx56'
     Setting config vars and restarting fizzy-fairy-1234... done, v9
-    ADMIN_PASSWORD: $pbkdf2-sha256$20000$FmLsPcd4D.Fcq5WyFkII4Q$6ykWQ1p5serGo.J3vzggeC8ebckL4xE0gXKbQ4SMzJE
+    AUTH_PASSWORD: $2a$10$OnlTBinCMtbCO/PXht60D.ZQj1iZDupI8UYDpoz9R69pHV1Nafx56
     [learning_journal]
     [step3]
     heffalump:learning_journal cewing$
 
 Finally, let's also use Python to set up a really nice, random value for the
-secret key.  Fire up your interpreter again:
+secret keys you need.  Fire up your interpreter again:
 
 .. code-block:: bash
 
@@ -1267,24 +1346,15 @@ secret key.  Fire up your interpreter again:
     Type "help", "copyright", "credits" or "license" for more information.
     >>>
 
-Now, use some convenient constants from the ``string`` module and a bit of
-``set`` magic combined with ``random`` to generate a 128-character random
-secret key:
+Now, use your old friend the ``os`` module to generate 32-byte random strings:
 
 .. code-block:: pycon
 
-    >>> import string
-    >>> import random
-    >>> chars = string.letters + string.digits
-    >>> specials = "".join(set(string.punctuation) - set("'`\""))
-    >>> specials
-    '!#%$&)(+*-,/.;:=<?>@[]\\_^{}|~'
-    >>> chars += specials
-    >>> chars
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#%$&)(+*-,/.;:=<?>@[]\\_^{}|~'
-    >>> secret_key = "".join(random.choice(chars) for _ in xrange(128))
-    >>> secret_key
-    'Xtkm!VU+Q5kYyjU{[N]r\\S.n2T&xSnxYF;Qu6JvygYi{T.ZM>nnW+hf6@2oyiB2Qp<XDv%4=KM!2S;#lNAfy8<=<RRbu7ST[B!)^OhA6(uQf-nclu22!tKgb=d8OI6v4'
+    >>> import os
+    >>> os.urandom(32)
+    'y\x91\x7fx\x88q*\xae\xf7\x0eG\xd7S\x93\x93H\x0e \xd7U\x10\r&i\xe7\x1ab\xaf\xce\x86\x9b\xba'
+    >>> os.urandom(32)
+    '\x1b\x14"=\xce{\xc9\xf9\xb5\x80E\x8d\x88~4\x8a\xc9PW\xec\xab\x08\x81E\xeb=\xd8\x0f\xf5\xf1V\x08'
     >>> ^D
 
 Again, copy that value and use it to set the environment variable in Heroku:
@@ -1293,15 +1363,34 @@ Again, copy that value and use it to set the environment variable in Heroku:
 
     [learning_journal]
     [step3]
-    heffalump:learning_journal cewing$ heroku config:set SECRET_KEY='Xtkm!VU+Q5kYyjU{[N]r\\S.n2T&xSnxYF;Qu6JvygYi{T.ZM>nnW+hf6@2oyiB2Qp<XDv%4=KM!2S;#lNAfy8<=<RRbu7ST[B!)^OhA6(uQf-nclu22!tKgb=d8OI6v4'
+    heffalump:learning_journal cewing$ heroku config:set JOURNAL_SESSION_SECRET='y\x91\x7fx\x88q*\xae\xf7\x0eG\xd7S\x93\x93H\x0e \xd7U\x10\r&i\xe7\x1ab\xaf\xce\x86\x9b\xba'
     Setting config vars and restarting fizzy-fairy-1234... done, v10
-    SECRET_KEY: Xtkm!VU+Q5kYyjU{[N]r\\S.n2T&xSnxYF;Qu6JvygYi{T.ZM>nnW+hf6@2oyiB2Qp<XDv%4=KM!2S;#lNAfy8<=<RRbu7ST[B!)^OhA6(uQf-nclu22!tKgb=d8OI6v4
+    JOURNAL_SESSION_SECRET: y\x91\x7fx\x88q*\xae\xf7\x0eG\xd7S\x93\x93H\x0e \xd7U\x10\r&i\xe7\x1ab\xaf\xce\x86\x9b\xba
+    [learning_journal]
+    [step3]
+    heffalump:learning_journal cewing$ heroku config:set JOURNAL_AUTH_SECRET='\x1b\x14"=\xce{\xc9\xf9\xb5\x80E\x8d\x88~4\x8a\xc9PW\xec\xab\x08\x81E\xeb=\xd8\x0f\xf5\xf1V\x08'
+    Setting config vars and restarting fizzy-fairy-1234... done, v10
+    JOURNAL_SESSION_SECRET: \x1b\x14"=\xce{\xc9\xf9\xb5\x80E\x8d\x88~4\x8a\xc9PW\xec\xab\x08\x81E\xeb=\xd8\x0f\xf5\xf1V\x08
     [learning_journal]
     [step3]
     heffalump:learning_journal cewing$
 
-And that should do it.  You are now able to view your app live on Heroku, log
-in, add posts, the whole nine yards!
+Finally, make sure your app has the proper values available by stopping and
+restarting it:
+
+.. code-block:: bash
+
+    [learning_journal]
+    [master]
+    heffalump:learning_journal cewing$ heroku scale web=0
+    Scaling dynos... done, now running web at 0:1X.
+    [learning_journal]
+    [master]
+    heffalump:learning_journal cewing$ heroku scale web=1
+    Scaling dynos... done, now running web at 1:1X.
+    [learning_journal]
+    [master]
+    heffalump:learning_journal cewing$
 
 
 Point DNS at Heroku
@@ -1322,3 +1411,6 @@ When you're done, give the worlds DNS servers a few minutes to respond to your
 chages (the exact amount of time will depend on your DNS settings) and then
 visit your running Python Learning Journal at your very own domain.
 
+When you've finished this final step, take a few moments to write a good entry
+about what you have learned over the last few days. It's a great opportunity to
+cement your knowledge by writing about it.
