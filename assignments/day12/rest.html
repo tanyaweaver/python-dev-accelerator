@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Consuming Data from a RESTful Web Service &mdash; Python Dev Accelerator 1.0 documentation</title>
+    <title>Consuming Data from a RESTful Web Service &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0',
+        VERSION:     '2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Python Dev Accelerator 1.0 documentation" href="../../index.html" />
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
     <link rel="up" title="Day 12" href="index.html" />
     <link rel="next" title="Task Automation with Fabric" href="fabric.html" />
     <link rel="prev" title="Producing and Consuming XML-RPC in Python" href="xmlrpc.html" />
@@ -39,6 +39,7 @@
   <div class="logo">
     <a href="../../index.html">
       <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
     </a>
   </div>
 </div>
@@ -55,7 +56,7 @@
         <li class="right" >
           <a href="xmlrpc.html" title="Producing and Consuming XML-RPC in Python"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Day 12</a> &raquo;</li> 
       </ul>
@@ -221,7 +222,7 @@ by scraping Craigslist in an earlier exercise.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock16'))">Peek At A Solution</a><br /><div id="hiddencodeblock16" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock23'))">Peek At A Solution</a><br /><div id="hiddencodeblock23" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
 <span class="c"># and a function</span>
@@ -258,7 +259,7 @@ gives are added to each listing. You&#8217;ll need to make some updates to your
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock17'))">Peek At A Solution</a><br /><div id="hiddencodeblock17" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock24'))">Peek At A Solution</a><br /><div id="hiddencodeblock24" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">pprint</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;test&#39;</span><span class="p">:</span>
         <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">read_search_results</span><span class="p">()</span>
@@ -311,7 +312,7 @@ requirements of our script.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock18'))">Peek At A Solution</a><br /><div id="hiddencodeblock18" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock25'))">Peek At A Solution</a><br /><div id="hiddencodeblock25" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
     <span class="n">location_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data-latitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;data-longitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
     <span class="n">listings</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;row&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">location_attrs</span><span class="p">)</span>
     <span class="c"># delete the line where you create a list in which to store</span>
@@ -399,7 +400,7 @@ an asynchronous call using <tt class="docutils literal"><span class="pre">gevent
         <li class="right" >
           <a href="xmlrpc.html" title="Producing and Consuming XML-RPC in Python"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
           <li><a href="index.html" >Day 12</a> &raquo;</li> 
       </ul>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python Learning Journal: Step 1 &mdash; Python Dev Accelerator 1.0 documentation</title>
+    <title>Python Learning Journal: Step 1 &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0',
+        VERSION:     '2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Python Dev Accelerator 1.0 documentation" href="../../index.html" />
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
     <link rel="up" title="Day 02 Assignments" href="index.html" />
     <link rel="next" title="Day 03 Assignments" href="../day03/index.html" />
     <link rel="prev" title="Day 02 Assignments" href="index.html" />
@@ -39,6 +39,7 @@
   <div class="logo">
     <a href="../../index.html">
       <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
     </a>
   </div>
 </div>
@@ -55,7 +56,7 @@
         <li class="right" >
           <a href="index.html" title="Day 02 Assignments"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Day 02 Assignments</a> &raquo;</li> 
       </ul>
@@ -69,11 +70,13 @@
   <div class="section" id="python-learning-journal-step-1">
 <h1>Python Learning Journal: Step 1<a class="headerlink" href="#python-learning-journal-step-1" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial we will begin the process of creating an online learning
-journal using Python and the Flask web framework.</p>
+journal using Python and the <a class="reference external" href="http://www.pylonsproject.org">Pyramid web framework</a>.</p>
 <p>The walk-through is intended to get you to a working application as quickly as
 possible. There will be many questions left unanswered as we proceed. Fear not.
 The answers will come as this course progresses. For now, simply focus on the
 process and getting to a working application.</p>
+<p>Our application will be built using a <a class="reference external" href="http://www.tomdalling.com/blog/software-design/model-view-controller-explained/">Model-View-Controller</a> <a class="reference external" href="http://blog.codinghorror.com/understanding-model-view-controller/">pattern</a> where
+each component in our design falls into one of those three categories.</p>
 <div class="section" id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>In order to follow this tutorial, you will need to have several tools in place
@@ -133,7 +136,7 @@ repository.</p>
 <dt>Repository Name:</dt>
 <dd><tt class="docutils literal"><span class="pre">learning_journal</span></tt></dd>
 <dt>Description:</dt>
-<dd>A lightweight Flask web journal.</dd>
+<dd>A lightweight Pyramid web journal.</dd>
 </dl>
 <p>Leave the new repository as <strong>Public</strong></p>
 <p>Check the box for initializing the repository with a README.</p>
@@ -150,9 +153,9 @@ cloning your repository at the bottom of the menu on the right-hand side of the
 page.</p>
 <a class="reference internal image-reference" href="../../_images/learning_journal_clone_url.png"><img alt="../../_images/learning_journal_clone_url.png" src="../../_images/learning_journal_clone_url.png" style="width: 35%;" /></a>
 <p>There are two versions of this URL, one for HTTPS and the other for SSH.</p>
-<p>If you have <a class="reference external" href="https://help.github.com/articles/generating-ssh-keys">set up public key authentication</a> for your GitHub account, you
-will want to copy the SSH version of the URL.  Otherwise, you&#8217;ll need to copy
-the HTTPS version.</p>
+<p>If you have <a class="reference external" href="https://help.github.com/articles/generating-ssh-keys">set up public key authentication</a> for your GitHub account (and
+you really, really should), you will want to copy the SSH version of the URL.
+Otherwise, you&#8217;ll need to copy the HTTPS version.</p>
 <p>Back in your terminal, make sure you are in your <tt class="docutils literal"><span class="pre">learning_journal</span></tt> project
 directory:</p>
 <div class="highlight-bash"><div class="highlight"><pre>192:learning_journal cewing$ pwd
@@ -169,11 +172,13 @@ directory:</p>
 <p>Once that is complete, you should have a new directory called
 <tt class="docutils literal"><span class="pre">learning_journal</span></tt> inside the project directory you created earlier.  Your
 filesystem should look something like this:</p>
-<div class="highlight-python"><div class="highlight"><pre>./learning_journal/   # &lt;- Your project directory
-├── learning_journal  # &lt;- Your repository root
-│   ├── LICENSE       # &lt;- Initial files from GitHub
-│   ├── README.md
-│   ├── .gitignore
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>tree -a -I .git .
+.                       <span class="c"># &lt;- Your project directory</span>
+└── learning_journal    <span class="c"># &lt;- Your repository root</span>
+    ├── .gitignore      <span class="c"># &lt;- Initial files from GitHub</span>
+    ├── LICENSE
+    └── README.md
 </pre></div>
 </div>
 </div>
@@ -220,10 +225,10 @@ that the <tt class="docutils literal"><span class="pre">pip</span></tt> command 
 </div>
 <p>Using the <tt class="docutils literal"><span class="pre">pip</span></tt> command, install the required software as follows:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
-192:learning_journal cewing<span class="nv">$ </span>pip install flask psycopg2 gunicorn
-Downloading/unpacking flask
+192:learning_journal cewing<span class="nv">$ </span>pip install pyramid psycopg2 waitress
+Downloading/unpacking pyramid
 ...
-Successfully installed flask psycopg2 Werkzeug Jinja2 itsdangerous markupsafe gunicorn
+Successfully installed pyramid psycopg2 zope.interface translationstring PasteDeploy WebOb repoze.lru zope.deprecation venusian waitress
 Cleaning up...
 </pre></div>
 </div>
@@ -270,6 +275,8 @@ nothing to commit, working directory clean
     └──  requirements.txt
 </pre></div>
 </div>
+<p>Don&#8217;t forget to add <tt class="docutils literal"><span class="pre">requirements.txt</span></tt> to your repository and commit your
+changes.</p>
 </div>
 <div class="section" id="create-a-database">
 <h3>Create a Database<a class="headerlink" href="#create-a-database" title="Permalink to this headline">¶</a></h3>
@@ -301,8 +308,7 @@ lines:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
 
 <span class="n">DB_SCHEMA</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">DROP TABLE IF EXISTS entries;</span>
-<span class="s">CREATE TABLE entries (</span>
+<span class="s">CREATE TABLE IF NOT EXISTS entries (</span>
 <span class="s">    id serial PRIMARY KEY,</span>
 <span class="s">    title VARCHAR (127) NOT NULL,</span>
 <span class="s">    text TEXT NOT NULL,</span>
@@ -317,21 +323,49 @@ column that will hold a timestamp.</p>
 </div>
 <div class="section" id="the-app-skeleton">
 <h3>The App Skeleton<a class="headerlink" href="#the-app-skeleton" title="Permalink to this headline">¶</a></h3>
-<p>We&#8217;ll also need a basic Flask app skeleton to work from.</p>
+<p>We&#8217;ll also need a basic Pyramid app skeleton to work from.</p>
 <p>Still in <tt class="docutils literal"><span class="pre">journal.py</span></tt>, add the following:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># add this at the top, just below the &#39;coding&#39; line</span>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pyramid.config</span> <span class="kn">import</span> <span class="n">Configurator</span>
+<span class="kn">from</span> <span class="nn">pyramid.session</span> <span class="kn">import</span> <span class="n">SignedCookieSessionFactory</span>
+<span class="kn">from</span> <span class="nn">pyramid.view</span> <span class="kn">import</span> <span class="n">view_config</span>
+<span class="kn">from</span> <span class="nn">waitress</span> <span class="kn">import</span> <span class="n">serve</span>
 
 <span class="c"># add this just below the SQL table definition we just created</span>
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
 
-<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s">u&#39;Hello world!&#39;</span>
 
-<span class="c"># put this at the very bottom of the file.</span>
+<span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;home&#39;</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s">&#39;string&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&quot;Hello World&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Create a configured wsgi app&quot;&quot;&quot;</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">settings</span><span class="p">[</span><span class="s">&#39;reload_all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">settings</span><span class="p">[</span><span class="s">&#39;debug_all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="c"># secret value for session signing:</span>
+    <span class="n">secret</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;JOURNAL_SESSION_SECRET&#39;</span><span class="p">,</span> <span class="s">&#39;itsaseekrit&#39;</span><span class="p">)</span>
+    <span class="n">session_factory</span> <span class="o">=</span> <span class="n">SignedCookieSessionFactory</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
+    <span class="c"># configuration setup</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">Configurator</span><span class="p">(</span>
+        <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">,</span>
+        <span class="n">session_factory</span><span class="o">=</span><span class="n">session_factory</span>
+    <span class="p">)</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">add_route</span><span class="p">(</span><span class="s">&#39;home&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">)</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">scan</span><span class="p">()</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">make_wsgi_app</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">app</span>
+
+
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;PORT&#39;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+    <span class="n">serve</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -341,14 +375,14 @@ column that will hold a timestamp.</p>
 way of letting your app know about the world around it.</p>
 <p>In your case, you have one thing you need to configure: a way to connect to the
 database.</p>
-<p>Flask gives many options for dealing with configuration, but in this case you
-are going to set values directly in the Flask app&#8217;s <tt class="docutils literal"><span class="pre">config</span></tt>. Add the
+<p>Pyramid gives many options for dealing with configuration, but in this case you
+are going to set values directly in the <tt class="docutils literal"><span class="pre">settings</span></tt> dictionary. Add the
 following to your <tt class="docutils literal"><span class="pre">journal.py</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># add this import at the top of your file:</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-<span class="c"># add this after app is defined</span>
-<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;DATABASE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># in the &quot;main&quot; function:</span>
+<span class="n">settings</span><span class="p">[</span><span class="s">&#39;reload_all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="c"># &lt;- THERE NOW</span>
+<span class="n">settings</span><span class="p">[</span><span class="s">&#39;debug_all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="c"># &lt;- THERE NOW</span>
+<span class="c"># ADD THIS  vvv</span>
+<span class="n">settings</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
     <span class="s">&#39;DATABASE_URL&#39;</span><span class="p">,</span> <span class="s">&#39;dbname=learning_journal user=cewing&#39;</span>
 <span class="p">)</span>
 </pre></div>
@@ -371,10 +405,10 @@ the following code:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># add this up at the top</span>
 <span class="kn">import</span> <span class="nn">psycopg2</span>
 
-<span class="c"># add the rest of this below the app.config statement</span>
-<span class="k">def</span> <span class="nf">connect_db</span><span class="p">():</span>
+<span class="c"># add this function before the &quot;main&quot; function</span>
+<span class="k">def</span> <span class="nf">connect_db</span><span class="p">(</span><span class="n">settings</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return a connection to the configured database&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;DATABASE&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Now that you can get an open connection to the database, you&#8217;ll set up a
@@ -385,11 +419,15 @@ Add this code to <tt class="docutils literal"><span class="pre">journal.py</span
 
 <span class="c"># add this function after the connect_db function</span>
 <span class="k">def</span> <span class="nf">init_db</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Initialize the database using DB_SCHEMA</span>
+    <span class="sd">&quot;&quot;&quot;Create database dables defined by DB_SCHEMA</span>
 
-<span class="sd">    WARNING: executing this function will drop existing tables.</span>
+<span class="sd">    Warning: This function will not update existing table definitions</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">connect_db</span><span class="p">())</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">settings</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s">&#39;DATABASE_URL&#39;</span><span class="p">,</span> <span class="s">&#39;dbname=learning_journal user=cewing&#39;</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">connect_db</span><span class="p">(</span><span class="n">settings</span><span class="p">))</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
         <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">DB_SCHEMA</span><span class="p">)</span>
         <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 </pre></div>
@@ -408,10 +446,9 @@ Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&
 </div>
 <p>Then, at the prompt, import your app to set up the configuration, and run the
 <tt class="docutils literal"><span class="pre">init_db</span></tt> function:</p>
-<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">app</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">init_db</span>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">init_db</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">init_db</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="o">^</span><span class="n">D</span>
+<span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
 <p>If that function returns silently, you&#8217;ve succeeded. Exit the interpreter with
@@ -465,7 +502,8 @@ that simplifies deploying web applications in a number of languages.</p>
 <p>Moving on from here assumes that you have already created a Heroku account,
 downloaded and installed the toolbelt, and successfully logged in to Heroku
 from your command line. If that is not the case. Please <a class="reference external" href="https://devcenter.heroku.com/articles/quickstart">follow this tutorial</a>
-to get up to speed.</p>
+to get up to speed. You only need to do the first two steps (Introduction and
+Set up)</p>
 <div class="section" id="add-a-procfile">
 <h3>Add a Procfile<a class="headerlink" href="#add-a-procfile" title="Permalink to this headline">¶</a></h3>
 <p>Heroku uses a standard file to control how your app is built and served. This
@@ -483,22 +521,17 @@ create a new file by that name in your journal repository root.</p>
 </pre></div>
 </div>
 <p>In your new <tt class="docutils literal"><span class="pre">Procfile</span></tt>, type the following line of code:</p>
-<div class="highlight-text"><div class="highlight"><pre>web: gunicorn journal:app
+<div class="highlight-text"><div class="highlight"><pre>web: python journal.py
 </pre></div>
 </div>
-<p>This tells heroku that you will be running a <tt class="docutils literal"><span class="pre">web</span></tt> service using the
-<tt class="docutils literal"><span class="pre">gunicorn</span></tt> WSGI server and that your WSGI application is called <tt class="docutils literal"><span class="pre">app</span></tt> and
-can be found in the <tt class="docutils literal"><span class="pre">journal</span></tt> python module.</p>
+<p>This tells heroku that you will be running a <tt class="docutils literal"><span class="pre">web</span></tt> service and that the
+service will be provided by executing the <tt class="docutils literal"><span class="pre">python</span> <span class="pre">journal.py</span></tt>.</p>
 <p>Once you&#8217;ve got that created, you should be able to use <tt class="docutils literal"><span class="pre">foreman</span></tt>, provided
 by the Heroku Toolbelt, to start up your application:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
 <span class="o">[</span>step1<span class="o">]</span>
 192:learning_journal cewing<span class="nv">$ </span>foreman start
 23:26:33 web.1  | started with pid 68019
-23:26:33 web.1  | 2014-05-27 23:26:33 <span class="o">[</span>68019<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Starting gunicorn 18.0
-23:26:33 web.1  | 2014-05-27 23:26:33 <span class="o">[</span>68019<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Listening at: http://0.0.0.0:5000 <span class="o">(</span>68019<span class="o">)</span>
-23:26:33 web.1  | 2014-05-27 23:26:33 <span class="o">[</span>68019<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Using worker: sync
-23:26:33 web.1  | 2014-05-27 23:26:33 <span class="o">[</span>68022<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Booting worker with pid: 68022
 </pre></div>
 </div>
 <p>With that process running in your terminal, start up your web browser and load
@@ -646,7 +679,8 @@ created for us to connect to. The connection string is stored on Heroku as
 <tt class="docutils literal"><span class="pre">HEROKU_POSTGRESQL_ONYX_URL</span></tt> (yours will be different).</p>
 <p>Our app expects something called <tt class="docutils literal"><span class="pre">DATABASE_URL</span></tt> to exist in our environment.
 The Heroku toolbelt provides another tool that allows us to connect the value
-they have us to the name we require.  Again, type this at your command line:</p>
+they have us to the name we require.  Again, type this at your command line
+(and don&#8217;t forget to use <em>your</em> database color):</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
 <span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
 192:learning_journal cewing<span class="nv">$ </span>heroku pg:promote HEROKU_POSTGRESQL_ONYX_URL
@@ -716,8 +750,40 @@ Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>Use the standard <tt class="docutils literal"><span class="pre">^D</span></tt> to detatch from the terminal.  At this point you&#8217;re
-safely done for the day.  Good work!</p>
+<p>Use the standard <tt class="docutils literal"><span class="pre">^D</span></tt> to detatch from the terminal.</p>
+<p>You may wish to verify that your initialization worked.  You can use the
+<tt class="docutils literal"><span class="pre">heroku</span> <span class="pre">pg</span></tt> command to connect to the database directly with <tt class="docutils literal"><span class="pre">psql</span></tt>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>heroku pg:psql
+---&gt; Connecting to HEROKU_POSTGRESQL_RED_URL <span class="o">(</span>DATABASE_URL<span class="o">)</span>
+psql <span class="o">(</span>9.3.2, server 9.3.5<span class="o">)</span>
+SSL connection <span class="o">(</span>cipher: DHE-RSA-AES256-SHA, bits: 256<span class="o">)</span>
+Type <span class="s2">&quot;help&quot;</span> <span class="k">for </span>help.
+
+evening-brushlands-7955::RED<span class="o">=</span>&gt; <span class="se">\d</span>
+                  List of relations
+ Schema |      Name      |   Type   |     Owner
+--------+----------------+----------+----------------
+ public | entries        | table    | kaplujiadphtmg
+ public | entries_id_seq | sequence | kaplujiadphtmg
+<span class="o">(</span>2 rows<span class="o">)</span>
+
+evening-brushlands-7955::RED<span class="o">=</span>&gt; <span class="se">\d</span> entries
+                                    Table <span class="s2">&quot;public.entries&quot;</span>
+ Column  |            Type             |                      Modifiers
+---------+-----------------------------+------------------------------------------------------
+ id      | integer                     | not null default nextval<span class="o">(</span><span class="s1">&#39;entries_id_seq&#39;</span>::regclass<span class="o">)</span>
+ title   | character varying<span class="o">(</span>127<span class="o">)</span>      | not null
+ text    | text                        | not null
+ created | timestamp without <span class="nb">time </span>zone | not null
+Indexes:
+    <span class="s2">&quot;entries_pkey&quot;</span> PRIMARY KEY, btree <span class="o">(</span>id<span class="o">)</span>
+</pre></div>
+</div>
+<p>This shows that your database does in fact have the <tt class="docutils literal"><span class="pre">entries</span></tt> table, and the
+table is correctly configured. At this point you&#8217;re safely done for the day.
+Good work!</p>
 </div>
 </div>
 </div>
@@ -797,7 +863,7 @@ safely done for the day.  Good work!</p>
         <li class="right" >
           <a href="index.html" title="Day 02 Assignments"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
           <li><a href="index.html" >Day 02 Assignments</a> &raquo;</li> 
       </ul>

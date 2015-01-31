@@ -179,12 +179,12 @@ This *imperative* code example:
 
 is identical to this *declarative* example.
 
-    .. code-block:: python
-    
-        @app.route('/foo', endpoint='homepage')
-        def index():
-            """some function that returns something"""
-            return "this is the homepage"
+.. code-block:: python
+
+    @app.route('/foo', endpoint='homepage')
+    def index():
+        """some function that returns something"""
+        return "this is the homepage"
 
 Pick one of the above, and add a the new function to your ``flask_intro.py``
 app file. (Make sure it comes above the ``__main__``)

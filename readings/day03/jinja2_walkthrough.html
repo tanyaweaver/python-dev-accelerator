@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Jinja2 Template Introduction &mdash; Python Dev Accelerator 1.0 documentation</title>
+    <title>Jinja2 Template Introduction &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0',
+        VERSION:     '2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Python Dev Accelerator 1.0 documentation" href="../../index.html" />
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
     <link rel="up" title="Day 03 Readings" href="index.html" />
     <link rel="prev" title="A Quick Flask Walkthrough" href="flask_walkthrough.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -38,6 +38,7 @@
   <div class="logo">
     <a href="../../index.html">
       <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
     </a>
   </div>
 </div>
@@ -51,7 +52,7 @@
         <li class="right" >
           <a href="flask_walkthrough.html" title="A Quick Flask Walkthrough"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Readings</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Day 03 Readings</a> &raquo;</li> 
       </ul>
@@ -64,8 +65,8 @@
             
   <div class="section" id="jinja2-template-introduction">
 <h1>Jinja2 Template Introduction<a class="headerlink" href="#jinja2-template-introduction" title="Permalink to this headline">¶</a></h1>
-<p>When you install <tt class="docutils literal"><span class="pre">flask</span></tt> into a virtualenv, it comes along with a Python-based
-templating engine called <tt class="docutils literal"><span class="pre">Jinja2</span></tt>.</p>
+<p>When you install <tt class="docutils literal"><span class="pre">pyramid_jinja2</span></tt> into your virtualenv, it brings along a
+Python-based templating engine called <tt class="docutils literal"><span class="pre">Jinja2</span></tt>.</p>
 <p>In this walkthrough, you&#8217;ll see some basics about how templates work, and get
 to know what sorts of options they provide you for creating HTML from a Python
 process.</p>
@@ -75,16 +76,17 @@ process.</p>
 </pre></div>
 </div>
 <p>A good framework will provide some way of generating HTML with a templating
-system.</p>
-<p>There are nearly as many templating systems as there are frameworks. Each comes
-with advantages and disadvantages.</p>
-<p>Flask includes the <em>Jinja2</em> templating system (perhaps because it&#8217;s built by
-the same folks).</p>
+system. As a result, there are nearly as many templating systems as there are
+frameworks. Each comes with advantages and disadvantages.</p>
+<p>Pyramid provides add-ons to use a number of different templating systems,
+including <a class="reference external" href="https://chameleon.readthedocs.org/en/latest/">chameleon</a>, <a class="reference external" href="http://www.makotemplates.org">mako</a>, and <a class="reference external" href="http://jinja.pocoo.org">Jinja2</a>. Of these, Jinja2 is arguably
+the easiest to learn, and has the advantage of strongly resembling the Django
+templating language. We&#8217;ll learn it first.</p>
 <div class="section" id="jinja2-template-basics">
 <h2>Jinja2 Template Basics<a class="headerlink" href="#jinja2-template-basics" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s start with the absolute basics.</p>
-<p>Fire up a Python interpreter, using your flask virtualenv:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>flaskenv<span class="o">)</span><span class="nv">$ </span>python
+<p>Fire up a Python interpreter, using your learning_journal virtualenv:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>learning_journal<span class="o">)</span><span class="nv">$ </span>python
 </pre></div>
 </div>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Template</span>
@@ -216,8 +218,8 @@ are some syntactic differences, though.</p>
 <p><a class="reference external" href="http://jinja.pocoo.org/docs/templates/#expressions">Learn all about expressions</a>, including <a class="reference external" href="http://jinja.pocoo.org/docs/templates/#assignments">assignments</a>  in the documentation.</p>
 </div>
 </div>
-<div class="section" id="jinja2-templates-in-flask">
-<h2>Jinja2 Templates in Flask<a class="headerlink" href="#jinja2-templates-in-flask" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="jinja2-templates-in-frameworks">
+<h2>Jinja2 Templates in Frameworks<a class="headerlink" href="#jinja2-templates-in-frameworks" title="Permalink to this headline">¶</a></h2>
 <p>The Jinja2 template engine has a concept it calls an <em>Environment</em>. The
 environment for the template engine is used to:</p>
 <ul class="simple">
@@ -225,25 +227,23 @@ environment for the template engine is used to:</p>
 <li>Set configuration for the templating system</li>
 <li>Add some commonly used functionality to the template <em>context</em></li>
 </ul>
-<p>In Flask, this environment is set up automatically when you instantiate your
-<tt class="docutils literal"><span class="pre">app</span></tt>.</p>
-<p>Flask uses the value you pass to the <tt class="docutils literal"><span class="pre">app</span></tt> constructor to calculate the root
-of your application on the filesystem. This means that Flask apps have a sense
-of their own filesystem location.</p>
-<p>From that root, a Flask app expects to find templates in a directory name
-<tt class="docutils literal"><span class="pre">templates</span></tt>.</p>
-<p>This allows you to use the <tt class="docutils literal"><span class="pre">render_template</span></tt> command from <tt class="docutils literal"><span class="pre">flask</span></tt> like
-so:</p>
-<div class="highlight-pycon"><div class="highlight"><pre><span class="go">from flask import render_template</span>
-<span class="go">page_html = render_template(&#39;hello_world.html&#39;)</span>
+<p>In Pyramid, this environment is set up automatically when you include the
+pyramid_jinja2 configuration. By default, templates will be searched for
+<em>relative</em> to the file in which they are called. Paths you use to reference
+templates will begin there unless you use <a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid-jinja2/en/latest/#template-lookup-mechanisms">another referencing system</a>.</p>
+<p>Once configured, you can use any file ending in <tt class="docutils literal"><span class="pre">.jinja2</span></tt> as a Pyramid
+<em>renderer</em>.  Needless to say, the file extension used is <a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid-jinja2/en/latest/#adding-or-overriding-a-renderer">also configurable</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyramid.config</span> <span class="kn">import</span> <span class="n">view_config</span>
+<span class="nd">@view_config</span><span class="p">(</span><span class="n">renderer</span><span class="o">=</span><span class="s">&quot;templates/hello_world.jinja2&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>In this case, Flask would expect to find a file called <tt class="docutils literal"><span class="pre">hello_world.html</span></tt> in
-a directory called <tt class="docutils literal"><span class="pre">templates</span></tt> in the app where this call appeared.</p>
+<p>In this case, Pyramid would expect to find a file called <tt class="docutils literal"><span class="pre">hello_world.jinja2</span></tt>
+in a directory called <tt class="docutils literal"><span class="pre">templates</span></tt> adjacent to the file where this code
+appeared.</p>
 <p>Let&#8217;s look at what a template file like that might look like:</p>
-<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;layout.html&quot;</span> <span class="cp">%}</span><span class="x"></span>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;layout.jinja2&quot;</span> <span class="cp">%}</span><span class="x"></span>
 <span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">  &lt;h1&gt;Hello World!&lt;/h1&gt;</span>
+<span class="x">  &lt;h2&gt;Hello World!&lt;/h2&gt;</span>
 <span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
 </pre></div>
 </div>
@@ -253,15 +253,15 @@ a directory called <tt class="docutils literal"><span class="pre">templates</spa
 <p><tt class="docutils literal"><span class="pre">Jinja2</span></tt> templates allow for <em>inheritance</em>.  This means that you can create
 shared structure in base templates, and then override or fill in named parts of
 that structure in <em>sub-templates</em>.</p>
-<p>In the above case, the <tt class="docutils literal"><span class="pre">hello_world.html</span></tt> sub-template <em>extends</em> the
-<tt class="docutils literal"><span class="pre">layout.html</span></tt> template. What does that file look like?</p>
+<p>In the above case, the <tt class="docutils literal"><span class="pre">hello_world.jinja2</span></tt> sub-template <em>extends</em> the
+<tt class="docutils literal"><span class="pre">layout.jinja2</span></tt> template. What does that file look like?</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="x">&lt;!DOCTYPE html&gt;</span>
 <span class="x">&lt;html&gt;</span>
 <span class="x">  &lt;head&gt;</span>
 <span class="x">    &lt;title&gt;Hello World!&lt;/title&gt;</span>
 <span class="x">  &lt;/head&gt;</span>
 <span class="x">  &lt;body&gt;</span>
-<span class="x">    &lt;h1&gt;A simple page.&lt;/h1&gt;</span>
+<span class="x">    &lt;h1&gt;A simple page&lt;/h1&gt;</span>
 <span class="x">    &lt;div class=&quot;content&quot;&gt;</span>
 <span class="x">    </span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
 <span class="x">    &lt;/div&gt;</span>
@@ -269,18 +269,18 @@ that structure in <em>sub-templates</em>.</p>
 <span class="x">&lt;/html&gt;</span>
 </pre></div>
 </div>
-<p>You can see here that the <tt class="docutils literal"><span class="pre">body</span></tt> block is defined in <tt class="docutils literal"><span class="pre">layout.html</span></tt> and then
-that block is filled by the templating in <tt class="docutils literal"><span class="pre">hello_world.html</span></tt>.</p>
+<p>You can see here that the <tt class="docutils literal"><span class="pre">body</span></tt> block is defined in <tt class="docutils literal"><span class="pre">layout.jinja2</span></tt> and then
+that block is filled by the templating in <tt class="docutils literal"><span class="pre">hello_world.jinja2</span></tt>.</p>
 <p>Inheritance can work the other way, as well. In addition to filling blocks in a
 larger structure, you can pull in smaller blocks using the <tt class="docutils literal"><span class="pre">include</span></tt> template
 tag.  For example, all the pages on your site might include a common footer
-which is defined in <tt class="docutils literal"><span class="pre">footer.html</span></tt>:</p>
+which is defined in <tt class="docutils literal"><span class="pre">footer.jinja2</span></tt>:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="x">&lt;div id=&quot;footer&quot;&gt;</span>
 <span class="x">  I am the footer, seen on all pages.</span>
 <span class="x">&lt;/div&gt;</span>
 </pre></div>
 </div>
-<p>Then, we can include this structure in our <tt class="docutils literal"><span class="pre">layout.html</span></tt> file:</p>
+<p>Then, we can include this structure in our <tt class="docutils literal"><span class="pre">layout.jinja2</span></tt> file:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="x">&lt;!DOCTYPE html&gt;</span>
 <span class="x">&lt;html&gt;</span>
 <span class="x">  &lt;head&gt;</span>
@@ -291,7 +291,7 @@ which is defined in <tt class="docutils literal"><span class="pre">footer.html</
 <span class="x">    &lt;div class=&quot;content&quot;&gt;</span>
 <span class="x">    </span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
 <span class="x">    &lt;/div&gt;</span>
-<span class="x">    </span><span class="cp">{%</span> <span class="k">include</span> <span class="s2">&quot;footer.html&quot;</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">include</span> <span class="s2">&quot;footer.jinja2&quot;</span> <span class="cp">%}</span><span class="x"></span>
 <span class="x">  &lt;/body&gt;</span>
 <span class="x">&lt;/html&gt;</span>
 </pre></div>
@@ -309,9 +309,9 @@ structures for repetetive elements like form inputs:</p>
 <span class="cp">{%</span>- <span class="k">endmacro</span> <span class="cp">%}</span><span class="x"></span>
 </pre></div>
 </div>
-<p>Once such a library is established, say in a file called <tt class="docutils literal"><span class="pre">forms.html</span></tt>, the
+<p>Once such a library is established, say in a file called <tt class="docutils literal"><span class="pre">forms.jinja2</span></tt>, the
 macros it contains can be used in other templates:</p>
-<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">import</span> <span class="s1">&#39;forms.html&#39;</span> <span class="k">as</span> <span class="nv">forms</span> <span class="cp">%}</span><span class="x"></span>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">import</span> <span class="s1">&#39;forms.jinja2&#39;</span> <span class="k">as</span> <span class="nv">forms</span> <span class="cp">%}</span><span class="x"></span>
 <span class="x">&lt;dl&gt;</span>
 <span class="x">    &lt;dt&gt;Username&lt;/dt&gt;</span>
 <span class="x">    &lt;dd&gt;</span><span class="cp">{{</span> <span class="nv">forms.input</span><span class="o">(</span><span class="s1">&#39;username&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&lt;/dd&gt;</span>
@@ -328,17 +328,19 @@ here, so read up.</p>
 <h3>Common Flask Context<a class="headerlink" href="#common-flask-context" title="Permalink to this headline">¶</a></h3>
 <p>Keyword arguments you pass to <tt class="docutils literal"><span class="pre">render_template</span></tt> become the <em>context</em> passed
 to the template for rendering.</p>
-<p>Flask will add a few things to this context, thanks to the <tt class="docutils literal"><span class="pre">jinja2</span></tt>
-environment it creates.</p>
+<p>Pyramid will add a single value to the <em>context</em> for jinja2 templates, the
+<tt class="docutils literal"><span class="pre">request</span></tt> object. Within pyramid, the request object is a single location
+where you can access other important information like:</p>
 <ul class="simple">
-<li><strong>config</strong>: contains the current configuration object</li>
-<li><strong>request</strong>: contains the current request object</li>
-<li><strong>session</strong>: any session data that might be available</li>
-<li><strong>g</strong>: the request-local object to which global variables are bound</li>
-<li><strong>url_for</strong>: so you can easily <em>reverse</em> urls from within your templates</li>
-<li><strong>get_flashed_messages</strong>: a function that returns messages you flash to your
-users (more on this later).</li>
+<li><strong>settings</strong>: <tt class="docutils literal"><span class="pre">request.registry.settings</span></tt> contains all settings for your
+app.</li>
+<li><strong>session</strong>: if sessions are configured, <tt class="docutils literal"><span class="pre">request.session</span></tt> will hold
+session data.</li>
+<li><strong>route_url</strong>: you can easily <em>reverse</em> urls from within your templates with
+<tt class="docutils literal"><span class="pre">request.route_url</span></tt>.</li>
 </ul>
+<p>and much much more. The Pyramid <tt class="docutils literal"><span class="pre">request</span></tt> supports an <a class="reference external" href="http://docs.pylonsproject.org/docs/pyramid/en/latest/api/request.html">entire ecosystem</a> of
+properties and methods that can come in useful.</p>
 </div>
 </div>
 <div class="section" id="much-much-more">
@@ -367,7 +369,7 @@ users (more on this later).</li>
 <li><a class="reference internal" href="#python-expressions-in-templates">Python Expressions in Templates</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#jinja2-templates-in-flask">Jinja2 Templates in Flask</a><ul>
+<li><a class="reference internal" href="#jinja2-templates-in-frameworks">Jinja2 Templates in Frameworks</a><ul>
 <li><a class="reference internal" href="#template-inheritance">Template Inheritance</a></li>
 <li><a class="reference internal" href="#common-flask-context">Common Flask Context</a></li>
 </ul>
@@ -406,7 +408,7 @@ users (more on this later).</li>
         <li class="right" >
           <a href="flask_walkthrough.html" title="A Quick Flask Walkthrough"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Readings</a> &raquo;</li>
           <li><a href="index.html" >Day 03 Readings</a> &raquo;</li> 
       </ul>

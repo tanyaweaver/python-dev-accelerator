@@ -2,8 +2,8 @@
 Jinja2 Template Introduction
 ****************************
 
-When you install ``flask`` into a virtualenv, it comes along with a Python-based
-templating engine called ``Jinja2``.
+When you install ``pyramid_jinja2`` into your virtualenv, it brings along a
+Python-based templating engine called ``Jinja2``.
 
 In this walkthrough, you'll see some basics about how templates work, and get
 to know what sorts of options they provide you for creating HTML from a Python
@@ -17,13 +17,17 @@ process.
 
 
 A good framework will provide some way of generating HTML with a templating
-system.
+system. As a result, there are nearly as many templating systems as there are
+frameworks. Each comes with advantages and disadvantages.
 
-There are nearly as many templating systems as there are frameworks. Each comes
-with advantages and disadvantages.
+Pyramid provides add-ons to use a number of different templating systems,
+including `chameleon`_, `mako`_, and `Jinja2`_. Of these, Jinja2 is arguably
+the easiest to learn, and has the advantage of strongly resembling the Django
+templating language. We'll learn it first.
 
-Flask includes the *Jinja2* templating system (perhaps because it's built by
-the same folks).
+.. _Jinja2: http://jinja.pocoo.org
+.. _mako: http://www.makotemplates.org
+.. _chameleon: https://chameleon.readthedocs.org/en/latest/
 
 
 Jinja2 Template Basics
@@ -31,11 +35,11 @@ Jinja2 Template Basics
 
 Let's start with the absolute basics.
 
-Fire up a Python interpreter, using your flask virtualenv:
-    
+Fire up a Python interpreter, using your learning_journal virtualenv:
+
 .. code-block:: bash
 
-    (flaskenv)$ python
+    (learning_journal)$ python
 
 .. code-block:: pycon
 
@@ -46,7 +50,7 @@ A template starts life as a simple string:
 .. code-block:: pycon
 
     >>> t1 = Template("Hello {{ name }}, how are you?")
-    >>> 
+    >>>
 
 But it has a bit more to it than that. You can call the ``render`` method of a
 template object, providing some *context*:
@@ -57,9 +61,9 @@ template object, providing some *context*:
     u'Hello Freddy, how are you?'
     >>> t1.render({'name': "Roberto"})
     u'Hello Roberto, how are you?'
-    >>> 
+    >>>
 
-*Context* can either be keyword arguments, or a dictionary. 
+*Context* can either be keyword arguments, or a dictionary.
 
 Simple Python values passed in as context will be resolved in the template by
 the *key* they are assigned to in the *context*.  These keys are arbitrary.
@@ -147,7 +151,7 @@ programming language:
     >>> t6.render(list=[1,2,3,4,5,6])
     u'\n1, 2, 3, 4, 5, 6, '
 
-Any control structure introduced in a template **must** be paired with an 
+Any control structure introduced in a template **must** be paired with an
 explicit closing tag ({% for %}...{% endfor %})
 
 You can `learn more about control structures`_ by reading the documentation.
@@ -208,8 +212,8 @@ are some syntactic differences, though.
 .. _assignments: http://jinja.pocoo.org/docs/templates/#assignments
 
 
-Jinja2 Templates in Flask
-=========================
+Jinja2 Templates in Frameworks
+==============================
 
 The Jinja2 template engine has a concept it calls an *Environment*. The
 environment for the template engine is used to:
@@ -218,34 +222,34 @@ environment for the template engine is used to:
 * Set configuration for the templating system
 * Add some commonly used functionality to the template *context*
 
-In Flask, this environment is set up automatically when you instantiate your
-``app``.
+In Pyramid, this environment is set up automatically when you include the
+pyramid_jinja2 configuration. By default, templates will be searched for
+*relative* to the file in which they are called. Paths you use to reference
+templates will begin there unless you use `another referencing system`_.
 
-Flask uses the value you pass to the ``app`` constructor to calculate the root
-of your application on the filesystem. This means that Flask apps have a sense
-of their own filesystem location.
+.. _another referencing system: http://docs.pylonsproject.org/projects/pyramid-jinja2/en/latest/#template-lookup-mechanisms
 
-From that root, a Flask app expects to find templates in a directory name
-``templates``.
+Once configured, you can use any file ending in ``.jinja2`` as a Pyramid
+*renderer*.  Needless to say, the file extension used is `also configurable`_.
 
-This allows you to use the ``render_template`` command from ``flask`` like
-so:
+.. _also configurable: http://docs.pylonsproject.org/projects/pyramid-jinja2/en/latest/#adding-or-overriding-a-renderer
 
-.. code-block:: pycon
-    
-    from flask import render_template
-    page_html = render_template('hello_world.html')
+.. code-block:: python
 
-In this case, Flask would expect to find a file called ``hello_world.html`` in
-a directory called ``templates`` in the app where this call appeared.
+    from pyramid.config import view_config
+    @view_config(renderer="templates/hello_world.jinja2")
+
+In this case, Pyramid would expect to find a file called ``hello_world.jinja2``
+in a directory called ``templates`` adjacent to the file where this code
+appeared.
 
 Let's look at what a template file like that might look like:
 
 .. code-block:: jinja
 
-    {% extends "layout.html" %}
+    {% extends "layout.jinja2" %}
     {% block body %}
-      <h1>Hello World!</h1>
+      <h2>Hello World!</h2>
     {% endblock %}
 
 That's not much to look at.  Where's the rest of the HTML that makes up a page?
@@ -257,8 +261,8 @@ Template Inheritance
 shared structure in base templates, and then override or fill in named parts of
 that structure in *sub-templates*.
 
-In the above case, the ``hello_world.html`` sub-template *extends* the
-``layout.html`` template. What does that file look like?
+In the above case, the ``hello_world.jinja2`` sub-template *extends* the
+``layout.jinja2`` template. What does that file look like?
 
 .. code-block:: jinja
 
@@ -268,20 +272,20 @@ In the above case, the ``hello_world.html`` sub-template *extends* the
         <title>Hello World!</title>
       </head>
       <body>
-        <h1>A simple page.</h1>
+        <h1>A simple page</h1>
         <div class="content">
         {% block body %}{% endblock %}
         </div>
       </body>
     </html>
 
-You can see here that the ``body`` block is defined in ``layout.html`` and then
-that block is filled by the templating in ``hello_world.html``.
+You can see here that the ``body`` block is defined in ``layout.jinja2`` and then
+that block is filled by the templating in ``hello_world.jinja2``.
 
 Inheritance can work the other way, as well. In addition to filling blocks in a
 larger structure, you can pull in smaller blocks using the ``include`` template
 tag.  For example, all the pages on your site might include a common footer
-which is defined in ``footer.html``:
+which is defined in ``footer.jinja2``:
 
 .. code-block:: jinja
 
@@ -289,7 +293,7 @@ which is defined in ``footer.html``:
       I am the footer, seen on all pages.
     </div>
 
-Then, we can include this structure in our ``layout.html`` file:
+Then, we can include this structure in our ``layout.jinja2`` file:
 
 .. code-block:: jinja
 
@@ -303,7 +307,7 @@ Then, we can include this structure in our ``layout.html`` file:
         <div class="content">
         {% block body %}{% endblock %}
         </div>
-        {% include "footer.html" %}
+        {% include "footer.jinja2" %}
       </body>
     </html>
 
@@ -322,12 +326,12 @@ structures for repetetive elements like form inputs:
             }}">{{ value|e }}</textarea>
     {%- endmacro %}
 
-Once such a library is established, say in a file called ``forms.html``, the
+Once such a library is established, say in a file called ``forms.jinja2``, the
 macros it contains can be used in other templates:
 
 .. code-block:: jinja
 
-    {% import 'forms.html' as forms %}
+    {% import 'forms.jinja2' as forms %}
     <dl>
         <dt>Username</dt>
         <dd>{{ forms.input('username') }}</dd>
@@ -349,16 +353,21 @@ Common Flask Context
 Keyword arguments you pass to ``render_template`` become the *context* passed
 to the template for rendering.
 
-Flask will add a few things to this context, thanks to the ``jinja2``
-environment it creates.
+Pyramid will add a single value to the *context* for jinja2 templates, the
+``request`` object. Within pyramid, the request object is a single location
+where you can access other important information like:
 
-* **config**: contains the current configuration object
-* **request**: contains the current request object
-* **session**: any session data that might be available
-* **g**: the request-local object to which global variables are bound
-* **url_for**: so you can easily *reverse* urls from within your templates
-* **get_flashed_messages**: a function that returns messages you flash to your
-  users (more on this later).
+* **settings**: ``request.registry.settings`` contains all settings for your
+  app.
+* **session**: if sessions are configured, ``request.session`` will hold
+  session data.
+* **route_url**: you can easily *reverse* urls from within your templates with
+  ``request.route_url``.
+
+and much much more. The Pyramid ``request`` supports an `entire ecosystem`_ of
+properties and methods that can come in useful.
+
+.. _entire ecosystem: http://docs.pylonsproject.org/docs/pyramid/en/latest/api/request.html
 
 
 Much, Much More

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python Learning Journal: Step 2 &mdash; Python Dev Accelerator 1.0 documentation</title>
+    <title>Python Learning Journal: Step 2 &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0',
+        VERSION:     '2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Python Dev Accelerator 1.0 documentation" href="../../index.html" />
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
     <link rel="up" title="Day 03 Assignments" href="index.html" />
     <link rel="next" title="Day 04 Assignments" href="../day04/index.html" />
     <link rel="prev" title="Day 03 Assignments" href="index.html" />
@@ -39,6 +39,7 @@
   <div class="logo">
     <a href="../../index.html">
       <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
     </a>
   </div>
 </div>
@@ -55,7 +56,7 @@
         <li class="right" >
           <a href="index.html" title="Day 03 Assignments"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Day 03 Assignments</a> &raquo;</li> 
       </ul>
@@ -69,7 +70,7 @@
   <div class="section" id="python-learning-journal-step-2">
 <h1>Python Learning Journal: Step 2<a class="headerlink" href="#python-learning-journal-step-2" title="Permalink to this headline">¶</a></h1>
 <p>In part one of this tutorial, you built the <em>data model</em> for a simple learning
-journal web application using Flask and PostgreSQL. You deployed this work to
+journal web application using Pyramid and PostgreSQL. You deployed this work to
 Heroku and confirmed that you could see a simple page.</p>
 <p>In this second part, you&#8217;ll build the <em>control layer</em> and the <em>view layer</em> for
 this application. Along the way, you&#8217;ll learn about Test-Driven Development and
@@ -115,79 +116,75 @@ a response has been sent back to the client.</p>
 <p>In a data-driven application, the database is the memory store for the
 application. It makes sense to bind the lifecycle of a database connection to
 this same request/response cycle.</p>
-<p>Flask does not dictate that you write an application that uses a database.
+<p>Pyramid does not dictate that you write an application that uses a database.
 Because of this, managing the lifecycle of database connection so that they are
 connected to the request/response cycle is up to you.</p>
-<p>Happily, Flask <em>does</em> provide a way to help you.</p>
+<p>Happily, Pyramid <em>does</em> provide a way to help you.</p>
 </div>
-<div class="section" id="request-boundary-decorators">
-<h3>Request Boundary Decorators<a class="headerlink" href="#request-boundary-decorators" title="Permalink to this headline">¶</a></h3>
-<p>The Flask <em>app</em> provides decorators we can use on our database lifecycle
-functions:</p>
-<dl class="docutils">
-<dt><tt class="docutils literal"><span class="pre">&#64;app.before_request</span></tt>:</dt>
-<dd>Any function decorated by this will be called before the cycle begins</dd>
-<dt><tt class="docutils literal"><span class="pre">&#64;app.after_request</span></tt>:</dt>
-<dd><p class="first">Any function decorated by this will be called after the cycle is complete.</p>
-<p class="last">However, if an unhandled exception occurs, these functions are skipped.</p>
-</dd>
-<dt><tt class="docutils literal"><span class="pre">&#64;app.teardown_request</span></tt>:</dt>
-<dd>Any function decorated by this will be called at the end of the cycle,
-<em>even if</em> an unhandled exception occurs.</dd>
-</dl>
-</div>
-<div class="section" id="context-in-flask">
-<h3>Context in Flask<a class="headerlink" href="#context-in-flask" title="Permalink to this headline">¶</a></h3>
-<p>Consider the following simple functions, meant to create and destroy a database
-connection:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_database_connection</span><span class="p">():</span>
-    <span class="n">db</span> <span class="o">=</span> <span class="n">connect_db</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">db</span>
+<div class="section" id="opening-a-connection">
+<h3>Opening a Connection<a class="headerlink" href="#opening-a-connection" title="Permalink to this headline">¶</a></h3>
+<p>In Pyramid, the beginning of a request/response cycle is marked by an
+<em>event</em>. Pyramid events can be <em>subscribed to</em> by functions so that when an
+event happens, the function is called.  This is an example of the
+<a class="reference external" href="https://carldanley.com/js-observer-pattern/">Observer pattern</a>.</p>
+<p>To subscribe to an event, we use the <tt class="docutils literal"><span class="pre">subscriber</span></tt> decorator. The function we
+decorate must take <tt class="docutils literal"><span class="pre">event</span></tt> as it&#8217;s sole argument. The event that is passed to
+the function will have access to the newly created request, your app, settings
+and so on. Add the following code to your <tt class="docutils literal"><span class="pre">journal.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># add imports to the top of the file</span>
+<span class="kn">from</span> <span class="nn">pyramid.events</span> <span class="kn">import</span> <span class="n">NewRequest</span><span class="p">,</span> <span class="n">subscriber</span>
 
-<span class="nd">@app.teardown_request</span>
-<span class="k">def</span> <span class="nf">teardown_request</span><span class="p">(</span><span class="n">exception</span><span class="p">):</span>
-    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="c"># and add this function below the init_db function you wrote yesterday:</span>
+<span class="nd">@subscriber</span><span class="p">(</span><span class="n">NewRequest</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">open_connection</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">request</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">settings</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">connect_db</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>How does the <tt class="docutils literal"><span class="pre">db</span></tt> object get from one place to the other? It&#8217;s not passed. It
-isn&#8217;t bound at module scope. Where does <tt class="docutils literal"><span class="pre">teardown_request</span></tt> find it?</p>
-<p>You might be tempted to say &#8220;attach it to the Flask <tt class="docutils literal"><span class="pre">app</span></tt> since that&#8217;s
-global.&#8221; But the Flask <tt class="docutils literal"><span class="pre">app</span></tt> is a <em>global</em> context, shared <strong>across all
-requests</strong>. This won&#8217;t work for a database connection.</p>
-<p>Flask solves this problem by providing what it calls <em>local globals</em>. These
-objects can be imported, as if they were part of the <em>global</em> context. But in
-reality they are constructed <em>locally</em> for to each request.</p>
-<p>The local global most useful for us in this situation is <a class="reference external" href="http://flask.pocoo.org/docs/api/#flask.g,">flask.g</a>. You can
-set attributes on this object and since it can be imported anywhere, they can
-be passed from function to function. Perfect for things like a database
+<p>Notice that the newly created request is an attribute of the event. This
+request is a Python object created that represents all the information received
+from a client who is viewing our application. It will be passed to functions
+like <em>views</em> that require it, and so it is a fine place to put a database
 connection.</p>
 </div>
-<div class="section" id="getting-and-releasing-a-connection">
-<h3>Getting and Releasing A Connection<a class="headerlink" href="#getting-and-releasing-a-connection" title="Permalink to this headline">¶</a></h3>
-<p>With <tt class="docutils literal"><span class="pre">flask.g</span></tt> as a place to hold a connection, you&#8217;re ready to rock. In
-<tt class="docutils literal"><span class="pre">journal.py</span></tt> add the following code:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># add this import at the top:</span>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">g</span>
+<div class="section" id="releasing-a-connection">
+<h3>Releasing a Connection<a class="headerlink" href="#releasing-a-connection" title="Permalink to this headline">¶</a></h3>
+<p>Now that every new request will have a connection to the database on it, we can
+deal with the opposite end of the request/response cycle. We want to close the
+connection we created when the cycle is complete.</p>
+<p>In Pyramid, the end of the request/response cycle is not marked by an event.
+Instead, there is a hook on the request object itself that lets us register
+<em>callback functions</em> for a point just before the response is sent back to the
+client. We register callbacks by passing them to the <tt class="docutils literal"><span class="pre">add_finished_callback</span></tt>
+method of the request object.</p>
+<p>Begin by writing the callback function.  It will take only the <tt class="docutils literal"><span class="pre">request</span></tt> as
+an argument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># add this import at the top of the file:</span>
+<span class="kn">import</span> <span class="nn">transaction</span>
 
-<span class="c"># add these function after init_db</span>
-<span class="k">def</span> <span class="nf">get_database_connection</span><span class="p">():</span>
-    <span class="n">db</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">db</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">g</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span> <span class="o">=</span> <span class="n">connect_db</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">db</span>
+<span class="c"># and this function just below open_connection</span>
+<span class="k">def</span> <span class="nf">close_connection</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;close the database connection for this request</span>
 
-<span class="nd">@app.teardown_request</span>
-<span class="k">def</span> <span class="nf">teardown_request</span><span class="p">(</span><span class="n">exception</span><span class="p">):</span>
-    <span class="n">db</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="sd">    If there has been an error in the processing of the request, abort any</span>
+<span class="sd">    open transactions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&#39;db&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">db</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">exception</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exception</span><span class="p">,</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
-            <span class="c"># if there was a problem with the database, rollback any</span>
-            <span class="c"># existing transaction</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">exception</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">db</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c"># otherwise, commit</span>
             <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-        <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Then modify the <tt class="docutils literal"><span class="pre">open_connection</span></tt> function you just wrote above, adding one
+final line to the function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">open_connection</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="c"># ...</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">connect_db</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">add_finished_callback</span><span class="p">(</span><span class="n">close_connection</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Once you&#8217;ve written these functions, commit your changes with a comment about
@@ -255,26 +252,49 @@ tests.</p>
 <p>To begin, add the following code in your <tt class="docutils literal"><span class="pre">test_journal.py</span></tt> file:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">closing</span>
+<span class="kn">from</span> <span class="nn">pyramid</span> <span class="kn">import</span> <span class="n">testing</span>
 <span class="kn">import</span> <span class="nn">pytest</span>
 
-<span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">app</span>
 <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">connect_db</span>
-<span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">get_database_connection</span>
-<span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">init_db</span>
+<span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">DB_SCHEMA</span>
 
 
 <span class="n">TEST_DSN</span> <span class="o">=</span> <span class="s">&#39;dbname=test_learning_journal user=cewing&#39;</span>
 
 
-<span class="k">def</span> <span class="nf">clear_db</span><span class="p">():</span>
-    <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">connect_db</span><span class="p">())</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">init_db</span><span class="p">(</span><span class="n">settings</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">connect_db</span><span class="p">(</span><span class="n">settings</span><span class="p">))</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">DB_SCHEMA</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">clear_db</span><span class="p">(</span><span class="n">settings</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">connect_db</span><span class="p">(</span><span class="n">settings</span><span class="p">))</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
         <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;DROP TABLE entries&quot;</span><span class="p">)</span>
         <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">clear_entries</span><span class="p">(</span><span class="n">settings</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">connect_db</span><span class="p">(</span><span class="n">settings</span><span class="p">))</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;DELETE FROM entries&quot;</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">run_query</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">(),</span> <span class="n">get_results</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">get_results</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">results</span>
 </pre></div>
 </div>
+<p>These functions will serve as <em>utilities</em> for our tests.</p>
 <p><strong>Notes</strong></p>
 <ul class="simple">
-<li>Remember to use the correct name for the user, mine is just an example.</li>
+<li>Remember to use <strong>the correct name for your database user</strong>, mine is just an
+example.</li>
 <li>Notice that you&#8217;ll be using a different <tt class="docutils literal"><span class="pre">dbname</span></tt> for testing. This prevents
 overwriting data you might want to save.</li>
 </ul>
@@ -286,24 +306,37 @@ overwriting data you might want to save.</li>
 </div>
 <p>You&#8217;ve created a <tt class="docutils literal"><span class="pre">clear_db</span></tt> function. It will be used for removing your test
 database table when the tests are finished for isolation.</p>
+<p>You&#8217;ve also created a new <tt class="docutils literal"><span class="pre">init_db</span></tt> function.  It will be used for setting up
+the database before tests begin. But it requires settings passed in instead of
+deriving them from the environment.</p>
 <div class="section" id="creating-fixtures">
 <h3>Creating Fixtures<a class="headerlink" href="#creating-fixtures" title="Permalink to this headline">¶</a></h3>
 <p>The <tt class="docutils literal"><span class="pre">pytest</span></tt> module does more than just test discovery. It supports
 <a class="reference external" href="http://pytest.org/latest/fixture.html">fixtures</a>.</p>
-<p>Fixtures help you to manage resources needed for your tests. You&#8217;ll add a few
-fixtures to help test your Flask app.</p>
-<p>The first fixture is responsible for configuring your Flask app for testing.
+<p>Fixtures help you to manage resources needed for your tests. They are run
+before and after your tests. You can use them to create and destroy resources
+needed for testing. Fixtures help ensure that you have control over the
+environment where your tests run.</p>
+<p>You&#8217;ll add a few fixtures to help test your Pyramid app.</p>
+<p>The first fixture is responsible for generating and clearing the test database.
 Add this code to <tt class="docutils literal"><span class="pre">test_journal.py</span></tt>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s">&#39;session&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">test_app</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;configure our app for use in testing&quot;&quot;&quot;</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;DATABASE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">TEST_DSN</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;TESTING&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">def</span> <span class="nf">db</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;set up and tear down a database&quot;&quot;&quot;</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;db&#39;</span><span class="p">:</span> <span class="n">TEST_DSN</span><span class="p">}</span>
+    <span class="n">init_db</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">cleanup</span><span class="p">():</span>
+        <span class="n">clear_db</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+    <span class="n">request</span><span class="o">.</span><span class="n">addfinalizer</span><span class="p">(</span><span class="n">cleanup</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">settings</span>
 </pre></div>
 </div>
 <p><strong>NOTES</strong>:</p>
 <ul class="simple">
-<li>The <tt class="docutils literal"><span class="pre">pytext.fixture</span></tt> decorator registers the <tt class="docutils literal"><span class="pre">test_app</span></tt> function as a
+<li>The <tt class="docutils literal"><span class="pre">pytest.fixture</span></tt> decorator registers the <tt class="docutils literal"><span class="pre">db</span></tt> function as a
 fixture with pytest.</li>
 <li>The <tt class="docutils literal"><span class="pre">scope</span></tt> argument passed to the decorator determines how often a fixture
 is run.<ul>
@@ -313,70 +346,71 @@ file).</li>
 <li><tt class="docutils literal"><span class="pre">function</span></tt> scope is run once for each test function.</li>
 </ul>
 </li>
-<li>Configuration like this applies across all tests, so scope this fixture to
+<li>We&#8217;ll want to have the database across all tests, so scope this fixture to
 <tt class="docutils literal"><span class="pre">session</span></tt>.</li>
-<li>This fixture requires no teardown so there&#8217;s no code written to clean up
-after tests are done.</li>
+<li>A fixture function may be defined with parameters.</li>
+<li>The names of the parameters must match <em>registered fixtures</em>.</li>
+<li>The fixtures named as parameters will be run surrounding the new fixture,
+like the layers of an onion</li>
+<li>The <tt class="docutils literal"><span class="pre">request</span></tt> parameter is a special fixture that <tt class="docutils literal"><span class="pre">pytest</span></tt> registers.</li>
+<li>You use it to connect this <tt class="docutils literal"><span class="pre">cleanup</span></tt> function to the <tt class="docutils literal"><span class="pre">db</span></tt> fixture.</li>
+<li>This means that <tt class="docutils literal"><span class="pre">cleanup</span></tt> will be run after tests are complete as a
+tear-down action, <em>in the same order as this fixture</em>.</li>
+<li>By returning <tt class="docutils literal"><span class="pre">settings</span></tt> from this fixture, tests or fixtures that depend on
+it will be able to access the same settings we used to create the database.</li>
 </ul>
-<p>The next fixture you&#8217;ll write will handle initializing the database tables and
-removing them after. Add the following to <tt class="docutils literal"><span class="pre">test_journal.py</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s">&#39;session&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">db</span><span class="p">(</span><span class="n">test_app</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;initialize the entries table and drop it when finished&quot;&quot;&quot;</span>
-    <span class="n">init_db</span><span class="p">()</span>
+<p>The next fixture we create will be responsible for providing us with a
+<em>request</em> object that we can use in our tests. We want to <em>mock</em> features of
+the real Pyramid request that are used by our code. Add the following to
+<tt class="docutils literal"><span class="pre">test_journal.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.yield_fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s">&#39;function&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">req_context</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;mock a request with a database attached&quot;&quot;&quot;</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">db</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="n">testing</span><span class="o">.</span><span class="n">DummyRequest</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">connect_db</span><span class="p">(</span><span class="n">settings</span><span class="p">))</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+        <span class="n">req</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
+        <span class="n">req</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">yield</span> <span class="n">req</span>
 
-    <span class="k">def</span> <span class="nf">cleanup</span><span class="p">():</span>
-        <span class="n">clear_db</span><span class="p">()</span>
-
-    <span class="n">request</span><span class="o">.</span><span class="n">addfinalizer</span><span class="p">(</span><span class="n">cleanup</span><span class="p">)</span>
+        <span class="c"># after a test has run, we clear out entries for isolation</span>
+        <span class="n">clear_entries</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>Notes</strong>:</p>
 <ul class="simple">
-<li>The fixture function is defined with parameters.</li>
-<li>The names of the parameters must match <em>registered fixtures</em>.</li>
-<li>The fixtures named as parameters will be run surrounding the new fixture.</li>
-<li>You name <tt class="docutils literal"><span class="pre">test_app</span></tt> to ensure that configuration changes are in place when
-the database is set up.</li>
-<li>The <tt class="docutils literal"><span class="pre">request</span></tt> parameter is a fixture that <tt class="docutils literal"><span class="pre">pytest</span></tt> registers.</li>
-<li>You use it to connect the <tt class="docutils literal"><span class="pre">cleanup</span></tt> function to the <tt class="docutils literal"><span class="pre">db</span></tt> fixture.</li>
-<li>This means that <tt class="docutils literal"><span class="pre">cleanup</span></tt> will be run after tests are complete as a
-tear-down action.</li>
-</ul>
-<p>The last fixture helps each test to run in isolation from other tests. Add the
-following code to <tt class="docutils literal"><span class="pre">test_journal.py</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.yield_fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s">&#39;function&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">req_context</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;run tests within a test request context so that &#39;g&#39; is present&quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">app</span><span class="o">.</span><span class="n">test_request_context</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">):</span>
-        <span class="k">yield</span>
-        <span class="n">con</span> <span class="o">=</span> <span class="n">get_database_connection</span><span class="p">()</span>
-        <span class="n">con</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li>Remember that your database lifecycle is bound to the <em>request/response
-cycle</em></li>
-<li>The database connection will be attached to <tt class="docutils literal"><span class="pre">flask.g</span></tt></li>
-<li>Flask creates <tt class="docutils literal"><span class="pre">g</span></tt> when a cycle begines, but tests <strong>have no
-request/response cycle</strong>.</li>
-<li>Flask&#8217;s <tt class="docutils literal"><span class="pre">app.test_request_context</span></tt> is a <em>context provider</em>.<ul>
-<li>Used in a <tt class="docutils literal"><span class="pre">with</span></tt> statement it creates a mock request/response cycle.</li>
-</ul>
-</li>
-<li>The request only exists <em>inside</em> the <tt class="docutils literal"><span class="pre">with</span></tt> block, so the callback pattern
-used in the <tt class="docutils literal"><span class="pre">db</span></tt> fixture would not work.</li>
-<li>The <a class="reference external" href="http://pytest.org/latest/yieldfixture.html">yield_fixture decorator</a> allows fixtures made from <em>generator functions</em></li>
-<li>Because <tt class="docutils literal"><span class="pre">yield</span></tt> preserves internal state, the entire test happens <strong>inside
-the context manager scope</strong>!</li>
+<li>The <a class="reference external" href="http://pytest.org/latest/yieldfixture.html">yield_fixture decorator</a> allows fixtures made from <em>generator functions</em><ul>
+<li>Because <tt class="docutils literal"><span class="pre">yield</span></tt> preserves internal state, the entire test happens
+<strong>inside the context manager scope</strong>!</li>
 <li>When control returns to the fixture, code after the <tt class="docutils literal"><span class="pre">yield</span></tt> statement is
 executed as the tear-down action.</li>
+<li>You use yield fixtures when you want to maintain the ephemeral program
+state created by your fixture.</li>
+</ul>
+</li>
+<li>This test is intended to <em>isolate</em> each test from the next, so we use the
+<tt class="docutils literal"><span class="pre">function</span></tt> scope.<ul>
+<li>Notice that each test will have its own connection to the database.</li>
+<li>Notice that in our <tt class="docutils literal"><span class="pre">cleanup</span></tt> function, we delete any entries that have
+been created.</li>
+<li>Then we close the connection.</li>
+</ul>
+</li>
+<li>Note that this fixture requires the <tt class="docutils literal"><span class="pre">db</span></tt> fixture we just wrote.<ul>
+<li>When we require another fixture the <em>return value</em> of that fixture is
+available to us <em>bound</em> to the name of the fixture.</li>
+<li>Here we re-bind the settings returned by the <tt class="docutils literal"><span class="pre">db</span></tt> fixture only for the
+sake of clarity.</li>
+</ul>
+</li>
+<li>By returning the <tt class="docutils literal"><span class="pre">DummyRequest</span></tt> instance we create, we provide access to
+this request to other fixtures or tests that may use this one.</li>
 </ul>
 </div>
 </div>
 <div class="section" id="writing-and-reading-entries">
 <h2>Writing and Reading Entries<a class="headerlink" href="#writing-and-reading-entries" title="Permalink to this headline">¶</a></h2>
-<p>Your journal&#8217;s <em>data model</em> consists of <em>entries</em>. You&#8217;ve set up a simple
+<p>Your journal&#8217;s <strong>data model</strong> consists of <em>entries</em>. You&#8217;ve set up a simple
 database schema to represent them:</p>
 <div class="highlight-psql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">entries</span> <span class="p">(</span>
     <span class="n">id</span> <span class="nb">serial</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
@@ -397,106 +431,153 @@ database schema to represent them:</p>
 <h3>Test Writing An Entry<a class="headerlink" href="#test-writing-an-entry" title="Permalink to this headline">¶</a></h3>
 <p>Start by writing a test that demonstrates the desired functionality. In
 <tt class="docutils literal"><span class="pre">test_journal.py</span></tt>, add the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">run_independent_query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">[]):</span>
-    <span class="n">con</span> <span class="o">=</span> <span class="n">get_database_connection</span><span class="p">()</span>
-    <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-
-
-<span class="k">def</span> <span class="nf">test_write_entry</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_write_entry</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">write_entry</span>
-    <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;My Title&quot;</span><span class="p">,</span> <span class="s">&quot;My Text&quot;</span><span class="p">)</span>
-    <span class="n">write_entry</span><span class="p">(</span><span class="o">*</span><span class="n">expected</span><span class="p">)</span>
-    <span class="n">rows</span> <span class="o">=</span> <span class="n">run_independent_query</span><span class="p">(</span><span class="s">&quot;SELECT * FROM entries&quot;</span><span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Test Title&#39;</span><span class="p">,</span> <span class="s">&#39;Test Text&#39;</span><span class="p">)</span>
+    <span class="n">req_context</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">expected</span><span class="p">))</span>
+
+    <span class="c"># assert that there are no entries when we start</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">run_query</span><span class="p">(</span><span class="n">req_context</span><span class="o">.</span><span class="n">db</span><span class="p">,</span> <span class="s">&quot;SELECT * FROM entries&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">write_entry</span><span class="p">(</span><span class="n">req_context</span><span class="p">)</span>
+    <span class="c"># manually commit so we can see the entry on query</span>
+    <span class="n">req_context</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">run_query</span><span class="p">(</span><span class="n">req_context</span><span class="o">.</span><span class="n">db</span><span class="p">,</span> <span class="s">&quot;SELECT title, text FROM entries&quot;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">expected</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">actual</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">expected</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">val</span> <span class="o">==</span> <span class="n">actual</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 </pre></div>
 </div>
 <p><strong>NOTES</strong></p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">pytest</span></tt> will only run functions that start with <tt class="docutils literal"><span class="pre">test_</span></tt> as tests.</li>
-<li>The <tt class="docutils literal"><span class="pre">run_independent_query</span></tt> is a <em>helper functions</em> you can re-use.</li>
+<li>We import the function we are going to test <em>inside</em> the test itself. This
+limits failures due to import errors to <em>only those tests that would be
+affected</em> by the error.</li>
 </ul>
 <p>In your terminal, run the <tt class="docutils literal"><span class="pre">py.test</span></tt> command to see the expected failure:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
-<span class="o">[</span>step2 *<span class="o">]</span>
-192:learning_journal cewing<span class="nv">$ </span>py.test
-<span class="o">=============================</span> <span class="nb">test </span>session <span class="nv">starts</span> <span class="o">==============================</span>
-platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step2 *]
+192:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
 collected 1 items
 
-test_journal.py <span class="nv">F</span>
+test_journal.py F
 
-<span class="o">===================================</span> <span class="nv">FAILURES</span> <span class="o">===================================</span>
+=================================== FAILURES ===================================
 _______________________________ test_write_entry _______________________________
 
-<span class="nv">req_context</span> <span class="o">=</span> None
+req_context = &lt;pyramid.testing.DummyRequest object at 0x10679aa10&gt;
 
-    def test_write_entry<span class="o">(</span>req_context<span class="o">)</span>:
+    def test_write_entry(req_context):
 &gt;       from journal import write_entry
 E       ImportError: cannot import name write_entry
 
-test_journal.py:55: <span class="nv">ImportError</span>
-<span class="o">===========================</span> 1 failed in 0.16 <span class="nv">seconds</span> <span class="o">===========================</span>
+test_journal.py:67: ImportError
+=========================== 1 failed in 0.20 seconds ===========================
+[learning_journal]
+[step2 *]
+192:learning_journal cewing$
 </pre></div>
 </div>
 </div>
 <div class="section" id="implement-write-entry">
 <h3>Implement <tt class="docutils literal"><span class="pre">write_entry</span></tt><a class="headerlink" href="#implement-write-entry" title="Permalink to this headline">¶</a></h3>
-<p>Next you need to make the test pass. Return to <tt class="docutils literal"><span class="pre">journal.py</span></tt> and add the
-following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># at the top of the file, add this import</span>
+<p>Next you need to write the function that will make the test pass. What can you
+tell about the function from the test you just wrote?</p>
+<ul class="simple">
+<li>It will take the <tt class="docutils literal"><span class="pre">request</span></tt> as an argument.</li>
+<li>It will get the appropriate values for <tt class="docutils literal"><span class="pre">title</span></tt> and <tt class="docutils literal"><span class="pre">text</span></tt> from the
+<tt class="docutils literal"><span class="pre">params</span></tt> attribute of the <tt class="docutils literal"><span class="pre">request</span></tt>.</li>
+<li>It must generate a value for date and time when the entry was created (since
+none is provided on the request).</li>
+<li>It will insert those values into the database using an appropriate SQL
+statement.</li>
+<li>It will return an empty dictionary.</li>
+</ul>
+<p>Remember, when writing SQL statements you <strong>MUST</strong> use parameterized statements
+and placeholders.  Review your
+<a class="reference internal" href="../../readings/day02/sql_persistence_in_python.html"><em>SQL persistence reading</em></a>
+for more on this.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock1'))">Peek At A Solution</a><br /><div id="hiddencodeblock1" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># at the top of the file, add this import</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 
 <span class="c"># below DB_SCHEMA add this new SQL query string:</span>
-<span class="n">DB_ENTRY_INSERT</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="n">INSERT_ENTRY</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
 <span class="s">INSERT INTO entries (title, text, created) VALUES (</span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">)</span>
 <span class="s">&quot;&quot;&quot;</span>
 
-<span class="c"># add this just above the hello function near the bottom of the file.</span>
-<span class="k">def</span> <span class="nf">write_entry</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">title</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Title and text required for writing an entry&quot;</span><span class="p">)</span>
-    <span class="n">con</span> <span class="o">=</span> <span class="n">get_database_connection</span><span class="p">()</span>
-    <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
-    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">DB_ENTRY_INSERT</span><span class="p">,</span> <span class="p">[</span><span class="n">title</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">now</span><span class="p">])</span>
+<span class="c"># add this just below the hello function near the bottom of the file.</span>
+<span class="k">def</span> <span class="nf">write_entry</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;write a single entry to the database&quot;&quot;&quot;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;text&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">INSERT_ENTRY</span><span class="p">,</span> <span class="p">[</span><span class="n">title</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">created</span><span class="p">])</span>
 </pre></div>
 </div>
+</div><p>The function we create here is a <strong>controller</strong>.  It takes information from a
+<tt class="docutils literal"><span class="pre">request</span></tt>, passes it to the <em>data model</em> for persistence, and returns some
+value as a result.</p>
 <p><strong>NOTES</strong></p>
 <ul class="simple">
 <li>The SQL statement will insert a new entry into your <tt class="docutils literal"><span class="pre">entries</span></tt> table.</li>
 <li>Although the <tt class="docutils literal"><span class="pre">%s</span></tt> placeholders in the SQL look like <em>string formatting</em>
-they are not.</li>
+they are not.<ul>
 <li>The call signature for <tt class="docutils literal"><span class="pre">.execute(query,</span> <span class="pre">params)</span></tt> calls for a second
 paramter that is a sequence of values to insert.</li>
 <li>Parameters passed this way are properly escaped and safe from SQL Injection.</li>
 <li>Only ever use this form to parameterize SQL queries in Python.</li>
+<li><strong>NEVER USE PYTHON STRING FORMATTING WITH A SQL STRING</strong>.</li>
 </ul>
-<p><strong>NEVER USE PYTHON STRING FORMATTING WITH A SQL STRING</strong>.</p>
-<ul class="simple">
+</li>
 <li>Notice that <tt class="docutils literal"><span class="pre">write_entry</span></tt> does not require a value for the <tt class="docutils literal"><span class="pre">created</span></tt>
-field.</li>
+field.<ul>
 <li>The field is required, so you build and provide it <em>inside</em> the function.</li>
 <li>You are creating a time value in UTC or <a class="reference external" href="http://en.wikipedia.org/wiki/Coordinated_Universal_Time">Coordinated Universal Time</a>.</li>
 <li>It is best practice to store time values in UTC.</li>
 </ul>
+</li>
+</ul>
 <p>Re-run your tests and verify that your work is correct:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
-<span class="o">[</span>step2 *<span class="o">]</span>
-192:learning_journal cewing<span class="nv">$ </span>py.test
-<span class="o">=============================</span> <span class="nb">test </span>session <span class="nv">starts</span> <span class="o">==============================</span>
-platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step2 *]
+192:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
 collected 1 items
 
 test_journal.py .
 
-<span class="o">===========================</span> 1 passed in 0.17 <span class="nv">seconds</span> <span class="o">===========================</span>
+=========================== 1 passed in 0.44 seconds ===========================
+[learning_journal]
+[step2 *]
+192:learning_journal cewing$
 </pre></div>
 </div>
-<p>What other tests might you implement here?</p>
+<p>What other tests might you implement here? Are there restrictions on the values
+that ought to be placed in the database you wish to verify? How might you test
+those restrictions?</p>
+<p>Try your hand at writing a few tests of your own.</p>
+<p>Remember, when you are finished with this step, commit your changes to git so
+you can preserve them.  Write a quality commit message explaining what you&#8217;ve
+done and why.</p>
 </div>
 <div class="section" id="test-reading-entries">
 <h3>Test Reading Entries<a class="headerlink" href="#test-reading-entries" title="Permalink to this headline">¶</a></h3>
@@ -511,76 +592,121 @@ specs:</p>
 <li>The list should be ordered with the most recently created entries first.</li>
 </ul>
 <p>Again, begin with tests. Back in <tt class="docutils literal"><span class="pre">test_journal.py</span></tt> add the following code:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_get_all_entries_empty</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">get_all_entries</span>
-    <span class="n">entries</span> <span class="o">=</span> <span class="n">get_all_entries</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># add imports up top</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">INSERT_ENTRY</span>
+
+<span class="c"># Then add two new tests at the bottom</span>
+<span class="k">def</span> <span class="nf">test_read_entries_empty</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
+    <span class="c"># call the function under test</span>
+    <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">read_entries</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">read_entries</span><span class="p">(</span><span class="n">req_context</span><span class="p">)</span>
+    <span class="c"># make assertions about the result</span>
+    <span class="k">assert</span> <span class="s">&#39;entries&#39;</span> <span class="ow">in</span> <span class="n">result</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;entries&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span>
 
 
-<span class="k">def</span> <span class="nf">test_get_all_entries</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">get_all_entries</span><span class="p">,</span> <span class="n">write_entry</span>
-    <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;My Title&quot;</span><span class="p">,</span> <span class="s">&quot;My Text&quot;</span><span class="p">)</span>
-    <span class="n">write_entry</span><span class="p">(</span><span class="o">*</span><span class="n">expected</span><span class="p">)</span>
-    <span class="n">entries</span> <span class="o">=</span> <span class="n">get_all_entries</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">test_read_entries</span><span class="p">(</span><span class="n">req_context</span><span class="p">):</span>
+    <span class="c"># prepare data for testing</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Test Title&#39;</span><span class="p">,</span> <span class="s">&#39;Test Text&#39;</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span>
+    <span class="n">run_query</span><span class="p">(</span><span class="n">req_context</span><span class="o">.</span><span class="n">db</span><span class="p">,</span> <span class="n">INSERT_ENTRY</span><span class="p">,</span> <span class="n">expected</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="c"># call the function under test</span>
+    <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">read_entries</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">read_entries</span><span class="p">(</span><span class="n">req_context</span><span class="p">)</span>
+    <span class="c"># make assertions about the result</span>
+    <span class="k">assert</span> <span class="s">&#39;entries&#39;</span> <span class="ow">in</span> <span class="n">result</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;entries&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;entries&#39;</span><span class="p">]:</span>
         <span class="k">assert</span> <span class="n">expected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">entry</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]</span>
         <span class="k">assert</span> <span class="n">expected</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">entry</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">]</span>
-        <span class="k">assert</span> <span class="s">&#39;created&#39;</span> <span class="ow">in</span> <span class="n">entry</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;created&#39;</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">entry</span>
 </pre></div>
 </div>
-<p>Run your tests now to ensure that the two new tests fail:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
-<span class="o">[</span>step2 *<span class="o">]</span>
-192:learning_journal cewing<span class="nv">$ </span>py.test
-<span class="o">=============================</span> <span class="nb">test </span>session <span class="nv">starts</span> <span class="o">==============================</span>
-platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+<p>What would you expect to be the result of running these tests now? Run your
+tests to ensure that the two new tests fail in the way you expect. If you get a
+different result that you expected, ask yourself why:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step2 *]
+192:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
 collected 3 items
 
 test_journal.py .FF
 
-<span class="o">===================================</span> <span class="nv">FAILURES</span> <span class="o">===================================</span>
-__________________________ test_get_all_entries_empty __________________________
+=================================== FAILURES ===================================
+___________________________ test_read_entries_empty ____________________________
 
-<span class="nv">req_context</span> <span class="o">=</span> None
+req_context = &lt;pyramid.testing.DummyRequest object at 0x107c77410&gt;
 
-    def test_get_all_entries_empty<span class="o">(</span>req_context<span class="o">)</span>:
-&gt;       from journal import get_all_entries
-E       ImportError: cannot import name get_all_entries
+    def test_read_entries_empty(req_context):
+&gt;       from journal import read_entries
+E       ImportError: cannot import name read_entries
 
-test_journal.py:65: ImportError
-_____________________________ test_get_all_entries _____________________________
+test_journal.py:94: ImportError
+______________________________ test_read_entries _______________________________
 
-<span class="nv">req_context</span> <span class="o">=</span> None
+req_context = &lt;pyramid.testing.DummyRequest object at 0x107c77f90&gt;
 
-    def test_get_all_entries<span class="o">(</span>req_context<span class="o">)</span>:
-&gt;       from journal import get_all_entries, write_entry
-E       ImportError: cannot import name get_all_entries
+    def test_read_entries(req_context):
+        # prepare data for testing
+        now = datetime.datetime.utcnow()
+        expected = (&#39;Test Title&#39;, &#39;Test Text&#39;, now)
+        run_query(req_context.db, INSERT_ENTRY, expected, False)
+        # call the function under test
+&gt;       from journal import read_entries
+E       ImportError: cannot import name read_entries
 
-test_journal.py:71: <span class="nv">ImportError</span>
-<span class="o">======================</span> 2 failed, 1 passed in 0.25 <span class="nv">seconds</span> <span class="o">======================</span>
+test_journal.py:106: ImportError
+====================== 2 failed, 1 passed in 0.23 seconds ======================
+[learning_journal]
+[step2 *]
+192:learning_journal cewing$
 </pre></div>
 </div>
 </div>
-<div class="section" id="implement-get-all-entries">
-<h3>Implement <tt class="docutils literal"><span class="pre">get_all_entries</span></tt><a class="headerlink" href="#implement-get-all-entries" title="Permalink to this headline">¶</a></h3>
-<p>You need to implement <tt class="docutils literal"><span class="pre">get_all_entries</span></tt>. Back in <tt class="docutils literal"><span class="pre">journal.py</span></tt> add the
-following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># add this new SQL string below the others</span>
+<div class="section" id="implement-read-entries">
+<h3>Implement <tt class="docutils literal"><span class="pre">read_entries</span></tt><a class="headerlink" href="#implement-read-entries" title="Permalink to this headline">¶</a></h3>
+<p>Now you are ready to implement the <strong>controller</strong> function that will make these
+tests pass.  Look carefully at the tests you&#8217;ve written.  What do they tell you
+about the function you need to write?</p>
+<ul class="simple">
+<li>It must take the <tt class="docutils literal"><span class="pre">request</span></tt> as an argument.</li>
+<li>It does not expect any parameters from the request</li>
+<li>It returns a dictionary containing the key &#8216;entries&#8217;</li>
+<li>That key points to an iterable containing entries</li>
+<li>Each entry is a dictionary with keys that correspond to the fields in our
+database.</li>
+</ul>
+<p>Back in <tt class="docutils literal"><span class="pre">journal.py</span></tt> go ahead and work on implementing this function yourself.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock2'))">Peek At A Solution</a><br /><div id="hiddencodeblock2" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add this new SQL string below the others</span>
 <span class="n">DB_ENTRIES_LIST</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
 <span class="s">SELECT id, title, text, created FROM entries ORDER BY created DESC</span>
 <span class="s">&quot;&quot;&quot;</span>
 
-<span class="k">def</span> <span class="nf">get_all_entries</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">read_entries</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;return a list of all entries as dicts&quot;&quot;&quot;</span>
-    <span class="n">con</span> <span class="o">=</span> <span class="n">get_database_connection</span><span class="p">()</span>
-    <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">DB_ENTRIES_LIST</span><span class="p">)</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">SELECT_ENTRIES</span><span class="p">)</span>
     <span class="n">keys</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">,</span> <span class="s">&#39;created&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;entries&#39;</span><span class="p">:</span> <span class="n">entries</span><span class="p">}</span>
 </pre></div>
 </div>
-<p><strong>NOTES</strong></p>
+</div><p><strong>NOTES</strong></p>
 <ul class="simple">
 <li>You run a query using the database <em>cursor</em>, not the <em>connection</em>.</li>
 <li>After running the query, you must read the results.
@@ -590,20 +716,30 @@ following:</p>
 <li><tt class="docutils literal"><span class="pre">dict(zip(keys,</span> <span class="pre">vals))</span></tt> creates a dictionary from a pair of sequences.</li>
 </ul>
 <p>Back in your terminal, your tests should now pass:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
-<span class="o">[</span>step2 *<span class="o">]</span>
-192:learning_journal cewing<span class="nv">$ </span>py.test
-<span class="o">=============================</span> <span class="nb">test </span>session <span class="nv">starts</span> <span class="o">==============================</span>
-platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step2 *]
+192:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
 collected 3 items
 
 test_journal.py ...
 
-<span class="o">===========================</span> 3 passed in 0.15 <span class="nv">seconds</span> <span class="o">===========================</span>
+=========================== 3 passed in 0.87 seconds ===========================
+[learning_journal]
+[step2 *]
+192:learning_journal cewing$
 </pre></div>
 </div>
+<p>What more might you test about this implementation? How would you go about
+testing it? Try your hand at adding a test or two of your own.</p>
+<p>Remember, when you&#8217;re finished commit your changes.  Make a useful commit
+message about what you did any why.</p>
+</div>
+<div class="section" id="where-we-stand">
+<h3>Where We Stand<a class="headerlink" href="#where-we-stand" title="Permalink to this headline">¶</a></h3>
 <p>You&#8217;ve now moved quite some distance in implementing your learning journal in
-Flask.</p>
+Pyramid.</p>
 <ul class="simple">
 <li>You&#8217;ve created code to initialize your database schema</li>
 <li>You&#8217;ve added functions to manage the lifecycle of your database connection</li>
@@ -618,41 +754,83 @@ it does.</li>
 <h2>Viewing Your Journal<a class="headerlink" href="#viewing-your-journal" title="Permalink to this headline">¶</a></h2>
 <p>The last step in the second part of this tutorial is to put a view on the front
 page of this journal so we can see it online.</p>
-<p>You&#8217;ll use <a class="reference external" href="http://jinja.pocoo.org/docs/templates/">the Jinja2 templating language</a> and create a basic Flask view
-function.</p>
-<div class="section" id="templates-in-flask">
-<h3>Templates In Flask<a class="headerlink" href="#templates-in-flask" title="Permalink to this headline">¶</a></h3>
-<p>First, a detour into templates as they work in Flask.</p>
+<p>You&#8217;ll use <a class="reference external" href="http://jinja.pocoo.org/docs/templates/">the Jinja2 templating language</a> and connect your <em>controllers</em> to
+the <em>views</em> that will display the data they expose.</p>
+<div class="section" id="renderers-in-pyramid">
+<h3>Renderers in Pyramid<a class="headerlink" href="#renderers-in-pyramid" title="Permalink to this headline">¶</a></h3>
+<p>First, a detour into templates as they work in Pyramid.</p>
+<p>Within the world of Pyramid, the data assembled by the <strong>controller</strong>s we
+created above are passed off to a <em>renderer</em>.  A <em>renderer</em> is responsible for
+taking that information, turning it into something that a client can use and
+sending that off to be returned to the client. The data might be turned into an
+HTML page, or a JSON response, or an XML document. For this reason, we consider
+the <em>renderer</em> in Pyramid to fill the roll of the <strong>View</strong> in the <strong>MVC</strong>
+pattern.</p>
+</div>
+<div class="section" id="installing-a-renderer-add-on">
+<h3>Installing a Renderer Add-On<a class="headerlink" href="#installing-a-renderer-add-on" title="Permalink to this headline">¶</a></h3>
+<p>Pyramid comes with a few simple renderers built-in: <tt class="docutils literal"><span class="pre">'string'</span></tt>, <tt class="docutils literal"><span class="pre">'json'</span></tt>,
+and <tt class="docutils literal"><span class="pre">'jsonp'</span></tt>.  You can add new renderers by installing additional packages
+and configuring them. We want to use <em>Jinja2 Templates</em> as renderers, and so we
+are going to install <a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid_jinja2/en/latest/">pyramid_jinja2</a>, which wraps the Jinja2 template
+language in structures that Pyramid can use as renderers.</p>
+<p>Begin by installing the package into your virtual environment:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step2 *]
+192:learning_journal cewing$ pip install pyramid_jinja2
+Downloading/unpacking pyramid-jinja2
+...
+Successfully installed pyramid-jinja2 Jinja2 markupsafe
+Cleaning up...
+[learning_journal]
+[step2 *]
+192:learning_journal cewing$
+</pre></div>
+</div>
+<p>Once this is complete, add the dependency to your requirements.txt file:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step2 *]
+192:learning_journal cewing$ pip freeze &gt; requirements.txt
+[learning_journal]
+[step2 *]
+192:learning_journal cewing$
+</pre></div>
+</div>
+<p>That will ensure that Heroku will also be aware of these changes.</p>
+<p>Finally, you&#8217;ll need to inform your application that it should use this new
+renderer.  Pyramid handles this using configuration. A package like
+<tt class="docutils literal"><span class="pre">pyramid_jinja2</span></tt> can provide configuration to be included by an application
+that depends on it. You add this using the <tt class="docutils literal"><span class="pre">include</span></tt> method of the config
+object.</p>
+<p>In <tt class="docutils literal"><span class="pre">journal.py</span></tt> make the following change:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># configuration setup</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">Configurator</span><span class="p">(</span>
+    <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">,</span>
+    <span class="n">session_factory</span><span class="o">=</span><span class="n">session_factory</span>
+<span class="p">)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">include</span><span class="p">(</span><span class="s">&#39;pyramid_jinja2&#39;</span><span class="p">)</span>  <span class="c"># &lt;-- ADD THIS LINE HERE</span>
+<span class="n">config</span><span class="o">.</span><span class="n">add_route</span><span class="p">(</span><span class="s">&#39;home&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will ensure that the configuration <tt class="docutils literal"><span class="pre">pyramid_jinja2</span></tt> requires to work
+properly is in place.</p>
+<p>Once you are done, commit your changes to <tt class="docutils literal"><span class="pre">git</span></tt> and make a good commit
+message explaining what you&#8217;ve done and why.</p>
+</div>
+<div class="section" id="set-up-your-templates">
+<h3>Set Up Your Templates<a class="headerlink" href="#set-up-your-templates" title="Permalink to this headline">¶</a></h3>
 <p>Jinja2 templates use the concept of an <em>Environment</em> to:</p>
 <ul class="simple">
 <li>Figure out where to look for templates</li>
 <li>Set configuration for the templating system</li>
 <li>Add some commonly used functionality to the template <em>context</em></li>
 </ul>
-<p>Flask sets up a proper Jinja2 Environment when you instantiate your <tt class="docutils literal"><span class="pre">app</span></tt>. It
-uses the value you pass to the <tt class="docutils literal"><span class="pre">app</span></tt> constructor to calculate the root of
-your application on the filesystem.</p>
-<p>From that root, it expects to find templates in a directory name <tt class="docutils literal"><span class="pre">templates</span></tt>.
-This allows you to use the <tt class="docutils literal"><span class="pre">render_template</span></tt> command from <tt class="docutils literal"><span class="pre">flask</span></tt> like so:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span>
-<span class="n">page_html</span> <span class="o">=</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;hello_world.html&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Cris&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Keyword arguments you pass to <tt class="docutils literal"><span class="pre">render_template</span></tt> become the <em>context</em> passed
-to the template for rendering (like the <tt class="docutils literal"><span class="pre">name</span></tt> keyword above).</p>
-<p>Flask will add a few name/value pairs to this context.</p>
-<ul class="simple">
-<li><strong>config</strong>: the current configuration object</li>
-<li><strong>request</strong>: the current request object</li>
-<li><strong>session</strong>: any session data that might be available</li>
-<li><strong>g</strong>: the request-local object to which global variables are bound</li>
-<li><strong>url_for</strong>: a function to <em>reverse</em> urls from within your templates</li>
-<li><strong>get_flashed_messages</strong>: a function that returns messages you <em>flash</em> to
-your users (more on this later).</li>
-</ul>
-</div>
-<div class="section" id="set-up-your-templates">
-<h3>Set Up Your Templates<a class="headerlink" href="#set-up-your-templates" title="Permalink to this headline">¶</a></h3>
+<p>Pyramid has a number of ways of working with this <em>environment</em> to assist in
+finding templates.  The simplest to use (and the default in Pyramid) is
+<a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid-jinja2/en/latest/#caller-relative-template-lookup">caller-relative template lookup</a>.</p>
+<p>In this scheme, templates are searched for in a path relative to the file in
+which the calling code is found. Our entire application lives in a single file,
+so we can establish a location adjacent to that file to hold our templates.</p>
 <p>In your <tt class="docutils literal"><span class="pre">learning_journal</span></tt> repository, add a new <tt class="docutils literal"><span class="pre">templates</span></tt> directory:</p>
 <div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
 [step2]
@@ -662,7 +840,7 @@ heffalump:learning_journal cewing$ mkdir templates
 heffalump:learning_journal cewing$
 </pre></div>
 </div>
-<p>In this directory create a new file <tt class="docutils literal"><span class="pre">base.html</span></tt>:</p>
+<p>In this directory create a new file <tt class="docutils literal"><span class="pre">base.jinja2</span></tt>:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="x">&lt;!DOCTYPE html&gt;</span>
 <span class="x">&lt;html lang=&quot;en&quot;&gt;</span>
 <span class="x">  &lt;head&gt;</span>
@@ -693,32 +871,40 @@ heffalump:learning_journal cewing$
 <span class="x">&lt;/html&gt;</span>
 </pre></div>
 </div>
+<p>This file represents the main structure of our website.  Individual pages will
+be able to extend this structure through <em>template inheritance</em></p>
+<p><strong>NOTE</strong></p>
+<p>If you have a layout for your learning journal you&#8217;d like to use, please feel
+free to do so. You may wish to begin by using my simple layout above, to
+minimize confusion until you have the basics working.</p>
 </div>
 <div class="section" id="template-inheritance">
 <h3>Template Inheritance<a class="headerlink" href="#template-inheritance" title="Permalink to this headline">¶</a></h3>
-<p>You can combine templates in a number of different ways.</p>
+<p>Jinja2 allows you to combine templates in a number of different ways.</p>
 <ul class="simple">
 <li>you can make replaceable blocks in templates with blocks<ul>
-<li><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">block</span> <span class="pre">foo</span> <span class="pre">%}{%</span> <span class="pre">endblock</span> <span class="pre">%}</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">block</span> <span class="pre">body</span> <span class="pre">%}{%</span> <span class="pre">endblock</span> <span class="pre">%}</span></tt></li>
 </ul>
 </li>
 <li>you can build on a template in a second template by extending<ul>
-<li><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">extends</span> <span class="pre">&quot;layout.html&quot;</span> <span class="pre">%}</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">extends</span> <span class="pre">&quot;base.jinja2&quot;</span> <span class="pre">%}</span></tt></li>
 <li>this <em>must</em> be the first text in the template</li>
 </ul>
 </li>
 <li>you can re-use common structure with <em>include</em>:<ul>
-<li><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">include</span> <span class="pre">&quot;footer.html&quot;</span> <span class="pre">%}</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">include</span> <span class="pre">&quot;footer.jinja2&quot;</span> <span class="pre">%}</span></tt></li>
 </ul>
 </li>
 </ul>
+<p>In our <tt class="docutils literal"><span class="pre">base.jinja2</span></tt> we added a <tt class="docutils literal"><span class="pre">block</span></tt> called body.  Now we can create a
+template that will extend that.</p>
 </div>
 <div class="section" id="displaying-an-entries-list">
 <h3>Displaying an Entries List<a class="headerlink" href="#displaying-an-entries-list" title="Permalink to this headline">¶</a></h3>
-<p>Keep it simple for now, create a new file, <tt class="docutils literal"><span class="pre">list_entries.html</span></tt> in
-<tt class="docutils literal"><span class="pre">templates</span></tt>.  This will <em>extend</em> your <tt class="docutils literal"><span class="pre">base.html</span></tt> file, filling the <em>body</em>
-block you created:</p>
-<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;base.html&quot;</span> <span class="cp">%}</span><span class="x"></span>
+<p>Keep it simple for now, create a new file, <tt class="docutils literal"><span class="pre">list.jinja2</span></tt> in <tt class="docutils literal"><span class="pre">templates</span></tt>.
+This will <em>extend</em> your <tt class="docutils literal"><span class="pre">base.jinja2</span></tt> file, filling the <em>body</em> block in that
+template:</p>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;base.jinja2&quot;</span> <span class="cp">%}</span><span class="x"></span>
 <span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span><span class="x"></span>
 <span class="x">  &lt;h2&gt;Entries&lt;/h2&gt;</span>
 <span class="x">  </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">entry</span> <span class="k">in</span> <span class="nv">entries</span> <span class="cp">%}</span><span class="x"></span>
@@ -737,6 +923,10 @@ block you created:</p>
 <span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
 </pre></div>
 </div>
+<p>Notice that because of <em>caller-relative template lookup</em> we refer to the
+<tt class="docutils literal"><span class="pre">base.jinja2</span></tt> file without any directory reference.  Both that file and this
+<tt class="docutils literal"><span class="pre">list.jinja2</span></tt> file are in the same location so a relative lookup only needs
+the filename.</p>
 <p>The template will loop over a set of <tt class="docutils literal"><span class="pre">entries</span></tt>, showing each in an HTML5
 <tt class="docutils literal"><span class="pre">&lt;article/&gt;</span></tt> tag.</p>
 <p>At this point, your project directory should look like this:</p>
@@ -749,37 +939,89 @@ block you created:</p>
     ├── journal.py
     ├── requirements.txt
     ├── templates
-    │   ├── base.html
-    │   └── list_entries.html
+    │   ├── base.jinja2
+    │   └── list.jinja2
     └── test_journal.py
 </pre></div>
 </div>
-<p>To get entries to your template, you&#8217;ll need to create a Python function that
-will:</p>
-<ul class="simple">
-<li>build a list of entries</li>
-<li>pass the list to our template to be rendered</li>
-<li>return the result to a client&#8217;s browser</li>
-</ul>
-<p>In most web frameworks, a function that returns a response to the client is
-called a <strong>view</strong>. So this new function will be the first element in the view
-layer of our web app.</p>
+<p>This template we&#8217;ve just created will be a Pyramid <em>renderer</em>.  We&#8217;ve noted
+that the <em>renderer</em> in Pyramid takes the <em>view</em> role in the <em>MVC</em> pattern. What
+remains for us to do is to connect the <em>controller</em> functions to these new
+<em>renderers</em> we are creating so that we can see the results of our hard work.</p>
 </div>
 <div class="section" id="test-viewing-entries">
 <h3>Test Viewing Entries<a class="headerlink" href="#test-viewing-entries" title="Permalink to this headline">¶</a></h3>
-<p>As usual, you&#8217;ll start by writing tests. First, you&#8217;ll test to see that having
-no entries results in the expected HTML. Add the following to
-<tt class="docutils literal"><span class="pre">test_journal.py</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_empty_listing</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
-    <span class="n">actual</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<p>Before we test viewing entries, we must first talk about different types of
+tests.</p>
+<p>The tests we&#8217;ve written so far are what you can call <em>unit tests</em>.  They
+concentrate on small, simple functionality and <em>mock</em> or make up any
+environment they require to function. <em>Unit tests</em> are designed to test
+functions in isolation from a real system to ensure that they operate as
+intended on their own.</p>
+<p>The new tests we are going to write are <em>functional</em> tests.  They will require
+that we engage all of Pyramid&#8217;s functionality so that we can request a web page
+and make assertions about the content that is returned to us.</p>
+<p>To write functional tests we&#8217;ll need to add a new dependency on a package
+called <a class="reference external" href="http://webtest.pythonpaste.org/en/latest/index.html">WebTest</a>.  This package will set up a complete <em>WSGI</em> application and
+provide us with machinery we can use to interact with it.</p>
+<p>Begin by installing <tt class="docutils literal"><span class="pre">WebTest</span></tt>:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step2]
+heffalump:learning_journal cewing$ pip install WebTest
+...
+Cleaning up...
+[learning_journal]
+[step2 *]
+heffalump:learning_journal cewing$
+</pre></div>
+</div>
+<p>Next, we will have to create a <em>pytest fixture</em> that will set everything up for
+us:</p>
+<ul class="simple">
+<li>The fixture will need to have a database correctly configured and initialized
+and will need to tear it down after all the tests are finished.</li>
+<li>The fixture will also need to ensure that the application itself has the
+correct setting for our test database connection.</li>
+<li>Finally, the fixture will need to run for each individual test function that
+uses it.</li>
+</ul>
+<p>Between the WebTest documentation and code you&#8217;ve already written, you can try
+writing this new fixture on your own.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock3'))">Peek At A Solution</a><br /><div id="hiddencodeblock3" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s">&#39;function&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">app</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">main</span>
+    <span class="kn">from</span> <span class="nn">webtest</span> <span class="kn">import</span> <span class="n">TestApp</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;DATABASE_URL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">TEST_DSN</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">TestApp</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+</div><p>Now that we have a fixture that will provide us with a functional app we can
+interact with, we can write our first tests for the view of a list of entries.
+Add the following to <tt class="docutils literal"><span class="pre">test_journal.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_empty_listing</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="n">actual</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
     <span class="n">expected</span> <span class="o">=</span> <span class="s">&#39;No entries here so far&#39;</span>
     <span class="k">assert</span> <span class="n">expected</span> <span class="ow">in</span> <span class="n">actual</span>
 </pre></div>
 </div>
 <p><strong>NOTES</strong></p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">app.test_client()</span></tt> returns a mock HTTP client, like a web browser for us
-to use.</li>
+<li>The <tt class="docutils literal"><span class="pre">app</span></tt> created by our fixture works as a mock HTTP client, like a web
+browser for us to use.</li>
 <li>Because this test actually creates a request, we don&#8217;t need to use the
 <tt class="docutils literal"><span class="pre">req_context</span></tt> fixture. Having an initialized database is enough</li>
 <li>The <tt class="docutils literal"><span class="pre">data</span></tt> attribute of the <em>response</em> returned by <tt class="docutils literal"><span class="pre">client.get()</span></tt> holds
@@ -787,58 +1029,70 @@ the full rendered HTML of our page, but we are only checking for the one
 thing we want to see.</li>
 </ul>
 <p>Next, you&#8217;ll test what happens when you have some entries. But to do so, you&#8217;ll
-need to create entries.</p>
-<p>Remember, you want each test to be fully isolated from the rest, and so far
-you&#8217;ve done fine by simply rolling back your database transaction between
-tests. This test requires that data be written, because the test client will
-get a connection of its own, separate from the one you use for writing.</p>
+need to create entries. This test requires that data be written, because the
+<tt class="docutils literal"><span class="pre">app</span></tt> will get a connection of its own, separate from the one you use for
+writing.</p>
 <p>The simplest solution is to write the entry and commit it, then delete it when
 the test is over.</p>
-<p>Let&#8217;s make a <tt class="docutils literal"><span class="pre">function</span></tt> scoped fixture that will do that. Add this below the
-other fixtures in your <tt class="docutils literal"><span class="pre">test_journal.py</span></tt> file:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s">&#39;function&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">with_entry</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">write_entry</span>
-    <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="s">u&#39;Test Title&#39;</span><span class="p">,</span> <span class="s">u&#39;Test Text&#39;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">app</span><span class="o">.</span><span class="n">test_request_context</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">):</span>
-        <span class="n">write_entry</span><span class="p">(</span><span class="o">*</span><span class="n">expected</span><span class="p">)</span>
-        <span class="c"># manually commit transaction here to avoid rollback due to</span>
-        <span class="c"># handled exceptions</span>
-        <span class="n">get_database_connection</span><span class="p">()</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<p>Try your hand at writing a <tt class="docutils literal"><span class="pre">function</span></tt> scoped fixture that will take care of
+this for you. It&#8217;d be quite nice if it would return information about the entry
+it writes as well, so you can use it to test against:</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock4'))">Peek At A Solution</a><br /><div id="hiddencodeblock4" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s">&#39;function&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">entry</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;provide a single entry in the database&quot;&quot;&quot;</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">db</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Test Title&#39;</span><span class="p">,</span> <span class="s">&#39;Test Text&#39;</span><span class="p">,</span> <span class="n">now</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="n">connect_db</span><span class="p">(</span><span class="n">settings</span><span class="p">))</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+        <span class="n">run_query</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">INSERT_ENTRY</span><span class="p">,</span> <span class="n">expected</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">cleanup</span><span class="p">():</span>
-        <span class="k">with</span> <span class="n">app</span><span class="o">.</span><span class="n">test_request_context</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">):</span>
-            <span class="n">con</span> <span class="o">=</span> <span class="n">get_database_connection</span><span class="p">()</span>
-            <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-            <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;DELETE FROM entries&quot;</span><span class="p">)</span>
-            <span class="c"># and here as well</span>
-            <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">clear_entries</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
     <span class="n">request</span><span class="o">.</span><span class="n">addfinalizer</span><span class="p">(</span><span class="n">cleanup</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">expected</span>
 </pre></div>
 </div>
-<p><strong>NOTES</strong></p>
-<ul class="simple">
-<li>You use a <tt class="docutils literal"><span class="pre">test_request_context</span></tt> in both setup and teardown to ensure that
-<tt class="docutils literal"><span class="pre">g</span></tt> exists.</li>
-<li>You allow the <tt class="docutils literal"><span class="pre">with</span></tt> blocks to close, committing the transactions for each
-test context.</li>
-</ul>
-<p>Now, use this new fixture in a test of retrieving a listing of entries:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_listing</span><span class="p">(</span><span class="n">with_entry</span><span class="p">):</span>
-    <span class="n">expected</span> <span class="o">=</span> <span class="n">with_entry</span>
-    <span class="n">actual</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
-    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">expected</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">actual</span>
+</div><p>Now, use this new fixture in a test of retrieving a listing of entries.  See if
+you can write this test yourself:</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock5'))">Peek At A Solution</a><br /><div id="hiddencodeblock5" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_listing</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="n">actual</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
+    <span class="k">for</span> <span class="n">expected</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">[:</span><span class="mi">2</span><span class="p">]:</span>
+        <span class="k">assert</span> <span class="n">expected</span> <span class="ow">in</span> <span class="n">actual</span>
 </pre></div>
 </div>
-<p>If you run your tests with these two new ones added, you should see both fail:</p>
+</div><p>If you run your tests with these two new ones added, you should see both fail:</p>
 <div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
 [step2 *]
-192:learning_journal cewing$ py.test
+heffalump:learning_journal cewing$ py.test
 ============================= test session starts ==============================
-platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
 collected 5 items
 
 test_journal.py ...FF
@@ -846,71 +1100,199 @@ test_journal.py ...FF
 =================================== FAILURES ===================================
 ______________________________ test_empty_listing ______________________________
 
-db = None
+app = &lt;webtest.app.TestApp object at 0x10d182490&gt;
 
-    def test_empty_listing(db):
-        actual = app.test_client().get(&#39;/&#39;).data
+    def test_empty_listing(app):
+        response = app.get(&#39;/&#39;)
+        assert response.status_code == 200
+        actual = response.body
         expected = &#39;No entries here so far&#39;
 &gt;       assert expected in actual
-E       assert &#39;No entries here so far&#39; in &#39;Hello world!&#39;
+E       assert &#39;No entries here so far&#39; in &#39;Hello World&#39;
 
-test_journal.py:102: AssertionError
+test_journal.py:148: AssertionError
 _________________________________ test_listing _________________________________
 
-with_entry = (&#39;Test Title&#39;, &#39;Test Text&#39;)
+app = &lt;webtest.app.TestApp object at 0x10d1a7150&gt;
+entry = (&#39;Test Title&#39;, &#39;Test Text&#39;, datetime.datetime(2015, 1, 29, 2, 9, 10, 326267))
 
-    def test_listing(with_entry):
-        expected = with_entry
-        actual = app.test_client().get(&#39;/&#39;).data
-        for value in expected:
-&gt;           assert value in actual
-E           assert &#39;Test Title&#39; in &#39;Hello world!&#39;
+    def test_listing(app, entry):
+        response = app.get(&#39;/&#39;)
+        assert response.status_code == 200
+        actual = response.body
+        for expected in entry:
+&gt;           assert expected in actual
+E           assert &#39;Test Title&#39; in &#39;Hello World&#39;
 
-test_journal.py:109: AssertionError
-====================== 2 failed, 3 passed in 0.21 seconds ======================
+test_journal.py:156: AssertionError
+====================== 2 failed, 3 passed in 0.46 seconds ======================
 [learning_journal]
 [step2 *]
-192:learning_journal cewing$
+heffalump:learning_journal cewing$
 </pre></div>
 </div>
 </div>
 <div class="section" id="writing-the-list-view">
 <h3>Writing the List View<a class="headerlink" href="#writing-the-list-view" title="Permalink to this headline">¶</a></h3>
-<p>Interesting. Your tests fail, but not because you haven&#8217;t implemented a view
-yet. Instead they fail because there <em>is</em> a view that is returning the wrong
-thing.</p>
-<p>You wrote this view in the previous tutorial step. Remember this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s">u&#39;Hello world!&#39;</span>
+<p>Interesting. Your tests fail, but not because you haven&#8217;t implemented a
+function yet. Instead they fail because there <em>is</em> a function found that is
+returning the wrong thing: &#8220;Hello World&#8221;</p>
+<p>This brings us to the topic of how Pyramid serves HTTP requests.</p>
+<p>Every time a client requests a page from your Pyramid app (and this is what
+happens when you call the <tt class="docutils literal"><span class="pre">get</span></tt> method of your <tt class="docutils literal"><span class="pre">app</span></tt>) a process happens.</p>
+<p><strong>Matching a Route</strong></p>
+<p>The first step is that Pyramid looks for <em>routes</em> that have been configured and
+tries to match one to the <em>path</em> of the request from the client. At this point,
+you may say &#8220;But I never made any routes, I don&#8217;t even know what one is&#8221;.
+You&#8217;d be wrong.</p>
+<p>In the first step of our application, when you created the <tt class="docutils literal"><span class="pre">main</span></tt> function,
+you included this line of configuration:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">config</span><span class="o">.</span><span class="n">add_route</span><span class="p">(</span><span class="s">&#39;home&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>That&#8217;s a <em>view</em>.  It&#8217;s a simple function that returns something to the client.
-You used the <tt class="docutils literal"><span class="pre">&#64;app.route()</span></tt> decorator to say &#8220;show this view when the user
-requests the url &#8216;/&#8217;&#8221;.</p>
-<p>You need to replace that stub view with a real one that fits your specs above.
-Add this to <tt class="docutils literal"><span class="pre">journal.py</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># at the top, import</span>
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span>
-
-<span class="c"># and replacing the &#39;hello&#39; function from the previous step</span>
-<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">show_entries</span><span class="p">():</span>
-    <span class="n">entries</span> <span class="o">=</span> <span class="n">get_all_entries</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;list_entries.html&#39;</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">)</span>
+<p>That code configures a single <em>route</em>.  The route has a <em>name</em> (<tt class="docutils literal"><span class="pre">'home'</span></tt>) and
+a <em>pattern</em> (<tt class="docutils literal"><span class="pre">'/'</span></tt>). Pyramid tries to match the <em>path</em> of an incoming request
+to that pattern.  Our tests both have this line of code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">response</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>And now, all your tests should pass:</p>
+<p>That line uses the app as a mock web browser to make a <tt class="docutils literal"><span class="pre">GET</span></tt> request for the
+path <tt class="docutils literal"><span class="pre">'/'</span></tt>!  This path matches the pattern for our <tt class="docutils literal"><span class="pre">'home'</span></tt> route, and so
+that&#8217;s the route that is selected.</p>
+<p><strong>Selecting a View</strong></p>
+<p>Once a <em>route</em> has been selected, the next step Pyramid takes is to select a
+<em>view</em> that is configured to use that route. Again, you might think you have no
+idea what a <em>view</em> is in Pyramid, but actually, you wrote one of these in the
+first step of this tutorial as well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;home&#39;</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s">&#39;string&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&quot;Hello World&quot;</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">view_config</span></tt> decorator is used by Pyramid to decorate some function that
+can serve as a <em>view function</em>.  The sole hard-and-fast requirement of a view
+function is that it take <tt class="docutils literal"><span class="pre">request</span></tt> as an argument.</p>
+<p>Do you have any other functions you&#8217;ve written so far in <tt class="docutils literal"><span class="pre">journal.py</span></tt> that
+might also serve as <em>view functions</em>?</p>
+<p>The <tt class="docutils literal"><span class="pre">view_config</span></tt> decorator can take a number of arguments. One that you must
+provide is <tt class="docutils literal"><span class="pre">route_name</span></tt>. This parameter serves to connect a <em>view function</em>
+to a <em>route</em>.</p>
+<p>When Pyramid matches the <tt class="docutils literal"><span class="pre">'home'</span></tt> route, it then seeks a view function that
+is configured with that <em>route_name</em>. This <tt class="docutils literal"><span class="pre">home</span></tt> function is found, and it
+is executed.</p>
+<p><strong>Rendering a Response</strong></p>
+<p>After the view is executed, the return value of the function is passed on to
+any <em>renderer</em> configured by the <tt class="docutils literal"><span class="pre">view_config</span></tt> decorator.  That <em>renderer</em> is
+responsible for turning the data from the <em>view function</em> into a response
+suitable for sending back to a client.  In this case, the <tt class="docutils literal"><span class="pre">'string'</span></tt> renderer
+takes whatever value is returned by the <em>view function</em> and sends it back to
+the client as a plain text response.  This is why your test sees the body of
+the response as &#8220;Hello World&#8221;!</p>
+<p>A view <em>can</em> be configured without a <em>renderer</em>.  If this is the case, the view
+itself is responsible for returning a value suitable for returning to the
+client.  We will see an example of this later.</p>
+</div>
+<div class="section" id="a-word-on-terminology">
+<h3>A Word on Terminology<a class="headerlink" href="#a-word-on-terminology" title="Permalink to this headline">¶</a></h3>
+<p>Although the MVC pattern is a useful abstraction, there are a few differences
+in how things are named in Python web frameworks:</p>
+<table border="1" class="centered width-80 docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">MVC Terminology</th>
+<th class="head">Python Web Frameworks</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Model</td>
+<td>Model</td>
+</tr>
+<tr class="row-odd"><td>Conroller</td>
+<td><ul class="first last simple">
+<li>View Function</li>
+<li>Class Based View</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>View</td>
+<td><ul class="first last simple">
+<li>Renderer</li>
+<li>Template</li>
+<li>HTTP Response</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Note in particular that what <em>MVC</em> calls a <em>controller</em> is most directly
+analogous to what Python calls a <em>view</em>. This will be a source of confusion, so
+I will try to use the term <em>view function</em> to be more precise.</p>
+<p>For more on this difference and why it exists, you can <a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/designdefense.html#pyramid-gets-its-terminology-wrong-mvc">read this</a> from the
+Pyramid design documentation.</p>
+</div>
+<div class="section" id="a-visual-exploration">
+<h3>A Visual Exploration<a class="headerlink" href="#a-visual-exploration" title="Permalink to this headline">¶</a></h3>
+<p>It&#8217;s easiest to see the effects of this chain of operations by using a real
+browser.</p>
+<p>Take a moment to start up your application at the command line:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
 <span class="o">[</span>step2 *<span class="o">]</span>
-192:learning_journal cewing<span class="nv">$ </span>py.test
-<span class="o">=============================</span> <span class="nb">test </span>session <span class="nv">starts</span> <span class="o">==============================</span>
-platform darwin -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+heffalump:learning_journal cewing<span class="nv">$ </span>python journal.py
+serving on http://0.0.0.0:5000
+</pre></div>
+</div>
+<p>When it&#8217;s running, point your web browser at this address:</p>
+<p><a class="reference external" href="http://localhost:5000">http://localhost:5000</a></p>
+<p>You should see something like this:</p>
+<img alt="../../_images/flask_hello.png" class="align-center" src="../../_images/flask_hello.png" />
+<p>Now, quit your application with <tt class="docutils literal"><span class="pre">^C</span></tt> (that&#8217;s the <em>control</em> key and the letter
+<em>c</em>). Then remove the following code from your <tt class="docutils literal"><span class="pre">journal.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;home&#39;</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s">&#39;string&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&quot;Hello World&quot;</span>
+</pre></div>
+</div>
+<p>Restart your application as you did before.  Reload the same URL and you should
+see this:</p>
+<img alt="../../_images/pyramid_not_found.png" class="align-center" src="../../_images/pyramid_not_found.png" />
+<p>If a matched <em>route</em> has no <em>view</em> to pass the request to, it will raise a
+<strong>404</strong> error.</p>
+<p>Now, let&#8217;s re-connect the <tt class="docutils literal"><span class="pre">'home'</span></tt> route to a <em>view</em>. We need a function that
+will take the <tt class="docutils literal"><span class="pre">request</span></tt> as an argument and will return a list of entries.  Do
+we have such a function available?  You betcha we do.</p>
+<p>Make the following changes to <tt class="docutils literal"><span class="pre">journal.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;home&#39;</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s">&#39;templates/list.jinja2&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">read_entries</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;return a list of all entries as dicts&quot;&quot;&quot;</span>
+    <span class="c"># ... leave the rest of the function unchanged</span>
+</pre></div>
+</div>
+<p>Finally, having saved this change, restart your application and again load the
+URL:</p>
+<p><a class="reference external" href="http://localhost:5000">http://localhost:5000</a></p>
+<p>You should see something like this:</p>
+<img alt="../../_images/pyramid_list_page_nostyle.png" class="align-center" src="../../_images/pyramid_list_page_nostyle.png" />
+<p>You&#8217;ve now attached the <tt class="docutils literal"><span class="pre">'home'</span></tt> route to the <tt class="docutils literal"><span class="pre">read_entries</span></tt> function,
+making it a <em>view</em> function. And you&#8217;ve configured it to use the
+<tt class="docutils literal"><span class="pre">list.jinja2</span></tt> <em>renderer</em> we created earlier. Review that template. Make sure
+you understand why the page is appearing with &#8220;<em>No entries here so far</em>&#8221;.</p>
+<p>Quit your application again and now all your tests should pass:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[learning_journal]
+[step2 *]
+heffalump:learning_journal cewing$ py.test
+============================= test session starts ==============================
+platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
 collected 5 items
 
 test_journal.py .....
 
-<span class="o">===========================</span> 5 passed in 0.22 <span class="nv">seconds</span> <span class="o">===========================</span>
+=========================== 5 passed in 0.37 seconds ===========================
+[learning_journal]
+[step2 *]
+heffalump:learning_journal cewing$
 </pre></div>
 </div>
 </div>
@@ -918,20 +1300,6 @@ test_journal.py .....
 <div class="section" id="deploying-your-work">
 <h2>Deploying Your Work<a class="headerlink" href="#deploying-your-work" title="Permalink to this headline">¶</a></h2>
 <p>It&#8217;s no fun to do all this work without seeing what you&#8217;ve done.</p>
-<p>Check it locally first, to ensure that everything is smooth. At your command
-line, start up the app:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
-<span class="o">[</span>step3 *<span class="o">]</span>
-heffalump:learning_journal cewing<span class="nv">$ </span>python journal.py
- * Running on http://127.0.0.1:5000/
- * Restarting with reloader
-</pre></div>
-</div>
-<p>You should be able to open a web browser and point it at <a class="reference external" href="http://127.0.0.1:5000">http://127.0.0.1:5000</a>
-and see your app.  It should look like this:</p>
-<a class="reference internal image-reference" href="../../_images/lj_localhost.png"><img alt="../../_images/lj_localhost.png" src="../../_images/lj_localhost.png" style="width: 45%;" /></a>
-<p>If you see something like that, then all is well. You&#8217;re ready to submit your
-work and deploy to Heroku.</p>
 <p>Repeat the steps you performed for the previous assignment to submit your work
 and prepare for deployment. As a reminder, here&#8217;s the outline:</p>
 <ol class="arabic simple">
@@ -958,25 +1326,95 @@ Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&
 </pre></div>
 </div>
 <p>And now, create a first entry using your controller API:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">app</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">connect_db</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">settings</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;db&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;DATABASE_URL&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">settings</span>
+<span class="go">{&#39;db&#39;: &#39;postgres://&lt;user&gt;:&lt;password&gt;@&lt;domain&gt;:&lt;port&gt;/&lt;database&gt;&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span> <span class="o">=</span> <span class="n">connect_db</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span>
+<span class="go">&lt;connection object at 0x7fef3ec3f280; dsn: &#39;postgres://&lt;user&gt;:&lt;password&gt;@&lt;domain&gt;:&lt;port&gt;/&lt;database&gt;&#39;, closed: 0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyramid</span> <span class="kn">import</span> <span class="n">testing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">req</span> <span class="o">=</span> <span class="n">testing</span><span class="o">.</span><span class="n">DummyRequest</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">req</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">write_entry</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">app</span><span class="o">.</span><span class="n">test_request_context</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;A Manual Entry&quot;</span>
-<span class="gp">... </span>    <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="gp">... </span><span class="s">Today, I learned that you can manually create learning</span>
-<span class="gp">... </span><span class="s">journal entries through the Python shell in Heroku.  That&#39;s</span>
-<span class="gp">... </span><span class="s">pretty interesting.</span>
-<span class="gp">... </span><span class="s">&quot;&quot;&quot;</span>
-<span class="gp">... </span>    <span class="n">write_entry</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;My First Entry&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="s">&quot;Today I learned you can write a journal entry from the command line in Heroku.  Neat!&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">req</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="n">text</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">write_entry</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span>
+<span class="go">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>And now you should be able to load up the URL Heroku has given you for your app
-in a browser. This is what I see:</p>
+<p>Once you&#8217;re done, use the standard <tt class="docutils literal"><span class="pre">^D</span></tt> to detach from the Python terminal on
+Heroku. At this point you are good to go. Well done!</p>
+<p>At this point, you should actually be able to see your website running on
+Heroku. You can open a browser and point immediately to the site using a
+command from the Heroku toolbelt:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>heroku open
+Opening evening-brushlands-7955... <span class="k">done</span>
+</pre></div>
+</div>
+<p>Your browser should then open (or open a new tab) and you should see something
+a bit like this:</p>
 <a class="reference internal image-reference" href="../../_images/lj_heroku.png"><img alt="../../_images/lj_heroku.png" src="../../_images/lj_heroku.png" style="width: 90%;" /></a>
-<p>Again, use the standard <tt class="docutils literal"><span class="pre">^D</span></tt> to detach from the Python terminal on Heroku. At
-this point you are good to go. Well done!</p>
+<p>If you see an error instead, here are some tools to use in debugging:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>heroku ps
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">ps</span></tt> command should tell you if there are any <em>dynos</em> running.  You
+should see output like this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>master<span class="o">]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>heroku <span class="nv">ps</span>
+<span class="o">===</span> web <span class="o">(</span>1X<span class="o">)</span>: <span class="sb">`</span>python journal.py<span class="sb">`</span>
+web.1: up 2015/01/28 19:28:17 <span class="o">(</span>~ 2s ago<span class="o">)</span>
+</pre></div>
+</div>
+<p>If you see nothing instead you can use the <tt class="docutils literal"><span class="pre">scale</span></tt> command to start a new
+<em>dyno</em>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>master<span class="o">]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>heroku scale <span class="nv">web</span><span class="o">=</span>1
+Scaling dynos... <span class="k">done</span>, now running web at 1:1X.
+</pre></div>
+</div>
+<p>You can also use the <tt class="docutils literal"><span class="pre">scale</span></tt> command to turn your website off.  Just scale
+<tt class="docutils literal"><span class="pre">web=0</span></tt>.</p>
+<p>If you get messages saying that your application crashed when you run <tt class="docutils literal"><span class="pre">ps</span></tt>,
+or if you see &#8220;internal server error&#8221; messages in your browser indicating
+something is wrong with the code in your application, you can use the heroku
+<tt class="docutils literal"><span class="pre">logs</span></tt> command to see logfiles of the server:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span>master<span class="o">]</span>
+heffalump:learning_journal cewing<span class="nv">$ </span>heroku logs
+2015-01-26T04:30:17.767423+00:00 heroku<span class="o">[</span>api<span class="o">]</span>: Enable Logplex by c...
+2015-01-26T04:30:17.767423+00:00 heroku<span class="o">[</span>api<span class="o">]</span>: Release v2 created by c...
+...
+</pre></div>
+</div>
+<p>These log messages may be quite cryptic, but they will help you to debug
+problems if you read them carefully.</p>
+<p>Finally, remember that to help yourself figure out what is happening, you can
+always open a Python interpreter in the Heroku environment:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>learning_journal<span class="o">]</span>
+<span class="o">[</span><span class="nv">master</span><span class="o">=]</span>
+192:learning_journal cewing<span class="nv">$ </span>heroku run python
+Running <span class="sb">`</span>python<span class="sb">`</span> attached to terminal... up, run.9416
+Python 2.7.6 <span class="o">(</span>default, Jan 16 2014, 02:39:37<span class="o">)</span>
+<span class="o">[</span>GCC 4.4.3<span class="o">]</span> on linux2
+Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for </span>more information.
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>From there you can poke around at your journal code to see what might be wrong.</p>
 </div>
 </div>
 </div>
@@ -993,9 +1431,8 @@ this point you are good to go. Well done!</p>
 <li><a class="reference internal" href="#preparing-to-work">Preparing to Work</a></li>
 <li><a class="reference internal" href="#managing-db-connections">Managing DB Connections</a><ul>
 <li><a class="reference internal" href="#the-request-response-cycle">The Request/Response Cycle</a></li>
-<li><a class="reference internal" href="#request-boundary-decorators">Request Boundary Decorators</a></li>
-<li><a class="reference internal" href="#context-in-flask">Context in Flask</a></li>
-<li><a class="reference internal" href="#getting-and-releasing-a-connection">Getting and Releasing A Connection</a></li>
+<li><a class="reference internal" href="#opening-a-connection">Opening a Connection</a></li>
+<li><a class="reference internal" href="#releasing-a-connection">Releasing a Connection</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#setting-up-testing">Setting Up Testing</a><ul>
@@ -1006,16 +1443,20 @@ this point you are good to go. Well done!</p>
 <li><a class="reference internal" href="#test-writing-an-entry">Test Writing An Entry</a></li>
 <li><a class="reference internal" href="#implement-write-entry">Implement <tt class="docutils literal"><span class="pre">write_entry</span></tt></a></li>
 <li><a class="reference internal" href="#test-reading-entries">Test Reading Entries</a></li>
-<li><a class="reference internal" href="#implement-get-all-entries">Implement <tt class="docutils literal"><span class="pre">get_all_entries</span></tt></a></li>
+<li><a class="reference internal" href="#implement-read-entries">Implement <tt class="docutils literal"><span class="pre">read_entries</span></tt></a></li>
+<li><a class="reference internal" href="#where-we-stand">Where We Stand</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#viewing-your-journal">Viewing Your Journal</a><ul>
-<li><a class="reference internal" href="#templates-in-flask">Templates In Flask</a></li>
+<li><a class="reference internal" href="#renderers-in-pyramid">Renderers in Pyramid</a></li>
+<li><a class="reference internal" href="#installing-a-renderer-add-on">Installing a Renderer Add-On</a></li>
 <li><a class="reference internal" href="#set-up-your-templates">Set Up Your Templates</a></li>
 <li><a class="reference internal" href="#template-inheritance">Template Inheritance</a></li>
 <li><a class="reference internal" href="#displaying-an-entries-list">Displaying an Entries List</a></li>
 <li><a class="reference internal" href="#test-viewing-entries">Test Viewing Entries</a></li>
 <li><a class="reference internal" href="#writing-the-list-view">Writing the List View</a></li>
+<li><a class="reference internal" href="#a-word-on-terminology">A Word on Terminology</a></li>
+<li><a class="reference internal" href="#a-visual-exploration">A Visual Exploration</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#deploying-your-work">Deploying Your Work</a><ul>
@@ -1061,7 +1502,7 @@ this point you are good to go. Well done!</p>
         <li class="right" >
           <a href="index.html" title="Day 03 Assignments"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
           <li><a href="index.html" >Day 03 Assignments</a> &raquo;</li> 
       </ul>

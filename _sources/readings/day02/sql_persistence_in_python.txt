@@ -469,10 +469,12 @@ This syntax **does not properly escape the values passed in**.
 
 This syntax leaves you wide open to **SQL Injection Attacks**.
 
-If I ever see you using this syntax I will personally take you out behind the
-woodshed and tan your hide.
+.. warning::
 
-I'm not kidding.
+    If I ever see you using this syntax I will personally take you out behind
+    the woodshed and tan your hide.
+
+    I'm not kidding.
 
 Python provides you with a syntax that is safe from the kinds of attacks that
 make you front page news.  Use it properly:

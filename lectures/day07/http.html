@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Understanding the HTTP Protocol &mdash; Python Dev Accelerator 1.0 documentation</title>
+    <title>Understanding the HTTP Protocol &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0',
+        VERSION:     '2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Python Dev Accelerator 1.0 documentation" href="../../index.html" />
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
     <link rel="up" title="Day 07 Lectures" href="index.html" />
     <link rel="next" title="Day 09 Lectures" href="../day09/index.html" />
     <link rel="prev" title="Network Protocols in Python" href="protocols.html" />
@@ -39,6 +39,7 @@
   <div class="logo">
     <a href="../../index.html">
       <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
     </a>
   </div>
 </div>
@@ -55,7 +56,7 @@
         <li class="right" >
           <a href="protocols.html" title="Network Protocols in Python"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Day 07 Lectures</a> &raquo;</li> 
       </ul>
@@ -150,21 +151,16 @@ three parts:</p>
 <div class="section" id="http-methods">
 <h3>HTTP Methods<a class="headerlink" href="#http-methods" title="Permalink to this headline">¶</a></h3>
 <p><strong>GET</strong> <tt class="docutils literal"><span class="pre">/path/to/index.html</span> <span class="pre">HTTP/1.1</span></tt></p>
-<ul class="build">
-<li><p class="first">Every HTTP request must start with a <em>method</em></p>
-</li>
-<li><p class="first">There are four main HTTP methods:</p>
-<blockquote>
-<div><ul class="build simple">
+<ul class="build simple">
+<li>Every HTTP request must start with a <em>method</em></li>
+<li>There are four main HTTP methods:<ul class="build">
 <li>GET</li>
 <li>POST</li>
 <li>PUT</li>
 <li>DELETE</li>
 </ul>
-</div></blockquote>
 </li>
-<li><p class="first">There are others, notably HEAD, but you won&#8217;t see them too much</p>
-</li>
+<li>There are others, notably HEAD, but you won&#8217;t see them too much</li>
 </ul>
 <p>These four methods can be mapped to the four basic steps (<em>CRUD</em>) of persistent
 storage:</p>
@@ -179,22 +175,16 @@ storage:</p>
 <h3>Safe &lt;&#8211;&gt; Unsafe<a class="headerlink" href="#safe-unsafe" title="Permalink to this headline">¶</a></h3>
 <p>HTTP methods can be categorized as <strong>safe</strong> or <strong>unsafe</strong>, based on whether
 they might <em>change something</em> on the server:</p>
-<ul class="build">
-<li><p class="first">Safe HTTP Methods</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="build simple">
+<li>Safe HTTP Methods<ul>
 <li>GET</li>
 </ul>
-</div></blockquote>
 </li>
-<li><p class="first">Unsafe HTTP Methods</p>
-<blockquote>
-<div><ul class="simple">
+<li>Unsafe HTTP Methods<ul>
 <li>POST</li>
 <li>PUT</li>
 <li>DELETE</li>
 </ul>
-</div></blockquote>
 </li>
 </ul>
 <p>This is a <em>normative</em> distinction, which is to say <strong>be careful</strong></p>
@@ -203,22 +193,16 @@ they might <em>change something</em> on the server:</p>
 <h3>Idempotent &lt;&#8211;&gt; Non-Idempotent<a class="headerlink" href="#idempotent-non-idempotent" title="Permalink to this headline">¶</a></h3>
 <p>HTTP methods can be categorized as <strong>idempotent</strong>, based on whether a given
 request will <em>always</em> have the same result:</p>
-<ul class="build">
-<li><p class="first">Idempotent HTTP Methods</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="build simple">
+<li>Idempotent HTTP Methods<ul>
 <li>GET</li>
 <li>PUT</li>
 <li>DELETE</li>
 </ul>
-</div></blockquote>
 </li>
-<li><p class="first">Non-Idempotent HTTP Methods</p>
-<blockquote>
-<div><ul class="simple">
+<li>Non-Idempotent HTTP Methods<ul>
 <li>POST</li>
 </ul>
-</div></blockquote>
 </li>
 </ul>
 <div class="build container">
@@ -329,8 +313,6 @@ use them to send extra data to the server.</p>
 </ul>
 <p>It&#8217;s well worth being familiar with the possible headers for HTTP.  You can
 <a class="reference external" href="http://www.cs.tut.fi/~jkorpela/http.html">read more about them here</a>.</p>
-<blockquote>
-<div></div></blockquote>
 </div>
 </div>
 <div class="section" id="id1">
@@ -532,7 +514,7 @@ building a rudimentary HTTP server from scratch.</p>
         <li class="right" >
           <a href="protocols.html" title="Network Protocols in Python"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
           <li><a href="index.html" >Day 07 Lectures</a> &raquo;</li> 
       </ul>

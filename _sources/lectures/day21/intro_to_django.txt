@@ -140,6 +140,9 @@ application.
 
 In settings.py, add the following to connect to a postgres DB via psycopg2:
 
+.. rst-class:: build
+.. container::
+
     .. code-block:: python
 
         DATABASES = {

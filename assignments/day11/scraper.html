@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Scraping Apartment Listings from Craigslist &mdash; Python Dev Accelerator 1.0 documentation</title>
+    <title>Scraping Apartment Listings from Craigslist &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0',
+        VERSION:     '2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Python Dev Accelerator 1.0 documentation" href="../../index.html" />
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
     <link rel="up" title="Day 11" href="index.html" />
     <link rel="next" title="Day 12" href="../day12/index.html" />
     <link rel="prev" title="Day 11" href="index.html" />
@@ -39,6 +39,7 @@
   <div class="logo">
     <a href="../../index.html">
       <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
     </a>
   </div>
 </div>
@@ -55,7 +56,7 @@
         <li class="right" >
           <a href="index.html" title="Day 11"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Day 11</a> &raquo;</li> 
       </ul>
@@ -118,7 +119,7 @@ from a query to craigslist. This function should:</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock1'))">Peek At A Solution</a><br /><div id="hiddencodeblock1" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">requests</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock8'))">Peek At A Solution</a><br /><div id="hiddencodeblock8" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="k">def</span> <span class="nf">fetch_search_results</span><span class="p">(</span>
     <span class="n">query</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">minAsk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">maxAsk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bedrooms</span><span class="o">=</span><span class="bp">None</span>
@@ -163,7 +164,7 @@ scraping. It will need to:</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock2'))">Peek At A Solution</a><br /><div id="hiddencodeblock2" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add this import at the top</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock9'))">Peek At A Solution</a><br /><div id="hiddencodeblock9" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add this import at the top</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 
 <span class="c"># then add this function lower down</span>
@@ -188,7 +189,7 @@ alternate sources for listing data (<tt class="docutils literal"><span class="pr
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock3'))">Peek At A Solution</a><br /><div id="hiddencodeblock3" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add another import at the top</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock10'))">Peek At A Solution</a><br /><div id="hiddencodeblock10" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add another import at the top</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
@@ -238,7 +239,7 @@ list of the apartment listing container nodes.  Call this function
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock4'))">Peek At A Solution</a><br /><div id="hiddencodeblock4" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock11'))">Peek At A Solution</a><br /><div id="hiddencodeblock11" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
     <span class="n">listings</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;row&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">listings</span>
 </pre></div>
@@ -298,7 +299,7 @@ the listings that have location attributes.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock5'))">Peek At A Solution</a><br /><div id="hiddencodeblock5" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock12'))">Peek At A Solution</a><br /><div id="hiddencodeblock12" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
     <span class="n">location_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data-latitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;data-longitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
     <span class="n">listings</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;row&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">location_attrs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">listings</span>
@@ -345,7 +346,7 @@ return the list of dictionaries rather than the list of <tt class="docutils lite
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock6'))">Peek At A Solution</a><br /><div id="hiddencodeblock6" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock13'))">Peek At A Solution</a><br /><div id="hiddencodeblock13" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
 <span class="n">location_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data-latitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;data-longitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
 <span class="n">listings</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;row&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">location_attrs</span><span class="p">)</span>
 <span class="n">extracted</span> <span class="o">=</span> <span class="p">[]</span>
@@ -407,7 +408,7 @@ dictionary it produces also contains a <tt class="docutils literal"><span class=
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock7'))">Peek At A Solution</a><br /><div id="hiddencodeblock7" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock14'))">Peek At A Solution</a><br /><div id="hiddencodeblock14" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
     <span class="n">location_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data-latitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;data-longitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
     <span class="n">listings</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;row&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">location_attrs</span><span class="p">)</span>
     <span class="n">extracted</span> <span class="o">=</span> <span class="p">[]</span>
@@ -570,7 +571,7 @@ breakpoint from your code.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock8'))">Peek At A Solution</a><br /><div id="hiddencodeblock8" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock15'))">Peek At A Solution</a><br /><div id="hiddencodeblock15" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
     <span class="n">location_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data-latitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;data-longitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
     <span class="n">listings</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;row&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">location_attrs</span><span class="p">)</span>
     <span class="n">extracted</span> <span class="o">=</span> <span class="p">[]</span>
@@ -665,7 +666,7 @@ heffalump:souptests cewing$
         <li class="right" >
           <a href="index.html" title="Day 11"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
           <li><a href="index.html" >Day 11</a> &raquo;</li> 
       </ul>

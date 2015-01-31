@@ -52,13 +52,16 @@ Create your own set of preferences by opening ``Preferences`` -> ``Settings -
 User``. This will create an empty file, you can then copy the settings you want
 to override from the default set into your personal settings.
 
-Here's a reasonable set of preliminary settings (theme, color scheme and font
-are quite personal, find ones that suit you and remember the ones listed here
-likely need to be installed if you want to use them):
+Here's a reasonable set of preliminary settings.  **Please note that the color
+scheme, theme and font face listed are not available by default**.  You may
+want to install them using the sublime package manager, or you may wish to find
+your own. My favorite monospaced font `Droid Sans Mono Slashed`_ is also not
+installed on any machine by default.  Any monospace font will do, but I really
+like that one.
+
+.. _Droid Sans Mono Slashed: http://blog.cosmix.org/2009/10/27/a-slashed-zero-droid-sans-mono/
 
 .. code-block:: json
-
-    source
 
     {
         "color_scheme": "Packages/User/Cobalt (SL).tmTheme",
@@ -82,7 +85,7 @@ likely need to be installed if you want to use them):
             100  // maximum allowable length
         ],
         "word_wrap": false, // I hate auto-wrapped text.
-        "wrap_width": 79 // This is used by a plugin elsewhere
+        "wrap_width": 79, // This is used by a plugin elsewhere
         "tab_size": 4,
         "translate_tabs_to_spaces": true,
         "use_tab_stops": true
@@ -108,11 +111,17 @@ Python!
 .. _Package Control: https://sublime.wbond.net
 .. _ones you write yourself: http://docs.sublimetext.info/en/latest/extensibility/plugins.html
 
+Before you begin installing packages with package control, you must install the
+system itself. Do so by following `the instructions here`_.
 
-To install a plugin using Package Control, open the ``command palette`` with
-``shift-super-P`` (``ctrl-shift-P`` on Windows/Linux). The ``super`` key is ``command``
-or ``⌘`` on OS X. When the palette opens, typing ``install`` will bring up the
-``Package Control: Install Package`` command. Hit ``enter`` to select it.
+.. _the instructions here: https://packagecontrol.io/installation
+
+
+Once the system is installed, you can install a plugin. Open the ``command
+palette`` with ``shift-super-P`` (``ctrl-shift-P`` on Windows/Linux). The
+``super`` key is ``command`` or ``⌘`` on OS X. When the palette opens, typing
+``install`` will bring up the ``Package Control: Install Package`` command. Hit
+``enter`` to select it.
 
 .. image:: /_static/pc_menu.png
     :width: 600px
@@ -152,23 +161,26 @@ There are two to choose from:
 .. _SublimeCodeIntel: https://sublime.wbond.net/packages/SublimeCodeIntel
 .. _SublimeJedi: https://sublime.wbond.net/packages/Jedi%20-%20Python%20autocompletion
 
-I've installed ``SublimeJedi``, and used the following settings *per project* to
-ensure that all relevant code is found:
+I've installed ``SublimeJedi``.  Using it I can set up individual settings for
+my projects. First, I use the ``Project`` menu to ``save project as...``.  I
+give my project a name (perhaps ``foo``) and then save. Once I've done so, I
+will have a ``foo.sublime-project`` file on disk.  This file can contain
+special settings that will apply to this project only, and will override more
+general settings like User preferences.
+
+To allow ``SublimeJedi`` to see any package I install in the virtualenv for my
+project, I can add the following settings to that file:
 
 .. code-block:: json
 
     {
-        "folders":
-        [
-            // ...
-        ],
 
         "settings": {
             // ...
-            "python_interpreter_path": "/Users/cewing/pythons/python-2.7/bin/python",
+            "python_interpreter_path": "/Users/cewing/projects/foo_env/bin/python",
 
             "python_package_paths": [
-                "/path/to/project/buildout/parts/omelette"
+                "/Users/cewing/projects/foo_env/lib/python-2.7/site-packages/"
             ]
         }
     }
@@ -177,7 +189,9 @@ The ``python_interpreter_path`` allows me to indicate which Python executable
 should be introspected for symbol definitions.
 
 The ``python_package_paths`` setting allows designating additional paths that
-will be searched for Python packages containing symbols. 
+will be searched for Python packages containing symbols. By pointing this at
+the ``site-packages`` directory of my project virtualenv, I get autocompletion
+for any package I install in this project with ``pip``.
 
 .. image:: /_static/tab_completion.png
     :width: 600px
@@ -304,10 +318,9 @@ Here are the settings you can add to ``Preferences`` -> ``Package Settings`` ->
     }
 
 The ``paths`` key points to the path that contains the ``flake8`` executable
-command.
-
-The ``python_paths`` key points to the location of the python executable to be
-used.
+command. The ``python_paths`` key points to the location of the python
+executable to be used. In both cases, you will want to provide values in the
+appropriate place for the OS you are using.
 
 The settings inside the ``flake8`` object control the performance of the
 linter. `Read more about them here`_.

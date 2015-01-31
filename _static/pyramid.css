@@ -40,13 +40,18 @@ div.document {
 }
 
 div.header {
-    /* width:100%;
-    background: #f4ad32 url(headerbg.png) repeat-x 0 top;
-    border-bottom: 2px solid #ffffff; */
     width:100%;
+    background-color: #393939;
+    border-bottom: 2px solid #ffffff;
+    /* width:100%;
     height:auto;
-    background:#eee;
+    background:#eee; */
 }
+
+/* div.logo {
+    text-align: center;
+    padding-top: 10px;
+} */
 
 div.logo {
     text-align: left;
@@ -56,6 +61,19 @@ div.logo {
 div.logo img {
     height: 57px;
     width: 51px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+div.logo p {
+    font-size: 18px;
+    font-family: Verdana, Helvetica, sans-serif;
+    text-transform: uppercase;
+    color: #FFF;
+    text-decoration: none;
+    border: none;
+    padding: 14px 0px 19px;
+    margin: 0px 60px;
 }
 
 div.body {
@@ -347,4 +365,9 @@ a:hover em.std-term {
 tt.xref {
     font-weight: normal;
     font-style: normal;
+}
+
+table.width-80 {
+    width: 80%;
+    margin: auto;
 }
