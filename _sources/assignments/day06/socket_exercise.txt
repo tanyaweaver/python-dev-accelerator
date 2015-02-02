@@ -48,8 +48,6 @@ When you are finished with a connection, you should **always close it**!
 Server Side
 ===========
 
-.. class:: big-centered
-
 What about the other half of the equation?
 
 Construct a Socket
@@ -248,8 +246,6 @@ interpreter):
 
 Congratulations!
 ----------------
-
-.. class:: big-centered
 
 You've run your first client-server interaction
 
