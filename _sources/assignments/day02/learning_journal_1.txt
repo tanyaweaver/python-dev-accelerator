@@ -865,7 +865,6 @@ From there, it's just like what you did locally a short while ago:
 
 .. code-block:: pycon
 
-    >>> from journal import app
     >>> from journal import init_db
     >>> init_db()
     >>>
