@@ -123,9 +123,6 @@ an argument:
 
 .. code-block:: python
 
-    # add this import at the top of the file:
-    import transaction
-
     # and this function just below open_connection
     def close_connection(request):
         """close the database connection for this request
