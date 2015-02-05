@@ -382,7 +382,7 @@ application. In <tt class="docutils literal"><span class="pre">journal.py</span>
     <span class="c"># add a secret value for auth tkt signing</span>
     <span class="n">auth_secret</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;JOURNAL_AUTH_SECRET&#39;</span><span class="p">,</span> <span class="s">&#39;anotherseekrit&#39;</span><span class="p">)</span>
     <span class="c"># and add a new value to the constructor for our Configurator:</span>
-    <span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">Configurator</span><span class="p">(</span>
         <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">,</span>
         <span class="n">session_factory</span><span class="o">=</span><span class="n">session_factory</span><span class="p">,</span>
         <span class="n">authentication_policy</span><span class="o">=</span><span class="n">AuthTktAuthenticationPolicy</span><span class="p">(</span>
@@ -406,7 +406,7 @@ that should be granted or denied to certain <em>principals</em>.</p>
 <span class="c"># and update our Configurator constructor like so:</span>
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="c"># ...</span>
-    <span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">Configurator</span><span class="p">(</span>
         <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">,</span>
         <span class="n">session_factory</span><span class="o">=</span><span class="n">session_factory</span><span class="p">,</span>
         <span class="n">authentication_policy</span><span class="o">=</span><span class="n">AuthTktAuthenticationPolicy</span><span class="p">(</span>
