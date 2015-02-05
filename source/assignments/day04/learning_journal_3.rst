@@ -867,7 +867,7 @@ not appear when you are not logged in.  Add the following to
 
     {% if request.authenticated_userid %} <!-- ADD THIS LINE -->
     <aside>
-    <form action="{{ url_for('add_entry') }}" method="POST" class="add_entry">
+    <form action="{{ request_url('add') }}" method="POST" class="add_entry">
       ...
     </form>
     </aside>
