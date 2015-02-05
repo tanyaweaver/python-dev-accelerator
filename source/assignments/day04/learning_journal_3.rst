@@ -955,6 +955,11 @@ job right.
 
         return {'error': error, 'username': username}
 
+    # add configuration to main:
+    def main():
+        # ...
+        config.add_route('login', '/login')
+
 **NOTES**
 
 * Any form that changes application state should only be processed on a
@@ -1073,6 +1078,11 @@ And then implement the view in ``journal.py``.  Try it on your own:
     def logout(request):
         headers = forget(request)
         return HTTPFound(request.route_url('home'), headers=headers)
+
+    # and configure a route in main:
+    def main():
+        # ...
+        config.add_route('logout', '/logout')
 
 And the tests will pass:
 
