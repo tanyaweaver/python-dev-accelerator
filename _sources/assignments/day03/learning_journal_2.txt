@@ -693,7 +693,7 @@ Back in ``journal.py`` go ahead and work on implementing this function yourself.
     :label: Peek At A Solution
 
     # add this new SQL string below the others
-    DB_ENTRIES_LIST = """
+    SELECT_ENTRIES = """
     SELECT id, title, text, created FROM entries ORDER BY created DESC
     """
 

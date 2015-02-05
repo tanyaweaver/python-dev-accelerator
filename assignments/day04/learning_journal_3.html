@@ -721,7 +721,7 @@ user to log in and log out. Start with the login <em>view function</em>. This sh
 <p>Moreover, you&#8217;ll want to update the journal home page to only show the form for
 adding entries if the user is logged in.</p>
 <p>Start with tests.  In <tt class="docutils literal"><span class="pre">test_journal.py</span></tt> add the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">SUBMIT_BTN</span> <span class="o">=</span> <span class="s">&#39;&lt;input type=&quot;submit&quot; value=&quot;Share&quot; name=&quot;Share&quot;/&gt;&#39;</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INPUT_BTN</span> <span class="o">=</span> <span class="s">&#39;&lt;input type=&quot;submit&quot; value=&quot;Share&quot; name=&quot;Share&quot;/&gt;&#39;</span>
 
 
 <span class="k">def</span> <span class="nf">login_helper</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
@@ -733,22 +733,29 @@ adding entries if the user is logged in.</p>
     <span class="k">return</span> <span class="n">app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;/login&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">login_data</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="s">&#39;*&#39;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">test_start_as_anonymous</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
-    <span class="n">client</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">()</span>
-    <span class="n">anon_home</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
-    <span class="k">assert</span> <span class="n">SUBMIT_BTN</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">anon_home</span>
+<span class="k">def</span> <span class="nf">test_start_as_anonymous</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">actual</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
+    <span class="k">assert</span> <span class="n">INPUT_BTN</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">actual</span>
 
 
-<span class="k">def</span> <span class="nf">test_login_success</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
-    <span class="n">username</span><span class="p">,</span> <span class="n">password</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;admin&#39;</span><span class="p">,</span> <span class="s">&#39;admin&#39;</span><span class="p">)</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">login_helper</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">SUBMIT_BTN</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">data</span>
+<span class="k">def</span> <span class="nf">test_login_success</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+    <span class="n">username</span><span class="p">,</span> <span class="n">password</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;admin&#39;</span><span class="p">,</span> <span class="s">&#39;secret&#39;</span><span class="p">)</span>
+    <span class="n">redirect</span> <span class="o">=</span> <span class="n">login_helper</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">app</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">redirect</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">302</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">redirect</span><span class="o">.</span><span class="n">follow</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="n">actual</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
+    <span class="k">assert</span> <span class="n">INPUT_BTN</span> <span class="ow">in</span> <span class="n">actual</span>
 
 
-<span class="k">def</span> <span class="nf">test_login_fails</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_login_fails</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
     <span class="n">username</span><span class="p">,</span> <span class="n">password</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;admin&#39;</span><span class="p">,</span> <span class="s">&#39;wrong&#39;</span><span class="p">)</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">login_helper</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="s">&#39;Login Failed&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">login_helper</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">app</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="n">actual</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
+    <span class="k">assert</span> <span class="s">&quot;Login Failed&quot;</span> <span class="ow">in</span> <span class="n">actual</span>
+    <span class="k">assert</span> <span class="n">INPUT_BTN</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">actual</span>
 </pre></div>
 </div>
 <p>If you run your tests now, you&#8217;ll see three failures:</p>
@@ -882,7 +889,7 @@ job right.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock6'))">Peek At A Solution</a><br /><div id="hiddencodeblock6" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add imports at the top</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock1'))">Peek At A Solution</a><br /><div id="hiddencodeblock1" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add imports at the top</span>
 <span class="kn">from</span> <span class="nn">pyramid.security</span> <span class="kn">import</span> <span class="n">remember</span><span class="p">,</span> <span class="n">forget</span>
 
 <span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;login&#39;</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s">&quot;templates/login.jinja2&quot;</span><span class="p">)</span>
@@ -1016,7 +1023,7 @@ heffalump:learning_journal cewing$
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock7'))">Peek At A Solution</a><br /><div id="hiddencodeblock7" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;logout&#39;</span><span class="p">)</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock2'))">Peek At A Solution</a><br /><div id="hiddencodeblock2" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;logout&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">logout</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="n">forget</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">HTTPFound</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">route_url</span><span class="p">(</span><span class="s">&#39;home&#39;</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
