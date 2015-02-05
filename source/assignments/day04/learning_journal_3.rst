@@ -226,7 +226,7 @@ Look carefully at the logic. What happens?
 So where do the form values come from?
 
 There's only one visible page in your app so far. Why not add a form there?
-Open ``list.html`` and add the following code:
+Open ``list.jinja2`` and add the following code:
 
 .. code-block:: jinja
 
@@ -772,7 +772,7 @@ Start with tests.  In ``test_journal.py`` add the following:
         Accept all status codes so that we can make assertions in tests
         """
         login_data = {'username': username, 'password': password}
-        return app.post('/login', params=login_data, status_code='*')
+        return app.post('/login', params=login_data, status='*')
 
 
     def test_start_as_anonymous(app):
@@ -861,7 +861,7 @@ If you run your tests now, you'll see three failures:
 
 Fix these one at a time.  First, ensure that the form for adding an entry does
 not appear when you are not logged in.  Add the following to
-``list.html``:
+``list.jinja2``:
 
 .. code-block:: jinja
 
