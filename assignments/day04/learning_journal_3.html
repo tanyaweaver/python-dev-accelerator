@@ -821,7 +821,7 @@ not appear when you are not logged in.  Add the following to
 <tt class="docutils literal"><span class="pre">list.jinja2</span></tt>:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">if</span> <span class="nv">request.authenticated_userid</span> <span class="cp">%}</span><span class="x"> &lt;!-- ADD THIS LINE --&gt;</span>
 <span class="x">&lt;aside&gt;</span>
-<span class="x">&lt;form action=&quot;</span><span class="cp">{{</span> <span class="nv">url_for</span><span class="o">(</span><span class="s1">&#39;add_entry&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot; method=&quot;POST&quot; class=&quot;add_entry&quot;&gt;</span>
+<span class="x">&lt;form action=&quot;</span><span class="cp">{{</span> <span class="nv">request_url</span><span class="o">(</span><span class="s1">&#39;add&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot; method=&quot;POST&quot; class=&quot;add_entry&quot;&gt;</span>
 <span class="x">  ...</span>
 <span class="x">&lt;/form&gt;</span>
 <span class="x">&lt;/aside&gt;</span>
