@@ -373,7 +373,7 @@ application. In ``journal.py`` make the following changes:
         # add a secret value for auth tkt signing
         auth_secret = os.environ.get('JOURNAL_AUTH_SECRET', 'anotherseekrit')
         # and add a new value to the constructor for our Configurator:
-        config = Configuration(
+        config = Configurator(
             settings=settings,
             session_factory=session_factory,
             authentication_policy=AuthTktAuthenticationPolicy(
@@ -402,7 +402,7 @@ To enable this policy we'll again need to update our configuration. Return to
     # and update our Configurator constructor like so:
     def main():
         # ...
-        config = Configuration(
+        config = Configurator(
             settings=settings,
             session_factory=session_factory,
             authentication_policy=AuthTktAuthenticationPolicy(
