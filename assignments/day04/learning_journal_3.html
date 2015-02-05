@@ -263,7 +263,7 @@ last view. Is there a <em>renderer</em> associated with it at all?</p>
 Look carefully at the logic. What happens?</p>
 <p>So where do the form values come from?</p>
 <p>There&#8217;s only one visible page in your app so far. Why not add a form there?
-Open <tt class="docutils literal"><span class="pre">list.html</span></tt> and add the following code:</p>
+Open <tt class="docutils literal"><span class="pre">list.jinja2</span></tt> and add the following code:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span><span class="x">  &lt;!-- already there --&gt;</span>
 <span class="x">&lt;aside&gt;</span>
 <span class="x">&lt;form action=&quot;</span><span class="cp">{{</span> <span class="nv">request.route_url</span><span class="o">(</span><span class="s1">&#39;add&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot; method=&quot;POST&quot; class=&quot;add_entry&quot;&gt;</span>
@@ -730,7 +730,7 @@ adding entries if the user is logged in.</p>
 <span class="sd">    Accept all status codes so that we can make assertions in tests</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">login_data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;username&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">:</span> <span class="n">password</span><span class="p">}</span>
-    <span class="k">return</span> <span class="n">app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;/login&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">login_data</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="s">&#39;*&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;/login&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">login_data</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s">&#39;*&#39;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">test_start_as_anonymous</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
@@ -818,7 +818,7 @@ heffalump:learning_journal cewing$
 </div>
 <p>Fix these one at a time.  First, ensure that the form for adding an entry does
 not appear when you are not logged in.  Add the following to
-<tt class="docutils literal"><span class="pre">list.html</span></tt>:</p>
+<tt class="docutils literal"><span class="pre">list.jinja2</span></tt>:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">if</span> <span class="nv">request.authenticated_userid</span> <span class="cp">%}</span><span class="x"> &lt;!-- ADD THIS LINE --&gt;</span>
 <span class="x">&lt;aside&gt;</span>
 <span class="x">&lt;form action=&quot;</span><span class="cp">{{</span> <span class="nv">url_for</span><span class="o">(</span><span class="s1">&#39;add_entry&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot; method=&quot;POST&quot; class=&quot;add_entry&quot;&gt;</span>
@@ -889,7 +889,7 @@ job right.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock1'))">Peek At A Solution</a><br /><div id="hiddencodeblock1" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add imports at the top</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock6'))">Peek At A Solution</a><br /><div id="hiddencodeblock6" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add imports at the top</span>
 <span class="kn">from</span> <span class="nn">pyramid.security</span> <span class="kn">import</span> <span class="n">remember</span><span class="p">,</span> <span class="n">forget</span>
 
 <span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;login&#39;</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s">&quot;templates/login.jinja2&quot;</span><span class="p">)</span>
@@ -910,6 +910,11 @@ job right.</p>
             <span class="k">return</span> <span class="n">HTTPFound</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">route_url</span><span class="p">(</span><span class="s">&#39;home&#39;</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">{</span><span class="s">&#39;error&#39;</span><span class="p">:</span> <span class="n">error</span><span class="p">,</span> <span class="s">&#39;username&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">}</span>
+
+<span class="c"># add configuration to main:</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c"># ...</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">add_route</span><span class="p">(</span><span class="s">&#39;login&#39;</span><span class="p">,</span> <span class="s">&#39;/login&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div><p><strong>NOTES</strong></p>
@@ -1023,10 +1028,15 @@ heffalump:learning_journal cewing$
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock2'))">Peek At A Solution</a><br /><div id="hiddencodeblock2" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;logout&#39;</span><span class="p">)</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock7'))">Peek At A Solution</a><br /><div id="hiddencodeblock7" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;logout&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">logout</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="n">forget</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">HTTPFound</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">route_url</span><span class="p">(</span><span class="s">&#39;home&#39;</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="c"># and configure a route in main:</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c"># ...</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">add_route</span><span class="p">(</span><span class="s">&#39;logout&#39;</span><span class="p">,</span> <span class="s">&#39;/logout&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div><p>And the tests will pass:</p>
