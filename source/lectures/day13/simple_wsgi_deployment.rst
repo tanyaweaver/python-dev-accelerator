@@ -155,6 +155,9 @@ On your local machine, in the ``fabtests`` directory, make a new file
         }
     }
 
+Remember, you want to use the name of your actual server on aws, not the
+example used above.
+
 Now, copy that file up to your server too:
 
 .. code-block:: bash

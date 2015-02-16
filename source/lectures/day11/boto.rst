@@ -294,7 +294,7 @@ Next we must set up some configuration values for our server-to-be.
 .. rst-class:: build
 .. code-block:: pycon
 
-    >>> instance_type = 't2.micro'
+    >>> instance_type = 't1.micro'
 
 Starting an Instance
 --------------------
