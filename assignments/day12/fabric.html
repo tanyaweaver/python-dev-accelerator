@@ -272,7 +272,7 @@ connection so we can easily use it from other functions.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock16'))">Peek At A Solution</a><br /><div id="hiddencodeblock16" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock18'))">Peek At A Solution</a><br /><div id="hiddencodeblock18" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import</span>
 <span class="kn">import</span> <span class="nn">boto.ec2</span>
 
 <span class="c"># add an environmental setting</span>
@@ -310,7 +310,7 @@ a new instance.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock17'))">Peek At A Solution</a><br /><div id="hiddencodeblock17" style="display: none"><div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<a href="javascript:showhide(document.getElementById('hiddencodeblock19'))">Peek At A Solution</a><br /><div id="hiddencodeblock19" style="display: none"><div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -452,7 +452,7 @@ filtering for a particular state.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock18'))">Peek At A Solution</a><br /><div id="hiddencodeblock18" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">list_aws_instances</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock20'))">Peek At A Solution</a><br /><div id="hiddencodeblock20" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">list_aws_instances</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">):</span>
     <span class="n">conn</span> <span class="o">=</span> <span class="n">get_ec2_connection</span><span class="p">()</span>
 
     <span class="n">reservations</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">get_all_reservations</span><span class="p">()</span>
@@ -507,7 +507,7 @@ the user at run time.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock19'))">Peek At A Solution</a><br /><div id="hiddencodeblock19" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock21'))">Peek At A Solution</a><br /><div id="hiddencodeblock21" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import</span>
 <span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="n">prompt</span>
 
 <span class="k">def</span> <span class="nf">select_instance</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s">&#39;running&#39;</span><span class="p">):</span>
@@ -553,7 +553,7 @@ an argument) on the server we select.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock20'))">Peek At A Solution</a><br /><div id="hiddencodeblock20" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock22'))">Peek At A Solution</a><br /><div id="hiddencodeblock22" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import</span>
 <span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="n">execute</span>
 
 <span class="k">def</span> <span class="nf">run_command_on_selected_server</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
@@ -601,7 +601,7 @@ that it will run that will install nginx for us and then start it.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock21'))">Peek At A Solution</a><br /><div id="hiddencodeblock21" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock23'))">Peek At A Solution</a><br /><div id="hiddencodeblock23" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import</span>
 <span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="n">sudo</span>
 
 <span class="k">def</span> <span class="nf">_install_nginx</span><span class="p">():</span>
@@ -622,7 +622,7 @@ command line that will run it on the server we select.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock22'))">Peek At A Solution</a><br /><div id="hiddencodeblock22" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">install_nginx</span><span class="p">():</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock24'))">Peek At A Solution</a><br /><div id="hiddencodeblock24" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">install_nginx</span><span class="p">():</span>
     <span class="n">run_command_on_selected_server</span><span class="p">(</span><span class="n">_install_nginx</span><span class="p">)</span>
 </pre></div>
 </div>

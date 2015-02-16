@@ -252,18 +252,32 @@ An Example: Scraping Blog Posts
         Python 2.7.5 (default, Aug 25 2013, 00:04:04)
         [GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)] on darwin
         Type "help", "copyright", "credits" or "license" for more information.
-        >>> 
+        >>>
 
 Fetching a Page
 ---------------
 
-Then, import the requests library and fetch our sample blog listing page:
+The first step is to fetch the page we'll be scraping.
+
+I've created a shortened url that points to a feed aggregator for open source
+blog posts.  Unfortunately, ``tinyurl`` won't issue a proper redirect response
+for requests that come from the ``requests`` library, so we'll have to pretend
+we are a real web browser.
+
+Open the developer tools for your browser and make sure you are viewing the
+*Network* tab so you can see network traffic your browser sends and receives.
+Load the url http:/tinyurl.com/sample-oss-posts in a new tab. Back in the
+network tab, click on the requests that went to tinyurl.  Find the headers for
+the request and copy the ``User-Agent`` header value. Then begin to follow
+along in your Python interpreter:
 
 .. code-block:: pycon
 
     >>> import requests
     >>> url = 'http://tinyurl.com/sample-oss-posts'
-    >>> resp = requests.get(url)
+    >>> ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36'
+    >>> headers = {'User-Agent': ua}
+    >>> resp = requests.get(url, headers=headers)
     >>> resp
     <Response [200]>
     >>> foo = resp.text
@@ -289,7 +303,7 @@ webpage out to the filesystem:
     ...
     >>> import os
     >>> os.listdir(os.getcwd())
-    ['blog_list.html']
+    ['blog_list.html', ...]
     >>>
 
 .. nextslide::
@@ -335,7 +349,7 @@ Parsing HTML
     >>> parsed = BeautifulSoup(resp.text)
     >>> len(parsed)
     2
-    >>> 
+    >>>
 
 .. _Document Object Model: http://en.wikipedia.org/wiki/Document_Object_Model
 
@@ -349,7 +363,7 @@ are those two things?
 
     >>> [type(t) for t in parsed]
     [<class 'bs4.element.Doctype'>, <class 'bs4.element.Tag'>]
-    >>> 
+    >>>
 
 .. rst-class:: build
 .. container::
@@ -368,12 +382,12 @@ These nodes can be roughly classed into two types, ``NavigableString`` and
 .. rst-class:: build
 .. container::
 
-    The main difference is that ``Tag`` nodes can contain other nodes, where
-    ``NavigableStrings`` do not.
+    The main difference is that ``Tag`` nodes can contain text or other nodes,
+    where ``NavigableStrings`` contain **only** text.
 
-    You can interact with these node types in a number of ways. 
+    You can interact with these node types in a number of ways.
 
-    The most common are  *Searching* and *Traversing* 
+    The most common are  *Searching* and *Traversing*
 
     Let's start with the simpler of the two, *searching*.
 
@@ -447,8 +461,8 @@ them:
 
     >>> entries = parsed.find_all('div', class_='feedEntry')
     >>> len(entries)
-    105
-    >>> 
+    70
+    >>>
 
 Okay. That works.
 
@@ -468,8 +482,8 @@ and then extract the text it contains:
     u'Dimitri Fontaine: PostgreSQL, Aggregates and Histograms'
     >>> titles = [e.find('a').find('h2').string for e in entries]
     >>> len(titles)
-    105
-    >>> 
+    70
+    >>>
 
 .. nextslide:: Extracting Sources
 
@@ -496,10 +510,10 @@ and then extract the text it contains:
     u'From Planet PostgreSQL.\n            \n            \n                Published on'
     >>> all_bylines = [e.find('p', class_='discreet') for e in entries]
     >>> len(all_bylines)
-    105
+    70
     >>> all_classifiers = [list(b.children)[0].strip() for b in all_bylines]
     >>> len(all_classifiers)
-    105
+    70
     >>> all_classifiers[0]
     u'From Planet PostgreSQL.\n            \n            \n                Published on'
 
@@ -516,7 +530,7 @@ and then extract the text it contains:
     30
     >>> import pprint
     >>> pprint.pprint(unique_classifiers)
-    set([u'By Adrian Holovaty from Planet Django.\n ...
+    set([u'u'By Will McGugan from Django community aggregator:\n ...
     >>>
 
 If we look these over, we find that we have some from ``Planet Django``, some
@@ -538,7 +552,7 @@ Start by defining a function to get the *classifier* for an entry:
     ...         if classifier in byline.text.lower():
     ...             return classifier
     ...     return 'other'
-    ... 
+    ...
     >>>
 
 .. nextslide::
@@ -564,9 +578,9 @@ We can also extract titles for each post with a function:
     ...
     >>> titles = [get_title(e) for e in entries]
     >>> len(titles)
-    105
+    70
     >>> titles[0]
-    u'Dimitri Fontaine: PostgreSQL, Aggregates and Histograms'
+    u'A method for rendering templates with Python'
 
 .. nextslide::
 
@@ -574,15 +588,16 @@ Put it all together to build a dictionary of categorized post titles:
 
     >>> paired = [(get_classifier(e), get_title(e)) for e in entries]
     >>> paired[0]
-    ('postgresql', u'Dimitri Fontaine: PostgreSQL, Aggregates and Histograms')
+    ('django', u'A method for rendering templates with Python')
     >>> groups = {}
     >>> for cat, title in paired:
     ...     list = groups.setdefault(cat, [])
     ...     list.append(title)
     ...
-    >>> groups['other']
-    [u'Is Open Source Consulting Dead?', u'Consulting and Patent Indemification', 
-     u'Python Advent Calendar 2012 Topic', u'Why I Like ZODB', ...]
+    >>> groups['django']
+    [u'A method for rendering templates with Python',
+     u"Don't import (too much) in your django settings",
+     ...]
 
 Neat!
 
@@ -594,6 +609,6 @@ Going Farther
 
 Okay, so that's the basics. For your assignment you'll take this a step farther
 and
-:ref:`build a list of apartment listings <scraper_assignment>` 
+:ref:`build a list of apartment listings <scraper_assignment>`
 using Craigslist.
 

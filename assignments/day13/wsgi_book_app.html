@@ -151,7 +151,7 @@ filesystem file or folder.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock26'))">Peek At A Solution</a><br /><div id="hiddencodeblock26" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock28'))">Peek At A Solution</a><br /><div id="hiddencodeblock28" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">bookdb</span> <span class="kn">import</span> <span class="n">BookDB</span>
 
 <span class="n">DB</span> <span class="o">=</span> <span class="n">BookDB</span><span class="p">()</span>
@@ -207,7 +207,7 @@ response</li>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock27'))">Peek At A Solution</a><br /><div id="hiddencodeblock27" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock29'))">Peek At A Solution</a><br /><div id="hiddencodeblock29" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&quot;Content-type&quot;</span><span class="p">,</span> <span class="s">&quot;text/html&quot;</span><span class="p">)]</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;PATH_INFO&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
@@ -271,7 +271,7 @@ title is a link to the detail page for that book</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock28'))">Peek At A Solution</a><br /><div id="hiddencodeblock28" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">books</span><span class="p">():</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock30'))">Peek At A Solution</a><br /><div id="hiddencodeblock30" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">books</span><span class="p">():</span>
     <span class="n">all_books</span> <span class="o">=</span> <span class="n">DB</span><span class="o">.</span><span class="n">titles</span><span class="p">()</span>
     <span class="n">body</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&lt;h1&gt;My Bookshelf&lt;/h1&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;ul&gt;&#39;</span><span class="p">]</span>
     <span class="n">item_template</span> <span class="o">=</span> <span class="s">&#39;&lt;li&gt;&lt;a href=&quot;/book/{id}&quot;&gt;{title}&lt;/a&gt;&lt;/li&gt;&#39;</span>
@@ -309,7 +309,7 @@ title is a link to the detail page for that book</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock29'))">Peek At A Solution</a><br /><div id="hiddencodeblock29" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">book</span><span class="p">(</span><span class="n">book_id</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock31'))">Peek At A Solution</a><br /><div id="hiddencodeblock31" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">book</span><span class="p">(</span><span class="n">book_id</span><span class="p">):</span>
     <span class="n">page</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
 <span class="s">&lt;h1&gt;{title}&lt;/h1&gt;</span>
 <span class="s">&lt;table&gt;</span>

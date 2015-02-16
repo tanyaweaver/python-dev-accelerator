@@ -250,10 +250,22 @@ Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&
 </div>
 <div class="section" id="fetching-a-page">
 <h3>Fetching a Page<a class="headerlink" href="#fetching-a-page" title="Permalink to this headline">¶</a></h3>
-<p>Then, import the requests library and fetch our sample blog listing page:</p>
+<p>The first step is to fetch the page we&#8217;ll be scraping.</p>
+<p>I&#8217;ve created a shortened url that points to a feed aggregator for open source
+blog posts.  Unfortunately, <tt class="docutils literal"><span class="pre">tinyurl</span></tt> won&#8217;t issue a proper redirect response
+for requests that come from the <tt class="docutils literal"><span class="pre">requests</span></tt> library, so we&#8217;ll have to pretend
+we are a real web browser.</p>
+<p>Open the developer tools for your browser and make sure you are viewing the
+<em>Network</em> tab so you can see network traffic your browser sends and receives.
+Load the url <a class="reference external" href="http:/tinyurl.com/sample-oss-posts">http:/tinyurl.com/sample-oss-posts</a> in a new tab. Back in the
+network tab, click on the requests that went to tinyurl.  Find the headers for
+the request and copy the <tt class="docutils literal"><span class="pre">User-Agent</span></tt> header value. Then begin to follow
+along in your Python interpreter:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">requests</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://tinyurl.com/sample-oss-posts&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ua</span> <span class="o">=</span> <span class="s">&#39;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="n">ua</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span>
 <span class="go">&lt;Response [200]&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span>
@@ -275,7 +287,7 @@ webpage out to the filesystem:</p>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
-<span class="go">[&#39;blog_list.html&#39;]</span>
+<span class="go">[&#39;blog_list.html&#39;, ...]</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
@@ -317,8 +329,8 @@ tree.</p>
 <p>These nodes can be roughly classed into two types, <tt class="docutils literal"><span class="pre">NavigableString</span></tt> and
 <tt class="docutils literal"><span class="pre">Tag</span></tt></p>
 <div class="build container">
-<p>The main difference is that <tt class="docutils literal"><span class="pre">Tag</span></tt> nodes can contain other nodes, where
-<tt class="docutils literal"><span class="pre">NavigableStrings</span></tt> do not.</p>
+<p>The main difference is that <tt class="docutils literal"><span class="pre">Tag</span></tt> nodes can contain text or other nodes,
+where <tt class="docutils literal"><span class="pre">NavigableStrings</span></tt> contain <strong>only</strong> text.</p>
 <p>You can interact with these node types in a number of ways.</p>
 <p>The most common are  <em>Searching</em> and <em>Traversing</em></p>
 <p>Let&#8217;s start with the simpler of the two, <em>searching</em>.</p>
@@ -368,7 +380,7 @@ around each post shares a common <em>CSS class</em>: <tt class="docutils literal
 them:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;div&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;feedEntry&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
-<span class="go">105</span>
+<span class="go">70</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
@@ -383,7 +395,7 @@ and then extract the text it contains:</p>
 <span class="go">u&#39;Dimitri Fontaine: PostgreSQL, Aggregates and Histograms&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;h2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">string</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span>
-<span class="go">105</span>
+<span class="go">70</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
@@ -401,10 +413,10 @@ Let&#8217;s gather up all of those and see what we have:</p>
 <span class="go">u&#39;From Planet PostgreSQL.\n            \n            \n                Published on&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">all_bylines</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;discreet&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">all_bylines</span><span class="p">)</span>
-<span class="go">105</span>
+<span class="go">70</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">all_classifiers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">children</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">all_bylines</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">all_classifiers</span><span class="p">)</span>
-<span class="go">105</span>
+<span class="go">70</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">all_classifiers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="go">u&#39;From Planet PostgreSQL.\n            \n            \n                Published on&#39;</span>
 </pre></div>
@@ -414,7 +426,7 @@ Let&#8217;s gather up all of those and see what we have:</p>
 <span class="go">30</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pprint</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">unique_classifiers</span><span class="p">)</span>
-<span class="go">set([u&#39;By Adrian Holovaty from Planet Django.\n ...</span>
+<span class="go">set([u&#39;u&#39;By Will McGugan from Django community aggregator:\n ...</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
@@ -448,23 +460,24 @@ whether they are Django, PostgreSQL or other.</p>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_title</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span>
-<span class="go">105</span>
+<span class="go">70</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">titles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="go">u&#39;Dimitri Fontaine: PostgreSQL, Aggregates and Histograms&#39;</span>
+<span class="go">u&#39;A method for rendering templates with Python&#39;</span>
 </pre></div>
 </div>
 <p>Put it all together to build a dictionary of categorized post titles:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">paired</span> <span class="o">=</span> <span class="p">[(</span><span class="n">get_classifier</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="n">get_title</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">paired</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="go">(&#39;postgresql&#39;, u&#39;Dimitri Fontaine: PostgreSQL, Aggregates and Histograms&#39;)</span>
+<span class="go">(&#39;django&#39;, u&#39;A method for rendering templates with Python&#39;)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">cat</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">paired</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="nb">list</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span> <span class="p">[])</span>
 <span class="gp">... </span>    <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
 <span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span><span class="p">[</span><span class="s">&#39;other&#39;</span><span class="p">]</span>
-<span class="go">[u&#39;Is Open Source Consulting Dead?&#39;, u&#39;Consulting and Patent Indemification&#39;,</span>
-<span class="go"> u&#39;Python Advent Calendar 2012 Topic&#39;, u&#39;Why I Like ZODB&#39;, ...]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span><span class="p">[</span><span class="s">&#39;django&#39;</span><span class="p">]</span>
+<span class="go">[u&#39;A method for rendering templates with Python&#39;,</span>
+<span class="go"> u&quot;Don&#39;t import (too much) in your django settings&quot;,</span>
+<span class="go"> ...]</span>
 </pre></div>
 </div>
 <p>Neat!</p>
