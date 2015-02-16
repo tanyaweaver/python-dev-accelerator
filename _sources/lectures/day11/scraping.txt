@@ -7,9 +7,13 @@ Extracting Data from the Web
 
     The internet makes a vast quantity of data available.
 
-    But not always in the form or combination you want.
+    .. rst-class:: build
+    .. container::
+    
+        But not always in the form or combination you want.
 
-    It can be nice to combine data from different sources to create *meaning*.
+        It can be nice to combine data from different sources to create
+        *meaning*.
 
 
 Part 1: Web Scraping
@@ -20,12 +24,17 @@ Part 1: Web Scraping
 
     Data online comes in many different formats:
 
-    * Simple websites with static (or perhaps dynamic) data in HTML
-    * Web services providing structured data
-    * Web services providing tranformative service (geocoding)
-    * Web services providing presentation (mapping)
+    .. rst-class:: build
+    .. container::
+    
+        .. rst-class:: build
 
-    Let's concentrate for now on that first class of data, HTML.
+        * Simple websites with static (or perhaps dynamic) data in HTML
+        * Web services providing structured data
+        * Web services providing tranformative service (geocoding)
+        * Web services providing presentation (mapping)
+
+        Let's concentrate for now on that first class of data, HTML.
 
 
 HTML Data
@@ -80,21 +89,32 @@ This is the result of one of the fundamental laws of the internet:
 Cleaning Up the Mess
 --------------------
 
-My favorite library for dealing with the mess that HTML can become is
-`BeautifulSoup`_. So let's go ahead and create a virtualenv for playing with it
-a bit:
+.. ifnotslides::
+
+    My favorite library for dealing with the mess that HTML can become is
+    `BeautifulSoup`_. So let's go ahead and create a virtualenv for playing
+    with it a bit:
+
+.. ifslides::
+
+    I use `BeautifulSoup`_ to clean up messy HTML
+
+    .. rst-class:: build
+    .. container::
+    
+        Let's make a virtualenv and play with it a bit.
+
+        .. code-block:: bash
+
+            heffalump:~ cewing$ mkproject souptests
+            New python executable in souptests/bin/python
+            Installing setuptools, pip...done.
+            Creating /Users/cewing/projects/souptests
+            Setting project for souptests to /Users/cewing/projects/souptests
+            [souptests]
+            heffalump:souptests cewing$
 
 .. _BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/bs4/doc/
-
-.. code-block:: bash
-
-    heffalump:~ cewing$ mkproject souptests
-    New python executable in souptests/bin/python
-    Installing setuptools, pip...done.
-    Creating /Users/cewing/projects/souptests
-    Setting project for souptests to /Users/cewing/projects/souptests
-    [souptests]
-    heffalump:souptests cewing$
 
 .. nextslide:: Install BeautifulSoup
 
@@ -120,15 +140,16 @@ Then, install the correct version of BeautifulSoup (you want 4, not 3):
 
 BeautifulSoup can use the Python HTMLParser.
 
-PRO:
-  Batteries Included.  It's already there
+.. rst-class:: build
+.. container::
 
-CON:
-  It's not great, especially before Python 2.7.3
+    **PRO**: Batteries Included.  It's already there
 
-BeautifulSoup also supports using other parsers.
+    **CON**: It's not great, especially before Python 2.7.3
 
-There are two good choices: `lxml`_  and `html5lib`_.
+    BeautifulSoup also supports using other parsers.
+
+    There are two good choices: `lxml`_  and `html5lib`_.
 
 .. _lxml: http://lxml.de
 .. _html5lib: http://html5lib.readthedocs.org.
@@ -158,12 +179,15 @@ Let's use ``html5lib``:
 
 .. nextslide:: Defaults and Configuration
 
-Once installed, BeautifulSoup will choose ``html5lib`` automatically. Actually,
-BeautifulSoup will choose the "best" available.
+Once installed, BeautifulSoup will choose ``html5lib`` automatically. 
 
-You can specify the parser if you need to control it *and* you have more than
-one parser available.
+.. rst-class:: build
+.. container::
 
+    Actually, BeautifulSoup will choose the "best" available.
+
+    You can specify the parser if you need to control it *and* you have more
+    than one parser available.
 
 Getting Webpages
 ----------------
@@ -171,22 +195,25 @@ Getting Webpages
 As with IMAP, FTP and other web protocols, Python provides tools for using HTTP
 as a client. They are spread across the ``urllib`` and ``urllib2`` packages.
 
-These packages have pretty unintuitive APIs.
+.. rst-class:: build
+.. container::
 
-The ``requests`` library is becoming the de-facto standard for this type of
-work.  Let's install it too.
+    These packages have pretty unintuitive APIs.
 
-.. code-block:: bash
+    The ``requests`` library is becoming the de-facto standard for this type of
+    work.  Let's install it too.
 
-    [souptests]
-    heffalump:souptests cewing$ pip install requests
-    Downloading/unpacking requests
-      Downloading requests-2.2.1-py2.py3-none-any.whl (625kB): 625kB downloaded
-    Installing collected packages: requests
-    Successfully installed requests
-    Cleaning up...
-    [souptests]
-    heffalump:souptests cewing$
+    .. code-block:: bash
+
+        [souptests]
+        heffalump:souptests cewing$ pip install requests
+        Downloading/unpacking requests
+          Downloading requests-2.2.1-py2.py3-none-any.whl (625kB): 625kB downloaded
+        Installing collected packages: requests
+        Successfully installed requests
+        Cleaning up...
+        [souptests]
+        heffalump:souptests cewing$
 
 .. nextslide:: The ``requests`` API
 
@@ -259,17 +286,32 @@ Fetching a Page
 
 The first step is to fetch the page we'll be scraping.
 
-I've created a shortened url that points to a feed aggregator for open source
-blog posts.  Unfortunately, ``tinyurl`` won't issue a proper redirect response
-for requests that come from the ``requests`` library, so we'll have to pretend
-we are a real web browser.
+.. ifnotslides::
 
-Open the developer tools for your browser and make sure you are viewing the
-*Network* tab so you can see network traffic your browser sends and receives.
-Load the url http:/tinyurl.com/sample-oss-posts in a new tab. Back in the
-network tab, click on the requests that went to tinyurl.  Find the headers for
-the request and copy the ``User-Agent`` header value. Then begin to follow
-along in your Python interpreter:
+    I've created a shortened url that points to a feed aggregator for open
+    source blog posts.  Unfortunately, ``tinyurl`` won't issue a proper
+    redirect response for requests that come from the ``requests`` library, so
+    we'll have to pretend we are a real web browser.
+
+.. ifnotslides::
+
+    Open the developer tools for your browser and make sure you are viewing the
+    *Network* tab so you can see network traffic your browser sends and
+    receives. Load the url http:/tinyurl.com/sample-oss-posts in a new tab.
+    Back in the network tab, click on the requests that went to tinyurl.  Find
+    the headers for the request and copy the ``User-Agent`` header value. Then
+    begin to follow along in your Python interpreter:
+
+.. ifslides::
+
+    .. rst-class:: build
+
+    * Open the url http://tinyurl.com/sample-oss-posts in your browser
+    * Check the network tab of your developer tools and get the value of the
+      ``User-Agent`` header
+    * We'll use it to bypass ``tinyurl``\ 's efforts to block us.
+
+.. nextslide::
 
 .. code-block:: pycon
 
@@ -310,11 +352,14 @@ webpage out to the filesystem:
 
 You should now be able to open the new file in your web browser.  Do so.
 
-The first step is to identify the smallest container element comment to all the
-things you want to extract.  We want to get all blog posts, so let's find the
-container that wraps each one.
+.. rst-class:: build
+.. container::
 
-**What's the best tool for getting this information from a web page?**
+    The first step is to identify the smallest container element comment to all
+    the things you want to extract.  We want to get all blog posts, so let's
+    find the container that wraps each one.
+
+    **What's the best tool for getting this information from a web page?**
 
 
 Parsing HTML
@@ -332,6 +377,8 @@ Parsing HTML
     does for us.
 
 .. ifslides::
+
+    .. rst-class:: build
 
     * The ``devtools`` in Chrome or other browsers show a structure of HTML
       tags
@@ -609,6 +656,6 @@ Going Farther
 
 Okay, so that's the basics. For your assignment you'll take this a step farther
 and
-:ref:`build a list of apartment listings <scraper_assignment>`
-using Craigslist.
+:ref:`build a list of restaurant health inspection data <scraper_assignment>`
+using the King County government website.
 

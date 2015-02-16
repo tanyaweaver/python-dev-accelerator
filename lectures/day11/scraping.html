@@ -71,20 +71,25 @@
 <h1>Extracting Data from the Web<a class="headerlink" href="#extracting-data-from-the-web" title="Permalink to this headline">¶</a></h1>
 <div class="left container">
 <p>The internet makes a vast quantity of data available.</p>
+<div class="build container">
 <p>But not always in the form or combination you want.</p>
-<p>It can be nice to combine data from different sources to create <em>meaning</em>.</p>
+<p>It can be nice to combine data from different sources to create
+<em>meaning</em>.</p>
+</div>
 </div>
 <div class="section" id="part-1-web-scraping">
 <h2>Part 1: Web Scraping<a class="headerlink" href="#part-1-web-scraping" title="Permalink to this headline">¶</a></h2>
 <div class="left container">
 <p>Data online comes in many different formats:</p>
-<ul class="simple">
+<div class="build container">
+<ul class="build simple">
 <li>Simple websites with static (or perhaps dynamic) data in HTML</li>
 <li>Web services providing structured data</li>
 <li>Web services providing tranformative service (geocoding)</li>
 <li>Web services providing presentation (mapping)</li>
 </ul>
 <p>Let&#8217;s concentrate for now on that first class of data, HTML.</p>
+</div>
 </div>
 <div class="section" id="html-data">
 <h3>HTML Data<a class="headerlink" href="#html-data" title="Permalink to this headline">¶</a></h3>
@@ -124,17 +129,8 @@
 <div class="section" id="cleaning-up-the-mess">
 <h3>Cleaning Up the Mess<a class="headerlink" href="#cleaning-up-the-mess" title="Permalink to this headline">¶</a></h3>
 <p>My favorite library for dealing with the mess that HTML can become is
-<a class="reference external" href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/">BeautifulSoup</a>. So let&#8217;s go ahead and create a virtualenv for playing with it
-a bit:</p>
-<div class="highlight-bash"><div class="highlight"><pre>heffalump:~ cewing$ mkproject souptests
-New python executable in souptests/bin/python
-Installing setuptools, pip...done.
-Creating /Users/cewing/projects/souptests
-Setting project for souptests to /Users/cewing/projects/souptests
-[souptests]
-heffalump:souptests cewing$
-</pre></div>
-</div>
+<a class="reference external" href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/">BeautifulSoup</a>. So let&#8217;s go ahead and create a virtualenv for playing
+with it a bit:</p>
 <p>Then, install the correct version of BeautifulSoup (you want 4, not 3):</p>
 <div class="highlight-bash"><div class="highlight"><pre>[souptests]
 heffalump:souptests cewing$ pip install beautifulsoup4
@@ -152,14 +148,12 @@ heffalump:souptests cewing$
 </pre></div>
 </div>
 <p>BeautifulSoup can use the Python HTMLParser.</p>
-<dl class="docutils">
-<dt>PRO:</dt>
-<dd>Batteries Included.  It&#8217;s already there</dd>
-<dt>CON:</dt>
-<dd>It&#8217;s not great, especially before Python 2.7.3</dd>
-</dl>
+<div class="build container">
+<p><strong>PRO</strong>: Batteries Included.  It&#8217;s already there</p>
+<p><strong>CON</strong>: It&#8217;s not great, especially before Python 2.7.3</p>
 <p>BeautifulSoup also supports using other parsers.</p>
 <p>There are two good choices: <a class="reference external" href="http://lxml.de">lxml</a>  and <a class="reference external" href="http://html5lib.readthedocs.org.">html5lib</a>.</p>
+</div>
 <p><tt class="docutils literal"><span class="pre">lxml</span></tt> is better, but it can be much harder to install.  For our exercise,
 Let&#8217;s use <tt class="docutils literal"><span class="pre">html5lib</span></tt>:</p>
 <div class="highlight-bash"><div class="highlight"><pre>[souptests]
@@ -179,15 +173,18 @@ Cleaning up...
 heffalump:souptests cewing$
 </pre></div>
 </div>
-<p>Once installed, BeautifulSoup will choose <tt class="docutils literal"><span class="pre">html5lib</span></tt> automatically. Actually,
-BeautifulSoup will choose the &#8220;best&#8221; available.</p>
-<p>You can specify the parser if you need to control it <em>and</em> you have more than
-one parser available.</p>
+<p>Once installed, BeautifulSoup will choose <tt class="docutils literal"><span class="pre">html5lib</span></tt> automatically.</p>
+<div class="build container">
+<p>Actually, BeautifulSoup will choose the &#8220;best&#8221; available.</p>
+<p>You can specify the parser if you need to control it <em>and</em> you have more
+than one parser available.</p>
+</div>
 </div>
 <div class="section" id="getting-webpages">
 <h3>Getting Webpages<a class="headerlink" href="#getting-webpages" title="Permalink to this headline">¶</a></h3>
 <p>As with IMAP, FTP and other web protocols, Python provides tools for using HTTP
 as a client. They are spread across the <tt class="docutils literal"><span class="pre">urllib</span></tt> and <tt class="docutils literal"><span class="pre">urllib2</span></tt> packages.</p>
+<div class="build container">
 <p>These packages have pretty unintuitive APIs.</p>
 <p>The <tt class="docutils literal"><span class="pre">requests</span></tt> library is becoming the de-facto standard for this type of
 work.  Let&#8217;s install it too.</p>
@@ -201,6 +198,7 @@ Cleaning up...
 [souptests]
 heffalump:souptests cewing$
 </pre></div>
+</div>
 </div>
 <p>In <tt class="docutils literal"><span class="pre">requests</span></tt>, each HTTP method is provided by a module-level function:</p>
 <ul class="build simple">
@@ -251,16 +249,16 @@ Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&
 <div class="section" id="fetching-a-page">
 <h3>Fetching a Page<a class="headerlink" href="#fetching-a-page" title="Permalink to this headline">¶</a></h3>
 <p>The first step is to fetch the page we&#8217;ll be scraping.</p>
-<p>I&#8217;ve created a shortened url that points to a feed aggregator for open source
-blog posts.  Unfortunately, <tt class="docutils literal"><span class="pre">tinyurl</span></tt> won&#8217;t issue a proper redirect response
-for requests that come from the <tt class="docutils literal"><span class="pre">requests</span></tt> library, so we&#8217;ll have to pretend
-we are a real web browser.</p>
+<p>I&#8217;ve created a shortened url that points to a feed aggregator for open
+source blog posts.  Unfortunately, <tt class="docutils literal"><span class="pre">tinyurl</span></tt> won&#8217;t issue a proper
+redirect response for requests that come from the <tt class="docutils literal"><span class="pre">requests</span></tt> library, so
+we&#8217;ll have to pretend we are a real web browser.</p>
 <p>Open the developer tools for your browser and make sure you are viewing the
-<em>Network</em> tab so you can see network traffic your browser sends and receives.
-Load the url <a class="reference external" href="http:/tinyurl.com/sample-oss-posts">http:/tinyurl.com/sample-oss-posts</a> in a new tab. Back in the
-network tab, click on the requests that went to tinyurl.  Find the headers for
-the request and copy the <tt class="docutils literal"><span class="pre">User-Agent</span></tt> header value. Then begin to follow
-along in your Python interpreter:</p>
+<em>Network</em> tab so you can see network traffic your browser sends and
+receives. Load the url <a class="reference external" href="http:/tinyurl.com/sample-oss-posts">http:/tinyurl.com/sample-oss-posts</a> in a new tab.
+Back in the network tab, click on the requests that went to tinyurl.  Find
+the headers for the request and copy the <tt class="docutils literal"><span class="pre">User-Agent</span></tt> header value. Then
+begin to follow along in your Python interpreter:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">requests</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://tinyurl.com/sample-oss-posts&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ua</span> <span class="o">=</span> <span class="s">&#39;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36&#39;</span>
@@ -292,10 +290,12 @@ webpage out to the filesystem:</p>
 </pre></div>
 </div>
 <p>You should now be able to open the new file in your web browser.  Do so.</p>
-<p>The first step is to identify the smallest container element comment to all the
-things you want to extract.  We want to get all blog posts, so let&#8217;s find the
-container that wraps each one.</p>
+<div class="build container">
+<p>The first step is to identify the smallest container element comment to all
+the things you want to extract.  We want to get all blog posts, so let&#8217;s
+find the container that wraps each one.</p>
 <p><strong>What&#8217;s the best tool for getting this information from a web page?</strong></p>
+</div>
 </div>
 <div class="section" id="parsing-html">
 <h3>Parsing HTML<a class="headerlink" href="#parsing-html" title="Permalink to this headline">¶</a></h3>
@@ -487,8 +487,8 @@ whether they are Django, PostgreSQL or other.</p>
 <h2>Going Farther<a class="headerlink" href="#going-farther" title="Permalink to this headline">¶</a></h2>
 <p class="left">Okay, so that&#8217;s the basics. For your assignment you&#8217;ll take this a step farther
 and
-<a class="reference internal" href="../../assignments/day11/scraper.html#scraper-assignment"><em>build a list of apartment listings</em></a>
-using Craigslist.</p>
+<a class="reference internal" href="../../assignments/day11/scraper.html#scraper-assignment"><em>build a list of restaurant health inspection data</em></a>
+using the King County government website.</p>
 </div>
 </div>
 

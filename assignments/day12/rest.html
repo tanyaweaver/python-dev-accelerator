@@ -70,7 +70,7 @@
   <div class="section" id="consuming-data-from-a-restful-web-service">
 <span id="rest-exercise"></span><h1>Consuming Data from a RESTful Web Service<a class="headerlink" href="#consuming-data-from-a-restful-web-service" title="Permalink to this headline">¶</a></h1>
 <p>As an example of a RESTful web service, let&#8217;s add some more information to our
-list of apartment rentals from previous exercises.</p>
+list of restaurant health inspection metadata from a previous exercise.</p>
 <p>We&#8217;ll use a common, public API provided by Google.</p>
 <p class="centered"><strong>Geocoding</strong></p>
 <div class="section" id="geocoding-with-google-apis">
@@ -194,23 +194,37 @@ receive address informatin back:</p>
 decreasingly specific designations for the location you provided.  The
 <tt class="docutils literal"><span class="pre">types</span></tt> values for each indicate the level of geographical specificity for
 each result.</p>
+<p>Using this geocoding service is nice, but who wants to properly format all
+those parameters all the time?  Moreover, do you really want to be tied only to
+google as a provider?</p>
+<p>And finally, although the data handed to us by google is <tt class="docutils literal"><span class="pre">json</span></tt>, if we want
+to simplify the process of mapping it, we might prefer to have <a class="reference external" href="http://geojson.org">geojson</a>
+instead.</p>
+<p>For this reason, we&#8217;re going to interact with google&#8217;s REST api through a
+wrapper library written in Python: <a class="reference external" href="http://geocoder.readthedocs.org/en/latest/">geocoder</a>.</p>
+<p>Go ahead and install this new library in your scraper project virtualenv:</p>
+<div class="highlight-bash"><div class="highlight"><pre>[souptests]
+192:souptests cewing$ pip install geocoder
+Downloading/unpacking geocoder
+  ...
+Successfully installed geocoder ratelim decorator
+Cleaning up...
+[souptests]
+192:souptests cewing$
+</pre></div>
+</div>
 </div>
 <div class="section" id="mashup">
 <h2>Mashup!<a class="headerlink" href="#mashup" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s create a simple mashup of this data with the apartment listings we built
-by scraping Craigslist in an earlier exercise.</p>
-<p>Open your <tt class="docutils literal"><span class="pre">scraper.py</span></tt> file in your editor and add a new function. Call it
-<tt class="docutils literal"><span class="pre">add_address</span></tt>. This function should:</p>
-<ul class="simple">
-<li>take a single listing from our craiglist work</li>
-<li>format the location data provided in that listing properly</li>
-<li>make a reverse geocoding lookup using the google api above</li>
-<li>add the best available address to the listing</li>
-<li>return the updated listing</li>
-</ul>
-<p>Can you write this function without looking at the solution below?  Try it.</p>
-<div class="section" id="solution">
-<h3>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s create a simple mashup by combining geocoded data from google about our
+restaurant with the metadata we extracted earlier.  Then we&#8217;ll map the results.</p>
+<p>The first step will be to move the entire body of the <tt class="docutils literal"><span class="pre">main</span></tt> block into a
+function that generates the metadata results for our listings one at a time. We
+can then iterate over the results and geocode them individually.</p>
+<p>Go ahead and create a new function in <tt class="docutils literal"><span class="pre">scraper.py</span></tt>.  Call it
+<tt class="docutils literal"><span class="pre">generate_results</span></tt> and have it do everything the <tt class="docutils literal"><span class="pre">main</span></tt> block does now.
+The only difference is that it will be a <em>generator</em> function and <em>yield</em> its
+results instead of printing them.</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -222,27 +236,73 @@ by scraping Craigslist in an earlier exercise.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock25'))">Peek At A Solution</a><br /><div id="hiddencodeblock25" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import</span>
-<span class="kn">import</span> <span class="nn">json</span>
-
-<span class="c"># and a function</span>
-<span class="k">def</span> <span class="nf">add_address</span><span class="p">(</span><span class="n">listing</span><span class="p">):</span>
-    <span class="n">api_url</span> <span class="o">=</span> <span class="s">&#39;http://maps.googleapis.com/maps/api/geocode/json&#39;</span>
-    <span class="n">loc</span> <span class="o">=</span> <span class="n">listing</span><span class="p">[</span><span class="s">&#39;location&#39;</span><span class="p">]</span>
-    <span class="n">latlng_tmpl</span> <span class="o">=</span> <span class="s">&quot;{data-latitude},{data-longitude}&quot;</span>
-    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&#39;sensor&#39;</span><span class="p">:</span> <span class="s">&#39;false&#39;</span><span class="p">,</span>
-        <span class="s">&#39;latlng&#39;</span><span class="p">:</span> <span class="n">latlng_tmpl</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">loc</span><span class="p">),</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock25'))">Peek At a Solution</a><br /><div id="hiddencodeblock25" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">generate_results</span><span class="p">(</span><span class="n">test</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;Inspection_Start&#39;</span><span class="p">:</span> <span class="s">&#39;2/1/2013&#39;</span><span class="p">,</span>
+        <span class="s">&#39;Inspection_End&#39;</span><span class="p">:</span> <span class="s">&#39;2/1/2015&#39;</span><span class="p">,</span>
+        <span class="s">&#39;Zip_Code&#39;</span><span class="p">:</span> <span class="s">&#39;98109&#39;</span>
     <span class="p">}</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span> <span class="c"># &lt;- this is a no-op if all is well</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;OK&#39;</span><span class="p">:</span>
-        <span class="n">best</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;results&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">listing</span><span class="p">[</span><span class="s">&#39;address&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">best</span><span class="p">[</span><span class="s">&#39;formatted_address&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">test</span><span class="p">:</span>
+        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">load_inspection_page</span><span class="p">(</span><span class="s">&#39;inspection_page.html&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">listing</span><span class="p">[</span><span class="s">&#39;address&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;unavailable&#39;</span>
-    <span class="k">return</span> <span class="n">listing</span>
+        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">get_inspection_page</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">parse_source</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+    <span class="n">listings</span> <span class="o">=</span> <span class="n">extract_data_listings</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">extract_restaurant_metadata</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+        <span class="n">score_data</span> <span class="o">=</span> <span class="n">extract_score_data</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+        <span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">score_data</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">metadata</span>
+</pre></div>
+</div>
+</div><p>Then update the <tt class="docutils literal"><span class="pre">main</span></tt> block like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;test&#39;</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">generate_results</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
+        <span class="k">print</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>If you run your script now, it should behave exactly as before. But now we&#8217;re
+ready to push further.</p>
+<div class="section" id="add-geocoding">
+<h3>Add Geocoding<a class="headerlink" href="#add-geocoding" title="Permalink to this headline">¶</a></h3>
+<p>The API for geocoding with <tt class="docutils literal"><span class="pre">geocoder</span></tt> is the same for all providers. You give
+an address, it returns geocoded data. You provide latitude and longitude, it
+provides address data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">geocoder</span><span class="o">.</span><span class="n">google</span><span class="p">(</span><span class="o">&lt;</span><span class="n">address</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">json</span>
+<span class="go"># json result data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">geojson</span>
+<span class="go"># geojson result data</span>
+</pre></div>
+</div>
+<p>Add a new function <tt class="docutils literal"><span class="pre">get_geojson</span></tt> to <tt class="docutils literal"><span class="pre">scraper.py</span></tt>.  It will</p>
+<ul class="simple">
+<li>Take a result from our search as it&#8217;s input</li>
+<li>Get geocoding data from google using the address of the restaurant</li>
+<li>Return the geojson representation of that data</li>
+</ul>
+<p>Try to write this function on your own.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock26'))">Peek At a Solution</a><br /><div id="hiddencodeblock26" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import at the top</span>
+<span class="kn">import</span> <span class="nn">geocoder</span>
+
+<span class="k">def</span> <span class="nf">get_geojson</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Address&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">address</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="n">geocoded</span> <span class="o">=</span> <span class="n">geocoder</span><span class="o">.</span><span class="n">google</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">geocoded</span><span class="o">.</span><span class="n">geojson</span>
 </pre></div>
 </div>
 </div><p>You&#8217;ll need to bolt the new function into your script so that the results it
@@ -259,48 +319,57 @@ gives are added to each listing. You&#8217;ll need to make some updates to your
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock26'))">Peek At A Solution</a><br /><div id="hiddencodeblock26" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock27'))">Peek At A Solution</a><br /><div id="hiddencodeblock27" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">pprint</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;test&#39;</span><span class="p">:</span>
-        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">read_search_results</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">fetch_search_results</span><span class="p">(</span>
-            <span class="n">minAsk</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">maxAsk</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">bedrooms</span><span class="o">=</span><span class="mi">2</span>
-        <span class="p">)</span>
-    <span class="n">doc</span> <span class="o">=</span> <span class="n">parse_source</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>    <span class="c"># above here is the same</span>
-    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">extract_listings</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span> <span class="c"># change everything below</span>
-        <span class="n">listing</span> <span class="o">=</span> <span class="n">add_address</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
-        <span class="n">pprint</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;test&#39;</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">generate_results</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
+        <span class="n">geo_result</span> <span class="o">=</span> <span class="n">get_geojson</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">geo_result</span><span class="p">)</span>
 </pre></div>
 </div>
-</div><p>Give it a whirl, using the test approach so you don&#8217;t hit Craigslist while
+</div><p>Give it a whirl, using the test approach so you don&#8217;t hit King County while
 trying it out:</p>
 <div class="highlight-bash"><div class="highlight"><pre>[souptests]
-heffalump:souptests cewing$ python scraper.py test
-{&#39;address&#39;: u&#39;12339-12399 78th Avenue South, Seattle, WA 98178, USA&#39;,
- &#39;description&#39;: u&#39;2 BEDROOM 2 BATHROOM Zero Down   Rent with Option to Buy&#39;,
- &#39;link&#39;: u&#39;/oly/apa/4345117401.html&#39;,
- &#39;location&#39;: {&#39;data-latitude&#39;: u&#39;47.4924143400595&#39;,
-              &#39;data-longitude&#39;: u&#39;-122.235904626445&#39;},
- &#39;price&#39;: u&#39;$960&#39;,
- &#39;size&#39;: u&#39;3br&#39;}
-{&#39;address&#39;: ...
-...
+192:souptests cewing$ python scraper.py test
+{&#39;bbox&#39;: [-122.3582706802915,
+          47.6234354197085,
+          -122.3555727197085,
+          47.6261333802915],
+ &#39;geometry&#39;: {&#39;coordinates&#39;: [-122.3569217, 47.6247844], &#39;type&#39;: &#39;Point&#39;},
+ &#39;properties&#39;: {&#39;accuracy&#39;: &#39;ROOFTOP&#39;,
+                &#39;address&#39;: &#39;601 Queen Anne Avenue North, Seattle, WA 98109, USA&#39;,
+                &#39;city&#39;: &#39;Seattle&#39;,
+                &#39;city_long&#39;: &#39;Seattle&#39;,
+                &#39;confidence&#39;: 9,
+                &#39;country&#39;: &#39;US&#39;,
+                &#39;country_long&#39;: &#39;United States&#39;,
+                &#39;county&#39;: &#39;King County&#39;,
+                &#39;encoding&#39;: &#39;utf-8&#39;,
+                &#39;housenumber&#39;: &#39;601&#39;,
+                &#39;lat&#39;: 47.6247844,
+                &#39;lng&#39;: -122.3569217,
+                &#39;location&#39;: u&#39;601 QUEEN ANNE AVE N Seattle, WA 98109&#39;,
+                &#39;neighborhood&#39;: &#39;Lower Queen Anne&#39;,
+                &#39;ok&#39;: True,
+                &#39;postal&#39;: &#39;98109&#39;,
+                &#39;provider&#39;: &#39;google&#39;,
+                &#39;quality&#39;: u&#39;street_address&#39;,
+                &#39;road_long&#39;: &#39;Queen Anne Avenue North&#39;,
+                &#39;state&#39;: &#39;WA&#39;,
+                &#39;state_long&#39;: &#39;Washington&#39;,
+                &#39;status&#39;: &#39;OK&#39;,
+                &#39;street&#39;: &#39;Queen Anne Ave N&#39;},
+ &#39;type&#39;: &#39;Feature&#39;}
+ ...
 [souptests]
-heffalump:souptests cewing$
+192:souptests cewing$
 </pre></div>
 </div>
 <p>Nifty, eh?</p>
-</div>
-</div>
-<div class="section" id="reduce-your-footprint">
-<h2>Reduce Your Footprint<a class="headerlink" href="#reduce-your-footprint" title="Permalink to this headline">¶</a></h2>
-<p>At the moment, all of our results need to be held in memory at the same time.
-In this case it probably isn&#8217;t too big a deal, but it&#8217;s good to practice being
-kind to your resources.</p>
-<p>Update the &#8216;extract_listings&#8217; method to turn it into a generator.  Then we can
-process a single apartment listing at a time, decreasing the memory
-requirements of our script.</p>
+<p>Notice though that running the script now takes quite some time. Let&#8217;s update
+the <tt class="docutils literal"><span class="pre">generate_results</span></tt> function so that it accepts a second keyword argument
+that indicates the number of results to run through.  Call the parameter
+<tt class="docutils literal"><span class="pre">count</span></tt> and give it a sensible default value, like 10.</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -312,36 +381,147 @@ requirements of our script.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock27'))">Peek At A Solution</a><br /><div id="hiddencodeblock27" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_listings</span><span class="p">(</span><span class="n">parsed</span><span class="p">):</span>
-    <span class="n">location_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data-latitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;data-longitude&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
-    <span class="n">listings</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;row&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">location_attrs</span><span class="p">)</span>
-    <span class="c"># delete the line where you create a list in which to store</span>
-    <span class="c"># your listings</span>
-    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">:</span>
-        <span class="n">location</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">listing</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">location_attrs</span><span class="p">}</span>
-        <span class="n">link</span> <span class="o">=</span> <span class="n">listing</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;span&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;pl&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
-        <span class="n">price_span</span> <span class="o">=</span> <span class="n">listing</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;span&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;price&#39;</span><span class="p">)</span>
-        <span class="n">this_listing</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s">&#39;location&#39;</span><span class="p">:</span> <span class="n">location</span><span class="p">,</span>
-            <span class="s">&#39;link&#39;</span><span class="p">:</span> <span class="n">link</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s">&#39;href&#39;</span><span class="p">],</span>
-            <span class="s">&#39;description&#39;</span><span class="p">:</span> <span class="n">link</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
-            <span class="s">&#39;price&#39;</span><span class="p">:</span> <span class="n">price_span</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
-            <span class="s">&#39;size&#39;</span><span class="p">:</span> <span class="n">price_span</span><span class="o">.</span><span class="n">next_sibling</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39; </span><span class="se">\n</span><span class="s">-/&#39;</span><span class="p">)</span>
-        <span class="p">}</span>
-        <span class="c"># delete the line where you append this result to a list</span>
-        <span class="k">yield</span> <span class="n">this_listing</span>  <span class="c"># This is the only change you need to make</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock28'))">Peek At a Solution</a><br /><div id="hiddencodeblock28" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">generate_results</span><span class="p">(</span><span class="n">test</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="c"># ... unchanged above here</span>
+    <span class="n">listings</span> <span class="o">=</span> <span class="n">extract_data_listings</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">[:</span><span class="n">count</span><span class="p">]:</span>
+        <span class="c"># ... unchanged below here</span>
 </pre></div>
 </div>
-</div><p>When you make that change, each individual listing will be <tt class="docutils literal"><span class="pre">yielded</span></tt> from the
-<tt class="docutils literal"><span class="pre">extract_listings</span></tt> generator, and you will be able to add an address to each
-without building all the rest first.</p>
+</div><p>Ahhhhh.  That&#8217;s better</p>
+<p>But still, all those <tt class="docutils literal"><span class="pre">properties</span></tt> in the geojson, and none of them are truly
+that important to us. Let&#8217;s replace them with the metadata and inspection
+scores we build previously.</p>
+<p>Update the <tt class="docutils literal"><span class="pre">get_geojson</span></tt> function. This time it will:</p>
+<ul class="simple">
+<li>Build a dictionary containing only the values we want from our
+inspection record.</li>
+<li>Convert list values to strings (geojson requires this)</li>
+<li>Add only the &#8216;address&#8217; property from the existing geojson properties,
+replacing the one we have in our metadata.</li>
+<li>Replace the rest of the properties of our geojson with this new data</li>
+<li>Return the modified geojson record</li>
+</ul>
+<p>Try making these updates on your own.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock29'))">Peek At a Solution</a><br /><div id="hiddencodeblock29" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_geojson</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Address&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">address</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="n">geocoded</span> <span class="o">=</span> <span class="n">geocoder</span><span class="o">.</span><span class="n">google</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+    <span class="n">geojson</span> <span class="o">=</span> <span class="n">geocoded</span><span class="o">.</span><span class="n">geojson</span>
+    <span class="n">inspection_data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">use_keys</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s">&#39;Business Name&#39;</span><span class="p">,</span> <span class="s">&#39;Average Score&#39;</span><span class="p">,</span> <span class="s">&#39;Total Inspections&#39;</span><span class="p">,</span> <span class="s">&#39;High Score&#39;</span><span class="p">,</span>
+        <span class="s">&#39;Address&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">use_keys</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="n">inspection_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="n">new_address</span> <span class="o">=</span> <span class="n">geojson</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;address&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_address</span><span class="p">:</span>
+        <span class="n">inspection_data</span><span class="p">[</span><span class="s">&#39;Address&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_address</span>
+    <span class="n">geojson</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inspection_data</span>
+    <span class="k">return</span> <span class="n">geojson</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="map-the-results">
+<h3>Map the Results<a class="headerlink" href="#map-the-results" title="Permalink to this headline">¶</a></h3>
+<p>We are now generating a series of <tt class="docutils literal"><span class="pre">geojson</span></tt> <em>Feature</em> objects. To map these
+objects, we&#8217;ll need to create a file which contains a <tt class="docutils literal"><span class="pre">geojson</span></tt>
+<em>FeatureCollection</em>.</p>
+<p>The structure of such a collection looks like this:</p>
+<div class="highlight-json"><div class="highlight"><pre>{&#39;type&#39;: &#39;FeatureCollection&#39;, &#39;features&#39;: [...]}
+</pre></div>
+</div>
+<p>Update your <tt class="docutils literal"><span class="pre">main</span></tt> function to append each feature to such a structure. Then
+you can dump the structure as <tt class="docutils literal"><span class="pre">json</span></tt> to a file. In <tt class="docutils literal"><span class="pre">scraper.py</span></tt> update the
+<tt class="docutils literal"><span class="pre">main</span></tt> block like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import at the top:</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pprint</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;test&#39;</span>
+    <span class="n">total_result</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;type&#39;</span><span class="p">:</span> <span class="s">&#39;FeatureCollection&#39;</span><span class="p">,</span> <span class="s">&#39;features&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">generate_results</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
+        <span class="n">geo_result</span> <span class="o">=</span> <span class="n">get_geojson</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">geo_result</span><span class="p">)</span>
+        <span class="n">total_result</span><span class="p">[</span><span class="s">&#39;features&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geo_result</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;my_map.json&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">total_result</span><span class="p">,</span> <span class="n">fh</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When you run the script not only will your results print, but the new file will
+appear in the current working directory.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
+192:souptests cewing<span class="nv">$ </span>python scraper.py <span class="nb">test</span>
+...
+<span class="o">[</span>souptests<span class="o">]</span>
+192:souptests cewing<span class="nv">$ </span>ls
+blog_list.html          my_map.json
+inspection_page.html    scraper.py
+</pre></div>
+</div>
+<p>Once the new file is written you are ready to display your results. Open your
+web browser and go to <a class="reference external" href="http://geojson.io">http://geojson.io</a>. Then drag and drop the new file you
+wrote onto the map you see there.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/geojson-io.png"><img alt="../../_images/geojson-io.png" src="../../_images/geojson-io.png" style="width: 75%;" /></a>
+</div>
+</div>
 </div>
 <div class="section" id="going-further">
 <h2>Going Further<a class="headerlink" href="#going-further" title="Permalink to this headline">¶</a></h2>
-<p>This would be a great opportunity for using asynchronous processing as well.</p>
-<p>Can you think of a way to handle the adding of an address to each listing using
-an asynchronous call using <tt class="docutils literal"><span class="pre">gevent</span></tt> or <tt class="docutils literal"><span class="pre">tornado</span></tt>?</p>
-<p>Consider this a standing challenge.</p>
+<p>Take a few more steps on your own to polish this mashup a bit.</p>
+<p>Begin by sorting the results of our search by the average score.</p>
+<p>Then, update your script to allow the user to choose how to sort, by
+average, high score or most inspections:</p>
+<div class="highlight-python"><div class="highlight"><pre>[souptests]
+192:souptests cewing$ python mashup.py highscore
+</pre></div>
+</div>
+<p>Next, allow the user to choose how many results to map:</p>
+<div class="highlight-python"><div class="highlight"><pre>[souptests]
+192:souptests cewing$ python mashup.py highscore 25
+</pre></div>
+</div>
+<p>Or allow them to reverse the results, showing the lowest scores first:</p>
+<div class="highlight-python"><div class="highlight"><pre>[souptests]
+192:souptests cewing$ python mashup.py highscore 25 reverse
+</pre></div>
+</div>
+<p>To simplify the passing of arguments from the command line, use the <a class="reference external" href="https://docs.python.org/2/library/argparse.html#module-argparse">argparse</a>
+module from the standard library to handle command line arguments</p>
+<p>Next, try adding a bit of information to your map by adding <tt class="docutils literal"><span class="pre">marker-color</span></tt> to
+the geojson properties dict. This will display a marker with the provided
+css-style color (<tt class="docutils literal"><span class="pre">#FF0000</span></tt>)</p>
+<p>See if you can make the color change according to the values used for the
+sorting of the list.  Either vary the intensity of the color, or the hue.</p>
+<p>Finally, if you are feeling particularly frisky, you can update your script
+to automatically open a browser window with your map loaded on
+<em>geojson.io</em>.</p>
+<p>To do this, you&#8217;ll want to read about the <a class="reference external" href="https://docs.python.org/2/library/webbrowser.html">webbrowser</a> module from the
+standard library.</p>
+<p>In addition, you&#8217;ll want to read up on using the URL parameters API for
+<em>geojson.io</em>.  Click on the <strong>help</strong> tab in the sidebar to view the
+information.</p>
+<p>You will also need to learn about how to properly quote special characters
+for a URL, using the <a class="reference external" href="https://docs.python.org/2/library/urllib.html#urllib.quote">urllib</a> <tt class="docutils literal"><span class="pre">quote</span></tt> function.</p>
 </div>
 </div>
 
@@ -356,10 +536,10 @@ an asynchronous call using <tt class="docutils literal"><span class="pre">gevent
 <li><a class="reference internal" href="#">Consuming Data from a RESTful Web Service</a><ul>
 <li><a class="reference internal" href="#geocoding-with-google-apis">Geocoding with Google APIs</a></li>
 <li><a class="reference internal" href="#mashup">Mashup!</a><ul>
-<li><a class="reference internal" href="#solution">Solution</a></li>
+<li><a class="reference internal" href="#add-geocoding">Add Geocoding</a></li>
+<li><a class="reference internal" href="#map-the-results">Map the Results</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#reduce-your-footprint">Reduce Your Footprint</a></li>
 <li><a class="reference internal" href="#going-further">Going Further</a></li>
 </ul>
 </li>

@@ -189,9 +189,11 @@ like to choose images from <a class="reference external" href="http://alestic.co
 of Ubuntu in EC2.</p>
 <p>At the top right of the Alestic homepage is a tool for finding AMI ids in a
 given AWS region.  We&#8217;ve connected to us-west-2, so we need one for that
-region. The tool reports that an EBS-store image for Ubuntu 12.04 Precise
-is &#8216;ami-bf582a8f&#8217;. Let&#8217;s use that.</p>
-<div class="build highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">image_id</span> <span class="o">=</span> <span class="s">&#39;ami-bf582a8f&#39;</span>
+region. We also need to choose the virtualization type, <tt class="docutils literal"><span class="pre">PV</span></tt>
+(paravirtualization) or <tt class="docutils literal"><span class="pre">HVM</span></tt> (hardware virtual machine). The tool
+reports that an EBS-store image using PV for Ubuntu 14.04
+Utopic is &#8216;ami-b5471c85&#8217;. Let&#8217;s use that.</p>
+<div class="build highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">image_id</span> <span class="o">=</span> <span class="s">&#39;ami-b5471c85&#39;</span>
 </pre></div>
 </div>
 <p>We also need to designate a key pair name and the name of a security group. Use
@@ -203,8 +205,9 @@ be <tt class="docutils literal"><span class="pre">pk-aws</span></tt> and <tt cla
 </pre></div>
 </div>
 <p>Finally, we need to designate exactly what type of instance to create. AWS
-instances come in all shapes and sizes, but the only on that is in the free
-usage tier is the <tt class="docutils literal"><span class="pre">t1.micro</span></tt> instance.</p>
+instances come in all shapes and sizes, but the only ones that are in the
+free usage tier are the <tt class="docutils literal"><span class="pre">t1.micro</span></tt> and <tt class="docutils literal"><span class="pre">t2.micro</span></tt> types.  We&#8217;ll begin
+with the older <tt class="docutils literal"><span class="pre">t1.micro</span></tt> type.</p>
 <div class="build highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">instance_type</span> <span class="o">=</span> <span class="s">&#39;t1.micro&#39;</span>
 </pre></div>
 </div>
@@ -215,7 +218,7 @@ usage tier is the <tt class="docutils literal"><span class="pre">t1.micro</span>
 run the following command:</p>
 <div class="build highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">reservations</span> <span class="o">=</span> <span class="n">ec2</span><span class="o">.</span><span class="n">run_instances</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">image_id</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">key_name</span><span class="o">=</span><span class="n">key_name</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">key_name</span><span class="o">=</span><span class="n">key_pair</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">security_groups</span><span class="o">=</span><span class="p">[</span><span class="n">security_group</span><span class="p">])</span>
 <span class="go">&gt;&gt;&gt;</span>

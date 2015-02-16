@@ -219,8 +219,10 @@ Next we must set up some configuration values for our server-to-be.
 
     At the top right of the Alestic homepage is a tool for finding AMI ids in a
     given AWS region.  We've connected to us-west-2, so we need one for that
-    region. The tool reports that an EBS-store image for Ubuntu 12.04 Precise
-    is 'ami-bf582a8f'. Let's use that.
+    region. We also need to choose the virtualization type, ``PV``
+    (paravirtualization) or ``HVM`` (hardware virtual machine). The tool
+    reports that an EBS-store image using PV for Ubuntu 14.04
+    Utopic is 'ami-b5471c85'. Let's use that.
 
 .. ifslides::
 
@@ -235,13 +237,14 @@ Next we must set up some configuration values for our server-to-be.
     * You can choose bare-bones images from `Alestic`_.
     * At the top right of the Alestic homepage is a tool to choose AMIs
     * Select the **us-west-2** region
-    * Find an image for Ubuntu Precise 12.04
+    * Find an image for Ubuntu Utopic 14.04
     * Use an EBS store (the OS disk is persisted when you *stop* your instance)
+    * Use PV (paravirtualization) for now.
 
 .. rst-class:: build
 .. code-block:: pycon
 
-    >>> image_id = 'ami-bf582a8f'
+    >>> image_id = 'ami-b5471c85'
 
 .. _Alestic: http://alestic.com
 
@@ -275,8 +278,9 @@ Next we must set up some configuration values for our server-to-be.
 .. ifnotslides::
 
     Finally, we need to designate exactly what type of instance to create. AWS
-    instances come in all shapes and sizes, but the only on that is in the free
-    usage tier is the ``t1.micro`` instance.
+    instances come in all shapes and sizes, but the only ones that are in the
+    free usage tier are the ``t1.micro`` and ``t2.micro`` types.  We'll begin
+    with the older ``t1.micro`` type.
 
 .. ifslides::
 
@@ -303,7 +307,7 @@ run the following command:
 
     >>> reservations = ec2.run_instances(
     ...     image_id,
-    ...     key_name=key_name,
+    ...     key_name=key_pair,
     ...     instance_type=instance_type,
     ...     security_groups=[security_group])
     >>>
@@ -489,5 +493,5 @@ Wrap-up
 
     Please read more in the `boto documentation`_.
 
-    .. _boto documentation: http://boto.readthedocs.org/
+.. _boto documentation: http://boto.readthedocs.org/
 
