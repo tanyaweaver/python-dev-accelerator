@@ -225,13 +225,13 @@ The API for geocoding with ``geocoder`` is the same for all providers. You give
 an address, it returns geocoded data. You provide latitude and longitude, it
 provides address data:
 
-    .. code-block:: python
+.. code-block:: python
 
-        >>> response = geocoder.google(<address>)
-        >>> response.json
-        # json result data
-        >>> response.geojson
-        # geojson result data
+    >>> response = geocoder.google(<address>)
+    >>> response.json
+    # json result data
+    >>> response.geojson
+    # geojson result data
 
 Add a new function ``get_geojson`` to ``scraper.py``.  It will
 
@@ -387,7 +387,7 @@ Update your ``main`` function to append each feature to such a structure. Then
 you can dump the structure as ``json`` to a file. In ``scraper.py`` update the
 ``main`` block like so:
 
-    .. code-block:: python
+.. code-block:: python
 
     # add an import at the top:
     import json
