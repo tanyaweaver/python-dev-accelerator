@@ -1,11 +1,11 @@
 .. _scraper_assignment:
 
-*******************************************
-Scraping Apartment Listings from Craigslist
-*******************************************
+************************************************
+Scraping Health Inspection Data from King County
+************************************************
 
-Work through this exercise to create a Python script to extract a list of
-apartment rentals from Craigslist.
+Work through this exercise to create a Python script to extract restaurant
+health inspection data from King County by ZIP Code and Date
 
 While working, you should use the virtualenv project we created in class for
 learning about the BeautifulSoup package.
@@ -23,33 +23,55 @@ Step 1: Fetch Search Results
 ============================
 
 The first step is to use the ``requests`` library to fetch a set of search
-results from the Craigslist site.
+results from the King County government website.
 
 In order to do so, we will need to assemble a *query* that fits with the search
-form present on the `Seattle apartment listing page`_.
+form present on the `Restaurant Inspection Information`_ page.
 
-.. _Seattle apartment listing page: https://seattle.craigslist.org/apa/
+.. _Restaurant Inspection Information: http://info.kingcounty.gov/health/ehs/foodsafety/inspections/search.aspx
 
-Use your browser's devtools to determine the name of the various inputs
-available in the search form on that page.  You should end up with a list that
-includes at least the following:
+The complexity of this webservice means the easiest way to extract this
+information is to submit a search manually and then copy the URL that results.
 
-* keywords: ``query=keyword+values+here``
-* price: ``minAsk=NNN maxAsk=NNN``
-* bedrooms: ``bedrooms=N`` (N in range 1-8)
+The outcome of this should be a domain name and path to the search results page
+and a set of *query parameters* available to be used.  Begin by recording these
+as all-caps constants at the top of your ``scraper.py`` file:
 
-You'll also discover, if you submit a search, that the URL to be used for a
-search request is in fact this:
+.. hidden-code-block:: python
+    :label: Peek At a Solution
 
-    http://seattle.craigslist.org/search/apa
+    INSPECTION_DOMAIN = 'http://info.kingcounty.gov'
+    INSPECTION_PATH = '/health/ehs/foodsafety/inspections/Results.aspx'
+    INSPECTION_PARAMS = {
+        'Output': 'W',
+        'Business_Name': '',
+        'Business_Address': '',
+        'Longitude': '',
+        'Latitude': '',
+        'City': '',
+        'Zip_Code': '',
+        'Inspection_Type': 'All',
+        'Inspection_Start': '',
+        'Inspection_End': '',
+        'Inspection_Closed_Business': 'A',
+        'Violation_Points': '',
+        'Violation_Red_Points': '',
+        'Violation_Descr': '',
+        'Fuzzy_Search': 'N',
+        'Sort': 'H'
+    }
 
-Our goal is to write a Python function that will return the search results HTML
-from a query to craigslist. This function should:
+Be aware that the results page is quite sensitive about having *all* the
+parameters in each request, even if they have no values set.
 
-* It will accept one keyword argument for each of the possible query values
+Your next job is to write a single Python function (``get_inspection_page``)
+that will fetch a set of search results for you. Here's the requirements:
+
+* It must accept keyword arguments for the possible query parameters
 * It will build a dictionary of request query parameters from incoming keywords
-* It will make a request to the craigslist server using this query
-* It will return the body of the response if there is no error
+* It will make a request to the King County server using this query
+* It will return the bytes content of the response and the encoding if there is
+  no error
 * It will raise an error if there is a problem with the response
 
 Here is one possible solution for this query:
@@ -59,25 +81,22 @@ Here is one possible solution for this query:
 
     import requests
 
-    def fetch_search_results(
-        query=None, minAsk=None, maxAsk=None, bedrooms=None
-    ):
-        search_params = {
-            key: val for key, val in locals().items() if val is not None
-        }
-        if not search_params:
-            raise ValueError("No valid keywords")
-
-        base = 'http://seattle.craigslist.org/search/apa'
-        resp = requests.get(base, params=search_params, timeout=3)
-        resp.raise_for_status()  # <- no-op if status==200
+    def get_inspection_page(**kwargs):
+        url = INSPECTION_DOMAIN + INSPECTION_PATH
+        params = INSPECTION_PARAMS.copy()
+        for key, val in kwargs.items():
+            if key in INSPECTION_PARAMS:
+                params[key] = val
+        resp = requests.get(url, params=params)
+        resp.raise_for_status() # <- This is a no-op if there is no HTTP error
+        # remember, in requests `content` is bytes and `text` is unicode
         return resp.content, resp.encoding
 
 
-Write the results of your search to a file, ``apartments.html`` so that you can
-work on it without needing to hammer the craigslist servers.
+Write the results of your search to a file, ``inspection_page.html`` so that
+you can work on it without needing to hammer the King County servers.
 
-Write a ``read_search_results`` function which reads this file from disk and
+Write a ``load_inspection_page`` function which reads this file from disk and
 returns the content and encoding in the same way as the above function. Then
 you can switch between the two without altering the API. I'll leave this
 exercise entirely to you.
@@ -107,9 +126,12 @@ This function can be quite simple. Add it to ``scraper.py``.
 
 In order to see the results we have at this point, we'll need to make our
 ``scraper.py`` executable by adding a ``__main__`` block. Since you have
-alternate sources for listing data (``read_search_results`` and
-``fetch_search_results``), you should allow a command-line argument such as
+alternate sources for listing data (``load_inspectioon_page`` and
+``get_inspection_page``), you should allow a command-line argument such as
 'test' to switch between the two.
+
+Go ahead and set the ZIP code and dates for your search statically in this
+block. You can work on providing them dynamically later.
 
 .. hidden-code-block:: python
     :label: Peek At A Solution
@@ -118,68 +140,87 @@ alternate sources for listing data (``read_search_results`` and
     import sys
 
     if __name__ == '__main__':
+        kwargs = {
+            'Inspection_Start': '2/1/2013',
+            'Inspection_End': '2/1/2015',
+            'Zip_Code': '98109'
+        }
         if len(sys.argv) > 1 and sys.argv[1] == 'test':
-            html, encoding = read_search_results()
+            # you will likely have something different here, depending on how
+            # you implemented the load_inspection_page function.
+            html, encoding = load_inspection_page('inspection_page.html')
         else:
-            html, encoding = fetch_search_results(
-                minAsk=500, maxAsk=1000, bedrooms=2
-            )
+            html, encoding = get_inspection_page(**kwargs)
         doc = parse_source(html, encoding)
         print doc.prettify(encoding=encoding)
 
 Now, you can execute your scraper script in one of two ways:
 
-1. ``python scraper.py`` will fetch results directly from Craigslist.
+1. ``python scraper.py`` will fetch results directly from King County.
 2. ``python scraper.py test`` will use your stored results from file.
 
 
 Step 3: Extract Listing Information
 ===================================
 
-You are going to build a function that extracts useful information from each of
-the listings in the parsed HTML search results. From each listing, we should
-extract the following information:
+You are going to build a series of functions that extracts useful information
+from each of the restaurant listings in the parsed HTML search results. From
+each listing, we should extract the following information:
 
-* Location data (latitude and longitude)
-* Source link (to craiglist detailed listing)
-* Description text
-* Price and size data
+* Metadata about the restaurant (name, category, address, etc.)
+* The average inspection score for the restaurant
+* The highest inspection score for the restaurant
+* The total number of inspections performed
 
-You'll be building this function one step at a time, to simplify the task.
+You'll be building this information one step at a time, to simplify the task.
 
 3a: Find Individual Listings
 ----------------------------
 
 The first job is to find the container that holds each individual listing. Use
-your browser's devtools to identify the container that holds each individual
-listing. Then, write a function that takes in the parsed HTML and returns a
-list of the apartment listing container nodes.  Call this function
-``extract_listings``:
+your browser's devtools to identify the container that holds each. Then, write
+a function that takes in the parsed HTML and returns a list of the restaurant
+listing container nodes.
+
+Pay attention to the fact that there are *two* containers for each restaurant.
+What is the difference between them?  Which do you want? Remember the
+BeautifulSoup allows you to search based on HTML attributes, and that
+`different types of filters`_ can be used. Which kind of filter would be most
+effective for this task?
+
+.. _different types of filters: http://www.crummy.com/software/BeautifulSoup/bs4/doc/#kinds-of-filters
+
+Call this function ``extract_data_listings``.
 
 .. hidden-code-block:: python
     :label: Peek At A Solution
 
-    def extract_listings(parsed):
-        listings = parsed.find_all('p', class_='row')
-        return listings
+    # add a new import at the top
+    import re
+
+    def extract_data_listings(html):
+        id_finder = re.compile(r'PR[\d]+~')
+        return html.find_all('div', id=id_finder)
 
 If you update your ``__main__`` block to use this new function, you can verify
 the results visually:
 
-
 .. code-block:: python
 
     if __name__ == '__main__':
+        kwargs = {
+            'Inspection_Start': '2/1/2013',
+            'Inspection_End': '2/1/2015',
+            'Zip_Code': '98109'
+        }
         if len(sys.argv) > 1 and sys.argv[1] == 'test':
-            html, encoding = read_search_results()
+            html, encoding = load_inspection_page('inspection_page.html')
         else:
-            html, encoding = fetch_search_results(
-                minAsk=500, maxAsk=1000, bedrooms=2
-            )
+            html, encoding = get_inspection_page(**kwargs)
         doc = parse_source(html, encoding)
-        listings = extract_listings(doc) # add this line
-        print len(listings)              # and this one
-        print listings[0].prettify()     # and this one too
+        listings = extract_data_listings(doc) # add this line
+        print len(listings)                   # and this one
+        print listings[0].prettify()          # and this one too
 
 Call your script from the command line (in test mode), to see your results:
 
@@ -187,114 +228,69 @@ Call your script from the command line (in test mode), to see your results:
 
     [souptests]
     heffalump:souptests cewing$ python scraper.py test
-    100
-    <p class="row" data-latitude="47.4924143400595" data-longitude="-122.235904626445" data-pid="4345117401">
-      ...
-    </p>
+    362
+    <div id="PR0020232~" name="PR0020232~" onclick="toggleShow(this.id);" onmouseout="this.style.cursor = 'auto';window.status = '';" onmouseover="this.style.cursor = 'pointer';window.status = 'Click to hide business and inspection details';" style="display: none" xmlns="">
+     <table style="width: 635px;">
+      <tbody>
+       <tr>
+       ...
+       </tr>
+      </tbody>
+     </table>
+    </div>
 
     [souptests]
     heffalump:souptests cewing$
 
+3b: Extract Metadata
+--------------------
 
-If you look through your test listings file using your browser's devtools,
-you'll notice that only *some* of them actually have latitude and longitude,
-Because the specs for our scraper require this data, we want to filter out any
-listings that do not.
+When you take a close look at the structure of the data ``<div>`` for each
+restaurant, you'll see that the metadata about the restaurant is located in the
+rows of a table. The rows we are interested in all have a few shared properties
+that set them apart from other rows in the table.
 
-``BeautifulSoup`` allows us to filter our searches using HTML attributes with
-the ``attrs`` argument. One way of doing this is to provide a specific value
-for a given attribute:
+The first is that all the rows that contain this information have *two* cells
+in them.  One that might contain a *label* for the metadata and a second that
+contains the *value*.
 
-.. code-block:: python
+The second is that the two ``<td>`` elements it contains are immediate
+children, not contained within some nested structure.
 
-    doc.filter('p', attrs={'data-longitude': "47.4924143400595"})
+BeautifulSoup allows us to `use functions as filters`_. These functions must
+take an *element* as their only argument, and return `True` if the element
+should pass through the filter, and `False` if not.
 
-It should be pretty clear though, that each of our listings is located in a
-different place, and this type of filtering won't really help much. Happily,
-you can also provide ``True`` as the value for a given attribute. By doing so,
-you are telling ``BeautifulSoup`` that you want to match any node that has
-that attribute, **regardless of the specific value**.
+.. _use functions as filters: http://www.crummy.com/software/BeautifulSoup/bs4/doc/#a-function
 
-Use this to enhance your ``extract_listings`` function so that it only returns
-the listings that have location attributes.
-
-.. hidden-code-block:: python
-    :label: Peek At A Solution
-
-    def extract_listings(parsed):
-        location_attrs = {'data-latitude': True, 'data-longitude': True}
-        listings = parsed.find_all('p', class_='row', attrs=location_attrs)
-        return listings
-
-Calling the script from the command line now should return a slightly different
-number of results:
-
-.. code-block:: bash
-
-    [souptests]
-    heffalump:souptests cewing$ python scraper.py test
-    74
-    <p class="row" data-latitude="47.4924143400595" data-longitude="-122.235904626445" data-pid="4345117401">
-      ...
-    </p>
-
-    [souptests]
-    heffalump:souptests cewing$
-
-3b: Extract Location Data
--------------------------
-
-You've used the location data to filter results. Now that only those results
-that have locations are being listed, let's begin scraping that data out of the
-HTML page.
-
-In ``BeautifulSoup``, the HTML attributes of a given tag are found as the
-``attrs`` attribute of the ``Tag`` object. This attribute is a dictionary and
-it is certain to be present, even if it is empty. The names of the attributes
-are the keys of this dictionary, and the HTML values are the values.
-
-We've already said that there is a certain set of data we want to preserve
-about each listing. We could create some custom Python class to represent a
-listing, and perhaps in some situations that would be appropriate, but for this
-simple script we will just build a dictionary that represents each listing.
-
-Update your ``extract_listings`` function to build a dictionary for each
-listing, and begin by populating it with the location data we extract. Then
-return the list of dictionaries rather than the list of ``Tag`` objects.
+Add a new function to ``scraper.py`` called ``has_two_tds`` that will take an
+element as an argument and return ``True`` if the element is both a ``<tr>``
+*and* contains exactly two ``<td>`` elements immediately within it.
 
 .. hidden-code-block:: python
     :label: Peek At A Solution
 
-    def extract_listings(parsed):
-    location_attrs = {'data-latitude': True, 'data-longitude': True}
-    listings = parsed.find_all('p', class_='row', attrs=location_attrs)
-    extracted = []
-    for listing in listings:
-        location = {key: listing.attrs.get(key, '') for key in location_attrs}
-        this_listing = {
-            'location': location,
-        }
-        extracted.append(this_listing)
-    return extracted
+    def has_two_tds(elem):
+        is_tr = elem.name == 'tr'
+        td_children = elem.find_all('td', recursive=False)
+        has_two = len(td_children) == 2
+        return is_tr and has_two
 
-Since the return value of this function has now changed from a list of ``Tag``
-objects to a list of dictionaries, we will also need to update our ``__main__``
-block:
+Demonstrate that your filter works properly by trying it out.  Start by
+updating our ``main`` block with a few lines of code that will catch the
+metadata rows from each div and print a count of them:
 
 .. code-block:: python
 
     if __name__ == '__main__':
-        import pprint                                  # add this import
-        if len(sys.argv) > 1 and sys.argv[1] == 'test':
-            html, encoding = read_search_results()
-        else:
-            html, encoding = fetch_search_results(
-                minAsk=500, maxAsk=1000, bedrooms=2
-            )
+        # ... existing code up here need not be changed
         doc = parse_source(html, encoding)
-        listings = extract_listings(doc)
-        print len(listings)
-        pprint.pprint(listings[0])                     # update this line
+        listings = extract_data_listings(doc)
+        for listing in listings:  # <- add this stuff here.
+            metadata_rows = listing.find('tbody').find_all(
+                has_two_tds, recursive=False
+            )
+            print len(metadata_rows)
 
 And now, executing this script at the command line should return the following:
 
@@ -302,242 +298,323 @@ And now, executing this script at the command line should return the following:
 
     [souptests]
     heffalump:souptests cewing$ python scraper.py test
-    74
-    {'location': {'data-latitude': u'47.4924143400595',
-                  'data-longitude': u'-122.235904626445'}}
+    7
+    7
+    7
+    ...
+    7
+    7
     [souptests]
     heffalump:souptests cewing$
 
-3c: Extract Description and Link
---------------------------------
+Great! Nice, consistent results means we've done our job correctly.  If you are
+getting values that vary widely, please review your filter function.
 
-We used the ``find_all`` method of a ``Tag`` above to extract *all* the
-listings from our parsed document. We can use the ``find`` method of each
-listing to find *the first* item that matches our search filter.
+You'll work next on extracting the data from those rows you have found.
 
-Use your browser's devtools to find the element in each listing that contains
-the descriptive text about the listing. What kind of HTML tag is it? What other
-useful bit of information is present in that tag?
-
-Use this information to enhance your ``extract_listings`` function so that each
-dictionary it produces also contains a ``description`` and ``link``:
-
-.. hidden-code-block:: python
-    :label: Peek At A Solution
-
-    def extract_listings(parsed):
-        location_attrs = {'data-latitude': True, 'data-longitude': True}
-        listings = parsed.find_all('p', class_='row', attrs=location_attrs)
-        extracted = []
-        for listing in listings:
-            location = {key: listing.attrs.get(key, '') for key in location_attrs}
-            link = listing.find('span', class_='pl').find('a') # add this
-            this_listing = {
-                'location': location,
-                'link': link.attrs['href'],                    # add this too
-                'description': link.string.strip(),            # and this
-            }
-            extracted.append(this_listing)
-        return extracted
-
-Note that in the solution we are calling the string ``strip`` method on the
-value we get for the description from the ``string`` attribute of the ``Tag``.
-
-The most obvious reason is that we don't want extra whitespace.
-
-The second reason is more subtle, but also more important. The values returned
-by ``string`` are **not** simple unicode strings.
-
-They are actually instances of the ``NavigableString`` class:
+BeautifulSoup provides a pair of attributes to represent the visible contents
+of ``Tag`` objects. The ``tag.text`` attribute will return all visible
+contents, including those of enclosed tags.  But this is often more than you
+want or need.  The ``tag.string`` text will return only the visible contents
+directly contained in this particular element, and only that which is *before*
+any nested tags.  Try updating your ``main`` block to peek at the contents of
+your rows for the first few matched restaurant listings.  Try ``tag.text``
+first:
 
 .. code-block:: python
 
-    >>> listing.find('span', class_='pl').find('a').string.__class__
-    <class 'bs4.element.NavigableString'>
+    if __name__ == '__main__':
+        ...
+        for listing in listings[:5]:
+            metadata_rows = listing.find('tbody').find_all(
+                has_two_tds, recursive=False
+            )
+            for row in metadata_rows:
+                for td in row.find_all('td', recursive=False):
+                    print td.text,
+                print
+            print
 
-These class instances contain not only the text, but also instance attributes
-that connect them to the DOM nodes that surround them. These attributes take
-quite a bit of memeory. Calling ``strip`` or casting them to ``unicode`` with
-the ``unicode`` type object converts them, saving memory.
-
-Executing the script from the command line now should show you that you have
-succeeded:
+Try running the script again to see the output:
 
 .. code-block:: bash
 
     [souptests]
-    heffalump:souptests cewing$ python scraper.py test
-    74
-    {'description': u'2 BEDROOM 2 BATHROOM Zero Down   Rent with Option to Buy',
-     'link': u'/oly/apa/4345117401.html',
-     'location': {'data-latitude': u'47.4924143400595',
-                  'data-longitude': u'-122.235904626445'}}
-    [souptests]
-    heffalump:souptests cewing$
+    192:souptests cewing$ python scraper.py test
+
+                - Business Name
+
+                TOULOUSE KITCHEN & LOUNGE
 
 
-3d: Extract Price and Size
---------------------------
+                Business Category:
 
-Again, use your browser devtools to find the container that holds *both* the
-price of a listed apartment, and the text that describes its size.
+                Seating 151-250 - Risk Category III
 
-What's different about these two? 
-
-The price data is contained inside a convenient container of its own. The size,
-however, is not. It is just some text found in the main container **after** the
-``Tag`` that holds the price.  You can see this by dropping a breakpoint into
-your ``extract_listings`` function:
+Hmmm.  Where'd all that extra whitespace come from?  the values from the first
+and second cells should have printed on the same row in our output, but they
+didn't.  There's extra stuff in there we don't want.  Try it again with
+``tag.string``:
 
 .. code-block:: python
 
-    def extract_listings(parsed):
+    if __name__ == '__main__':
         # ...
-        for listing in listings:
-            # ...
-            import pdb; pdb.set_trace() #<- add this line to enter the debugger
-            this_listing = {
+        for listing in listings[:5]:
+            metadata_rows = listing.find('tbody').find_all(
+                has_two_tds, recursive=False
+            )
+            for row in metadata_rows:
+                for td in row.find_all('td', recursive=False):
+                    print td.string,
+                print
+            print
 
-Then try running your script and inspect the DOM for one of your listing nodes:
-
-.. code-block:: pycon
-
-    > /Users/cewing/projects/souptests/scraper.py(39)extract_listings()
-    -> this_listing = {
-    (Pdb) l2 = listing.find('span', class_='l2')
-    (Pdb) print l2.prettify()
-    <span class="l2">
-     <span class="price">
-      $960
-     </span>
-     / 3br
-     <span class="pnr">
-      <small>
-       (Seattle98102)
-      </small>
-      <span class="px">
-       <span class="p">
-        pic
-        <a class="maptag" data-pid="4345117401" href="#">
-         map
-        </a>
-       </span>
-      </span>
-     </span>
-    </span>
-
-    (Pdb)
-
-If you try to get at that text by using the ``string`` attribute of the ``l2``
-span tag, you'll see that it just isn't there:
-
-.. code-block:: pycon
-
-    (Pdb) print l2.string
-    None
-    (Pdb)
-
-Likewise, if you use the ``text`` attribute to get *all* the text in the tag,
-you end up with more than you really want:
-
-.. code-block:: pycon
-
-    (Pdb) print l2.text
-      $960 / 3br -    (Seattle98102)   pic map
-    (Pdb)
-
-You *could* parse this string to extract what you want, but why? There's an
-easier way.
-
-All text in a DOM document is really contained in instances of the
-``NavigableString`` class.
-
-We've already talked about how this class contains references to the DOM nodes
-around it. These references allow us to *traverse* the DOM, moving from one
-node to the next directly instead of simply searching for what we want.
-``BeautifulSoup`` supports traversing from node to node in a number of ways:
-
-* **into** (or down to the next DOM tree level):
-
-  * ``Tag.children`` (iterator with immediately contained elements)
-  * ``Tag.descendants`` (generator returning **all** contained elements)
-
-* **out** (or up to the next DOM tree level):
-
-  * ``Tag.parent``: (the tag containing this tag)
-
-  * ``Tag.parents``: (generator returning all containers above this tag,
-    closest first)
-
-* **across** (or within the same DOM tree level):
-
-  * ``Tag.next_sibling`` (the node immediately following this one)
-  * ``Tag.next_siblings`` (generator returning **all nodes** at this level
-    after this one)
-  * ``Tag.previous_sibling`` (the node immediately before this one)
-  * ``Tag.previous_siblings`` (generator returning **all nodes** at this level
-    before this one)
-
-In this case, that ability can help us a great deal. Looking carefully, you
-might notice that the text describing the size of an apartment is located just
-after the ``span`` that contains our price. This means we can use traversal
-methods starting from the span containing the price to get where we want to be:
-
-.. code-block:: pycon
-
-    (Pdb) price_node = listing.find('span', class_='l2').find('span', class_='price')
-    (Pdb) price_node
-    <span class="price">$960</span>
-    (Pdb) price_node.next_sibling
-    u' / 3br -  '
-    (Pdb) price_node.next_sibling.strip()
-    u'/ 3br -'
-    (Pdb) price_node.next_sibling.strip(' \n-/')
-    u'3br'
-    (Pdb)
-
-Type 'quit' at your pdb prompt to exit the debugger and then remove the
-breakpoint from your code.
-
-Now update ``extract_listings`` to include the information we've just found:
+You should see that this makes no difference in our output.  This means that
+we'll need to clean up the values we get from these cells.  We need a function
+that will do this for us.  It should take a cell as it's sole argument and
+return the ``tag.string`` attribute with extraneous characters stripped.  Call
+the function ``clean_data``.
 
 .. hidden-code-block:: python
-    :label: Peek At A Solution
+    :label: Peek At a Solution
 
-    def extract_listings(parsed):
-        location_attrs = {'data-latitude': True, 'data-longitude': True}
-        listings = parsed.find_all('p', class_='row', attrs=location_attrs)
-        extracted = []
-        for listing in listings:
-            location = {key: listing.attrs.get(key, '') for key in location_attrs}
-            link = listing.find('span', class_='pl').find('a')
-            price_span = listing.find('span', class_='price')   # add me
-            this_listing = {
-                'location': location,
-                'link': link.attrs['href'],
-                'description': link.string.strip(),
-                'price': price_span.string.strip(),             # and me
-                'size': price_span.next_sibling.strip(' \n-/')  # me too
-            }
-            extracted.append(this_listing)
-        return extracted
+    def clean_data(td):
+        data = td.string
+        try:
+            return data.strip(" \n:-")
+        except AttributeError:
+            return u""
 
 
-And now executing your script from the command line should show these new
-elements for a listing:
+Add that into your ``main`` block and see the results:
+
+.. code-block:: python
+
+    if __name__ == '__main__':
+        # ...
+        for listing in listings[:5]:
+            metadata_rows = listing.find('tbody').find_all(
+                has_two_tds, recursive=False
+            )
+            for row in metadata_rows:
+                for td in row.find_all('td', recursive=False):
+                    print repr(clean_data(td)),
+                print
+            print
+
+.. code-block:: bash
+
+    [souptests]
+    192:souptests cewing$ python scraper.py test
+    u'Business Name' u'TOULOUSE KITCHEN & LOUNGE'
+    u'Business Category' u'Seating 151-250 - Risk Category III'
+    u'Address' u'601 QUEEN ANNE AVE N'
+    u'' u'Seattle, WA 98109'
+    u'Phone' u'(206) 283-1598'
+    u'Latitude' u'47.6247323574'
+    u'Longitude' u'122.3569098631'
+    ...
+
+Ahhh, much better.
+
+3c: Store Metadata
+------------------
+
+Next, we want to put this data into a data structure that will represent a
+single restaurant.  Our data is paired as labels and values. That should
+suggest a proper data structure.
+
+We need to create a function that will put these pieces together.  The function
+should take the listing for a single restaurant, and return a Python dictionary
+containing the metadata we've extracted.
+
+It'd be easy enough to simply walk through the rows and add an entry in our
+dictionary for each, but look at the data above. Does each row contain a label
+and a value?  Which one does not? What is suggested by this?  You'll need to
+account for this in your function.
+
+Call the function ``extract_restaurant_metadata`` and add it to ``scraper.py``.
+
+.. hidden-code-block:: python
+    :label: Peek At a Solution
+
+    def extract_restaurant_metadata(elem):
+        metadata_rows = elem.find('tbody').find_all(
+            has_two_tds, recursive=False
+        )
+        rdata = {}
+        current_label = ''
+        for row in metadata_rows:
+            key_cell, val_cell = row.find_all('td', recursive=False)
+            new_label = clean_data(key_cell)
+            current_label = new_label if new_label else current_label
+            rdata.setdefault(current_label, []).append(clean_data(val_cell))
+        return rdata
+
+Replace the rough work you added to your ``main`` block with a single clean
+call to this function and print out the results to verify your work:
+
+.. code-block:: python
+
+    if __name__ == '__main__':
+        # ...
+        for listing in listings[:5]:
+            metadata = extract_restaurant_metadata(listing)
+            print metadata
+            print
+
+.. code-block:: bash
+
+    [souptests]
+    192:souptests cewing$ python scraper.py test
+    {u'Business Category': [u'Seating 151-250 - Risk Category III'],
+     u'Longitude': [u'122.3569098631'], u'Phone': [u'(206) 283-1598'],
+     u'Business Name': [u'TOULOUSE KITCHEN & LOUNGE'],
+     u'Address': [u'601 QUEEN ANNE AVE N', u'Seattle, WA 98109'],
+     u'Latitude': [u'47.6247323574']}
+    ...
+
+Outstanding.  You've built the first part of this script and are ready to move
+on.
+
+
+3d: Extract Inspection Data
+---------------------------
+
+The next step is to extract the information we need to build our inspection
+data for each restaurant. As a reminder, we have said that we want to store the
+average inspection score, the highest inspection score and the total number of
+inspection performed.
+
+Let's think for a moment about what we want to find. We'll need to find rows in
+the tables in our restaurant that represent the results of an inspection. We
+don't need individual inspection items, just the total score. And we don't care
+about rows that contain non-inspection information.
+
+Use your browser's dev tools to inspect the structure of a listing again. Can
+you spot commonalities for all the rows that contain the data we want? There
+are four chief common points we can use to find our rows:
+
+* Each row is a table row, or ``<tr>`` element.
+* Each row contains exactly four table cell, or ``<td>`` elements.
+* Each row has text in the first cell that contains the word "inspection"
+* In that text, the word "inspection" is *not* the first word
+
+Your next task is to write a filter function that can be used to find these
+rows. Remember, a filter function takes an HTML element as its sole argument
+and returns ``True`` if the element matches the criteria of the filter,
+``False`` otherwise. Call the function ``is_ispection_row`` and add it to
+``scraper.py``.
+
+.. hidden-code-block:: python
+    :label: Peek At a Solution
+
+    def is_inspection_row(elem):
+        is_tr = elem.name == 'tr'
+        if not is_tr:
+            return False
+        td_children = elem.find_all('td', recursive=False)
+        has_four = len(td_children) == 4
+        this_text = clean_data(td_children[0]).lower()
+        contains_word = 'inspection' in this_text
+        does_not_start = not this_text.startswith('inspection')
+        return is_tr and has_four and contains_word and does_not_start
+
+Update your ``main`` block.  Use this new filter to find the inspection rows in
+each listing.  Print out the text in each row for the first few listings to
+verify that you've got it right:
+
+.. code-block:: python
+
+    if __name__ == '__main__':
+        # ...
+        for listing in listings[:5]:
+            metadata = extract_restaurant_metadata(listing)
+            inspection_rows = listing.find_all(is_inspection_row)
+            for row in inspection_rows:
+                print row.text
+
+Once you've confirmed that you are only seeing rows that contain useful data,
+your filter will be correct. Next move on to building the aggregated data you
+want to store about inspection scores.
+
+You'll need to add a new function ``extract_score_data`` to ``scraper.py``.
+This function will:
+
+* Take a restaurant listing as an argument.
+* Use the filter you just created to find inspection data rows.
+* Extract the score for each inspection.
+* Keep track of the number of inspections made.
+* Keep track of the highest score.
+* Calculate the average score for all inspections.
+* Return a dictionary containing the average score, high score, and total
+  inspection values.
+
+.. hidden-code-block:: python
+    :label: Peek At a Solution
+
+    def extract_score_data(elem):
+        inspection_rows = elem.find_all(is_inspection_row)
+        samples = len(inspection_rows)
+        total = high_score = average = 0
+        for row in inspection_rows:
+            strval = clean_data(row.find_all('td')[2])
+            try:
+                intval = int(strval)
+            except (ValueError, TypeError):
+                samples -= 1
+            else:
+                total += intval
+                high_score = intval if intval > high_score else high_score
+        if samples:
+            average = total/float(samples)
+        data = {
+            u'Average Score': average,
+            u'High Score': high_score,
+            u'Total Inspections': samples
+        }
+        return data
+
+Update your ``main`` block to include this new function.  Print out the results
+for the first few listings to verify that it worked.
+
+.. code-block:: python
+
+    if __name__ == '__main__':
+        kwargs = {
+            'Inspection_Start': '2/1/2013',
+            'Inspection_End': '2/1/2015',
+            'Zip_Code': '98109'
+        }
+        if len(sys.argv) > 1 and sys.argv[1] == 'test':
+            html, encoding = load_inspection_page('inspection_page.html')
+        else:
+            html, encoding = get_inspection_page(**kwargs)
+        doc = parse_source(html, encoding)
+        listings = extract_data_listings(doc)
+        for listing in listings[:5]:
+            metadata = extract_restaurant_metadata(listing)
+            score_data = extract_score_data(listing)
+            print score_data
 
 .. code-block:: bash
 
     [souptests]
     heffalump:souptests cewing$ python scraper.py test
-    74
-    {'description': u'2 BEDROOM 2 BATHROOM Zero Down   Rent with Option to Buy',
-     'link': u'/oly/apa/4345117401.html',
-     'location': {'data-latitude': u'47.4924143400595',
-                  'data-longitude': u'-122.235904626445'},
-     'price': u'$960',
-     'size': u'3br'}
+    {u'High Score': 90, u'Average Score': 28.6, u'Total Inspections': 5}
+    {u'High Score': 80, u'Average Score': 27.5, u'Total Inspections': 4}
+    {u'High Score': 80, u'Average Score': 27.5, u'Total Inspections': 4}
+    {u'High Score': 70, u'Average Score': 17.5, u'Total Inspections': 4}
+    {u'High Score': 70, u'Average Score': 32.25, u'Total Inspections': 4}
     [souptests]
     heffalump:souptests cewing$
 
+Alright.  That's working nicely.  The final step for today is to knit the two
+sets of data together into a single dictionary of data. Go ahead and do that in
+your ``main`` block. When you're done, remove the constraint on how many
+listings to process and run the scraper over the full set. Finish up by running
+it one more time without the ``test`` in the call so you fetch fresh data from
+the King County servers.
 
+Congratulations, you've built a successful web scraper.  Fun, eh?
