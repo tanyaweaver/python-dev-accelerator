@@ -73,11 +73,10 @@ Course Objectives
 - Acquire strong and idiomatic skills as a Python programmer
 - Achieve a deep understanding of the full environment in which web programming
   occurs, from sockets up to frameworks.
-- Build evaluative criteria that empower students to choose the right tool for
-  the job.
-- Learn facility with associated technologies, git, HTML, CSS, Javascript.
-- Gain mastery of the fundamental skills of agile design, testing, deployment
-  and teamwork.
+- Develop the evaluative criteria to choose the right tool for the job.
+- Build facility with associated technologies: git, HTML, CSS, Javascript.
+- Gain mastery of the fundamental skills of agile development, testing,
+  deployment and teamwork.
 
 
 Learning Philosophy
