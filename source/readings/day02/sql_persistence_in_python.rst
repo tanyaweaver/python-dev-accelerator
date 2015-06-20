@@ -149,9 +149,11 @@ this shell you are working directly in the database you designated with the
 This shell provides a number of special commands.  In the session above we can
 see three of them:
 
+* *\l* lists all the databases present in the server.
+* *\c* allows you to change the database you are interacting with. Give it a
+  database name as an argument.
 * *\d* describes the tables in a database. It can also take the name of one
   table as an argument, in which case it describes the columns in that table.
-* *\l* lists all the databases present in the server.
 * *\q* exits from the terminal and returns you to your normal shell session.
 
 There is `much more to learn about psql`_ but that will get you going for now.
