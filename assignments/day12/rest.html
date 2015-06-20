@@ -34,7 +34,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -56,16 +56,16 @@
         <li class="right" >
           <a href="xmlrpc.html" title="Producing and Consuming XML-RPC in Python"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 12</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 12</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="consuming-data-from-a-restful-web-service">
 <span id="rest-exercise"></span><h1>Consuming Data from a RESTful Web Service<a class="headerlink" href="#consuming-data-from-a-restful-web-service" title="Permalink to this headline">¶</a></h1>
@@ -76,12 +76,12 @@ list of restaurant health inspection metadata from a previous exercise.</p>
 <div class="section" id="geocoding-with-google-apis">
 <h2>Geocoding with Google APIs<a class="headerlink" href="#geocoding-with-google-apis" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://developers.google.com/maps/documentation/geocoding">https://developers.google.com/maps/documentation/geocoding</a></p>
-<p>Open a python interpreter using your <tt class="docutils literal"><span class="pre">souptests</span></tt> virtualenv:</p>
+<p>Open a python interpreter using your <code class="docutils literal"><span class="pre">souptests</span></code> virtualenv:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
 heffalump:souptests cewing<span class="nv">$ </span>python
 </pre></div>
 </div>
-<p>Then, import the <tt class="docutils literal"><span class="pre">requests</span></tt> library and prepare to make an HTTP request to
+<p>Then, import the <code class="docutils literal"><span class="pre">requests</span></code> library and prepare to make an HTTP request to
 the google geocoding service resource:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">requests</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">json</span>
@@ -192,12 +192,12 @@ receive address informatin back:</p>
 </div>
 <p>Notice that in the response there are actually a number of results.  These are
 decreasingly specific designations for the location you provided.  The
-<tt class="docutils literal"><span class="pre">types</span></tt> values for each indicate the level of geographical specificity for
+<code class="docutils literal"><span class="pre">types</span></code> values for each indicate the level of geographical specificity for
 each result.</p>
 <p>Using this geocoding service is nice, but who wants to properly format all
 those parameters all the time?  Moreover, do you really want to be tied only to
 google as a provider?</p>
-<p>And finally, although the data handed to us by google is <tt class="docutils literal"><span class="pre">json</span></tt>, if we want
+<p>And finally, although the data handed to us by google is <code class="docutils literal"><span class="pre">json</span></code>, if we want
 to simplify the process of mapping it, we might prefer to have <a class="reference external" href="http://geojson.org">geojson</a>
 instead.</p>
 <p>For this reason, we&#8217;re going to interact with google&#8217;s REST api through a
@@ -218,11 +218,11 @@ Cleaning up...
 <h2>Mashup!<a class="headerlink" href="#mashup" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s create a simple mashup by combining geocoded data from google about our
 restaurant with the metadata we extracted earlier.  Then we&#8217;ll map the results.</p>
-<p>The first step will be to move the entire body of the <tt class="docutils literal"><span class="pre">main</span></tt> block into a
+<p>The first step will be to move the entire body of the <code class="docutils literal"><span class="pre">main</span></code> block into a
 function that generates the metadata results for our listings one at a time. We
 can then iterate over the results and geocode them individually.</p>
-<p>Go ahead and create a new function in <tt class="docutils literal"><span class="pre">scraper.py</span></tt>.  Call it
-<tt class="docutils literal"><span class="pre">generate_results</span></tt> and have it do everything the <tt class="docutils literal"><span class="pre">main</span></tt> block does now.
+<p>Go ahead and create a new function in <code class="docutils literal"><span class="pre">scraper.py</span></code>.  Call it
+<code class="docutils literal"><span class="pre">generate_results</span></code> and have it do everything the <code class="docutils literal"><span class="pre">main</span></code> block does now.
 The only difference is that it will be a <em>generator</em> function and <em>yield</em> its
 results instead of printing them.</p>
 <script type="text/javascript">
@@ -255,7 +255,7 @@ results instead of printing them.</p>
         <span class="k">yield</span> <span class="n">metadata</span>
 </pre></div>
 </div>
-</div><p>Then update the <tt class="docutils literal"><span class="pre">main</span></tt> block like so:</p>
+</div><p>Then update the <code class="docutils literal"><span class="pre">main</span></code> block like so:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">test</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;test&#39;</span>
     <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">generate_results</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
@@ -266,7 +266,7 @@ results instead of printing them.</p>
 ready to push further.</p>
 <div class="section" id="add-geocoding">
 <h3>Add Geocoding<a class="headerlink" href="#add-geocoding" title="Permalink to this headline">¶</a></h3>
-<p>The API for geocoding with <tt class="docutils literal"><span class="pre">geocoder</span></tt> is the same for all providers. You give
+<p>The API for geocoding with <code class="docutils literal"><span class="pre">geocoder</span></code> is the same for all providers. You give
 an address, it returns geocoded data. You provide latitude and longitude, it
 provides address data:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">geocoder</span><span class="o">.</span><span class="n">google</span><span class="p">(</span><span class="o">&lt;</span><span class="n">address</span><span class="o">&gt;</span><span class="p">)</span>
@@ -276,7 +276,7 @@ provides address data:</p>
 <span class="go"># geojson result data</span>
 </pre></div>
 </div>
-<p>Add a new function <tt class="docutils literal"><span class="pre">get_geojson</span></tt> to <tt class="docutils literal"><span class="pre">scraper.py</span></tt>.  It will</p>
+<p>Add a new function <code class="docutils literal"><span class="pre">get_geojson</span></code> to <code class="docutils literal"><span class="pre">scraper.py</span></code>.  It will</p>
 <ul class="simple">
 <li>Take a result from our search as it&#8217;s input</li>
 <li>Get geocoding data from google using the address of the restaurant</li>
@@ -307,7 +307,7 @@ provides address data:</p>
 </div>
 </div><p>You&#8217;ll need to bolt the new function into your script so that the results it
 gives are added to each listing. You&#8217;ll need to make some updates to your
-<tt class="docutils literal"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></tt> block.</p>
+<code class="docutils literal"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code> block.</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -367,9 +367,9 @@ trying it out:</p>
 </div>
 <p>Nifty, eh?</p>
 <p>Notice though that running the script now takes quite some time. Let&#8217;s update
-the <tt class="docutils literal"><span class="pre">generate_results</span></tt> function so that it accepts a second keyword argument
+the <code class="docutils literal"><span class="pre">generate_results</span></code> function so that it accepts a second keyword argument
 that indicates the number of results to run through.  Call the parameter
-<tt class="docutils literal"><span class="pre">count</span></tt> and give it a sensible default value, like 10.</p>
+<code class="docutils literal"><span class="pre">count</span></code> and give it a sensible default value, like 10.</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -389,10 +389,10 @@ that indicates the number of results to run through.  Call the parameter
 </pre></div>
 </div>
 </div><p>Ahhhhh.  That&#8217;s better</p>
-<p>But still, all those <tt class="docutils literal"><span class="pre">properties</span></tt> in the geojson, and none of them are truly
+<p>But still, all those <code class="docutils literal"><span class="pre">properties</span></code> in the geojson, and none of them are truly
 that important to us. Let&#8217;s replace them with the metadata and inspection
 scores we build previously.</p>
-<p>Update the <tt class="docutils literal"><span class="pre">get_geojson</span></tt> function. This time it will:</p>
+<p>Update the <code class="docutils literal"><span class="pre">get_geojson</span></code> function. This time it will:</p>
 <ul class="simple">
 <li>Build a dictionary containing only the values we want from our
 inspection record.</li>
@@ -441,16 +441,16 @@ replacing the one we have in our metadata.</li>
 </div></div>
 <div class="section" id="map-the-results">
 <h3>Map the Results<a class="headerlink" href="#map-the-results" title="Permalink to this headline">¶</a></h3>
-<p>We are now generating a series of <tt class="docutils literal"><span class="pre">geojson</span></tt> <em>Feature</em> objects. To map these
-objects, we&#8217;ll need to create a file which contains a <tt class="docutils literal"><span class="pre">geojson</span></tt>
+<p>We are now generating a series of <code class="docutils literal"><span class="pre">geojson</span></code> <em>Feature</em> objects. To map these
+objects, we&#8217;ll need to create a file which contains a <code class="docutils literal"><span class="pre">geojson</span></code>
 <em>FeatureCollection</em>.</p>
 <p>The structure of such a collection looks like this:</p>
 <div class="highlight-json"><div class="highlight"><pre>{&#39;type&#39;: &#39;FeatureCollection&#39;, &#39;features&#39;: [...]}
 </pre></div>
 </div>
-<p>Update your <tt class="docutils literal"><span class="pre">main</span></tt> function to append each feature to such a structure. Then
-you can dump the structure as <tt class="docutils literal"><span class="pre">json</span></tt> to a file. In <tt class="docutils literal"><span class="pre">scraper.py</span></tt> update the
-<tt class="docutils literal"><span class="pre">main</span></tt> block like so:</p>
+<p>Update your <code class="docutils literal"><span class="pre">main</span></code> function to append each feature to such a structure. Then
+you can dump the structure as <code class="docutils literal"><span class="pre">json</span></code> to a file. In <code class="docutils literal"><span class="pre">scraper.py</span></code> update the
+<code class="docutils literal"><span class="pre">main</span></code> block like so:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># add an import at the top:</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
@@ -507,9 +507,9 @@ average, high score or most inspections:</p>
 </div>
 <p>To simplify the passing of arguments from the command line, use the <a class="reference external" href="https://docs.python.org/2/library/argparse.html#module-argparse">argparse</a>
 module from the standard library to handle command line arguments</p>
-<p>Next, try adding a bit of information to your map by adding <tt class="docutils literal"><span class="pre">marker-color</span></tt> to
+<p>Next, try adding a bit of information to your map by adding <code class="docutils literal"><span class="pre">marker-color</span></code> to
 the geojson properties dict. This will display a marker with the provided
-css-style color (<tt class="docutils literal"><span class="pre">#FF0000</span></tt>)</p>
+css-style color (<code class="docutils literal"><span class="pre">#FF0000</span></code>)</p>
 <p>See if you can make the color change according to the values used for the
 sorting of the list.  Either vary the intensity of the color, or the hue.</p>
 <p>Finally, if you are feeling particularly frisky, you can update your script
@@ -521,7 +521,7 @@ standard library.</p>
 <em>geojson.io</em>.  Click on the <strong>help</strong> tab in the sidebar to view the
 information.</p>
 <p>You will also need to learn about how to properly quote special characters
-for a URL, using the <a class="reference external" href="https://docs.python.org/2/library/urllib.html#urllib.quote">urllib</a> <tt class="docutils literal"><span class="pre">quote</span></tt> function.</p>
+for a URL, using the <a class="reference external" href="https://docs.python.org/2/library/urllib.html#urllib.quote">urllib</a> <code class="docutils literal"><span class="pre">quote</span></code> function.</p>
 </div>
 </div>
 
@@ -529,7 +529,7 @@ for a URL, using the <a class="reference external" href="https://docs.python.org
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -551,7 +551,7 @@ for a URL, using the <a class="reference external" href="https://docs.python.org
   <h4>Next topic</h4>
   <p class="topless"><a href="fabric.html"
                         title="next chapter">Task Automation with Fabric</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -568,7 +568,7 @@ for a URL, using the <a class="reference external" href="https://docs.python.org
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -580,14 +580,14 @@ for a URL, using the <a class="reference external" href="https://docs.python.org
         <li class="right" >
           <a href="xmlrpc.html" title="Producing and Consuming XML-RPC in Python"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
-          <li><a href="index.html" >Day 12</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 12</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

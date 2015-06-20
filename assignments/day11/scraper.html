@@ -34,7 +34,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -56,16 +56,16 @@
         <li class="right" >
           <a href="index.html" title="Day 11"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 11</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 11</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="scraping-health-inspection-data-from-king-county">
 <span id="scraper-assignment"></span><h1>Scraping Health Inspection Data from King County<a class="headerlink" href="#scraping-health-inspection-data-from-king-county" title="Permalink to this headline">¶</a></h1>
@@ -78,11 +78,11 @@ learning about the BeautifulSoup package.</p>
 heffalump:souptests cewing$
 </pre></div>
 </div>
-<p>Begin by creating a new Python file, call it <tt class="docutils literal"><span class="pre">scraper.py</span></tt>. Open it in your
+<p>Begin by creating a new Python file, call it <code class="docutils literal"><span class="pre">scraper.py</span></code>. Open it in your
 editor.</p>
 <div class="section" id="step-1-fetch-search-results">
 <h2>Step 1: Fetch Search Results<a class="headerlink" href="#step-1-fetch-search-results" title="Permalink to this headline">¶</a></h2>
-<p>The first step is to use the <tt class="docutils literal"><span class="pre">requests</span></tt> library to fetch a set of search
+<p>The first step is to use the <code class="docutils literal"><span class="pre">requests</span></code> library to fetch a set of search
 results from the King County government website.</p>
 <p>In order to do so, we will need to assemble a <em>query</em> that fits with the search
 form present on the <a class="reference external" href="http://info.kingcounty.gov/health/ehs/foodsafety/inspections/search.aspx">Restaurant Inspection Information</a> page.</p>
@@ -90,7 +90,7 @@ form present on the <a class="reference external" href="http://info.kingcounty.g
 information is to submit a search manually and then copy the URL that results.</p>
 <p>The outcome of this should be a domain name and path to the search results page
 and a set of <em>query parameters</em> available to be used.  Begin by recording these
-as all-caps constants at the top of your <tt class="docutils literal"><span class="pre">scraper.py</span></tt> file:</p>
+as all-caps constants at the top of your <code class="docutils literal"><span class="pre">scraper.py</span></code> file:</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -126,7 +126,7 @@ as all-caps constants at the top of your <tt class="docutils literal"><span clas
 </div>
 </div><p>Be aware that the results page is quite sensitive about having <em>all</em> the
 parameters in each request, even if they have no values set.</p>
-<p>Your next job is to write a single Python function (<tt class="docutils literal"><span class="pre">get_inspection_page</span></tt>)
+<p>Your next job is to write a single Python function (<code class="docutils literal"><span class="pre">get_inspection_page</span></code>)
 that will fetch a set of search results for you. Here&#8217;s the requirements:</p>
 <ul class="simple">
 <li>It must accept keyword arguments for the possible query parameters</li>
@@ -162,23 +162,23 @@ no error</li>
     <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">encoding</span>
 </pre></div>
 </div>
-</div><p>Write the results of your search to a file, <tt class="docutils literal"><span class="pre">inspection_page.html</span></tt> so that
+</div><p>Write the results of your search to a file, <code class="docutils literal"><span class="pre">inspection_page.html</span></code> so that
 you can work on it without needing to hammer the King County servers.</p>
-<p>Write a <tt class="docutils literal"><span class="pre">load_inspection_page</span></tt> function which reads this file from disk and
+<p>Write a <code class="docutils literal"><span class="pre">load_inspection_page</span></code> function which reads this file from disk and
 returns the content and encoding in the same way as the above function. Then
 you can switch between the two without altering the API. I&#8217;ll leave this
 exercise entirely to you.</p>
 </div>
 <div class="section" id="step-2-parse-search-results">
 <h2>Step 2: Parse Search Results<a class="headerlink" href="#step-2-parse-search-results" title="Permalink to this headline">¶</a></h2>
-<p>Next, we need a function <tt class="docutils literal"><span class="pre">parse_source</span></tt> to set up the HTML as DOM nodes for
+<p>Next, we need a function <code class="docutils literal"><span class="pre">parse_source</span></code> to set up the HTML as DOM nodes for
 scraping. It will need to:</p>
 <ul class="simple">
 <li>Take the response body from the previous method (or some other source)</li>
 <li>Parse it using BeautifulSoup</li>
 <li>Return the parsed object for further processing</li>
 </ul>
-<p>This function can be quite simple. Add it to <tt class="docutils literal"><span class="pre">scraper.py</span></tt>.</p>
+<p>This function can be quite simple. Add it to <code class="docutils literal"><span class="pre">scraper.py</span></code>.</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -200,9 +200,9 @@ scraping. It will need to:</p>
 </pre></div>
 </div>
 </div><p>In order to see the results we have at this point, we&#8217;ll need to make our
-<tt class="docutils literal"><span class="pre">scraper.py</span></tt> executable by adding a <tt class="docutils literal"><span class="pre">__main__</span></tt> block. Since you have
-alternate sources for listing data (<tt class="docutils literal"><span class="pre">load_inspectioon_page</span></tt> and
-<tt class="docutils literal"><span class="pre">get_inspection_page</span></tt>), you should allow a command-line argument such as
+<code class="docutils literal"><span class="pre">scraper.py</span></code> executable by adding a <code class="docutils literal"><span class="pre">__main__</span></code> block. Since you have
+alternate sources for listing data (<code class="docutils literal"><span class="pre">load_inspectioon_page</span></code> and
+<code class="docutils literal"><span class="pre">get_inspection_page</span></code>), you should allow a command-line argument such as
 &#8216;test&#8217; to switch between the two.</p>
 <p>Go ahead and set the ZIP code and dates for your search statically in this
 block. You can work on providing them dynamically later.</p>
@@ -238,8 +238,8 @@ block. You can work on providing them dynamically later.</p>
 </div>
 </div><p>Now, you can execute your scraper script in one of two ways:</p>
 <ol class="arabic simple">
-<li><tt class="docutils literal"><span class="pre">python</span> <span class="pre">scraper.py</span></tt> will fetch results directly from King County.</li>
-<li><tt class="docutils literal"><span class="pre">python</span> <span class="pre">scraper.py</span> <span class="pre">test</span></tt> will use your stored results from file.</li>
+<li><code class="docutils literal"><span class="pre">python</span> <span class="pre">scraper.py</span></code> will fetch results directly from King County.</li>
+<li><code class="docutils literal"><span class="pre">python</span> <span class="pre">scraper.py</span> <span class="pre">test</span></code> will use your stored results from file.</li>
 </ol>
 </div>
 <div class="section" id="step-3-extract-listing-information">
@@ -265,7 +265,7 @@ What is the difference between them?  Which do you want? Remember the
 BeautifulSoup allows you to search based on HTML attributes, and that
 <a class="reference external" href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/#kinds-of-filters">different types of filters</a> can be used. Which kind of filter would be most
 effective for this task?</p>
-<p>Call this function <tt class="docutils literal"><span class="pre">extract_data_listings</span></tt>.</p>
+<p>Call this function <code class="docutils literal"><span class="pre">extract_data_listings</span></code>.</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -285,7 +285,7 @@ effective for this task?</p>
     <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;div&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">id_finder</span><span class="p">)</span>
 </pre></div>
 </div>
-</div><p>If you update your <tt class="docutils literal"><span class="pre">__main__</span></tt> block to use this new function, you can verify
+</div><p>If you update your <code class="docutils literal"><span class="pre">__main__</span></code> block to use this new function, you can verify
 the results visually:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
@@ -324,21 +324,21 @@ heffalump:souptests cewing$
 </div>
 <div class="section" id="b-extract-metadata">
 <h3>3b: Extract Metadata<a class="headerlink" href="#b-extract-metadata" title="Permalink to this headline">¶</a></h3>
-<p>When you take a close look at the structure of the data <tt class="docutils literal"><span class="pre">&lt;div&gt;</span></tt> for each
+<p>When you take a close look at the structure of the data <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> for each
 restaurant, you&#8217;ll see that the metadata about the restaurant is located in the
 rows of a table. The rows we are interested in all have a few shared properties
 that set them apart from other rows in the table.</p>
 <p>The first is that all the rows that contain this information have <em>two</em> cells
 in them.  One that might contain a <em>label</em> for the metadata and a second that
 contains the <em>value</em>.</p>
-<p>The second is that the two <tt class="docutils literal"><span class="pre">&lt;td&gt;</span></tt> elements it contains are immediate
+<p>The second is that the two <code class="docutils literal"><span class="pre">&lt;td&gt;</span></code> elements it contains are immediate
 children, not contained within some nested structure.</p>
 <p>BeautifulSoup allows us to <a class="reference external" href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/#a-function">use functions as filters</a>. These functions must
 take an <em>element</em> as their only argument, and return <cite>True</cite> if the element
 should pass through the filter, and <cite>False</cite> if not.</p>
-<p>Add a new function to <tt class="docutils literal"><span class="pre">scraper.py</span></tt> called <tt class="docutils literal"><span class="pre">has_two_tds</span></tt> that will take an
-element as an argument and return <tt class="docutils literal"><span class="pre">True</span></tt> if the element is both a <tt class="docutils literal"><span class="pre">&lt;tr&gt;</span></tt>
-<em>and</em> contains exactly two <tt class="docutils literal"><span class="pre">&lt;td&gt;</span></tt> elements immediately within it.</p>
+<p>Add a new function to <code class="docutils literal"><span class="pre">scraper.py</span></code> called <code class="docutils literal"><span class="pre">has_two_tds</span></code> that will take an
+element as an argument and return <code class="docutils literal"><span class="pre">True</span></code> if the element is both a <code class="docutils literal"><span class="pre">&lt;tr&gt;</span></code>
+<em>and</em> contains exactly two <code class="docutils literal"><span class="pre">&lt;td&gt;</span></code> elements immediately within it.</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -358,7 +358,7 @@ element as an argument and return <tt class="docutils literal"><span class="pre"
 </pre></div>
 </div>
 </div><p>Demonstrate that your filter works properly by trying it out.  Start by
-updating our <tt class="docutils literal"><span class="pre">main</span></tt> block with a few lines of code that will catch the
+updating our <code class="docutils literal"><span class="pre">main</span></code> block with a few lines of code that will catch the
 metadata rows from each div and print a count of them:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="c"># ... existing code up here need not be changed</span>
@@ -388,12 +388,12 @@ heffalump:souptests cewing$
 getting values that vary widely, please review your filter function.</p>
 <p>You&#8217;ll work next on extracting the data from those rows you have found.</p>
 <p>BeautifulSoup provides a pair of attributes to represent the visible contents
-of <tt class="docutils literal"><span class="pre">Tag</span></tt> objects. The <tt class="docutils literal"><span class="pre">tag.text</span></tt> attribute will return all visible
+of <code class="docutils literal"><span class="pre">Tag</span></code> objects. The <code class="docutils literal"><span class="pre">tag.text</span></code> attribute will return all visible
 contents, including those of enclosed tags.  But this is often more than you
-want or need.  The <tt class="docutils literal"><span class="pre">tag.string</span></tt> text will return only the visible contents
+want or need.  The <code class="docutils literal"><span class="pre">tag.string</span></code> text will return only the visible contents
 directly contained in this particular element, and only that which is <em>before</em>
-any nested tags.  Try updating your <tt class="docutils literal"><span class="pre">main</span></tt> block to peek at the contents of
-your rows for the first few matched restaurant listings.  Try <tt class="docutils literal"><span class="pre">tag.text</span></tt>
+any nested tags.  Try updating your <code class="docutils literal"><span class="pre">main</span></code> block to peek at the contents of
+your rows for the first few matched restaurant listings.  Try <code class="docutils literal"><span class="pre">tag.text</span></code>
 first:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="o">...</span>
@@ -414,7 +414,7 @@ first:</p>
 
             - Business Name
 
-            TOULOUSE KITCHEN &amp; LOUNGE
+            TOULOUSE KITCHEN <span class="p">&amp;</span> LOUNGE
 
 
             Business Category:
@@ -425,7 +425,7 @@ first:</p>
 <p>Hmmm.  Where&#8217;d all that extra whitespace come from?  the values from the first
 and second cells should have printed on the same row in our output, but they
 didn&#8217;t.  There&#8217;s extra stuff in there we don&#8217;t want.  Try it again with
-<tt class="docutils literal"><span class="pre">tag.string</span></tt>:</p>
+<code class="docutils literal"><span class="pre">tag.string</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="c"># ...</span>
     <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
@@ -442,8 +442,8 @@ didn&#8217;t.  There&#8217;s extra stuff in there we don&#8217;t want.  Try it a
 <p>You should see that this makes no difference in our output.  This means that
 we&#8217;ll need to clean up the values we get from these cells.  We need a function
 that will do this for us.  It should take a cell as it&#8217;s sole argument and
-return the <tt class="docutils literal"><span class="pre">tag.string</span></tt> attribute with extraneous characters stripped.  Call
-the function <tt class="docutils literal"><span class="pre">clean_data</span></tt>.</p>
+return the <code class="docutils literal"><span class="pre">tag.string</span></code> attribute with extraneous characters stripped.  Call
+the function <code class="docutils literal"><span class="pre">clean_data</span></code>.</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -463,7 +463,7 @@ the function <tt class="docutils literal"><span class="pre">clean_data</span></t
         <span class="k">return</span> <span class="s">u&quot;&quot;</span>
 </pre></div>
 </div>
-</div><p>Add that into your <tt class="docutils literal"><span class="pre">main</span></tt> block and see the results:</p>
+</div><p>Add that into your <code class="docutils literal"><span class="pre">main</span></code> block and see the results:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="c"># ...</span>
     <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
@@ -503,7 +503,7 @@ containing the metadata we&#8217;ve extracted.</p>
 dictionary for each, but look at the data above. Does each row contain a label
 and a value?  Which one does not? What is suggested by this?  You&#8217;ll need to
 account for this in your function.</p>
-<p>Call the function <tt class="docutils literal"><span class="pre">extract_restaurant_metadata</span></tt> and add it to <tt class="docutils literal"><span class="pre">scraper.py</span></tt>.</p>
+<p>Call the function <code class="docutils literal"><span class="pre">extract_restaurant_metadata</span></code> and add it to <code class="docutils literal"><span class="pre">scraper.py</span></code>.</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -529,7 +529,7 @@ account for this in your function.</p>
     <span class="k">return</span> <span class="n">rdata</span>
 </pre></div>
 </div>
-</div><p>Replace the rough work you added to your <tt class="docutils literal"><span class="pre">main</span></tt> block with a single clean
+</div><p>Replace the rough work you added to your <code class="docutils literal"><span class="pre">main</span></code> block with a single clean
 call to this function and print out the results to verify your work:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="c"># ...</span>
@@ -566,16 +566,16 @@ about rows that contain non-inspection information.</p>
 you spot commonalities for all the rows that contain the data we want? There
 are four chief common points we can use to find our rows:</p>
 <ul class="simple">
-<li>Each row is a table row, or <tt class="docutils literal"><span class="pre">&lt;tr&gt;</span></tt> element.</li>
-<li>Each row contains exactly four table cell, or <tt class="docutils literal"><span class="pre">&lt;td&gt;</span></tt> elements.</li>
+<li>Each row is a table row, or <code class="docutils literal"><span class="pre">&lt;tr&gt;</span></code> element.</li>
+<li>Each row contains exactly four table cell, or <code class="docutils literal"><span class="pre">&lt;td&gt;</span></code> elements.</li>
 <li>Each row has text in the first cell that contains the word &#8220;inspection&#8221;</li>
 <li>In that text, the word &#8220;inspection&#8221; is <em>not</em> the first word</li>
 </ul>
 <p>Your next task is to write a filter function that can be used to find these
 rows. Remember, a filter function takes an HTML element as its sole argument
-and returns <tt class="docutils literal"><span class="pre">True</span></tt> if the element matches the criteria of the filter,
-<tt class="docutils literal"><span class="pre">False</span></tt> otherwise. Call the function <tt class="docutils literal"><span class="pre">is_ispection_row</span></tt> and add it to
-<tt class="docutils literal"><span class="pre">scraper.py</span></tt>.</p>
+and returns <code class="docutils literal"><span class="pre">True</span></code> if the element matches the criteria of the filter,
+<code class="docutils literal"><span class="pre">False</span></code> otherwise. Call the function <code class="docutils literal"><span class="pre">is_ispection_row</span></code> and add it to
+<code class="docutils literal"><span class="pre">scraper.py</span></code>.</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -599,7 +599,7 @@ and returns <tt class="docutils literal"><span class="pre">True</span></tt> if t
     <span class="k">return</span> <span class="n">is_tr</span> <span class="ow">and</span> <span class="n">has_four</span> <span class="ow">and</span> <span class="n">contains_word</span> <span class="ow">and</span> <span class="n">does_not_start</span>
 </pre></div>
 </div>
-</div><p>Update your <tt class="docutils literal"><span class="pre">main</span></tt> block.  Use this new filter to find the inspection rows in
+</div><p>Update your <code class="docutils literal"><span class="pre">main</span></code> block.  Use this new filter to find the inspection rows in
 each listing.  Print out the text in each row for the first few listings to
 verify that you&#8217;ve got it right:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
@@ -614,7 +614,7 @@ verify that you&#8217;ve got it right:</p>
 <p>Once you&#8217;ve confirmed that you are only seeing rows that contain useful data,
 your filter will be correct. Next move on to building the aggregated data you
 want to store about inspection scores.</p>
-<p>You&#8217;ll need to add a new function <tt class="docutils literal"><span class="pre">extract_score_data</span></tt> to <tt class="docutils literal"><span class="pre">scraper.py</span></tt>.
+<p>You&#8217;ll need to add a new function <code class="docutils literal"><span class="pre">extract_score_data</span></code> to <code class="docutils literal"><span class="pre">scraper.py</span></code>.
 This function will:</p>
 <ul class="simple">
 <li>Take a restaurant listing as an argument.</li>
@@ -660,7 +660,7 @@ inspection values.</li>
     <span class="k">return</span> <span class="n">data</span>
 </pre></div>
 </div>
-</div><p>Update your <tt class="docutils literal"><span class="pre">main</span></tt> block to include this new function.  Print out the results
+</div><p>Update your <code class="docutils literal"><span class="pre">main</span></code> block to include this new function.  Print out the results
 for the first few listings to verify that it worked.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
@@ -693,9 +693,9 @@ heffalump:souptests cewing$
 </div>
 <p>Alright.  That&#8217;s working nicely.  The final step for today is to knit the two
 sets of data together into a single dictionary of data. Go ahead and do that in
-your <tt class="docutils literal"><span class="pre">main</span></tt> block. When you&#8217;re done, remove the constraint on how many
+your <code class="docutils literal"><span class="pre">main</span></code> block. When you&#8217;re done, remove the constraint on how many
 listings to process and run the scraper over the full set. Finish up by running
-it one more time without the <tt class="docutils literal"><span class="pre">test</span></tt> in the call so you fetch fresh data from
+it one more time without the <code class="docutils literal"><span class="pre">test</span></code> in the call so you fetch fresh data from
 the King County servers.</p>
 <p>Congratulations, you&#8217;ve built a successful web scraper.  Fun, eh?</p>
 </div>
@@ -706,7 +706,7 @@ the King County servers.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -730,7 +730,7 @@ the King County servers.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../day12/index.html"
                         title="next chapter">Day 12</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -747,7 +747,7 @@ the King County servers.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -759,14 +759,14 @@ the King County servers.</p>
         <li class="right" >
           <a href="index.html" title="Day 11"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
-          <li><a href="index.html" >Day 11</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 11</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

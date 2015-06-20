@@ -34,7 +34,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -56,16 +56,16 @@
         <li class="right" >
           <a href="index.html" title="Day 09 Lectures"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 09 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 09 Lectures</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="concurrency">
 <h1>Concurrency<a class="headerlink" href="#concurrency" title="Permalink to this headline">¶</a></h1>
@@ -75,10 +75,10 @@
 <div class="left container">
 <p>We&#8217;ve been working for a few days now on writing servers and clients in
 Python.</p>
-<p>To do so, we&#8217;ve made extensive use of the <tt class="docutils literal"><span class="pre">socket</span></tt> library and the
+<p>To do so, we&#8217;ve made extensive use of the <code class="docutils literal"><span class="pre">socket</span></code> library and the
 interface it provides to low-level network I/O primitives.</p>
 <p>There&#8217;s a problem with the code we&#8217;ve been writing, however. It is
-<tt class="docutils literal"><span class="pre">blocking</span></tt>.</p>
+<code class="docutils literal"><span class="pre">blocking</span></code>.</p>
 </div>
 <div class="section" id="blocking-calls">
 <h3>Blocking Calls<a class="headerlink" href="#blocking-calls" title="Permalink to this headline">¶</a></h3>
@@ -130,7 +130,7 @@ interface it provides to low-level network I/O primitives.</p>
         <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
-<p>The call to <tt class="docutils literal"><span class="pre">socket.accept</span></tt> on line 10 is <em>blocking</em>. It will not
+<p>The call to <code class="docutils literal"><span class="pre">socket.accept</span></code> on line 10 is <em>blocking</em>. It will not
 return until a new connection is made by a client.</p>
 <p>This means that although in principle our server can handle more than one
 connection (it has a backlog of 5, right?), in fact it is only able to
@@ -140,22 +140,22 @@ message the client is sending us to be echoed back is the collected works
 of Shakespeare? Any other clients looking to have their simple messages
 echoed would be fored to wait while we process Shakespeare 16 bytes at a
 time.</p>
-<p>Operations that <tt class="docutils literal"><span class="pre">block</span></tt> like this are called <em>synchronous</em>. Getting
+<p>Operations that <code class="docutils literal"><span class="pre">block</span></code> like this are called <em>synchronous</em>. Getting
 around them is one of the tasks that comes with scaling a program.</p>
 </div>
 </div>
 <div class="section" id="simple-concurrency-w-select">
-<h2>Simple Concurrency w/ <tt class="docutils literal"><span class="pre">select</span></tt><a class="headerlink" href="#simple-concurrency-w-select" title="Permalink to this headline">¶</a></h2>
+<h2>Simple Concurrency w/ <code class="docutils literal"><span class="pre">select</span></code><a class="headerlink" href="#simple-concurrency-w-select" title="Permalink to this headline">¶</a></h2>
 <div class="left container">
-<p>The Python standard library provides the <tt class="docutils literal"><span class="pre">select</span></tt> module to help us
+<p>The Python standard library provides the <code class="docutils literal"><span class="pre">select</span></code> module to help us
 alleviate some of the issues with blocking I/O operations.</p>
-<p>The module provides <tt class="docutils literal"><span class="pre">select</span></tt>, an interface to the underlying Unix
-<tt class="docutils literal"><span class="pre">select</span></tt> system call. The purpose of select is to take a list of possible
+<p>The module provides <code class="docutils literal"><span class="pre">select</span></code>, an interface to the underlying Unix
+<code class="docutils literal"><span class="pre">select</span></code> system call. The purpose of select is to take a list of possible
 I/O channels (file handles, Unix sockets, network sockets) and return lists
 of those that are ready to be read, written or in an error state.</p>
 </div>
 <div class="section" id="using-select">
-<h3>Using <tt class="docutils literal"><span class="pre">select</span></tt><a class="headerlink" href="#using-select" title="Permalink to this headline">¶</a></h3>
+<h3>Using <code class="docutils literal"><span class="pre">select</span></code><a class="headerlink" href="#using-select" title="Permalink to this headline">¶</a></h3>
 <p>Consider the following update to our echo server code:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -237,29 +237,29 @@ of those that are ready to be read, written or in an error state.</p>
 </div>
 <div class="section" id="what-s-changed">
 <h3>What&#8217;s Changed<a class="headerlink" href="#what-s-changed" title="Permalink to this headline">¶</a></h3>
-<p>This code has incorporated <tt class="docutils literal"><span class="pre">select.select</span></tt> in order to allow the outer loop
+<p>This code has incorporated <code class="docutils literal"><span class="pre">select.select</span></code> in order to allow the outer loop
 to continue running regardless of the readiness of any given I/O operation.</p>
 <p>On line 9-10, we initialize a list of possible I/O sources by providing the
-server socket we&#8217;ve created and <tt class="docutils literal"><span class="pre">sys.stdin</span></tt>, which we will use to
+server socket we&#8217;ve created and <code class="docutils literal"><span class="pre">sys.stdin</span></code>, which we will use to
 gracefully terminate the server.</p>
 <p>On line 14, we pass this initialized list of I/O sources into a call to
-<tt class="docutils literal"><span class="pre">select.select</span></tt> as the potential readables. The list of potential
+<code class="docutils literal"><span class="pre">select.select</span></code> as the potential readables. The list of potential
 writables and potential exceptions can be ignored for this application. By
-additionally providing a <tt class="docutils literal"><span class="pre">timeout</span></tt> value of <tt class="docutils literal"><span class="pre">0</span></tt>, we ensure that this
-call to <tt class="docutils literal"><span class="pre">select.select</span></tt> will not block the loop. If no sources are ready
+additionally providing a <code class="docutils literal"><span class="pre">timeout</span></code> value of <code class="docutils literal"><span class="pre">0</span></code>, we ensure that this
+call to <code class="docutils literal"><span class="pre">select.select</span></code> will not block the loop. If no sources are ready
 for reading when the call is executed, the lists will be returned empty and
 we&#8217;ll simply move on to the next iteration.</p>
-<p>When the list of I/O sources bound to <tt class="docutils literal"><span class="pre">read_ready</span></tt> is non-empty, we use a
+<p>When the list of I/O sources bound to <code class="docutils literal"><span class="pre">read_ready</span></code> is non-empty, we use a
 for loop construct to handle each read_ready source individually.</p>
-<p>Now, when we call <tt class="docutils literal"><span class="pre">accept</span></tt> on the original server socket on line 18, we
+<p>Now, when we call <code class="docutils literal"><span class="pre">accept</span></code> on the original server socket on line 18, we
 can be assured that in fact a client <em>has</em> made a connection and the call
 will return immediately. When it does, we add the new socket it has given
 us, which represents the connection to the client, to the list of inputs so
-that it can be processed by <tt class="docutils literal"><span class="pre">select</span></tt> along with our server and stdin
+that it can be processed by <code class="docutils literal"><span class="pre">select</span></code> along with our server and stdin
 sources.</p>
 <p>Once a handler for a client has been added to the list of inputs, it might
-also be one of the items in the <tt class="docutils literal"><span class="pre">read_ready</span></tt> list returned by the call to
-<tt class="docutils literal"><span class="pre">select.</span></tt> This brings us to line 31, where a single buffer of data is
+also be one of the items in the <code class="docutils literal"><span class="pre">read_ready</span></code> list returned by the call to
+<code class="docutils literal"><span class="pre">select.</span></code> This brings us to line 31, where a single buffer of data is
 received from the client. The data is immediately returned to the client,
 if present.</p>
 <p>In this way, a series of longer messages from clients may be handled
@@ -287,9 +287,9 @@ library: <a class="reference external" href="http://docs.python.org/2/library/th
 to solving the problem of sharing resources among concurrent tasks.</p>
 <div class="section" id="id1">
 <h3>Threading<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>The <tt class="docutils literal"><span class="pre">threading</span></tt> module extends and provides a more useable API for the
-older, more basic <tt class="docutils literal"><span class="pre">thread</span></tt> module.  You should never need to address the
-<tt class="docutils literal"><span class="pre">thread</span></tt> module directly.</p>
+<p>The <code class="docutils literal"><span class="pre">threading</span></code> module extends and provides a more useable API for the
+older, more basic <code class="docutils literal"><span class="pre">thread</span></code> module.  You should never need to address the
+<code class="docutils literal"><span class="pre">thread</span></code> module directly.</p>
 <p>Threads are lightweight, independent processes that share the memory space
 used by the process that spawns them. This allows for great convenience in
 processing shared data. But that convenience comes at the price of
@@ -303,14 +303,14 @@ example of this approach, implemented as a set of Python classes,
 ostensibly create a separate process in which to run the handler code for a
 client connection, in reality, that process shares the <a class="reference external" href="http://jessenoller.com/blog/2009/02/01/python-threads-and-the-global-interpreter-lock">GIL</a> and so even
 though it is running &#8216;separately&#8217;, it&#8217;s bound by the same resource
-limitations as simply using <tt class="docutils literal"><span class="pre">select</span></tt>.</p>
+limitations as simply using <code class="docutils literal"><span class="pre">select</span></code>.</p>
 </div>
 <div class="section" id="id2">
 <h3>Multiprocessing<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>The <tt class="docutils literal"><span class="pre">multiprocessing</span></tt> module basically offers that same API as the
+<p>The <code class="docutils literal"><span class="pre">multiprocessing</span></code> module basically offers that same API as the
 threading module. So using it would look much like the example linked
-above, except that we would create the <tt class="docutils literal"><span class="pre">Client</span></tt> class as a subclass of
-<tt class="docutils literal"><span class="pre">multiprocessing.Process</span></tt> rather than <tt class="docutils literal"><span class="pre">threading.Thread</span></tt>.</p>
+above, except that we would create the <code class="docutils literal"><span class="pre">Client</span></code> class as a subclass of
+<code class="docutils literal"><span class="pre">multiprocessing.Process</span></code> rather than <code class="docutils literal"><span class="pre">threading.Thread</span></code>.</p>
 <p>Multiprocessing differs from threading in that it creates completely
 separate processes rather than lightweight threads. The processes created
 <strong>do not share</strong> memory space with each-other, and so if you have a need to
@@ -351,7 +351,7 @@ of tens of thousands at once.</p>
 that it allows you to write code as if it were synchronous, without needing
 to worry about when it might be interrupted.</p>
 <p>The code for this example is remarkably light, simply because the majority
-of the work is done by a <tt class="docutils literal"><span class="pre">StreamServer</span></tt> class provided by gevent. All we
+of the work is done by a <code class="docutils literal"><span class="pre">StreamServer</span></code> class provided by gevent. All we
 have to do is write the portion that actually handles a single client
 connection.</p>
 </div>
@@ -374,12 +374,12 @@ connection.</p>
 </pre></div>
 </div>
 <p>This code looks remarkably like the connection-handling code from our
-original server, and from the <tt class="docutils literal"><span class="pre">select</span></tt> version above. In fact, it is
+original server, and from the <code class="docutils literal"><span class="pre">select</span></code> version above. In fact, it is
 exactly the same, minus the work needed to manage readable sockets for
 select.</p>
 </div>
 <div class="section" id="the-streamserver-in-action">
-<h3>The <tt class="docutils literal"><span class="pre">StreamServer</span></tt> in Action<a class="headerlink" href="#the-streamserver-in-action" title="Permalink to this headline">¶</a></h3>
+<h3>The <code class="docutils literal"><span class="pre">StreamServer</span></code> in Action<a class="headerlink" href="#the-streamserver-in-action" title="Permalink to this headline">¶</a></h3>
 <p>Here&#8217;s how you run such a server:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">gevent.server</span> <span class="kn">import</span> <span class="n">StreamServer</span>
@@ -390,13 +390,13 @@ select.</p>
     <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Note the call to <tt class="docutils literal"><span class="pre">gevent.monkey.patch_all</span></tt>. Gevent works by leveraging a
-low-level library called <tt class="docutils literal"><span class="pre">libevent</span></tt>. To accomodate this library, it makes
+<p>Note the call to <code class="docutils literal"><span class="pre">gevent.monkey.patch_all</span></code>. Gevent works by leveraging a
+low-level library called <code class="docutils literal"><span class="pre">libevent</span></code>. To accomodate this library, it makes
 some changes to how blocking is handled by code in a number of standard
 Python libraries such as socket. In order to fully take advantage of these
-optimizations, calling one of the patch functions from <tt class="docutils literal"><span class="pre">gevent.monkey</span></tt>
-(or simply calling <tt class="docutils literal"><span class="pre">patch_all</span></tt>) will apply these changes so that if you
-are using a library built on one of these bases (such as <tt class="docutils literal"><span class="pre">requests</span></tt>) you
+optimizations, calling one of the patch functions from <code class="docutils literal"><span class="pre">gevent.monkey</span></code>
+(or simply calling <code class="docutils literal"><span class="pre">patch_all</span></code>) will apply these changes so that if you
+are using a library built on one of these bases (such as <code class="docutils literal"><span class="pre">requests</span></code>) you
 can take advantage of the asynchronous I/O provided by gevent.</p>
 </div>
 </div>
@@ -406,13 +406,13 @@ can take advantage of the asynchronous I/O provided by gevent.</p>
 <p>In this short lesson, we&#8217;ve explored a number of ways of solving the
 problem of <em>blocking code</em> with <em>concurrency</em>.</p>
 <p>I&#8217;ve attached samples of a working version of the echo server implemented
-in blocking style, using <tt class="docutils literal"><span class="pre">select</span></tt> and using <tt class="docutils literal"><span class="pre">gevent</span></tt> to this lecture as
-<a class="reference download internal" href="../../_downloads/echo_server_sync.tgz"><tt class="xref download docutils literal"><span class="pre">echo_server_sync.tgz</span></tt></a>.</p>
+in blocking style, using <code class="docutils literal"><span class="pre">select</span></code> and using <code class="docutils literal"><span class="pre">gevent</span></code> to this lecture as
+<a class="reference download internal" href="../../_downloads/echo_server_sync.tgz"><code class="xref download docutils literal"><span class="pre">echo_server_sync.tgz</span></code></a>.</p>
 <p>Your task is to update your HTTP server using one of the techniques
-described above: <tt class="docutils literal"><span class="pre">select</span></tt>, <tt class="docutils literal"><span class="pre">threading</span></tt>, <tt class="docutils literal"><span class="pre">multiprocessing</span></tt> or
-<tt class="docutils literal"><span class="pre">asynchronous</span> <span class="pre">concurrency</span></tt>.</p>
-<p>If you choose to use <tt class="docutils literal"><span class="pre">asynchronous</span> <span class="pre">concurrency</span></tt> you may choose either
-<tt class="docutils literal"><span class="pre">gevent</span></tt> (demoed here) or <tt class="docutils literal"><span class="pre">twisted</span></tt>.</p>
+described above: <code class="docutils literal"><span class="pre">select</span></code>, <code class="docutils literal"><span class="pre">threading</span></code>, <code class="docutils literal"><span class="pre">multiprocessing</span></code> or
+<code class="docutils literal"><span class="pre">asynchronous</span> <span class="pre">concurrency</span></code>.</p>
+<p>If you choose to use <code class="docutils literal"><span class="pre">asynchronous</span> <span class="pre">concurrency</span></code> you may choose either
+<code class="docutils literal"><span class="pre">gevent</span></code> (demoed here) or <code class="docutils literal"><span class="pre">twisted</span></code>.</p>
 </div>
 </div>
 </div>
@@ -421,7 +421,7 @@ described above: <tt class="docutils literal"><span class="pre">select</span></t
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -430,8 +430,8 @@ described above: <tt class="docutils literal"><span class="pre">select</span></t
 <li><a class="reference internal" href="#blocking-calls">Blocking Calls</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#simple-concurrency-w-select">Simple Concurrency w/ <tt class="docutils literal"><span class="pre">select</span></tt></a><ul>
-<li><a class="reference internal" href="#using-select">Using <tt class="docutils literal"><span class="pre">select</span></tt></a></li>
+<li><a class="reference internal" href="#simple-concurrency-w-select">Simple Concurrency w/ <code class="docutils literal"><span class="pre">select</span></code></a><ul>
+<li><a class="reference internal" href="#using-select">Using <code class="docutils literal"><span class="pre">select</span></code></a></li>
 <li><a class="reference internal" href="#what-s-changed">What&#8217;s Changed</a></li>
 <li><a class="reference internal" href="#what-hasn-t-changed">What Hasn&#8217;t Changed</a></li>
 </ul>
@@ -444,7 +444,7 @@ described above: <tt class="docutils literal"><span class="pre">select</span></t
 <li><a class="reference internal" href="#asynchronous-concurrency">Asynchronous Concurrency</a><ul>
 <li><a class="reference internal" href="#asynchronous-models">Asynchronous Models</a></li>
 <li><a class="reference internal" href="#an-echo-handler">An Echo Handler</a></li>
-<li><a class="reference internal" href="#the-streamserver-in-action">The <tt class="docutils literal"><span class="pre">StreamServer</span></tt> in Action</a></li>
+<li><a class="reference internal" href="#the-streamserver-in-action">The <code class="docutils literal"><span class="pre">StreamServer</span></code> in Action</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#use-what-you-ve-learned">Use What You&#8217;ve Learned</a></li>
@@ -458,7 +458,7 @@ described above: <tt class="docutils literal"><span class="pre">select</span></t
   <h4>Next topic</h4>
   <p class="topless"><a href="jenkins.html"
                         title="next chapter">Automate Tests with Travis CI</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -475,7 +475,7 @@ described above: <tt class="docutils literal"><span class="pre">select</span></t
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -487,14 +487,14 @@ described above: <tt class="docutils literal"><span class="pre">select</span></t
         <li class="right" >
           <a href="index.html" title="Day 09 Lectures"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" >Day 09 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 09 Lectures</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

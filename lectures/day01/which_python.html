@@ -34,7 +34,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -56,16 +56,16 @@
         <li class="right" >
           <a href="index.html" title="Day 01 Lectures"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 01 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 01 Lectures</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="which-python">
 <h1>Which Python?<a class="headerlink" href="#which-python" title="Permalink to this headline">¶</a></h1>
@@ -83,7 +83,7 @@ those steps in mind.</p>
 <h2>Bytes and Unicode<a class="headerlink" href="#bytes-and-unicode" title="Permalink to this headline">¶</a></h2>
 <p>One of the largest changes from Python 2 to Python three concerns the
 difference in handling bytes and unicode.</p>
-<p>In Python 2, a <tt class="docutils literal"><span class="pre">string</span></tt> literal is written thusly:</p>
+<p>In Python 2, a <code class="docutils literal"><span class="pre">string</span></code> literal is written thusly:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;I am a string&#39;</span>
 </pre></div>
 </div>
@@ -93,36 +93,36 @@ long as the only characters in your text are in the ASCII character set
 (basic English). However, this is less and less often the case. It is very
 common these days to see international characters in text that passes
 through your programs.</p>
-<p>Python 2 can handle these international characters using a <tt class="docutils literal"><span class="pre">unicode</span></tt> literal:</p>
+<p>Python 2 can handle these international characters using a <code class="docutils literal"><span class="pre">unicode</span></code> literal:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;I am a string with élan&#39;</span>
 </pre></div>
 </div>
-<p>Enocding a <tt class="docutils literal"><span class="pre">unicode</span></tt> literal transforms it to a string literal:</p>
+<p>Enocding a <code class="docutils literal"><span class="pre">unicode</span></code> literal transforms it to a string literal:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span> <span class="o">=</span> <span class="s">u&#39;I am a string with élan&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bar</span> <span class="o">=</span> <span class="n">foo</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bar</span>
 <span class="go">&#39;I am a string with \xc3\xa9lan&#39;</span>
 </pre></div>
 </div>
-<p>This shows that in fact, a <tt class="docutils literal"><span class="pre">string</span></tt> is a sequence of <strong>bytes</strong>.</p>
+<p>This shows that in fact, a <code class="docutils literal"><span class="pre">string</span></code> is a sequence of <strong>bytes</strong>.</p>
 <p>Python 2 allows for implicit conversion between unicode and bytes, but Python 3
 does not.</p>
-<p>In Python 3 you must hold text in your Python programs as <tt class="docutils literal"><span class="pre">unicode</span></tt> objects,
-and only encode to <tt class="docutils literal"><span class="pre">bytes</span></tt> when passing that data out (to file, network,
+<p>In Python 3 you must hold text in your Python programs as <code class="docutils literal"><span class="pre">unicode</span></code> objects,
+and only encode to <code class="docutils literal"><span class="pre">bytes</span></code> when passing that data out (to file, network,
 buffer).</p>
 <p>Similarly, you must <em>decode</em> bytes into unicode when you bring data in to your
 program.</p>
 <p>To help build the rigor needed to support this while still writing Python 2, we
 will follow this convention:</p>
 <ul class="simple">
-<li>All textual data in our programs should be <em>explicitly</em> unicode: <tt class="docutils literal"><span class="pre">u'élan'</span></tt>.</li>
-<li>All binary data will be written <em>explicitly</em> as byte string: <tt class="docutils literal"><span class="pre">b'\xc3\xa9lan</span></tt>.</li>
+<li>All textual data in our programs should be <em>explicitly</em> unicode: <code class="docutils literal"><span class="pre">u'élan'</span></code>.</li>
+<li>All binary data will be written <em>explicitly</em> as byte string: <code class="docutils literal"><span class="pre">b'\xc3\xa9lan</span></code>.</li>
 </ul>
 </div>
 <div class="section" id="integer-vs-float-division">
 <h2>Integer vs. Float Division<a class="headerlink" href="#integer-vs-float-division" title="Permalink to this headline">¶</a></h2>
-<p>In Python there are two division operators: <tt class="docutils literal"><span class="pre">/</span></tt> and <tt class="docutils literal"><span class="pre">//</span></tt>. In Python 3 these
-are <tt class="docutils literal"><span class="pre">division</span></tt> and <tt class="docutils literal"><span class="pre">integer</span> <span class="pre">division</span></tt> (also known as <tt class="docutils literal"><span class="pre">floored</span> <span class="pre">division</span></tt>):</p>
+<p>In Python there are two division operators: <code class="docutils literal"><span class="pre">/</span></code> and <code class="docutils literal"><span class="pre">//</span></code>. In Python 3 these
+are <code class="docutils literal"><span class="pre">division</span></code> and <code class="docutils literal"><span class="pre">integer</span> <span class="pre">division</span></code> (also known as <code class="docutils literal"><span class="pre">floored</span> <span class="pre">division</span></code>):</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>
 <span class="go">0.5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">//</span> <span class="mi">2</span>
@@ -133,10 +133,10 @@ are <tt class="docutils literal"><span class="pre">division</span></tt> and <tt 
 <span class="go">1</span>
 </pre></div>
 </div>
-<p>But in Python 2, things are a bit different. The <tt class="docutils literal"><span class="pre">//</span></tt> operator works
-similarly (it still gives you the <tt class="docutils literal"><span class="pre">floored</span></tt> result). The <tt class="docutils literal"><span class="pre">/</span></tt> operator is a
+<p>But in Python 2, things are a bit different. The <code class="docutils literal"><span class="pre">//</span></code> operator works
+similarly (it still gives you the <code class="docutils literal"><span class="pre">floored</span></code> result). The <code class="docutils literal"><span class="pre">/</span></code> operator is a
 completely different story. The return values for both depend on what you give
-them, and the <tt class="docutils literal"><span class="pre">/</span></tt> operator may work as floored division if you give use
+them, and the <code class="docutils literal"><span class="pre">/</span></code> operator may work as floored division if you give use
 integers:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">//</span> <span class="mi">2</span>
 <span class="go">0</span>
@@ -149,7 +149,7 @@ integers:</p>
 </pre></div>
 </div>
 <p>You should always be explicit which version of division you are using.  If you
-want integer or floored results, Explicitly use the <tt class="docutils literal"><span class="pre">//</span></tt> operator.</p>
+want integer or floored results, Explicitly use the <code class="docutils literal"><span class="pre">//</span></code> operator.</p>
 <p>And remember to be aware that much existing code does not carefully make this
 distinction. You should always be alert for potential problems arising from
 this discrepancy.</p>
@@ -183,7 +183,7 @@ excellent guide to strategies you can use today.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -202,7 +202,7 @@ excellent guide to strategies you can use today.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="virtualenv.html"
                         title="next chapter">Working with Virtualenv</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -219,7 +219,7 @@ excellent guide to strategies you can use today.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -231,14 +231,14 @@ excellent guide to strategies you can use today.</p>
         <li class="right" >
           <a href="index.html" title="Day 01 Lectures"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" >Day 01 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 01 Lectures</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

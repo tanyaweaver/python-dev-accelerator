@@ -31,7 +31,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -41,20 +41,20 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="a-quick-flask-walkthrough">
 <h1>A Quick Flask Walkthrough<a class="headerlink" href="#a-quick-flask-walkthrough" title="Permalink to this headline">¶</a></h1>
@@ -65,7 +65,7 @@ you&#8217;ll interact a bit with the framework by creating a very simple Flask
 application and seeing what it can do.</p>
 <div class="section" id="setting-up">
 <h2>Setting Up<a class="headerlink" href="#setting-up" title="Permalink to this headline">¶</a></h2>
-<p>Start by creating a <tt class="docutils literal"><span class="pre">flask_intro</span></tt> project and virtualenv:</p>
+<p>Start by creating a <code class="docutils literal"><span class="pre">flask_intro</span></code> project and virtualenv:</p>
 <div class="highlight-bash"><div class="highlight"><pre>heffalump:cewing cewing$ mkproject flask_intro
 New python executable in flask_intro/bin/python
 Installing setuptools, pip...done.
@@ -75,7 +75,7 @@ Setting project for flask_intro to /Users/cewing/projects/flask_intro
 heffalump:flask_intro cewing$
 </pre></div>
 </div>
-<p>Finally, install Flask using <tt class="docutils literal"><span class="pre">pip</span></tt>:</p>
+<p>Finally, install Flask using <code class="docutils literal"><span class="pre">pip</span></code>:</p>
 <div class="highlight-bash"><div class="highlight"><pre>flask_intro]
 heffalump:flask_intro cewing$ pip install flask
 Downloading/unpacking flask
@@ -92,7 +92,7 @@ heffalump:flask_intro cewing$
 <h2>Kicking the Tires<a class="headerlink" href="#kicking-the-tires" title="Permalink to this headline">¶</a></h2>
 <p>We&#8217;ve installed the Flask microframework and all of its dependencies.</p>
 <p>Now, let&#8217;s see what it can do.</p>
-<p>With your flaskenv active, create a file called <tt class="docutils literal"><span class="pre">flask_intro.py</span></tt> and open it
+<p>With your flaskenv active, create a file called <code class="docutils literal"><span class="pre">flask_intro.py</span></code> and open it
 in your text editor.</p>
 <div class="section" id="a-flask-app">
 <h3>A Flask App<a class="headerlink" href="#a-flask-app" title="Permalink to this headline">¶</a></h3>
@@ -109,7 +109,7 @@ simple app.  Type it into <cite>flask_intro.py</cite>:</p>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>As you might expect by now, the last block in our <tt class="docutils literal"><span class="pre">flask_intro.py</span></tt> file
+<p>As you might expect by now, the last block in our <code class="docutils literal"><span class="pre">flask_intro.py</span></code> file
 allows us to run this as a python program. Save your file, and in your
 terminal try this:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>flask_intro<span class="o">]</span>
@@ -117,16 +117,16 @@ heffalump:flask_intro cewing<span class="nv">$ </span>python flask_intro.py
  * Running on http://127.0.0.1:5000/
 </pre></div>
 </div>
-<p>Load <tt class="docutils literal"><span class="pre">http://localhost:5000</span></tt> in your browser to see it in action.</p>
+<p>Load <code class="docutils literal"><span class="pre">http://localhost:5000</span></code> in your browser to see it in action.</p>
 </div>
 <div class="section" id="debugging-flask">
 <h3>Debugging Flask<a class="headerlink" href="#debugging-flask" title="Permalink to this headline">¶</a></h3>
-<p>You&#8217;ve seen how <tt class="docutils literal"><span class="pre">pdb</span></tt> can come in handy in debugging Python code. And when we
-discussed the CGI specification, you used <tt class="docutils literal"><span class="pre">cgitb</span></tt> to enable tracebacks for
+<p>You&#8217;ve seen how <code class="docutils literal"><span class="pre">pdb</span></code> can come in handy in debugging Python code. And when we
+discussed the CGI specification, you used <code class="docutils literal"><span class="pre">cgitb</span></code> to enable tracebacks for
 errors raised in otherwise impenetrable CGI code.</p>
 <p>Flask provides a combination of these features.</p>
 <p>To explore them a bit, add a divide-by-0 error to your app, and also update the
-call to <tt class="docutils literal"><span class="pre">app.run()</span></tt>:</p>
+call to <code class="docutils literal"><span class="pre">app.run()</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">hello_world</span><span class="p">():</span>
     <span class="n">bar</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>         <span class="c">#&lt;- Add an error so you can see the fireworks.</span>
     <span class="k">return</span> <span class="s">&#39;Hello World!&#39;</span>
@@ -152,7 +152,7 @@ with a few bound symbols and see what you can find out about them.</p>
 <ul class="simple">
 <li>You instantiated a <cite>Flask</cite> app with a name that represents the package or
 module containing the app<ul>
-<li>Because our app is a single Python module, this should be <tt class="docutils literal"><span class="pre">__name__</span></tt></li>
+<li>Because our app is a single Python module, this should be <code class="docutils literal"><span class="pre">__name__</span></code></li>
 <li>This is used to help the <cite>Flask</cite> app figure out where to look for
 <em>resources</em></li>
 </ul>
@@ -178,8 +178,8 @@ called.</p>
 <p>URL Rules are strings.  They represent what environ[&#8216;PATH_INFO&#8217;] will look like
 when it arrives at your application code.</p>
 <p>These rules are added to a <em>mapping</em> on the Flask object called the <em>url_map</em>.</p>
-<p>You can call <tt class="docutils literal"><span class="pre">app.add_url_rule()</span></tt> to add a new one</p>
-<p>Or you can use what we&#8217;ve used, the <tt class="docutils literal"><span class="pre">app.route()</span></tt> decorator.</p>
+<p>You can call <code class="docutils literal"><span class="pre">app.add_url_rule()</span></code> to add a new one</p>
+<p>Or you can use what we&#8217;ve used, the <code class="docutils literal"><span class="pre">app.route()</span></code> decorator.</p>
 <p>This <em>imperative</em> code example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;some function that returns something&quot;&quot;&quot;</span>
@@ -195,10 +195,10 @@ when it arrives at your application code.</p>
     <span class="k">return</span> <span class="s">&quot;this is the homepage&quot;</span>
 </pre></div>
 </div>
-<p>Pick one of the above, and add a the new function to your <tt class="docutils literal"><span class="pre">flask_intro.py</span></tt>
-app file. (Make sure it comes above the <tt class="docutils literal"><span class="pre">__main__</span></tt>)</p>
-<p>Notice that the the route for the <tt class="docutils literal"><span class="pre">hello_world</span></tt> function we defined in
-<tt class="docutils literal"><span class="pre">flask_intro.py</span></tt> did not have an <tt class="docutils literal"><span class="pre">endpoint</span></tt> argument. This argument allows
+<p>Pick one of the above, and add a the new function to your <code class="docutils literal"><span class="pre">flask_intro.py</span></code>
+app file. (Make sure it comes above the <code class="docutils literal"><span class="pre">__main__</span></code>)</p>
+<p>Notice that the the route for the <code class="docutils literal"><span class="pre">hello_world</span></code> function we defined in
+<code class="docutils literal"><span class="pre">flask_intro.py</span></code> did not have an <code class="docutils literal"><span class="pre">endpoint</span></code> argument. This argument allows
 us to establish a different &#8216;name&#8217; for our route than the name of the function
 that will handle the route. If this argument is ommitted, then the &#8216;name&#8217; for
 the route will be the same as the name of the function.</p>
@@ -213,7 +213,7 @@ templates</em></p>
 <p>This separation is called <strong>decoupling</strong> and it is a good thing.</p>
 <p>Let&#8217;s try it out to make the concept clear.</p>
 <p>Fire up a python interpreter in the same directory where you&#8217;ve created
-<tt class="docutils literal"><span class="pre">flask_intro.py</span></tt>. When it&#8217;s ready, type the following:</p>
+<code class="docutils literal"><span class="pre">flask_intro.py</span></code>. When it&#8217;s ready, type the following:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask_intro</span> <span class="kn">import</span> <span class="n">app</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">url_for</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">app</span><span class="o">.</span><span class="n">test_request_context</span><span class="p">():</span>
@@ -229,11 +229,11 @@ templates</em></p>
 just needed to know its name.</p>
 <p>There are a few important points to note about what we just did:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">url_for</span></tt> requires an <em>HTTP request context</em> to work</li>
+<li><code class="docutils literal"><span class="pre">url_for</span></code> requires an <em>HTTP request context</em> to work</li>
 <li>You can fake an HTTP request when working in a terminal (or testing)</li>
-<li>The <tt class="docutils literal"><span class="pre">test_request_context</span></tt> method of your app object provides one.</li>
-<li>That method is a <em>context manager</em>, so you can use it with the <tt class="docutils literal"><span class="pre">with</span></tt>
-statement. When execution leaves the block defined by <tt class="docutils literal"><span class="pre">with</span></tt>, the context
+<li>The <code class="docutils literal"><span class="pre">test_request_context</span></code> method of your app object provides one.</li>
+<li>That method is a <em>context manager</em>, so you can use it with the <code class="docutils literal"><span class="pre">with</span></code>
+statement. When execution leaves the block defined by <code class="docutils literal"><span class="pre">with</span></code>, the context
 is safely destroyed.</li>
 </ul>
 </div>
@@ -244,7 +244,7 @@ Python regular expressions.</p>
 <p>Flask allows for dynamic urls as well, but uses <em>placeholders</em> instead.</p>
 <p>A <em>placeholder</em> in a URL rule becomes a named arg to your function.</p>
 <p>And <em>converters</em> ensure the incoming argument is of the correct type.</p>
-<p>Add these two new routes to <tt class="docutils literal"><span class="pre">flask_intro.py</span></tt>:</p>
+<p>Add these two new routes to <code class="docutils literal"><span class="pre">flask_intro.py</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/profile/&lt;username&gt;&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">show_profile</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
     <span class="k">return</span> <span class="s">&quot;My username is </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">username</span>
@@ -274,13 +274,13 @@ Python regular expressions.</p>
     <span class="k">return</span> <span class="s">&#39;writing entry </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">id</span>
 </pre></div>
 </div>
-<p>After adding that to <tt class="docutils literal"><span class="pre">flask_intro.py</span></tt> and saving, start up your app and try
-loading <tt class="docutils literal"><span class="pre">http://localhost:5000/blog/entry/23/</span></tt> into your browser. Which of
+<p>After adding that to <code class="docutils literal"><span class="pre">flask_intro.py</span></code> and saving, start up your app and try
+loading <code class="docutils literal"><span class="pre">http://localhost:5000/blog/entry/23/</span></code> into your browser. Which of
 the two was called?</p>
 <p>Before finishing the tutorial, try reversing one more time now that you have a
 bit more variety to work with:</p>
-<p>Quit your Flask app with <tt class="docutils literal"><span class="pre">^C</span></tt>.  Then start a python interpreter in that same
-terminal and import your <tt class="docutils literal"><span class="pre">flask_intro.py</span></tt> module:</p>
+<p>Quit your Flask app with <code class="docutils literal"><span class="pre">^C</span></code>.  Then start a python interpreter in that same
+terminal and import your <code class="docutils literal"><span class="pre">flask_intro.py</span></code> module:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask_intro</span> <span class="kn">import</span> <span class="n">app</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">url_for</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">app</span><span class="o">.</span><span class="n">test_request_context</span><span class="p">():</span>
@@ -301,7 +301,7 @@ terminal and import your <tt class="docutils literal"><span class="pre">flask_in
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -324,7 +324,7 @@ terminal and import your <tt class="docutils literal"><span class="pre">flask_in
 </li>
 </ul>
 
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -341,18 +341,18 @@ terminal and import your <tt class="docutils literal"><span class="pre">flask_in
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

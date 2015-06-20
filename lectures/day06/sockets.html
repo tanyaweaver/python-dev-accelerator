@@ -34,7 +34,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -56,21 +56,21 @@
         <li class="right" >
           <a href="lettuce.html" title="Behavior Driven Development with Lettuce"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 6 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 6 Lectures</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="tcp-ip-and-sockets">
 <h1>TCP/IP and Sockets<a class="headerlink" href="#tcp-ip-and-sockets" title="Permalink to this headline">¶</a></h1>
 <p>This lecture has some longer code samples which you might want to have on
-hand.  They are reproduced in <a class="reference download internal" href="../../_downloads/socket_exercises.py"><tt class="xref download docutils literal"><span class="pre">socket_exercises.py</span></tt></a></p>
+hand.  They are reproduced in <a class="reference download internal" href="../../_downloads/socket_exercises.py"><code class="xref download docutils literal"><span class="pre">socket_exercises.py</span></code></a></p>
 <div class="section" id="network-basics">
 <h2>Network Basics<a class="headerlink" href="#network-basics" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="../../_images/network_topology.png"><img alt="../../_images/network_topology.png" class="align-center" src="../../_images/network_topology.png" style="width: 45%;" /></a>
@@ -250,7 +250,7 @@ know their hostname. For example:</p>
 <span class="go">&#39;108.59.11.99&#39;</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">gethostbyname_ex</span></tt> method of the <tt class="docutils literal"><span class="pre">socket</span></tt> library provides more
+<p>The <code class="docutils literal"><span class="pre">gethostbyname_ex</span></code> method of the <code class="docutils literal"><span class="pre">socket</span></code> library provides more
 information about the machines we are exploring:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">socket</span><span class="o">.</span><span class="n">gethostbyname_ex</span><span class="p">(</span><span class="s">&#39;google.com&#39;</span><span class="p">)</span>
 <span class="go">(&#39;google.com&#39;, [], [&#39;173.194.33.9&#39;, &#39;173.194.33.14&#39;,</span>
@@ -268,7 +268,7 @@ information about the machines we are exploring:</p>
 </div>
 <div class="section" id="constructing-a-socket">
 <h3>Constructing a Socket<a class="headerlink" href="#constructing-a-socket" title="Permalink to this headline">¶</a></h3>
-<p>To create a socket, you use the <strong>socket</strong> method of the <tt class="docutils literal"><span class="pre">socket</span></tt> library.
+<p>To create a socket, you use the <strong>socket</strong> method of the <code class="docutils literal"><span class="pre">socket</span></code> library.
 It takes up to three optional positional arguments (here we use none to get
 the default behavior):</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
@@ -293,7 +293,7 @@ these integers are <strong>constants</strong> defined in the socket library.</p>
 <h3>A quick utility method<a class="headerlink" href="#a-quick-utility-method" title="Permalink to this headline">¶</a></h3>
 <p>Let&#8217;s define a method in place to help us see these constants. It will take a
 single argument, the shared prefix for a defined set of constants:</p>
-<p><a class="reference download internal" href="../../_downloads/socket_exercises.py"><tt class="xref download docutils literal"><span class="pre">see</span> <span class="pre">socket_exercises.py</span></tt></a></p>
+<p><a class="reference download internal" href="../../_downloads/socket_exercises.py"><code class="xref download docutils literal"><span class="pre">see</span> <span class="pre">socket_exercises.py</span></code></a></p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">get_constants</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="sd">&quot;&quot;&quot;mapping of socket module constants to their names.&quot;&quot;&quot;</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
@@ -319,7 +319,7 @@ stack.  There were a couple of different types of IP addresses:</p>
 </ul>
 <p>The <strong>family</strong> of a socket corresponds to the <em>addressing system</em> it uses for
 connecting.</p>
-<p>Families defined in the <tt class="docutils literal"><span class="pre">socket</span></tt> library are prefixed by <tt class="docutils literal"><span class="pre">AF_</span></tt>:</p>
+<p>Families defined in the <code class="docutils literal"><span class="pre">socket</span></code> library are prefixed by <code class="docutils literal"><span class="pre">AF_</span></code>:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">families</span> <span class="o">=</span> <span class="n">get_constants</span><span class="p">(</span><span class="s">&#39;AF_&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">families</span>
 <span class="go">{0: &#39;AF_UNSPEC&#39;, 1: &#39;AF_UNIX&#39;, 2: &#39;AF_INET&#39;,</span>
@@ -328,10 +328,10 @@ connecting.</p>
 </pre></div>
 </div>
 <p><em>Your results may vary</em></p>
-<p>Of all of these, the ones we care most about are <tt class="docutils literal"><span class="pre">2</span></tt> (IPv4) and <tt class="docutils literal"><span class="pre">30</span></tt>
+<p>Of all of these, the ones we care most about are <code class="docutils literal"><span class="pre">2</span></code> (IPv4) and <code class="docutils literal"><span class="pre">30</span></code>
 (IPv6).</p>
 <p>When you are on a machine with an operating system that is Unix-like, you will
-find another generally useful socket family: <tt class="docutils literal"><span class="pre">AF_UNIX</span></tt>, or Unix Domain
+find another generally useful socket family: <code class="docutils literal"><span class="pre">AF_UNIX</span></code>, or Unix Domain
 Sockets. Sockets in this family:</p>
 <ul class="build simple">
 <li>connect processes <strong>on the same machine</strong></li>
@@ -344,7 +344,7 @@ machine __or__ across the network</li>
 <div class="section" id="test-your-skills">
 <h3>Test your skills<a class="headerlink" href="#test-your-skills" title="Permalink to this headline">¶</a></h3>
 <p>What is the <em>default</em> family for the socket we created just a moment ago?</p>
-<p>(remember we bound the socket to the symbol <tt class="docutils literal"><span class="pre">foo</span></tt>) center</p>
+<p>(remember we bound the socket to the symbol <code class="docutils literal"><span class="pre">foo</span></code>) center</p>
 <p>How did you figure this out?</p>
 </div>
 </div>
@@ -353,25 +353,25 @@ machine __or__ across the network</li>
 <div class="section" id="id2">
 <h3>Socket Types<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>The socket <em>type</em> determines the semantics of socket communications.</p>
-<p>Look up socket type constants with the <tt class="docutils literal"><span class="pre">SOCK_</span></tt> prefix:</p>
+<p>Look up socket type constants with the <code class="docutils literal"><span class="pre">SOCK_</span></code> prefix:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">types</span> <span class="o">=</span> <span class="n">get_constants</span><span class="p">(</span><span class="s">&#39;SOCK_&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">types</span>
 <span class="go">{1: &#39;SOCK_STREAM&#39;, 2: &#39;SOCK_DGRAM&#39;,</span>
 <span class="go"> ...}</span>
 </pre></div>
 </div>
-<p>The most common are <tt class="docutils literal"><span class="pre">1</span></tt> (Stream communication (TCP)) and <tt class="docutils literal"><span class="pre">2</span></tt> (Datagram
+<p>The most common are <code class="docutils literal"><span class="pre">1</span></code> (Stream communication (TCP)) and <code class="docutils literal"><span class="pre">2</span></code> (Datagram
 communication (UDP)).</p>
 </div>
 <div class="section" id="id3">
 <h3>Test your skills<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>What is the <em>default</em> type for our generic socket, <tt class="docutils literal"><span class="pre">foo</span></tt>?</p>
+<p>What is the <em>default</em> type for our generic socket, <code class="docutils literal"><span class="pre">foo</span></code>?</p>
 </div>
 </div>
 <div class="section" id="socket-protocols">
 <h2>Socket Protocols<a class="headerlink" href="#socket-protocols" title="Permalink to this headline">¶</a></h2>
 <p>A socket also has a designated <em>protocol</em>. The constants for these are
-prefixed by <tt class="docutils literal"><span class="pre">IPPROTO_</span></tt>:</p>
+prefixed by <code class="docutils literal"><span class="pre">IPPROTO_</span></code>:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">protocols</span> <span class="o">=</span> <span class="n">get_constants</span><span class="p">(</span><span class="s">&#39;IPPROTO_&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">protocols</span>
 <span class="go">{0: &#39;IPPROTO_IP&#39;, 1: &#39;IPPROTO_ICMP&#39;,</span>
@@ -380,11 +380,11 @@ prefixed by <tt class="docutils literal"><span class="pre">IPPROTO_</span></tt>:
 </pre></div>
 </div>
 <p>The choice of which protocol to use for a socket is determined by the
-<em>internet layer</em> protocol you intend to use. <tt class="docutils literal"><span class="pre">TCP</span></tt>? <tt class="docutils literal"><span class="pre">UDP</span></tt>? <tt class="docutils literal"><span class="pre">ICMP</span></tt>?
-<tt class="docutils literal"><span class="pre">IGMP</span></tt>?</p>
+<em>internet layer</em> protocol you intend to use. <code class="docutils literal"><span class="pre">TCP</span></code>? <code class="docutils literal"><span class="pre">UDP</span></code>? <code class="docutils literal"><span class="pre">ICMP</span></code>?
+<code class="docutils literal"><span class="pre">IGMP</span></code>?</p>
 <div class="section" id="id4">
 <h3>Test your skills<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>What is the <em>default</em> protocol used by our generic socket, <tt class="docutils literal"><span class="pre">foo</span></tt>?</p>
+<p>What is the <em>default</em> protocol used by our generic socket, <code class="docutils literal"><span class="pre">foo</span></code>?</p>
 </div>
 <div class="section" id="custom-sockets">
 <h3>Custom Sockets<a class="headerlink" href="#custom-sockets" title="Permalink to this headline">¶</a></h3>
@@ -412,8 +412,8 @@ remote socket will have a specific communications profile.</p>
 <p>You ask.</p>
 </div>
 <div class="section" id="getaddrinfo">
-<h3><tt class="docutils literal"><span class="pre">getaddrinfo</span></tt><a class="headerlink" href="#getaddrinfo" title="Permalink to this headline">¶</a></h3>
-<p>The function <tt class="docutils literal"><span class="pre">socket.getaddrinfo</span></tt> provides information about available
+<h3><code class="docutils literal"><span class="pre">getaddrinfo</span></code><a class="headerlink" href="#getaddrinfo" title="Permalink to this headline">¶</a></h3>
+<p>The function <code class="docutils literal"><span class="pre">socket.getaddrinfo</span></code> provides information about available
 connections on a given host.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">socket</span><span class="o">.</span><span class="n">getaddrinfo</span><span class="p">(</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
 </pre></div>
@@ -460,7 +460,7 @@ server.</p>
 <p class="first admonition-title">Warning</p>
 <p class="last">Typing this next bit can take some time, and if you aren&#8217;t careful, the
 connection you open might time out before you get to the end. The
-exercise is reproduced in <a class="reference download internal" href="../../_downloads/socket_exercises.py"><tt class="xref download docutils literal"><span class="pre">socket_exercises.py</span></tt></a></p>
+exercise is reproduced in <a class="reference download internal" href="../../_downloads/socket_exercises.py"><code class="xref download docutils literal"><span class="pre">socket_exercises.py</span></code></a></p>
 </div>
 <p>First, connect and send a message:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">streams</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span>
@@ -492,33 +492,33 @@ exercise is reproduced in <a class="reference download internal" href="../../_do
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cewing_socket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>There are two basic methods on a socket for sending messages, <tt class="docutils literal"><span class="pre">send</span></tt> and
-<tt class="docutils literal"><span class="pre">sendall</span></tt>. We&#8217;re using the latter here.</p>
+<p>There are two basic methods on a socket for sending messages, <code class="docutils literal"><span class="pre">send</span></code> and
+<code class="docutils literal"><span class="pre">sendall</span></code>. We&#8217;re using the latter here.</p>
 <ul class="build simple">
 <li>the transmission continues until all data is sent or an error occurs</li>
-<li>success returns <tt class="docutils literal"><span class="pre">None</span></tt></li>
+<li>success returns <code class="docutils literal"><span class="pre">None</span></code></li>
 <li>failure to send raises an error</li>
 <li>you can use the type of error to figure out why the transmission failed</li>
 <li>if an error occurs you <strong>cannot</strong> know how much, if any, of your data was
 sent</li>
 </ul>
-<p>With <tt class="docutils literal"><span class="pre">send</span></tt>, you send the message one chunk at a time.  You are responsible
+<p>With <code class="docutils literal"><span class="pre">send</span></code>, you send the message one chunk at a time.  You are responsible
 for checking if a particular chunk succeeded or not, and you are also
 responsible for determining when the full transmission is done.</p>
-<p>The <tt class="docutils literal"><span class="pre">recv</span></tt> method handles incoming messages in buffers.</p>
+<p>The <code class="docutils literal"><span class="pre">recv</span></code> method handles incoming messages in buffers.</p>
 <ul class="build simple">
-<li>The sole required argument is <tt class="docutils literal"><span class="pre">buffer_size</span></tt> (an integer). It should be a
+<li>The sole required argument is <code class="docutils literal"><span class="pre">buffer_size</span></code> (an integer). It should be a
 power of 2 and smallish (~4096)</li>
-<li>It returns a byte string of <tt class="docutils literal"><span class="pre">buffer_size</span></tt> (or smaller if less data was
+<li>It returns a byte string of <code class="docutils literal"><span class="pre">buffer_size</span></code> (or smaller if less data was
 received)</li>
-<li>If the response is longer than <tt class="docutils literal"><span class="pre">buffer</span> <span class="pre">size</span></tt>, you can call the method
-repeatedly. The last bunch will be less than <tt class="docutils literal"><span class="pre">buffer</span> <span class="pre">size</span></tt>.</li>
+<li>If the response is longer than <code class="docutils literal"><span class="pre">buffer</span> <span class="pre">size</span></code>, you can call the method
+repeatedly. The last bunch will be less than <code class="docutils literal"><span class="pre">buffer</span> <span class="pre">size</span></code>.</li>
 </ul>
 <p>Hotice that receiving a message is not a one-and-done kind of thing</p>
 <p>We don&#8217;t know how big the incoming message is before we start receiving it.</p>
-<p>As a result, we have to use the <tt class="docutils literal"><span class="pre">Accumulator</span></tt> pattern to gather incoming
+<p>As a result, we have to use the <code class="docutils literal"><span class="pre">Accumulator</span></code> pattern to gather incoming
 buffers of the message until there is no more to get.</p>
-<p>The <tt class="docutils literal"><span class="pre">recv</span></tt> method will return a string less than <tt class="docutils literal"><span class="pre">buffsize</span></tt> if there isn&#8217;t
+<p>The <code class="docutils literal"><span class="pre">recv</span></code> method will return a string less than <code class="docutils literal"><span class="pre">buffsize</span></code> if there isn&#8217;t
 any more to come.</p>
 <p>Sockets do not have a concept of the &#8220;End Of Transmission&#8221;.</p>
 <p>So what happens if the message coming in is an <em>exact multiple of the
@@ -526,7 +526,7 @@ buffsize</em>?</p>
 <p>There are a couple of strategies for dealing with this. One is to punt to the
 <em>application level protocol</em> and allow it to predetermine the size of the
 message to come. HTTP works this way</p>
-<p>The other is to use the <tt class="docutils literal"><span class="pre">shutdown</span></tt> method of a socket to close that socket
+<p>The other is to use the <code class="docutils literal"><span class="pre">shutdown</span></code> method of a socket to close that socket
 for reading, writing or both.</p>
 <p>When you do so, a 0-byte message is sent to the partner socket, allowing it to
 know that you are finished.</p>
@@ -558,7 +558,7 @@ interaction, then by building a basic echo server and client.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -594,7 +594,7 @@ interaction, then by building a basic echo server and client.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#address-information">Address Information</a><ul>
-<li><a class="reference internal" href="#getaddrinfo"><tt class="docutils literal"><span class="pre">getaddrinfo</span></tt></a></li>
+<li><a class="reference internal" href="#getaddrinfo"><code class="docutils literal"><span class="pre">getaddrinfo</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#communicating">Communicating</a><ul>
@@ -613,7 +613,7 @@ interaction, then by building a basic echo server and client.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../day07/index.html"
                         title="next chapter">Day 07 Lectures</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -630,7 +630,7 @@ interaction, then by building a basic echo server and client.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -642,14 +642,14 @@ interaction, then by building a basic echo server and client.</p>
         <li class="right" >
           <a href="lettuce.html" title="Behavior Driven Development with Lettuce"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" >Day 6 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 6 Lectures</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

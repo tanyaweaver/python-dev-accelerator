@@ -34,7 +34,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -56,16 +56,16 @@
         <li class="right" >
           <a href="index.html" title="Day 01 Assignments"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 01 Assignments</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 01 Assignments</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="turning-sublime-text-into-a-lightweight-python-ide">
 <h1>Turning Sublime Text Into a Lightweight Python IDE<a class="headerlink" href="#turning-sublime-text-into-a-lightweight-python-ide" title="Permalink to this headline">¶</a></h1>
@@ -100,10 +100,10 @@ Some of the plugins I recommend are not available for version 2.</p>
 and read that link then return here.</p>
 <p>There are a number of <a class="reference external" href="http://www.sublimetext.com/docs/3/settings.html">different levels of configuration</a> in Sublime Text. You
 will most often work on settings at the user level.</p>
-<p>Open <tt class="docutils literal"><span class="pre">Preferences</span></tt> -&gt; <tt class="docutils literal"><span class="pre">Settings</span> <span class="pre">-</span> <span class="pre">Default</span></tt> to see all the default settings
+<p>Open <code class="docutils literal"><span class="pre">Preferences</span></code> -&gt; <code class="docutils literal"><span class="pre">Settings</span> <span class="pre">-</span> <span class="pre">Default</span></code> to see all the default settings
 and choose which to override.</p>
-<p>Create your own set of preferences by opening <tt class="docutils literal"><span class="pre">Preferences</span></tt> -&gt; <tt class="docutils literal"><span class="pre">Settings</span> <span class="pre">-</span>
-<span class="pre">User</span></tt>. This will create an empty file, you can then copy the settings you want
+<p>Create your own set of preferences by opening <code class="docutils literal"><span class="pre">Preferences</span></code> -&gt; <code class="docutils literal"><span class="pre">Settings</span> <span class="pre">-</span>
+<span class="pre">User</span></code>. This will create an empty file, you can then copy the settings you want
 to override from the default set into your personal settings.</p>
 <p>Here&#8217;s a reasonable set of preliminary settings.  <strong>Please note that the color
 scheme, theme and font face listed are not available by default</strong>.  You may
@@ -140,9 +140,9 @@ like that one.</p>
 }
 </pre></div>
 </div>
-<p>Especially important is the setting <tt class="docutils literal"><span class="pre">translate_tabs_to_spaces</span></tt>, which ensures
-that any time you hit a tab key, the single <tt class="docutils literal"><span class="pre">\t</span></tt> character is replaced by four
-<tt class="docutils literal"><span class="pre">\s</span></tt> characters.  In Python this is <strong>vital</strong>!</p>
+<p>Especially important is the setting <code class="docutils literal"><span class="pre">translate_tabs_to_spaces</span></code>, which ensures
+that any time you hit a tab key, the single <code class="docutils literal"><span class="pre">\t</span></code> character is replaced by four
+<code class="docutils literal"><span class="pre">\s</span></code> characters.  In Python this is <strong>vital</strong>!</p>
 </div>
 <div class="section" id="extending-the-editor">
 <h2>Extending the Editor<a class="headerlink" href="#extending-the-editor" title="Permalink to this headline">¶</a></h2>
@@ -154,17 +154,17 @@ yet, including <a class="reference external" href="http://docs.sublimetext.info/
 Python!</p>
 <p>Before you begin installing packages with package control, you must install the
 system itself. Do so by following <a class="reference external" href="https://packagecontrol.io/installation">the instructions here</a>.</p>
-<p>Once the system is installed, you can install a plugin. Open the <tt class="docutils literal"><span class="pre">command</span>
-<span class="pre">palette</span></tt> with <tt class="docutils literal"><span class="pre">shift-super-P</span></tt> (<tt class="docutils literal"><span class="pre">ctrl-shift-P</span></tt> on Windows/Linux). The
-<tt class="docutils literal"><span class="pre">super</span></tt> key is <tt class="docutils literal"><span class="pre">command</span></tt> or <tt class="docutils literal"><span class="pre">⌘</span></tt> on OS X. When the palette opens, typing
-<tt class="docutils literal"><span class="pre">install</span></tt> will bring up the <tt class="docutils literal"><span class="pre">Package</span> <span class="pre">Control:</span> <span class="pre">Install</span> <span class="pre">Package</span></tt> command. Hit
-<tt class="docutils literal"><span class="pre">enter</span></tt> to select it.</p>
+<p>Once the system is installed, you can install a plugin. Open the <code class="docutils literal"><span class="pre">command</span>
+<span class="pre">palette</span></code> with <code class="docutils literal"><span class="pre">shift-super-P</span></code> (<code class="docutils literal"><span class="pre">ctrl-shift-P</span></code> on Windows/Linux). The
+<code class="docutils literal"><span class="pre">super</span></code> key is <code class="docutils literal"><span class="pre">command</span></code> or <code class="docutils literal"><span class="pre">⌘</span></code> on OS X. When the palette opens, typing
+<code class="docutils literal"><span class="pre">install</span></code> will bring up the <code class="docutils literal"><span class="pre">Package</span> <span class="pre">Control:</span> <span class="pre">Install</span> <span class="pre">Package</span></code> command. Hit
+<code class="docutils literal"><span class="pre">enter</span></code> to select it.</p>
 <a class="reference internal image-reference" href="../../_images/pc_menu.png"><img alt="The package control command in the command palette." class="align-center" src="../../_images/pc_menu.png" style="width: 600px;" /></a>
 <p>After you select the command, Sublime Text fetches an updated list of packages
 from the network. It might take a second or two for the list to appear. When it
 does, start to type the name of the package you want. Sublime Text filters the
 list and shows you what you want to see. To install a plugin, select it with
-the mouse, or use arrow keys to navigate the list and hit <tt class="docutils literal"><span class="pre">enter</span></tt> when your
+the mouse, or use arrow keys to navigate the list and hit <code class="docutils literal"><span class="pre">enter</span></code> when your
 plugin is highlighted.</p>
 <a class="reference internal image-reference" href="../../_images/plugin_list.png"><img alt="../../_images/plugin_list.png" class="align-center" src="../../_images/plugin_list.png" style="width: 600px;" /></a>
 </div>
@@ -183,13 +183,13 @@ it&#8217;s own plugin system.  It is a bit heavy and requires building an index.
 <li><a class="reference external" href="https://sublime.wbond.net/packages/Jedi%20-%20Python%20autocompletion">SublimeJedi</a> only supports Python, but is faster and keeps an index on its
 own.</li>
 </ol>
-<p>I&#8217;ve installed <tt class="docutils literal"><span class="pre">SublimeJedi</span></tt>.  Using it I can set up individual settings for
-my projects. First, I use the <tt class="docutils literal"><span class="pre">Project</span></tt> menu to <tt class="docutils literal"><span class="pre">save</span> <span class="pre">project</span> <span class="pre">as...</span></tt>.  I
-give my project a name (perhaps <tt class="docutils literal"><span class="pre">foo</span></tt>) and then save. Once I&#8217;ve done so, I
-will have a <tt class="docutils literal"><span class="pre">foo.sublime-project</span></tt> file on disk.  This file can contain
+<p>I&#8217;ve installed <code class="docutils literal"><span class="pre">SublimeJedi</span></code>.  Using it I can set up individual settings for
+my projects. First, I use the <code class="docutils literal"><span class="pre">Project</span></code> menu to <code class="docutils literal"><span class="pre">save</span> <span class="pre">project</span> <span class="pre">as...</span></code>.  I
+give my project a name (perhaps <code class="docutils literal"><span class="pre">foo</span></code>) and then save. Once I&#8217;ve done so, I
+will have a <code class="docutils literal"><span class="pre">foo.sublime-project</span></code> file on disk.  This file can contain
 special settings that will apply to this project only, and will override more
 general settings like User preferences.</p>
-<p>To allow <tt class="docutils literal"><span class="pre">SublimeJedi</span></tt> to see any package I install in the virtualenv for my
+<p>To allow <code class="docutils literal"><span class="pre">SublimeJedi</span></code> to see any package I install in the virtualenv for my
 project, I can add the following settings to that file:</p>
 <div class="highlight-json"><div class="highlight"><pre>{
 
@@ -204,16 +204,16 @@ project, I can add the following settings to that file:</p>
 }
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">python_interpreter_path</span></tt> allows me to indicate which Python executable
+<p>The <code class="docutils literal"><span class="pre">python_interpreter_path</span></code> allows me to indicate which Python executable
 should be introspected for symbol definitions.</p>
-<p>The <tt class="docutils literal"><span class="pre">python_package_paths</span></tt> setting allows designating additional paths that
+<p>The <code class="docutils literal"><span class="pre">python_package_paths</span></code> setting allows designating additional paths that
 will be searched for Python packages containing symbols. By pointing this at
-the <tt class="docutils literal"><span class="pre">site-packages</span></tt> directory of my project virtualenv, I get autocompletion
-for any package I install in this project with <tt class="docutils literal"><span class="pre">pip</span></tt>.</p>
+the <code class="docutils literal"><span class="pre">site-packages</span></code> directory of my project virtualenv, I get autocompletion
+for any package I install in this project with <code class="docutils literal"><span class="pre">pip</span></code>.</p>
 <a class="reference internal image-reference" href="../../_images/tab_completion.png"><img alt="Tab completion provided by SublimeJedi" class="align-center" src="../../_images/tab_completion.png" style="width: 600px;" /></a>
-<p>Once configured, you should be able to use the <tt class="docutils literal"><span class="pre">ctrl-shift-G</span></tt> keyboard
+<p>Once configured, you should be able to use the <code class="docutils literal"><span class="pre">ctrl-shift-G</span></code> keyboard
 shortcut to jump directly to the definition of a symbol. You can also use
-<tt class="docutils literal"><span class="pre">alt-shift-F</span></tt> to find other usages of the same symbol elsewhere in your code.</p>
+<code class="docutils literal"><span class="pre">alt-shift-F</span></code> to find other usages of the same symbol elsewhere in your code.</p>
 </div>
 <div class="section" id="code-linting">
 <h3>Code Linting<a class="headerlink" href="#code-linting" title="Permalink to this headline">¶</a></h3>
@@ -221,8 +221,8 @@ shortcut to jump directly to the definition of a symbol. You can also use
 to run the code. This saves time. Sublime Text has an available plugin for code
 linters called <a class="reference external" href="http://sublimelinter.readthedocs.org/en/latest/">SublimeLinter</a>.</p>
 <p>Python has a couple of great tools available for linting, the <a class="reference external" href="https://pypi.python.org/pypi/pep8">pep8</a> and
-<a class="reference external" href="https://pypi.python.org/pypi/pyflakes">pyflakes</a> packages. <tt class="docutils literal"><span class="pre">Pep8</span></tt> checks for style violations, lines too long,
-extra spaces and so on. <tt class="docutils literal"><span class="pre">Pyflakes</span></tt> checks for syntactic violations, like
+<a class="reference external" href="https://pypi.python.org/pypi/pyflakes">pyflakes</a> packages. <code class="docutils literal"><span class="pre">Pep8</span></code> checks for style violations, lines too long,
+extra spaces and so on. <code class="docutils literal"><span class="pre">Pyflakes</span></code> checks for syntactic violations, like
 using a symbol that isn&#8217;t defined or importing a symbol you don&#8217;t use.</p>
 <p>Another Python linting package, <a class="reference external" href="https://pypi.python.org/pypi/flake8">flake8</a> combines these two, and adds in
 <a class="reference external" href="https://pypi.python.org/pypi/mccabe">mccabe</a>, a tool to check the <a class="reference external" href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">cyclomatic complexity</a> of code you write. This
@@ -231,6 +231,12 @@ simplified and thus made easier to understand and more testable.</p>
 <p>There is a nice plugin for the SublimeLinter that <a class="reference external" href="https://sublime.wbond.net/packages/SublimeLinter-flake8">utilizes flake8</a>. For it to
 work, the plugin will need to have a Python executable that has the Python
 tools it needs installed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">SublimeLinter and the flake8 plugin for it work best in Sublime Text 3.  If
+you have a hard time getting them to work, consider trying the
+less-featureful but simpler package <a class="reference external" href="https://packagecontrol.io/packages/Python%20Flake8%20Lint">Python Flake8 Lint</a>.</p>
+</div>
 <p>Use <a class="reference external" href="http://virtualenv.org">virtualenv</a> to accomplish this. First, create a virtualenv and activate
 it:</p>
 <div class="highlight-bash"><div class="highlight"><pre>$ cd /Users/cewing/virtualenvs
@@ -258,8 +264,8 @@ Cleaning up...
 (sublenv)$
 </pre></div>
 </div>
-<p>The Python executable for this <tt class="docutils literal"><span class="pre">virtualenv</span></tt> now has the required packages
-installed. You can look in <tt class="docutils literal"><span class="pre">/path/to/sublenv/bin</span></tt> to see the executable
+<p>The Python executable for this <code class="docutils literal"><span class="pre">virtualenv</span></code> now has the required packages
+installed. You can look in <code class="docutils literal"><span class="pre">/path/to/sublenv/bin</span></code> to see the executable
 commands for each:</p>
 <blockquote>
 <div>(sublenv)$ ls sublenv/bin
@@ -269,8 +275,8 @@ activate.fish       pep8                python
 activate_this.py    pip                 python2
 easy_install        pip2                python2.7</div></blockquote>
 <p>Now install SublimeLinter and then SublimeLinter-flake8 using Package Control.</p>
-<p>Here are the settings you can add to <tt class="docutils literal"><span class="pre">Preferences</span></tt> -&gt; <tt class="docutils literal"><span class="pre">Package</span> <span class="pre">Settings</span></tt> -&gt;
-<tt class="docutils literal"><span class="pre">SublimeLinter</span></tt> -&gt; <tt class="docutils literal"><span class="pre">Settings</span> <span class="pre">-</span> <span class="pre">User</span></tt>:</p>
+<p>Here are the settings you can add to <code class="docutils literal"><span class="pre">Preferences</span></code> -&gt; <code class="docutils literal"><span class="pre">Package</span> <span class="pre">Settings</span></code> -&gt;
+<code class="docutils literal"><span class="pre">SublimeLinter</span></code> -&gt; <code class="docutils literal"><span class="pre">Settings</span> <span class="pre">-</span> <span class="pre">User</span></code>:</p>
 <div class="highlight-json"><div class="highlight"><pre>{
     //...
     &quot;linters&quot;: {
@@ -304,17 +310,17 @@ easy_install        pip2                python2.7</div></blockquote>
 }
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">paths</span></tt> key points to the path that contains the <tt class="docutils literal"><span class="pre">flake8</span></tt> executable
-command. The <tt class="docutils literal"><span class="pre">python_paths</span></tt> key points to the location of the python
+<p>The <code class="docutils literal"><span class="pre">paths</span></code> key points to the path that contains the <code class="docutils literal"><span class="pre">flake8</span></code> executable
+command. The <code class="docutils literal"><span class="pre">python_paths</span></code> key points to the location of the python
 executable to be used. In both cases, you will want to provide values in the
 appropriate place for the OS you are using.</p>
-<p>The settings inside the <tt class="docutils literal"><span class="pre">flake8</span></tt> object control the performance of the
+<p>The settings inside the <code class="docutils literal"><span class="pre">flake8</span></code> object control the performance of the
 linter. <a class="reference external" href="https://github.com/SublimeLinter/SublimeLinter-flake8#settings">Read more about them here</a>.</p>
 <a class="reference internal image-reference" href="../../_images/flake8_output.png"><img alt="Flake8 shows unused import and trailing whitespace issues." class="align-center" src="../../_images/flake8_output.png" style="width: 600px;" /></a>
 </div>
 <div class="section" id="white-space-management">
 <h3>White Space Management<a class="headerlink" href="#white-space-management" title="Permalink to this headline">¶</a></h3>
-<p>One of the issues highlighted by <tt class="docutils literal"><span class="pre">flake8</span></tt> is trailing spaces.  Sublime text
+<p>One of the issues highlighted by <code class="docutils literal"><span class="pre">flake8</span></code> is trailing spaces.  Sublime text
 provides a setting that allows you to remove them every time you save a file:</p>
 <div class="highlight-json"><div class="highlight"><pre>source
 
@@ -348,7 +354,7 @@ debugging session in the file where the code exists.</p>
 <p>There is no plugin for SublimeText that supports this. But there is a Python
 package you can install into the virtualenv for each of your projects that does
 it.</p>
-<p>The package is called <a class="reference external" href="https://pypi.python.org/pypi/PdbSublimeTextSupport">PDBSublimeTextSupport</a> and its simple to install with <tt class="docutils literal"><span class="pre">pip</span></tt>:</p>
+<p>The package is called <a class="reference external" href="https://pypi.python.org/pypi/PdbSublimeTextSupport">PDBSublimeTextSupport</a> and its simple to install with <code class="docutils literal"><span class="pre">pip</span></code>:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>projectenv<span class="o">)</span><span class="nv">$ </span>pip install PDBSublimeTextSupport
 </pre></div>
 </div>
@@ -364,7 +370,7 @@ Text file move along with you.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -390,7 +396,7 @@ Text file move along with you.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../day02/index.html"
                         title="next chapter">Day 02 Assignments</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -407,7 +413,7 @@ Text file move along with you.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -419,14 +425,14 @@ Text file move along with you.</p>
         <li class="right" >
           <a href="index.html" title="Day 01 Assignments"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
-          <li><a href="index.html" >Day 01 Assignments</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 01 Assignments</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

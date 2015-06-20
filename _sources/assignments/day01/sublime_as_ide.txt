@@ -233,9 +233,16 @@ There is a nice plugin for the SublimeLinter that `utilizes flake8`_. For it to
 work, the plugin will need to have a Python executable that has the Python
 tools it needs installed.
 
+.. note::
+
+    SublimeLinter and the flake8 plugin for it work best in Sublime Text 3.  If
+    you have a hard time getting them to work, consider trying the
+    less-featureful but simpler package `Python Flake8 Lint`_.
+
 Use `virtualenv`_ to accomplish this. First, create a virtualenv and activate
 it:
 
+.. _Python Flake8 Lint: https://packagecontrol.io/packages/Python%20Flake8%20Lint
 .. _utilizes flake8: https://sublime.wbond.net/packages/SublimeLinter-flake8
 .. _virtualenv: http://virtualenv.org
 

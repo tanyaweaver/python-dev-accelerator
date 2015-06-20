@@ -34,7 +34,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -56,16 +56,16 @@
         <li class="right" >
           <a href="scraping.html" title="Extracting Data from the Web"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 11 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 11 Lectures</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="manage-aws-resources-with-boto">
 <h1>Manage AWS Resources with Boto<a class="headerlink" href="#manage-aws-resources-with-boto" title="Permalink to this headline">¶</a></h1>
@@ -109,7 +109,7 @@ EC2 (<em>Elastic Compute Cluster</em>) using boto.</p>
 <p>Next, we want to configure boto so that it has access to the security
 credentials it needs.</p>
 <p>Boto will look for configuration in a configuration file in your home
-directory.  This file is called <tt class="docutils literal"><span class="pre">.boto</span></tt>. Create it, if it doesn&#8217;t exist:</p>
+directory.  This file is called <code class="docutils literal"><span class="pre">.boto</span></code>. Create it, if it doesn&#8217;t exist:</p>
 <div class="build container">
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>ls ~/.b*
 /Users/cewing/.bash_history
@@ -147,7 +147,7 @@ losing all your AWS resources.</p>
 <p>You will want to secure that file from easy access by making it readable
 and writable only by yourself:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>bototests<span class="o">]</span>
-heffalump:bototests cewing<span class="nv">$ </span>chmod 600 ~/.boto
+heffalump:bototests cewing<span class="nv">$ </span>chmod <span class="m">600</span> ~/.boto
 </pre></div>
 </div>
 </div>
@@ -189,8 +189,8 @@ like to choose images from <a class="reference external" href="http://alestic.co
 of Ubuntu in EC2.</p>
 <p>At the top right of the Alestic homepage is a tool for finding AMI ids in a
 given AWS region.  We&#8217;ve connected to us-west-2, so we need one for that
-region. We also need to choose the virtualization type, <tt class="docutils literal"><span class="pre">PV</span></tt>
-(paravirtualization) or <tt class="docutils literal"><span class="pre">HVM</span></tt> (hardware virtual machine). The tool
+region. We also need to choose the virtualization type, <code class="docutils literal"><span class="pre">PV</span></code>
+(paravirtualization) or <code class="docutils literal"><span class="pre">HVM</span></code> (hardware virtual machine). The tool
 reports that an EBS-store image using PV for Ubuntu 14.04
 Utopic is &#8216;ami-b5471c85&#8217;. Let&#8217;s use that.</p>
 <div class="build highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">image_id</span> <span class="o">=</span> <span class="s">&#39;ami-b5471c85&#39;</span>
@@ -199,15 +199,15 @@ Utopic is &#8216;ami-b5471c85&#8217;. Let&#8217;s use that.</p>
 <p>We also need to designate a key pair name and the name of a security group. Use
 the key pair name and security group you created as part of the assignment to
 get an AWS account. If you followed the instructions explicitly, these should
-be <tt class="docutils literal"><span class="pre">pk-aws</span></tt> and <tt class="docutils literal"><span class="pre">ssh-access</span></tt>.</p>
+be <code class="docutils literal"><span class="pre">pk-aws</span></code> and <code class="docutils literal"><span class="pre">ssh-access</span></code>.</p>
 <div class="build highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">key_pair</span> <span class="o">=</span> <span class="s">&#39;pk-aws&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">security_group</span> <span class="o">=</span> <span class="s">&#39;ssh-access&#39;</span>
 </pre></div>
 </div>
 <p>Finally, we need to designate exactly what type of instance to create. AWS
 instances come in all shapes and sizes, but the only ones that are in the
-free usage tier are the <tt class="docutils literal"><span class="pre">t1.micro</span></tt> and <tt class="docutils literal"><span class="pre">t2.micro</span></tt> types.  We&#8217;ll begin
-with the older <tt class="docutils literal"><span class="pre">t1.micro</span></tt> type.</p>
+free usage tier are the <code class="docutils literal"><span class="pre">t1.micro</span></code> and <code class="docutils literal"><span class="pre">t2.micro</span></code> types.  We&#8217;ll begin
+with the older <code class="docutils literal"><span class="pre">t1.micro</span></code> type.</p>
 <div class="build highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">instance_type</span> <span class="o">=</span> <span class="s">&#39;t1.micro&#39;</span>
 </pre></div>
 </div>
@@ -224,7 +224,7 @@ run the following command:</p>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>When the command returns, <tt class="docutils literal"><span class="pre">reservations</span></tt> will hold a list of all the
+<p>When the command returns, <code class="docutils literal"><span class="pre">reservations</span></code> will hold a list of all the
 instances we have just created (there should be only one).</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">reservations</span>
 <span class="go">Reservation:r-9f78c096</span>
@@ -249,7 +249,7 @@ instances we have just created (there should be only one).</p>
 </pre></div>
 </div>
 <p>You may need to update a couple of times until you see the state change to
-<tt class="docutils literal"><span class="pre">running</span></tt>. Once it does, you can get the public DNS name of the instance:</p>
+<code class="docutils literal"><span class="pre">running</span></code>. Once it does, you can get the public DNS name of the instance:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">public_dns_name</span>
 <span class="go">u&#39;ec2-54-203-88-113.us-west-2.compute.amazonaws.com&#39;</span>
 </pre></div>
@@ -301,7 +301,7 @@ ubuntu@ip-10-235-47-92:~$
 <div class="build container">
 <p>You are now working in a shell <em>on the server you just created</em>!</p>
 <p>Run a few simple shell commands and look around a bit.</p>
-<p>Disconnect by typing the <tt class="docutils literal"><span class="pre">exit</span></tt> command and return to your Python
+<p>Disconnect by typing the <code class="docutils literal"><span class="pre">exit</span></code> command and return to your Python
 interpreter.</p>
 </div>
 </div>
@@ -352,7 +352,7 @@ for now.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -381,7 +381,7 @@ for now.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../day12/index.html"
                         title="next chapter">Day 12 Lectures</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -398,7 +398,7 @@ for now.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -410,14 +410,14 @@ for now.</p>
         <li class="right" >
           <a href="scraping.html" title="Extracting Data from the Web"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" >Day 11 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 11 Lectures</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

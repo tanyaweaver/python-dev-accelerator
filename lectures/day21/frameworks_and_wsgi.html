@@ -34,7 +34,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -56,16 +56,16 @@
         <li class="right" >
           <a href="index.html" title="Day 21 Lectures"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 21 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 21 Lectures</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="introduction-to-web-frameworks">
 <h1>Introduction to Web Frameworks<a class="headerlink" href="#introduction-to-web-frameworks" title="Permalink to this headline">¶</a></h1>
@@ -109,16 +109,16 @@ the rest.</p>
 <div class="build container">
 <p>In particular, contrast the book db app you created using WSGI and your
 first full-scale web project.</p>
-<p>Compare the ease of routing in <tt class="docutils literal"><span class="pre">Flask</span></tt> with the way you solved the same
+<p>Compare the ease of routing in <code class="docutils literal"><span class="pre">Pyramid</span></code> with the way you solved the same
 problem for the book database.</p>
-<p>Think about how <em>general</em> the route system is in <tt class="docutils literal"><span class="pre">Flask</span></tt> and how
+<p>Think about how <em>general</em> the route system is in <code class="docutils literal"><span class="pre">Flask</span></code> and how
 <em>specific</em> your solution for the book database.</p>
 </div>
 <p>In writing a web app with WSGI, what were your pain points? Which bits do you
 wish you didn&#8217;t have to think about?</p>
 <div class="build container">
-<p>How about in the case of your Flask app?</p>
-<p>How about with using <tt class="docutils literal"><span class="pre">psycopg2</span></tt> directly?</p>
+<p>How about in the case of your Pyramid app?</p>
+<p>How about with using <code class="docutils literal"><span class="pre">psycopg2</span></code> directly?</p>
 <p>This last question is important when it comes to choosing a framework</p>
 <ul class="build simple">
 <li>abstraction ∝ 1/freedom</li>
@@ -217,133 +217,97 @@ correctly.</dd>
 <dt>Second Corollary:</dt>
 <dd>You can&#8217;t know unless you try</dd>
 </dl>
-<p>You began with the current king of the micro-framework class, <strong>Flask</strong>.</p>
+<p>You began with the most flexible of all the frameworks, <strong>Pyramid</strong>.</p>
 <div class="build container">
 <p>Next you&#8217;ll be working with the champion of the full-stack framework class,
 <strong>Django</strong></p>
-<p>You&#8217;ll also be asked to follow a tutorial on &#8220;the second most popular
-microframework and the second most popular full-stack framework&#8221;,
-<strong>Pyramid</strong></p>
+<p>You&#8217;ll also be asked to follow a tutorial on the king of the microframework
+class, <code class="docutils literal"><span class="pre">Flask</span></code> a bit later on. <strong>Pyramid</strong></p>
 </div>
 </div>
 </div>
 <div class="section" id="frameworks-and-wsgi">
 <h2>Frameworks and WSGI<a class="headerlink" href="#frameworks-and-wsgi" title="Permalink to this headline">¶</a></h2>
 <div class="left container">
-<p>But quickly, before we move on to <tt class="docutils literal"><span class="pre">Django</span></tt>, a word on WSGI and web
+<p>But quickly, before we move on to <code class="docutils literal"><span class="pre">Django</span></code>, a word on WSGI and web
 frameworks.</p>
 <p>Modern Python web frameworks nearly all work as <em>wsgi apps</em>.</p>
 <p>This means that like your bookdb, you can serve them using a <em>wsgi server</em>.</p>
 <p>How exactly does that work?</p>
 </div>
-<div class="section" id="flask-and-wsgi">
-<h3>Flask and WSGI<a class="headerlink" href="#flask-and-wsgi" title="Permalink to this headline">¶</a></h3>
-<p>Consider the code for a simple <tt class="docutils literal"><span class="pre">hello</span> <span class="pre">world</span></tt> app in <tt class="docutils literal"><span class="pre">Flask</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<div class="section" id="django-and-wsgi">
+<h3>Django and WSGI<a class="headerlink" href="#django-and-wsgi" title="Permalink to this headline">¶</a></h3>
+<p>Running a Django site in production is no different than any other framework.
+Your site is run using a <em>wsgi server</em>, which calls the <em>wsgi application</em>
+Django builds for you. For a peek behind the curtain, open <code class="docutils literal"><span class="pre">wsgi.py</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">&quot;DJANGO_SETTINGS_MODULE&quot;</span><span class="p">,</span> <span class="s">&quot;imager.settings&quot;</span><span class="p">)</span>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-
-<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">hello_world</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s">&#39;Hello World!&#39;</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">django.core.wsgi</span> <span class="kn">import</span> <span class="n">get_wsgi_application</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">get_wsgi_application</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Flask the framework provides a Python class called <cite>Flask</cite>. This class
-functions as a single <em>application</em> in the WSGI sense.</p>
-<div class="build container">
-<p>We know a WSGI application must be a <em>callable</em> that takes the arguments
-<em>environ</em> and <em>start_response</em>.</p>
-<p>It has to call the <em>start_response</em> method, providing status and headers.</p>
-<p>And it has to return an <em>iterable</em> that represents the HTTP response body.</p>
-<p>In Python, an object is a <em>callable</em> if it has a <tt class="docutils literal"><span class="pre">__call__</span></tt> method.</p>
-</div>
-<p>Take a moment to start up your <tt class="docutils literal"><span class="pre">learning_journal</span></tt> virtualenv and fire up a
-Python interpreter:</p>
-<div class="highlight-bash"><div class="highlight"><pre>heffalump:~ cewing<span class="nv">$ </span>workon learning_journal
-<span class="o">[</span>learning_journal<span class="o">]</span>
-heffalump:learning_journal cewing<span class="nv">$ </span>python
-Python 2.7.5 <span class="o">(</span>default, Aug 25 2013, 00:04:04<span class="o">)</span>
-<span class="o">[</span>GCC 4.2.1 Compatible Apple LLVM 5.0 <span class="o">(</span>clang-500.0.68<span class="o">)]</span> on darwin
-Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for </span>more information.
-&gt;&gt;&gt;
-</pre></div>
-</div>
-<p>Once there, import the <tt class="docutils literal"><span class="pre">flask</span></tt> package. Our <tt class="docutils literal"><span class="pre">app</span></tt> is an instance of the
-<tt class="docutils literal"><span class="pre">Flask</span></tt> class from this package.  Let&#8217;s go look that up and see what it does:</p>
-<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">flask</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">flask</span><span class="o">.</span><span class="n">__file__</span>
-<span class="go">&#39;/Users/cewing/virtualenvs/learning_journal/lib/python2.7/site-packages/flask/__init__.pyc&#39;</span>
-<span class="go">&gt;&gt;&gt;</span>
-</pre></div>
-</div>
-<p>Open that <tt class="docutils literal"><span class="pre">flask</span></tt> directory in your editor and open <tt class="docutils literal"><span class="pre">__init__.py</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    flask</span>
-<span class="sd">    ~~~~~</span>
+<p>Let&#8217;s follow this down a ways and see what we find.  What does
+<code class="docutils literal"><span class="pre">get_wsgi_application</span></code> look like?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_wsgi_application</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The public interface to Django&#39;s WSGI support. Should return a WSGI</span>
+<span class="sd">    callable.</span>
 
-<span class="sd">    A microframework based on Werkzeug.  It&#39;s extensively documented</span>
-<span class="sd">    and follows best practice patterns.</span>
-<span class="sd">    ...</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="c"># ...</span>
-<span class="kn">from</span> <span class="nn">werkzeug.exceptions</span> <span class="kn">import</span> <span class="n">abort</span>
-<span class="kn">from</span> <span class="nn">werkzeug.utils</span> <span class="kn">import</span> <span class="n">redirect</span>
-<span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Markup</span><span class="p">,</span> <span class="n">escape</span>
+<span class="sd">    Allows us to avoid making django.core.handlers.WSGIHandler public API, in</span>
+<span class="sd">    case the internal WSGI implementation changes or moves in the future.</span>
 
-<span class="kn">from</span> <span class="nn">.app</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span>
-<span class="kn">from</span> <span class="nn">.config</span> <span class="kn">import</span> <span class="n">Config</span>
-</pre></div>
-</div>
-<p>On line 21 you should see that <tt class="docutils literal"><span class="pre">Flask</span></tt> is imported into the global <tt class="docutils literal"><span class="pre">flask</span></tt>
-namespace from <tt class="docutils literal"><span class="pre">.app</span></tt>.  Open the <tt class="docutils literal"><span class="pre">app.py</span></tt> file to dig a bit further.</p>
-<p>Here&#8217;s the <tt class="docutils literal"><span class="pre">__call__</span></tt> method of the <tt class="docutils literal"><span class="pre">Flask</span></tt> class (lines 1834-36 in my
-version):</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Shortcut for :attr:`wsgi_app`.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wsgi_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>As you can see, it calls another method, called <tt class="docutils literal"><span class="pre">wsgi_app</span></tt>.  Let&#8217;s follow
-this down...</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">wsgi_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The actual WSGI application.</span>
-<span class="sd">    ...</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ctx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_context</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
-    <span class="n">ctx</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
-    <span class="n">error</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">try</span><span class="p">:</span>
+    <span class="n">django</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">WSGIHandler</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>One level further down. Let&#8217;s review <code class="docutils literal"><span class="pre">django.core.handlers.wsgi.WSGIHandler</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">WSGIHandler</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">BaseHandler</span><span class="p">):</span>
+    <span class="n">initLock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+    <span class="n">request_class</span> <span class="o">=</span> <span class="n">WSGIRequest</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="c"># Set up middleware if needed. We couldn&#39;t do this earlier, because</span>
+        <span class="c"># settings weren&#39;t available.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request_middleware</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">initLock</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="c"># Check that middleware is still uninitialized.</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request_middleware</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">load_middleware</span><span class="p">()</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="c"># Unload whatever middleware we got</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_request_middleware</span> <span class="o">=</span> <span class="bp">None</span>
+                    <span class="k">raise</span>
+
+        <span class="n">set_script_prefix</span><span class="p">(</span><span class="n">get_script_name</span><span class="p">(</span><span class="n">environ</span><span class="p">))</span>
+        <span class="n">signals</span><span class="o">.</span><span class="n">request_started</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">full_dispatch_request</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">error</span> <span class="o">=</span> <span class="n">e</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_response</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">response</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
-    <span class="c">#...</span>
-</pre></div>
-</div>
-<p><tt class="docutils literal"><span class="pre">response</span></tt> is another WSGI app.  <tt class="docutils literal"><span class="pre">Flask</span></tt> is actually <em>WSGI middleware</em>!</p>
-<p>Following this all the way down leads to a <tt class="docutils literal"><span class="pre">Response</span></tt> class from a package
-called <em>werkzeug</em>. Here&#8217;s the <tt class="docutils literal"><span class="pre">__call__</span></tt> method provided by that class:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Process this response as WSGI application.</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_class</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;Bad Request (UnicodeDecodeError)&#39;</span><span class="p">,</span>
+                <span class="n">exc_info</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">(),</span>
+                <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s">&#39;status_code&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">HttpResponseBadRequest</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 
-<span class="sd">    :param environ: the WSGI environment.</span>
-<span class="sd">    :param start_response: the response callable provided by the WSGI</span>
-<span class="sd">                           server.</span>
-<span class="sd">    :return: an application iterator</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">app_iter</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wsgi_response</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
-    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">app_iter</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">_handler_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span>
+
+        <span class="n">status</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">reason_phrase</span><span class="p">)</span>
+        <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">response_headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="s">&#39;Set-Cookie&#39;</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">))))</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="n">force_str</span><span class="p">(</span><span class="n">status</span><span class="p">),</span> <span class="n">response_headers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span>
 </pre></div>
 </div>
-<p>Given the amount of time you&#8217;ve spent in week three working on WSGI apps,
-this should look pretty familiar to you.</p>
+<p>Given your previous experience creating WSGI apps, this should look pretty
+familiar to you.</p>
 <p>All Python web frameworks that operate under the WSGI spec will do this same
 sort of thing.</p>
 <div class="build container">
@@ -351,10 +315,6 @@ sort of thing.</p>
 <p>And these layers of abstraction allow you, the developer to focus only on
 the thing that really matters to you.</p>
 <p>Getting input from a request, and returning a response.</p>
-<p>In the case of <tt class="docutils literal"><span class="pre">Flask</span></tt> both the Request and the Response are actually
-instances of Python classes defined in the <tt class="docutils literal"><span class="pre">werkzeug</span></tt> package. These
-classes smooth over some of the complications of interacting with the raw
-WSGI <tt class="docutils literal"><span class="pre">environ</span></tt>.</p>
 </div>
 </div>
 </div>
@@ -364,7 +324,7 @@ WSGI <tt class="docutils literal"><span class="pre">environ</span></tt>.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -376,7 +336,7 @@ WSGI <tt class="docutils literal"><span class="pre">environ</span></tt>.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#frameworks-and-wsgi">Frameworks and WSGI</a><ul>
-<li><a class="reference internal" href="#flask-and-wsgi">Flask and WSGI</a></li>
+<li><a class="reference internal" href="#django-and-wsgi">Django and WSGI</a></li>
 </ul>
 </li>
 </ul>
@@ -389,7 +349,7 @@ WSGI <tt class="docutils literal"><span class="pre">environ</span></tt>.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="intro_to_django.html"
                         title="next chapter">An Introduction To Django</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -406,7 +366,7 @@ WSGI <tt class="docutils literal"><span class="pre">environ</span></tt>.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -418,14 +378,14 @@ WSGI <tt class="docutils literal"><span class="pre">environ</span></tt>.</p>
         <li class="right" >
           <a href="index.html" title="Day 21 Lectures"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" >Day 21 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 21 Lectures</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

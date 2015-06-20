@@ -34,7 +34,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -56,16 +56,16 @@
         <li class="right" >
           <a href="index.html" title="Day 12"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 12</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 12</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="producing-and-consuming-xml-rpc-in-python">
 <span id="xmlrpc-assignment"></span><h1>Producing and Consuming XML-RPC in Python<a class="headerlink" href="#producing-and-consuming-xml-rpc-in-python" title="Permalink to this headline">¶</a></h1>
@@ -73,7 +73,7 @@
 be generated and consumed from within a Python ecosystem.</p>
 <div class="section" id="a-simple-function-based-service">
 <h2>A Simple Function-Based Service<a class="headerlink" href="#a-simple-function-based-service" title="Permalink to this headline">¶</a></h2>
-<p>Begin by creating a file, <tt class="docutils literal"><span class="pre">xmlrpc_server.py</span></tt>.</p>
+<p>Begin by creating a file, <code class="docutils literal"><span class="pre">xmlrpc_server.py</span></code>.</p>
 <p>Into it, type the following code:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding: utf-8 -*-</span>
@@ -100,7 +100,7 @@ be generated and consumed from within a Python ecosystem.</p>
 </pre></div>
 </div>
 <p>The call to server.register_function tells the server that we want this
-<tt class="docutils literal"><span class="pre">multiply</span></tt> function to be available to the network.</p>
+<code class="docutils literal"><span class="pre">multiply</span></code> function to be available to the network.</p>
 <p>We can run a client from a terminal. First, open one terminal and run the
 xmlrpc_server.py script:</p>
 <blockquote>
@@ -114,7 +114,7 @@ xmlrpc_server.py script:</p>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>By passing the optional <tt class="docutils literal"><span class="pre">verbose</span></tt> argument to our ServerProxy, we have
+<p>By passing the optional <code class="docutils literal"><span class="pre">verbose</span></code> argument to our ServerProxy, we have
 indicated that we want to see the traffic that goes back and forth.</p>
 <p>If you format the HTTP request you sent to the service, it looks like this:</p>
 <div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/RPC2</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span>
@@ -159,7 +159,7 @@ response with an XML body:</p>
 <div class="section" id="class-based-service">
 <h2>Class-Based Service<a class="headerlink" href="#class-based-service" title="Permalink to this headline">¶</a></h2>
 <p>It is also possible to register methods defined on a Python class as a service.</p>
-<p>In your <tt class="docutils literal"><span class="pre">xmlrpc_server.py</span></tt> file, add the following class definition:</p>
+<p>In your <code class="docutils literal"><span class="pre">xmlrpc_server.py</span></code> file, add the following class definition:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SimpleMathService</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;provide simple mathematical operations&quot;&quot;&quot;</span>
 
@@ -187,7 +187,7 @@ response with an XML body:</p>
         <span class="k">return</span> <span class="s">&quot;This method is not callable on the published service&quot;</span>
 </pre></div>
 </div>
-<p>Then, comment out the earlier <tt class="docutils literal"><span class="pre">multiply</span></tt> function and the line that registers
+<p>Then, comment out the earlier <code class="docutils literal"><span class="pre">multiply</span></code> function and the line that registers
 it with the server:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># def multiply(a, b):</span>
 <span class="c">#     return a * b</span>
@@ -199,7 +199,7 @@ it with the server:</p>
 </pre></div>
 </div>
 <p>Back in your server terminal, quit the server and then restart it.</p>
-<p>Then, try calling <tt class="docutils literal"><span class="pre">multiply</span></tt> again:</p>
+<p>Then, try calling <code class="docutils literal"><span class="pre">multiply</span></code> again:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">proxy</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
 <span class="gp">...</span>
 <span class="gt">Traceback (most recent call last):</span>
@@ -274,11 +274,11 @@ this tell you about a class-based service?</p>
 <p>XML-RPC supports introspection of a service, allowing you to get information
 about the service and how it functions.</p>
 <p>The introspection methods that are available for a Python XML-RPC server are
-<tt class="docutils literal"><span class="pre">listMethods</span></tt>, <tt class="docutils literal"><span class="pre">methodHelp</span></tt>, and <tt class="docutils literal"><span class="pre">methodSignature</span></tt>.</p>
+<code class="docutils literal"><span class="pre">listMethods</span></code>, <code class="docutils literal"><span class="pre">methodHelp</span></code>, and <code class="docutils literal"><span class="pre">methodSignature</span></code>.</p>
 <p>To add support for a given introspection method to your class-based service,
 you have to implement a corresponding private method on the class. Add the
-following two methods to your <tt class="docutils literal"><span class="pre">SimpleMathService</span></tt> class in
-<tt class="docutils literal"><span class="pre">xmlrpc_server.py</span></tt>:</p>
+following two methods to your <code class="docutils literal"><span class="pre">SimpleMathService</span></code> class in
+<code class="docutils literal"><span class="pre">xmlrpc_server.py</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_listMethods</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;custom logic for presenting method names to users</span>
 
@@ -294,20 +294,20 @@ following two methods to your <tt class="docutils literal"><span class="pre">Sim
     <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">__doc__</span>
 </pre></div>
 </div>
-<p>In addition, make sure to import the <tt class="docutils literal"><span class="pre">list_public_methods</span></tt> method from the
-<tt class="docutils literal"><span class="pre">SimpleXMLRPCServer</span></tt> module at the top of the server script:</p>
+<p>In addition, make sure to import the <code class="docutils literal"><span class="pre">list_public_methods</span></code> method from the
+<code class="docutils literal"><span class="pre">SimpleXMLRPCServer</span></code> module at the top of the server script:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">SimpleXMLRPCServer</span> <span class="kn">import</span> <span class="n">list_public_methods</span>
 </pre></div>
 </div>
 <p>Finally, just after creating the server, set it up to provide the public
-introspection functions (still in <tt class="docutils literal"><span class="pre">xmlrpc_server.py</span></tt>):</p>
+introspection functions (still in <code class="docutils literal"><span class="pre">xmlrpc_server.py</span></code>):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">50000</span><span class="p">)</span>
 <span class="n">server</span> <span class="o">=</span> <span class="n">SimpleXMLRPCServer</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
 <span class="n">server</span><span class="o">.</span><span class="n">register_introspection_functions</span><span class="p">()</span> <span class="c"># this line is new</span>
 </pre></div>
 </div>
 <p>Now, restart your server and kick the tires. The introspection functions are
-available as attributes of the <tt class="docutils literal"><span class="pre">system</span></tt> attribute of your proxy:</p>
+available as attributes of the <code class="docutils literal"><span class="pre">system</span></code> attribute of your proxy:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">proxy</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">listMethods</span><span class="p">()</span>
 <span class="gp">...</span>
 <span class="go">[&#39;divide&#39;, &#39;get_usage&#39;, &#39;system.listMethods&#39;, &#39;system.methodHelp&#39;, &#39;system.methodSignature&#39;]</span>
@@ -323,7 +323,7 @@ available as attributes of the <tt class="docutils literal"><span class="pre">sy
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">It is included here for completeness, and you should try it, but I&#8217;ve been
-unable to get <tt class="docutils literal"><span class="pre">system.methodSignature</span></tt> to work on OS X.</p>
+unable to get <code class="docutils literal"><span class="pre">system.methodSignature</span></code> to work on OS X.</p>
 </div>
 </div>
 </div>
@@ -332,7 +332,7 @@ unable to get <tt class="docutils literal"><span class="pre">system.methodSignat
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -350,7 +350,7 @@ unable to get <tt class="docutils literal"><span class="pre">system.methodSignat
   <h4>Next topic</h4>
   <p class="topless"><a href="rest.html"
                         title="next chapter">Consuming Data from a RESTful Web Service</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -367,7 +367,7 @@ unable to get <tt class="docutils literal"><span class="pre">system.methodSignat
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -379,14 +379,14 @@ unable to get <tt class="docutils literal"><span class="pre">system.methodSignat
         <li class="right" >
           <a href="index.html" title="Day 12"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
-          <li><a href="index.html" >Day 12</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 12</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

@@ -34,7 +34,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -56,16 +56,16 @@
         <li class="right" >
           <a href="index.html" title="Day 11 Lectures"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 11 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 11 Lectures</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="extracting-data-from-the-web">
 <h1>Extracting Data from the Web<a class="headerlink" href="#extracting-data-from-the-web" title="Permalink to this headline">¶</a></h1>
@@ -120,9 +120,9 @@
 <p>This is the result of one of the fundamental laws of the internet:</p>
 <p><strong>&#8220;Be strict in what you send and tolerant in what you receive&#8221;</strong></p>
 <div class="centered container">
-<div class="figure align-center">
+<div class="figure align-center" id="id1">
 <a class="reference internal image-reference" href="../../_images/scream.jpg"><img alt="../../_images/scream.jpg" src="../../_images/scream.jpg" style="width: 35%;" /></a>
-<p class="caption">Photo by Matthew via Flickr (<a class="reference external" href="http://www.flickr.com/photos/purplemattfish/3918004964/">http://www.flickr.com/photos/purplemattfish/3918004964/</a>) - CC-BY-NC-ND</p>
+<p class="caption"><span class="caption-text">Photo by Matthew via Flickr (<a class="reference external" href="http://www.flickr.com/photos/purplemattfish/3918004964/">http://www.flickr.com/photos/purplemattfish/3918004964/</a>) - CC-BY-NC-ND</span></p>
 </div>
 </div>
 </div>
@@ -154,8 +154,8 @@ heffalump:souptests cewing$
 <p>BeautifulSoup also supports using other parsers.</p>
 <p>There are two good choices: <a class="reference external" href="http://lxml.de">lxml</a>  and <a class="reference external" href="http://html5lib.readthedocs.org.">html5lib</a>.</p>
 </div>
-<p><tt class="docutils literal"><span class="pre">lxml</span></tt> is better, but it can be much harder to install.  For our exercise,
-Let&#8217;s use <tt class="docutils literal"><span class="pre">html5lib</span></tt>:</p>
+<p><code class="docutils literal"><span class="pre">lxml</span></code> is better, but it can be much harder to install.  For our exercise,
+Let&#8217;s use <code class="docutils literal"><span class="pre">html5lib</span></code>:</p>
 <div class="highlight-bash"><div class="highlight"><pre>[souptests]
 heffalump:souptests cewing$ pip install html5lib
 Downloading/unpacking html5lib
@@ -173,7 +173,7 @@ Cleaning up...
 heffalump:souptests cewing$
 </pre></div>
 </div>
-<p>Once installed, BeautifulSoup will choose <tt class="docutils literal"><span class="pre">html5lib</span></tt> automatically.</p>
+<p>Once installed, BeautifulSoup will choose <code class="docutils literal"><span class="pre">html5lib</span></code> automatically.</p>
 <div class="build container">
 <p>Actually, BeautifulSoup will choose the &#8220;best&#8221; available.</p>
 <p>You can specify the parser if you need to control it <em>and</em> you have more
@@ -183,10 +183,10 @@ than one parser available.</p>
 <div class="section" id="getting-webpages">
 <h3>Getting Webpages<a class="headerlink" href="#getting-webpages" title="Permalink to this headline">¶</a></h3>
 <p>As with IMAP, FTP and other web protocols, Python provides tools for using HTTP
-as a client. They are spread across the <tt class="docutils literal"><span class="pre">urllib</span></tt> and <tt class="docutils literal"><span class="pre">urllib2</span></tt> packages.</p>
+as a client. They are spread across the <code class="docutils literal"><span class="pre">urllib</span></code> and <code class="docutils literal"><span class="pre">urllib2</span></code> packages.</p>
 <div class="build container">
 <p>These packages have pretty unintuitive APIs.</p>
-<p>The <tt class="docutils literal"><span class="pre">requests</span></tt> library is becoming the de-facto standard for this type of
+<p>The <code class="docutils literal"><span class="pre">requests</span></code> library is becoming the de-facto standard for this type of
 work.  Let&#8217;s install it too.</p>
 <div class="highlight-bash"><div class="highlight"><pre>[souptests]
 heffalump:souptests cewing$ pip install requests
@@ -200,30 +200,30 @@ heffalump:souptests cewing$
 </pre></div>
 </div>
 </div>
-<p>In <tt class="docutils literal"><span class="pre">requests</span></tt>, each HTTP method is provided by a module-level function:</p>
+<p>In <code class="docutils literal"><span class="pre">requests</span></code>, each HTTP method is provided by a module-level function:</p>
 <ul class="build simple">
-<li><tt class="docutils literal"><span class="pre">GET</span></tt> == <tt class="docutils literal"><span class="pre">requests.get(url,</span> <span class="pre">**kwargs)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">POST</span></tt> == <tt class="docutils literal"><span class="pre">requests.post(url,</span> <span class="pre">**kwargs)</span></tt></li>
+<li><code class="docutils literal"><span class="pre">GET</span></code> == <code class="docutils literal"><span class="pre">requests.get(url,</span> <span class="pre">**kwargs)</span></code></li>
+<li><code class="docutils literal"><span class="pre">POST</span></code> == <code class="docutils literal"><span class="pre">requests.post(url,</span> <span class="pre">**kwargs)</span></code></li>
 <li>...</li>
 </ul>
 <div class="build container">
-<p>Those unspecified <tt class="docutils literal"><span class="pre">kwargs</span></tt> represent other parts of an HTTP request:</p>
+<p>Those unspecified <code class="docutils literal"><span class="pre">kwargs</span></code> represent other parts of an HTTP request:</p>
 <ul class="build simple">
-<li><tt class="docutils literal"><span class="pre">params</span></tt>: a dict of url query parameters (?foo=bar&amp;baz=bim)</li>
-<li><tt class="docutils literal"><span class="pre">headers</span></tt>: a dict of headers to send with the request</li>
-<li><tt class="docutils literal"><span class="pre">data</span></tt>: the body of the request, if any (form data for POST goes here)</li>
+<li><code class="docutils literal"><span class="pre">params</span></code>: a dict of url query parameters (?foo=bar&amp;baz=bim)</li>
+<li><code class="docutils literal"><span class="pre">headers</span></code>: a dict of headers to send with the request</li>
+<li><code class="docutils literal"><span class="pre">data</span></code>: the body of the request, if any (form data for POST goes here)</li>
 <li>...</li>
 </ul>
 </div>
-<p>The return value from one of these functions is a <tt class="docutils literal"><span class="pre">response</span></tt> which provides:</p>
+<p>The return value from one of these functions is a <code class="docutils literal"><span class="pre">response</span></code> which provides:</p>
 <ul class="build simple">
-<li><tt class="docutils literal"><span class="pre">response.status_code</span></tt>: see the HTTP Status Code returned</li>
-<li><tt class="docutils literal"><span class="pre">response.ok</span></tt>: True if <tt class="docutils literal"><span class="pre">response.status_code</span></tt> is not an error</li>
-<li><tt class="docutils literal"><span class="pre">response.raise_for_status()</span></tt>: call to raise a python error if it is</li>
-<li><tt class="docutils literal"><span class="pre">response.headers</span></tt>: The headers sent from the server</li>
-<li><tt class="docutils literal"><span class="pre">response.text</span></tt>: Body of the response, decoded to unicode</li>
-<li><tt class="docutils literal"><span class="pre">response.encoding</span></tt>: The encoding used to decode</li>
-<li><tt class="docutils literal"><span class="pre">response.content</span></tt>: The original encoded response body as bytes</li>
+<li><code class="docutils literal"><span class="pre">response.status_code</span></code>: see the HTTP Status Code returned</li>
+<li><code class="docutils literal"><span class="pre">response.ok</span></code>: True if <code class="docutils literal"><span class="pre">response.status_code</span></code> is not an error</li>
+<li><code class="docutils literal"><span class="pre">response.raise_for_status()</span></code>: call to raise a python error if it is</li>
+<li><code class="docutils literal"><span class="pre">response.headers</span></code>: The headers sent from the server</li>
+<li><code class="docutils literal"><span class="pre">response.text</span></code>: Body of the response, decoded to unicode</li>
+<li><code class="docutils literal"><span class="pre">response.encoding</span></code>: The encoding used to decode</li>
+<li><code class="docutils literal"><span class="pre">response.content</span></code>: The original encoded response body as bytes</li>
 </ul>
 <div class="build container">
 <p>You can <a class="reference external" href="http://requests.readthedocs.org">read more about this library</a> on your own.</p>
@@ -239,9 +239,9 @@ structure, a list of blog posts.</p>
 <p>Begin by firing up a Python interpreter:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
 heffalump:souptests cewing<span class="nv">$ </span>python
-Python 2.7.5 <span class="o">(</span>default, Aug 25 2013, 00:04:04<span class="o">)</span>
+Python 2.7.5 <span class="o">(</span>default, Aug <span class="m">25</span> 2013, 00:04:04<span class="o">)</span>
 <span class="o">[</span>GCC 4.2.1 Compatible Apple LLVM 5.0 <span class="o">(</span>clang-500.0.68<span class="o">)]</span> on darwin
-Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for </span>more information.
+Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for</span> more information.
 &gt;&gt;&gt;
 </pre></div>
 </div>
@@ -250,14 +250,14 @@ Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&
 <h3>Fetching a Page<a class="headerlink" href="#fetching-a-page" title="Permalink to this headline">¶</a></h3>
 <p>The first step is to fetch the page we&#8217;ll be scraping.</p>
 <p>I&#8217;ve created a shortened url that points to a feed aggregator for open
-source blog posts.  Unfortunately, <tt class="docutils literal"><span class="pre">tinyurl</span></tt> won&#8217;t issue a proper
-redirect response for requests that come from the <tt class="docutils literal"><span class="pre">requests</span></tt> library, so
+source blog posts.  Unfortunately, <code class="docutils literal"><span class="pre">tinyurl</span></code> won&#8217;t issue a proper
+redirect response for requests that come from the <code class="docutils literal"><span class="pre">requests</span></code> library, so
 we&#8217;ll have to pretend we are a real web browser.</p>
 <p>Open the developer tools for your browser and make sure you are viewing the
 <em>Network</em> tab so you can see network traffic your browser sends and
 receives. Load the url <a class="reference external" href="http:/tinyurl.com/sample-oss-posts">http:/tinyurl.com/sample-oss-posts</a> in a new tab.
 Back in the network tab, click on the requests that went to tinyurl.  Find
-the headers for the request and copy the <tt class="docutils literal"><span class="pre">User-Agent</span></tt> header value. Then
+the headers for the request and copy the <code class="docutils literal"><span class="pre">User-Agent</span></code> header value. Then
 begin to follow along in your Python interpreter:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">requests</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://tinyurl.com/sample-oss-posts&#39;</span>
@@ -304,7 +304,7 @@ displays as a formatted structure of HTML tags.  We can interact with those
 tags in devtools because they are actually just representations of a DOM node.
 (DOM stands for <a class="reference external" href="http://en.wikipedia.org/wiki/Document_Object_Model">Document Object Model</a>)</p>
 <p>In order to work with the page in the same fashion in Python, we need to
-<strong>parse</strong> it into the same kind of structure.  That&#8217;s what <tt class="docutils literal"><span class="pre">BeautifulSoup</span></tt>
+<strong>parse</strong> it into the same kind of structure.  That&#8217;s what <code class="docutils literal"><span class="pre">BeautifulSoup</span></code>
 does for us.</p>
 <div class="build highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">parsed</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -321,16 +321,16 @@ are those two things?</p>
 </pre></div>
 </div>
 <div class="build container">
-<p>Once an html page has been parsed by <tt class="docutils literal"><span class="pre">BeautifulSoup</span></tt>, everything becomes a
-<tt class="docutils literal"><span class="pre">node</span></tt>.  The parsed document itself is a <tt class="docutils literal"><span class="pre">node</span></tt> and <tt class="docutils literal"><span class="pre">nodes</span></tt> are iterable.</p>
+<p>Once an html page has been parsed by <code class="docutils literal"><span class="pre">BeautifulSoup</span></code>, everything becomes a
+<code class="docutils literal"><span class="pre">node</span></code>.  The parsed document itself is a <code class="docutils literal"><span class="pre">node</span></code> and <code class="docutils literal"><span class="pre">nodes</span></code> are iterable.</p>
 <p>When you iterate over a node, you get the nodes that it contains in the DOM
 tree.</p>
 </div>
-<p>These nodes can be roughly classed into two types, <tt class="docutils literal"><span class="pre">NavigableString</span></tt> and
-<tt class="docutils literal"><span class="pre">Tag</span></tt></p>
+<p>These nodes can be roughly classed into two types, <code class="docutils literal"><span class="pre">NavigableString</span></code> and
+<code class="docutils literal"><span class="pre">Tag</span></code></p>
 <div class="build container">
-<p>The main difference is that <tt class="docutils literal"><span class="pre">Tag</span></tt> nodes can contain text or other nodes,
-where <tt class="docutils literal"><span class="pre">NavigableStrings</span></tt> contain <strong>only</strong> text.</p>
+<p>The main difference is that <code class="docutils literal"><span class="pre">Tag</span></code> nodes can contain text or other nodes,
+where <code class="docutils literal"><span class="pre">NavigableStrings</span></code> contain <strong>only</strong> text.</p>
 <p>You can interact with these node types in a number of ways.</p>
 <p>The most common are  <em>Searching</em> and <em>Traversing</em></p>
 <p>Let&#8217;s start with the simpler of the two, <em>searching</em>.</p>
@@ -338,32 +338,32 @@ where <tt class="docutils literal"><span class="pre">NavigableStrings</span></tt
 </div>
 <div class="section" id="searching-html">
 <h3>Searching HTML<a class="headerlink" href="#searching-html" title="Permalink to this headline">¶</a></h3>
-<p>A <tt class="docutils literal"><span class="pre">Tag</span></tt> in <tt class="docutils literal"><span class="pre">BeautifulSoup</span></tt> has a couple of methods that support searching:</p>
+<p>A <code class="docutils literal"><span class="pre">Tag</span></code> in <code class="docutils literal"><span class="pre">BeautifulSoup</span></code> has a couple of methods that support searching:</p>
 <dl class="docutils">
-<dt><tt class="docutils literal"><span class="pre">tag.find()</span></tt>:</dt>
+<dt><code class="docutils literal"><span class="pre">tag.find()</span></code>:</dt>
 <dd>will find the first instance of a node that matches the search specification</dd>
-<dt><tt class="docutils literal"><span class="pre">tag.find_all()</span></tt>:</dt>
+<dt><code class="docutils literal"><span class="pre">tag.find_all()</span></code>:</dt>
 <dd>will find <strong>all</strong> instances that match the search specification.</dd>
 </dl>
 <p>So, How do we build a specification for searching? The call signature for
-<tt class="docutils literal"><span class="pre">find_all</span></tt> helps a bit:</p>
+<code class="docutils literal"><span class="pre">find_all</span></code> helps a bit:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">tag</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">recursive</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="build simple">
-<li><tt class="docutils literal"><span class="pre">name</span></tt> is the name of an html tag type (&#8216;a&#8217;, &#8216;p&#8217;, &#8216;div&#8217;, etc.)</li>
-<li><tt class="docutils literal"><span class="pre">attrs</span></tt> is a dictionary of key-value pairs where the key is an html
+<li><code class="docutils literal"><span class="pre">name</span></code> is the name of an html tag type (&#8216;a&#8217;, &#8216;p&#8217;, &#8216;div&#8217;, etc.)</li>
+<li><code class="docutils literal"><span class="pre">attrs</span></code> is a dictionary of key-value pairs where the key is an html
 attribute name and the value is the value you want to match.</li>
-<li><tt class="docutils literal"><span class="pre">recursive</span></tt> controls whether to find <em>descendents</em> (the default) or just
+<li><code class="docutils literal"><span class="pre">recursive</span></code> controls whether to find <em>descendents</em> (the default) or just
 <em>children</em> (recursive=False)</li>
-<li><tt class="docutils literal"><span class="pre">text</span></tt> allows you to find <tt class="docutils literal"><span class="pre">NavigableString</span></tt> nodes instead of <tt class="docutils literal"><span class="pre">Tag</span></tt> nodes.</li>
-<li><tt class="docutils literal"><span class="pre">limit</span></tt> controls how many to find, maximum.</li>
+<li><code class="docutils literal"><span class="pre">text</span></code> allows you to find <code class="docutils literal"><span class="pre">NavigableString</span></code> nodes instead of <code class="docutils literal"><span class="pre">Tag</span></code> nodes.</li>
+<li><code class="docutils literal"><span class="pre">limit</span></code> controls how many to find, maximum.</li>
 </ul>
 <div class="build container">
 <p>The last element <strong>kwargs</strong> allows you to pass arbitrary keyword arguments.</p>
 <p>If the argument you pass is not recognized as one of the other arguments,
 it will be treated as the name of an <em>HTML attribute</em> to filter on.</p>
-<p>Passing <tt class="docutils literal"><span class="pre">id=&quot;my-div&quot;</span></tt> would result in a search for any item with the id
+<p>Passing <code class="docutils literal"><span class="pre">id=&quot;my-div&quot;</span></code> would result in a search for any item with the id
 &#8220;my-div&#8221;:</p>
 <div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;my-div&quot;</span><span class="nt">&gt;</span>This is found<span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;other-div&quot;</span><span class="nt">&gt;</span>This would not be<span class="nt">&lt;/div&gt;</span>
@@ -372,11 +372,11 @@ it will be treated as the name of an <em>HTML attribute</em> to filter on.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">because <tt class="docutils literal"><span class="pre">class</span></tt> is a keyword in python, you can&#8217;t use it as a keyword
-argument.  Instead you should use <tt class="docutils literal"><span class="pre">class_</span></tt> (<tt class="docutils literal"><span class="pre">class_=&quot;button&quot;</span></tt>)</p>
+<p class="last">because <code class="docutils literal"><span class="pre">class</span></code> is a keyword in python, you can&#8217;t use it as a keyword
+argument.  Instead you should use <code class="docutils literal"><span class="pre">class_</span></code> (<code class="docutils literal"><span class="pre">class_=&quot;button&quot;</span></code>)</p>
 </div>
 <p>Looking at the blog listing, we can see that the container that is wrapped
-around each post shares a common <em>CSS class</em>: <tt class="docutils literal"><span class="pre">feedEntry</span></tt>. Let&#8217;s grab all of
+around each post shares a common <em>CSS class</em>: <code class="docutils literal"><span class="pre">feedEntry</span></code>. Let&#8217;s grab all of
 them:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;div&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;feedEntry&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
@@ -400,7 +400,7 @@ and then extract the text it contains:</p>
 </pre></div>
 </div>
 <p>We can also find the set of possible sources for our blog posts.  The
-byline is contained in a <tt class="docutils literal"><span class="pre">&lt;p&gt;</span></tt> tag with the CSS class <tt class="docutils literal"><span class="pre">discreet</span></tt>.
+byline is contained in a <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> tag with the CSS class <code class="docutils literal"><span class="pre">discreet</span></code>.
 Let&#8217;s gather up all of those and see what we have:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">byline</span> <span class="o">=</span> <span class="n">e1</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">&#39;discreet&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">byline</span><span class="o">.</span><span class="n">children</span><span class="p">))</span>
@@ -430,9 +430,9 @@ Let&#8217;s gather up all of those and see what we have:</p>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>If we look these over, we find that we have some from <tt class="docutils literal"><span class="pre">Planet</span> <span class="pre">Django</span></tt>, some
-from <tt class="docutils literal"><span class="pre">Planet</span> <span class="pre">PostgreSQL</span></tt> and maybe some others as well (I get one from
-<tt class="docutils literal"><span class="pre">plope</span></tt> too).</p>
+<p>If we look these over, we find that we have some from <code class="docutils literal"><span class="pre">Planet</span> <span class="pre">Django</span></code>, some
+from <code class="docutils literal"><span class="pre">Planet</span> <span class="pre">PostgreSQL</span></code> and maybe some others as well (I get one from
+<code class="docutils literal"><span class="pre">plope</span></code> too).</p>
 <p>Let&#8217;s take one more step, and divide our post titles into categories based on
 whether they are Django, PostgreSQL or other.</p>
 <p>Start by defining a function to get the <em>classifier</em> for an entry:</p>
@@ -487,7 +487,7 @@ whether they are Django, PostgreSQL or other.</p>
 <h2>Going Farther<a class="headerlink" href="#going-farther" title="Permalink to this headline">¶</a></h2>
 <p class="left">Okay, so that&#8217;s the basics. For your assignment you&#8217;ll take this a step farther
 and
-<a class="reference internal" href="../../assignments/day11/scraper.html#scraper-assignment"><em>build a list of restaurant health inspection data</em></a>
+<a class="reference internal" href="../../assignments/day11/scraper.html#scraper-assignment"><span>build a list of restaurant health inspection data</span></a>
 using the King County government website.</p>
 </div>
 </div>
@@ -496,7 +496,7 @@ using the King County government website.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -524,7 +524,7 @@ using the King County government website.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="boto.html"
                         title="next chapter">Manage AWS Resources with Boto</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -541,7 +541,7 @@ using the King County government website.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -553,14 +553,14 @@ using the King County government website.</p>
         <li class="right" >
           <a href="index.html" title="Day 11 Lectures"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
-          <li><a href="index.html" >Day 11 Lectures</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Classroom Lectures</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 11 Lectures</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

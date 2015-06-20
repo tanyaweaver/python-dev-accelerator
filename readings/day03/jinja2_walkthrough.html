@@ -33,7 +33,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -43,7 +43,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -52,21 +52,21 @@
         <li class="right" >
           <a href="index.html" title="Day 03 Readings"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Readings</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 03 Readings</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Readings</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 03 Readings</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="jinja2-template-introduction">
 <h1>Jinja2 Template Introduction<a class="headerlink" href="#jinja2-template-introduction" title="Permalink to this headline">¶</a></h1>
-<p>When you install <tt class="docutils literal"><span class="pre">pyramid_jinja2</span></tt> into your virtualenv, it brings along a
-Python-based templating engine called <tt class="docutils literal"><span class="pre">Jinja2</span></tt>.</p>
+<p>When you install <code class="docutils literal"><span class="pre">pyramid_jinja2</span></code> into your virtualenv, it brings along a
+Python-based templating engine called <code class="docutils literal"><span class="pre">Jinja2</span></code>.</p>
 <p>In this walkthrough, you&#8217;ll see some basics about how templates work, and get
 to know what sorts of options they provide you for creating HTML from a Python
 process.</p>
@@ -97,7 +97,7 @@ templating language. We&#8217;ll learn it first.</p>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>But it has a bit more to it than that. You can call the <tt class="docutils literal"><span class="pre">render</span></tt> method of a
+<p>But it has a bit more to it than that. You can call the <code class="docutils literal"><span class="pre">render</span></code> method of a
 template object, providing some <em>context</em>:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Freddy&quot;</span><span class="p">)</span>
 <span class="go">u&#39;Hello Freddy, how are you?&#39;</span>
@@ -109,7 +109,7 @@ template object, providing some <em>context</em>:</p>
 <p><em>Context</em> can either be keyword arguments, or a dictionary.</p>
 <p>Simple Python values passed in as context will be resolved in the template by
 the <em>key</em> they are assigned to in the <em>context</em>.  These keys are arbitrary.
-<em>Placeholders</em> like <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">name</span> <span class="pre">}}</span></tt> in this example will be replaced by the
+<em>Placeholders</em> like <code class="docutils literal"><span class="pre">{{</span> <span class="pre">name</span> <span class="pre">}}</span></code> in this example will be replaced by the
 corresponding values from the <em>context</em>.</p>
 <div class="section" id="item-and-attribute-access-in-templates">
 <h3>Item and Attribute Access in Templates<a class="headerlink" href="#item-and-attribute-access-in-templates" title="Permalink to this headline">¶</a></h3>
@@ -158,11 +158,11 @@ operator:</p>
 <span class="s">u&#39;confusing: YDOOD YDWOH&#39;</span>
 </pre></div>
 </div>
-<p>There are <a class="reference external" href="http://jinja.pocoo.org/docs/templates/#builtin-filters">a large number of filters</a> available to use in <tt class="docutils literal"><span class="pre">jinja2</span></tt>.</p>
+<p>There are <a class="reference external" href="http://jinja.pocoo.org/docs/templates/#builtin-filters">a large number of filters</a> available to use in <code class="docutils literal"><span class="pre">jinja2</span></code>.</p>
 </div>
 <div class="section" id="control-flow">
 <h3>Control Flow<a class="headerlink" href="#control-flow" title="Permalink to this headline">¶</a></h3>
-<p><tt class="docutils literal"><span class="pre">Jinja2</span></tt> provides all the expected control structures of a featureful
+<p><code class="docutils literal"><span class="pre">Jinja2</span></code> provides all the expected control structures of a featureful
 programming language:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="go">tmpl = &quot;&quot;&quot;</span>
 <span class="gp">... </span><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">list</span> <span class="o">%</span><span class="p">}{{</span> <span class="n">item</span> <span class="p">}},</span> <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
@@ -179,7 +179,7 @@ explicit closing tag ({% for %}...{% endfor %})</p>
 <div class="section" id="conditionals-in-templates">
 <h3>Conditionals in Templates<a class="headerlink" href="#conditionals-in-templates" title="Permalink to this headline">¶</a></h3>
 <p>There are a number of specialized <em>tests</em> available for use with the
-<tt class="docutils literal"><span class="pre">if...elif...else</span></tt> control structure:</p>
+<code class="docutils literal"><span class="pre">if...elif...else</span></code> control structure:</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tmpl</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
 <span class="gp">... </span><span class="s">{</span><span class="si">% i</span><span class="s">f phrase is upper %}</span>
 <span class="gp">... </span><span class="s">  {{ phrase|lower }}</span>
@@ -195,11 +195,11 @@ explicit closing tag ({% for %}...{% endfor %})</p>
 <span class="go">u&#39;\nThis should print as-is&#39;</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="http://jinja.pocoo.org/docs/templates/#builtin-tests">Here&#8217;s a list</a> of all the built-in tests in the <tt class="docutils literal"><span class="pre">jinja2</span></tt> template language.</p>
+<p><a class="reference external" href="http://jinja.pocoo.org/docs/templates/#builtin-tests">Here&#8217;s a list</a> of all the built-in tests in the <code class="docutils literal"><span class="pre">jinja2</span></code> template language.</p>
 </div>
 <div class="section" id="python-expressions-in-templates">
 <h3>Python Expressions in Templates<a class="headerlink" href="#python-expressions-in-templates" title="Permalink to this headline">¶</a></h3>
-<p>You can also use basic Python-like expressions in <tt class="docutils literal"><span class="pre">jinja2</span></tt> templates. There
+<p>You can also use basic Python-like expressions in <code class="docutils literal"><span class="pre">jinja2</span></code> templates. There
 are some syntactic differences, though.</p>
 <div class="highlight-pycon"><div class="highlight"><pre><span class="go">tmpl = &quot;&quot;&quot;</span>
 <span class="gp">... </span><span class="p">{</span><span class="o">%</span> <span class="nb">set</span> <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">%</span><span class="p">}</span>
@@ -231,14 +231,14 @@ environment for the template engine is used to:</p>
 pyramid_jinja2 configuration. By default, templates will be searched for
 <em>relative</em> to the file in which they are called. Paths you use to reference
 templates will begin there unless you use <a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid-jinja2/en/latest/#template-lookup-mechanisms">another referencing system</a>.</p>
-<p>Once configured, you can use any file ending in <tt class="docutils literal"><span class="pre">.jinja2</span></tt> as a Pyramid
+<p>Once configured, you can use any file ending in <code class="docutils literal"><span class="pre">.jinja2</span></code> as a Pyramid
 <em>renderer</em>.  Needless to say, the file extension used is <a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid-jinja2/en/latest/#adding-or-overriding-a-renderer">also configurable</a>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyramid.config</span> <span class="kn">import</span> <span class="n">view_config</span>
 <span class="nd">@view_config</span><span class="p">(</span><span class="n">renderer</span><span class="o">=</span><span class="s">&quot;templates/hello_world.jinja2&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>In this case, Pyramid would expect to find a file called <tt class="docutils literal"><span class="pre">hello_world.jinja2</span></tt>
-in a directory called <tt class="docutils literal"><span class="pre">templates</span></tt> adjacent to the file where this code
+<p>In this case, Pyramid would expect to find a file called <code class="docutils literal"><span class="pre">hello_world.jinja2</span></code>
+in a directory called <code class="docutils literal"><span class="pre">templates</span></code> adjacent to the file where this code
 appeared.</p>
 <p>Let&#8217;s look at what a template file like that might look like:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;layout.jinja2&quot;</span> <span class="cp">%}</span><span class="x"></span>
@@ -250,11 +250,11 @@ appeared.</p>
 <p>That&#8217;s not much to look at.  Where&#8217;s the rest of the HTML that makes up a page?</p>
 <div class="section" id="template-inheritance">
 <h3>Template Inheritance<a class="headerlink" href="#template-inheritance" title="Permalink to this headline">¶</a></h3>
-<p><tt class="docutils literal"><span class="pre">Jinja2</span></tt> templates allow for <em>inheritance</em>.  This means that you can create
+<p><code class="docutils literal"><span class="pre">Jinja2</span></code> templates allow for <em>inheritance</em>.  This means that you can create
 shared structure in base templates, and then override or fill in named parts of
 that structure in <em>sub-templates</em>.</p>
-<p>In the above case, the <tt class="docutils literal"><span class="pre">hello_world.jinja2</span></tt> sub-template <em>extends</em> the
-<tt class="docutils literal"><span class="pre">layout.jinja2</span></tt> template. What does that file look like?</p>
+<p>In the above case, the <code class="docutils literal"><span class="pre">hello_world.jinja2</span></code> sub-template <em>extends</em> the
+<code class="docutils literal"><span class="pre">layout.jinja2</span></code> template. What does that file look like?</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="x">&lt;!DOCTYPE html&gt;</span>
 <span class="x">&lt;html&gt;</span>
 <span class="x">  &lt;head&gt;</span>
@@ -269,18 +269,18 @@ that structure in <em>sub-templates</em>.</p>
 <span class="x">&lt;/html&gt;</span>
 </pre></div>
 </div>
-<p>You can see here that the <tt class="docutils literal"><span class="pre">body</span></tt> block is defined in <tt class="docutils literal"><span class="pre">layout.jinja2</span></tt> and then
-that block is filled by the templating in <tt class="docutils literal"><span class="pre">hello_world.jinja2</span></tt>.</p>
+<p>You can see here that the <code class="docutils literal"><span class="pre">body</span></code> block is defined in <code class="docutils literal"><span class="pre">layout.jinja2</span></code> and then
+that block is filled by the templating in <code class="docutils literal"><span class="pre">hello_world.jinja2</span></code>.</p>
 <p>Inheritance can work the other way, as well. In addition to filling blocks in a
-larger structure, you can pull in smaller blocks using the <tt class="docutils literal"><span class="pre">include</span></tt> template
+larger structure, you can pull in smaller blocks using the <code class="docutils literal"><span class="pre">include</span></code> template
 tag.  For example, all the pages on your site might include a common footer
-which is defined in <tt class="docutils literal"><span class="pre">footer.jinja2</span></tt>:</p>
+which is defined in <code class="docutils literal"><span class="pre">footer.jinja2</span></code>:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="x">&lt;div id=&quot;footer&quot;&gt;</span>
 <span class="x">  I am the footer, seen on all pages.</span>
 <span class="x">&lt;/div&gt;</span>
 </pre></div>
 </div>
-<p>Then, we can include this structure in our <tt class="docutils literal"><span class="pre">layout.jinja2</span></tt> file:</p>
+<p>Then, we can include this structure in our <code class="docutils literal"><span class="pre">layout.jinja2</span></code> file:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="x">&lt;!DOCTYPE html&gt;</span>
 <span class="x">&lt;html&gt;</span>
 <span class="x">  &lt;head&gt;</span>
@@ -309,7 +309,7 @@ structures for repetetive elements like form inputs:</p>
 <span class="cp">{%</span>- <span class="k">endmacro</span> <span class="cp">%}</span><span class="x"></span>
 </pre></div>
 </div>
-<p>Once such a library is established, say in a file called <tt class="docutils literal"><span class="pre">forms.jinja2</span></tt>, the
+<p>Once such a library is established, say in a file called <code class="docutils literal"><span class="pre">forms.jinja2</span></code>, the
 macros it contains can be used in other templates:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">import</span> <span class="s1">&#39;forms.jinja2&#39;</span> <span class="k">as</span> <span class="nv">forms</span> <span class="cp">%}</span><span class="x"></span>
 <span class="x">&lt;dl&gt;</span>
@@ -326,20 +326,20 @@ here, so read up.</p>
 </div>
 <div class="section" id="common-flask-context">
 <h3>Common Flask Context<a class="headerlink" href="#common-flask-context" title="Permalink to this headline">¶</a></h3>
-<p>Keyword arguments you pass to <tt class="docutils literal"><span class="pre">render_template</span></tt> become the <em>context</em> passed
+<p>Keyword arguments you pass to <code class="docutils literal"><span class="pre">render_template</span></code> become the <em>context</em> passed
 to the template for rendering.</p>
 <p>Pyramid will add a single value to the <em>context</em> for jinja2 templates, the
-<tt class="docutils literal"><span class="pre">request</span></tt> object. Within pyramid, the request object is a single location
+<code class="docutils literal"><span class="pre">request</span></code> object. Within pyramid, the request object is a single location
 where you can access other important information like:</p>
 <ul class="simple">
-<li><strong>settings</strong>: <tt class="docutils literal"><span class="pre">request.registry.settings</span></tt> contains all settings for your
+<li><strong>settings</strong>: <code class="docutils literal"><span class="pre">request.registry.settings</span></code> contains all settings for your
 app.</li>
-<li><strong>session</strong>: if sessions are configured, <tt class="docutils literal"><span class="pre">request.session</span></tt> will hold
+<li><strong>session</strong>: if sessions are configured, <code class="docutils literal"><span class="pre">request.session</span></code> will hold
 session data.</li>
 <li><strong>route_url</strong>: you can easily <em>reverse</em> urls from within your templates with
-<tt class="docutils literal"><span class="pre">request.route_url</span></tt>.</li>
+<code class="docutils literal"><span class="pre">request.route_url</span></code>.</li>
 </ul>
-<p>and much much more. The Pyramid <tt class="docutils literal"><span class="pre">request</span></tt> supports an <a class="reference external" href="http://docs.pylonsproject.org/docs/pyramid/en/latest/api/request.html">entire ecosystem</a> of
+<p>and much much more. The Pyramid <code class="docutils literal"><span class="pre">request</span></code> supports an <a class="reference external" href="http://docs.pylonsproject.org/docs/pyramid/en/latest/api/request.html">entire ecosystem</a> of
 properties and methods that can come in useful.</p>
 </div>
 </div>
@@ -356,7 +356,7 @@ properties and methods that can come in useful.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -382,7 +382,7 @@ properties and methods that can come in useful.</p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Day 03 Readings</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -399,7 +399,7 @@ properties and methods that can come in useful.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -408,14 +408,14 @@ properties and methods that can come in useful.</p>
         <li class="right" >
           <a href="index.html" title="Day 03 Readings"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Readings</a> &raquo;</li>
-          <li><a href="index.html" >Day 03 Readings</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Readings</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 03 Readings</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

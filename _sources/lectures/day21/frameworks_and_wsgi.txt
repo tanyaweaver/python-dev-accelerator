@@ -60,7 +60,7 @@ Think back over the first half of class.
     In particular, contrast the book db app you created using WSGI and your
     first full-scale web project.
 
-    Compare the ease of routing in ``Flask`` with the way you solved the same
+    Compare the ease of routing in ``Pyramid`` with the way you solved the same
     problem for the book database.
 
     Think about how *general* the route system is in ``Flask`` and how
@@ -74,7 +74,7 @@ wish you didn't have to think about?
 .. rst-class:: build
 .. container::
 
-    How about in the case of your Flask app?
+    How about in the case of your Pyramid app?
 
     How about with using ``psycopg2`` directly?
 
@@ -147,7 +147,7 @@ Second Corollary:
 
 .. nextslide::
 
-You began with the current king of the micro-framework class, **Flask**.
+You began with the most flexible of all the frameworks, **Pyramid**.
 
 .. rst-class:: build
 .. container::
@@ -155,9 +155,8 @@ You began with the current king of the micro-framework class, **Flask**.
     Next you'll be working with the champion of the full-stack framework class,
     **Django**
 
-    You'll also be asked to follow a tutorial on "the second most popular
-    microframework and the second most popular full-stack framework",
-    **Pyramid**
+    You'll also be asked to follow a tutorial on the king of the microframework
+    class, ``Flask`` a bit later on. **Pyramid**
 
 Frameworks and WSGI
 ===================
@@ -174,151 +173,90 @@ Frameworks and WSGI
 
     How exactly does that work?
 
-Flask and WSGI
---------------
+Django and WSGI
+---------------
 
-Consider the code for a simple ``hello world`` app in ``Flask``:
-
-.. code-block:: python
-
-    from flask import Flask
-    
-    app = Flask(__name__)
-
-    @app.route('/')
-    def hello_world():
-        return 'Hello World!'
-
-    if __name__ == '__main__':
-        app.run()
-
-
-.. nextslide:: What's Happening Here?
-
-Flask the framework provides a Python class called `Flask`. This class
-functions as a single *application* in the WSGI sense.
-
-.. rst-class:: build
-.. container::
-
-    We know a WSGI application must be a *callable* that takes the arguments
-    *environ* and *start_response*.
-
-    It has to call the *start_response* method, providing status and headers.
-
-    And it has to return an *iterable* that represents the HTTP response body.
-
-
-    In Python, an object is a *callable* if it has a ``__call__`` method.
-
-.. nextslide::
-
-Take a moment to start up your ``learning_journal`` virtualenv and fire up a
-Python interpreter:
-
-.. code-block:: bash
-
-    heffalump:~ cewing$ workon learning_journal
-    [learning_journal]
-    heffalump:learning_journal cewing$ python
-    Python 2.7.5 (default, Aug 25 2013, 00:04:04)
-    [GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)] on darwin
-    Type "help", "copyright", "credits" or "license" for more information.
-    >>>
-
-Once there, import the ``flask`` package. Our ``app`` is an instance of the
-``Flask`` class from this package.  Let's go look that up and see what it does:
-
-.. code-block:: pycon
-
-    >>> import flask
-    >>> flask.__file__
-    '/Users/cewing/virtualenvs/learning_journal/lib/python2.7/site-packages/flask/__init__.pyc'
-    >>> 
-
-.. nextslide::
-
-Open that ``flask`` directory in your editor and open ``__init__.py``:
+Running a Django site in production is no different than any other framework.
+Your site is run using a *wsgi server*, which calls the *wsgi application*
+Django builds for you. For a peek behind the curtain, open ``wsgi.py``:
 
 .. code-block:: python
 
-    # -*- coding: utf-8 -*-
-    """
-        flask
-        ~~~~~
+    import os
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "imager.settings")
 
-        A microframework based on Werkzeug.  It's extensively documented
-        and follows best practice patterns.
-        ...
-    """
-    # ...
-    from werkzeug.exceptions import abort
-    from werkzeug.utils import redirect
-    from jinja2 import Markup, escape
+    from django.core.wsgi import get_wsgi_application
+    application = get_wsgi_application()
 
-    from .app import Flask, Request, Response
-    from .config import Config
+.. nextslide:: Django's wsgi implementation
 
-.. nextslide:: The ``Flask.__call__`` method
-
-On line 21 you should see that ``Flask`` is imported into the global ``flask``
-namespace from ``.app``.  Open the ``app.py`` file to dig a bit further.
-
-Here's the ``__call__`` method of the ``Flask`` class (lines 1834-36 in my
-version):
+Let's follow this down a ways and see what we find.  What does
+``get_wsgi_application`` look like?
 
 .. code-block:: python
 
-    def __call__(self, environ, start_response):
-        """Shortcut for :attr:`wsgi_app`."""
-        return self.wsgi_app(environ, start_response)
-
-As you can see, it calls another method, called ``wsgi_app``.  Let's follow
-this down...
-
-.. nextslide:: The ``Flask.wsgi_app`` method
-
-.. code-block:: python
-
-    def wsgi_app(self, environ, start_response):
-        """The actual WSGI application.  
-        ...
+    def get_wsgi_application():
         """
-        ctx = self.request_context(environ)
-        ctx.push()
-        error = None
-        try:
+        The public interface to Django's WSGI support. Should return a WSGI
+        callable.
+
+        Allows us to avoid making django.core.handlers.WSGIHandler public API, in
+        case the internal WSGI implementation changes or moves in the future.
+
+        """
+        django.setup()
+        return WSGIHandler()
+
+.. nextslide:: The Django WSGIHandler
+
+One level further down. Let's review ``django.core.handlers.wsgi.WSGIHandler``:
+
+.. code-block:: python
+
+    class WSGIHandler(base.BaseHandler):
+        initLock = Lock()
+        request_class = WSGIRequest
+
+        def __call__(self, environ, start_response):
+            # Set up middleware if needed. We couldn't do this earlier, because
+            # settings weren't available.
+            if self._request_middleware is None:
+                with self.initLock:
+                    try:
+                        # Check that middleware is still uninitialized.
+                        if self._request_middleware is None:
+                            self.load_middleware()
+                    except:
+                        # Unload whatever middleware we got
+                        self._request_middleware = None
+                        raise
+
+            set_script_prefix(get_script_name(environ))
+            signals.request_started.send(sender=self.__class__)
             try:
-                response = self.full_dispatch_request()
-            except Exception as e:
-                error = e
-                response = self.make_response(self.handle_exception(e))
-            return response(environ, start_response)
-        #...
+                request = self.request_class(environ)
+            except UnicodeDecodeError:
+                logger.warning('Bad Request (UnicodeDecodeError)',
+                    exc_info=sys.exc_info(),
+                    extra={
+                        'status_code': 400,
+                    }
+                )
+                response = http.HttpResponseBadRequest()
+            else:
+                response = self.get_response(request)
 
-``response`` is another WSGI app.  ``Flask`` is actually *WSGI middleware*!
+            response._handler_class = self.__class__
 
-.. nextslide:: The ``werkzeug.Response`` class
+            status = '%s %s' % (response.status_code, response.reason_phrase)
+            response_headers = [(str(k), str(v)) for k, v in response.items()]
+            for c in response.cookies.values():
+                response_headers.append((str('Set-Cookie'), str(c.output(header=''))))
+            start_response(force_str(status), response_headers)
+            return response
 
-Following this all the way down leads to a ``Response`` class from a package
-called *werkzeug*. Here's the ``__call__`` method provided by that class:
-
-.. code-block:: python
-
-    def __call__(self, environ, start_response):
-        """Process this response as WSGI application.
-
-        :param environ: the WSGI environment.
-        :param start_response: the response callable provided by the WSGI
-                               server.
-        :return: an application iterator
-        """
-        app_iter, status, headers = self.get_wsgi_response(environ)
-        start_response(status, headers)
-        return app_iter
-
-Given the amount of time you've spent in week three working on WSGI apps,
-this should look pretty familiar to you.
+Given your previous experience creating WSGI apps, this should look pretty
+familiar to you.
 
 .. nextslide:: Commonalities
 
@@ -334,9 +272,3 @@ sort of thing.
     the thing that really matters to you.
 
     Getting input from a request, and returning a response.
-
-    In the case of ``Flask`` both the Request and the Response are actually
-    instances of Python classes defined in the ``werkzeug`` package. These
-    classes smooth over some of the complications of interacting with the raw
-    WSGI ``environ``.
-

@@ -34,7 +34,7 @@
 <![endif]-->
 
   </head>
-  <body>
+  <body role="document">
 <div class="header">
   <div class="logo">
     <a href="../../index.html">
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -56,16 +56,16 @@
         <li class="right" >
           <a href="rest.html" title="Consuming Data from a RESTful Web Service"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Day 12</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Day 12</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="task-automation-with-fabric">
 <h1>Task Automation with Fabric<a class="headerlink" href="#task-automation-with-fabric" title="Permalink to this headline">¶</a></h1>
@@ -75,7 +75,7 @@
 hand</p>
 </div>
 <p>We&#8217;ve looked at creating and destroying new AWS EC2 instances using the Python
-wrapper for the AWS API, <tt class="docutils literal"><span class="pre">boto</span></tt>.</p>
+wrapper for the AWS API, <code class="docutils literal"><span class="pre">boto</span></code>.</p>
 <p>Once you have a server, you want to do something useful with it. Possible tasks
 might include:</p>
 <ul class="simple">
@@ -93,7 +93,7 @@ encourages actually doing that task more often.</p>
 <p>One package available for Python to accomplish this sort of task automation is
 <a class="reference external" href="http://docs.fabfile.org/en/latest/">fabric</a>. It provides a uniform interface for performing tasks either locally
 or on one or more remote server.</p>
-<p><tt class="docutils literal"><span class="pre">Fabric</span></tt> uses SSH to handle communications between your local machine and the
+<p><code class="docutils literal"><span class="pre">Fabric</span></code> uses SSH to handle communications between your local machine and the
 system you are working on, so any command you can run from a terminal is
 available to be automated.</p>
 <p>In this quick tutorial, we&#8217;ll walk through the process of automating the
@@ -101,8 +101,8 @@ provisioning of a new AWS EC2 instance and then installing some software on the
 new system.</p>
 <div class="section" id="setting-up">
 <h2>Setting Up<a class="headerlink" href="#setting-up" title="Permalink to this headline">¶</a></h2>
-<p>To begin with, let&#8217;s create an environment suitable for exploring <tt class="docutils literal"><span class="pre">fabric</span></tt>
-and using <tt class="docutils literal"><span class="pre">boto</span></tt> to set up remote servers.</p>
+<p>To begin with, let&#8217;s create an environment suitable for exploring <code class="docutils literal"><span class="pre">fabric</span></code>
+and using <code class="docutils literal"><span class="pre">boto</span></code> to set up remote servers.</p>
 <p>Begin by creating a new virtualenv project:</p>
 <div class="highlight-bash"><div class="highlight"><pre>heffalump:~ cewing$ mkproject fabrictests
 New python executable in fabrictests/bin/python
@@ -129,9 +129,9 @@ heffalump:fabrictests cewing$
 </pre></div>
 </div>
 <p>Notice that fabric, since it operates over SSH, requires the Python ssh library
-<tt class="docutils literal"><span class="pre">paramiko</span></tt>.</p>
-<p>Because <tt class="docutils literal"><span class="pre">fabric</span></tt> will use SSH to connect to <strong>all</strong> hosts when using it&#8217;s
-<tt class="docutils literal"><span class="pre">run</span></tt> command (including your local machine) you&#8217;ll need to enable SSH access
+<code class="docutils literal"><span class="pre">paramiko</span></code>.</p>
+<p>Because <code class="docutils literal"><span class="pre">fabric</span></code> will use SSH to connect to <strong>all</strong> hosts when using it&#8217;s
+<code class="docutils literal"><span class="pre">run</span></code> command (including your local machine) you&#8217;ll need to enable SSH access
 for your <a class="reference external" href="http://bluishcoder.co.nz/articles/mac-ssh.html">OS X</a> or <a class="reference external" href="https://help.ubuntu.com/community/SSH/OpenSSH/Configuring">Linux</a> machine.</p>
 </div>
 <div class="section" id="one-more-thing">
@@ -141,16 +141,16 @@ prove that we&#8217;ve done it, we need to be able to connect to that server via
 (port 80).</p>
 <p>Before you go any further, open your AWS web console. Navigate to the EC2
 dashboard, and then select the &#8216;Security Groups&#8217; controls.</p>
-<p>Find your <tt class="docutils literal"><span class="pre">ssh-access</span></tt> security group and add a new TCP rule. Allow HTTP
+<p>Find your <code class="docutils literal"><span class="pre">ssh-access</span></code> security group and add a new TCP rule. Allow HTTP
 access via port 80 from any address.</p>
 <p>Don&#8217;t forget to apply your rules changes after adding the new rule, or it won&#8217;t
 take effect.</p>
 </div>
 <div class="section" id="fabric-basics">
 <h2>Fabric Basics<a class="headerlink" href="#fabric-basics" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">Fabric</span></tt> operates by providing a single command <tt class="docutils literal"><span class="pre">fab</span></tt>.</p>
+<p><code class="docutils literal"><span class="pre">Fabric</span></code> operates by providing a single command <code class="docutils literal"><span class="pre">fab</span></code>.</p>
 <p>This command looks for a file in your present working directory called
-<tt class="docutils literal"><span class="pre">fabfile</span></tt> or <tt class="docutils literal"><span class="pre">fabfile.py</span></tt>. If there is none, it will throw an error:</p>
+<code class="docutils literal"><span class="pre">fabfile</span></code> or <code class="docutils literal"><span class="pre">fabfile.py</span></code>. If there is none, it will throw an error:</p>
 <div class="highlight-bash"><div class="highlight"><pre>[fabrictests]
 heffalump:fabrictests cewing$ fab
 
@@ -163,7 +163,7 @@ Aborting.
 heffalump:fabrictests cewing$
 </pre></div>
 </div>
-<p>Let&#8217;s start by creating a new fabfile here in the <tt class="docutils literal"><span class="pre">fabrictests</span></tt> project
+<p>Let&#8217;s start by creating a new fabfile here in the <code class="docutils literal"><span class="pre">fabrictests</span></code> project
 directory:</p>
 <div class="highlight-bash"><div class="highlight"><pre>fabrictests]
 heffalump:fabrictests cewing$ touch fabfile.py
@@ -175,7 +175,7 @@ heffalump:fabrictests cewing$
 <p>Python code.</p>
 <p>Let&#8217;s start by creating a very simple test Python function we can use to show
 how fabric works in general.</p>
-<p>Open <tt class="docutils literal"><span class="pre">fabfile.py</span></tt> in your editor and add the following code:</p>
+<p>Open <code class="docutils literal"><span class="pre">fabfile.py</span></code> in your editor and add the following code:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="n">run</span>
 
 <span class="k">def</span> <span class="nf">host_type</span><span class="p">():</span>
@@ -183,7 +183,7 @@ how fabric works in general.</p>
 </pre></div>
 </div>
 <p>Once you&#8217;ve saved this, the name of the new Python function becomes available
-as a <tt class="docutils literal"><span class="pre">subcommand</span></tt> for the <tt class="docutils literal"><span class="pre">fab</span></tt> command:</p>
+as a <code class="docutils literal"><span class="pre">subcommand</span></code> for the <code class="docutils literal"><span class="pre">fab</span></code> command:</p>
 <div class="highlight-bash"><div class="highlight"><pre>[fabrictests]
 heffalump:fabrictests cewing$ fab -H localhost host_type
 [localhost] Executing task &#39;host_type&#39;
@@ -201,26 +201,26 @@ heffalump:fabrictests cewing$
 </div>
 <p>Each function we define in a fabfile can perform a task on our behalf on the
 specified host. These tasks can range from the simple to the highly complex. In
-essence, you can think of <tt class="docutils literal"><span class="pre">fabric</span></tt> as supplying a way to encapsulate standard
+essence, you can think of <code class="docutils literal"><span class="pre">fabric</span></code> as supplying a way to encapsulate standard
 shell actions so that you can repeat them more easily.</p>
 <p>Notice that you&#8217;re local machine has prompted you to login with a password.
-That&#8217;s a good thing. If you <a class="reference external" href="http://stackoverflow.com/questions/7260/how-do-i-setup-public-key-authentication">enable publickey login</a> then <tt class="docutils literal"><span class="pre">fabric</span></tt> will skip
+That&#8217;s a good thing. If you <a class="reference external" href="http://stackoverflow.com/questions/7260/how-do-i-setup-public-key-authentication">enable publickey login</a> then <code class="docutils literal"><span class="pre">fabric</span></code> will skip
 this part for you. This also means that you won&#8217;t be sending your password
 across a connection, so that&#8217;s nice.</p>
 <div class="section" id="the-fabric-environment">
 <span id="fab-env"></span><h3>The Fabric Environment<a class="headerlink" href="#the-fabric-environment" title="Permalink to this headline">¶</a></h3>
-<p>Having to specify a host to connect to is a bit awkward, so <tt class="docutils literal"><span class="pre">fabric</span></tt> provides
+<p>Having to specify a host to connect to is a bit awkward, so <code class="docutils literal"><span class="pre">fabric</span></code> provides
 a mechanism for setting this up automatically.</p>
-<p>The <tt class="docutils literal"><span class="pre">fabric.api</span></tt> module provides a symbol <tt class="docutils literal"><span class="pre">env</span></tt> that allows you to share
+<p>The <code class="docutils literal"><span class="pre">fabric.api</span></code> module provides a symbol <code class="docutils literal"><span class="pre">env</span></code> that allows you to share
 state between different fabric tasks.  This state can be mutated locally, both
 at module level and from within a given task.</p>
 <p>You can hang pretty much any symbol onto this object, which is really just a
 fancy Python dictionary.</p>
 <p>However, there are a number of environmental settings that are present from the
-get-go, and which <tt class="docutils literal"><span class="pre">fabric</span></tt> will refer to automatically.</p>
-<p>One of these is <tt class="docutils literal"><span class="pre">hosts</span></tt>.  When we invoked the <tt class="docutils literal"><span class="pre">fab</span></tt> command with <tt class="docutils literal"><span class="pre">-H</span>
-<span class="pre">localhost</span></tt> we were pre-populating this env attribute with the string
-&#8216;localhost&#8217;.  We can do this manually.  Update your <tt class="docutils literal"><span class="pre">fabfile.py</span></tt> as follows:</p>
+get-go, and which <code class="docutils literal"><span class="pre">fabric</span></code> will refer to automatically.</p>
+<p>One of these is <code class="docutils literal"><span class="pre">hosts</span></code>.  When we invoked the <code class="docutils literal"><span class="pre">fab</span></code> command with <code class="docutils literal"><span class="pre">-H</span>
+<span class="pre">localhost</span></code> we were pre-populating this env attribute with the string
+&#8216;localhost&#8217;.  We can do this manually.  Update your <code class="docutils literal"><span class="pre">fabfile.py</span></code> as follows:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="n">run</span>
 <span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="n">env</span>
 
@@ -230,7 +230,7 @@ get-go, and which <tt class="docutils literal"><span class="pre">fabric</span></
     <span class="n">run</span><span class="p">(</span><span class="s">&#39;uname -s&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Save those changes and you should now be able to run the <tt class="docutils literal"><span class="pre">host_type</span></tt>
+<p>Save those changes and you should now be able to run the <code class="docutils literal"><span class="pre">host_type</span></code>
 subcommand without providing the host explicitly:</p>
 <div class="highlight-bash"><div class="highlight"><pre>[fabrictests]
 heffalump:fabrictests cewing$ fab host_type
@@ -251,15 +251,15 @@ heffalump:fabrictests cewing$
 </div>
 <div class="section" id="fabric-with-boto">
 <h2>Fabric with Boto<a class="headerlink" href="#fabric-with-boto" title="Permalink to this headline">¶</a></h2>
-<p>Our interactions with <tt class="docutils literal"><span class="pre">boto</span></tt> are all oriented around creating and destroying
+<p>Our interactions with <code class="docutils literal"><span class="pre">boto</span></code> are all oriented around creating and destroying
 servers.</p>
 <p>In fabric, our orientation will be toward manipulating <em>a server</em> once it
 exists.</p>
 <p>Before we do that, though we need to get a server running.</p>
 <p>Any attempt we make at dealing with AWS EC2 through boto will require that we
 have a connection. Our first step must be to make a connection to the region we
-want to use.  Let&#8217;s add a function to do this to our <tt class="docutils literal"><span class="pre">fabfile.py</span></tt>. We&#8217;ll use
-the <a class="reference internal" href="#fab-env"><em>fabric env</em></a> as a place to hold the established
+want to use.  Let&#8217;s add a function to do this to our <code class="docutils literal"><span class="pre">fabfile.py</span></code>. We&#8217;ll use
+the <a class="reference internal" href="#fab-env"><span>fabric env</span></a> as a place to hold the established
 connection so we can easily use it from other functions.</p>
 <script type="text/javascript">
     function showhide(element){
@@ -295,7 +295,7 @@ connection so we can easily use it from other functions.</p>
 use to us as we try to provision, manage and deprovision our servers.</p>
 <div class="section" id="provisioning-an-instance">
 <h3>Provisioning an Instance<a class="headerlink" href="#provisioning-an-instance" title="Permalink to this headline">¶</a></h3>
-<p>In the <tt class="docutils literal"><span class="pre">boto</span></tt> walkthrough, we saw how to provision a new instance and set it
+<p>In the <code class="docutils literal"><span class="pre">boto</span></code> walkthrough, we saw how to provision a new instance and set it
 running.  Let&#8217;s convert that code to a fabric task.</p>
 <p>We&#8217;ll need to start by getting a connection, then use that connection to create
 a new instance.</p>
@@ -423,9 +423,9 @@ see the new instance you just created running happily.</p>
 <h2>Running Shell Commands on a Server<a class="headerlink" href="#running-shell-commands-on-a-server" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have an instance running, we want to run commands on it to
 configure it.</p>
-<p>Fabric provides the <tt class="docutils literal"><span class="pre">run</span></tt> command to support this.</p>
+<p>Fabric provides the <code class="docutils literal"><span class="pre">run</span></code> command to support this.</p>
 <p>But there&#8217;s an issue.  When you execute a function using fabric, it is actually
-run repeatedly, once for each <tt class="docutils literal"><span class="pre">host</span></tt> you list in the <tt class="docutils literal"><span class="pre">env.hosts</span></tt>
+run repeatedly, once for each <code class="docutils literal"><span class="pre">host</span></code> you list in the <code class="docutils literal"><span class="pre">env.hosts</span></code>
 environment setting.</p>
 <p>At the moment, our script lists &#8216;localhost&#8217;, but we don&#8217;t actually want to run
 this command on &#8216;localhost&#8217;, so we need to get around this.</p>
@@ -435,7 +435,7 @@ were run <em>both</em> on localhost and this new remote host.  That&#8217;s no g
 <p>Fabric provides <a class="reference external" href="http://docs.fabfile.org/en/1.8/api/core/tasks.html#fabric.tasks.execute">the execute command</a> specifically for this purpose.  We can
 pass it the list of hosts on which we want to run a particular command, and it
 will do so for us. This means that we can dynamically set the name of the
-instance we want, and <tt class="docutils literal"><span class="pre">fabric</span></tt> will execute our chosen command on that server
+instance we want, and <code class="docutils literal"><span class="pre">fabric</span></code> will execute our chosen command on that server
 only!</p>
 <p>In order to play with that, though, we need to interactively select the
 instance we want to use (after all, we might have more than one, right?).</p>
@@ -494,7 +494,7 @@ heffalump:fabrictests cewing$
 <p>Nice.</p>
 <p>Now we must create a function that will take the output of that function and
 give us an interactive choice of running instances on which to take a given
-action. Fabric provides <tt class="docutils literal"><span class="pre">prompt</span></tt>, <a class="reference external" href="http://docs.fabfile.org/en/1.8/api/core/operations.html#fabric.operations.prompt">a function</a> which will ask for input from
+action. Fabric provides <code class="docutils literal"><span class="pre">prompt</span></code>, <a class="reference external" href="http://docs.fabfile.org/en/1.8/api/core/operations.html#fabric.operations.prompt">a function</a> which will ask for input from
 the user at run time.</p>
 <script type="text/javascript">
     function showhide(element){
@@ -537,7 +537,7 @@ the user at run time.</p>
 </div>
 </div><p>Here, we build a list of the available instances that are &#8216;running&#8217;, and then
 ask the user to choose among them. After a valid choice is made, we can then
-hang that instance on our <tt class="docutils literal"><span class="pre">env</span></tt> so that we can access it from other
+hang that instance on our <code class="docutils literal"><span class="pre">env</span></code> so that we can access it from other
 functions. We can also short-circuit this behavior by checking first to see if
 we&#8217;ve already selected an instance.</p>
 <p>Now, let&#8217;s set up a function that will run a given command (passed by name as
@@ -588,7 +588,7 @@ heffalump:fabrictests cewing$
 When the AWS server asks to use public-key authentication, the agent will then
 try this key along with any others the agent knows about. If no known key
 works, ssh will bomb out.</p>
-<p><tt class="docutils literal"><span class="pre">Execute</span></tt> <a class="reference external" href="http://docs.fabfile.org/en/1.8/api/core/tasks.html#fabric.tasks.execute">will take</a> the name of a fabric command to run. We need a command
+<p><code class="docutils literal"><span class="pre">Execute</span></code> <a class="reference external" href="http://docs.fabfile.org/en/1.8/api/core/tasks.html#fabric.tasks.execute">will take</a> the name of a fabric command to run. We need a command
 that it will run that will install nginx for us and then start it.</p>
 <script type="text/javascript">
     function showhide(element){
@@ -679,7 +679,7 @@ of your instance is the way to get at it, so use that in your browser:</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -706,7 +706,7 @@ of your instance is the way to get at it, so use that in your browser:</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../day13/index.html"
                         title="next chapter">Day 13</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -723,7 +723,7 @@ of your instance is the way to get at it, so use that in your browser:</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -735,14 +735,14 @@ of your instance is the way to get at it, so use that in your browser:</p>
         <li class="right" >
           <a href="rest.html" title="Consuming Data from a RESTful Web Service"
              >previous</a> |</li>
-        <li><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Homework Assignments</a> &raquo;</li>
-          <li><a href="index.html" >Day 12</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Homework Assignments</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Day 12</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Cris Ewing.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>
