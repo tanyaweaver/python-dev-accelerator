@@ -278,7 +278,7 @@ you&#8217;re done, take a peek at my solution:</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock1'))">Peek At A Solution</a><br /><div id="hiddencodeblock1" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_add_no_params</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock11'))">Peek At A Solution</a><br /><div id="hiddencodeblock11" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_add_no_params</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;/add&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
     <span class="k">assert</span> <span class="s">&#39;IntegrityError&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
 </pre></div>
@@ -896,7 +896,7 @@ job right.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock2'))">Peek At A Solution</a><br /><div id="hiddencodeblock2" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add imports at the top</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock12'))">Peek At A Solution</a><br /><div id="hiddencodeblock12" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add imports at the top</span>
 <span class="kn">from</span> <span class="nn">pyramid.security</span> <span class="kn">import</span> <span class="n">remember</span><span class="p">,</span> <span class="n">forget</span>
 
 <span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;login&#39;</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s">&quot;templates/login.jinja2&quot;</span><span class="p">)</span>
@@ -1037,7 +1037,7 @@ Banks:learning-journal cewing$
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock3'))">Peek At A Solution</a><br /><div id="hiddencodeblock3" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;logout&#39;</span><span class="p">)</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock13'))">Peek At A Solution</a><br /><div id="hiddencodeblock13" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s">&#39;logout&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">logout</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="n">forget</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">HTTPFound</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">route_url</span><span class="p">(</span><span class="s">&#39;home&#39;</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
