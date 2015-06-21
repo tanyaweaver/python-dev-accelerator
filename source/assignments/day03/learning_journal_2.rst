@@ -162,8 +162,8 @@ factory:
     def main():
         # ...
         settings['debug_all'] = debug          # <- already present, do not add
-        if not DBSession.bind:
-            # only bind the session if it isn't already bound, for testing
+        if not os.environ.get('TESTING', False):
+            # only bind the session if we are not testing
             engine = sa.create_engine(DATABASE_URL)
             DBSession.configure(bind=engine)
         # configuration setup
@@ -275,6 +275,7 @@ To begin, add the following code to your ``test_journal.py`` file:
         'postgresql://cewing:@localhost:5432/test-learning-journal'
     )
     os.environ['DATABASE_URL'] = TEST_DATABASE_URL
+    os.environ['TESTING'] = "True"
 
     import journal
 
