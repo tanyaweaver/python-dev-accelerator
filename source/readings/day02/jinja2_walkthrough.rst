@@ -33,17 +33,38 @@ templating language. We'll learn it first.
 Jinja2 Template Basics
 ======================
 
-Let's start with the absolute basics.
-
-Fire up a Python interpreter, using your learning_journal virtualenv:
+Let's start with the absolute basics. Begin by activating your learning-journal
+virtualenv:
 
 .. code-block:: bash
 
-    (learning_journal)$ python
+    $ workon learning-journal
+    (learning-journal)$
+
+Next, install the ``Jinja2`` template language package using ``pip``:
+
+.. code-block:: bash
+
+    (learning-journal)$ pip install jinja2
+    Collecting jinja2
+      ...
+    Successfully installed jinja2-2.7.3 markupsafe-0.23
+    (learning-journal)$
+
+Then, fire up a Python interpreter, with your learning-journal virtualenv
+active:
+
+.. code-block:: bash
+
+    (learning-journal)$ python
 
 .. code-block:: pycon
 
     >>> from jinja2 import Template
+
+For the next steps, you'll play around a bit with the basic concepts of Jinja2
+templating.  Feel free to explore a bit, try things out, go beyond what's
+suggested and learn from your mistakes.
 
 A template starts life as a simple string:
 
@@ -347,13 +368,13 @@ here, so read up.
 .. _importing: http://jinja.pocoo.org/docs/templates/#import
 
 
-Common Flask Context
---------------------
+Common Pyramid Context
+----------------------
 
 Keyword arguments you pass to ``render_template`` become the *context* passed
 to the template for rendering.
 
-Pyramid will add a single value to the *context* for jinja2 templates, the
+Pyramid will `add values`_ to the *context* for jinja2 templates, including the
 ``request`` object. Within pyramid, the request object is a single location
 where you can access other important information like:
 
@@ -367,6 +388,7 @@ where you can access other important information like:
 and much much more. The Pyramid ``request`` supports an `entire ecosystem`_ of
 properties and methods that can come in useful.
 
+.. _add values: http://docs.pylonsproject.org/projects/pyramid/en/1.5-branch/narr/templates.html#system-values-used-during-rendering
 .. _entire ecosystem: http://docs.pylonsproject.org/docs/pyramid/en/latest/api/request.html
 
 
