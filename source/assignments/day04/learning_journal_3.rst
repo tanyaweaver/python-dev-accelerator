@@ -1305,7 +1305,7 @@ Use these tools now to set a username for your app:
     [step3]
     heffalump:learning_journal cewing$ heroku config:set AUTH_USERNAME=cewing
     Setting config vars and restarting fizzy-fairy-1234... done, v8
-    ADMIN_USERNAME: cewing
+    AUTH_USERNAME: cewing
     [learning_journal]
     [step3]
     heffalump:learning_journal cewing$
