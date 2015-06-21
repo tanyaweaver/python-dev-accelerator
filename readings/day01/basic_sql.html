@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Basic SQL &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Introduction to SQL &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -67,10 +67,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="basic-sql">
-<h1>Basic SQL<a class="headerlink" href="#basic-sql" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="introduction-to-sql">
+<h1>Introduction to SQL<a class="headerlink" href="#introduction-to-sql" title="Permalink to this headline">¶</a></h1>
 <div class="line-block">
-<div class="line">A quick overview of SQL</div>
+<div class="line"><strong>A quick overview of SQL</strong></div>
 <div class="line">History, Concepts, and Syntax</div>
 </div>
 <div class="section" id="what-is-sql">
@@ -189,8 +189,8 @@ user (id, password) -&gt; user_profile (preferences, name, address)</dd>
 items -&gt; orders</dd>
 </dl>
 </div>
-<div class="section" id="sql-relations-1">
-<h3>SQL Relations: ∞ -&gt; 1<a class="headerlink" href="#sql-relations-1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="relations-1">
+<h3>Relations: ∞ -&gt; 1<a class="headerlink" href="#relations-1" title="Permalink to this headline">¶</a></h3>
 <p>Many-to-one relationships are modelled using <em>Foreign Keys</em>. The <em>many</em> table
 has a column, the value of which is the <em>primary key</em> of the row from the <em>one</em>
 table.</p>
@@ -255,8 +255,8 @@ table.</p>
 value in the <code class="docutils literal"><span class="pre">id</span></code> column of the <code class="docutils literal"><span class="pre">authors</span></code> table, you can see that Harry
 Houdini has two books belonging to him, while William Gibson only has one.</p>
 </div>
-<div class="section" id="sql-relations-1-1">
-<h3>SQL Relations: 1 -&gt; 1<a class="headerlink" href="#sql-relations-1-1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="relations-1-1">
+<h3>Relations: 1 -&gt; 1<a class="headerlink" href="#relations-1-1" title="Permalink to this headline">¶</a></h3>
 <p>One-to-one relationships are really just a special case of Many-to-one, and are
 also modelled with <em>Foreign Keys</em>. In this case, the column on the related
 table which holds the <em>primary key</em> of the target table has an additional
@@ -337,8 +337,8 @@ means that if you try to create a second record with the same value as one
 already present, an error will be raised. This concept is called
 <em>data integrity</em>, and some databases are better at preserving it than others.</p>
 </div>
-<div class="section" id="sql-relations">
-<h3>SQL Relations: ∞ -&gt; ∞<a class="headerlink" href="#sql-relations" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>Relations: ∞ -&gt; ∞<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>Many-to-many relations are a bit trickier to model. No column in a database can
 contain more than one value, so there&#8217;s no way to define a <em>foreign key</em>-like
 construct that would work. Instead, this relationship is modelled using a third
@@ -746,7 +746,7 @@ Banks:psycopg cewing$
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Basic SQL</a><ul>
+<li><a class="reference internal" href="#">Introduction to SQL</a><ul>
 <li><a class="reference internal" href="#what-is-sql">What is SQL</a><ul>
 <li><a class="reference internal" href="#big-players-in-sql">Big Players in SQL</a></li>
 </ul>
@@ -754,9 +754,9 @@ Banks:psycopg cewing$
 <li><a class="reference internal" href="#sql-rdbms-concepts">SQL/RDBMS Concepts</a><ul>
 <li><a class="reference internal" href="#tables">Tables</a></li>
 <li><a class="reference internal" href="#relations">Relations</a></li>
-<li><a class="reference internal" href="#sql-relations-1">SQL Relations: ∞ -&gt; 1</a></li>
-<li><a class="reference internal" href="#sql-relations-1-1">SQL Relations: 1 -&gt; 1</a></li>
-<li><a class="reference internal" href="#sql-relations">SQL Relations: ∞ -&gt; ∞</a></li>
+<li><a class="reference internal" href="#relations-1">Relations: ∞ -&gt; 1</a></li>
+<li><a class="reference internal" href="#relations-1-1">Relations: 1 -&gt; 1</a></li>
+<li><a class="reference internal" href="#id1">Relations: ∞ -&gt; ∞</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#sql-syntax">SQL Syntax</a><ul>

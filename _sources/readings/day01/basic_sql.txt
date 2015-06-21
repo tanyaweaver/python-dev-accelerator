@@ -1,8 +1,8 @@
-*********
-Basic SQL
-*********
+*******************
+Introduction to SQL
+*******************
 
-| A quick overview of SQL
+| **A quick overview of SQL**
 | History, Concepts, and Syntax
 
 
@@ -116,8 +116,8 @@ Many-to-many relationships:
   Used to represent associations or membership.  Like users -> groups or
   items -> orders
 
-SQL Relations: ∞ -> 1
----------------------
+Relations: ∞ -> 1
+-----------------
 
 Many-to-one relationships are modelled using *Foreign Keys*. The *many* table
 has a column, the value of which is the *primary key* of the row from the *one*
@@ -151,8 +151,8 @@ By matching the value in the ``author`` column of the ``books`` table to the
 value in the ``id`` column of the ``authors`` table, you can see that Harry
 Houdini has two books belonging to him, while William Gibson only has one.
 
-SQL Relations: 1 -> 1
----------------------
+Relations: 1 -> 1
+-----------------
 
 One-to-one relationships are really just a special case of Many-to-one, and are
 also modelled with *Foreign Keys*. In this case, the column on the related
@@ -194,8 +194,8 @@ means that if you try to create a second record with the same value as one
 already present, an error will be raised. This concept is called
 *data integrity*, and some databases are better at preserving it than others.
 
-SQL Relations: ∞ -> ∞
----------------------
+Relations: ∞ -> ∞
+-----------------
 
 Many-to-many relations are a bit trickier to model. No column in a database can
 contain more than one value, so there's no way to define a *foreign key*-like

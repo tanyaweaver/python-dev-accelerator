@@ -71,10 +71,6 @@ Fire up an interactive Python session and get a connection:
     [GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)] on darwin
     Type "help", "copyright", "credits" or "license" for more information.
     >>> import psycopg2
-    >>> conn = psycopg2.connection(dbname="psycotest", user="cewing")
-    Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
-    AttributeError: 'module' object has no attribute 'connection'
     >>> conn = psycopg2.connect(dbname="psycotest", user="cewing")
     >>> conn
     <connection object at 0x7fafc8e005c0; dsn: 'user=cewing dbname=psycotest', closed: 0>

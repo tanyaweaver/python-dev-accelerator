@@ -469,7 +469,7 @@ compare them.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock1'))">Peek At A Solution</a><br /><div id="hiddencodeblock1" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Entry</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock3'))">Peek At A Solution</a><br /><div id="hiddencodeblock3" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Entry</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="c"># ... &lt;- column attributes are defined here</span>
 
     <span class="nd">@classmethod</span>
@@ -554,7 +554,7 @@ change your method so that it creates and returns a new <code class="docutils li
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock2'))">Peek At A Solution</a><br /><div id="hiddencodeblock2" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@classmethod</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock4'))">Peek At A Solution</a><br /><div id="hiddencodeblock4" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="n">instance</span> <span class="o">=</span> <span class="n">cls</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">instance</span>
@@ -642,7 +642,7 @@ done, check my solution below:</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock3'))">Peek At A Solution</a><br /><div id="hiddencodeblock3" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@classmethod</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock5'))">Peek At A Solution</a><br /><div id="hiddencodeblock5" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">session</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">session</span> <span class="o">=</span> <span class="n">DBSession</span>
@@ -695,7 +695,7 @@ you like:</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock4'))">Peek At A Solution</a><br /><div id="hiddencodeblock4" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_entry_no_title_fails</span><span class="p">(</span><span class="n">db_session</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock6'))">Peek At A Solution</a><br /><div id="hiddencodeblock6" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_entry_no_title_fails</span><span class="p">(</span><span class="n">db_session</span><span class="p">):</span>
     <span class="n">bad_data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&#39;test text&#39;</span><span class="p">}</span>
     <span class="n">journal</span><span class="o">.</span><span class="n">Entry</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">db_session</span><span class="p">,</span> <span class="o">**</span><span class="n">bad_data</span><span class="p">)</span>
     <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">IntegrityError</span><span class="p">):</span>
@@ -799,7 +799,7 @@ about the method you need to write?</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock5'))">Peek At A Solution</a><br /><div id="hiddencodeblock5" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Entry</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock7'))">Peek At A Solution</a><br /><div id="hiddencodeblock7" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Entry</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="c"># ...</span>
 
     <span class="nd">@classmethod</span>
@@ -1098,7 +1098,7 @@ writing this new fixture on your own.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock6'))">Peek At A Solution</a><br /><div id="hiddencodeblock6" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.fixture</span><span class="p">()</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock8'))">Peek At A Solution</a><br /><div id="hiddencodeblock8" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.fixture</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">app</span><span class="p">():</span>
     <span class="kn">from</span> <span class="nn">journal</span> <span class="kn">import</span> <span class="n">main</span>
     <span class="kn">from</span> <span class="nn">webtest</span> <span class="kn">import</span> <span class="n">TestApp</span>
@@ -1142,7 +1142,7 @@ it writes as well, so you can use it to test against:</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock7'))">Peek At A Solution</a><br /><div id="hiddencodeblock7" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.fixture</span><span class="p">()</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock9'))">Peek At A Solution</a><br /><div id="hiddencodeblock9" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.fixture</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">entry</span><span class="p">(</span><span class="n">db_session</span><span class="p">):</span>
     <span class="n">entry</span> <span class="o">=</span> <span class="n">journal</span><span class="o">.</span><span class="n">Entry</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s">&#39;Test Title&#39;</span><span class="p">,</span>
@@ -1166,7 +1166,7 @@ you can write this test yourself:</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock8'))">Peek At A Solution</a><br /><div id="hiddencodeblock8" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_listing</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock10'))">Peek At A Solution</a><br /><div id="hiddencodeblock10" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_listing</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
     <span class="n">actual</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
@@ -1264,11 +1264,11 @@ means that any symbols used in the template must be present in the dict
 returned by the view.</p>
 <p>Notice that your list view template contains one symbol that isn&#8217;t defined in
 the scope of the template itself:</p>
-<div class="highlight-jinja2"><div class="highlight"><pre>{% for entry in entries %}
- ...
-{% else %}
- ...
-{% endfor %}
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">for</span> <span class="nv">entry</span> <span class="k">in</span> <span class="nv">entries</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x"> ...</span>
+<span class="cp">{%</span> <span class="k">else</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x"> ...</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
 </pre></div>
 </div>
 <p>Somehow, you&#8217;ll need to provide a dictionary with the key <cite>entries</cite> in it to

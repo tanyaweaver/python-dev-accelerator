@@ -1309,7 +1309,7 @@ returned by the view.
 Notice that your list view template contains one symbol that isn't defined in
 the scope of the template itself:
 
-.. code-block:: jinja2
+.. code-block:: jinja
 
     {% for entry in entries %}
      ...
