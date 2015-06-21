@@ -3,8 +3,9 @@ Python Learning Journal: Step 2
 *******************************
 
 In part one of this tutorial, you built the *data model* for a simple learning
-journal web application using Pyramid and PostgreSQL. You deployed this work to
-Heroku and confirmed that you could see a simple page.
+journal web application using Pyramid, PostgreSQL, and SQLAlchemy. You deployed
+this work to Heroku and confirmed that you could initialize a database and see
+a simple page.
 
 In this second part, you'll build the *control layer* and the *view layer* for
 this application. Along the way, you'll learn about Test-Driven Development and
@@ -20,24 +21,22 @@ starting a new work day on the app will be to return to that environment:
 
 .. code-block:: bash
 
-    cewing$ workon learning_journal
-    [learning_journal]
-    192:learning_journal cewing$
+    cewing$ workon learning-journal
+    [learning-journal]
+    192:learning-journal cewing$
 
-Next, you'll want to change directories into your ``git`` repository and make a
-new branch for the work in this part of the tutorial:
+Next, you'll want to make a new branch for the work in this part of the
+tutorial:
 
 .. code-block:: bash
 
-    [learning_journal]
-    192:learning_journal cewing$ cd learning_journal/
-    [learning_journal]
+    [learning-journal]
     [master=]
-    192:learning_journal cewing$ git checkout -b step2
+    192:learning-journal cewing$ git checkout -b step2
     Switched to a new branch 'step2'
-    [learning_journal]
+    [learning-journal]
     [step2]
-    192:learning_journal cewing$
+    192:learning-journal cewing$
 
 You'll do your work for this part of the tutorial in this branch, and then when
 your tests are passing, merge it back to your ``master`` branch. Building this
@@ -69,89 +68,129 @@ Pyramid does not dictate that you write an application that uses a database.
 Because of this, managing the lifecycle of database connection so that they are
 connected to the request/response cycle is up to you.
 
-Happily, Pyramid *does* provide a way to help you.
+You could do this work manually, but happily there are add-ons available that
+will take care of it on your behalf. You two of these in the first part of this
+tutorial, ``pyramid-tm``, or the Pyramid Transaction Manager, and
+zope.sqlalchemy.
 
+The purpose of pyramid-tm is to create a new *transaction* at the beginning of
+each request, and to determine what to do with that transaction at the end,
+before a response is returned to the client. By default, if there was any error
+raised by code run during the request-response cycle, then the transaction is
+rolled back. Otherwise, the transaction is committed.
 
-Opening a Connection
---------------------
+The purpose of zope.sqlalchemy is to join the sqlalchemy database session to
+this transaction manager.  This means that any code that reads from or writes
+to the database will exist within a transaction that will be automatically
+committed or rolled back.  You don't need to worry about calling ``commit`` at
+any time.
 
-In Pyramid, the beginning of a request/response cycle is marked by an
-*event*. Pyramid events can be *subscribed to* by functions so that when an
-event happens, the function is called.  This is an example of the
-`Observer pattern`_.
+Adding Transaction Management
+-----------------------------
 
-To subscribe to an event, we use the ``subscriber`` decorator. The function we
-decorate must take ``event`` as it's sole argument. The event that is passed to
-the function will have access to the newly created request, your app, settings
-and so on. Add the following code to your ``journal.py`` file:
+To use this transaction management there are a couple of updates you must make
+to your code.
 
-.. code-block:: python
+First, you need to create a database session that uses the
+``ZopeTransactionExtension`` from the ``zope.sqlalchemy`` package. Remember how
+you created a session at the command line during class previously:
 
-    # add imports to the top of the file
-    from pyramid.events import NewRequest, subscriber
+.. code-block:: pycon
 
-    # and add this function below the init_db function you wrote yesterday:
-    @subscriber(NewRequest)
-    def open_connection(event):
-        request = event.request
-        settings = request.registry.settings
-        request.db = connect_db(settings)
+    >>> from sqlalchemy.orm import sessionmaker # <- import a factory maker
+    >>> Session = sessionmaker(bind=engine)     # <- create a factory for sessions
+    >>> session = Session()                     # <- start a session
 
-Notice that the newly created request is an attribute of the event. This
-request is a Python object created that represents all the information received
-from a client who is viewing our application. It will be passed to functions
-like *views* that require it, and so it is a fine place to put a database
-connection.
+In your journal app, you'll do something quite similar, but you'll use a
+special kind of session called a *scoped_session* which helps to maintain the
+association of one session with one request, even when there are many many
+requests happening all at once.
 
-.. _Observer pattern: https://carldanley.com/js-observer-pattern/
-
-Releasing a Connection
-----------------------
-
-Now that every new request will have a connection to the database on it, we can
-deal with the opposite end of the request/response cycle. We want to close the
-connection we created when the cycle is complete.
-
-In Pyramid, the end of the request/response cycle is not marked by an event.
-Instead, there is a hook on the request object itself that lets us register
-*callback functions* for a point just before the response is sent back to the
-client. We register callbacks by passing them to the ``add_finished_callback``
-method of the request object.
-
-Begin by writing the callback function.  It will take only the ``request`` as
-an argument:
+In ``journal.py`` add the following code:
 
 .. code-block:: python
 
-    # and this function just below open_connection
-    def close_connection(request):
-        """close the database connection for this request
+    # add these imports at the top of the file
+    from sqlalchemy.orm import scoped_session, sessionmaker
+    from zope.sqlalchemy import ZopeTransactionExtension
 
-        If there has been an error in the processing of the request, abort any
-        open transactions.
-        """
-        db = getattr(request, 'db', None)
-        if db is not None:
-            if request.exception is not None:
-                db.rollback()
-            else:
-                db.commit()
-            request.db.close()
+    # add this right below the imports
+    DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 
-Then modify the ``open_connection`` function you just wrote above, adding one
-final line to the function:
+You've now bound a symbol at the module scope, one which is available to *all*
+the code in your project, which is responsible for creating sessions for each
+request.  This symbol will be your point of access to the database throughout
+your appliation code.
+
+Notice though that the session is not yet created. You've only created a
+*factory* for making sessions. Nor does that factory know anything about which
+database to connect to. Supplying that information is part of the job of
+application configuration.
+
+Remember in part one of this tutorial that you wrote a fully functional web
+application. Part of that application code was a *factory function* responsible
+for building and returning a configured app object to be served to clients.
+That function is where the configuration of your application must happen, so
+that function is where you will turn next.
+
+Find the ``main`` function in ``journal.py``.  at the moment it should look
+like this:
 
 .. code-block:: python
 
-    def open_connection(event):
+    def main():
+        """Create a configured wsgi app"""
+        settings = {}
+        debug = os.environ.get('DEBUG', True)
+        settings['reload_all'] = debug
+        settings['debug_all'] = debug
+        # configuration setup
+        config = Configurator(
+            settings=settings
+        )
+        config.add_route('home', '/')
+        config.scan()
+        app = config.make_wsgi_app()
+        return app
+
+Just below where you set ``debug_all`` in the setting dictionary, add the
+following code to create the database engine and the set up the session
+factory:
+
+.. code-block:: python
+
+    def main():
         # ...
-        request.db = connect_db(settings)
-        request.add_finished_callback(close_connection)
+        settings['debug_all'] = debug          # <- already present, do not add
+        if not DBSession.bind:
+            # only bind the session if it isn't already bound, for testing
+            engine = sa.create_engine(DATABASE_URL)
+            DBSession.configure(bind=engine)
+        # configuration setup
 
-Once you've written these functions, commit your changes with a comment about
-what you've just done. "Commit early and commit often" is a good programmer's
-motto.
+Finally, we'll need to tell our application that we want to use the transaction
+management provided by ``pyramid-tm``. Pyramid allows add-ons to declare their
+own configuration and allows you to simply include that configuration when you
+want to use it. You do this using the ``.include()`` method of your
+``Configurator`` instance. Again, in ``journal.py`` add the following line,
+just below where you bind ``config`` for the first time, and above where you
+add your first ``route``:
 
+.. code-block:: python
+
+    def main():
+        # ...
+        config = Configurator(
+            # ...
+        )
+        config.include('pyramid_tm')
+
+And that is all.  You've now created a session factory that will automatically
+be thread-safe and local to a single request, and you've bound the lifecycle of
+that session to a transaction that is started when a request arrives at your
+application and closed when the response goes back to the client.
+
+Now you want to prove that it works.
 
 Setting Up Testing
 ==================
@@ -167,50 +206,49 @@ code needed to make the test pass.
 
 Before you can write tests, though, you'll need to add a new package you'll be
 using to run your tests: `pytest`_.  In your terminal, with your
-``learning_journal`` virtualenv active, use ``pip`` to install ``pytest``:
+``learning-journal`` virtualenv active, use ``pip`` to install ``pytest``:
 
 .. _pytest: http://pytest.org/latest/contents.html
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [step2]
-    192:learning_journal cewing$ pip install pytest
+    192:learning-journal cewing$ pip install pytest
     Downloading/unpacking pytest
       Downloading pytest-2.5.2.tar.gz (608kB): 608kB downloaded
-      Running setup.py (path:/Users/cewing/virtualenvs/learning_journal/build/pytest/setup.py) egg_info for package pytest
+      Running setup.py (path:/Users/cewing/virtualenvs/learning-journal/build/pytest/setup.py) egg_info for package pytest
 
       ...
 
     Successfully installed pytest py
     Cleaning up...
-    [learning_journal]
+    [learning-journal]
     [step2]
-    192:learning_journal cewing$
+    192:learning-journal cewing$
 
 Then, you'll need to create a new file to hold your tests. Call it
 ``test_journal.py``:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [step2]
-    192:learning_journal cewing$ touch test_journal.py
-    [learning_journal]
+    192:learning-journal cewing$ touch test_journal.py
+    [learning-journal]
     [step2]
-    192:learning_journal cewing$
+    192:learning-journal cewing$
 
 At this point, your project directory structure should look like this::
 
-    ../../learning_journal/
-    └── learning_journal
-        ├── .gitignore
-        ├── LICENSE
-        ├── Procfile
-        ├── README.md
-        ├── journal.py
-        ├── requirements.txt
-        └── test_journal.py
+    .
+    ├── .gitignore
+    ├── LICENSE
+    ├── Procfile
+    ├── README.md
+    ├── journal.py
+    ├── requirements.txt
+    └── test_journal.py
 
 The ``pytest`` module provides a new command, ``py.test``.  When you execute
 that command in your terminal, the package uses a standard heuristic to find
@@ -221,50 +259,27 @@ tests.
 * It imports these files and finds functions that start with ``test_``.
 * It executes those functions and reports the results.
 
-To begin, add the following code in your ``test_journal.py`` file:
+To begin, add the following code to your ``test_journal.py`` file:
 
 .. code-block:: python
 
     # -*- coding: utf-8 -*-
-    from contextlib import closing
-    from pyramid import testing
+    from __future__ import unicode_literals
+    import os
     import pytest
+    from sqlalchemy import create_engine
+    from sqlalchemy.exc import IntegrityError
 
-    from journal import connect_db
-    from journal import DB_SCHEMA
+    TEST_DATABASE_URL = os.environ.get(
+        'DATABASE_URL',
+        'postgresql://cewing:@localhost:5432/test-learning-journal'
+    )
+    os.environ['DATABASE_URL'] = TEST_DATABASE_URL
 
+    import journal
 
-    TEST_DSN = 'dbname=test_learning_journal user=cewing'
-
-
-    def init_db(settings):
-        with closing(connect_db(settings)) as db:
-            db.cursor().execute(DB_SCHEMA)
-            db.commit()
-
-
-    def clear_db(settings):
-        with closing(connect_db(settings)) as db:
-            db.cursor().execute("DROP TABLE entries")
-            db.commit()
-
-
-    def clear_entries(settings):
-        with closing(connect_db(settings)) as db:
-            db.cursor().execute("DELETE FROM entries")
-            db.commit()
-
-
-    def run_query(db, query, params=(), get_results=True):
-        cursor = db.cursor()
-        cursor.execute(query, params)
-        db.commit()
-        results = None
-        if get_results:
-            results = cursor.fetchall()
-        return results
-
-These functions will serve as *utilities* for our tests.
+The order of things here looks odd, but it is very important. Make sure to
+import your ``journal`` module last
 
 **Notes**
 
@@ -277,22 +292,16 @@ Take a moment to create that new database:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [step2]
-    192:learning_journal cewing$ createdb test_learning_journal
+    192:learning-journal cewing$ createdb test-learning-journal
 
-You've created a ``clear_db`` function. It will be used for removing your test
-database table when the tests are finished for isolation.
-
-You've also created a new ``init_db`` function.  It will be used for setting up
-the database before tests begin. But it requires settings passed in instead of
-deriving them from the environment.
 
 Creating Fixtures
 -----------------
 
-The ``pytest`` module does more than just test discovery. It supports
-`fixtures`_.
+The ``pytest`` module does more than just test discovery. It supports a concept
+called `fixtures`_.
 
 Fixtures help you to manage resources needed for your tests. They are run
 before and after your tests. You can use them to create and destroy resources
@@ -303,27 +312,27 @@ You'll add a few fixtures to help test your Pyramid app.
 
 .. _fixtures: http://pytest.org/latest/fixture.html
 
-The first fixture is responsible for generating and clearing the test database.
-Add this code to ``test_journal.py``:
+The first fixture is responsible for creating a connection to the database.  It
+will be run once per testing session so that all tests use the same connection.
+
+Add the following to ``test_journal.py``
 
 .. code-block:: python
 
     @pytest.fixture(scope='session')
-    def db(request):
-        """set up and tear down a database"""
-        settings = {'db': TEST_DSN}
-        init_db(settings)
-
-        def cleanup():
-            clear_db(settings)
-
-        request.addfinalizer(cleanup)
-
-        return settings
+    def connection(request):
+        engine = create_engine(TEST_DATABASE_URL)
+        journal.Base.metadata.create_all(engine)
+        connection = engine.connect()
+        journal.DBSession.registry.clear()
+        journal.DBSession.configure(bind=connection)
+        journal.Base.metadata.bind = engine
+        request.addfinalizer(journal.Base.metadata.drop_all)
+        return connection
 
 **NOTES**:
 
-* The ``pytest.fixture`` decorator registers the ``db`` function as a
+* The ``pytest.fixture`` decorator registers the ``connection`` function as a
   fixture with pytest.
 * The ``scope`` argument passed to the decorator determines how often a fixture
   is run.
@@ -331,249 +340,365 @@ Add this code to ``test_journal.py``:
   * ``session`` scope is run only once each time ``py.test`` is invoked.
   * ``module`` scope is run once for each module of tests (once per Python
     file).
-  * ``function`` scope is run once for each test function.
+  * ``function`` scope is run once for each test function (this is the default).
 
-* We'll want to have the database across all tests, so scope this fixture to
-  ``session``.
+* We'll want to have the same connection across all tests, so scope this
+  fixture to ``session``.
 * A fixture function may be defined with parameters.
 * The names of the parameters must match *registered fixtures*.
 * The fixtures named as parameters will be run surrounding the new fixture,
   like the layers of an onion
 * The ``request`` parameter is a special fixture that ``pytest`` registers.
-* You use it to connect this ``cleanup`` function to the ``db`` fixture.
-* This means that ``cleanup`` will be run after tests are complete as a
-  tear-down action, *in the same order as this fixture*.
-* By returning ``settings`` from this fixture, tests or fixtures that depend on
-  it will be able to access the same settings we used to create the database.
+* You use it to add a method that will be run after this fixture goes out of
+  scope using ``.addfinalizer()``
+* By returning ``connection`` from this fixture, tests or fixtures that depend on
+  it will be able to access the same connection created here.
 
 
-The next fixture we create will be responsible for providing us with a
-*request* object that we can use in our tests. We want to *mock* features of
-the real Pyramid request that are used by our code. Add the following to
-``test_journal.py``:
+The next fixture we create will be responsible for providing us with a database
+session we can use in our tests. Add the following to ``test_journal.py``:
 
 .. code-block:: python
 
-    @pytest.yield_fixture(scope='function')
-    def req_context(db, request):
-        """mock a request with a database attached"""
-        settings = db
-        req = testing.DummyRequest()
-        with closing(connect_db(settings)) as db:
-            req.db = db
-            req.exception = None
-            yield req
+    @pytest.fixture()
+    def db_session(request, connection):
+        from transaction import abort
+        trans = connection.begin()
+        request.addfinalizer(trans.rollback)
+        request.addfinalizer(abort)
 
-            # after a test has run, we clear out entries for isolation
-            clear_entries(settings)
+        from journal import DBSession
+        return DBSession
 
 **Notes**:
 
-* The `yield_fixture decorator`_ allows fixtures made from *generator functions*
-
-  * Because ``yield`` preserves internal state, the entire test happens
-    **inside the context manager scope**!
-  * When control returns to the fixture, code after the ``yield`` statement is
-    executed as the tear-down action.
-  * You use yield fixtures when you want to maintain the ephemeral program
-    state created by your fixture.
-
-* This test is intended to *isolate* each test from the next, so we use the
-  ``function`` scope.
-
-  * Notice that each test will have its own connection to the database.
-  * Notice that in our ``cleanup`` function, we delete any entries that have
-    been created.
-  * Then we close the connection.
-
-* Note that this fixture requires the ``db`` fixture we just wrote.
-
-  * When we require another fixture the *return value* of that fixture is
-    available to us *bound* to the name of the fixture.
-  * Here we re-bind the settings returned by the ``db`` fixture only for the
-    sake of clarity.
-
-* By returning the ``DummyRequest`` instance we create, we provide access to
-  this request to other fixtures or tests that may use this one.
-
-
-.. _yield_fixture decorator: http://pytest.org/latest/yieldfixture.html
-
+* Notice that this fixture requires not only the ``request`` fixture provided
+  by pytest, but also the ``connection`` fixture you just wrote.
+* You start a new transaction here in this fixture, mocking the actions usually
+  handled by ``pyramid-tm``.
+* You also add finalizers to rollback and then abort that transaction, which
+  ensure that no work in the database will persist between tests
+* This means that this fixture must be used for *each* test.  That is the
+  default scope so we do not designate a scope for this fixture.
 
 Writing and Reading Entries
 ===========================
 
 Your journal's **data model** consists of *entries*. You've set up a simple
-database schema to represent them:
-
-.. code-block:: psql
-
-    CREATE TABLE entries (
-        id serial PRIMARY KEY,
-        title VARCHAR (127) NOT NULL,
-        text TEXT NOT NULL,
-        created TIMESTAMP NOT NULL
-    )
+database schema to represent them using a SQLAlchemy ``model`` class.
 
 To write an entry, what would you need to do?
 
 * Provide a title
 * Provide some body text
-* Set a date/time
 * Write them to a row in the database
 
+This type of work is considered a **controller** because it connects client
+input in the form of the title and text to the data model. The work should be
+encapsulated in a function.  Moreover, to keep our application clean, it might
+be a good idea to make this function a method of the ``Entry`` class you wrote
+yesterday.  That way, the ``Entry`` class is responsible for writing new
+entries. You probably don't want to have to have an existing entry in order to
+write a new one, so this would be a good job for a *class method*.
 
 Test Writing An Entry
 ---------------------
 
-Start by writing a test that demonstrates the desired functionality. In
-``test_journal.py``, add the following:
+While you think a bit about how you might do that job, start by writing a test
+that demonstrates the desired functionality. Often this can help you to think
+more clearly about what such a method should do. In ``test_journal.py``, add
+the following:
 
 .. code-block:: python
 
-    def test_write_entry(req_context):
-        from journal import write_entry
-        fields = ('title', 'text')
-        expected = ('Test Title', 'Test Text')
-        req_context.params = dict(zip(fields, expected))
-
-        # assert that there are no entries when we start
-        rows = run_query(req_context.db, "SELECT * FROM entries")
-        assert len(rows) == 0
-
-        result = write_entry(req_context)
-        # manually commit so we can see the entry on query
-        req_context.db.commit()
-
-        rows = run_query(req_context.db, "SELECT title, text FROM entries")
-        assert len(rows) == 1
-        actual = rows[0]
-        for idx, val in enumerate(expected):
-            assert val == actual[idx]
+    def test_write_entry(db_session):
+        kwargs = {'title': "Test Title", 'text': "Test entry text"}
+        kwargs['session'] = db_session
+        # first, assert that there are no entries in the database:
+        assert db_session.query(journal.Entry).count() == 0
+        # now, create an entry using the 'write' class method
+        entry = journal.Entry.write(**kwargs)
 
 **NOTES**
 
 * ``pytest`` will only run functions that start with ``test_`` as tests.
-* We import the function we are going to test *inside* the test itself. This
-  limits failures due to import errors to *only those tests that would be
-  affected* by the error.
+* You are passing *title*, *text*, **and** *session* to the ``write`` method.
+  That way you can be sure that the method uses the session you carefully
+  crafted in your fixture.
 
-In your terminal, run the ``py.test`` command to see the expected failure:
+Stop there for a moment.  What is going to happen when you run this test?
+
+Try it out and see:
 
 .. code-block:: bash
 
-    [learning_journal]
-    [step2 *]
-    192:learning_journal cewing$ py.test
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$ py.test --tb=native
     ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
+    platform darwin -- Python 2.7.6 -- py-1.4.28 -- pytest-2.7.1
+    rootdir: /Users/cewing/projects/codefellows/learning-journal, inifile:
     collected 1 items
 
     test_journal.py F
 
     =================================== FAILURES ===================================
     _______________________________ test_write_entry _______________________________
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/codefellows/learning-journal/test_journal.py", line 46, in test_write_entry
+        entry = journal.Entry.write(**kwargs)
+    AttributeError: type object 'Entry' has no attribute 'write'
+    =========================== 1 failed in 0.27 seconds ===========================
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$
 
-    req_context = <pyramid.testing.DummyRequest object at 0x10679aa10>
+Yep.  As you probably expected, the test failed because there is no
+``.write()`` method on the Entry class.
 
-        def test_write_entry(req_context):
-    >       from journal import write_entry
-    E       ImportError: cannot import name write_entry
-
-    test_journal.py:67: ImportError
-    =========================== 1 failed in 0.20 seconds ===========================
-    [learning_journal]
-    [step2 *]
-    192:learning_journal cewing$
-
-
-Implement ``write_entry``
--------------------------
-
-Next you need to write the function that will make the test pass. What can you
-tell about the function from the test you just wrote?
-
-* It will take the ``request`` as an argument.
-* It will get the appropriate values for ``title`` and ``text`` from the
-  ``params`` attribute of the ``request``.
-* It must generate a value for date and time when the entry was created (since
-  none is provided on the request).
-* It will insert those values into the database using an appropriate SQL
-  statement.
-* It will return an empty dictionary.
-
-Remember, when writing SQL statements you **MUST** use parameterized statements
-and placeholders.  Review your
-:doc:`SQL persistence reading <../../readings/day02/sql_persistence_in_python>`
-for more on this.
+Fix that problem by adding such a method, in the simplest possible form. You
+don't have to return anything from it for now, in fact, just make the method
+body ``pass``. Think about the test you just wrote, what does this method
+expect as arguments? See if you can add a ``.write()`` method to your ``Entry``
+class in ``journal.py``. Once you've finished, open my example below and
+compare them.
 
 .. hidden-code-block:: python
     :label: Peek At A Solution
 
-    # at the top of the file, add this import
-    import datetime
+    class Entry(Base):
+        # ... <- column attributes are defined here
 
-    # below DB_SCHEMA add this new SQL query string:
-    INSERT_ENTRY = """
-    INSERT INTO entries (title, text, created) VALUES (%s, %s, %s)
-    """
+        @classmethod
+        def write(cls, title=None, text=None, session=None):
+            pass
 
-    # add this just below the hello function near the bottom of the file.
-    def write_entry(request):
-        """write a single entry to the database"""
-        title = request.params.get('title', None)
-        text = request.params.get('text', None)
-        created = datetime.datetime.utcnow()
-        request.db.cursor().execute(INSERT_ENTRY, [title, text, created])
-
-The function we create here is a **controller**.  It takes information from a
-``request``, passes it to the *data model* for persistence, and returns some
-value as a result.
-
-**NOTES**
-
-* The SQL statement will insert a new entry into your ``entries`` table.
-* Although the ``%s`` placeholders in the SQL look like *string formatting*
-  they are not.
-
-  * The call signature for ``.execute(query, params)`` calls for a second
-    paramter that is a sequence of values to insert.
-  * Parameters passed this way are properly escaped and safe from SQL Injection.
-  * Only ever use this form to parameterize SQL queries in Python.
-  * **NEVER USE PYTHON STRING FORMATTING WITH A SQL STRING**.
-
-* Notice that ``write_entry`` does not require a value for the ``created``
-  field.
-
-  * The field is required, so you build and provide it *inside* the function.
-  * You are creating a time value in UTC or `Coordinated Universal Time`_.
-  * It is best practice to store time values in UTC.
-
-.. _Coordinated Universal Time: http://en.wikipedia.org/wiki/Coordinated_Universal_Time
-
-Re-run your tests and verify that your work is correct:
+Now, you should be able to run your previously written test, without causing an
+error:
 
 .. code-block:: bash
 
-    [learning_journal]
-    [step2 *]
-    192:learning_journal cewing$ py.test
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$ py.test --tb=native
     ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
+    platform darwin -- Python 2.7.6 -- py-1.4.28 -- pytest-2.7.1
+    rootdir: /Users/cewing/projects/codefellows/learning-journal, inifile:
     collected 1 items
 
     test_journal.py .
 
-    =========================== 1 passed in 0.44 seconds ===========================
-    [learning_journal]
-    [step2 *]
-    192:learning_journal cewing$
+    =========================== 1 passed in 0.27 seconds ===========================
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$
+
+Wonderful!  But does it actually test anything? Only that such a method exists.
+Your tests should be a bit more sophisticated than this. Let's add some
+assertions about the outcome of calling ``Entry.write()``.  Add the following
+to ``test_journal.py``
+
+.. code-block:: python
+
+    def test_write_entry(db_session): # <- extend this test
+
+        # ... <- keep all the existing test content, just add the stuff below
+
+        # the entry we get back ought to be an instance of Entry
+        assert isinstance(entry, journal.Entry)
+        # id and created are generated automatically, but only on writing to
+        # the database
+        auto_fields = ['id', 'created']
+        for field in auto_fields:
+            assert getattr(entry, field, None) is None
+
+
+Now you're making some assertions about what this method ought to do.  You are
+saying that the method should return an ``Entry`` instance.  And that it should
+have no 'id' or 'created' attributes at first.
+
+Try running your tests again, and see what you get:
+
+.. code-block:: bash
+
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$ py.test --tb=native
+    ============================= test session starts ==============================
+    platform darwin -- Python 2.7.6 -- py-1.4.28 -- pytest-2.7.1
+    rootdir: /Users/cewing/projects/codefellows/learning-journal, inifile:
+    collected 1 items
+
+    test_journal.py F
+
+    =================================== FAILURES ===================================
+    _______________________________ test_write_entry _______________________________
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/codefellows/learning-journal/test_journal.py", line 48, in test_write_entry
+        assert isinstance(entry, journal.Entry)
+    AssertionError: assert isinstance(None, <class 'journal.Entry'>)
+     +  where <class 'journal.Entry'> = journal.Entry
+    =========================== 1 failed in 0.27 seconds ===========================
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$
+
+As expected, the test is failing again, because a new entry is *not* returned.
+Let's move to fix that by altering how our method works. Back in ``journal.py``
+change your method so that it creates and returns a new ``Entry`` object.
+
+See if you can do this on your own.  Then check against my solution below:
+
+.. hidden-code-block:: python
+    :label: Peek At A Solution
+
+    @classmethod
+    def write(cls, title=None, text=None, session=None):
+        instance = cls(title=title, text=text)
+        return instance
+
+Okay, now run the tests again to see what happens.
+
+.. code-block:: bash
+
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$ py.test --tb=native
+    ============================= test session starts ==============================
+    platform darwin -- Python 2.7.6 -- py-1.4.28 -- pytest-2.7.1
+    rootdir: /Users/cewing/projects/codefellows/learning-journal, inifile:
+    collected 1 items
+
+    test_journal.py .
+
+    =========================== 1 passed in 0.27 seconds ===========================
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$
+
+Terrific!  The test is passing again.  That's wonderful.  But wait, we want our
+method to write this new entry into the database so it will be persisted,
+right? Are we testing for that yet? Let's add a bit more and see what happens:
+
+.. code-block:: python
+
+    # in test_journal.py
+
+    def test_write_entry(db_session): # <- extend this test
+
+        # ... <- keep all the existing test content, just add the stuff below
+
+        # flush the session to "write" the data to the database
+        db_session.flush()
+        # now, we should have one entry:
+        assert db_session.query(journal.Entry).count() == 1
+        for field in fields:
+            if field != 'session':
+                assert getattr(entry, field, '') == kwargs[field]
+        # id and created should be set automatically upon writing to db:
+        for auto in ['id', 'created']:
+            assert getattr(entry, auto, None) is not None    
+
+In your terminal, run the ``py.test`` command to see the expected failure:
+
+.. code-block:: bash
+
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$ py.test --tb=native
+    ============================= test session starts ==============================
+    platform darwin -- Python 2.7.6 -- py-1.4.28 -- pytest-2.7.1
+    rootdir: /Users/cewing/projects/codefellows/learning-journal, inifile:
+    collected 1 items
+
+    test_journal.py F
+
+    =================================== FAILURES ===================================
+    _______________________________ test_write_entry _______________________________
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/codefellows/learning-journal/test_journal.py", line 57, in test_write_entry
+        assert db_session.query(journal.Entry).count() == 1
+    AssertionError: assert 0L == 1
+     +  where 0L = <bound method Query.count of <sqlalchemy.orm.query.Query object at 0x10eae9dd0>>()
+     +    where <bound method Query.count of <sqlalchemy.orm.query.Query object at 0x10eae9dd0>> = <sqlalchemy.orm.query.Query object at 0x10eae9dd0>.count
+     +      where <sqlalchemy.orm.query.Query object at 0x10eae9dd0> = <bound method scoped_session.do of <sqlalchemy.orm.scoping.scoped_session object at 0x10e75c750>>(<class 'journal.Entry'>)
+     +        where <bound method scoped_session.do of <sqlalchemy.orm.scoping.scoped_session object at 0x10e75c750>> = <sqlalchemy.orm.scoping.scoped_session object at 0x10e75c750>.query
+     +        and   <class 'journal.Entry'> = journal.Entry
+    =========================== 1 failed in 0.27 seconds ===========================
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$
+
+Alright.  Failing again.  This time because although you flushed your db
+session, you got no entries back when you queried the database. It's time to
+wrap this up and write this entry to the database. Do you remember how we did
+that during class? Try adding that to your ``.write()`` method. When you're
+done, check my solution below:
+
+.. hidden-code-block:: python
+    :label: Peek At A Solution
+
+    @classmethod
+    def write(cls, title=None, text=None, session=None):
+        if session is None:
+            session = DBSession
+        instance = cls(title=title, text=text)
+        session.add(instance)
+        return instance
+
+Now the purpose of passing the session becomes clear. If we don't bother
+passing one, then the ``DBSession`` defined in our ``journal.py`` file is used.
+If we do pass one, then it is preferred. This allows the method to work both
+here in tests, and in production where we don't need (or want) to create a
+special session.
+
+Now, finally, run your test one last time and see it pass:
+
+.. code-block:: bash
+
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$ py.test --tb=native
+    ============================= test session starts ==============================
+    platform darwin -- Python 2.7.6 -- py-1.4.28 -- pytest-2.7.1
+    rootdir: /Users/cewing/projects/codefellows/learning-journal, inifile:
+    collected 1 items
+
+    test_journal.py .
+
+    =========================== 1 passed in 0.27 seconds ===========================
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$
+
+You have a test that exercises this method and ensures that it does what is
+supposed to do. And you have a method that makes the test pass. The
+back-and-forth you've done is sometimes called **Red-Green-Refactor** in honor
+of the colors of output in your terminal when you run the tests. It's a great
+way to iteratively develop functionality and at the same time ensure it is
+tested properly.
 
 What other tests might you implement here? Are there restrictions on the values
 that ought to be placed in the database you wish to verify? How might you test
 those restrictions?
 
-Try your hand at writing a few tests of your own.
+Try your hand at writing a few tests of your own. Then you can peek at mine, if
+you like:
+
+.. hidden-code-block:: python
+    :label: Peek At A Solution
+
+    def test_entry_no_title_fails(db_session):
+        bad_data = {'text': 'test text'}
+        journal.Entry.write(session=db_session, **bad_data)
+        with pytest.raises(IntegrityError):
+            db_session.flush()
+
+    def test_entry_no_text_fails(db_session):
+        bad_data = {'title': 'test title'}
+        journal.Entry.write(session=db_session, **bad_data)
+        with pytest.raises(IntegrityError):
+            db_session.flush()
 
 Remember, when you are finished with this step, commit your changes to git so
 you can preserve them.  Write a quality commit message explaining what you've
@@ -589,44 +714,32 @@ specs:
 
 * The return value should be a list of entries.
 * If there are no entries, the function should return an empty list.
-* Each entry in the list should be a dictionary of at least 'title', 'text' and
-  'created'
 * The list should be ordered with the most recently created entries first.
 
 Again, begin with tests. Back in ``test_journal.py`` add the following code:
 
 .. code-block:: python
 
-    # add imports up top
-    import datetime
-    from journal import INSERT_ENTRY
-
-    # Then add two new tests at the bottom
-    def test_read_entries_empty(req_context):
-        # call the function under test
-        from journal import read_entries
-        result = read_entries(req_context)
-        # make assertions about the result
-        assert 'entries' in result
-        assert len(result['entries']) == 0
+    def test_read_entries_empty(db_session):
+        entries = journal.Entry.all()
+        assert len(entries) == 0
 
 
-    def test_read_entries(req_context):
-        # prepare data for testing
-        now = datetime.datetime.utcnow()
-        expected = ('Test Title', 'Test Text', now)
-        run_query(req_context.db, INSERT_ENTRY, expected, False)
-        # call the function under test
-        from journal import read_entries
-        result = read_entries(req_context)
-        # make assertions about the result
-        assert 'entries' in result
-        assert len(result['entries']) == 1
-        for entry in result['entries']:
-            assert expected[0] == entry['title']
-            assert expected[1] == entry['text']
-            for key in 'id', 'created':
-                assert key in entry
+    def test_read_entries_one(db_session):
+        title_template = "Title {}"
+        text_template = "Entry Text {}"
+        # write three entries, with order clear in the title and text
+        for x in range(3):
+            journal.Entry.write(
+                title=title_template.format(x),
+                text=text_template.format(x),
+                session=db_session)
+            db_session.flush()
+        entries = journal.Entry.all()
+        assert len(entries) == 3
+        assert entries[0].title > entries[1].title > entries[2].title
+        for entry in entries:
+            assert isinstance(entry, journal.Entry)
 
 What would you expect to be the result of running these tests now? Run your
 tests to ensure that the two new tests fail in the way you expect. If you get a
@@ -634,109 +747,87 @@ different result that you expected, ask yourself why:
 
 .. code-block:: bash
 
-    [learning_journal]
-    [step2 *]
-    192:learning_journal cewing$ py.test
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$ py.test --tb=native
     ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
-    collected 3 items
+    platform darwin -- Python 2.7.6 -- py-1.4.28 -- pytest-2.7.1
+    rootdir: /Users/cewing/projects/codefellows/learning-journal, inifile:
+    collected 5 items
 
-    test_journal.py .FF
+    test_journal.py ...FF
 
     =================================== FAILURES ===================================
     ___________________________ test_read_entries_empty ____________________________
-
-    req_context = <pyramid.testing.DummyRequest object at 0x107c77410>
-
-        def test_read_entries_empty(req_context):
-    >       from journal import read_entries
-    E       ImportError: cannot import name read_entries
-
-    test_journal.py:94: ImportError
-    ______________________________ test_read_entries _______________________________
-
-    req_context = <pyramid.testing.DummyRequest object at 0x107c77f90>
-
-        def test_read_entries(req_context):
-            # prepare data for testing
-            now = datetime.datetime.utcnow()
-            expected = ('Test Title', 'Test Text', now)
-            run_query(req_context.db, INSERT_ENTRY, expected, False)
-            # call the function under test
-    >       from journal import read_entries
-    E       ImportError: cannot import name read_entries
-
-    test_journal.py:106: ImportError
-    ====================== 2 failed, 1 passed in 0.23 seconds ======================
-    [learning_journal]
-    [step2 *]
-    192:learning_journal cewing$
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/codefellows/learning-journal/test_journal.py", line 80, in test_read_entries_empty
+        entries = journal.Entry.all()
+    AttributeError: type object 'Entry' has no attribute 'all'
+    ____________________________ test_read_entries_one _____________________________
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/codefellows/learning-journal/test_journal.py", line 94, in test_read_entries_one
+        entries = journal.Entry.all()
+    AttributeError: type object 'Entry' has no attribute 'all'
+    ====================== 2 failed, 3 passed in 0.27 seconds ======================
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$
 
 
-Implement ``read_entries``
------------------------------
+Implement ``Entry.all()``
+-------------------------
 
-Now you are ready to implement the **controller** function that will make these
+Now you are ready to implement the **controller** method that will make these
 tests pass.  Look carefully at the tests you've written.  What do they tell you
-about the function you need to write?
+about the method you need to write?
 
-* It must take the ``request`` as an argument.
-* It does not expect any parameters from the request
-* It returns a dictionary containing the key 'entries'
-* That key points to an iterable containing entries
-* Each entry is a dictionary with keys that correspond to the fields in our
-  database.
+* It can take a database session as an optional argument
+* It is a class method (no instance created or used, right?)
+* It returns a list of things
+* Those things should be ``Entry`` instances
 
 Back in ``journal.py`` go ahead and work on implementing this function yourself.
 
 .. hidden-code-block:: python
     :label: Peek At A Solution
 
-    # add this new SQL string below the others
-    SELECT_ENTRIES = """
-    SELECT id, title, text, created FROM entries ORDER BY created DESC
-    """
+    class Entry(Base):
+        # ...
 
-    def read_entries(request):
-        """return a list of all entries as dicts"""
-        cursor = request.db.cursor()
-        cursor.execute(SELECT_ENTRIES)
-        keys = ('id', 'title', 'text', 'created')
-        entries = [dict(zip(keys, row)) for row in cursor.fetchall()]
-        return {'entries': entries}
+        @classmethod
+        def all(cls, session=None):
+            if session is None:
+                session = DBSession
+            return session.query(cls).order_by(cls.created.desc()).all()
 
 **NOTES**
 
-* You run a query using the database *cursor*, not the *connection*.
-* After running the query, you must read the results.
-  * Get all results with ``cursor.fetchall()``.
-  * Get *n* results with ``cursor.fetchmany(size=n)``.
-  * Get one result with ``cursor.fetchone()``.
-* ``dict(zip(keys, vals))`` creates a dictionary from a pair of sequences.
+* Again, we can optionally pass a session in order to allow for easier testing.
+* The simple query is now using an ``order_by`` clause to control the order in
+  which items are returned.
+* The argument to an ``order_by`` clause must be a ``Column`` instance
+* ``Column`` instances have attributes that allow you to determine whether the
+  sort order is ascending or descending.
+  
 
 Back in your terminal, your tests should now pass:
 
 .. code-block:: bash
 
-    [learning_journal]
-    [step2 *]
-    192:learning_journal cewing$ py.test
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$ py.test --tb=native
     ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
-    collected 3 items
+    platform darwin -- Python 2.7.6 -- py-1.4.28 -- pytest-2.7.1
+    rootdir: /Users/cewing/projects/codefellows/learning-journal, inifile:
+    collected 5 items
 
-    test_journal.py ...
+    test_journal.py .....
 
-    =========================== 3 passed in 0.87 seconds ===========================
-    [learning_journal]
-    [step2 *]
-    192:learning_journal cewing$
-
-What more might you test about this implementation? How would you go about
-testing it? Try your hand at adding a test or two of your own.
-
-Remember, when you're finished commit your changes.  Make a useful commit
-message about what you did any why.
+    =========================== 5 passed in 0.31 seconds ===========================
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$
 
 Where We Stand
 --------------
@@ -744,8 +835,8 @@ Where We Stand
 You've now moved quite some distance in implementing your learning journal in
 Pyramid.
 
-* You've created code to initialize your database schema
-* You've added functions to manage the lifecycle of your database connection
+* You've created a data model representing your entry
+* You've written code to initialize your database schema
 * You've put in place functions to write and read journal entries
 * And, since it's tested, you are reasonably sure your code does what you think
   it does.
@@ -762,7 +853,6 @@ You'll use `the Jinja2 templating language`_ and connect your *controllers* to
 the *views* that will display the data they expose.
 
 .. _the Jinja2 templating language: http://jinja.pocoo.org/docs/templates/
-
 
 
 Renderers in Pyramid
@@ -793,47 +883,46 @@ Begin by installing the package into your virtual environment:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [step2 *]
-    192:learning_journal cewing$ pip install pyramid_jinja2
+    192:learning-journal cewing$ pip install pyramid_jinja2
     Downloading/unpacking pyramid-jinja2
     ...
     Successfully installed pyramid-jinja2 Jinja2 markupsafe
     Cleaning up...
-    [learning_journal]
+    [learning-journal]
     [step2 *]
-    192:learning_journal cewing$
+    192:learning-journal cewing$
 
 Once this is complete, add the dependency to your requirements.txt file:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [step2 *]
-    192:learning_journal cewing$ pip freeze > requirements.txt
-    [learning_journal]
+    192:learning-journal cewing$ pip freeze > requirements.txt
+    [learning-journal]
     [step2 *]
-    192:learning_journal cewing$
+    192:learning-journal cewing$
 
 That will ensure that Heroku will also be aware of these changes.
 
 Finally, you'll need to inform your application that it should use this new
-renderer.  Pyramid handles this using configuration. A package like
-``pyramid_jinja2`` can provide configuration to be included by an application
-that depends on it. You add this using the ``include`` method of the config
-object.
+renderer.  Pyramid handles this using configuration. Like with ``pyramid-tm``,
+``pyramid_jinja2`` provides configuration that can be included by an
+application that depends on it. You add this using the ``include`` method of
+the config object.
 
 In ``journal.py`` make the following change:
 
 .. code-block:: python
 
-    # configuration setup
-    config = Configurator(
-        settings=settings,
-        session_factory=session_factory
-    )
-    config.include('pyramid_jinja2')  # <-- ADD THIS LINE HERE
-    config.add_route('home', '/')
+    def main():
+        # ...
+        # configuration setup
+        config.include('pyramid_tm')
+        config.include('pyramid_jinja2')  # <-- ADD THIS LINE HERE
+        config.add_route('home', '/')
 
 This will ensure that the configuration ``pyramid_jinja2`` requires to work
 properly is in place.
@@ -861,16 +950,16 @@ In this scheme, templates are searched for in a path relative to the file in
 which the calling code is found. Our entire application lives in a single file,
 so we can establish a location adjacent to that file to hold our templates.
 
-In your ``learning_journal`` repository, add a new ``templates`` directory:
+In your ``learning-journal`` repository, add a new ``templates`` directory:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [step2]
-    heffalump:learning_journal cewing$ mkdir templates
-    [learning_journal]
+    heffalump:learning-journal cewing$ mkdir templates
+    [learning-journal]
     [step2]
-    heffalump:learning_journal cewing$
+    heffalump:learning-journal cewing$
 
 In this directory create a new file ``base.jinja2``:
 
@@ -908,11 +997,12 @@ In this directory create a new file ``base.jinja2``:
 This file represents the main structure of our website.  Individual pages will
 be able to extend this structure through *template inheritance*
 
-**NOTE**
+.. note::
 
-If you have a layout for your learning journal you'd like to use, please feel
-free to do so. You may wish to begin by using my simple layout above, to
-minimize confusion until you have the basics working.
+    If you have a layout for your learning journal you'd like to use, perhaps
+    the mockup you completed for pre-work, please feel free to use it here. You
+    may wish to begin by using my simple layout above, to minimize confusion
+    until you have the basics working.
 
 
 Template Inheritance
@@ -920,11 +1010,11 @@ Template Inheritance
 
 Jinja2 allows you to combine templates in a number of different ways.
 
-* you can make replaceable blocks in templates with blocks
+* you can make replaceable blocks in templates with *blocks*:
 
   * ``{% block body %}{% endblock %}``
 
-* you can build on a template in a second template by extending
+* you can build on a template from within a second template by *extending*:
 
   * ``{% extends "base.jinja2" %}``
   * this *must* be the first text in the template
@@ -975,18 +1065,17 @@ The template will loop over a set of ``entries``, showing each in an HTML5
 
 At this point, your project directory should look like this::
 
-    /learning_journal
-    └── learning_journal
-        ├── .gitignore
-        ├── LICENSE
-        ├── Procfile
-        ├── README.md
-        ├── journal.py
-        ├── requirements.txt
-        ├── templates
-        │   ├── base.jinja2
-        │   └── list.jinja2
-        └── test_journal.py
+    .
+    ├── .gitignore
+    ├── LICENSE
+    ├── Procfile
+    ├── README.md
+    ├── journal.py
+    ├── requirements.txt
+    ├── templates
+    │   ├── base.jinja2
+    │   └── list.jinja2
+    └── test_journal.py
 
 
 This template we've just created will be a Pyramid *renderer*.  We've noted
@@ -1020,24 +1109,23 @@ Begin by installing ``WebTest``:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [step2]
-    heffalump:learning_journal cewing$ pip install WebTest
+    heffalump:learning-journal cewing$ pip install WebTest
     ...
     Cleaning up...
-    [learning_journal]
+    [learning-journal]
     [step2 *]
-    heffalump:learning_journal cewing$
+    heffalump:learning-journal cewing$
 
 Next, we will have to create a *pytest fixture* that will set everything up for
 us:
 
-* The fixture will need to have a database correctly configured and initialized
-  and will need to tear it down after all the tests are finished.
-* The fixture will also need to ensure that the application itself has the
-  correct setting for our test database connection.
-* Finally, the fixture will need to run for each individual test function that
-  uses it.
+* The fixture will need to create a configured application
+* The fixture will need to wrap that application in the WebTest server
+* The fixture will return the wrapped application so tests can use it
+* The fixture should be run for each test so that you get a fresh instance of
+  the application each time
 
 Between the WebTest documentation and code you've already written, you can try
 writing this new fixture on your own.
@@ -1045,11 +1133,10 @@ writing this new fixture on your own.
 .. hidden-code-block:: python
     :label: Peek At A Solution
 
-    @pytest.fixture(scope='function')
-    def app(db):
+    @pytest.fixture()
+    def app():
         from journal import main
         from webtest import TestApp
-        os.environ['DATABASE_URL'] = TEST_DSN
         app = main()
         return TestApp(app)
 
@@ -1070,19 +1157,13 @@ Add the following to ``test_journal.py``:
 
 * The ``app`` created by our fixture works as a mock HTTP client, like a web
   browser for us to use.
-* Because this test actually creates a request, we don't need to use the
-  ``req_context`` fixture. Having an initialized database is enough
 * The ``data`` attribute of the *response* returned by ``client.get()`` holds
   the full rendered HTML of our page, but we are only checking for the one
   thing we want to see.
 
 Next, you'll test what happens when you have some entries. But to do so, you'll
-need to create entries. This test requires that data be written, because the
-``app`` will get a connection of its own, separate from the one you use for
-writing.
-
-The simplest solution is to write the entry and commit it, then delete it when
-the test is over.
+need to create entries. The simplest solution is to write the entry and commit
+it, then delete it when the test is over.
 
 Try your hand at writing a ``function`` scoped fixture that will take care of
 this for you. It'd be quite nice if it would return information about the entry
@@ -1091,23 +1172,15 @@ it writes as well, so you can use it to test against:
 .. hidden-code-block:: python
     :label: Peek At A Solution
 
-    @pytest.fixture(scope='function')
-    def entry(db, request):
-        """provide a single entry in the database"""
-        settings = db
-        now = datetime.datetime.utcnow()
-        expected = ('Test Title', 'Test Text', now)
-        with closing(connect_db(settings)) as db:
-            run_query(db, INSERT_ENTRY, expected, False)
-            db.commit()
-
-        def cleanup():
-            clear_entries(settings)
-
-        request.addfinalizer(cleanup)
-
-        return expected
-
+    @pytest.fixture()
+    def entry(db_session):
+        entry = journal.Entry.write(
+            title='Test Title',
+            text='Test Entry Text',
+            session=db_session
+        )
+        db_session.flush()
+        return entry
 
 Now, use this new fixture in a test of retrieving a listing of entries.  See if
 you can write this test yourself:
@@ -1119,54 +1192,39 @@ you can write this test yourself:
         response = app.get('/')
         assert response.status_code == 200
         actual = response.body
-        for expected in entry[:2]:
+        for field in ['title', 'text']:
+            expected = getattr(entry, field, 'absent')
             assert expected in actual
 
-If you run your tests with these two new ones added, you should see both fail:
+If you run your tests with these two new tests added, you should see both fail:
 
 .. code-block:: bash
 
-    [learning_journal]
-    [step2 *]
-    heffalump:learning_journal cewing$ py.test
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$ py.test --tb=native
     ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
-    collected 5 items
+    platform darwin -- Python 2.7.6 -- py-1.4.28 -- pytest-2.7.1
+    rootdir: /Users/cewing/projects/codefellows/learning-journal, inifile:
+    collected 7 items
 
-    test_journal.py ...FF
+    test_journal.py .....FF
 
     =================================== FAILURES ===================================
     ______________________________ test_empty_listing ______________________________
-
-    app = <webtest.app.TestApp object at 0x10d182490>
-
-        def test_empty_listing(app):
-            response = app.get('/')
-            assert response.status_code == 200
-            actual = response.body
-            expected = 'No entries here so far'
-    >       assert expected in actual
-    E       assert 'No entries here so far' in 'Hello World'
-
-    test_journal.py:148: AssertionError
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/codefellows/learning-journal/test_journal.py", line 124, in test_empty_listing
+        assert expected in actual
+    AssertionError: assert 'No entries here so far' in 'Hello World'
     _________________________________ test_listing _________________________________
-
-    app = <webtest.app.TestApp object at 0x10d1a7150>
-    entry = ('Test Title', 'Test Text', datetime.datetime(2015, 1, 29, 2, 9, 10, 326267))
-
-        def test_listing(app, entry):
-            response = app.get('/')
-            assert response.status_code == 200
-            actual = response.body
-            for expected in entry:
-    >           assert expected in actual
-    E           assert 'Test Title' in 'Hello World'
-
-    test_journal.py:156: AssertionError
-    ====================== 2 failed, 3 passed in 0.46 seconds ======================
-    [learning_journal]
-    [step2 *]
-    heffalump:learning_journal cewing$
+    Traceback (most recent call last):
+      File "/Users/cewing/projects/codefellows/learning-journal/test_journal.py", line 133, in test_listing
+        assert expected in actual
+    AssertionError: assert 'Test Title' in 'Hello World'
+    ====================== 2 failed, 5 passed in 0.37 seconds ======================
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$
 
 
 Writing the List View
@@ -1186,7 +1244,7 @@ happens when you call the ``get`` method of your ``app``) a process happens.
 The first step is that Pyramid looks for *routes* that have been configured and
 tries to match one to the *path* of the request from the client. At this point,
 you may say "But I never made any routes, I don't even know what one is".
-You'd be wrong.
+You'd be at least partly wrong.
 
 In the first step of our application, when you created the ``main`` function,
 you included this line of configuration:
@@ -1224,9 +1282,6 @@ The ``view_config`` decorator is used by Pyramid to decorate some function that
 can serve as a *view function*.  The sole hard-and-fast requirement of a view
 function is that it take ``request`` as an argument.
 
-Do you have any other functions you've written so far in ``journal.py`` that
-might also serve as *view functions*?
-
 The ``view_config`` decorator can take a number of arguments. One that you must
 provide is ``route_name``. This parameter serves to connect a *view function*
 to a *route*.
@@ -1245,6 +1300,25 @@ takes whatever value is returned by the *view function* and sends it back to
 the client as a plain text response.  This is why your test sees the body of
 the response as "Hello World"!
 
+For *template renderers*, like the one you've just created, a view is required
+to return a dict instance that can serve as context for the template. This
+means that any symbols used in the template must be present in the dict
+returned by the view.
+
+Notice that your list view template contains one symbol that isn't defined in
+the scope of the template itself:
+
+.. code-block:: jinja2
+
+    {% for entry in entries %}
+     ...
+    {% else %}
+     ...
+    {% endfor %}
+
+Somehow, you'll need to provide a dictionary with the key `entries` in it to
+this template *renderer*.
+
 A view *can* be configured without a *renderer*.  If this is the case, the view
 itself is responsible for returning a value suitable for returning to the
 client.  We will see an example of this later.
@@ -1252,8 +1326,9 @@ client.  We will see an example of this later.
 A Word on Terminology
 ---------------------
 
-Although the MVC pattern is a useful abstraction, there are a few differences
-in how things are named in Python web frameworks:
+Although the MVC pattern is a useful abstraction, it's not a perfect match for
+the web world. There are a few differences in how things are named in Python
+web frameworks, and a few ambiguities about where the edges are:
 
 .. rst-class:: centered width-80%
 
@@ -1264,9 +1339,12 @@ in how things are named in Python web frameworks:
 +-------------------+-------------------------+
 | Conroller         | - View Function         |
 |                   | - Class Based View      |
+|                   | - Model methods         |
 +-------------------+-------------------------+
 | View              | - Renderer              |
 |                   | - Template              |
+|                   | - View Function         |
+|                   | - Class Based View      |
 |                   | - HTTP Response         |
 +-------------------+-------------------------+
 
@@ -1289,9 +1367,9 @@ Take a moment to start up your application at the command line:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [step2 *]
-    heffalump:learning_journal cewing$ python journal.py
+    heffalump:learning-journal cewing$ python journal.py
     serving on http://0.0.0.0:5000
 
 When it's running, point your web browser at this address:
@@ -1321,18 +1399,17 @@ see this:
 If a matched *route* has no *view* to pass the request to, it will raise a
 **404** error.
 
-Now, let's re-connect the ``'home'`` route to a *view*. We need a function that
-will take the ``request`` as an argument and will return a list of entries.  Do
-we have such a function available?  You betcha we do.
+Now, let's re-connect the ``'home'`` route to a *view function*. We need to create a
+function that will take the ``request`` as an argument and will return a
 
 Make the following changes to ``journal.py``:
 
 .. code-block:: python
 
     @view_config(route_name='home', renderer='templates/list.jinja2')
-    def read_entries(request):
-        """return a list of all entries as dicts"""
-        # ... leave the rest of the function unchanged
+    def list_view(request):
+        entries = Entry.all()
+        return {'entries': entries}
 
 Finally, having saved this change, restart your application and again load the
 URL:
@@ -1349,24 +1426,24 @@ making it a *view* function. And you've configured it to use the
 ``list.jinja2`` *renderer* we created earlier. Review that template. Make sure
 you understand why the page is appearing with "*No entries here so far*\ ".
 
-
 Quit your application again and now all your tests should pass:
 
 .. code-block:: bash
 
-    [learning_journal]
-    [step2 *]
-    heffalump:learning_journal cewing$ py.test
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$ py.test --tb=native
     ============================= test session starts ==============================
-    platform darwin -- Python 2.7.5 -- py-1.4.26 -- pytest-2.6.4
-    collected 5 items
+    platform darwin -- Python 2.7.6 -- py-1.4.28 -- pytest-2.7.1
+    rootdir: /Users/cewing/projects/codefellows/learning-journal, inifile:
+    collected 7 items
 
-    test_journal.py .....
+    test_journal.py .......
 
-    =========================== 5 passed in 0.37 seconds ===========================
-    [learning_journal]
-    [step2 *]
-    heffalump:learning_journal cewing$
+    =========================== 7 passed in 0.38 seconds ===========================
+    [learning-journal]
+    [pyramid/step2 *]
+    Pratchett:learning-journal cewing$
 
 
 Deploying Your Work
@@ -1395,39 +1472,33 @@ Go ahead and create one. Start by opening a python session with Heroku:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [master=]
-    192:learning_journal cewing$ heroku run python
+    192:learning-journal cewing$ heroku run python
     Running `python` attached to terminal... up, run.9416
     Python 2.7.6 (default, Jan 16 2014, 02:39:37)
     [GCC 4.4.3] on linux2
     Type "help", "copyright", "credits" or "license" for more information.
     >>>
 
-And now, create a first entry using your controller API:
+And now, create a first entry:
 
 .. code-block:: python
 
-    >>> from journal import connect_db
     >>> import os
-    >>> settings = {}
-    >>> settings['db'] = os.environ.get('DATABASE_URL', None)
-    >>> settings
-    {'db': 'postgres://<user>:<password>@<domain>:<port>/<database>'}
-    >>> db = connect_db(settings)
-    >>> db
-    <connection object at 0x7fef3ec3f280; dsn: 'postgres://<user>:<password>@<domain>:<port>/<database>', closed: 0>
-    >>> from pyramid import testing
-    >>> req = testing.DummyRequest()
-    >>> req.db = db
-    >>> from journal import write_entry
-    >>> title = "My First Entry"
-    >>> text = "Today I learned you can write a journal entry from the command line in Heroku.  Neat!"
-    >>> req.params = {'title': title, 'text': text}
-    >>> result = write_entry(req)
-    >>> result
-    {}
-    >>> db.commit()
+    >>> from sqlalchemy import create_engine
+    >>> from sqlalchemy.orm import sessionmaker
+    >>> from journal import Entry
+    >>> db_url = os.environ.get('DATABASE_URL')
+    >>> engine = create_engine(db_url)
+    >>> Session = sessionmaker(bind=engine)
+    >>> session = Session()
+    >>> entry = Entry(
+    ...   title="My First Entry",
+    ...   text="Today I learned you can write a journal entry from the command line in Heroku,  Neat!"
+    ... )
+    >>> session.add(entry)
+    >>> session.commit()
     >>>
 
 Once you're done, use the standard ``^D`` to detach from the Python terminal on
@@ -1439,9 +1510,9 @@ command from the Heroku toolbelt:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [master=]
-    heffalump:learning_journal cewing$ heroku open
+    heffalump:learning-journal cewing$ heroku open
     Opening evening-brushlands-7955... done
 
 Your browser should then open (or open a new tab) and you should see something
@@ -1454,18 +1525,18 @@ If you see an error instead, here are some tools to use in debugging:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [master=]
-    heffalump:learning_journal cewing$ heroku ps
+    heffalump:learning-journal cewing$ heroku ps
 
 The ``ps`` command should tell you if there are any *dynos* running.  You
 should see output like this:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [master]
-    heffalump:learning_journal cewing$ heroku ps
+    heffalump:learning-journal cewing$ heroku ps
     === web (1X): `python journal.py`
     web.1: up 2015/01/28 19:28:17 (~ 2s ago)
 
@@ -1474,9 +1545,9 @@ If you see nothing instead you can use the ``scale`` command to start a new
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [master]
-    heffalump:learning_journal cewing$ heroku scale web=1
+    heffalump:learning-journal cewing$ heroku scale web=1
     Scaling dynos... done, now running web at 1:1X.
 
 You can also use the ``scale`` command to turn your website off.  Just scale
@@ -1490,9 +1561,9 @@ something is wrong with the code in your application, you can use the heroku
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [master]
-    heffalump:learning_journal cewing$ heroku logs
+    heffalump:learning-journal cewing$ heroku logs
     2015-01-26T04:30:17.767423+00:00 heroku[api]: Enable Logplex by c...
     2015-01-26T04:30:17.767423+00:00 heroku[api]: Release v2 created by c...
     ...
@@ -1506,9 +1577,9 @@ always open a Python interpreter in the Heroku environment:
 
 .. code-block:: bash
 
-    [learning_journal]
+    [learning-journal]
     [master=]
-    192:learning_journal cewing$ heroku run python
+    192:learning-journal cewing$ heroku run python
     Running `python` attached to terminal... up, run.9416
     Python 2.7.6 (default, Jan 16 2014, 02:39:37)
     [GCC 4.4.3] on linux2
