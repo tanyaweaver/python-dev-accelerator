@@ -172,6 +172,10 @@ as a ``subcommand`` for the ``fab`` command:
     [fabrictests]
     heffalump:fabrictests cewing$
 
+If you see error output at this point, there is something wrong with how you've
+set up ssh access to your machine.  Please ask for help from a TA or your
+instructor.
+
 Each function we define in a fabfile can perform a task on our behalf on the
 specified host. These tasks can range from the simple to the highly complex. In
 essence, you can think of ``fabric`` as supplying a way to encapsulate standard
@@ -300,8 +304,8 @@ a new instance.
         wait_val = int(interval)
         timeout_val = int(timeout)
         conn = get_ec2_connection()
-        instance_type = 't1.micro'
-        key_name = 'pk-cpe'
+        instance_type = 't2.micro'
+        key_name = 'pk-aws'
         security_group = 'ssh-access'
         image_id = 'ami-d0d8b8e0'
 
@@ -381,7 +385,7 @@ Running Shell Commands on a Server
 Now that we have an instance running, we want to run commands on it to
 configure it.
 
-Fabric provides the ``run`` command to support this.
+As you've seen, Fabric provides the ``run`` command to allow this.
 
 But there's an issue.  When you execute a function using fabric, it is actually
 run repeatedly, once for each ``host`` you list in the ``env.hosts``
@@ -446,7 +450,7 @@ instance:
       'image': u'ami-d0d8b8e0',
       'instance': Instance:i-ab5159a2,
       'state': u'running',
-      'type': u't1.micro'}]
+      'type': u't2.micro'}]
 
     Done.
     [fabrictests]
@@ -541,6 +545,14 @@ When the AWS server asks to use public-key authentication, the agent will then
 try this key along with any others the agent knows about. If no known key
 works, ssh will bomb out.
 
+.. note::
+
+    Sometimes your ssh agent will *forget* the keys you've added.  If you wish,
+    you can also short-circuit the selection of a key by specifying which key
+    to use in your fabric ``env`` (in ``fabfile.py``):
+
+        env.key_filename = '/path/to/keyfile.pem'
+
 ``Execute`` `will take`_ the name of a fabric command to run. We need a command
 that it will run that will install nginx for us and then start it.
 
@@ -565,7 +577,8 @@ command line that will run it on the server we select.
     def install_nginx():
         run_command_on_selected_server(_install_nginx)
 
-Now, if we run this fabric command from our command line, we can get nginx installed on our AWS instance:
+Now, if we run this fabric command from our command line, we can get nginx
+installed on our AWS instance:
 
 .. code-block:: bash
 

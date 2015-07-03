@@ -199,6 +199,9 @@ Disconnecting from localhost... done.
 heffalump:fabrictests cewing$
 </pre></div>
 </div>
+<p>If you see error output at this point, there is something wrong with how you&#8217;ve
+set up ssh access to your machine.  Please ask for help from a TA or your
+instructor.</p>
 <p>Each function we define in a fabfile can perform a task on our behalf on the
 specified host. These tasks can range from the simple to the highly complex. In
 essence, you can think of <code class="docutils literal"><span class="pre">fabric</span></code> as supplying a way to encapsulate standard
@@ -351,8 +354,8 @@ a new instance.</p>
     <span class="n">wait_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
     <span class="n">timeout_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
     <span class="n">conn</span> <span class="o">=</span> <span class="n">get_ec2_connection</span><span class="p">()</span>
-    <span class="n">instance_type</span> <span class="o">=</span> <span class="s">&#39;t1.micro&#39;</span>
-    <span class="n">key_name</span> <span class="o">=</span> <span class="s">&#39;pk-cpe&#39;</span>
+    <span class="n">instance_type</span> <span class="o">=</span> <span class="s">&#39;t2.micro&#39;</span>
+    <span class="n">key_name</span> <span class="o">=</span> <span class="s">&#39;pk-aws&#39;</span>
     <span class="n">security_group</span> <span class="o">=</span> <span class="s">&#39;ssh-access&#39;</span>
     <span class="n">image_id</span> <span class="o">=</span> <span class="s">&#39;ami-d0d8b8e0&#39;</span>
 
@@ -423,7 +426,7 @@ see the new instance you just created running happily.</p>
 <h2>Running Shell Commands on a Server<a class="headerlink" href="#running-shell-commands-on-a-server" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have an instance running, we want to run commands on it to
 configure it.</p>
-<p>Fabric provides the <code class="docutils literal"><span class="pre">run</span></code> command to support this.</p>
+<p>As you&#8217;ve seen, Fabric provides the <code class="docutils literal"><span class="pre">run</span></code> command to allow this.</p>
 <p>But there&#8217;s an issue.  When you execute a function using fabric, it is actually
 run repeatedly, once for each <code class="docutils literal"><span class="pre">host</span></code> you list in the <code class="docutils literal"><span class="pre">env.hosts</span></code>
 environment setting.</p>
@@ -484,7 +487,7 @@ Connected to EC2 region us-west-2
   &#39;image&#39;: u&#39;ami-d0d8b8e0&#39;,
   &#39;instance&#39;: Instance:i-ab5159a2,
   &#39;state&#39;: u&#39;running&#39;,
-  &#39;type&#39;: u&#39;t1.micro&#39;}]
+  &#39;type&#39;: u&#39;t2.micro&#39;}]
 
 Done.
 [fabrictests]
@@ -588,6 +591,14 @@ heffalump:fabrictests cewing$
 When the AWS server asks to use public-key authentication, the agent will then
 try this key along with any others the agent knows about. If no known key
 works, ssh will bomb out.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Sometimes your ssh agent will <em>forget</em> the keys you&#8217;ve added.  If you wish,
+you can also short-circuit the selection of a key by specifying which key
+to use in your fabric <code class="docutils literal"><span class="pre">env</span></code> (in <code class="docutils literal"><span class="pre">fabfile.py</span></code>):</p>
+<blockquote class="last">
+<div>env.key_filename = &#8216;/path/to/keyfile.pem&#8217;</div></blockquote>
+</div>
 <p><code class="docutils literal"><span class="pre">Execute</span></code> <a class="reference external" href="http://docs.fabfile.org/en/1.8/api/core/tasks.html#fabric.tasks.execute">will take</a> the name of a fabric command to run. We need a command
 that it will run that will install nginx for us and then start it.</p>
 <script type="text/javascript">
@@ -626,7 +637,8 @@ command line that will run it on the server we select.</p>
     <span class="n">run_command_on_selected_server</span><span class="p">(</span><span class="n">_install_nginx</span><span class="p">)</span>
 </pre></div>
 </div>
-</div><p>Now, if we run this fabric command from our command line, we can get nginx installed on our AWS instance:</p>
+</div><p>Now, if we run this fabric command from our command line, we can get nginx
+installed on our AWS instance:</p>
 <div class="highlight-bash"><div class="highlight"><pre>[fabrictests]
 heffalump:fabrictests cewing$ fab install_nginx
 [localhost] Executing task &#39;install_nginx&#39;
