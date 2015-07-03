@@ -88,9 +88,10 @@ results from the King County government website.</p>
 form present on the <a class="reference external" href="http://info.kingcounty.gov/health/ehs/foodsafety/inspections/search.aspx">Restaurant Inspection Information</a> page.</p>
 <p>The complexity of this webservice means the easiest way to extract this
 information is to submit a search manually and then copy the URL that results.</p>
-<p>The outcome of this should be a domain name and path to the search results page
-and a set of <em>query parameters</em> available to be used.  Begin by recording these
-as all-caps constants at the top of your <code class="docutils literal"><span class="pre">scraper.py</span></code> file:</p>
+<p>After you&#8217;ve done this, you should know the domain name and path to the search
+results page and know the set of <em>query parameters</em> available to be used (along
+with some default values).  Begin by recording these three items as <em>constants</em>
+at the top of your <code class="docutils literal"><span class="pre">scraper.py</span></code> file:</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -102,7 +103,7 @@ as all-caps constants at the top of your <code class="docutils literal"><span cl
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock14'))">Peek At a Solution</a><br /><div id="hiddencodeblock14" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="n">INSPECTION_DOMAIN</span> <span class="o">=</span> <span class="s">&#39;http://info.kingcounty.gov&#39;</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock1'))">Peek At a Solution</a><br /><div id="hiddencodeblock1" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="n">INSPECTION_DOMAIN</span> <span class="o">=</span> <span class="s">&#39;http://info.kingcounty.gov&#39;</span>
 <span class="n">INSPECTION_PATH</span> <span class="o">=</span> <span class="s">&#39;/health/ehs/foodsafety/inspections/Results.aspx&#39;</span>
 <span class="n">INSPECTION_PARAMS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">&#39;Output&#39;</span><span class="p">:</span> <span class="s">&#39;W&#39;</span><span class="p">,</span>
@@ -127,7 +128,8 @@ as all-caps constants at the top of your <code class="docutils literal"><span cl
 </div><p>Be aware that the results page is quite sensitive about having <em>all</em> the
 parameters in each request, even if they have no values set.</p>
 <p>Your next job is to write a single Python function (<code class="docutils literal"><span class="pre">get_inspection_page</span></code>)
-that will fetch a set of search results for you. Here&#8217;s the requirements:</p>
+that will fetch a set of search results for you. Here are the requirements for
+this function:</p>
 <ul class="simple">
 <li>It must accept keyword arguments for the possible query parameters</li>
 <li>It will build a dictionary of request query parameters from incoming keywords</li>
@@ -136,7 +138,10 @@ that will fetch a set of search results for you. Here&#8217;s the requirements:<
 no error</li>
 <li>It will raise an error if there is a problem with the response</li>
 </ul>
-<p>Here is one possible solution for this query:</p>
+<p>As you work on building this function, try out various approaches in your
+Python interpreter first.  See what works and what fails before you try to
+write the function.</p>
+<p>Here is one possible solution for this function:</p>
 <script type="text/javascript">
     function showhide(element){
         if (!document.getElementById)
@@ -148,7 +153,7 @@ no error</li>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock15'))">Peek At A Solution</a><br /><div id="hiddencodeblock15" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">requests</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock2'))">Peek At A Solution</a><br /><div id="hiddencodeblock2" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="k">def</span> <span class="nf">get_inspection_page</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">url</span> <span class="o">=</span> <span class="n">INSPECTION_DOMAIN</span> <span class="o">+</span> <span class="n">INSPECTION_PATH</span>
@@ -174,7 +179,8 @@ exercise entirely to you.</p>
 <p>Next, we need a function <code class="docutils literal"><span class="pre">parse_source</span></code> to set up the HTML as DOM nodes for
 scraping. It will need to:</p>
 <ul class="simple">
-<li>Take the response body from the previous method (or some other source)</li>
+<li>Take the response body from the previous function (or the file read from
+disk)</li>
 <li>Parse it using BeautifulSoup</li>
 <li>Return the parsed object for further processing</li>
 </ul>
@@ -190,12 +196,12 @@ scraping. It will need to:</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock16'))">Peek At A Solution</a><br /><div id="hiddencodeblock16" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add this import at the top</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock3'))">Peek At A Solution</a><br /><div id="hiddencodeblock3" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add this import at the top</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 
 <span class="c"># then add this function lower down</span>
 <span class="k">def</span> <span class="nf">parse_source</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">):</span>
-    <span class="n">parsed</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">from_encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+    <span class="n">parsed</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s">&#39;html5lib&#39;</span><span class="p">,</span> <span class="n">from_encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">parsed</span>
 </pre></div>
 </div>
@@ -217,7 +223,7 @@ block. You can work on providing them dynamically later.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock17'))">Peek At A Solution</a><br /><div id="hiddencodeblock17" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add another import at the top</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock4'))">Peek At A Solution</a><br /><div id="hiddencodeblock4" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add another import at the top</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
@@ -277,7 +283,7 @@ effective for this task?</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock18'))">Peek At A Solution</a><br /><div id="hiddencodeblock18" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add a new import at the top</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock5'))">Peek At A Solution</a><br /><div id="hiddencodeblock5" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c"># add a new import at the top</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
 <span class="k">def</span> <span class="nf">extract_data_listings</span><span class="p">(</span><span class="n">html</span><span class="p">):</span>
@@ -350,7 +356,7 @@ element as an argument and return <code class="docutils literal"><span class="pr
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock19'))">Peek At A Solution</a><br /><div id="hiddencodeblock19" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">has_two_tds</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock6'))">Peek At A Solution</a><br /><div id="hiddencodeblock6" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">has_two_tds</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
     <span class="n">is_tr</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;tr&#39;</span>
     <span class="n">td_children</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;td&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
     <span class="n">has_two</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">td_children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
@@ -455,7 +461,7 @@ the function <code class="docutils literal"><span class="pre">clean_data</span><
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock20'))">Peek At a Solution</a><br /><div id="hiddencodeblock20" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">td</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock7'))">Peek At a Solution</a><br /><div id="hiddencodeblock7" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">td</span><span class="p">):</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">string</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&quot; </span><span class="se">\n</span><span class="s">:-&quot;</span><span class="p">)</span>
@@ -515,7 +521,7 @@ account for this in your function.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock21'))">Peek At a Solution</a><br /><div id="hiddencodeblock21" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_restaurant_metadata</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock8'))">Peek At a Solution</a><br /><div id="hiddencodeblock8" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_restaurant_metadata</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
     <span class="n">metadata_rows</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;tbody&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span>
         <span class="n">has_two_tds</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span>
     <span class="p">)</span>
@@ -587,7 +593,7 @@ and returns <code class="docutils literal"><span class="pre">True</span></code> 
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock22'))">Peek At a Solution</a><br /><div id="hiddencodeblock22" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_inspection_row</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock9'))">Peek At a Solution</a><br /><div id="hiddencodeblock9" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_inspection_row</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
     <span class="n">is_tr</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&#39;tr&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">is_tr</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">False</span>
@@ -637,7 +643,7 @@ inspection values.</li>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock23'))">Peek At a Solution</a><br /><div id="hiddencodeblock23" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_score_data</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock10'))">Peek At a Solution</a><br /><div id="hiddencodeblock10" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_score_data</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
     <span class="n">inspection_rows</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">is_inspection_row</span><span class="p">)</span>
     <span class="n">samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inspection_rows</span><span class="p">)</span>
     <span class="n">total</span> <span class="o">=</span> <span class="n">high_score</span> <span class="o">=</span> <span class="n">average</span> <span class="o">=</span> <span class="mi">0</span>
