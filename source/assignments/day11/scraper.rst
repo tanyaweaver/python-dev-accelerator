@@ -33,9 +33,10 @@ form present on the `Restaurant Inspection Information`_ page.
 The complexity of this webservice means the easiest way to extract this
 information is to submit a search manually and then copy the URL that results.
 
-The outcome of this should be a domain name and path to the search results page
-and a set of *query parameters* available to be used.  Begin by recording these
-as all-caps constants at the top of your ``scraper.py`` file:
+After you've done this, you should know the domain name and path to the search
+results page and know the set of *query parameters* available to be used (along
+with some default values).  Begin by recording these three items as *constants*
+at the top of your ``scraper.py`` file:
 
 .. hidden-code-block:: python
     :label: Peek At a Solution
@@ -65,7 +66,8 @@ Be aware that the results page is quite sensitive about having *all* the
 parameters in each request, even if they have no values set.
 
 Your next job is to write a single Python function (``get_inspection_page``)
-that will fetch a set of search results for you. Here's the requirements:
+that will fetch a set of search results for you. Here are the requirements for
+this function:
 
 * It must accept keyword arguments for the possible query parameters
 * It will build a dictionary of request query parameters from incoming keywords
@@ -73,8 +75,12 @@ that will fetch a set of search results for you. Here's the requirements:
 * It will return the bytes content of the response and the encoding if there is
   no error
 * It will raise an error if there is a problem with the response
+  
+As you work on building this function, try out various approaches in your
+Python interpreter first.  See what works and what fails before you try to
+write the function.
 
-Here is one possible solution for this query:
+Here is one possible solution for this function:
 
 .. hidden-code-block:: python
     :label: Peek At A Solution
@@ -107,7 +113,8 @@ Step 2: Parse Search Results
 Next, we need a function ``parse_source`` to set up the HTML as DOM nodes for
 scraping. It will need to:
 
-* Take the response body from the previous method (or some other source)
+* Take the response body from the previous function (or the file read from
+  disk)
 * Parse it using BeautifulSoup
 * Return the parsed object for further processing
 
@@ -121,7 +128,7 @@ This function can be quite simple. Add it to ``scraper.py``.
 
     # then add this function lower down
     def parse_source(html, encoding='utf-8'):
-        parsed = BeautifulSoup(html, from_encoding=encoding)
+        parsed = BeautifulSoup(html, 'html5lib', from_encoding=encoding)
         return parsed
 
 In order to see the results we have at this point, we'll need to make our
