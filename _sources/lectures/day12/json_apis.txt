@@ -652,9 +652,11 @@ Wrap Up
 .. rst-class:: left
 .. container::
 
-    Tonight, you'll do a
+    Later, you'll do a
     :ref:`walkthrough of using a RESTful web service <rest_exercise>` to extend
-    the data you built about apartment listings yesterday.
+    the app you built to scrape health inspection data yesterday.
 
     As you do so, make note of how the information the web service provides you
     indicates what else you can do with the data you get back.
+
+    Are there other services you might add to your health inspection data app?

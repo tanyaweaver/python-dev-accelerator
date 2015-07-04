@@ -280,7 +280,7 @@ Next we must set up some configuration values for our server-to-be.
     Finally, we need to designate exactly what type of instance to create. AWS
     instances come in all shapes and sizes, but the only ones that are in the
     free usage tier are the ``t1.micro`` and ``t2.micro`` types.  We'll begin
-    with the older ``t1.micro`` type.
+    with the older ``t2.micro`` type.
 
 .. ifslides::
 
@@ -288,13 +288,13 @@ Next we must set up some configuration values for our server-to-be.
 
     * Finally, we pick an instance type
     * These control how much CPU power, RAM and disk space you have
-    * We'll start out with a ``t1.micro`` instance
+    * We'll start out with a ``t2.micro`` instance
     * If you use only one of these, they are on the **free usage tier**
 
 .. rst-class:: build
 .. code-block:: pycon
 
-    >>> instance_type = 't1.micro'
+    >>> instance_type = 't2.micro'
 
 Starting an Instance
 --------------------
