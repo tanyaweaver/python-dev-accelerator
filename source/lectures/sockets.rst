@@ -5,8 +5,7 @@ TCP/IP and Sockets
 .. ifnotslides::
 
     This lecture has some longer code samples which you might want to have on
-    hand.  They are reproduced in :download:`socket_exercises.py
-    <../../downloads/socket_exercises.py>`
+    hand.  They are reproduced in :download:`socket_exercises.py <../downloads/socket_exercises.py>`
 
 Network Basics
 ==============
@@ -336,7 +335,7 @@ single argument, the shared prefix for a defined set of constants:
 
 .. ifnotslides::
 
-    :download:`see socket_exercises.py <../../downloads/socket_exercises.py>`
+    :download:`see socket_exercises.py <../downloads/socket_exercises.py>`
 
 .. code-block:: pycon
 
@@ -571,7 +570,7 @@ Client Side Communications
         Typing this next bit can take some time, and if you aren't careful, the
         connection you open might time out before you get to the end. The
         exercise is reproduced in :download:`socket_exercises.py
-        <../../downloads/socket_exercises.py>`
+        <../downloads/socket_exercises.py>`
 
 First, connect and send a message:
 
