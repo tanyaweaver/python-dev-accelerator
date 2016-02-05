@@ -1,18 +1,17 @@
-********************
-Homework Assignments
-********************
+.. slideconf::
+    :autoslides: False
 
-Materials in support of homework assignments in the Python Dev Accelerator
+********************************
+401 Python: Homework Assignments
+********************************
 
+.. slide:: Code Samples
+    :level: 1
+
+    This document contains no slides.
 
 .. toctree::
-    :maxdepth: 2
+   :maxdepth: 2
+   :glob:
 
-    day01/index
-    day02/index
-    day03/index
-    day04/index
-    day06/index
-    day11/index
-    day12/index
-    day13/index
+   ./*
