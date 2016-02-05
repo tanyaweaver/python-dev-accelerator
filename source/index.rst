@@ -1,65 +1,17 @@
-**********************
-Python Dev Accelerator
-**********************
+.. slideconf::
+    :autoslides: False
+
+***********************
+Code Fellows 401 Python
+***********************
+
+.. slide:: Code Fellows 401 Python
+    :level: 1
+
+    This document contains no slides.
 
 The materials in this documentation support the Python Dev Accelerator program
 at Code Fellows in Seattle, WA.
-
-
-In This Course
-==============
-
-.. ifslides::
-
-    +----------------------+-----------------------+--------------------+
-    | Lectures:            | Assignments:          | Readings:          |
-    +======================+=======================+====================+
-    |                      |                       |                    |
-    | .. toctree::         | .. toctree::          | .. toctree::       |
-    |     :maxdepth: 3     |     :maxdepth: 3      |     :maxdepth: 3   |
-    |                      |                       |                    |
-    |     lectures/index   |     assignments/index |     readings/index |
-    |                      |                       |                    |
-    +----------------------+-----------------------+--------------------+
-
-.. ifnotslides::
-
-    Lectures
-    --------
-    
-    .. toctree::
-        :maxdepth: 3
-
-        lectures/index
-
-    Assignments
-    -----------
-
-    .. toctree::
-        :maxdepth: 3
-
-        assignments/index
-
-    Readings
-    --------
-
-    .. toctree::
-        :maxdepth: 3
-
-        readings/index
-
-    Code Examples
-    -------------
-
-    Sample code used or referenced during classroom lectures.
-
-    * :download:`Day 3: Pytest Fixtures Demo <downloads/pytest.tgz>`
-    * :download:`Day 6: Lettuce Demo <downloads/fizzbuzz.tgz>`
-    * :download:`Day 6: In-class socket exercises <downloads/socket_exercises.py>`
-    * :download:`Day 9: Concurrency examples for the echo server <downloads/echo_server_sync.tgz>`
-    * :download:`Day 12: BDD Tests for the Learning Journal <downloads/learning_lettuce.tgz>`
-    * :download:`Day 12: Updated apartment scraper script with JSON craigslist search <downloads/scraper.py>`
-    * :download:`Day 22: Skeleton script, test data, and training data for Sentiment Analysis Data <downloads/student_sentiment.tar.gz>`
 
 Overview
 ========
@@ -267,3 +219,27 @@ constituents of Code Fellows, when and where ever those individuals are
 conducting Code Fellows business or participating in Code Fellows classes,
 events, or activities, shall maintain an environment free of discrimination,
 including harassment, bullying, or retaliation.
+
+Course Schedule
+===============
+
+To find the assignments, readings, lecture notes and other materials for a
+given day, please select the day from the list below.
+
+.. toctree::
+    :maxdepth: 3
+
+    Weekly Schedule <schedule/index>
+
+All Course materials
+====================
+
+Direct links to all course materials, without reference to schedule
+
+.. toctree::
+    :maxdepth: 3
+
+    Lecture Notes <lectures/index>
+    Assignments <assignments/index>
+    Readings <readings/index>
+    Sample Code <downloads/index>

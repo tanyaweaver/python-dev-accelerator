@@ -1,8 +1,0 @@
-***************
-Day 02 Readings
-***************
-
-.. toctree::
-   :maxdepth: 2
-
-   jinja2_walkthrough

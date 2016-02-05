@@ -1,13 +1,9 @@
-********
-Readings
-********
-
-Readings to help explain some of the concepts in class
-
+***************
+Day 03 Readings
+***************
 
 .. toctree::
-    :maxdepth: 2
+   :maxdepth: 2
+   :glob:
 
-    day01/index
-    day02/index
-    day03/index
+   ./*
