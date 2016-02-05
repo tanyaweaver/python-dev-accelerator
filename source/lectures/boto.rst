@@ -374,35 +374,8 @@ You can use that DNS name to ssh into the running instance.
         RSA key fingerprint is 56:3e:9c:b3:75:96:4f:11:44:e9:2b:14:3a:02:f8:f2.
         Are you sure you want to continue connecting (yes/no)? yes
         Warning: Permanently added 'ec2-54-203-88-113.us-west-2.compute.amazonaws.com,54.203.88.113' (RSA) to the list of known hosts.
-        Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.2.0-58-virtual x86_64)
-
-         * Documentation:  https://help.ubuntu.com/
-
-          System information as of Sat Feb 15 06:20:44 UTC 2014
-
-          System load:  0.0               Processes:           58
-          Usage of /:   11.1% of 7.87GB   Users logged in:     0
-          Memory usage: 8%                IP address for eth0: 10.235.47.92
-          Swap usage:   0%
-
-          Graph this data and manage this system at:
-            https://landscape.canonical.com/
-
-          Get cloud support with Ubuntu Advantage Cloud Guest:
-            http://www.ubuntu.com/business/services/cloud
-
-        0 packages can be updated.
-        0 updates are security updates.
-
-
-        The programs included with the Ubuntu system are free software;
-        the exact distribution terms for each program are described in the
-        individual files in /usr/share/doc/*/copyright.
-
-        Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
-        applicable law.
-
-        To run a command as administrator (user "root"), use "sudo <command>".
+        ...
+        (user "root"), use "sudo <command>".
         See "man sudo_root" for details.
 
         ubuntu@ip-10-235-47-92:~$

@@ -32,14 +32,6 @@ Environments
         TERM_PROGRAM=iTerm.app
         ...
 
-    It's there in Windows too:
-
-    .. code-block:: posh
-
-        C:\> set
-        ALLUSERSPROFILE=C:\ProgramData
-        ...
-
 Changing Your Environment
 -------------------------
 
@@ -50,14 +42,6 @@ This can be manipulated. In a ``bash`` shell we can do this:
     $ export VARIABLE='some value'
     $ echo $VARIABLE
     some value
-
-And in Windows as well:
-
-.. code-block:: posh
-
-    C:\Users\Administrator\> set VARIABLE='some value'
-    C:\Users\Administrator\> echo %VARIABLE%
-    'some value'
 
 .. nextslide::
 
@@ -73,22 +57,13 @@ In \*nix:
     ...
     VARIABLE=some value
 
-Or Windows:
-
-.. code-block:: posh
-
-    C:\> set
-    ALLUSERSPROFILE=C:\ProgramData
-    ...
-    VARIABLE='some value'
-
 
 Environment in Python
 ---------------------
 
 From within Python, the same *environment* can be seen:
 
-.. code-block:: python
+.. code-block:: pycon
 
     $ python
     ...
@@ -101,7 +76,7 @@ From within Python, the same *environment* can be seen:
 
 And of course, from within Python you can alter os environment values:
 
-.. code-block:: python
+.. code-block:: pycon
 
     >>> os.environ['VARIABLE'] = 'new_value'
     >>> print os.environ['VARIABLE']
