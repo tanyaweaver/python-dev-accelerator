@@ -15,4 +15,4 @@ sample code.
 
 
 * :download:`WSGI Book Application Database <bookdb.py>`
-* :download:`Socket Programming exercise code <scraper.py>`
+* :download:`Socket Programming exercise code <socket_exercises.py>`

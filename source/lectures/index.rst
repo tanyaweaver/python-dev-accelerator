@@ -1,19 +1,17 @@
-******************
-Classroom Lectures
-******************
+.. slideconf::
+    :autoslides: False
 
-Materials presented in class during the Python Dev Accelerator
+*************************
+401 Python: Lecture Notes
+*************************
+
+.. slide:: Code Samples
+    :level: 1
+
+    This document contains no slides.
 
 .. toctree::
-    :maxdepth: 1
+   :maxdepth: 2
+   :glob:
 
-    day01/index
-    day02/index
-    day06/index
-    day07/index
-    day09/index
-    day11/index
-    day12/index
-    day13/index
-    day14/index
-    day21/index
+   ./*
