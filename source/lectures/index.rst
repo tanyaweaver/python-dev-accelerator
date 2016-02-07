@@ -10,6 +10,8 @@
 
     This document contains no slides.
 
+A comprehensive list of lectures for the Code Fellows Python 401 course.
+
 .. toctree::
    :maxdepth: 2
    :glob:

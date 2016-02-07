@@ -5,7 +5,7 @@
 Pimp Your Editor
 ****************
 
-.. slide:: Code Samples
+.. slide:: Pimp Your Editor
     :level: 1
 
     This document contains no slides.
