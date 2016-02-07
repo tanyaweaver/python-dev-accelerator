@@ -1,47 +1,62 @@
 **********************************
-CodeFellows Python Dev Accelerator
+CodeFellows Python 401 Course Docs
 **********************************
 
-Find here the lectures, assignments and code for the Code Fellows Python Dev
-Accelerator program.
+Find here the lectures, assignments and code for the Code Fellows 401 Python
+course.
 
 
 Building the Documentation
 ==========================
 
-Create a virtual environment in which to build the documentation:
+Begin by cloning this repository to your local machine:
 
 .. code-block:: bash
 
-    $ mkvirtualenv cf-pyda
-    (cf-pyda)$
-
-Clone the repository:
-
-.. code-block:: bash
-
-    (cf-pyda)$ git clone https://github.com/codefellows/python-dev-accelerator.git
+    $ git clone https://github.com/codefellows/python-dev-accelerator.git
 
 Change directories into the cloned repository:
 
 .. code-block:: bash
 
-    (cf-pyda)$ cd python-dev-accelerator
+    $ cd python-dev-accelerator
 
-Install the required dependencies:
+This documentation will build either in a Python 2.7 or a Python 3.4+
+environment. For best results, you will want to create a virtualenv in which to
+install the requirements.
+
+If you are using Python 2.7, then install `virtualenv`_.  If you are using
+Python 3.4 or greater, then the `venv`_ module should come pre-installed in
+Python.
+
+Once you have virtualenv ready to use, you can set up a virtualenv in which to
+build the documentation (using Python 2.7):
 
 .. code-block:: bash
 
-    (cf-pyda)$ pip install -r requirements.txt
+    $ virtualenv ./
 
-Also install the `hidden_code_block`_ sphinx extension (used to hide sample
-code in walk-through assignments):
-
-.. _hidden_code_block: http://scopatz.github.io/hiddencode/
+or with Python 3.4+
 
 .. code-block:: bash
 
-    (cf-pyda)$ wget -P $VIRTUAL_ENV/lib/python2.7/site-packages/ https://raw.githubusercontent.com/scopatz/hiddencode/master/hidden_code_block.py
+    $ python3 -m venv ./
+
+.. _venv: https://docs.python.org/3/library/venv.html
+.. _virtualenv: https://virtualenv.readthedocs.org/en/latest/
+
+Once you have a virtualenv installed, activate it.
+
+.. code-block:: bash
+
+    $ . bin/activate
+    (python-dev-accelerator)$
+
+Now, you can install the required dependencies:
+
+.. code-block:: bash
+
+    (python-dev-accelerator)$ pip install -r requirements.pip
 
 Once this is complete, you should be able to build the documentation using the
 Makefile:
@@ -55,6 +70,9 @@ License
 
 Copyright 2014 Cris Ewing.
 
+Documentation
+-------------
+
 The documentation in this work is licensed under the Creative Commons
 Attribution-ShareAlike 4.0 International License. To view a copy of this
 license, visit http://creativecommons.org/licenses/by-sa/4.0/ or send a letter
@@ -63,6 +81,9 @@ to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California,
 
 A copy of this license in text format is included in this package under the
 ``docs`` directory
+
+Code Examples
+-------------
 
 Code in this work is licensed under the MIT License.  A copy of this license in
 text format is included in this package under the ``docs`` directory.
