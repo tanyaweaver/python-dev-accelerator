@@ -63,12 +63,12 @@ Makefile:
 
 .. code-block:: bash
 
-    (cf-pyda)$ make html slides
+    (python-dev-accelerator)$ make html slides
 
 License
 =======
 
-Copyright 2014 Cris Ewing.
+Copyright 2014-2016 Cris Ewing.
 
 Documentation
 -------------
