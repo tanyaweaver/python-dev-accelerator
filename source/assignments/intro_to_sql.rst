@@ -14,8 +14,8 @@ Tasks
 =====
 
 Our next project will involve the creation of an SQL database.  Read
-Introduction To SQL (Links to an external site.) to get familiar with the
-basics of SQL.
+`Introduction To SQL <../readings/basic_sql>`_ to get familiar with the basics
+of SQL.
 
 At the end of the reading there are a few steps you will need to take to
 prepare for the next class session.
