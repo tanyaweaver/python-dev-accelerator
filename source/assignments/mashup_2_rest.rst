@@ -1,11 +1,11 @@
 .. slideconf::
     :autoslides: False
 
-*********************************************
-Mashup Part 1: Scraping Data from King County
-*********************************************
+*****************************************************
+Mashup Part 2: Extending Your Mashup With Geolocation
+*****************************************************
 
-.. slide:: Learning Journal, Final Submission
+.. slide:: Mashup Part 2: Extending Your Mashup With Geolocation
     :level: 1
 
     This document contains no slides.
