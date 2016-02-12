@@ -23,7 +23,7 @@ data from Google.
 
 Start by making a new branch in your basic_scraper repository, "step2".
 
-Follow `this tutorial <tutorials/rest>`_ to accomplish the task.
+Follow :doc:`this tutorial <tutorials/rest>` to accomplish the task.
 
 Note that there are stretch goals at the end of the tutorial.  Try to
 accomplish as many of them as you can in a reasonable amount of time.  There is
