@@ -80,7 +80,7 @@ div.body {
     background-color: #ffffff;
     color: #3E4349;
     padding: 0 30px 30px 30px;
-    font-size: 1em;
+    font-size: 14px;
     border: 2px solid #ddd;
     border-right-style: none;
     overflow: auto;
@@ -109,7 +109,7 @@ div.footer a:hover {
 div.related {
     line-height: 30px;
     color: #373839;
-    font-size: 0.8em;
+    font-size: 11px;
     background-color: #eee;
 }
  
@@ -122,8 +122,8 @@ div.related ul {
 }
  
 div.sphinxsidebar {
-    font-size: 0.75em;
-    line-height: 1.5em;
+    font-size: 12px;
+    line-height: 20px;
 }
 
 div.sphinxsidebarwrapper{
@@ -134,7 +134,7 @@ div.sphinxsidebar h3,
 div.sphinxsidebar h4 {
     font-family: "Neuton", sans-serif;
     color: #373839;
-    font-size: 1.4em;
+    font-size: 20px;
     font-weight: normal;
     margin: 0;
     padding: 5px 10px;
@@ -142,7 +142,7 @@ div.sphinxsidebar h4 {
 }
 
 div.sphinxsidebar h4{
-    font-size: 1.3em;
+    font-size: 18px;
 }
  
 div.sphinxsidebar h3 a {
