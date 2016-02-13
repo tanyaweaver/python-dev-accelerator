@@ -13,8 +13,9 @@ Concurrency In Python
     We've been working for a few days now on writing servers and clients in
     Python.
 
-    To do so, we've made extensive use of the ``socket`` library and the
-    interface it provides to low-level network I/O primitives.
+    To do so, we've made extensive use of the :mod:`socket <python2:socket>`
+    (:py:mod:`py3 <socket>`) library and the interface it provides to low-level
+    network I/O primitives.
 
     There's a problem with the code we've been writing, however. It is
     ``blocking``.
