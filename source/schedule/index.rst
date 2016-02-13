@@ -14,7 +14,7 @@ Python 401 consists of 10 weeks of intensive instruction, readings and
 exercises in Python web programming.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    week01/index
    week02/index
