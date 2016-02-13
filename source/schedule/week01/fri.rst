@@ -9,3 +9,8 @@ Friday
     :level: 1
 
     This document contains no slides.
+
+
+Assignments
+===========
+

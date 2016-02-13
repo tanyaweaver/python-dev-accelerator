@@ -5,7 +5,7 @@
 Week One
 ********
 
-.. slide:: Course Presentations
+.. slide:: Week One
     :level: 1
 
     This document contains no slides.
