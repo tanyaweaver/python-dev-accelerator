@@ -195,6 +195,13 @@ p.sidebar-title {
     font-weight: bold;
 }
 
+div.sphinxsidebarwrapper h4 {
+    display: none;
+}
+div.sphinxsidebarwrapper p.topless {
+    display: none;
+}
+
 /* -- body styles ----------------------------------------------------------- */
  
 a, a .pre {
