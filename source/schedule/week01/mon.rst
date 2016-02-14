@@ -15,7 +15,7 @@ Objectives
 
 * Have working installs of Python 2.7 and 3.5
 * Install and understand virtualenv
-* Build a basic understanding of Python Syntax
+* Ensure a basic common understanding of Python Syntax
 * Establish a common editor setup with linting and syntax highlighting
 
 Readings
@@ -42,5 +42,5 @@ Demo
 Assignments
 ===========
 
-* :doc:`Pimp Your Editor </assignments/pimp_your_editor>`
-* Break These Functions
+* :doc:`/assignments/pimp_your_editor   `
+* :doc:`/assignments/break_these_funcs`

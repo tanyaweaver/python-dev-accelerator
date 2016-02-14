@@ -1900,10 +1900,10 @@ There are several exceptions that you are likely to see a lot of:
   a value.
 * ``TypeError``: indicates that you have tried to use the wrong kind of object for
   an operation.
-* ``SyntaxError``: indicates that you have mis-typed something.
 * ``AttributeError``: indicates that you have tried to access an attribute or
   method that an object does not have (this often means you have a different
   type of object than you expect)
+* ``SyntaxError``: indicates that you have mis-typed something.
 
 .. slide:: Exceptions
     :level: 3
