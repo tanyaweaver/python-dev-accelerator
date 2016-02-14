@@ -26,7 +26,7 @@ Our application will need some data.  I've got a simple database that we can
 use all set up.
 
 The database (with a very simple api)
-:download:`can be found here <../downloads/bookdb.py>`. Copy that code and
+:download:`can be found here </downloads/bookdb.py>`. Copy that code and
 paste it into a file in your bookapp project folder.  Keep the same name
 (``bookdb.py``).
 
