@@ -16,7 +16,7 @@ Now it's time to make a simple application.
 Tasks
 =====
 
-Work through :doc:`the tutorial <tutorials/wsgi_book_app` to build your first truly dynamic WSGI application.
+Work through :doc:`the tutorial <tutorials/wsgi_book_app>` to build your first truly dynamic WSGI application.
 
 Submitting Your Work
 ====================

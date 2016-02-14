@@ -15,6 +15,7 @@ Objectives
 
 * Have working installs of Python 2.7 and 3.5
 * Install and understand virtualenv
+* Build a basic understanding of Python Syntax
 * Establish a common editor setup with linting and syntax highlighting
 
 Readings
@@ -28,24 +29,12 @@ No review topics today
 Concepts
 ========
 
-* Which version of Python
+.. toctree::
+   :maxdepth: 2
 
-    - Why we teach Python 2
-    - How we support Python 3
-
-* Differences between Python 2 and 3
-
-    - unicode vs. bytes
-    - print statement
-    - True division vs. Floored division
-
-* Sandboxing
-
-    - Why do we need sandboxes?
-    - How do we make them?
-    - How do we manage them?
-
-* Basic Python Syntax
+   /lectures/which_python
+   /lectures/virtualenv
+   /lectures/intro_to_python_1
 
 
 Demo
@@ -54,3 +43,5 @@ Demo
 Assignments
 ===========
 
+* :doc:`Pimp Your Editor </assignments/pimp_your_editor>`
+* Break These Functions
