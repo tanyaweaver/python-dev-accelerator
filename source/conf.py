@@ -274,9 +274,14 @@ extensions += [
     'hieroglyph',
 ]
 
-slide_title = 'Python Dev Accelerator'
-slide_theme = 'slides2'
+# TODO: open bug report with hieroglyph plus pr that fixes the documentation
+# for this.  Current docs suggest that html_theme_path is the setting needed,
+# but it is not.
+slide_theme_path = ['_themes']
+slide_title = "Python 401"
+slide_theme = 'cf_slides2'
 slide_levels = 3
+slide_numbers = True
 
 # Place custom static assets in the _static directory and uncomment
 # the following lines to include them
