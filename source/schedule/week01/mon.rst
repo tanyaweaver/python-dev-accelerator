@@ -32,7 +32,6 @@ Concepts
 .. toctree::
    :maxdepth: 2
 
-   /lectures/which_python
    /lectures/virtualenv
    /lectures/intro_to_python_1
 

@@ -238,8 +238,8 @@ The change in handling strings that are bytes versus those that are unicode.
 The change in the behavior of the division operators: ``/`` and ``//``.
 The change of ``print`` from a statement to a function.
 
-We'll talk about each of these in turn as we learn the basics of Python syntax today.
-There are other differences, and we'll talk about them as they come up.
+We will see each of these in action today, though we will not talk deeply about them.
+There are other differences, and we'll cover about them as they come up.
 
 .. slide:: 2 vs. 3
     :level: 3
@@ -2332,3 +2332,186 @@ Each value is *bound* to a *parameter* symbol inside the function and used.
 
             In [23]: fun(3, 4, 5)
             3 4 5 12
+
+Saving Your Code
+================
+
+Working in the Python interpreter (or in iPython) is a great way to learn the basic syntax of Python interactively.
+But in order to do your homework for tonight, you'll need to be able to save your code.
+For this, we need to talk briefly about python modules.
+We'll cover just enough to get you going, and return for more tomorrow.
+
+In Python, to a first approximation, a ``module`` is a text file that contains python code and ends with the file extension ``.py``
+You write statements and expressions in this file, and then you can run the file to execute those statements and expressions.
+
+Let's try this out.
+
+A Simple Module
+---------------
+
+Quit iPython and create a new file in your current working directory.
+Call it ``my_first_module.py``.
+
+.. code-block:: bash
+
+    (day1)$ touch my_first_module.py
+
+.. slide:: Saving Code
+    :level: 3
+
+    Save your code in Python ``modules`` in order to preserve it.
+
+    .. rst-class:: build
+    .. container::
+
+        A ``module`` is, roughly, any file that ends in ``.py``
+
+        Create a new file named ``my_first_module.py``:
+
+        .. code-block:: bash
+
+            (day1)$ touch my_first_module.py
+
+Now, open the file in your text editor and add the following code:
+
+.. code-block:: python
+
+    from __future__ import print_function
+
+
+    def message():
+        message = u'This is a message from my first Python module'
+        return message
+
+
+    print(message())
+
+.. slide:: ``my_first_module.py``
+    :level: 3
+
+    Open this new file in your text editor
+
+    .. rst-class:: build
+    .. container::
+
+        Add the following Python code:
+
+        .. code-block:: python
+
+            from __future__ import print_function
+
+
+            def message():
+                message = u'This is a message from my first Python module'
+                return message
+
+
+            print(message())
+
+        Save the file
+
+Save the changes you've made to this file.
+This is now a very simple Python module.
+The next step is to run the file.
+
+The first way we should learn is to execute the file using Python itself.
+We can do that from the command line, like so:
+
+.. code-block:: bash
+
+    (day1)$ python my_first_module.py
+    This is a message from my first Python module
+
+Notice that the final line of the file executed, and that we can see the results because it printed something.
+When we ran that file, each line of code in the file was evaluated, starting at the top.
+We can accomplish the same thing from inside iPython.
+Start it back up:
+
+.. code-block:: bash
+
+    (day1)$ ipython
+    Python 3.5.1 (default, Jan 18 2016, 14:50:30)
+    Type "copyright", "credits" or "license" for more information.
+
+    IPython 4.1.1 -- An enhanced Interactive Python.
+    ?         -> Introduction and overview of IPython's features.
+    %quickref -> Quick reference.
+    help      -> Python's own help system.
+    object?   -> Details about 'object', use 'object??' for extra details.
+
+.. code-block:: ipython
+
+    In [1]: run my_first_module.py
+    This is a message from my first Python module
+
+    In [2]:
+
+.. slide:: Running a Module
+    :level: 3
+
+    You can run this new file from the command line:
+
+    .. rst-class:: build
+    .. container::
+
+        .. code-block:: bash
+
+            (day1)$ python my_first_module.py
+            This is a message from my first Python module
+
+        You can also run it in iPython:
+
+        .. code-block:: ipython
+
+            In [1]: run my_first_module.py
+            This is a message from my first Python module
+
+Now, back in your editor make the following change to ``my_first_module.py``:
+
+.. code-block:: python
+
+    # update the last line:
+    print(message(), u'plus a bit more')
+
+Then, try running the code again in your iPython session
+
+.. code-block:: ipython
+
+    In [2]: run my_first_module.py
+    This is a message from my first Python module plus a bit more
+
+Notice that when you *run* code in iPython, changes to the original are automatically picked up.
+Also notice that the ``message`` function you created is now available to be used iPython.
+This will be useful as you work on your homework tonight.
+You can learn a lot more by reading the iPython documentation for `the run magic`_.
+
+.. _the run magic: https://ipython.org/ipython-doc/3/interactive/magics.html#magic-run
+
+.. slide:: ``%run`` in iPython
+    :level: 3
+
+    Update your module like so:
+
+    .. rst-class:: build
+    .. container::
+
+        .. code-block:: python
+
+            # update the last line:
+            print(message(), u'plus a bit more')
+
+        When you run it again in iPython the changes are shown:
+
+        .. code-block:: ipython
+
+            In [2]: run my_first_module.py
+            This is a message from my first Python module plus a bit more
+
+        And you can call the ``message`` function in iPython:
+
+        .. code-block:: ipython
+
+            In [5]: message()
+            Out[5]: 'This is a message from my first Python module'
+
+        Read the documentation for the iPython ``run`` magic for more.
