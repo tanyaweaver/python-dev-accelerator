@@ -10,10 +10,12 @@
 
     This document contains no slides.
 
-A comprehensive list of lectures for the Code Fellows Python 401 course.
+This is a comprehensive list of the lectures for this course.
+Lectures are often available both as HTML and as slides.
+Slides will be presented in class, but the full HTML will serve as long-form lecture notes.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :glob:
 
-   ./*
+   /lectures/*

@@ -10,10 +10,11 @@
 
     This document contains no slides.
 
-A comprehensive list of assignments for the Code Fellows Python 401 course.
+A comprehensive list of assignments.
+Not in any particular order.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :glob:
 
-   ./*
+   /assignments/*

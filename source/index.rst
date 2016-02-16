@@ -207,75 +207,89 @@ Pre-Work
 Course Schedule
 ===============
 
-Week 01
--------
+Under Construction
 
-.. include:: schedule/week01/index.rst
-    :start-line: 12
+.. Week 01
+.. -------
 
-Week 02
--------
+.. .. include:: schedule/week01/index.rst
+..     :start-line: 12
 
-.. include:: schedule/week02/index.rst
-    :start-line: 12
+.. Week 02
+.. -------
 
-Week 03
--------
+.. .. include:: schedule/week02/index.rst
+..     :start-line: 12
 
-.. include:: schedule/week03/index.rst
-    :start-line: 12
+.. Week 03
+.. -------
 
-Week 04
--------
+.. .. include:: schedule/week03/index.rst
+..     :start-line: 12
 
-.. include:: schedule/week04/index.rst
-    :start-line: 12
+.. Week 04
+.. -------
 
-Week 05
--------
+.. .. include:: schedule/week04/index.rst
+..     :start-line: 12
 
-.. include:: schedule/week05/index.rst
-    :start-line: 12
+.. Week 05
+.. -------
 
-Week 06
--------
+.. .. include:: schedule/week05/index.rst
+..     :start-line: 12
 
-.. include:: schedule/week06/index.rst
-    :start-line: 12
+.. Week 06
+.. -------
 
-Week 07
--------
+.. .. include:: schedule/week06/index.rst
+..     :start-line: 12
 
-.. include:: schedule/week07/index.rst
-    :start-line: 12
+.. Week 07
+.. -------
 
-Week 08
--------
+.. .. include:: schedule/week07/index.rst
+..     :start-line: 12
 
-.. include:: schedule/week08/index.rst
-    :start-line: 12
+.. Week 08
+.. -------
 
-Week 09
--------
+.. .. include:: schedule/week08/index.rst
+..     :start-line: 12
 
-.. include:: schedule/week09/index.rst
-    :start-line: 12
+.. Week 09
+.. -------
 
-Week 10
--------
+.. .. include:: schedule/week09/index.rst
+..     :start-line: 12
 
-.. include:: schedule/week10/index.rst
-    :start-line: 12
+.. Week 10
+.. -------
+
+.. .. include:: schedule/week10/index.rst
+..     :start-line: 12
 
 All Course materials
 ====================
 
 Direct links to all course materials, without reference to schedule
 
-.. toctree::
-    :maxdepth: 2
+Under Construction
 
-    Lecture Notes <lectures/index>
-    Assignments <assignments/index>
-    Readings <readings/index>
-    Sample Code <downloads/index>
+.. Lecture Notes
+.. -------------
+
+.. .. include:: lectures/index.rst
+..     :start-line: 12
+
+.. Assignments
+.. -----------
+
+.. .. include:: assignments/index.rst
+..     :start-line: 12
+
+.. Readings
+.. --------
+
+.. .. include:: readings/index.rst
+..     :start-line: 12
