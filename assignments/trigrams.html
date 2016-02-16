@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Kata Fourteen: Tom Swift Under Milk Wood &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="kata-fourteen-tom-swift-under-milk-wood">
+<h1>Kata Fourteen: Tom Swift Under Milk Wood<a class="headerlink" href="#kata-fourteen-tom-swift-under-milk-wood" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-kata-fourteen-tom-swift-under-milk-wood"></span><p>Adapted from <a class="reference external" href="http://codekata.com/kata/kata14-tom-swift-under-the-milkwood/">Dave Thomas&#8217;s work</a>.</p>
+<p>Trigrams can be used to mutate text into new, surreal, forms.
+But what heuristics do we apply to get a reasonable result?</p>
+<p>As a boy, one of my treats was go to the shops on a Saturday and spend part of my allowance on books; for a nine-year old, I had quite a collection of Tom Swift and Hardy Boys.
+Wouldn’t it be great to be able to create more and more of these classic books, to be able to generate a new Tom Swift adventure on demand?</p>
+<p>OK, perhaps not.
+But that won’t stop us trying.
+I coded up a quick program to generate some swash-buckling scientific adventure on demand.
+It came up with:</p>
+<div class="highlight-python"><div class="highlight"><pre>... it was in the wind that was what he thought was his companion. I
+think would be a good one and accordingly the ship their situation
+improved. Slowly so slowly that it beat the band! You’d think no one
+was a low voice. &quot;Don’t take any of the elements and the
+inventors of the little Frenchman in the enclosed car or cabin completely
+fitted up in front of the gas in the house and wringing her hands.
+&quot;I’m sure they’ll fall!&quot;
+
+She looked up at them. He dug a mass of black vapor which it had
+refused to accept any. As for Mr. Swift as if it goes too high I’ll
+warn you and you can and swallow frequently. That will make the airship was
+shooting upward again and just before the raid wouldn’t have been
+instrumental in capturing the scoundrels right out of jail.&quot;&lt;/em&gt;
+</pre></div>
+</div>
+<p>Stylistically, it’s Victor Appleton meets Dylan Thomas.
+Technically, it’s all done with <strong>trigrams</strong>.</p>
+<p>Trigram analysis is very simple.
+Look at each set of three adjacent words in a document.
+Use the first two words of the set as a key, and remember the fact that the third word followed that key.
+Once you’ve finished, you know the list of individual words that can follow each two word sequence in the document.
+For example, given the input:</p>
+<div class="highlight-python"><div class="highlight"><pre>I wish I may I wish I might
+</pre></div>
+</div>
+<p>You might generate:</p>
+<div class="highlight-python"><div class="highlight"><pre>&quot;I wish&quot; =&gt; [&quot;I&quot;, &quot;I&quot;]
+&quot;wish I&quot; =&gt; [&quot;may&quot;, &quot;might&quot;]
+&quot;may I&quot;  =&gt; [&quot;wish&quot;]
+&quot;I may&quot;  =&gt; [&quot;I&quot;]
+</pre></div>
+</div>
+<p>This says that the words &#8220;I wish&#8221; are twice followed by the word &#8220;I&#8221;, the words &#8220;wish I&#8221; are followed once by &#8220;may&#8221; and once by &#8220;might&#8221; and so on.</p>
+<p>To generate new text from this analysis, choose an arbitrary word pair as a starting point.
+Use these to look up a random next word (using the table above) and append this new word to the text so far.
+This now gives you a new word pair at the end of the text, so look up a potential next word based on these.
+Add this to the list, and so on.
+In the previous example, we could start with &#8220;I may&#8221;.
+The only possible next word is &#8220;I&#8221;, so now we have:</p>
+<div class="highlight-python"><div class="highlight"><pre>I may I
+</pre></div>
+</div>
+<p>The last two words are &#8220;may I&#8221;, so the next word is &#8220;wish&#8221;.
+We then look up &#8220;I wish&#8221;, and find our choice is constrained to another &#8220;I&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre>I may I wish I
+</pre></div>
+</div>
+<p>Now we look up &#8220;wish I&#8221;, and find we have a choice.
+Let’s choose &#8220;may&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre>I may I wish I may
+</pre></div>
+</div>
+<p>Now we’re back where we started from, with &#8220;I may.&#8221;
+Following the same sequence, but choosing &#8220;might&#8221; this time, we get:</p>
+<div class="highlight-python"><div class="highlight"><pre>I may I wish I may I wish I might
+</pre></div>
+</div>
+<p>At this point we stop, as no sequence starts &#8220;I might.&#8221;</p>
+<p>Given a short input text, the algorithm isn’t too interesting.
+Feed it a book, however, and you give it more options, so the resulting output can be surprising.</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>For this kata, try implementing a trigram algorithm that generates a couple of hundred words of text using a book-sized file as input.
+<a class="reference external" href="http://www.gutenberg.org/">Project Gutenberg</a> is a good source of online books (Tom Swift and His Airship is <a class="reference external" href="http://sailor.gutenberg.org/etext02/03tom10.txt">here</a>.)</p>
+<p>Be warned that these files have DOS line endings (carriage return followed by newline).</p>
+<p>Create a new repository called <code class="docutils literal"><span class="pre">trigrams</span></code>.
+Create a Python module <code class="docutils literal"><span class="pre">trigrams.py</span></code> in this repository which holds the code you use to implement a solution.</p>
+<p>Create a <code class="docutils literal"><span class="pre">main</span></code> function which implements the core of your algorithm.
+It should take two arguments, the path to a source file and an integer representing the number of words to generate.</p>
+<p>Try to keep your code well-factored by creating functions to execute discreet steps of the processing.
+You might have one function that processes the input into your trigram source.
+Perhaps there is another that is responsible for selecting a new word, given a pair of input words.
+Maybe there are others.</p>
+<p>Add a <code class="docutils literal"><span class="pre">tests.py</span></code> module to your code.
+For each function you write, with the exception of <code class="docutils literal"><span class="pre">main</span></code>, create one or more tests that prove it works as intended.</p>
+<p>Finally, add an <code class="docutils literal"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">'__main__':</span></code> block to your code.
+In this block, use <cite>sys.argv</cite> to get the name of a source file from the command line.
+When the <code class="docutils literal"><span class="pre">trigrams.py</span></code> module is executed as a script (<code class="docutils literal"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">trigrams.py</span> <span class="pre">some_text.txt</span> <span class="pre">200</span></code>) it should print 200 words of text to <code class="docutils literal"><span class="pre">stdout</span></code>.</p>
+<p>If you install any additional Python packages (like <code class="docutils literal"><span class="pre">pytest</span></code>) to accomplish your work, make sure you use <code class="docutils literal"><span class="pre">pip</span> <span class="pre">freeze</span></code> to create a <code class="docutils literal"><span class="pre">requirements.pip</span></code> file and include it in your repository.</p>
+<div class="section" id="resources">
+<h3>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h3>
+<p>For convenience you can download a copy of &#8220;Sherlock Holmes&#8221; <a class="reference download internal" href="../_downloads/sherlock.txt"><code class="xref download docutils literal"><span class="pre">here</span></code></a>.</p>
+<p>There is also a <a class="reference download internal" href="../_downloads/sherlock_small.txt"><code class="xref download docutils literal"><span class="pre">shorter</span> <span class="pre">copy</span></code></a> you can use for testing purposes.
+You should add this shorter version to your repository as a resource to be used for running your tests.</p>
+</div>
+<div class="section" id="objectives">
+<h3>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h3>
+<p>Kata’s are about trying something many times.
+In this one, what we’re experimenting with is not just the code, but the heuristics of processing the text.
+What do we do with punctuation?
+Paragraphs?
+Do we have to implement backtracking if we chose a next word that turns out to be a dead end?</p>
+</div>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>Submit a link to your repository with your work.</p>
+<p>In addition, run your script once at the command line and create an example output file.
+You can save this output by using the <code class="docutils literal"><span class="pre">redirect</span></code> shell operator (<code class="docutils literal"><span class="pre">&gt;</span></code>) like so:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ python trigrams.py some_book.txt <span class="m">500</span> &gt; my_submission.txt
+</pre></div>
+</div>
+<p>Upload this generated file as well.
+<strong>Do Not</strong> include this file in your repository (nor should you include any full-length book text you download to play with).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Kata Fourteen: Tom Swift Under Milk Wood</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#resources">Resources</a></li>
+<li><a class="reference internal" href="#objectives">Objectives</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

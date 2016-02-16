@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>401 Python: Lecture Notes &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Break This Function &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -56,33 +56,36 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="python-lecture-notes">
-<h1>401 Python: Lecture Notes<a class="headerlink" href="#python-lecture-notes" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-code-samples"></span><p>This is a comprehensive list of the lectures for this course.
-Lectures are often available both as HTML and as slides.
-Slides will be presented in class, but the full HTML will serve as long-form lecture notes.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="async.html">Concurrency</a></li>
-<li class="toctree-l1"><a class="reference internal" href="boto.html">Manage AWS Resources with Boto</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cgi_wsgi.html">Getting Data In</a></li>
-<li class="toctree-l1"><a class="reference internal" href="frameworks_and_wsgi.html">Introduction to Web Frameworks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="http.html">Understanding the HTTP Protocol</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_django.html">An Introduction To Django</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_python_1.html">Introduction To Python: Part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jenkins.html">Automate Tests with Travis CI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_apis.html">Extracting Data from the Web, II</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lettuce.html">Behavior Driven Development with Lettuce</a></li>
-<li class="toctree-l1"><a class="reference internal" href="protocols.html">Network Protocols in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_packages.html">Distributing Python Packages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="scraping.html">Extracting Data from the Web</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shell.html">Shell Customizations for Python Development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="simple_wsgi_deployment.html">Deploying a Simple WSGI Application on AWS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sockets.html">TCP/IP and Sockets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sql_persistence_in_python.html">SQL Persistence in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="virtualenv.html">Working with Virtualenv</a></li>
-<li class="toctree-l1"><a class="reference internal" href="which_python.html">Which Python?</a></li>
+  <div class="section" id="break-this-function">
+<h1>Break This Function<a class="headerlink" href="#break-this-function" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-break-this-function"></span><p>In class we covered, briefly, <a class="reference external" href="http://docs.python.org/2/library/exceptions.html#bltin-exceptions" title="(in Python v2.7)"><span class="xref std std-ref">Python Exceptions</span></a> (<a class="reference external" href="http://docs.python.org/3/library/exceptions.html#bltin-exceptions" title="(in Python v3.5)"><span class="xref std std-ref">py3</span></a>).
+We spoke specifically about a few exception types that you are likely to see most often:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">NameError</span></code></li>
+<li><code class="docutils literal"><span class="pre">TypeError</span></code></li>
+<li><code class="docutils literal"><span class="pre">AttributeError</span></code></li>
+<li><code class="docutils literal"><span class="pre">SyntaxError</span></code></li>
 </ul>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>Create a python module called <code class="docutils literal"><span class="pre">break_me.py</span></code>.
+In this file create three functions:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">name_error()</span></code>: when called, this function will cause a NameError</li>
+<li><code class="docutils literal"><span class="pre">type_error()</span></code>: when called, this function will cause a TypeError</li>
+<li><code class="docutils literal"><span class="pre">attribute_error()</span></code>: when called, this function will cause an AttributeError</li>
+</ul>
+<p>Then add a few other simple functions.
+Write these such that when one is called, the result will be that an exception is caused.
+However, the exception should occur at a stack depth of 4 frames.</p>
+<p>Finally, write a function that would cause a <code class="docutils literal"><span class="pre">SyntaxError</span></code>.
+Your editor, if it is properly configured, should show an indication of this problem.
+Take a screen shot showing that your editor <em>does</em> show the problem.
+Once you have taken this screenshot, you should remove this function from your file so that it will run.</p>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>Upload two files: your <code class="docutils literal"><span class="pre">break_me.py</span></code> file, and the screenshot you took of your editor.</p>
 </div>
 </div>
 
@@ -92,6 +95,15 @@ Slides will be presented in class, but the full HTML will serve as long-form lec
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Break This Function</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">

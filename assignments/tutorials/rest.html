@@ -1,0 +1,568 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Consuming Data from a RESTful Web Service &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../../index.html">
+      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="consuming-data-from-a-restful-web-service">
+<span id="rest-exercise"></span><h1>Consuming Data from a RESTful Web Service<a class="headerlink" href="#consuming-data-from-a-restful-web-service" title="Permalink to this headline">¶</a></h1>
+<p>As an example of a RESTful web service, let&#8217;s add some more information to our
+list of restaurant health inspection metadata from a previous exercise.</p>
+<p>We&#8217;ll use a common, public API provided by Google.</p>
+<p class="centered"><strong>Geocoding</strong></p>
+<div class="section" id="geocoding-with-google-apis">
+<h2>Geocoding with Google APIs<a class="headerlink" href="#geocoding-with-google-apis" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://developers.google.com/maps/documentation/geocoding">https://developers.google.com/maps/documentation/geocoding</a></p>
+<p>Open a python interpreter using your <code class="docutils literal"><span class="pre">souptests</span></code> virtualenv:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
+heffalump:souptests cewing$ python
+</pre></div>
+</div>
+<p>Then, import the <code class="docutils literal"><span class="pre">requests</span></code> library and prepare to make an HTTP request to
+the google geocoding service resource:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://maps.googleapis.com/maps/api/geocode/json&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">addr</span> <span class="o">=</span> <span class="s1">&#39;511 Boren Ave. N, Seattle, 98109&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="n">addr</span><span class="p">,</span> <span class="s1">&#39;sensor&#39;</span><span class="p">:</span> <span class="s1">&#39;false&#39;</span> <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;OK&#39;</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">{u&#39;results&#39;: [{u&#39;address_components&#39;: [{u&#39;long_name&#39;: u&#39;511&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;511&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;street_number&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;Boren Avenue North&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;Boren Ave N&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;route&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;South Lake Union&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;SLU&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;neighborhood&#39;,</span>
+<span class="go">                                                   u&#39;political&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;Seattle&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;Seattle&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;locality&#39;,</span>
+<span class="go">                                                   u&#39;political&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;King County&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;King County&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;administrative_area_level_2&#39;,</span>
+<span class="go">                                                   u&#39;political&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;Washington&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;WA&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;administrative_area_level_1&#39;,</span>
+<span class="go">                                                   u&#39;political&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;United States&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;US&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;country&#39;,</span>
+<span class="go">                                                   u&#39;political&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;98109&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;98109&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;postal_code&#39;]}],</span>
+<span class="go">               u&#39;formatted_address&#39;: u&#39;511 Boren Avenue North, Seattle, WA 98109, USA&#39;,</span>
+<span class="go">               u&#39;geometry&#39;: {u&#39;location&#39;: {u&#39;lat&#39;: 47.6235481,</span>
+<span class="go">                                           u&#39;lng&#39;: -122.336212},</span>
+<span class="go">                             u&#39;location_type&#39;: u&#39;ROOFTOP&#39;,</span>
+<span class="go">                             u&#39;viewport&#39;: {u&#39;northeast&#39;: {u&#39;lat&#39;: 47.6248970802915,</span>
+<span class="go">                                                          u&#39;lng&#39;: -122.3348630197085},</span>
+<span class="go">                                           u&#39;southwest&#39;: {u&#39;lat&#39;: 47.6221991197085,</span>
+<span class="go">                                                          u&#39;lng&#39;: -122.3375609802915}}},</span>
+<span class="go">               u&#39;types&#39;: [u&#39;street_address&#39;]}],</span>
+<span class="go"> u&#39;status&#39;: u&#39;OK&#39;}</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>You can also do the reverse, provide a location as latitude and longitude and
+receive address informatin back:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">location</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">latlng</span><span class="o">=</span><span class="s2">&quot;{lat},{lng}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">location</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;latlng&#39;</span><span class="p">:</span> <span class="n">latlng</span><span class="p">,</span> <span class="s1">&#39;sensor&#39;</span><span class="p">:</span> <span class="s1">&#39;false&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">paramters</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;OK&#39;</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">{u&#39;results&#39;: [{u&#39;address_components&#39;: [{u&#39;long_name&#39;: u&#39;511&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;511&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;street_number&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;Boren Avenue North&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;Boren Ave N&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;route&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;South Lake Union&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;SLU&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;neighborhood&#39;,</span>
+<span class="go">                                                   u&#39;political&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;Seattle&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;Seattle&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;locality&#39;,</span>
+<span class="go">                                                   u&#39;political&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;King County&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;King County&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;administrative_area_level_2&#39;,</span>
+<span class="go">                                                   u&#39;political&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;Washington&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;WA&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;administrative_area_level_1&#39;,</span>
+<span class="go">                                                   u&#39;political&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;United States&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;US&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;country&#39;,</span>
+<span class="go">                                                   u&#39;political&#39;]},</span>
+<span class="go">                                       {u&#39;long_name&#39;: u&#39;98109&#39;,</span>
+<span class="go">                                        u&#39;short_name&#39;: u&#39;98109&#39;,</span>
+<span class="go">                                        u&#39;types&#39;: [u&#39;postal_code&#39;]}],</span>
+<span class="go">               u&#39;formatted_address&#39;: u&#39;511 Boren Avenue North, Seattle, WA 98109, USA&#39;,</span>
+<span class="go">               u&#39;geometry&#39;: {u&#39;location&#39;: {u&#39;lat&#39;: 47.6235481,</span>
+<span class="go">                                           u&#39;lng&#39;: -122.336212},</span>
+<span class="go">                             u&#39;location_type&#39;: u&#39;ROOFTOP&#39;,</span>
+<span class="go">                             u&#39;viewport&#39;: {u&#39;northeast&#39;: {u&#39;lat&#39;: 47.6248970802915,</span>
+<span class="go">                                                          u&#39;lng&#39;: -122.3348630197085},</span>
+<span class="go">                                           u&#39;southwest&#39;: {u&#39;lat&#39;: 47.6221991197085,</span>
+<span class="go">                                                          u&#39;lng&#39;: -122.3375609802915}}},</span>
+<span class="go">               u&#39;types&#39;: [u&#39;street_address&#39;]},</span>
+<span class="go">              ...</span>
+<span class="go">              ],</span>
+<span class="go"> u&#39;status&#39;: u&#39;OK&#39;}</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Notice that in the response there are actually a number of results.  These are
+decreasingly specific designations for the location you provided.  The
+<code class="docutils literal"><span class="pre">types</span></code> values for each indicate the level of geographical specificity for
+each result.</p>
+<p>Using this geocoding service is nice, but who wants to properly format all
+those parameters all the time?  Moreover, do you really want to be tied only to
+google as a provider?</p>
+<p>And finally, although the data handed to us by google is <code class="docutils literal"><span class="pre">json</span></code>, if we want
+to simplify the process of mapping it, we might prefer to have <a class="reference external" href="http://geojson.org">geojson</a>
+instead.</p>
+<p>For this reason, we&#8217;re going to interact with google&#8217;s REST api through a
+wrapper library written in Python: <a class="reference external" href="http://geocoder.readthedocs.org/en/latest/">geocoder</a>.</p>
+<p>Go ahead and install this new library in your scraper project virtualenv:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
+192:souptests cewing$ pip install geocoder
+Downloading/unpacking geocoder
+  ...
+Successfully installed geocoder ratelim decorator
+Cleaning up...
+<span class="o">[</span>souptests<span class="o">]</span>
+192:souptests cewing$
+</pre></div>
+</div>
+</div>
+<div class="section" id="mashup">
+<h2>Mashup!<a class="headerlink" href="#mashup" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s create a simple mashup by combining geocoded data from google about our
+restaurant with the metadata we extracted earlier.  Then we&#8217;ll map the results.</p>
+<p>The first step will be to move the entire body of the <code class="docutils literal"><span class="pre">main</span></code> block into a
+function that generates the metadata results for our listings one at a time. We
+can then iterate over the results and geocode them individually.</p>
+<p>Go ahead and create a new function in <code class="docutils literal"><span class="pre">scraper.py</span></code>.  Call it
+<code class="docutils literal"><span class="pre">generate_results</span></code> and have it do everything the <code class="docutils literal"><span class="pre">main</span></code> block does now.
+The only difference is that it will be a <em>generator</em> function and <em>yield</em> its
+results instead of printing them.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock21'))">Peek At a Solution</a><br /><div id="hiddencodeblock21" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">generate_results</span><span class="p">(</span><span class="n">test</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Inspection_Start&#39;</span><span class="p">:</span> <span class="s1">&#39;2/1/2013&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Inspection_End&#39;</span><span class="p">:</span> <span class="s1">&#39;2/1/2015&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Zip_Code&#39;</span><span class="p">:</span> <span class="s1">&#39;98109&#39;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">test</span><span class="p">:</span>
+        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">load_inspection_page</span><span class="p">(</span><span class="s1">&#39;inspection_page.html&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">get_inspection_page</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">parse_source</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+    <span class="n">listings</span> <span class="o">=</span> <span class="n">extract_data_listings</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">extract_restaurant_metadata</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+        <span class="n">score_data</span> <span class="o">=</span> <span class="n">extract_score_data</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+        <span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">score_data</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">metadata</span>
+</pre></div>
+</div>
+</div><p>Then update the <code class="docutils literal"><span class="pre">main</span></code> block like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">generate_results</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
+        <span class="k">print</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>If you run your script now, it should behave exactly as before. But now we&#8217;re
+ready to push further.</p>
+<div class="section" id="add-geocoding">
+<h3>Add Geocoding<a class="headerlink" href="#add-geocoding" title="Permalink to this headline">¶</a></h3>
+<p>The API for geocoding with <code class="docutils literal"><span class="pre">geocoder</span></code> is the same for all providers. You give
+an address, it returns geocoded data. You provide latitude and longitude, it
+provides address data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">geocoder</span><span class="o">.</span><span class="n">google</span><span class="p">(</span><span class="o">&lt;</span><span class="n">address</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">json</span>
+<span class="go"># json result data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">geojson</span>
+<span class="go"># geojson result data</span>
+</pre></div>
+</div>
+<p>Add a new function <code class="docutils literal"><span class="pre">get_geojson</span></code> to <code class="docutils literal"><span class="pre">scraper.py</span></code>.  It will</p>
+<ul class="simple">
+<li>Take a result from our search as it&#8217;s input</li>
+<li>Get geocoding data from google using the address of the restaurant</li>
+<li>Return the geojson representation of that data</li>
+</ul>
+<p>Try to write this function on your own.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock22'))">Peek At a Solution</a><br /><div id="hiddencodeblock22" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c1"># add an import at the top</span>
+<span class="kn">import</span> <span class="nn">geocoder</span>
+
+<span class="k">def</span> <span class="nf">get_geojson</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Address&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">address</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="n">geocoded</span> <span class="o">=</span> <span class="n">geocoder</span><span class="o">.</span><span class="n">google</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">geocoded</span><span class="o">.</span><span class="n">geojson</span>
+</pre></div>
+</div>
+</div><p>You&#8217;ll need to bolt the new function into your script so that the results it
+gives are added to each listing. You&#8217;ll need to make some updates to your
+<code class="docutils literal"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code> block.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock23'))">Peek At A Solution</a><br /><div id="hiddencodeblock23" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pprint</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">generate_results</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
+        <span class="n">geo_result</span> <span class="o">=</span> <span class="n">get_geojson</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">geo_result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div><p>Give it a whirl, using the test approach so you don&#8217;t hit King County while
+trying it out:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
+192:souptests cewing$ python scraper.py <span class="nb">test</span>
+<span class="o">{</span><span class="s1">&#39;bbox&#39;</span>: <span class="o">[</span>-122.3582706802915,
+          47.6234354197085,
+          -122.3555727197085,
+          47.6261333802915<span class="o">]</span>,
+ <span class="s1">&#39;geometry&#39;</span>: <span class="o">{</span><span class="s1">&#39;coordinates&#39;</span>: <span class="o">[</span>-122.3569217, 47.6247844<span class="o">]</span>, <span class="s1">&#39;type&#39;</span>: <span class="s1">&#39;Point&#39;</span><span class="o">}</span>,
+ <span class="s1">&#39;properties&#39;</span>: <span class="o">{</span><span class="s1">&#39;accuracy&#39;</span>: <span class="s1">&#39;ROOFTOP&#39;</span>,
+                <span class="s1">&#39;address&#39;</span>: <span class="s1">&#39;601 Queen Anne Avenue North, Seattle, WA 98109, USA&#39;</span>,
+                <span class="s1">&#39;city&#39;</span>: <span class="s1">&#39;Seattle&#39;</span>,
+                <span class="s1">&#39;city_long&#39;</span>: <span class="s1">&#39;Seattle&#39;</span>,
+                <span class="s1">&#39;confidence&#39;</span>: 9,
+                <span class="s1">&#39;country&#39;</span>: <span class="s1">&#39;US&#39;</span>,
+                <span class="s1">&#39;country_long&#39;</span>: <span class="s1">&#39;United States&#39;</span>,
+                <span class="s1">&#39;county&#39;</span>: <span class="s1">&#39;King County&#39;</span>,
+                <span class="s1">&#39;encoding&#39;</span>: <span class="s1">&#39;utf-8&#39;</span>,
+                <span class="s1">&#39;housenumber&#39;</span>: <span class="s1">&#39;601&#39;</span>,
+                <span class="s1">&#39;lat&#39;</span>: 47.6247844,
+                <span class="s1">&#39;lng&#39;</span>: -122.3569217,
+                <span class="s1">&#39;location&#39;</span>: u<span class="s1">&#39;601 QUEEN ANNE AVE N Seattle, WA 98109&#39;</span>,
+                <span class="s1">&#39;neighborhood&#39;</span>: <span class="s1">&#39;Lower Queen Anne&#39;</span>,
+                <span class="s1">&#39;ok&#39;</span>: True,
+                <span class="s1">&#39;postal&#39;</span>: <span class="s1">&#39;98109&#39;</span>,
+                <span class="s1">&#39;provider&#39;</span>: <span class="s1">&#39;google&#39;</span>,
+                <span class="s1">&#39;quality&#39;</span>: u<span class="s1">&#39;street_address&#39;</span>,
+                <span class="s1">&#39;road_long&#39;</span>: <span class="s1">&#39;Queen Anne Avenue North&#39;</span>,
+                <span class="s1">&#39;state&#39;</span>: <span class="s1">&#39;WA&#39;</span>,
+                <span class="s1">&#39;state_long&#39;</span>: <span class="s1">&#39;Washington&#39;</span>,
+                <span class="s1">&#39;status&#39;</span>: <span class="s1">&#39;OK&#39;</span>,
+                <span class="s1">&#39;street&#39;</span>: <span class="s1">&#39;Queen Anne Ave N&#39;</span><span class="o">}</span>,
+ <span class="s1">&#39;type&#39;</span>: <span class="s1">&#39;Feature&#39;</span><span class="o">}</span>
+ ...
+<span class="o">[</span>souptests<span class="o">]</span>
+192:souptests cewing$
+</pre></div>
+</div>
+<p>Nifty, eh?</p>
+<p>Notice though that running the script now takes quite some time. Let&#8217;s update
+the <code class="docutils literal"><span class="pre">generate_results</span></code> function so that it accepts a second keyword argument
+that indicates the number of results to run through.  Call the parameter
+<code class="docutils literal"><span class="pre">count</span></code> and give it a sensible default value, like 10.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock24'))">Peek At a Solution</a><br /><div id="hiddencodeblock24" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">generate_results</span><span class="p">(</span><span class="n">test</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="c1"># ... unchanged above here</span>
+    <span class="n">listings</span> <span class="o">=</span> <span class="n">extract_data_listings</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">[:</span><span class="n">count</span><span class="p">]:</span>
+        <span class="c1"># ... unchanged below here</span>
+</pre></div>
+</div>
+</div><p>Ahhhhh.  That&#8217;s better</p>
+<p>But still, all those <code class="docutils literal"><span class="pre">properties</span></code> in the geojson, and none of them are truly
+that important to us. Let&#8217;s replace them with the metadata and inspection
+scores we build previously.</p>
+<p>Update the <code class="docutils literal"><span class="pre">get_geojson</span></code> function. This time it will:</p>
+<ul class="simple">
+<li>Build a dictionary containing only the values we want from our
+inspection record.</li>
+<li>Convert list values to strings (geojson requires this)</li>
+<li>Add only the &#8216;address&#8217; property from the existing geojson properties,
+replacing the one we have in our metadata.</li>
+<li>Replace the rest of the properties of our geojson with this new data</li>
+<li>Return the modified geojson record</li>
+</ul>
+<p>Try making these updates on your own.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock25'))">Peek At a Solution</a><br /><div id="hiddencodeblock25" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_geojson</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Address&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">address</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="n">geocoded</span> <span class="o">=</span> <span class="n">geocoder</span><span class="o">.</span><span class="n">google</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+    <span class="n">geojson</span> <span class="o">=</span> <span class="n">geocoded</span><span class="o">.</span><span class="n">geojson</span>
+    <span class="n">inspection_data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">use_keys</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s1">&#39;Business Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Average Score&#39;</span><span class="p">,</span> <span class="s1">&#39;Total Inspections&#39;</span><span class="p">,</span> <span class="s1">&#39;High Score&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Address&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">use_keys</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="n">inspection_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="n">new_address</span> <span class="o">=</span> <span class="n">geojson</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;address&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_address</span><span class="p">:</span>
+        <span class="n">inspection_data</span><span class="p">[</span><span class="s1">&#39;Address&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_address</span>
+    <span class="n">geojson</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inspection_data</span>
+    <span class="k">return</span> <span class="n">geojson</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="map-the-results">
+<h3>Map the Results<a class="headerlink" href="#map-the-results" title="Permalink to this headline">¶</a></h3>
+<p>We are now generating a series of <code class="docutils literal"><span class="pre">geojson</span></code> <em>Feature</em> objects. To map these
+objects, we&#8217;ll need to create a file which contains a <code class="docutils literal"><span class="pre">geojson</span></code>
+<em>FeatureCollection</em>.</p>
+<p>The structure of such a collection looks like this:</p>
+<div class="highlight-json"><div class="highlight"><pre>{&#39;type&#39;: &#39;FeatureCollection&#39;, &#39;features&#39;: [...]}
+</pre></div>
+</div>
+<p>Update your <code class="docutils literal"><span class="pre">main</span></code> function to append each feature to such a structure. Then
+you can dump the structure as <code class="docutils literal"><span class="pre">json</span></code> to a file. In <code class="docutils literal"><span class="pre">scraper.py</span></code> update the
+<code class="docutils literal"><span class="pre">main</span></code> block like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># add an import at the top:</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pprint</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span>
+    <span class="n">total_result</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;FeatureCollection&#39;</span><span class="p">,</span> <span class="s1">&#39;features&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">generate_results</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
+        <span class="n">geo_result</span> <span class="o">=</span> <span class="n">get_geojson</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">geo_result</span><span class="p">)</span>
+        <span class="n">total_result</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geo_result</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;my_map.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">total_result</span><span class="p">,</span> <span class="n">fh</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When you run the script not only will your results print, but the new file will
+appear in the current working directory.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
+192:souptests cewing$ python scraper.py <span class="nb">test</span>
+...
+<span class="o">[</span>souptests<span class="o">]</span>
+192:souptests cewing$ ls
+blog_list.html          my_map.json
+inspection_page.html    scraper.py
+</pre></div>
+</div>
+<p>Once the new file is written you are ready to display your results. Open your
+web browser and go to <a class="reference external" href="http://geojson.io">http://geojson.io</a>. Then drag and drop the new file you
+wrote onto the map you see there.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/geojson-io.png"><img alt="../../_images/geojson-io.png" src="../../_images/geojson-io.png" style="width: 75%;" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="going-further">
+<h2>Going Further<a class="headerlink" href="#going-further" title="Permalink to this headline">¶</a></h2>
+<p>Take a few more steps on your own to polish this mashup a bit.</p>
+<p>Begin by sorting the results of our search by the average score.</p>
+<p>Then, update your script to allow the user to choose how to sort, by
+average, high score or most inspections:</p>
+<div class="highlight-python"><div class="highlight"><pre>[souptests]
+192:souptests cewing$ python mashup.py highscore
+</pre></div>
+</div>
+<p>Next, allow the user to choose how many results to map:</p>
+<div class="highlight-python"><div class="highlight"><pre>[souptests]
+192:souptests cewing$ python mashup.py highscore 25
+</pre></div>
+</div>
+<p>Or allow them to reverse the results, showing the lowest scores first:</p>
+<div class="highlight-python"><div class="highlight"><pre>[souptests]
+192:souptests cewing$ python mashup.py highscore 25 reverse
+</pre></div>
+</div>
+<p>To simplify the passing of arguments from the command line, use the <a class="reference external" href="https://docs.python.org/2/library/argparse.html#module-argparse">argparse</a>
+module from the standard library to handle command line arguments</p>
+<p>Next, try adding a bit of information to your map by adding <code class="docutils literal"><span class="pre">marker-color</span></code> to
+the geojson properties dict. This will display a marker with the provided
+css-style color (<code class="docutils literal"><span class="pre">#FF0000</span></code>)</p>
+<p>See if you can make the color change according to the values used for the
+sorting of the list.  Either vary the intensity of the color, or the hue.</p>
+<p>Finally, if you are feeling particularly frisky, you can update your script
+to automatically open a browser window with your map loaded on
+<em>geojson.io</em>.</p>
+<p>To do this, you&#8217;ll want to read about the <a class="reference external" href="https://docs.python.org/2/library/webbrowser.html">webbrowser</a> module from the
+standard library.</p>
+<p>In addition, you&#8217;ll want to read up on using the URL parameters API for
+<em>geojson.io</em>.  Click on the <strong>help</strong> tab in the sidebar to view the
+information.</p>
+<p>You will also need to learn about how to properly quote special characters
+for a URL, using the <a class="reference external" href="https://docs.python.org/2/library/urllib.html#urllib.quote">urllib</a> <code class="docutils literal"><span class="pre">quote</span></code> function.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Consuming Data from a RESTful Web Service</a><ul>
+<li><a class="reference internal" href="#geocoding-with-google-apis">Geocoding with Google APIs</a></li>
+<li><a class="reference internal" href="#mashup">Mashup!</a><ul>
+<li><a class="reference internal" href="#add-geocoding">Add Geocoding</a></li>
+<li><a class="reference internal" href="#map-the-results">Map the Results</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#going-further">Going Further</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

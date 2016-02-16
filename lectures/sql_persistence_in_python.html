@@ -1,0 +1,603 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SQL Persistence in Python &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sql-persistence-in-python">
+<h1>SQL Persistence in Python<a class="headerlink" href="#sql-persistence-in-python" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, you&#8217;ll walk through some basic concepts of data persistence
+using the most common Python DBAPI2 connector for the PostgreSQL database,
+<code class="docutils literal"><span class="pre">pyscopg2</span></code>.</p>
+<p>This will build a very basic understanding of working with PostgreSQL in
+Python.  However you may wish to bookmark the <a class="reference external" href="http://www.postgresql.org/docs/9.3/static/index.html">postgreSQL documentation</a> and
+the <a class="reference external" href="http://initd.org/psycopg/docs/">psycopg2 documentation</a> for future reference.</p>
+<p>Begin by activating the virtualenv we created in class:</p>
+<div class="highlight-bash"><div class="highlight"><pre>heffalump:psycopg2 cewing$ workon psycopg2
+<span class="o">[</span>psycopg2<span class="o">]</span>
+heffalump:psycopg2 cewing$
+</pre></div>
+</div>
+<div class="section" id="interacting-with-the-database">
+<h2>Interacting With the Database<a class="headerlink" href="#interacting-with-the-database" title="Permalink to this headline">¶</a></h2>
+<p>Once all that is in place, we&#8217;re ready to interact with our database using
+<code class="docutils literal"><span class="pre">psycopg2</span></code>.</p>
+<div class="section" id="connections-and-cursors">
+<h3>Connections and Cursors<a class="headerlink" href="#connections-and-cursors" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;ll begin by getting connected. Connecting to any database consists of
+providing a specially-formatted string to the connector, called a <strong>DSN</strong> or
+Data Source Name.</p>
+<p>Each different type of database uses a different format for this string.  In
+PostgreSQL it is typically a set of <code class="docutils literal"><span class="pre">key=value</span></code> pairs where the keys come
+from a <a class="reference external" href="http://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-PARAMKEYWORDS">defined set of possible keys</a>.</p>
+<p>There are a lot of possible keywords, but the ones you are most likely to see
+and use are:</p>
+<ul class="simple">
+<li><strong>dbname</strong>: the name of the database in the server you want to connect with.</li>
+<li><strong>host</strong>: the hostname on which the server is listening. This can also be a
+pathname to a socket file if the system is using Unix Domain Socket
+connections.</li>
+<li><strong>port</strong>: the port number on which the server is listening. This can also be
+a socket file extension if the system is using Unix Domain Socket
+connections.</li>
+<li><strong>user</strong>: The username to use when connecting to the database. Default is the
+system name of the user who is running the connect command.</li>
+<li><strong>password</strong>: The password of the user. This is only used if the system
+requires password authentication.</li>
+</ul>
+<p>We set up our database to allow us to connect directly using <em>ident</em>
+authorization. So the only parameters we must pass are the dbname and user.</p>
+<p>Fire up an interactive Python session and get a connection:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="go">[psycopg2]</span>
+<span class="go">heffalump:psycopg2 cewing$ python</span>
+<span class="go">Python 2.7.5 (default, Aug 25 2013, 00:04:04)</span>
+<span class="go">[GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)] on darwin</span>
+<span class="go">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">psycopg2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dbname</span><span class="o">=</span><span class="s2">&quot;psycotest&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s2">&quot;cewing&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span>
+<span class="go">&lt;connection object at 0x7fafc8e005c0; dsn: &#39;user=cewing dbname=psycotest&#39;, closed: 0&gt;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>A connection represents our tie to the database. But to interact with it, we
+want to use a <em>cursor</em>:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span>
+<span class="go">&lt;cursor object at 0x10a370718; closed: 0&gt;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>The cursor is a local representation of the state of the database. You can
+execute statements on it, and see the results of those statements, but until
+you <strong>commit</strong> a transaction, the changes are not persisted to the system on
+disk.</p>
+</div>
+<div class="section" id="simple-inserts-and-selects">
+<h3>Simple Inserts and Selects<a class="headerlink" href="#simple-inserts-and-selects" title="Permalink to this headline">¶</a></h3>
+<p>Use your cursor to insert a new record into the <code class="docutils literal"><span class="pre">author</span></code> table:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">insert</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO author (name) VALUES(&#39;Iain M. Banks&#39;);&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span><span class="o">.</span><span class="n">rowcount</span>
+<span class="go">1</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Notice that we <code class="docutils literal"><span class="pre">execute</span></code> a statement using the cursor. After this is done, we
+can interrogate the cursor to find out what happened. In this case, we can
+learn that one row was inserted.</p>
+<p><strong>NOTE</strong>:</p>
+<p>Every so often, you will make an error in typing an SQL command. When you try
+to execute the statement, you&#8217;ll be informed of the error. This is nice. It&#8217;s
+important to note, though, that many kinds of errors can result in the current
+transaction with the database being &#8220;aborted&#8221;.</p>
+<p>When this happens, you&#8217;ll see error messages like this:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">psycopg2.InternalError</span>: <span class="n">current transaction is aborted, commands ignored until end of transaction block</span>
+</pre></div>
+</div>
+<p>There is nothing to fear here. You simply have to end a transaction block so
+that you can start interacting with the database again. The safest way is to
+roll back the transaction, which ensures that nothing since the last commit
+will be saved:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(more about transactions soon)</p>
+<p>We can also retrieve from the database the information we just inserted, using
+a <code class="docutils literal"><span class="pre">SELECT</span></code> statement:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT * from author;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="go">[(1, &#39;Iain M. Banks&#39;)]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>You&#8217;ll see that our select query found one row in the database.  The row is
+returned as a tuple with as many values as there are columns in the query. We
+asked for all columns (*) and so we got two.</p>
+<p>The order of the values in each tuple is dependent on the query. In this case
+we asked for all columns so we got them in the database order (id, name).</p>
+</div>
+<div class="section" id="parameterized-statements">
+<h3>Parameterized Statements<a class="headerlink" href="#parameterized-statements" title="Permalink to this headline">¶</a></h3>
+<p>Inserting static data one row at a time is tedious.</p>
+<p>We are software engineers. We can do better than that.</p>
+<p>In order to repeat a statement a number of times, with different values, we
+must use <em>parameters</em>.</p>
+<p>In DBAPI2 packages, these parameters are specialized forms of <em>placeholders</em>
+used in the strings passed to the <code class="docutils literal"><span class="pre">execute</span></code> command. Each database system
+uses its own format, but the general idea is the same. You create an SQL
+statement with placeholders where you want values to be inserted. Then you call
+the &#8216;execute&#8217; command with <em>two</em> arguments: your parameterized statement, and
+a tuple containing as many values as you have parameters.</p>
+<p>There is also an <code class="docutils literal"><span class="pre">executemany</span></code> method on a cursor object that supports
+passing an iterable of tuples. The SQL statement will be run one time for each
+tuple in the iterable:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">insert</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO author (name) VALUES(</span><span class="si">%s</span><span class="s2">);&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">authors</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;China Mieville&quot;</span><span class="p">,),</span> <span class="p">(</span><span class="s2">&quot;Frank Herbert&quot;</span><span class="p">,),</span>
+<span class="gp">... </span>           <span class="p">(</span><span class="s2">&quot;J.R.R. Tolkein&quot;</span><span class="p">,),</span> <span class="p">(</span><span class="s2">&quot;Susan Cooper&quot;</span><span class="p">,),</span>
+<span class="gp">... </span>           <span class="p">(</span><span class="s2">&quot;Madeline L&#39;Engle&quot;</span><span class="p">,),</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="n">authors</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span><span class="o">.</span><span class="n">rowcount</span>
+<span class="go">5</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>And we can read our inserted values back:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="k">print</span> <span class="n">row</span>
+<span class="gp">...</span>
+<span class="go">(1, &#39;Iain M. Banks&#39;)</span>
+<span class="go">(2, &#39;China Mieville&#39;)</span>
+<span class="go">(3, &#39;Frank Herbert&#39;)</span>
+<span class="go">(4, &#39;J.R.R. Tolkein&#39;)</span>
+<span class="go">(5, &#39;Susan Cooper&#39;)</span>
+<span class="go">(6, &quot;Madeline L&#39;Engle&quot;)</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="red-letter-warning">
+<h3>RED LETTER WARNING<a class="headerlink" href="#red-letter-warning" title="Permalink to this headline">¶</a></h3>
+<p><strong>A SUPER IMPORTANT WARNING THAT YOU MUST PAY ATTENTION TO</strong></p>
+<p>The placeholder for psycopg2 is <code class="docutils literal"><span class="pre">%s</span></code>.  This placeholder is the same
+regardless of the type of data you are passing in as your values.</p>
+<p><strong>Do Not Be Fooled</strong> into thinking that this means you can use string
+formatting to build your SQL statements:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># THIS IS BAD:</span>
+<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;INSERT INTO author (name) VALUES(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="s2">&quot;Bob Dobbins&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This syntax <strong>does not properly escape the values passed in</strong>.</p>
+<p>This syntax leaves you wide open to <strong>SQL Injection Attacks</strong>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>If I ever see you using this syntax I will personally take you out behind
+the woodshed and tan your hide.</p>
+<p class="last">I&#8217;m not kidding.</p>
+</div>
+<p>Python provides you with a syntax that is safe from the kinds of attacks that
+make you front page news.  Use it properly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;INSERT INTO author (name) VALUES(</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;Bob Dobbins&quot;</span><span class="p">,</span> <span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="transactions">
+<h3>Transactions<a class="headerlink" href="#transactions" title="Permalink to this headline">¶</a></h3>
+<p>Transactions group operations together, allowing you to verify them <em>before</em>
+the results hit the database.</p>
+<p>In the DBAPI2 specification, data-altering statements require an explicit
+<code class="docutils literal"><span class="pre">commit</span></code> unless auto-commit has been enabled.</p>
+<p>Thus far, we haven&#8217;t actually committed a transaction. If we open a second
+terminal and fire up the psql shell program, we can see that the data we&#8217;ve
+inserted is not yet <em>in</em> our database:</p>
+<div class="highlight-psql"><div class="highlight"><pre>heffalump:training.python_web cewing$ psql -d psycotest
+psql (9.3.2)
+Type &quot;help&quot; for help.
+
+psycotest=# \d
+                List of relations
+ Schema |        Name         |   Type   | Owner
+--------+---------------------+----------+--------
+ public | author              | table    | cewing
+ public | author_authorid_seq | sequence | cewing
+ public | book                | table    | cewing
+ public | book_bookid_seq     | sequence | cewing
+(4 rows)
+
+psycotest=# select * from author;
+ authorid | name
+----------+------
+(0 rows)
+
+psycotest=#
+</pre></div>
+</div>
+<p>In order for the values we&#8217;ve inserted to actually be persisted to the
+filesystem, making them available outside the cursor we have, we must commit a
+transaction.</p>
+<p>We do this using the connection object we first set up:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span>
+<span class="go">&lt;connection object at 0x7fafc8e005c0; dsn: &#39;user=cewing dbname=psycotest&#39;, closed: 0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>And now, back in <code class="docutils literal"><span class="pre">psql</span></code>, our data is finally on disk:</p>
+<div class="highlight-psql"><div class="highlight"><pre><span class="gp">psycotest=#</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">author</span><span class="p">;</span>
+<span class="go"> authorid |       name</span>
+<span class="go">----------+------------------</span>
+<span class="go">        1 | Iain M. Banks</span>
+<span class="go">        2 | China Mieville</span>
+<span class="go">        3 | Frank Herbert</span>
+<span class="go">        4 | J.R.R. Tolkein</span>
+<span class="go">        5 | Susan Cooper</span>
+<span class="go">        6 | Madeline L&#39;Engle</span>
+<span class="go">(6 rows)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="handling-errors-with-rollback">
+<h2>Handling Errors with Rollback<a class="headerlink" href="#handling-errors-with-rollback" title="Permalink to this headline">¶</a></h2>
+<p>The largest benefit of having a transactional system like this is that you can
+fix errors before they make a hash of your actual database.</p>
+<p>When you attempt to commit a transaction there are two possible outcomes:
+success or failure. If the commit succeeds, you can be sure that the changes
+you&#8217;ve made are final and complete.</p>
+<p>If the commit fails for some reason, an exception will be raised. You can then
+tell the connection to roll back the transaction. This will undo all changes
+since the last transaction commit, leaving your database in a consistent,
+well-known state.</p>
+<p>To help visualize this, let&#8217;s set up a quick exercise.</p>
+<p>First, at your psql prompt, empty the table you just filled:</p>
+<div class="highlight-psql"><div class="highlight"><pre><span class="gp">psycotest=#</span> <span class="k">delete</span> <span class="k">from</span> <span class="n">author</span><span class="p">;</span>
+<span class="go">DELETE 6</span>
+<span class="gp">psycotest=#</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">author</span><span class="p">;</span>
+<span class="go"> authorid | name</span>
+<span class="go">----------+------</span>
+<span class="go">(0 rows)</span>
+
+<span class="gp">psycotest=#</span>
+</pre></div>
+</div>
+<p>Next, create a new file in your project directory.  Call it <code class="docutils literal"><span class="pre">populatedb.py</span></code>.
+Add the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">psycopg2</span>
+
+<span class="n">DB_CONNECTION_PARAMS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;dbname&#39;</span><span class="p">:</span> <span class="s1">&#39;psycotest&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;cewing&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">AUTHOR_INSERT</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO author (name) VALUES(</span><span class="si">%s</span><span class="s2">);&quot;</span>
+<span class="n">AUTHOR_QUERY</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM author;&quot;</span>
+
+<span class="n">BOOK_INSERT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">INSERT INTO book (title, authorid) VALUES(</span><span class="si">%s</span><span class="s2">, (</span>
+<span class="s2">    SELECT author FROM author WHERE name=</span><span class="si">%s</span><span class="s2"> ));</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">BOOK_QUERY</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM book;&quot;</span>
+
+<span class="n">AUTHORS_BOOKS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;China Mieville&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Perdido Street Station&quot;</span><span class="p">,</span> <span class="s2">&quot;The Scar&quot;</span><span class="p">,</span> <span class="s2">&quot;King Rat&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;Frank Herbert&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Dune&quot;</span><span class="p">,</span> <span class="s2">&quot;Hellstrom&#39;s Hive&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;J.R.R. Tolkien&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;The Hobbit&quot;</span><span class="p">,</span> <span class="s2">&quot;The Silmarillion&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;Susan Cooper&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;The Dark is Rising&quot;</span><span class="p">,</span> <span class="s2">&quot;The Greenwitch&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;Madeline L</span><span class="se">\&#39;</span><span class="s1">Engle&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A Wrinkle in Time&quot;</span><span class="p">,</span> <span class="s2">&quot;A Swiftly Tilting Planet&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>These module-level constants will let us write a bit less code below.  We have
+a dictionary that represents the parameters we will use to connect to the
+database, a number of useful SQL statements for inserting and querying data,
+and a set of data we will use.</p>
+<p>You might see an error in the SQL above.  Leave it where it is.  We will fix it
+after demonstrating rollback.</p>
+<p>Next, add the following helper functions to <code class="docutils literal"><span class="pre">populatedb.py</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">show_query_results</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">had_rows</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+            <span class="k">print</span> <span class="n">row</span>
+            <span class="n">had_rows</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">had_rows</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s2">&quot;no rows returned&quot;</span>
+
+<span class="k">def</span> <span class="nf">show_authors</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">AUTHOR_QUERY</span>
+    <span class="n">show_query_results</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">show_books</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">BOOK_QUERY</span>
+    <span class="n">show_query_results</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">populate_db</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+        <span class="n">authors</span> <span class="o">=</span> <span class="p">([</span><span class="n">author</span><span class="p">]</span> <span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="n">AUTHORS_BOOKS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="n">AUTHOR_INSERT</span><span class="p">,</span> <span class="n">authors</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">([</span><span class="n">book</span><span class="p">,</span> <span class="n">author</span><span class="p">]</span> <span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="n">AUTHORS_BOOKS</span>
+                  <span class="k">for</span> <span class="n">book</span> <span class="ow">in</span> <span class="n">AUTHORS_BOOKS</span><span class="p">[</span><span class="n">author</span><span class="p">])</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="n">BOOK_INSERT</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">show_query_results</span></code> function is a helper that will take a &#8216;SELECT&#8217; query
+and a connection, perform the query on that connection and then print the
+results.</p>
+<p>The <code class="docutils literal"><span class="pre">show_authors</span></code> and <code class="docutils literal"><span class="pre">show_books</span></code> functions are simple one-stage wrappers
+that perform the correct query using <code class="docutils literal"><span class="pre">show_query_results</span></code>.</p>
+<p>The final function, <code class="docutils literal"><span class="pre">populate_db</span></code>, inserts authors and books into our
+database as two separate queries. Note the nested generator expression that
+provides all books by all authors for inserting into the book table. Python can
+be fun!</p>
+<p><strong>Note</strong>: The <code class="docutils literal"><span class="pre">con.cursor()</span></code> call in <code class="docutils literal"><span class="pre">show_query_results</span></code> and
+<code class="docutils literal"><span class="pre">populate_db</span></code> above is being used as a <em>context manager</em>. What this means is
+that when the block defined by the <code class="docutils literal"><span class="pre">with</span></code> statement exits, the cursor will be
+cleanly closed.</p>
+<p>Finally, in order to actually use all of this, we need a <code class="docutils literal"><span class="pre">__main__</span></code> block
+that will try to run our code and explicitly roll back in case of error.</p>
+<p>Add the following to the bottom of the <code class="docutils literal"><span class="pre">populatedb.py</span></code> file:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="n">conn1</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">DB_CONNECTION_PARAMS</span><span class="p">)</span>
+    <span class="n">conn2</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">DB_CONNECTION_PARAMS</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">populate_db</span><span class="p">(</span><span class="n">conn1</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">authors and books on conn2 before commit:&quot;</span>
+        <span class="n">show_authors</span><span class="p">(</span><span class="n">conn2</span><span class="p">)</span>
+        <span class="n">show_books</span><span class="p">(</span><span class="n">conn2</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
+        <span class="n">conn1</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">authors and books on conn2 after rollback:&quot;</span>
+        <span class="n">show_authors</span><span class="p">(</span><span class="n">conn2</span><span class="p">)</span>
+        <span class="n">show_books</span><span class="p">(</span><span class="n">conn2</span><span class="p">)</span>
+        <span class="k">raise</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">conn1</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">authors and books on conn2 after commit:&quot;</span>
+        <span class="n">show_authors</span><span class="p">(</span><span class="n">conn2</span><span class="p">)</span>
+        <span class="n">show_books</span><span class="p">(</span><span class="n">conn2</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">conn1</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>(L3-4) In this code we set up two separate connections to the database.  We
+will do our write operations using the first, and our read operations on the
+second to illustrate the effect of commit and rollback.</p>
+<p>(L5-9) First, we try to write our data to the database.  If that is
+successfull, we read the author and book tables from our second connection to
+show that before committing, the tables remain empty.</p>
+<p>(L16-20) In the case that no error occurs, we hit the <code class="docutils literal"><span class="pre">else:</span></code> block.  This
+allows us to commit our transaction on the first connection and demonstrate
+that afterward we can read our data back from the second connection.</p>
+<p>(L10-15) If an error is raised, we enter the <code class="docutils literal"><span class="pre">except</span></code> block. Here, we roll
+back our transaction, and demonstrate that after rollback no data has hit our
+database. In the end, we re-raise the exception so that our script will fail
+visibly.</p>
+<p><strong>Note</strong>: We are catching the base exception class for <em>all</em> psycopg2 database
+errors. There are a <a class="reference external" href="http://initd.org/psycopg/docs/module.html#exceptions">number of more specific errors</a> you can use to determine if
+perhaps a transaction might be retried or must be rolled back. That&#8217;s more
+involved than we need to get for this demonstration, though.</p>
+<p>(L21-23) At the last, we add a <code class="docutils literal"><span class="pre">finally</span></code> block that will happen even if
+errors occur. Here we safely close the two connections we&#8217;ve opened to our
+database so that we don&#8217;t leave them hanging when the script exits.</p>
+<p>Now that we have all that in place, let&#8217;s execute our <code class="docutils literal"><span class="pre">populateddb.py</span></code> script
+from a terminal. In your active <code class="docutils literal"><span class="pre">psycopg2</span></code> virtualenv, try the following:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>psycopg2<span class="o">]</span>
+heffalump:psycopg2 cewing$ python populatedb.py
+
+authors and books on conn2 after rollback:
+no rows returned
+no rows returned
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;populatedb.py&quot;</span>, line 64, in &lt;module&gt;
+    populate_db<span class="o">(</span>conn1<span class="o">)</span>
+  File <span class="s2">&quot;populatedb.py&quot;</span>, line 56, in populate_db
+    cur.executemany<span class="o">(</span>BOOK_INSERT, params<span class="o">)</span>
+psycopg2.ProgrammingError: column <span class="s2">&quot;authorid&quot;</span> is of <span class="nb">type</span> integer but expression is of <span class="nb">type</span> author
+LINE 2: ...TO book <span class="o">(</span>title, authorid<span class="o">)</span> VALUES<span class="o">(</span><span class="s1">&#39;Perdido Street Station&#39;</span>, <span class="o">(</span>
+                                                                      ^
+HINT:  You will need to rewrite or cast the expression.
+
+<span class="o">[</span>psycopg2<span class="o">]</span>
+heffalump:psycopg2 cewing$
+</pre></div>
+</div>
+<p>Notice first that the initial write operation worked. The error that is raised
+comes from the point in <code class="docutils literal"><span class="pre">populate_db</span></code> where we are inserting books. Despite
+this, the <code class="docutils literal"><span class="pre">conn.rollback()</span></code> in our <code class="docutils literal"><span class="pre">except</span></code> block removes <em>all</em> changes to
+the database made since the last commit. This means that when we look at the
+database with our second connection, no data is available in either table.</p>
+<p>Let&#8217;s fix our SQL error and retry the process.</p>
+<p>Edit the <code class="docutils literal"><span class="pre">BOOK_INSERT</span></code> constant at the top of our script as follows (change
+the &#8216;author&#8217; after <code class="docutils literal"><span class="pre">SELECT</span></code> in the second line to &#8216;authorid&#8217;):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">BOOK_INSERT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">INSERT INTO book (title, authorid) VALUES(</span><span class="si">%s</span><span class="s2">, (</span>
+<span class="s2">    SELECT authorid FROM author WHERE name=</span><span class="si">%s</span><span class="s2"> ));</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Now you can re-run the script and see what success looks like:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>psycopg2<span class="o">]</span>
+heffalump:psycopg2 cewing$ python populatedb.py
+
+authors and books on conn2 before commit:
+no rows returned
+no rows returned
+
+authors and books on conn2 after commit:
+<span class="o">(</span>62, <span class="s1">&#39;China Mieville&#39;</span><span class="o">)</span>
+<span class="o">(</span>63, <span class="s1">&#39;Frank Herbert&#39;</span><span class="o">)</span>
+<span class="o">(</span>64, <span class="s1">&#39;Susan Cooper&#39;</span><span class="o">)</span>
+<span class="o">(</span>65, <span class="s1">&#39;J.R.R. Tolkien&#39;</span><span class="o">)</span>
+<span class="o">(</span>66, <span class="s2">&quot;Madeline L&#39;Engle&quot;</span><span class="o">)</span>
+<span class="o">(</span>45, <span class="s1">&#39;Perdido Street Station&#39;</span>, 62<span class="o">)</span>
+<span class="o">(</span>46, <span class="s1">&#39;The Scar&#39;</span>, 62<span class="o">)</span>
+<span class="o">(</span>47, <span class="s1">&#39;King Rat&#39;</span>, 62<span class="o">)</span>
+<span class="o">(</span>48, <span class="s1">&#39;Dune&#39;</span>, 63<span class="o">)</span>
+<span class="o">(</span>49, <span class="s2">&quot;Hellstrom&#39;s Hive&quot;</span>, 63<span class="o">)</span>
+<span class="o">(</span>50, <span class="s1">&#39;The Dark is Rising&#39;</span>, 64<span class="o">)</span>
+<span class="o">(</span>51, <span class="s1">&#39;The Greenwitch&#39;</span>, 64<span class="o">)</span>
+<span class="o">(</span>52, <span class="s1">&#39;The Hobbit&#39;</span>, 65<span class="o">)</span>
+<span class="o">(</span>53, <span class="s1">&#39;The Silmarillion&#39;</span>, 65<span class="o">)</span>
+<span class="o">(</span>54, <span class="s1">&#39;A Wrinkle in Time&#39;</span>, 66<span class="o">)</span>
+<span class="o">(</span>55, <span class="s1">&#39;A Swiftly Tilting Planet&#39;</span>, 66<span class="o">)</span>
+<span class="o">[</span>psycopg2<span class="o">]</span>
+heffalump:psycopg2 cewing$
+</pre></div>
+</div>
+</div>
+<div class="section" id="wrap-up">
+<h2>Wrap-Up<a class="headerlink" href="#wrap-up" title="Permalink to this headline">¶</a></h2>
+<p>The Python DBAPI2 specification provides for a uniform interface between Python
+programs and the Relational databases they might use for persistence.</p>
+<p>In this tutorial you&#8217;ve learned a bit about the general operations of DBAPI2
+using one particular implementation, <code class="docutils literal"><span class="pre">psycopg2</span></code>.</p>
+<p>There are small variations between implementations, particularly in the arena
+of <em>placeholders</em> in parameterized SQL statments and how they should be
+formatted. But the general shape of a DB interaction should be very consistent
+from one API packge to another.</p>
+<p>Next, we&#8217;ll learn about how to use these underlying API packages through the
+lens of an Object Relational Manager, providing us with more automatic
+connections between our Python object layer and the underlying persistence
+model.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">SQL Persistence in Python</a><ul>
+<li><a class="reference internal" href="#interacting-with-the-database">Interacting With the Database</a><ul>
+<li><a class="reference internal" href="#connections-and-cursors">Connections and Cursors</a></li>
+<li><a class="reference internal" href="#simple-inserts-and-selects">Simple Inserts and Selects</a></li>
+<li><a class="reference internal" href="#parameterized-statements">Parameterized Statements</a></li>
+<li><a class="reference internal" href="#red-letter-warning">RED LETTER WARNING</a></li>
+<li><a class="reference internal" href="#transactions">Transactions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#handling-errors-with-rollback">Handling Errors with Rollback</a></li>
+<li><a class="reference internal" href="#wrap-up">Wrap-Up</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

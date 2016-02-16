@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Get an Amazon AWS Account &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="get-an-amazon-aws-account">
+<h1>Get an Amazon AWS Account<a class="headerlink" href="#get-an-amazon-aws-account" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-get-an-amazon-aws-account"></span><p>You&#8217;ve deployed one application to Heroku.  Now we&#8217;ll learn another deployment
+stack: <a class="reference external" href="http://aws.amazon.com/">Amazon Web Services</a>.</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>Please sign up for an account.</p>
+<p>To allow you a bit more freedom in your learning on AWS we&#8217;ve arranged with
+Amazon for each of you to receive AWS credits to use.  In order to receive this
+credit you&#8217;ll need to sign up for your account.  Please use the same email
+address I see on your profile here in canvas.  When you submit this assignment,
+I will send this address to Brook, who will send it to AWS for them to process
+your credits.</p>
+<p><strong>Please do pester us if your credits do not appear after a week or two</strong>.</p>
+<p>Once you&#8217;ve signed up for an account take the following actions:</p>
+<ul>
+<li><p class="first"><a class="reference external" href="http://docs.aws.amazon.com/gettingstarted/latest/wah/getting-started-prereq.html#create-an-iam-user">Create an IAM user</a>
+and <strong>place them in a group</strong> with <code class="docutils literal"><span class="pre">Power</span> <span class="pre">User</span></code> access.</p>
+<ul class="simple">
+<li>Set up Security Credentials for that IAM user.</li>
+<li>Save these Security Credentials in a safe place so you can use them for class.</li>
+</ul>
+</li>
+<li><p class="first"><a class="reference external" href="http://docs.aws.amazon.com/gettingstarted/latest/wah/getting-started-prereq.html#create-a-key-pair">Create a Keypair</a></p>
+<ul>
+<li><p class="first">Choose the &#8216;US West (Oregon)&#8217; region since it&#8217;s geographically closest to
+you.</p>
+</li>
+<li><p class="first">When you download your private key, save it to ~/.ssh/pk-aws.pem</p>
+</li>
+<li><p class="first">Make sure that the private key is secure and useable by doing the following
+command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ chmod 400 ~/.ssh/pk-aws.pem
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p class="first"><a class="reference external" href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html">Create a custom security group</a></p>
+<ul>
+<li><p class="first">The security group should be named <code class="docutils literal"><span class="pre">ssh-access</span></code></p>
+</li>
+<li><p class="first">Add one custom TCP rule:</p>
+<div class="highlight-python"><div class="highlight"><pre>allow port 22
+allow addresses 0.0.0.0/0
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+<p>Be sure to complete these actions before Monday, as you will need them in class.</p>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>To submit, tell me you&#8217;re done.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If you use an email address other than the one on your profile
+here in Canvas, please submit that email address so that we can
+process your credits</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Get an Amazon AWS Account</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

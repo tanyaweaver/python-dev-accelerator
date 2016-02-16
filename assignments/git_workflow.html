@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>401 Python: Lecture Notes &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Git Workflows &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -56,33 +56,46 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="python-lecture-notes">
-<h1>401 Python: Lecture Notes<a class="headerlink" href="#python-lecture-notes" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-code-samples"></span><p>This is a comprehensive list of the lectures for this course.
-Lectures are often available both as HTML and as slides.
-Slides will be presented in class, but the full HTML will serve as long-form lecture notes.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="async.html">Concurrency</a></li>
-<li class="toctree-l1"><a class="reference internal" href="boto.html">Manage AWS Resources with Boto</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cgi_wsgi.html">Getting Data In</a></li>
-<li class="toctree-l1"><a class="reference internal" href="frameworks_and_wsgi.html">Introduction to Web Frameworks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="http.html">Understanding the HTTP Protocol</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_django.html">An Introduction To Django</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_python_1.html">Introduction To Python: Part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jenkins.html">Automate Tests with Travis CI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_apis.html">Extracting Data from the Web, II</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lettuce.html">Behavior Driven Development with Lettuce</a></li>
-<li class="toctree-l1"><a class="reference internal" href="protocols.html">Network Protocols in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_packages.html">Distributing Python Packages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="scraping.html">Extracting Data from the Web</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shell.html">Shell Customizations for Python Development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="simple_wsgi_deployment.html">Deploying a Simple WSGI Application on AWS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sockets.html">TCP/IP and Sockets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sql_persistence_in_python.html">SQL Persistence in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="virtualenv.html">Working with Virtualenv</a></li>
-<li class="toctree-l1"><a class="reference internal" href="which_python.html">Which Python?</a></li>
+  <div class="section" id="git-workflows">
+<h1>Git Workflows<a class="headerlink" href="#git-workflows" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-git-workflows"></span><p>When you begin working collaboratively with other developers, the workflow with
+which you handle your changes becomes important.</p>
+<p>For this assignment, you&#8217;ll be sitting down with your data structures partner
+and creating a step-by-step Git workflow. The purpose of writing out a Git
+workflow is to keep yourself from making mindless mistakes, and also have a
+plan on keeping your git history and git branches neat and well-named. It may
+not seem essential with only 2 people working on a 2-file repository, but
+you&#8217;ll want it badly when you&#8217;re working with 5 people on a complex project
+during project week.</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>Begin by reading <a class="reference external" href="https://www.atlassian.com/git/tutorials/comparing-workflows/">this comparison of several git workflows</a>. Think about the
+strengths and weakness of each.  What is the purpose, the intended benefit of
+each? What sorts of work might each facilitate or make more difficult?</p>
+<p>Once you have read up on several options, come up with a git workflow you will
+use with your partner. Document this workflow, and then use it.</p>
+<p>What I&#8217;m expecting:</p>
+<ul class="simple">
+<li>Step-by-step git commands with annotation about when to do them</li>
+<li>What to name your branches so you can make sense of them later</li>
+<li>How frequently you should make commits, new branches, and pull requests to master</li>
+<li>How you plan to communicate what you have and have not yet done</li>
 </ul>
+<p>Of course, the only way this will be of any use to you is if you actually USE
+your workflow as you code and you UPDATE it if you realize there are any
+deficiencies. Trust me - this will help you if you use it!</p>
+<p>As an example, here&#8217;s a real-world git workflow from a project provided by a
+former Code Fellows student:
+<a class="reference external" href="https://docs.google.com/document/d/1AKX40p7DhzXmq-jMbashHYkDkXZZI_y1zkgobOJNeiU/edit?usp=sharing">https://docs.google.com/document/d/1AKX40p7DhzXmq-jMbashHYkDkXZZI_y1zkgobOJNeiU/edit?usp=sharing</a></p>
+<p>To clarify, Phabricator is a kanban board used by that project, and git rebase
+is a command you should avoid until you are ready for it. If you want to check
+out a kanban board, look at trello.com or waffle.io</p>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>Use the text area in the Canvas assignment to write your git workflow. If you
+want to hold on to it, you can also put it into Google Docs or some other
+public location and submit a link to Canvas.  I need to read it.</p>
 </div>
 </div>
 
@@ -92,6 +105,15 @@ Slides will be presented in class, but the full HTML will serve as long-form lec
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Git Workflows</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">

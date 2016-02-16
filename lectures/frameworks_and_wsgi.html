@@ -1,0 +1,366 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction to Web Frameworks &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction-to-web-frameworks">
+<h1>Introduction to Web Frameworks<a class="headerlink" href="#introduction-to-web-frameworks" title="Permalink to this headline">¶</a></h1>
+<div class="left container">
+<p>We&#8217;ve been at this for a couple of weeks now.  We&#8217;ve learned a great deal:</p>
+<ul class="build simple">
+<li>Sockets, the TCP/IP Stack and Basic Networking Mechanics</li>
+<li>Web Protocols and the Importance of Clear Communication</li>
+<li>APIs and Consuming Data from The Web</li>
+<li>CGI and WSGI and Getting Information to Your Dynamic Applications</li>
+<li>Building applications using a <em>framework</em></li>
+</ul>
+</div>
+<div class="section" id="frameworks">
+<h2>Frameworks<a class="headerlink" href="#frameworks" title="Permalink to this headline">¶</a></h2>
+<div class="left container">
+<p>From Wikipedia:</p>
+<blockquote>
+<div>A web application framework (WAF) is a software framework that is
+designed to support the development of dynamic websites, web
+applications and web services. The framework aims to alleviate the
+overhead associated with common activities performed in Web
+development. For example, many frameworks provide libraries for
+database access, templating frameworks and session management, and they
+often promote code reuse</div></blockquote>
+</div>
+<div class="section" id="abstraction">
+<h3>Abstraction<a class="headerlink" href="#abstraction" title="Permalink to this headline">¶</a></h3>
+<p>Great, but what does that really <em>mean</em>?</p>
+<div class="build container">
+<p>Well, it means that a <em>framework</em> is something you use to build an
+<em>application</em>.</p>
+<p>A framework allows you to build different kinds of applications.</p>
+<p>A framework abstracts what needs to be abstracted, and allows control of
+the rest.</p>
+</div>
+</div>
+<div class="section" id="appropriate-abstractions">
+<h3>Appropriate Abstractions<a class="headerlink" href="#appropriate-abstractions" title="Permalink to this headline">¶</a></h3>
+<p>Think back over the first half of class.</p>
+<div class="build container">
+<p>In particular, contrast the book db app you created using WSGI and your
+first full-scale web project.</p>
+<p>Compare the ease of routing in <code class="docutils literal"><span class="pre">Pyramid</span></code> with the way you solved the same
+problem for the book database.</p>
+<p>Think about how <em>general</em> the route system is in <code class="docutils literal"><span class="pre">Flask</span></code> and how
+<em>specific</em> your solution for the book database.</p>
+</div>
+<p>In writing a web app with WSGI, what were your pain points? Which bits do you
+wish you didn&#8217;t have to think about?</p>
+<div class="build container">
+<p>How about in the case of your Pyramid app?</p>
+<p>How about with using <code class="docutils literal"><span class="pre">psycopg2</span></code> directly?</p>
+<p>This last question is important when it comes to choosing a framework</p>
+<ul class="build simple">
+<li>abstraction ∝ 1/freedom</li>
+<li>The more they choose, the less you can</li>
+<li><em>Every</em> framework makes choices in what to abstract</li>
+<li><em>Every</em> framework makes <em>different</em> choices</li>
+</ul>
+<p>One important lesson to keep in mind: <strong>Don&#8217;t Fight the Framework</strong></p>
+</div>
+<p>There are scores of Python web frameworks (this is a partial list).</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="16%" />
+<col width="16%" />
+<col width="20%" />
+<col width="29%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Django</td>
+<td>Grok</td>
+<td>Pylons</td>
+<td>TurboGears</td>
+<td>web2py</td>
+</tr>
+<tr class="row-even"><td>Zope</td>
+<td>CubicWeb</td>
+<td>Enamel</td>
+<td>Gizmo(QP)</td>
+<td>Glashammer</td>
+</tr>
+<tr class="row-odd"><td>Karrigell</td>
+<td>Nagare</td>
+<td>notmm</td>
+<td>Porcupine</td>
+<td>QP</td>
+</tr>
+<tr class="row-even"><td>SkunkWeb</td>
+<td>Spyce</td>
+<td>Tipfy</td>
+<td>Tornado</td>
+<td>WebCore</td>
+</tr>
+<tr class="row-odd"><td>web.py</td>
+<td>Webware</td>
+<td>Werkzeug</td>
+<td>WHIFF</td>
+<td>XPRESS</td>
+</tr>
+<tr class="row-even"><td>AppWsgi</td>
+<td>Bobo</td>
+<td>Bo7le</td>
+<td>CherryPy</td>
+<td>circuits.web</td>
+</tr>
+<tr class="row-odd"><td>Paste</td>
+<td>PyWebLib</td>
+<td>WebStack</td>
+<td>Albatross</td>
+<td>Aquarium</td>
+</tr>
+<tr class="row-even"><td>Divmod</td>
+<td>Nevow</td>
+<td>Flask</td>
+<td>JOTWeb2</td>
+<td>Python Servlet</td>
+</tr>
+<tr class="row-odd"><td>Engine</td>
+<td>Pyramid</td>
+<td>Quixote</td>
+<td>Spiked</td>
+<td>weblayer</td>
+</tr>
+</tbody>
+</table>
+<ul class="build simple">
+<li>Each of them has made choices about the appropriate level of abstraction.</li>
+<li>Each has made slightly different choices.</li>
+<li>Picking the right one is an important choice.</li>
+</ul>
+</div>
+<div class="section" id="choosing-a-framework">
+<h3>Choosing a Framework<a class="headerlink" href="#choosing-a-framework" title="Permalink to this headline">¶</a></h3>
+<p>Many folks will tell you &#8220;&lt;XYZ&gt; is the <strong>best</strong> framework&#8221;.</p>
+<div class="build container">
+<p>In most cases, what they really mean is &#8220;I know how to use &lt;XYZ&gt;&#8221;</p>
+<p>In some cases, what they really mean is &#8220;&lt;XYZ&gt; fits my brain the best&#8221;</p>
+<p>What they usually forget is that everyone&#8217;s brain (and everyone&#8217;s use-case)
+is different.</p>
+</div>
+<p>Cris&#8217; First Law of Frameworks: <strong>Pick the Right Tool for the Job</strong></p>
+<dl class="build docutils">
+<dt>First Corollary:</dt>
+<dd>The right tool is the tool that allows you to finish the job quickly and
+correctly.</dd>
+<dt>Second Corollary:</dt>
+<dd>You can&#8217;t know unless you try</dd>
+</dl>
+<p>You began with the most flexible of all the frameworks, <strong>Pyramid</strong>.</p>
+<div class="build container">
+<p>Next you&#8217;ll be working with the champion of the full-stack framework class,
+<strong>Django</strong></p>
+<p>You&#8217;ll also be asked to follow a tutorial on the king of the microframework
+class, <code class="docutils literal"><span class="pre">Flask</span></code> a bit later on. <strong>Pyramid</strong></p>
+</div>
+</div>
+</div>
+<div class="section" id="frameworks-and-wsgi">
+<h2>Frameworks and WSGI<a class="headerlink" href="#frameworks-and-wsgi" title="Permalink to this headline">¶</a></h2>
+<div class="left container">
+<p>But quickly, before we move on to <code class="docutils literal"><span class="pre">Django</span></code>, a word on WSGI and web
+frameworks.</p>
+<p>Modern Python web frameworks nearly all work as <em>wsgi apps</em>.</p>
+<p>This means that like your bookdb, you can serve them using a <em>wsgi server</em>.</p>
+<p>How exactly does that work?</p>
+</div>
+<div class="section" id="django-and-wsgi">
+<h3>Django and WSGI<a class="headerlink" href="#django-and-wsgi" title="Permalink to this headline">¶</a></h3>
+<p>Running a Django site in production is no different than any other framework.
+Your site is run using a <em>wsgi server</em>, which calls the <em>wsgi application</em>
+Django builds for you. For a peek behind the curtain, open <code class="docutils literal"><span class="pre">wsgi.py</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;DJANGO_SETTINGS_MODULE&quot;</span><span class="p">,</span> <span class="s2">&quot;imager.settings&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">django.core.wsgi</span> <span class="kn">import</span> <span class="n">get_wsgi_application</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">get_wsgi_application</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Let&#8217;s follow this down a ways and see what we find.  What does
+<code class="docutils literal"><span class="pre">get_wsgi_application</span></code> look like?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_wsgi_application</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The public interface to Django&#39;s WSGI support. Should return a WSGI</span>
+<span class="sd">    callable.</span>
+
+<span class="sd">    Allows us to avoid making django.core.handlers.WSGIHandler public API, in</span>
+<span class="sd">    case the internal WSGI implementation changes or moves in the future.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">django</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">WSGIHandler</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>One level further down. Let&#8217;s review <code class="docutils literal"><span class="pre">django.core.handlers.wsgi.WSGIHandler</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">WSGIHandler</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">BaseHandler</span><span class="p">):</span>
+    <span class="n">initLock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+    <span class="n">request_class</span> <span class="o">=</span> <span class="n">WSGIRequest</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="c1"># Set up middleware if needed. We couldn&#39;t do this earlier, because</span>
+        <span class="c1"># settings weren&#39;t available.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request_middleware</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">initLock</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="c1"># Check that middleware is still uninitialized.</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request_middleware</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">load_middleware</span><span class="p">()</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="c1"># Unload whatever middleware we got</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_request_middleware</span> <span class="o">=</span> <span class="bp">None</span>
+                    <span class="k">raise</span>
+
+        <span class="n">set_script_prefix</span><span class="p">(</span><span class="n">get_script_name</span><span class="p">(</span><span class="n">environ</span><span class="p">))</span>
+        <span class="n">signals</span><span class="o">.</span><span class="n">request_started</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_class</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Bad Request (UnicodeDecodeError)&#39;</span><span class="p">,</span>
+                <span class="n">exc_info</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">(),</span>
+                <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s1">&#39;status_code&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">HttpResponseBadRequest</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+        <span class="n">response</span><span class="o">.</span><span class="n">_handler_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span>
+
+        <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">reason_phrase</span><span class="p">)</span>
+        <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">response_headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;Set-Cookie&#39;</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">))))</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="n">force_str</span><span class="p">(</span><span class="n">status</span><span class="p">),</span> <span class="n">response_headers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+<p>Given your previous experience creating WSGI apps, this should look pretty
+familiar to you.</p>
+<p>All Python web frameworks that operate under the WSGI spec will do this same
+sort of thing.</p>
+<div class="build container">
+<p>They have to do it.</p>
+<p>And these layers of abstraction allow you, the developer to focus only on
+the thing that really matters to you.</p>
+<p>Getting input from a request, and returning a response.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction to Web Frameworks</a><ul>
+<li><a class="reference internal" href="#frameworks">Frameworks</a><ul>
+<li><a class="reference internal" href="#abstraction">Abstraction</a></li>
+<li><a class="reference internal" href="#appropriate-abstractions">Appropriate Abstractions</a></li>
+<li><a class="reference internal" href="#choosing-a-framework">Choosing a Framework</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#frameworks-and-wsgi">Frameworks and WSGI</a><ul>
+<li><a class="reference internal" href="#django-and-wsgi">Django and WSGI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

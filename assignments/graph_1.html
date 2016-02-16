@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>401 Python: Lecture Notes &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Tasks &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -56,34 +56,49 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="python-lecture-notes">
-<h1>401 Python: Lecture Notes<a class="headerlink" href="#python-lecture-notes" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-code-samples"></span><p>This is a comprehensive list of the lectures for this course.
-Lectures are often available both as HTML and as slides.
-Slides will be presented in class, but the full HTML will serve as long-form lecture notes.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="async.html">Concurrency</a></li>
-<li class="toctree-l1"><a class="reference internal" href="boto.html">Manage AWS Resources with Boto</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cgi_wsgi.html">Getting Data In</a></li>
-<li class="toctree-l1"><a class="reference internal" href="frameworks_and_wsgi.html">Introduction to Web Frameworks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="http.html">Understanding the HTTP Protocol</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_django.html">An Introduction To Django</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_python_1.html">Introduction To Python: Part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jenkins.html">Automate Tests with Travis CI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_apis.html">Extracting Data from the Web, II</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lettuce.html">Behavior Driven Development with Lettuce</a></li>
-<li class="toctree-l1"><a class="reference internal" href="protocols.html">Network Protocols in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_packages.html">Distributing Python Packages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="scraping.html">Extracting Data from the Web</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shell.html">Shell Customizations for Python Development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="simple_wsgi_deployment.html">Deploying a Simple WSGI Application on AWS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sockets.html">TCP/IP and Sockets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sql_persistence_in_python.html">SQL Persistence in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="virtualenv.html">Working with Virtualenv</a></li>
-<li class="toctree-l1"><a class="reference internal" href="which_python.html">Which Python?</a></li>
+  <p>Read a bit about the <a class="reference external" href="http://en.wikipedia.org/wiki/Graph_(abstract_data_type)">Graph data structure</a>.</p>
+<div class="section" id="tasks">
+<h1>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h1>
+<p>Once you have a grasp of the basic idea, implement a simple graph (unweighted,
+directed) in Python.  You may use any of the Python primitive data types that
+are available without importing any additional libraries (str, unicode, dict,
+list, tuple).</p>
+<p>Your graph should support the following operations:</p>
+<ul class="simple">
+<li><strong>g.nodes()</strong>: return a list of all nodes in the graph</li>
+<li><strong>g.edges()</strong>: return a list of all edges in the graph</li>
+<li><strong>g.add_node(n)</strong>: adds a new node &#8216;n&#8217; to the graph</li>
+<li><strong>g.add_edge(n1, n2)</strong>: adds a new edge to the graph connecting &#8216;n1&#8217; and
+&#8216;n2&#8217;, if either n1 or n2 are not already present in the graph, they should be
+added.</li>
+<li><strong>g.del_node(n)</strong>: deletes the node &#8216;n&#8217; from the graph, raises an error if no
+such node exists</li>
+<li><strong>g.del_edge(n1, n2)</strong>: deletes the edge connecting &#8216;n1&#8217; and &#8216;n2&#8217; from the
+graph, raises an error if no such edge exists</li>
+<li><strong>g.has_node(n)</strong>: True if node &#8216;n&#8217; is contained in the graph, False if not.</li>
+<li><strong>g.neighbors(n)</strong>: returns the list of all nodes connected to &#8216;n&#8217; by edges,
+raises an error if n is not in g</li>
+<li><strong>g.adjacent(n1, n2)</strong>: returns True if there is an edge connecting n1 and
+n2, False if not, raises an error if either of the supplied nodes are not in
+g</li>
 </ul>
+<p>Begin by creating a new branch &#8220;simple_graph&#8221; in your data-structures
+repository.  For each method of your graph class (including the constructor),
+write tests first that demonstrates the functionality of that method, then
+implement the method to make the tests pass.</p>
+<p>Focus on making small, atomic commits to git with well-written and meaningful
+commit messages.</p>
+<p>Remember to update your README file with a description of this new data type as
+well as any additional sources, references or collaborations you may have used
+in completing the work.</p>
 </div>
+<div class="section" id="submitting-your-work">
+<h1>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h1>
+<p>When your work is complete and all tests are passing, push your work to github
+and issue a Pull Request to your master branch.  Submit the URL for your pull
+request.  After this is complete, you may merge your work to master.</p>
+<p>As usual, use the comments function in canvas to submit questions, comments and
+reflections on this work.</p>
 </div>
 
 
@@ -92,6 +107,12 @@ Slides will be presented in class, but the full HTML will serve as long-form lec
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">

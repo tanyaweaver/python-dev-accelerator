@@ -1,0 +1,1265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction To Python: Part 1 &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction-to-python-part-1">
+<h1>Introduction To Python: Part 1<a class="headerlink" href="#introduction-to-python-part-1" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-introduction-to-python-part-1"></span><p>In this lecture, we will establish a common understanding of Python, the language you&#8217;ll be spending the next ten weeks writing.</p>
+<div class="section" id="what-is-python">
+<h2>What is Python?<a class="headerlink" href="#what-is-python" title="Permalink to this headline">¶</a></h2>
+<p>Python is a dynamic, strongly typed, byte-compiled, interpreted language.
+But what exactly does that mean?</p>
+<span class="admonition-what-is-python"></span><div class="section" id="python-features">
+<h3>Python Features<a class="headerlink" href="#python-features" title="Permalink to this headline">¶</a></h3>
+<p>Unlike C, C++, C#, or Java, Python is <em>dynamically typed</em>.
+In this respect, it is more similar to Lisp, Perl or JavaScript.
+In dynamically typed languages there are no <em>type declarations</em>.
+One effect of this is that programs written in Python tend to be shorter and more flexible.
+Another effect is that because there is less code, there are fewer bugs to find.</p>
+<p>In addition, Python is <em>interpreted</em>.
+This means that there is no need to compile programs into executable form.
+As a result, the process of creating a program in Python is simpler.
+You can test the results of your work immediately.
+You can even work interactively, through the Python interpreter.</p>
+<span class="admonition-python-features"></span></div>
+<div class="section" id="what-s-is-dynamic-typing">
+<h3>What&#8217;s is Dynamic Typing?<a class="headerlink" href="#what-s-is-dynamic-typing" title="Permalink to this headline">¶</a></h3>
+<p>In a <em>dynamically typed</em> language, the <em>types</em> of individual values are not declared ahead of time.
+When a program is run, each value is checked for its type.
+Once its type is understood, then statements involving the value can be dispatched to appropriate functions or methods.
+An example might help to clarify what we mean.
+Here is a statement written in Python:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>Because Python is <em>dynamically typed</em>, a few questions need to be answered before this statement can be evaluated.
+First, what type of value is <code class="docutils literal"><span class="pre">a</span></code>?
+Second, what type of value is <code class="docutils literal"><span class="pre">b</span></code>?
+Finally, what does it mean to apply the <em>addition operator</em> (<code class="docutils literal"><span class="pre">+</span></code>) to these two values?</p>
+<p>There is one final aspect of a language being <em>dynamically typed</em>.
+At any time, the type of a variable might change.
+<strong>Every time</strong> an operation involving <code class="docutils literal"><span class="pre">a</span></code> or <code class="docutils literal"><span class="pre">b</span></code> occurs, these checks must happen again.</p>
+<span class="admonition-dynamic-typing"></span></div>
+<div class="section" id="what-is-strong-typing">
+<h3>What is Strong Typing?<a class="headerlink" href="#what-is-strong-typing" title="Permalink to this headline">¶</a></h3>
+<p>In a strongly typed language, <strong>everything</strong> has a type.
+The type of a thing determines what it is capable of.
+In Python, we can use the <a class="reference external" href="http://docs.python.org/2/library/functions.html#type" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">type</span></code></a> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#type" title="(in Python v3.5)"><code class="xref py py-class docutils literal"><span class="pre">py3</span></code></a>) object to learn the type of anything:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="gp">In [2]: </span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[2]: </span><span class="go">int</span>
+
+<span class="gp">In [3]: </span><span class="n">b</span> <span class="o">=</span> <span class="s1">&#39;5&#39;</span>
+
+<span class="gp">In [4]: </span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="gh">Out[4]: </span><span class="go">str</span>
+</pre></div>
+</div>
+<span class="admonition-strong-typing"></span></div>
+<div class="section" id="duck-typing">
+<h3>Duck Typing<a class="headerlink" href="#duck-typing" title="Permalink to this headline">¶</a></h3>
+<p>The combination of <em>Dynamic Typing</em> and <em>Strong Typing</em> is often referred to as <em>Duck Typing</em>.</p>
+<blockquote class="epigraph">
+<div><p>&#8220;When I see a bird that walks like a duck and swims like a duck and quacks like a duck, I call that bird a duck.&#8221;</p>
+<p class="attribution">&mdash;James Whitcomb Riley</p>
+</div></blockquote>
+<p>Basically, this means that if an object behaves in the expected way when a program is run, then that object is of the right type.</p>
+<span class="admonition-duck-typing"></span></div>
+</div>
+<div class="section" id="python-versions">
+<h2>Python Versions<a class="headerlink" href="#python-versions" title="Permalink to this headline">¶</a></h2>
+<p>There are two major versions of Python active at this time: Python 2 (currently at version 2.7.11) and Python 3 (currently at version 3.5.1).
+Python 2 can be referred to as the &#8220;classic&#8221; version of Python.
+It evolved directly from the original Python, first released publicly in 1991.</p>
+<p>Python 3 is an updated version, the first version of which was released in 2008.
+It was created because over time certain fundamental flaws had been discovered in the original design of the language.
+These flaws could not be fixed without breaking backwards compatibility.
+Guido Van Rossum, the creator of Python and &#8220;Benevolent Dictator for Life&#8221; (BDFL) determined that fixing the flaws was more important than maintaining 100% backward compatiblity.</p>
+<span class="admonition-python-versions"></span><div class="section" id="writing-compatible-code">
+<h3>Writing Compatible Code<a class="headerlink" href="#writing-compatible-code" title="Permalink to this headline">¶</a></h3>
+<p>In this class we will focus on writing code that is compatible with <em>both</em> Python 2 and Python 3.</p>
+<p>Adoption of Python 3 is growing fast.
+It is quite possible at this point to write entire projects from the start with Python 3.
+There&#8217;s even a nice service to <a class="reference external" href="https://caniusepython3.com/">check your dependencies</a> for compatibility with Python 3.</p>
+<p>However, a great preponderance of existing code in use today is written in Python 2.
+It is highly likely that you will end up employed in a company that still uses Python 2.
+If you learn how to write code that is compatible across both versions, you will be able to help contribute to breaking up the log-jam of legacy code that exists in the world.</p>
+<p>In writing compatible code, these resources will be of great use.  Please bookmark them:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://wiki.python.org/moin/PortingPythonToPy3k">https://wiki.python.org/moin/PortingPythonToPy3k</a></li>
+<li><a class="reference external" href="http://python3porting.com">http://python3porting.com</a> (particulary the chapters on modern idioms and
+supporting Python 2 and 3)</li>
+<li><a class="reference external" href="http://python-future.org/compatible_idioms.html">http://python-future.org/compatible_idioms.html</a></li>
+</ul>
+<span class="admonition-compatible-code"></span></div>
+<div class="section" id="important-differences">
+<h3>Important Differences<a class="headerlink" href="#important-differences" title="Permalink to this headline">¶</a></h3>
+<p>There are three differences between Python 2 and Python 3 that will be important from the start.
+The change in handling strings that are bytes versus those that are unicode.
+The change in the behavior of the division operators: <code class="docutils literal"><span class="pre">/</span></code> and <code class="docutils literal"><span class="pre">//</span></code>.
+The change of <code class="docutils literal"><span class="pre">print</span></code> from a statement to a function.</p>
+<p>We will see each of these in action today, though we will not talk deeply about them.
+There are other differences, and we&#8217;ll cover about them as they come up.</p>
+<span class="admonition-vs-3"></span></div>
+</div>
+<div class="section" id="introduction-to-your-environment">
+<h2>Introduction to Your Environment<a class="headerlink" href="#introduction-to-your-environment" title="Permalink to this headline">¶</a></h2>
+<p>In working with Python, you&#8217;ll need three basic tools:</p>
+<ul class="simple">
+<li>Your Command Line</li>
+<li>Your Interpreter</li>
+<li>Your Editor</li>
+</ul>
+<span class="admonition-tools-of-the-trade"></span><div class="section" id="your-command-line-cli">
+<h3>Your Command Line (cli)<a class="headerlink" href="#your-command-line-cli" title="Permalink to this headline">¶</a></h3>
+<p>Having some facility on the command line is important.
+You need to be able to move comfortably through your filesystem, create and remove files and folders, execute programs and evaluate output.
+We won&#8217;t cover this in class, so if you are not comfortable, please bone up.</p>
+<p>I suggest running through the <strong>cli</strong> tutorial at &#8220;learn code the hard way&#8221;:</p>
+<p><a class="reference external" href="http://cli.learncodethehardway.org/book">http://cli.learncodethehardway.org/book</a></p>
+<p>There are a few things you can do to make your command line a better place to work.
+You&#8217;ll do this for homework.
+More about specific enhancements later.</p>
+<span class="admonition-the-cli"></span></div>
+<div class="section" id="your-interpreter">
+<h3>Your Interpreter<a class="headerlink" href="#your-interpreter" title="Permalink to this headline">¶</a></h3>
+<p>Python comes with a built-in interpreter.
+You see it when you type <code class="docutils literal"><span class="pre">python</span></code> at the command line:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="go">$ python</span>
+<span class="go">Python 2.7.5 (default, Aug 25 2013, 00:04:04)</span>
+<span class="go">[GCC 4.2.1 Compatible Apple LLVM 5.0 (clang-500.0.68)] on darwin</span>
+<span class="go">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>That last thing you see, <code class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></code> is the &#8220;Python prompt&#8221;.
+This is where you type code.</p>
+<span class="admonition-python-interpreter"></span><p>Try it out:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s2">u&quot;hello world!&quot;</span><span class="p">)</span>
+<span class="go">hello world!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">4</span> <span class="o">+</span> <span class="mi">5</span>
+<span class="go">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">**</span> <span class="mi">8</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="go">255</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s2">u&quot;one string&quot;</span> <span class="o">+</span> <span class="s2">u&quot; plus another&quot;</span><span class="p">)</span>
+<span class="go">one string plus another</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<span class="admonition-type-some-python"></span><p>When you are in an interpreter, there are a number of tools available to you.
+There is a help system:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">help</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="go">Help on class str in module __builtin__:</span>
+
+<span class="go">class str(basestring)</span>
+<span class="go"> |  str(object=&#39;&#39;) -&gt; string</span>
+<span class="go"> |</span>
+<span class="go"> |  Return a nice string representation of the object.</span>
+<span class="go"> |  If the argument is a string, the return value is the same object.</span>
+<span class="go"> ...</span>
+</pre></div>
+</div>
+<p>You can type <code class="docutils literal"><span class="pre">q</span></code> to exit the help viewer.</p>
+<p>You can also use the <code class="docutils literal"><span class="pre">dir</span></code> builtin to find out about the attributes of a
+given object:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">bob</span> <span class="o">=</span> <span class="s2">u&quot;this is a string&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">bob</span><span class="p">)</span>
+<span class="go">[&#39;__add__&#39;, &#39;__class__&#39;, &#39;__contains__&#39;, &#39;__delattr__&#39;,</span>
+<span class="go"> &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__getattribute__&#39;,</span>
+<span class="go"> &#39;__getitem__&#39;, &#39;__getnewargs__&#39;, &#39;__getslice__&#39;, &#39;__gt__&#39;,</span>
+<span class="go"> ...</span>
+<span class="go"> &#39;rjust&#39;, &#39;rpartition&#39;, &#39;rsplit&#39;, &#39;rstrip&#39;, &#39;split&#39;, &#39;splitlines&#39;,</span>
+<span class="go"> &#39;startswith&#39;, &#39;strip&#39;, &#39;swapcase&#39;, &#39;title&#39;, &#39;translate&#39;, &#39;upper&#39;,</span>
+<span class="go"> &#39;zfill&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">help</span><span class="p">(</span><span class="n">bob</span><span class="o">.</span><span class="n">rpartition</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This allows you quite a bit of latitude in exploring what Python is.</p>
+<span class="admonition-interpreter-tools"></span><p>In addition to the built-in interpreter, there are several more advanced
+interpreters available to you.</p>
+<p>We&#8217;ll be using one in this course called <code class="docutils literal"><span class="pre">iPython</span></code></p>
+<p>More on this soon.</p>
+<span class="admonition-advanced-interpreters"></span></div>
+<div class="section" id="your-editor">
+<h3>Your Editor<a class="headerlink" href="#your-editor" title="Permalink to this headline">¶</a></h3>
+<p>Typing code in an interpreter is great for exploring.
+But for anything &#8220;real&#8221;, you&#8217;ll want to save the work you are doing in a more permanent fashion.
+This is where an Editor fits in.</p>
+<p>Any good text editor will do.
+MS Word is <strong>not</strong> a text editor.
+Nor is <em>TextEdit</em> on a Mac.
+<code class="docutils literal"><span class="pre">Notepad</span></code> is a text editor &#8211; but a crappy one.
+A text editor saves only what it shows you, with no special formatting characters hidden behind the scenes.</p>
+<span class="admonition-your-editor"></span><p>You need a real &#8220;programmers text editor&#8221;.
+This special tool supports a number of features that make writing code much easier.
+At a minimum, your editor should support:</p>
+<ul class="build simple">
+<li>Syntax Colorization</li>
+<li>Automatic Indentation</li>
+<li>Code linting (syntax and style validation)</li>
+</ul>
+<p>In addition, great features to add include:</p>
+<ul class="simple">
+<li>Tab completion</li>
+<li>Jump-to-definition</li>
+<li>Interactive follow-along for debugging</li>
+</ul>
+<span class="admonition-minimum-requirements"></span><p>There are those who have religious feelings about their editors.
+I am not one of them.
+The best tool is the one that you are happy using.
+If you already have an editor that supports these features, please use it.</p>
+<p>If you do not already have such an editor, then may I suggest <a class="reference external" href="http://www.sublimetext.com">Sublime Text</a>?
+It is written in Python, can be scripted, and has extensions for all the features you need.
+I use version 3 and am very happy with it.</p>
+</div>
+<div class="section" id="why-no-ide">
+<h3>Why No IDE?<a class="headerlink" href="#why-no-ide" title="Permalink to this headline">¶</a></h3>
+<p>I am often asked this question.
+An IDE does not give you much that you can&#8217;t get with a good editor plus a good interpreter.
+An IDE often weighs a great deal, both in memory and CPU.
+Setting up IDEs to work with different projects can be challenging and time-consuming.
+And finally, particularly when you are first learning, you don&#8217;t want too much done for you.</p>
+<p>If you currently use an IDE, then continue to do so.
+If you really really want to use one, I suggest <a class="reference external" href="https://www.jetbrains.com/pycharm/">PyCharm</a>.
+It is written for Python, is supported by a well-known company, and is very good.</p>
+<span class="admonition-no-ide"></span></div>
+<div class="section" id="introduction-to-ipython">
+<h3>Introduction to iPython<a class="headerlink" href="#introduction-to-ipython" title="Permalink to this headline">¶</a></h3>
+<p>As I said before, in this class we&#8217;ll be using the <a class="reference external" href="http://ipython.org">iPython</a> interpreter in class.
+There are a number of enhancements it offers that make it easier to work in than the built-in interpreter.
+There is extensive <a class="reference external" href="http://ipython.org/ipython-doc/stable/index.html">official documentation</a> you can read to learn everything there is to know about it.
+You may want to start by reading about <a class="reference external" href="http://ipython.org/ipython-doc/stable/interactive/index.html">Using iPython for Interactive Work</a>.
+Today, we&#8217;ll just touch the surface in order to get you started.</p>
+<span class="admonition-intro-to-ipython"></span><div class="section" id="installing-ipython">
+<h4>Installing iPython<a class="headerlink" href="#installing-ipython" title="Permalink to this headline">¶</a></h4>
+<p>Earlier this class, we installed <code class="docutils literal"><span class="pre">virtualenv</span></code> to allow us to create sandboxes to play in.
+Let&#8217;s use that pattern here, to install iPython for the purposes of this class.</p>
+<p>Begin by making a new virtualenv and then activating it:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ python3 -m venv day1
+...
+$ <span class="nb">source</span> day1/bin/activate
+<span class="o">(</span>day1<span class="o">)</span>$
+</pre></div>
+</div>
+<p>Then, we can install iPython into our new virtual environment:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>day1<span class="o">)</span>$ pip install ipython
+...
+</pre></div>
+</div>
+<span class="admonition-install-ipython"></span></div>
+<div class="section" id="the-very-basics-of-ipython">
+<h4>The very basics of iPython<a class="headerlink" href="#the-very-basics-of-ipython" title="Permalink to this headline">¶</a></h4>
+<p>Now that it is installed, go ahead and fire it up:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>day1<span class="o">)</span>$ ipython
+Python 3.5.1 <span class="o">(</span>default, Jan <span class="m">18</span> 2016, 14:50:30<span class="o">)</span>
+Type <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for</span> more information.
+
+IPython 4.1.1 -- An enhanced Interactive Python.
+?         -&gt; Introduction and overview of IPython<span class="s1">&#39;s features.</span>
+<span class="s1">%quickref -&gt; Quick reference.</span>
+<span class="s1">help      -&gt; Python&#39;</span>s own <span class="nb">help</span> system.
+object?   -&gt; Details about <span class="s1">&#39;object&#39;</span>, use <span class="s1">&#39;object??&#39;</span> <span class="k">for</span> extra details.
+
+In <span class="o">[</span>1<span class="o">]</span>:
+</pre></div>
+</div>
+<p>The iPython prompt looks quite a bit different from the standard Python interpreter prompt.
+For starters, it shows you line numbers which count up as you work.
+You can refer to these line numbers later when saving or re-running code you&#8217;ve already typed.
+In addition, it tells you if you are viewing &#8220;input&#8221; (<code class="docutils literal"><span class="pre">In</span> <span class="pre">[1]:</span></code>) or &#8220;output&#8221; (<code class="docutils literal"><span class="pre">Out[1]:</span></code>).
+This can be handy.
+More on this later.</p>
+<span class="admonition-start-ipython"></span><p>There are a few basic tricks you&#8217;ll use every day.
+The help system shows you information about any object:</p>
+<div class="highlight-python"><div class="highlight"><pre>.. code-block:: ipython
+</pre></div>
+</div>
+<blockquote>
+<div>In [2]: str?</div></blockquote>
+<p>You can use two question marks to get more detailed information.
+In some cases, this will even show you the source code for the thing you are asking about.
+If you are done with the help system, typing <code class="docutils literal"><span class="pre">q</span></code> will exit back to the iPython prompt.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [3]: </span><span class="nb">str</span><span class="o">.&lt;</span><span class="n">tab</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>You can use tab completion which works in a way very similar to that in your <code class="docutils literal"><span class="pre">cli</span></code>.
+Type a few characters of something, and use tab completion to finish it.
+If there is more than one possible match, you&#8217;ll be shown all of them.
+You can also use tab completion to explore the APIs available on objects in the interpreter.
+Type the name of an object, then a dot, and then the tab character to see all available methods and attributes.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="n">ls</span>
+</pre></div>
+</div>
+<p>Simple shell commands are available to you directly in the iPython interpreter.
+You can use these to navigate and keep track of what is around you as you work.
+With the <code class="docutils literal"><span class="pre">!</span></code> character, you can execute <em>any</em> available shell command:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="o">!</span>touch foo.py
+</pre></div>
+</div>
+<span class="admonition-basic-usage"></span><p>You can use the <code class="docutils literal"><span class="pre">paste</span></code> magic command to paste the contents of your clipboard directly into an iPython session.
+This preserves whitespace correctly, which makes it much easier to paste long code snippets without running into formatting problems.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [6]: </span><span class="o">%</span><span class="k">paste</span>
+</pre></div>
+</div>
+<p>Finally, command line recall in iPython allows you to use the up and down arrows to navigate through previous commands.
+If you type a bit, then using the up and down arrows will navigate through previous lines that started the same way.</p>
+<p>The combination of these few tricks can get you quite a long way in learning Python.
+There&#8217;s not a lot more you&#8217;ll use every day.</p>
+<span class="admonition-basic-usage"></span></div>
+</div>
+</div>
+<div class="section" id="basic-python-syntax">
+<h2>Basic Python Syntax<a class="headerlink" href="#basic-python-syntax" title="Permalink to this headline">¶</a></h2>
+<div class="center mlarge line-block">
+<div class="line">Expressions, Statements,</div>
+<div class="line">Values, Types, and Symbols</div>
+</div>
+<span class="admonition-basic-syntax"></span><div class="section" id="code-structure">
+<h3>Code structure<a class="headerlink" href="#code-structure" title="Permalink to this headline">¶</a></h3>
+<p>In python, every line is a piece of code.
+There are three basic types of lines of code: comments, expressions, and statements.</p>
+<p>Comments:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [3]: </span><span class="c1"># everything after a &#39;#&#39; is a comment</span>
+</pre></div>
+</div>
+<p>Expressions:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="c1"># evaluating an expression results in a value</span>
+
+<span class="gp">In [5]: </span><span class="mi">3</span> <span class="o">+</span> <span class="mi">4</span>
+<span class="gh">Out[5]: </span><span class="go">7</span>
+</pre></div>
+</div>
+<p>Statements:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [6]: </span><span class="c1"># statements do not return a value, may contain an expression</span>
+
+<span class="gp">In [7]: </span><span class="k">print</span><span class="p">(</span><span class="s2">u&quot;this&quot;</span><span class="p">)</span>
+<span class="go">this</span>
+
+<span class="gp">In [8]: </span><span class="n">line_count</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="gp">In [9]:</span>
+</pre></div>
+</div>
+<p>Notice how in iPython the presence of the <code class="docutils literal"><span class="pre">Out[N]:</span></code> prompt can help you to spot the difference between statements and expressions.</p>
+<span class="admonition-code-structure"></span></div>
+<div class="section" id="printing">
+<h3>Printing<a class="headerlink" href="#printing" title="Permalink to this headline">¶</a></h3>
+<p>One of the largest differences between Python 2 and Python 3 is in printing values.
+In Python 2.x, printing is a statement. In Python 3, it was changed to a function.
+In order to write code compatible across both versions, include the following statement at the top of your Python code files:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+</pre></div>
+</div>
+<p>Then you can use <code class="docutils literal"><span class="pre">print</span></code> as a function in any version of Python starting with 2.6:</p>
+<div class="highlight-iPython"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="k">print</span><span class="p">(</span><span class="s1">u&#39;this works everywhere now&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You should use this idiom in any code you write for this class.</p>
+<span class="admonition-printing"></span><p>With the print function, you can print multiple things, separated by commas:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [3]: </span><span class="k">print</span><span class="p">(</span><span class="s2">u&quot;the value is&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">the value is 5</span>
+</pre></div>
+</div>
+<p>For each call to <code class="docutils literal"><span class="pre">print</span></code>, Python automatically adds a newline.
+You can provide a different ending with <code class="docutils literal"><span class="pre">end</span></code> argument to the print function:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [12]: </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<span class="gp">   ....: </span>    <span class="k">print</span><span class="p">(</span><span class="s2">u&quot;the value is&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">   ....:</span>
+<span class="go">the value is 0</span>
+<span class="go">the value is 1</span>
+<span class="go">the value is 2</span>
+<span class="go">the value is 3</span>
+<span class="go">the value is 4</span>
+</pre></div>
+</div>
+<p>Any python object can be printed (though it might not be pretty...):</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="k">class</span> <span class="nc">Bar</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">   ...: </span>    <span class="k">pass</span>
+<span class="gp">   ...:</span>
+
+<span class="gp">In [2]: </span><span class="k">print</span><span class="p">(</span><span class="n">Bar</span><span class="p">)</span>
+<span class="go">&lt;class &#39;__main__.Bar&#39;&gt;</span>
+</pre></div>
+</div>
+<span class="admonition-print-features"></span></div>
+<div class="section" id="code-blocks">
+<h3>Code Blocks<a class="headerlink" href="#code-blocks" title="Permalink to this headline">¶</a></h3>
+<p>Python is formatted as blocks of code.
+Blocks of code are delimited by a colon and indentation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">a_function</span><span class="p">():</span>
+    <span class="n">a_new_code_block</span>
+<span class="n">end_of_the_block</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="n">do_something_bad</span><span class="p">()</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">fix_the_problem</span><span class="p">()</span>
+</pre></div>
+</div>
+<span class="admonition-code-blocks"></span><p>Python uses whitespace to delineate code structure.
+This means that in Python, whitespace is <strong>significant</strong>.
+(but <strong>ONLY</strong> for newlines and indentation)
+The standard is to indent with <strong>4 spaces</strong>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><strong>SPACES ARE NOT TABS</strong> and <strong>TABS ARE NOT SPACES</strong></p>
+</div>
+<p>These two blocks look the same:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>But when you see the whitespace characters, it turns out they are not:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+\<span class="n">s</span>\<span class="n">s</span>\<span class="n">s</span>\<span class="n">sprint</span><span class="p">(</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+\<span class="n">tprint</span><span class="p">(</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this class there is a hard and fast rule.</p>
+<p class="center"><strong>ALWAYS INDENT WITH 4 SPACES</strong>.</p>
+<p>You should set up your editor to use spaces only.
+Ideally, it should even do so when you use the &lt;tab&gt; key.</p>
+<span class="admonition-indent-with-4-spaces"></span><span class="admonition-class-rule"></span></div>
+<div class="section" id="values">
+<h3>Values<a class="headerlink" href="#values" title="Permalink to this headline">¶</a></h3>
+<p>In Python, we use the term <strong>values</strong> to refer to pieces of unnamed data.
+Like the integer <code class="docutils literal"><span class="pre">42</span></code>, or the unicode object <code class="docutils literal"><span class="pre">u'Hello</span> <span class="pre">world!'</span></code>, or this list of five integers: <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5]</span></code>.
+You can find the type of a value by passing it as an argument to the <code class="docutils literal"><span class="pre">type</span></code> object:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [21]: </span><span class="nb">type</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="gh">Out[21]: </span><span class="go">int</span>
+</pre></div>
+</div>
+<p>Python is fully object-oriented.
+In Python, every value is an object.
+You can use the <a class="reference external" href="http://docs.python.org/2/library/functions.html#dir" title="(in Python v2.7)"><code class="xref py py-func docutils literal"><span class="pre">dir</span></code></a> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#dir" title="(in Python v3.5)"><code class="xref py py-func docutils literal"><span class="pre">py3</span></code></a>) builtin to inspect the attributes and methods supported by any value.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [22]: </span><span class="nb">dir</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="gh">Out[22]:</span>
+<span class="go">[&#39;__abs__&#39;,</span>
+<span class="go"> &#39;__add__&#39;,</span>
+<span class="go"> ...</span>
+<span class="go"> &#39;real&#39;,</span>
+<span class="go"> &#39;to_bytes&#39;]</span>
+</pre></div>
+</div>
+<span class="admonition-values"></span><div class="section" id="object-literals">
+<h4>Object Literals<a class="headerlink" href="#object-literals" title="Permalink to this headline">¶</a></h4>
+<p>In Python, values of the basic types may be constructed using <em>object literals</em>.
+This is a special type of syntax that lets us create instances of these types merely by typing them.
+No need for constructor functions.</p>
+<p>For numbers you can simply type the number:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># an integer</span>
+<span class="mi">42</span>
+<span class="c1"># a floating point number</span>
+<span class="mf">3.14</span>
+</pre></div>
+</div>
+<p>For the string types, you use quotation marks to set off the characters of the string.
+Single- and double-quotes are interchangeable.
+If a string contains a quotation mark of the same type as used to contain the string, it must be escaped with a backslash (<code class="docutils literal"><span class="pre">\</span></code>).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s1">u&#39;This is a unicode string&#39;</span>
+<span class="n">b</span><span class="s2">&quot;This is a bytestring&quot;</span>
+<span class="s1">u&#39;Contained quotes of the same type</span><span class="se">\&#39;</span><span class="s1">ll require escaping&#39;</span>
+</pre></div>
+</div>
+<p>You can also define multi-line strings by enclosing the string in tripled quotation marks.
+Either single- or double-quotes may be used:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">u&#39;&#39;&#39;This is a string that covers</span>
+<span class="sd">multiple lines</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">u&quot;&quot;&quot;This string has</span>
+<span class="sd">more than one line in it as well</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>The two boolean values are, in and of themselves, object literals:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">True</span>
+<span class="bp">False</span>
+</pre></div>
+</div>
+<span class="admonition-object-literals"></span><p>There are more literals, but these will do for now.</p>
+</div>
+</div>
+<div class="section" id="using-values">
+<h3>Using Values<a class="headerlink" href="#using-values" title="Permalink to this headline">¶</a></h3>
+<p>Expressions are made of values and operators in combination.
+When the expression is <em>evaluated</em> (like when you press enter in the interpreter), it returns a new value.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [28]: </span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="gh">Out[28]: </span><span class="go">4</span>
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [29]: </span><span class="s2">u&quot;Hip &quot;</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="s2">u&quot;Hooray!&quot;</span>
+<span class="gh">Out[29]: </span><span class="go">u&quot;Hip Hip Hooray!&quot;</span>
+</pre></div>
+</div>
+<span class="admonition-using-values"></span><div class="section" id="symbols">
+<h4>Symbols<a class="headerlink" href="#symbols" title="Permalink to this headline">¶</a></h4>
+<p>Python gives names to values using <em>symbols</em>.
+There are rules about what makes a legal symbol.
+A legal symbol <strong>must</strong> begin with an underscore or a letter.
+After the first character, a legal symbol <strong>may</strong> contain any number of underscores, letters and digits.</p>
+<div class="highlight-python"><div class="highlight"><pre>this_is_a_symbol
+this_is_2
+_AsIsThis
+1butThisIsNot
+nor-is-this
+</pre></div>
+</div>
+<p>When a value has been given a name, we can refer to it by name in later lines of code.</p>
+<span class="admonition-symbols"></span></div>
+<div class="section" id="assignment">
+<h4>Assignment<a class="headerlink" href="#assignment" title="Permalink to this headline">¶</a></h4>
+<p>In Python, we never declare variables.
+Instead, we <strong>bind</strong> symbols to values using the <em>assignment operator</em> (<code class="docutils literal"><span class="pre">=</span></code>):</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [24]: </span><span class="n">the_answer</span> <span class="o">=</span> <span class="mi">42</span>
+</pre></div>
+</div>
+<p>A symbol can never exist in Python without being bound to a value.
+For this reason, Python does not have the concept of <em>undefined</em>.
+Instead, attempting to refer to a symbol that has not yet been bound to any value results in a <code class="docutils literal"><span class="pre">NameError</span></code>:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [25]: </span><span class="n">unbound</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-25-7aafa8f1cb96&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">unbound</span>
+
+<span class="ne">NameError</span>: name &#39;unbound&#39; is not defined
+</pre></div>
+</div>
+<p>Any value can be bound to one symbol, many symbols, or to no symbols.
+Values that have no symbols bound to them are <em>unreachable</em> and will be garbage collected.</p>
+<p>Binding a symbol to a value is a <em>statement</em>, not an <em>expression</em>.
+No value is returned.</p>
+<span class="admonition-assignment"></span><p>When a symbol has been bound to a value, then evaluating that symbol returns the value to which it is bound:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [26]: </span><span class="n">name</span> <span class="o">=</span> <span class="s2">u&quot;value&quot;</span>
+
+<span class="gp">In [27]: </span><span class="n">name</span>
+<span class="gh">Out[27]: </span><span class="go">u&#39;value&#39;</span>
+
+<span class="gp">In [28]: </span><span class="n">an_integer</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="gp">In [29]: </span><span class="n">an_integer</span>
+<span class="gh">Out[29]: </span><span class="go">42</span>
+
+<span class="gp">In [30]: </span><span class="n">a_float</span> <span class="o">=</span> <span class="mf">3.14</span>
+
+<span class="gp">In [31]: </span><span class="n">a_float</span>
+<span class="gh">Out[31]: </span><span class="go">3.14</span>
+</pre></div>
+</div>
+<span class="admonition-evaluating-symbols"></span><p>In Python, symbols themselves do not have any type.
+Evaluating the type of a <em>symbol</em> will return the type of the <em>value</em> to which it is bound.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [19]: </span><span class="nb">type</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="gh">Out[19]: </span><span class="go">int</span>
+
+<span class="gp">In [20]: </span><span class="nb">type</span><span class="p">(</span><span class="mf">3.14</span><span class="p">)</span>
+<span class="gh">Out[20]: </span><span class="go">float</span>
+
+<span class="gp">In [21]: </span><span class="n">a</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="gp">In [22]: </span><span class="n">b</span> <span class="o">=</span> <span class="mf">3.14</span>
+
+<span class="gp">In [23]: </span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[23]: </span><span class="go">int</span>
+
+<span class="gp">In [25]: </span><span class="n">a</span> <span class="o">=</span> <span class="n">b</span>
+
+<span class="gp">In [26]: </span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gh">Out[26]: </span><span class="go">float</span>
+</pre></div>
+</div>
+<span class="admonition-symbols-and-type"></span><p>Python supports &#8220;in-place assignment&#8221; for a number of operators.
+The in-place assignment operators are  <code class="docutils literal"><span class="pre">+=</span></code>, <code class="docutils literal"><span class="pre">-=</span></code>, <code class="docutils literal"><span class="pre">*=</span></code>, <code class="docutils literal"><span class="pre">/=</span></code>, <code class="docutils literal"><span class="pre">**=</span></code>, and <code class="docutils literal"><span class="pre">%=</span></code>.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [32]: </span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="gp">In [33]: </span><span class="n">a</span>
+<span class="gh">Out[33]: </span><span class="go">1</span>
+
+<span class="gp">In [34]: </span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="gp">In [35]: </span><span class="n">a</span>
+<span class="gh">Out[35]: </span><span class="go">2</span>
+
+<span class="gp">In [36]: </span><span class="n">a</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="gp">In [37]: </span><span class="n">a</span>
+<span class="gh">Out[37]: </span><span class="go">3</span>
+</pre></div>
+</div>
+<span class="admonition-in-place-assignment"></span><p>In Python, you can also perform <em>multiple-assignment</em>.
+This allows you to bind more than one symbol to an equal number of values simultaneously.
+Python evaluates all the expressions on the right before doing any assignments.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [48]: </span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="gp">In [49]: </span><span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="gp">In [50]: </span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="mi">3</span> <span class="o">**</span> <span class="n">y</span>
+
+<span class="gp">In [51]: </span><span class="n">i</span>
+<span class="gh">Out[51]: </span><span class="go">4</span>
+
+<span class="gp">In [52]: </span><span class="n">j</span>
+<span class="gh">Out[52]: </span><span class="go">243</span>
+</pre></div>
+</div>
+<p>Using this feature, we can perform a nifty Python trick.
+We can swap values between two symbols in a single statement:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [51]: </span><span class="n">i</span>
+<span class="gh">Out[51]: </span><span class="go">4</span>
+
+<span class="gp">In [52]: </span><span class="n">j</span>
+<span class="gh">Out[52]: </span><span class="go">243</span>
+
+<span class="gp">In [53]: </span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span>
+
+<span class="gp">In [54]: </span><span class="n">i</span>
+<span class="gh">Out[54]: </span><span class="go">243</span>
+
+<span class="gp">In [55]: </span><span class="n">j</span>
+<span class="gh">Out[55]: </span><span class="go">4</span>
+</pre></div>
+</div>
+<p>Multiple assignment and symbol swapping can be very useful in certain contexts.</p>
+<span class="admonition-multiple-assignment"></span></div>
+<div class="section" id="unbinding">
+<h4>Unbinding<a class="headerlink" href="#unbinding" title="Permalink to this headline">¶</a></h4>
+<p>You can&#8217;t actually delete any values in Python.
+So long as there is any symbol bound to a value, the value will be kept in memory.</p>
+<p>You can unbind a symbol using the <a class="reference external" href="http://docs.python.org/2/reference/simple_stmts.html#del" title="(in Python v2.7)"><code class="xref std std-keyword docutils literal"><span class="pre">del</span></code></a> (<a class="reference external" href="http://docs.python.org/3/reference/simple_stmts.html#del" title="(in Python v3.5)"><code class="xref std std-keyword docutils literal"><span class="pre">py3</span></code></a>) builtin function.
+When a symbol is unbound, it is no longer present, and attempting to evaluate it will raise a <code class="docutils literal"><span class="pre">NameError</span></code>.
+When there are no longer any references to a value, it becomes unreachable, and will be garbage collected.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [56]: </span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="gp">In [57]: </span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+
+<span class="gp">In [58]: </span><span class="k">del</span> <span class="n">a</span>
+
+<span class="gp">In [59]: </span><span class="n">a</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-59-60b725f10c9c&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">a</span>
+
+<span class="ne">NameError</span>: name &#39;a&#39; is not defined
+
+<span class="gp">In [60]: </span><span class="n">b</span>
+<span class="gh">Out[60]: </span><span class="go">5</span>
+</pre></div>
+</div>
+<span class="admonition-unbinding"></span></div>
+</div>
+<div class="section" id="identity-and-equality">
+<h3>Identity and Equality<a class="headerlink" href="#identity-and-equality" title="Permalink to this headline">¶</a></h3>
+<p>Every value in Python is an object.
+Every object is unique and has a unique <em>identity</em>, which you can inspect with  the <a class="reference external" href="http://docs.python.org/2/library/functions.html#id" title="(in Python v2.7)"><code class="xref py py-func docutils literal"><span class="pre">id</span></code></a> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#id" title="(in Python v3.5)"><code class="xref py py-func docutils literal"><span class="pre">py3</span></code></a>) builtin:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [68]: </span><span class="nb">id</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="gh">Out[68]: </span><span class="go">140553647890984</span>
+
+<span class="gp">In [69]: </span><span class="nb">id</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+<span class="gh">Out[69]: </span><span class="go">140553647884864</span>
+
+<span class="gp">In [70]: </span><span class="n">new_i</span> <span class="o">=</span> <span class="n">i</span>
+
+<span class="gp">In [71]: </span><span class="nb">id</span><span class="p">(</span><span class="n">new_i</span><span class="p">)</span>
+<span class="gh">Out[71]: </span><span class="go">140553647890984</span>
+</pre></div>
+</div>
+<p>You can find out if the values bound to two different symbols are the <strong>same object</strong> using the <a class="reference external" href="http://docs.python.org/2/reference/expressions.html#is" title="(in Python v2.7)"><code class="xref std std-keyword docutils literal"><span class="pre">is</span></code></a> (<a class="reference external" href="http://docs.python.org/3/reference/expressions.html#is" title="(in Python v3.5)"><code class="xref std std-keyword docutils literal"><span class="pre">py3</span></code></a>) keyword:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [72]: </span><span class="n">count</span> <span class="o">=</span> <span class="mi">23</span>
+
+<span class="gp">In [73]: </span><span class="n">other_count</span> <span class="o">=</span> <span class="n">count</span>
+
+<span class="gp">In [74]: </span><span class="n">count</span> <span class="ow">is</span> <span class="n">other_count</span>
+<span class="gh">Out[74]: </span><span class="go">True</span>
+
+<span class="gp">In [75]: </span><span class="n">count</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="gp">In [76]: </span><span class="n">other_count</span> <span class="ow">is</span> <span class="n">count</span>
+<span class="gh">Out[76]: </span><span class="go">False</span>
+</pre></div>
+</div>
+<span class="admonition-identity"></span><p>Equality is a different concept from identity.
+Certain types of values may be compared for equality, but not all.
+If two values mutually support it, you can test equality with the <code class="docutils literal"><span class="pre">==</span></code> operator (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#stdcomparisons" title="(in Python v2.7)"><span class="xref std std-ref">py2</span></a>) (<a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#stdcomparisons" title="(in Python v3.5)"><span class="xref std std-ref">py3</span></a>).</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [77]: </span><span class="n">val1</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">+</span> <span class="mi">30</span>
+
+<span class="gp">In [78]: </span><span class="n">val2</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">10</span>
+
+<span class="gp">In [79]: </span><span class="n">val1</span> <span class="o">==</span> <span class="n">val2</span>
+<span class="gh">Out[79]: </span><span class="go">True</span>
+
+<span class="gp">In [80]: </span><span class="n">val3</span> <span class="o">=</span> <span class="s1">u&#39;50&#39;</span>
+
+<span class="gp">In [81]: </span><span class="n">val1</span> <span class="o">==</span> <span class="n">val3</span>
+<span class="gh">Out[84]: </span><span class="go">False</span>
+</pre></div>
+</div>
+<span class="admonition-equality"></span></div>
+<div class="section" id="operators">
+<h3>Operators<a class="headerlink" href="#operators" title="Permalink to this headline">¶</a></h3>
+<p>Like other programming languages, Python uses <code class="docutils literal"><span class="pre">operators</span></code> to perform actions on values.
+Operator Precedence determines which of the possible operations in an expression will be evaluated first.
+To force statements to be evaluated out of the order set by operator precedence, use parentheses.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">4</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<span class="admonition-operators"></span><div class="section" id="python-operator-precedence">
+<h4>Python Operator Precedence<a class="headerlink" href="#python-operator-precedence" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>Parentheses and Literals:</dt>
+<dd><p class="first"><code class="docutils literal"><span class="pre">(),</span> <span class="pre">[],</span> <span class="pre">{}</span></code></p>
+<p class="last"><code class="docutils literal"><span class="pre">&quot;&quot;,</span> <span class="pre">b'',</span> <span class="pre">u''</span></code></p>
+</dd>
+<dt>Function Calls:</dt>
+<dd><code class="docutils literal"><span class="pre">f(args)</span></code></dd>
+<dt>Slicing and Subscription:</dt>
+<dd><p class="first"><code class="docutils literal"><span class="pre">a[x:y]</span></code></p>
+<p class="last"><code class="docutils literal"><span class="pre">b[0],</span> <span class="pre">c['key']</span></code></p>
+</dd>
+<dt>Attribute Reference:</dt>
+<dd><code class="docutils literal"><span class="pre">obj.attribute</span></code></dd>
+<dt>Exponentiation:</dt>
+<dd><code class="docutils literal"><span class="pre">**</span></code></dd>
+<dt>Bitwise NOT, Unary Signing:</dt>
+<dd><p class="first"><code class="docutils literal"><span class="pre">~x</span></code></p>
+<p class="last"><code class="docutils literal"><span class="pre">+x,</span> <span class="pre">-x</span></code></p>
+</dd>
+<dt>Multiplication, Division, Modulus:</dt>
+<dd><code class="docutils literal"><span class="pre">*,</span> <span class="pre">/,</span> <span class="pre">%</span></code></dd>
+<dt>Addition, Subtraction:</dt>
+<dd><code class="docutils literal"><span class="pre">+,</span> <span class="pre">-</span></code></dd>
+<dt>Bitwise operations:</dt>
+<dd><p class="first"><code class="docutils literal"><span class="pre">&lt;&lt;,</span> <span class="pre">&gt;&gt;,</span></code></p>
+<p class="last"><code class="docutils literal"><span class="pre">&amp;,</span> <span class="pre">^,</span> <span class="pre">|</span></code></p>
+</dd>
+<dt>Comparisons:</dt>
+<dd><code class="docutils literal"><span class="pre">&lt;,</span> <span class="pre">&lt;=,</span> <span class="pre">&gt;,</span> <span class="pre">&gt;=,</span> <span class="pre">!=,</span> <span class="pre">==</span></code></dd>
+<dt>Membership and Identity:</dt>
+<dd><code class="docutils literal"><span class="pre">in,</span> <span class="pre">not</span> <span class="pre">in,</span> <span class="pre">is,</span> <span class="pre">is</span> <span class="pre">not</span></code></dd>
+<dt>Boolean operations:</dt>
+<dd><code class="docutils literal"><span class="pre">or,</span> <span class="pre">and,</span> <span class="pre">not</span></code></dd>
+<dt>Anonymous Functions:</dt>
+<dd><code class="docutils literal"><span class="pre">lambda</span></code></dd>
+</dl>
+<span class="admonition-operator-precedence"></span><span class="admonition-operator-precedence"></span><span class="admonition-operator-precedence"></span></div>
+</div>
+<div class="section" id="keywords">
+<h3>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h3>
+<p>Python defines a number of <code class="docutils literal"><span class="pre">keywords</span></code>.
+These are language constructs.
+You <em>cannot</em> use these words as symbols.</p>
+<div class="highlight-python"><div class="highlight"><pre>and       del       from      not       while
+as        elif      global    or        with
+assert    else      if        pass      yield
+break     except    import    print
+class     exec      in        raise
+continue  finally   is        return
+def       for       lambda    try
+</pre></div>
+</div>
+<p>If you try to use any of the keywords as symbols, you will cause a
+<code class="docutils literal"><span class="pre">SyntaxError</span></code>:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [13]: </span><span class="k">del</span> <span class="o">=</span> <span class="s2">u&quot;this will raise an error&quot;</span>
+<span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-13-c816927c2fb8&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
+    <span class="k">del</span> <span class="o">=</span> <span class="s2">u&quot;this will raise an error&quot;</span>
+        <span class="o">^</span>
+<span class="ne">SyntaxError</span>: invalid syntax
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [14]: </span><span class="k">def</span> <span class="nf">a_function</span><span class="p">(</span><span class="k">else</span><span class="o">=</span><span class="s1">u&#39;something&#39;</span><span class="p">):</span>
+<span class="gp">   ....: </span>    <span class="k">print</span><span class="p">(</span><span class="k">else</span><span class="p">)</span>
+<span class="gp">   ....:</span>
+<span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-14-1dbbea504a9e&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
+    <span class="k">def</span> <span class="nf">a_function</span><span class="p">(</span><span class="k">else</span><span class="o">=</span><span class="s1">u&#39;something&#39;</span><span class="p">):</span>
+                      <span class="o">^</span>
+<span class="ne">SyntaxError</span>: invalid syntax
+</pre></div>
+</div>
+<span class="admonition-keywords"></span></div>
+<div class="section" id="builtins">
+<h3>Builtins<a class="headerlink" href="#builtins" title="Permalink to this headline">¶</a></h3>
+<p>Python also has a number of pre-bound symbols, called <strong>builtins</strong>.
+They are loaded in a namespace called <code class="docutils literal"><span class="pre">__builtins__</span></code>.
+You can see them by passing the namespace to the <code class="docutils literal"><span class="pre">dir</span></code> function:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [6]: </span><span class="nb">dir</span><span class="p">(</span><span class="n">__builtins__</span><span class="p">)</span>
+<span class="gh">Out[6]:</span>
+<span class="go">[&#39;ArithmeticError&#39;,</span>
+<span class="go"> &#39;AssertionError&#39;,</span>
+<span class="go"> &#39;AttributeError&#39;,</span>
+<span class="go"> &#39;BaseException&#39;,</span>
+<span class="go"> &#39;BufferError&#39;,</span>
+<span class="go"> ...</span>
+<span class="go"> &#39;unicode&#39;,</span>
+<span class="go"> &#39;vars&#39;,</span>
+<span class="go"> &#39;xrange&#39;,</span>
+<span class="go"> &#39;zip&#39;]</span>
+</pre></div>
+</div>
+<p>You are free to rebind these symbols.
+However, this is generally a <strong>BAD IDEA</strong>.
+Your editor, when properly configured for syntax colorization, should alert you to the problem.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [15]: </span><span class="nb">type</span><span class="p">(</span><span class="s1">u&#39;a new and exciting string&#39;</span><span class="p">)</span>
+<span class="gh">Out[15]: </span><span class="go">unicode</span>
+
+<span class="gp">In [16]: </span><span class="nb">type</span> <span class="o">=</span> <span class="s1">u&#39;a slightly different string&#39;</span>
+
+<span class="gp">In [17]: </span><span class="nb">type</span><span class="p">(</span><span class="s1">u&#39;type is no longer what it was&#39;</span><span class="p">)</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-17-907616e55e2a&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="nb">type</span><span class="p">(</span><span class="s1">u&#39;type is no longer what it was&#39;</span><span class="p">)</span>
+
+<span class="ne">TypeError</span>: &#39;unicode&#39; object is not callable
+</pre></div>
+</div>
+<span class="admonition-builtins"></span></div>
+<div class="section" id="exceptions">
+<h3>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h3>
+<p>Notice that the first batch of <code class="docutils literal"><span class="pre">__builtins__</span></code> are all <em>Exceptions</em>.
+Exceptions are how Python tells you that something has gone wrong.
+Understanding the standard exception types in Python and what can cause them is very helpful in debugging your code.</p>
+<p>There are several exceptions that you are likely to see a lot of:</p>
+<ul class="build simple">
+<li><code class="docutils literal"><span class="pre">NameError</span></code>: indicates that you have tried to use a symbol that is not bound to
+a value.</li>
+<li><code class="docutils literal"><span class="pre">TypeError</span></code>: indicates that you have tried to use the wrong kind of object for
+an operation.</li>
+<li><code class="docutils literal"><span class="pre">AttributeError</span></code>: indicates that you have tried to access an attribute or
+method that an object does not have (this often means you have a different
+type of object than you expect)</li>
+<li><code class="docutils literal"><span class="pre">SyntaxError</span></code>: indicates that you have mis-typed something.</li>
+</ul>
+<span class="admonition-exceptions"></span></div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<p>A function is a self-contained chunk of code.
+You write a function when you need the same code to run multiple times, or in multiple parts of the program.
+We call this being DRY (for Don&#8217;t Repeat Yourself).
+It&#8217;s also useful to keep your code clean.
+Finally, writing well-scoped, single-purpose functions helps us to write tests that prove that our code works properly.</p>
+<p>A function is created with the <a class="reference external" href="http://docs.python.org/2/reference/compound_stmts.html#def" title="(in Python v2.7)"><code class="xref std std-keyword docutils literal"><span class="pre">def</span></code></a> (<a class="reference external" href="http://docs.python.org/3/reference/compound_stmts.html#def" title="(in Python v3.5)"><code class="xref std std-keyword docutils literal"><span class="pre">py3</span></code></a>) statement.
+The statement requires the <code class="docutils literal"><span class="pre">def</span></code> keyword, a name for the function, a list of parameters (possibly empty) and a colon, followed by an indented block of code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">func_name</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="c1"># the body contains statements and expressions</span>
+    <span class="n">func_body</span> <span class="o">=</span> <span class="n">params</span> <span class="o">*</span> <span class="nb">list</span>
+</pre></div>
+</div>
+<p>This minimal python function actually does nothing.
+The <a class="reference external" href="http://docs.python.org/2/reference/simple_stmts.html#pass" title="(in Python v2.7)"><code class="xref std std-keyword docutils literal"><span class="pre">pass</span></code></a> (<a class="reference external" href="http://docs.python.org/3/reference/simple_stmts.html#pass" title="(in Python v3.5)"><code class="xref std std-keyword docutils literal"><span class="pre">py3</span></code></a>) statement fulfills the requirement for an indented function body, but is a no-op (it does nothing).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">minimal</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<span class="admonition-functions"></span><p>When the <code class="docutils literal"><span class="pre">def</span></code> statement is executed it creates a <em>function object</em>.
+This value is bound to a symbol, the <em>name</em> of the function.
+The <code class="docutils literal"><span class="pre">def</span></code> statement must be executed before the function may be used.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [23]: </span><span class="n">unbound</span><span class="p">()</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-23-3132459951e4&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">unbound</span><span class="p">()</span>
+
+<span class="ne">NameError</span>: name &#39;unbound&#39; is not defined
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [18]: </span><span class="k">def</span> <span class="nf">simple</span><span class="p">():</span>
+<span class="gp">   ....: </span>    <span class="k">print</span><span class="p">(</span><span class="s2">u&quot;I am a simple function&quot;</span><span class="p">)</span>
+<span class="gp">   ....:</span>
+
+<span class="gp">In [19]: </span><span class="n">simple</span><span class="p">()</span>
+<span class="go">I am a simple function</span>
+</pre></div>
+</div>
+<span class="admonition-functions"></span><div class="section" id="calling-functions">
+<h4>Calling Functions<a class="headerlink" href="#calling-functions" title="Permalink to this headline">¶</a></h4>
+<p>You <strong>call</strong> a function using the <code class="docutils literal"><span class="pre">call</span></code> operator (parens).
+When a function is called, it is executed.
+The statements in the function are evaluated sequentially.
+Symbols bound in the function may be used in later statements.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="k">def</span> <span class="nf">simple</span><span class="p">():</span>
+<span class="gp">   ....: </span>    <span class="n">value</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="gp">   ....: </span>    <span class="k">print</span><span class="p">(</span><span class="s2">u&quot;I am a simple function&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="gp">   ....:</span>
+
+<span class="gp">In [2]: </span><span class="nb">type</span><span class="p">(</span><span class="n">simple</span><span class="p">)</span>
+<span class="gh">Out[2]: </span><span class="go">function</span>
+
+<span class="gp">In [3]: </span><span class="n">simple</span>
+<span class="gh">Out[3]: </span><span class="go">&lt;function __main__.simple&gt;</span>
+
+<span class="gp">In [4]: </span><span class="n">simple</span><span class="p">()</span>
+<span class="go">I am a simple function 8</span>
+</pre></div>
+</div>
+<p>Functions can call other functions, this makes an execution stack.
+Each nested function call creates a new frame in the stack.
+Here we define three functions two of which call another of the three.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="k">def</span> <span class="nf">exceptional</span><span class="p">():</span>
+<span class="gp">   ...: </span>    <span class="k">print</span><span class="p">(</span><span class="s2">u&quot;I am exceptional!&quot;</span><span class="p">)</span>
+<span class="gp">   ...: </span>    <span class="k">print</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">   ...:</span>
+<span class="gp">In [6]: </span><span class="k">def</span> <span class="nf">passive</span><span class="p">():</span>
+<span class="gp">   ...: </span>    <span class="n">exceptional</span><span class="p">()</span>
+<span class="gp">   ...:</span>
+<span class="gp">In [7]: </span><span class="k">def</span> <span class="nf">doer</span><span class="p">():</span>
+<span class="gp">   ...: </span>    <span class="n">passive</span><span class="p">()</span>
+<span class="gp">   ...:</span>
+</pre></div>
+</div>
+<span class="admonition-calling-functions"></span></div>
+<div class="section" id="tracebacks">
+<h4>Tracebacks<a class="headerlink" href="#tracebacks" title="Permalink to this headline">¶</a></h4>
+<p>Executing the <code class="docutils literal"><span class="pre">doer()</span></code> function will call the <code class="docutils literal"><span class="pre">passive</span></code> function, which will in turn call the <code class="docutils literal"><span class="pre">exceptional</span></code> function.
+And what happens then?</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [36]: </span><span class="n">doer</span><span class="p">()</span>
+<span class="go">I am exceptional</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ZeroDivisionError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-36-685a01a77340&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">doer</span><span class="p">()</span>
+
+<span class="nn">&lt;ipython-input-35-f26b1f9e69ad&gt;</span> in <span class="ni">doer</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">doer</span><span class="p">():</span>
+<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="n">passive</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>
+
+<span class="nn">&lt;ipython-input-34-1ceb03279947&gt;</span> in <span class="ni">passive</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">passive</span><span class="p">():</span>
+<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="n">exceptional</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>
+
+<span class="nn">&lt;ipython-input-33-af07a70629dd&gt;</span> in <span class="ni">exceptional</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">exceptional</span><span class="p">():</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="k">print</span><span class="p">(</span><span class="s1">u&#39;I am exceptional&#39;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="k">print</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>
+
+<span class="ne">ZeroDivisionError</span>: division by zero
+</pre></div>
+</div>
+<p>This output is called a &#8220;traceback&#8221;.
+In Python tracebacks, the Error message is always the last line printed.
+Above this line you&#8217;ll find one stanza for each frame in the execution stack when the error happened.
+The last of these stanzas shows you the line of code (and the file) in which the error happened.
+Learning to read tracebacks and understand what they tell you is key to becomming a profficient programmer.</p>
+<span class="admonition-tracebacks"></span></div>
+<div class="section" id="return">
+<h4><code class="docutils literal"><span class="pre">return</span></code><a class="headerlink" href="#return" title="Permalink to this headline">¶</a></h4>
+<p>In Python, every function ends by returning a value.
+You can specify the value to return using the <a class="reference external" href="http://docs.python.org/2/reference/simple_stmts.html#return" title="(in Python v2.7)"><code class="xref std std-keyword docutils literal"><span class="pre">return</span></code></a> (<a class="reference external" href="http://docs.python.org/3/reference/simple_stmts.html#return" title="(in Python v3.5)"><code class="xref std std-keyword docutils literal"><span class="pre">py3</span></code></a>) statement:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="k">def</span> <span class="nf">the_answer</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">42</span>
+</pre></div>
+</div>
+<p>if you don&#8217;t explicilty put <code class="docutils literal"><span class="pre">return</span></code>  there, Python will automatically return <code class="docutils literal"><span class="pre">None</span></code></p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [9]: </span><span class="k">def</span> <span class="nf">fun</span><span class="p">():</span>
+<span class="gp">   ...: </span>    <span class="k">pass</span>
+<span class="gp">   ...:</span>
+<span class="gp">In [10]: </span><span class="n">fun</span><span class="p">()</span>
+<span class="gp">In [11]: </span><span class="n">result</span> <span class="o">=</span> <span class="n">fun</span><span class="p">()</span>
+<span class="gp">In [12]: </span><span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="go">None</span>
+</pre></div>
+</div>
+<p>Note that the interpreter eats <code class="docutils literal"><span class="pre">None</span></code> values (no Out appears).</p>
+<span class="admonition-return"></span><p>Only one return statement will ever be executed in a function.
+Ever.
+Anything after a executed return statement will never get run.
+This can be useful when debugging!</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [14]: </span><span class="k">def</span> <span class="nf">no_error</span><span class="p">():</span>
+<span class="gp">   ....: </span>    <span class="k">return</span> <span class="s1">u&#39;done&#39;</span>
+<span class="gp">   ....: </span>    <span class="c1"># the following will not be evaluated</span>
+<span class="gp">   ....: </span>    <span class="k">print</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">   ....:</span>
+<span class="gp">In [15]: </span><span class="n">no_error</span><span class="p">()</span>
+<span class="gh">Out[15]: </span><span class="go">u&#39;done&#39;</span>
+</pre></div>
+</div>
+<span class="admonition-return-ends-execution"></span><p>However, functions <em>can</em> return multiple results.
+To do so, you put each result to return in the return statement, separated by commas:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [16]: </span><span class="k">def</span> <span class="nf">fun</span><span class="p">():</span>
+<span class="gp">   ....: </span>    <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
+<span class="gp">   ....:</span>
+<span class="gp">In [17]: </span><span class="n">fun</span><span class="p">()</span>
+<span class="gh">Out[17]: </span><span class="go">(1, 2, 3)</span>
+</pre></div>
+</div>
+<p>In combination with multiple assignment, this can be very useful:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [18]: </span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="n">fun</span><span class="p">()</span>
+<span class="gp">In [19]: </span><span class="n">x</span>
+<span class="gh">Out[19]: </span><span class="go">1</span>
+<span class="gp">In [20]: </span><span class="n">y</span>
+<span class="gh">Out[20]: </span><span class="go">2</span>
+<span class="gp">In [21]: </span><span class="n">z</span>
+<span class="gh">Out[21]: </span><span class="go">3</span>
+</pre></div>
+</div>
+<span class="admonition-returning-multiple-values"></span></div>
+<div class="section" id="parameters-and-arguments">
+<h4>Parameters and Arguments<a class="headerlink" href="#parameters-and-arguments" title="Permalink to this headline">¶</a></h4>
+<p>In a <code class="docutils literal"><span class="pre">def</span></code> statement, the names written <em>inside</em> the parens are called <strong>parameters</strong>.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [22]: </span><span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+<span class="gp">   ....: </span>    <span class="n">q</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span>
+<span class="gp">   ....: </span>    <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+<span class="gp">   ....:</span>
+</pre></div>
+</div>
+<p>Parameters become <em>symbols</em> in the context of the function.
+You can evaluate them, use them in statements, perform operations on them.
+In this example, the symbols <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code> and <code class="docutils literal"><span class="pre">z</span></code> (as well as <code class="docutils literal"><span class="pre">q</span></code>) are <em>local</em>.
+They are bound only within the <em>scope</em> of the function.
+They do not exist outside the function.</p>
+<p>When you call a function, you pass values to the function as <strong>arguments</strong>:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [23]: </span><span class="n">fun</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">3 4 5 12</span>
+</pre></div>
+</div>
+<p>Each value is <em>bound</em> to a <em>parameter</em> symbol inside the function and used.</p>
+<span class="admonition-parameters-and-arguments"></span></div>
+</div>
+</div>
+<div class="section" id="saving-your-code">
+<h2>Saving Your Code<a class="headerlink" href="#saving-your-code" title="Permalink to this headline">¶</a></h2>
+<p>Working in the Python interpreter (or in iPython) is a great way to learn the basic syntax of Python interactively.
+But in order to do your homework for tonight, you&#8217;ll need to be able to save your code.
+For this, we need to talk briefly about python modules.
+We&#8217;ll cover just enough to get you going, and return for more tomorrow.</p>
+<p>In Python, to a first approximation, a <code class="docutils literal"><span class="pre">module</span></code> is a text file that contains python code and ends with the file extension <code class="docutils literal"><span class="pre">.py</span></code>
+You write statements and expressions in this file, and then you can run the file to execute those statements and expressions.</p>
+<p>Let&#8217;s try this out.</p>
+<div class="section" id="a-simple-module">
+<h3>A Simple Module<a class="headerlink" href="#a-simple-module" title="Permalink to this headline">¶</a></h3>
+<p>Quit iPython and create a new file in your current working directory.
+Call it <code class="docutils literal"><span class="pre">my_first_module.py</span></code>.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>day1<span class="o">)</span>$ touch my_first_module.py
+</pre></div>
+</div>
+<span class="admonition-saving-code"></span><p>Now, open the file in your text editor and add the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+
+<span class="k">def</span> <span class="nf">message</span><span class="p">():</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s1">u&#39;This is a message from my first Python module&#39;</span>
+    <span class="k">return</span> <span class="n">message</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">())</span>
+</pre></div>
+</div>
+<span class="admonition-my-first-module-py"></span><p>Save the changes you&#8217;ve made to this file.
+This is now a very simple Python module.
+The next step is to run the file.</p>
+<p>The first way we should learn is to execute the file using Python itself.
+We can do that from the command line, like so:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>day1<span class="o">)</span>$ python my_first_module.py
+This is a message from my first Python module
+</pre></div>
+</div>
+<p>Notice that the final line of the file executed, and that we can see the results because it printed something.
+When we ran that file, each line of code in the file was evaluated, starting at the top.
+We can accomplish the same thing from inside iPython.
+Start it back up:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>day1<span class="o">)</span>$ ipython
+Python 3.5.1 <span class="o">(</span>default, Jan <span class="m">18</span> 2016, 14:50:30<span class="o">)</span>
+Type <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for</span> more information.
+
+IPython 4.1.1 -- An enhanced Interactive Python.
+?         -&gt; Introduction and overview of IPython<span class="s1">&#39;s features.</span>
+<span class="s1">%quickref -&gt; Quick reference.</span>
+<span class="s1">help      -&gt; Python&#39;</span>s own <span class="nb">help</span> system.
+object?   -&gt; Details about <span class="s1">&#39;object&#39;</span>, use <span class="s1">&#39;object??&#39;</span> <span class="k">for</span> extra details.
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">run</span> <span class="n">my_first_module</span><span class="o">.</span><span class="n">py</span>
+<span class="go">This is a message from my first Python module</span>
+
+<span class="gp">In [2]:</span>
+</pre></div>
+</div>
+<span class="admonition-running-a-module"></span><p>Now, back in your editor make the following change to <code class="docutils literal"><span class="pre">my_first_module.py</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># update the last line:</span>
+<span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">(),</span> <span class="s1">u&#39;plus a bit more&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then, try running the code again in your iPython session</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [2]: </span><span class="n">run</span> <span class="n">my_first_module</span><span class="o">.</span><span class="n">py</span>
+<span class="go">This is a message from my first Python module plus a bit more</span>
+</pre></div>
+</div>
+<p>Notice that when you <em>run</em> code in iPython, changes to the original are automatically picked up.
+Also notice that the <code class="docutils literal"><span class="pre">message</span></code> function you created is now available to be used iPython.
+This will be useful as you work on your homework tonight.
+You can learn a lot more by reading the iPython documentation for <a class="reference external" href="https://ipython.org/ipython-doc/3/interactive/magics.html#magic-run">the run magic</a>.</p>
+<span class="admonition-run-in-ipython"></span></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction To Python: Part 1</a><ul>
+<li><a class="reference internal" href="#what-is-python">What is Python?</a><ul>
+<li><a class="reference internal" href="#python-features">Python Features</a></li>
+<li><a class="reference internal" href="#what-s-is-dynamic-typing">What&#8217;s is Dynamic Typing?</a></li>
+<li><a class="reference internal" href="#what-is-strong-typing">What is Strong Typing?</a></li>
+<li><a class="reference internal" href="#duck-typing">Duck Typing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python-versions">Python Versions</a><ul>
+<li><a class="reference internal" href="#writing-compatible-code">Writing Compatible Code</a></li>
+<li><a class="reference internal" href="#important-differences">Important Differences</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#introduction-to-your-environment">Introduction to Your Environment</a><ul>
+<li><a class="reference internal" href="#your-command-line-cli">Your Command Line (cli)</a></li>
+<li><a class="reference internal" href="#your-interpreter">Your Interpreter</a></li>
+<li><a class="reference internal" href="#your-editor">Your Editor</a></li>
+<li><a class="reference internal" href="#why-no-ide">Why No IDE?</a></li>
+<li><a class="reference internal" href="#introduction-to-ipython">Introduction to iPython</a><ul>
+<li><a class="reference internal" href="#installing-ipython">Installing iPython</a></li>
+<li><a class="reference internal" href="#the-very-basics-of-ipython">The very basics of iPython</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#basic-python-syntax">Basic Python Syntax</a><ul>
+<li><a class="reference internal" href="#code-structure">Code structure</a></li>
+<li><a class="reference internal" href="#printing">Printing</a></li>
+<li><a class="reference internal" href="#code-blocks">Code Blocks</a></li>
+<li><a class="reference internal" href="#values">Values</a><ul>
+<li><a class="reference internal" href="#object-literals">Object Literals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-values">Using Values</a><ul>
+<li><a class="reference internal" href="#symbols">Symbols</a></li>
+<li><a class="reference internal" href="#assignment">Assignment</a></li>
+<li><a class="reference internal" href="#unbinding">Unbinding</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#identity-and-equality">Identity and Equality</a></li>
+<li><a class="reference internal" href="#operators">Operators</a><ul>
+<li><a class="reference internal" href="#python-operator-precedence">Python Operator Precedence</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keywords">Keywords</a></li>
+<li><a class="reference internal" href="#builtins">Builtins</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#calling-functions">Calling Functions</a></li>
+<li><a class="reference internal" href="#tracebacks">Tracebacks</a></li>
+<li><a class="reference internal" href="#return"><code class="docutils literal"><span class="pre">return</span></code></a></li>
+<li><a class="reference internal" href="#parameters-and-arguments">Parameters and Arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#saving-your-code">Saving Your Code</a><ul>
+<li><a class="reference internal" href="#a-simple-module">A Simple Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

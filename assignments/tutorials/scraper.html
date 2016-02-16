@@ -1,0 +1,753 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Scraping Health Inspection Data from King County &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../../index.html">
+      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="scraping-health-inspection-data-from-king-county">
+<span id="scraper-assignment"></span><h1>Scraping Health Inspection Data from King County<a class="headerlink" href="#scraping-health-inspection-data-from-king-county" title="Permalink to this headline">¶</a></h1>
+<p>Work through this exercise to create a Python script to extract restaurant
+health inspection data from King County by ZIP Code and Date</p>
+<p>While working, you should use the virtualenv project we created in class for
+learning about the BeautifulSoup package.</p>
+<div class="highlight-bash"><div class="highlight"><pre>heffalump:~ cewing$ workon souptests
+<span class="o">[</span>souptests<span class="o">]</span>
+heffalump:souptests cewing$
+</pre></div>
+</div>
+<p>Begin by creating a new Python file, call it <code class="docutils literal"><span class="pre">scraper.py</span></code>. Open it in your
+editor.</p>
+<div class="section" id="step-1-fetch-search-results">
+<h2>Step 1: Fetch Search Results<a class="headerlink" href="#step-1-fetch-search-results" title="Permalink to this headline">¶</a></h2>
+<p>The first step is to use the <code class="docutils literal"><span class="pre">requests</span></code> library to fetch a set of search
+results from the King County government website.</p>
+<p>In order to do so, we will need to assemble a <em>query</em> that fits with the search
+form present on the <a class="reference external" href="http://info.kingcounty.gov/health/ehs/foodsafety/inspections/search.aspx">Restaurant Inspection Information</a> page.</p>
+<p>The complexity of this webservice means the easiest way to extract this
+information is to submit a search manually and then copy the URL that results.</p>
+<p>After you&#8217;ve done this, you should know the domain name and path to the search
+results page and know the set of <em>query parameters</em> available to be used (along
+with some default values).  Begin by recording these three items as <em>constants</em>
+at the top of your <code class="docutils literal"><span class="pre">scraper.py</span></code> file:</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock26'))">Peek At a Solution</a><br /><div id="hiddencodeblock26" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="n">INSPECTION_DOMAIN</span> <span class="o">=</span> <span class="s1">&#39;http://info.kingcounty.gov&#39;</span>
+<span class="n">INSPECTION_PATH</span> <span class="o">=</span> <span class="s1">&#39;/health/ehs/foodsafety/inspections/Results.aspx&#39;</span>
+<span class="n">INSPECTION_PARAMS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Output&#39;</span><span class="p">:</span> <span class="s1">&#39;W&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Business_Name&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Business_Address&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Longitude&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Latitude&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;City&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Zip_Code&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Inspection_Type&#39;</span><span class="p">:</span> <span class="s1">&#39;All&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Inspection_Start&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Inspection_End&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Inspection_Closed_Business&#39;</span><span class="p">:</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Violation_Points&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Violation_Red_Points&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Violation_Descr&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Fuzzy_Search&#39;</span><span class="p">:</span> <span class="s1">&#39;N&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Sort&#39;</span><span class="p">:</span> <span class="s1">&#39;H&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div><p>Be aware that the results page is quite sensitive about having <em>all</em> the
+parameters in each request, even if they have no values set.</p>
+<p>Your next job is to write a single Python function (<code class="docutils literal"><span class="pre">get_inspection_page</span></code>)
+that will fetch a set of search results for you. Here are the requirements for
+this function:</p>
+<ul class="simple">
+<li>It must accept keyword arguments for the possible query parameters</li>
+<li>It will build a dictionary of request query parameters from incoming keywords</li>
+<li>It will make a request to the King County server using this query</li>
+<li>It will return the bytes content of the response and the encoding if there is
+no error</li>
+<li>It will raise an error if there is a problem with the response</li>
+</ul>
+<p>As you work on building this function, try out various approaches in your
+Python interpreter first.  See what works and what fails before you try to
+write the function.</p>
+<p>Here is one possible solution for this function:</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock27'))">Peek At A Solution</a><br /><div id="hiddencodeblock27" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="k">def</span> <span class="nf">get_inspection_page</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">INSPECTION_DOMAIN</span> <span class="o">+</span> <span class="n">INSPECTION_PATH</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">INSPECTION_PARAMS</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">INSPECTION_PARAMS</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span> <span class="c1"># &lt;- This is a no-op if there is no HTTP error</span>
+    <span class="c1"># remember, in requests `content` is bytes and `text` is unicode</span>
+    <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">encoding</span>
+</pre></div>
+</div>
+</div><p>Write the results of your search to a file, <code class="docutils literal"><span class="pre">inspection_page.html</span></code> so that
+you can work on it without needing to hammer the King County servers.</p>
+<p>Write a <code class="docutils literal"><span class="pre">load_inspection_page</span></code> function which reads this file from disk and
+returns the content and encoding in the same way as the above function. Then
+you can switch between the two without altering the API. I&#8217;ll leave this
+exercise entirely to you.</p>
+</div>
+<div class="section" id="step-2-parse-search-results">
+<h2>Step 2: Parse Search Results<a class="headerlink" href="#step-2-parse-search-results" title="Permalink to this headline">¶</a></h2>
+<p>Next, we need a function <code class="docutils literal"><span class="pre">parse_source</span></code> to set up the HTML as DOM nodes for
+scraping. It will need to:</p>
+<ul class="simple">
+<li>Take the response body from the previous function (or the file read from
+disk)</li>
+<li>Parse it using BeautifulSoup</li>
+<li>Return the parsed object for further processing</li>
+</ul>
+<p>This function can be quite simple. Add it to <code class="docutils literal"><span class="pre">scraper.py</span></code>.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock28'))">Peek At A Solution</a><br /><div id="hiddencodeblock28" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c1"># add this import at the top</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="c1"># then add this function lower down</span>
+<span class="k">def</span> <span class="nf">parse_source</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">):</span>
+    <span class="n">parsed</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s1">&#39;html5lib&#39;</span><span class="p">,</span> <span class="n">from_encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parsed</span>
+</pre></div>
+</div>
+</div><p>In order to see the results we have at this point, we&#8217;ll need to make our
+<code class="docutils literal"><span class="pre">scraper.py</span></code> executable by adding a <code class="docutils literal"><span class="pre">__main__</span></code> block. Since you have
+alternate sources for listing data (<code class="docutils literal"><span class="pre">load_inspectioon_page</span></code> and
+<code class="docutils literal"><span class="pre">get_inspection_page</span></code>), you should allow a command-line argument such as
+&#8216;test&#8217; to switch between the two.</p>
+<p>Go ahead and set the ZIP code and dates for your search statically in this
+block. You can work on providing them dynamically later.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock29'))">Peek At A Solution</a><br /><div id="hiddencodeblock29" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c1"># add another import at the top</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Inspection_Start&#39;</span><span class="p">:</span> <span class="s1">&#39;2/1/2013&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Inspection_End&#39;</span><span class="p">:</span> <span class="s1">&#39;2/1/2015&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Zip_Code&#39;</span><span class="p">:</span> <span class="s1">&#39;98109&#39;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span><span class="p">:</span>
+        <span class="c1"># you will likely have something different here, depending on how</span>
+        <span class="c1"># you implemented the load_inspection_page function.</span>
+        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">load_inspection_page</span><span class="p">(</span><span class="s1">&#39;inspection_page.html&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">get_inspection_page</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">parse_source</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">doc</span><span class="o">.</span><span class="n">prettify</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+</pre></div>
+</div>
+</div><p>Now, you can execute your scraper script in one of two ways:</p>
+<ol class="arabic simple">
+<li><code class="docutils literal"><span class="pre">python</span> <span class="pre">scraper.py</span></code> will fetch results directly from King County.</li>
+<li><code class="docutils literal"><span class="pre">python</span> <span class="pre">scraper.py</span> <span class="pre">test</span></code> will use your stored results from file.</li>
+</ol>
+</div>
+<div class="section" id="step-3-extract-listing-information">
+<h2>Step 3: Extract Listing Information<a class="headerlink" href="#step-3-extract-listing-information" title="Permalink to this headline">¶</a></h2>
+<p>You are going to build a series of functions that extracts useful information
+from each of the restaurant listings in the parsed HTML search results. From
+each listing, we should extract the following information:</p>
+<ul class="simple">
+<li>Metadata about the restaurant (name, category, address, etc.)</li>
+<li>The average inspection score for the restaurant</li>
+<li>The highest inspection score for the restaurant</li>
+<li>The total number of inspections performed</li>
+</ul>
+<p>You&#8217;ll be building this information one step at a time, to simplify the task.</p>
+<div class="section" id="a-find-individual-listings">
+<h3>3a: Find Individual Listings<a class="headerlink" href="#a-find-individual-listings" title="Permalink to this headline">¶</a></h3>
+<p>The first job is to find the container that holds each individual listing. Use
+your browser&#8217;s devtools to identify the container that holds each. Then, write
+a function that takes in the parsed HTML and returns a list of the restaurant
+listing container nodes.</p>
+<p>Pay attention to the fact that there are <em>two</em> containers for each restaurant.
+What is the difference between them?  Which do you want? Remember the
+BeautifulSoup allows you to search based on HTML attributes, and that
+<a class="reference external" href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/#kinds-of-filters">different types of filters</a> can be used. Which kind of filter would be most
+effective for this task?</p>
+<p>Call this function <code class="docutils literal"><span class="pre">extract_data_listings</span></code>.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock30'))">Peek At A Solution</a><br /><div id="hiddencodeblock30" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c1"># add a new import at the top</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">extract_data_listings</span><span class="p">(</span><span class="n">html</span><span class="p">):</span>
+    <span class="n">id_finder</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;PR[\d]+~&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">id_finder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div><p>If you update your <code class="docutils literal"><span class="pre">__main__</span></code> block to use this new function, you can verify
+the results visually:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Inspection_Start&#39;</span><span class="p">:</span> <span class="s1">&#39;2/1/2013&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Inspection_End&#39;</span><span class="p">:</span> <span class="s1">&#39;2/1/2015&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Zip_Code&#39;</span><span class="p">:</span> <span class="s1">&#39;98109&#39;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span><span class="p">:</span>
+        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">load_inspection_page</span><span class="p">(</span><span class="s1">&#39;inspection_page.html&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">get_inspection_page</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">parse_source</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+    <span class="n">listings</span> <span class="o">=</span> <span class="n">extract_data_listings</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="c1"># add this line</span>
+    <span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">listings</span><span class="p">)</span>                   <span class="c1"># and this one</span>
+    <span class="k">print</span> <span class="n">listings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">prettify</span><span class="p">()</span>          <span class="c1"># and this one too</span>
+</pre></div>
+</div>
+<p>Call your script from the command line (in test mode), to see your results:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
+heffalump:souptests cewing$ python scraper.py <span class="nb">test</span>
+362
+&lt;div <span class="nv">id</span><span class="o">=</span><span class="s2">&quot;PR0020232~&quot;</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;PR0020232~&quot;</span> <span class="nv">onclick</span><span class="o">=</span><span class="s2">&quot;toggleShow(this.id);&quot;</span> <span class="nv">onmouseout</span><span class="o">=</span><span class="s2">&quot;this.style.cursor = &#39;auto&#39;;window.status = &#39;&#39;;&quot;</span> <span class="nv">onmouseover</span><span class="o">=</span><span class="s2">&quot;this.style.cursor = &#39;pointer&#39;;window.status = &#39;Click to hide business and inspection details&#39;;&quot;</span> <span class="nv">style</span><span class="o">=</span><span class="s2">&quot;display: none&quot;</span> <span class="nv">xmlns</span><span class="o">=</span><span class="s2">&quot;&quot;</span>&gt;
+ &lt;table <span class="nv">style</span><span class="o">=</span><span class="s2">&quot;width: 635px;&quot;</span>&gt;
+  &lt;tbody&gt;
+   &lt;tr&gt;
+   ...
+   &lt;/tr&gt;
+  &lt;/tbody&gt;
+ &lt;/table&gt;
+&lt;/div&gt;
+
+<span class="o">[</span>souptests<span class="o">]</span>
+heffalump:souptests cewing$
+</pre></div>
+</div>
+</div>
+<div class="section" id="b-extract-metadata">
+<h3>3b: Extract Metadata<a class="headerlink" href="#b-extract-metadata" title="Permalink to this headline">¶</a></h3>
+<p>When you take a close look at the structure of the data <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> for each
+restaurant, you&#8217;ll see that the metadata about the restaurant is located in the
+rows of a table. The rows we are interested in all have a few shared properties
+that set them apart from other rows in the table.</p>
+<p>The first is that all the rows that contain this information have <em>two</em> cells
+in them.  One that might contain a <em>label</em> for the metadata and a second that
+contains the <em>value</em>.</p>
+<p>The second is that the two <code class="docutils literal"><span class="pre">&lt;td&gt;</span></code> elements it contains are immediate
+children, not contained within some nested structure.</p>
+<p>BeautifulSoup allows us to <a class="reference external" href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/#a-function">use functions as filters</a>. These functions must
+take an <em>element</em> as their only argument, and return <cite>True</cite> if the element
+should pass through the filter, and <cite>False</cite> if not.</p>
+<p>Add a new function to <code class="docutils literal"><span class="pre">scraper.py</span></code> called <code class="docutils literal"><span class="pre">has_two_tds</span></code> that will take an
+element as an argument and return <code class="docutils literal"><span class="pre">True</span></code> if the element is both a <code class="docutils literal"><span class="pre">&lt;tr&gt;</span></code>
+<em>and</em> contains exactly two <code class="docutils literal"><span class="pre">&lt;td&gt;</span></code> elements immediately within it.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock31'))">Peek At A Solution</a><br /><div id="hiddencodeblock31" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">has_two_tds</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+    <span class="n">is_tr</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;tr&#39;</span>
+    <span class="n">td_children</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">has_two</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">td_children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">is_tr</span> <span class="ow">and</span> <span class="n">has_two</span>
+</pre></div>
+</div>
+</div><p>Demonstrate that your filter works properly by trying it out.  Start by
+updating our <code class="docutils literal"><span class="pre">main</span></code> block with a few lines of code that will catch the
+metadata rows from each div and print a count of them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># ... existing code up here need not be changed</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">parse_source</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+    <span class="n">listings</span> <span class="o">=</span> <span class="n">extract_data_listings</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">:</span>  <span class="c1"># &lt;- add this stuff here.</span>
+        <span class="n">metadata_rows</span> <span class="o">=</span> <span class="n">listing</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;tbody&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span>
+            <span class="n">has_two_tds</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span>
+        <span class="p">)</span>
+        <span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_rows</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And now, executing this script at the command line should return the following:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
+heffalump:souptests cewing$ python scraper.py <span class="nb">test</span>
+7
+7
+7
+...
+7
+7
+<span class="o">[</span>souptests<span class="o">]</span>
+heffalump:souptests cewing$
+</pre></div>
+</div>
+<p>Great! Nice, consistent results means we&#8217;ve done our job correctly.  If you are
+getting values that vary widely, please review your filter function.</p>
+<p>You&#8217;ll work next on extracting the data from those rows you have found.</p>
+<p>BeautifulSoup provides a pair of attributes to represent the visible contents
+of <code class="docutils literal"><span class="pre">Tag</span></code> objects. The <code class="docutils literal"><span class="pre">tag.text</span></code> attribute will return all visible
+contents, including those of enclosed tags.  But this is often more than you
+want or need.  The <code class="docutils literal"><span class="pre">tag.string</span></code> text will return only the visible contents
+directly contained in this particular element, and only that which is <em>before</em>
+any nested tags.  Try updating your <code class="docutils literal"><span class="pre">main</span></code> block to peek at the contents of
+your rows for the first few matched restaurant listings.  Try <code class="docutils literal"><span class="pre">tag.text</span></code>
+first:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+        <span class="n">metadata_rows</span> <span class="o">=</span> <span class="n">listing</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;tbody&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span>
+            <span class="n">has_two_tds</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">metadata_rows</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">td</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+                <span class="k">print</span> <span class="n">td</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="k">print</span>
+        <span class="k">print</span>
+</pre></div>
+</div>
+<p>Try running the script again to see the output:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
+192:souptests cewing$ python scraper.py <span class="nb">test</span>
+
+            - Business Name
+
+            TOULOUSE KITCHEN <span class="p">&amp;</span> LOUNGE
+
+
+            Business Category:
+
+            Seating 151-250 - Risk Category III
+</pre></div>
+</div>
+<p>Hmmm.  Where&#8217;d all that extra whitespace come from?  the values from the first
+and second cells should have printed on the same row in our output, but they
+didn&#8217;t.  There&#8217;s extra stuff in there we don&#8217;t want.  Try it again with
+<code class="docutils literal"><span class="pre">tag.string</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># ...</span>
+    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+        <span class="n">metadata_rows</span> <span class="o">=</span> <span class="n">listing</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;tbody&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span>
+            <span class="n">has_two_tds</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">metadata_rows</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">td</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+                <span class="k">print</span> <span class="n">td</span><span class="o">.</span><span class="n">string</span><span class="p">,</span>
+            <span class="k">print</span>
+        <span class="k">print</span>
+</pre></div>
+</div>
+<p>You should see that this makes no difference in our output.  This means that
+we&#8217;ll need to clean up the values we get from these cells.  We need a function
+that will do this for us.  It should take a cell as it&#8217;s sole argument and
+return the <code class="docutils literal"><span class="pre">tag.string</span></code> attribute with extraneous characters stripped.  Call
+the function <code class="docutils literal"><span class="pre">clean_data</span></code>.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock32'))">Peek At a Solution</a><br /><div id="hiddencodeblock32" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">td</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">string</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\n</span><span class="s2">:-&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">u&quot;&quot;</span>
+</pre></div>
+</div>
+</div><p>Add that into your <code class="docutils literal"><span class="pre">main</span></code> block and see the results:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># ...</span>
+    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+        <span class="n">metadata_rows</span> <span class="o">=</span> <span class="n">listing</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;tbody&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span>
+            <span class="n">has_two_tds</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">metadata_rows</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">td</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+                <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">clean_data</span><span class="p">(</span><span class="n">td</span><span class="p">)),</span>
+            <span class="k">print</span>
+        <span class="k">print</span>
+</pre></div>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
+192:souptests cewing$ python scraper.py <span class="nb">test</span>
+u<span class="s1">&#39;Business Name&#39;</span> u<span class="s1">&#39;TOULOUSE KITCHEN &amp; LOUNGE&#39;</span>
+u<span class="s1">&#39;Business Category&#39;</span> u<span class="s1">&#39;Seating 151-250 - Risk Category III&#39;</span>
+u<span class="s1">&#39;Address&#39;</span> u<span class="s1">&#39;601 QUEEN ANNE AVE N&#39;</span>
+u<span class="s1">&#39;&#39;</span> u<span class="s1">&#39;Seattle, WA 98109&#39;</span>
+u<span class="s1">&#39;Phone&#39;</span> u<span class="s1">&#39;(206) 283-1598&#39;</span>
+u<span class="s1">&#39;Latitude&#39;</span> u<span class="s1">&#39;47.6247323574&#39;</span>
+u<span class="s1">&#39;Longitude&#39;</span> u<span class="s1">&#39;122.3569098631&#39;</span>
+...
+</pre></div>
+</div>
+<p>Ahhh, much better.</p>
+</div>
+<div class="section" id="c-store-metadata">
+<h3>3c: Store Metadata<a class="headerlink" href="#c-store-metadata" title="Permalink to this headline">¶</a></h3>
+<p>Next, we want to put this data into a data structure that will represent a
+single restaurant.  Our data is paired as labels and values. That should
+suggest a proper data structure.</p>
+<p>We need to create a function that will put these pieces together.  The function
+should take the listing for a single restaurant, and return a Python dictionary
+containing the metadata we&#8217;ve extracted.</p>
+<p>It&#8217;d be easy enough to simply walk through the rows and add an entry in our
+dictionary for each, but look at the data above. Does each row contain a label
+and a value?  Which one does not? What is suggested by this?  You&#8217;ll need to
+account for this in your function.</p>
+<p>Call the function <code class="docutils literal"><span class="pre">extract_restaurant_metadata</span></code> and add it to <code class="docutils literal"><span class="pre">scraper.py</span></code>.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock33'))">Peek At a Solution</a><br /><div id="hiddencodeblock33" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_restaurant_metadata</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+    <span class="n">metadata_rows</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;tbody&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span>
+        <span class="n">has_two_tds</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="n">rdata</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">current_label</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">metadata_rows</span><span class="p">:</span>
+        <span class="n">key_cell</span><span class="p">,</span> <span class="n">val_cell</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">new_label</span> <span class="o">=</span> <span class="n">clean_data</span><span class="p">(</span><span class="n">key_cell</span><span class="p">)</span>
+        <span class="n">current_label</span> <span class="o">=</span> <span class="n">new_label</span> <span class="k">if</span> <span class="n">new_label</span> <span class="k">else</span> <span class="n">current_label</span>
+        <span class="n">rdata</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">current_label</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clean_data</span><span class="p">(</span><span class="n">val_cell</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">rdata</span>
+</pre></div>
+</div>
+</div><p>Replace the rough work you added to your <code class="docutils literal"><span class="pre">main</span></code> block with a single clean
+call to this function and print out the results to verify your work:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># ...</span>
+    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">extract_restaurant_metadata</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">metadata</span>
+        <span class="k">print</span>
+</pre></div>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
+192:souptests cewing$ python scraper.py <span class="nb">test</span>
+<span class="o">{</span>u<span class="s1">&#39;Business Category&#39;</span>: <span class="o">[</span>u<span class="s1">&#39;Seating 151-250 - Risk Category III&#39;</span><span class="o">]</span>,
+ u<span class="s1">&#39;Longitude&#39;</span>: <span class="o">[</span>u<span class="s1">&#39;122.3569098631&#39;</span><span class="o">]</span>, u<span class="s1">&#39;Phone&#39;</span>: <span class="o">[</span>u<span class="s1">&#39;(206) 283-1598&#39;</span><span class="o">]</span>,
+ u<span class="s1">&#39;Business Name&#39;</span>: <span class="o">[</span>u<span class="s1">&#39;TOULOUSE KITCHEN &amp; LOUNGE&#39;</span><span class="o">]</span>,
+ u<span class="s1">&#39;Address&#39;</span>: <span class="o">[</span>u<span class="s1">&#39;601 QUEEN ANNE AVE N&#39;</span>, u<span class="s1">&#39;Seattle, WA 98109&#39;</span><span class="o">]</span>,
+ u<span class="s1">&#39;Latitude&#39;</span>: <span class="o">[</span>u<span class="s1">&#39;47.6247323574&#39;</span><span class="o">]}</span>
+...
+</pre></div>
+</div>
+<p>Outstanding.  You&#8217;ve built the first part of this script and are ready to move
+on.</p>
+</div>
+<div class="section" id="d-extract-inspection-data">
+<h3>3d: Extract Inspection Data<a class="headerlink" href="#d-extract-inspection-data" title="Permalink to this headline">¶</a></h3>
+<p>The next step is to extract the information we need to build our inspection
+data for each restaurant. As a reminder, we have said that we want to store the
+average inspection score, the highest inspection score and the total number of
+inspection performed.</p>
+<p>Let&#8217;s think for a moment about what we want to find. We&#8217;ll need to find rows in
+the tables in our restaurant that represent the results of an inspection. We
+don&#8217;t need individual inspection items, just the total score. And we don&#8217;t care
+about rows that contain non-inspection information.</p>
+<p>Use your browser&#8217;s dev tools to inspect the structure of a listing again. Can
+you spot commonalities for all the rows that contain the data we want? There
+are four chief common points we can use to find our rows:</p>
+<ul class="simple">
+<li>Each row is a table row, or <code class="docutils literal"><span class="pre">&lt;tr&gt;</span></code> element.</li>
+<li>Each row contains exactly four table cell, or <code class="docutils literal"><span class="pre">&lt;td&gt;</span></code> elements.</li>
+<li>Each row has text in the first cell that contains the word &#8220;inspection&#8221;</li>
+<li>In that text, the word &#8220;inspection&#8221; is <em>not</em> the first word</li>
+</ul>
+<p>Your next task is to write a filter function that can be used to find these
+rows. Remember, a filter function takes an HTML element as its sole argument
+and returns <code class="docutils literal"><span class="pre">True</span></code> if the element matches the criteria of the filter,
+<code class="docutils literal"><span class="pre">False</span></code> otherwise. Call the function <code class="docutils literal"><span class="pre">is_ispection_row</span></code> and add it to
+<code class="docutils literal"><span class="pre">scraper.py</span></code>.</p>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock34'))">Peek At a Solution</a><br /><div id="hiddencodeblock34" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_inspection_row</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+    <span class="n">is_tr</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;tr&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_tr</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    <span class="n">td_children</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">has_four</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">td_children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="n">this_text</span> <span class="o">=</span> <span class="n">clean_data</span><span class="p">(</span><span class="n">td_children</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">contains_word</span> <span class="o">=</span> <span class="s1">&#39;inspection&#39;</span> <span class="ow">in</span> <span class="n">this_text</span>
+    <span class="n">does_not_start</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">this_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;inspection&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">is_tr</span> <span class="ow">and</span> <span class="n">has_four</span> <span class="ow">and</span> <span class="n">contains_word</span> <span class="ow">and</span> <span class="n">does_not_start</span>
+</pre></div>
+</div>
+</div><p>Update your <code class="docutils literal"><span class="pre">main</span></code> block.  Use this new filter to find the inspection rows in
+each listing.  Print out the text in each row for the first few listings to
+verify that you&#8217;ve got it right:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># ...</span>
+    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">extract_restaurant_metadata</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+        <span class="n">inspection_rows</span> <span class="o">=</span> <span class="n">listing</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">is_inspection_row</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">inspection_rows</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">row</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+<p>Once you&#8217;ve confirmed that you are only seeing rows that contain useful data,
+your filter will be correct. Next move on to building the aggregated data you
+want to store about inspection scores.</p>
+<p>You&#8217;ll need to add a new function <code class="docutils literal"><span class="pre">extract_score_data</span></code> to <code class="docutils literal"><span class="pre">scraper.py</span></code>.
+This function will:</p>
+<ul class="simple">
+<li>Take a restaurant listing as an argument.</li>
+<li>Use the filter you just created to find inspection data rows.</li>
+<li>Extract the score for each inspection.</li>
+<li>Keep track of the number of inspections made.</li>
+<li>Keep track of the highest score.</li>
+<li>Calculate the average score for all inspections.</li>
+<li>Return a dictionary containing the average score, high score, and total
+inspection values.</li>
+</ul>
+<script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock35'))">Peek At a Solution</a><br /><div id="hiddencodeblock35" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_score_data</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+    <span class="n">inspection_rows</span> <span class="o">=</span> <span class="n">elem</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">is_inspection_row</span><span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inspection_rows</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">high_score</span> <span class="o">=</span> <span class="n">average</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">inspection_rows</span><span class="p">:</span>
+        <span class="n">strval</span> <span class="o">=</span> <span class="n">clean_data</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;td&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">intval</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">strval</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="n">samples</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">intval</span>
+            <span class="n">high_score</span> <span class="o">=</span> <span class="n">intval</span> <span class="k">if</span> <span class="n">intval</span> <span class="o">&gt;</span> <span class="n">high_score</span> <span class="k">else</span> <span class="n">high_score</span>
+    <span class="k">if</span> <span class="n">samples</span><span class="p">:</span>
+        <span class="n">average</span> <span class="o">=</span> <span class="n">total</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">u&#39;Average Score&#39;</span><span class="p">:</span> <span class="n">average</span><span class="p">,</span>
+        <span class="s1">u&#39;High Score&#39;</span><span class="p">:</span> <span class="n">high_score</span><span class="p">,</span>
+        <span class="s1">u&#39;Total Inspections&#39;</span><span class="p">:</span> <span class="n">samples</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+</div>
+</div><p>Update your <code class="docutils literal"><span class="pre">main</span></code> block to include this new function.  Print out the results
+for the first few listings to verify that it worked.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Inspection_Start&#39;</span><span class="p">:</span> <span class="s1">&#39;2/1/2013&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Inspection_End&#39;</span><span class="p">:</span> <span class="s1">&#39;2/1/2015&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Zip_Code&#39;</span><span class="p">:</span> <span class="s1">&#39;98109&#39;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span><span class="p">:</span>
+        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">load_inspection_page</span><span class="p">(</span><span class="s1">&#39;inspection_page.html&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">get_inspection_page</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">parse_source</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+    <span class="n">listings</span> <span class="o">=</span> <span class="n">extract_data_listings</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">listings</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">extract_restaurant_metadata</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+        <span class="n">score_data</span> <span class="o">=</span> <span class="n">extract_score_data</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">score_data</span>
+</pre></div>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>souptests<span class="o">]</span>
+heffalump:souptests cewing$ python scraper.py <span class="nb">test</span>
+<span class="o">{</span>u<span class="s1">&#39;High Score&#39;</span>: 90, u<span class="s1">&#39;Average Score&#39;</span>: 28.6, u<span class="s1">&#39;Total Inspections&#39;</span>: 5<span class="o">}</span>
+<span class="o">{</span>u<span class="s1">&#39;High Score&#39;</span>: 80, u<span class="s1">&#39;Average Score&#39;</span>: 27.5, u<span class="s1">&#39;Total Inspections&#39;</span>: 4<span class="o">}</span>
+<span class="o">{</span>u<span class="s1">&#39;High Score&#39;</span>: 80, u<span class="s1">&#39;Average Score&#39;</span>: 27.5, u<span class="s1">&#39;Total Inspections&#39;</span>: 4<span class="o">}</span>
+<span class="o">{</span>u<span class="s1">&#39;High Score&#39;</span>: 70, u<span class="s1">&#39;Average Score&#39;</span>: 17.5, u<span class="s1">&#39;Total Inspections&#39;</span>: 4<span class="o">}</span>
+<span class="o">{</span>u<span class="s1">&#39;High Score&#39;</span>: 70, u<span class="s1">&#39;Average Score&#39;</span>: 32.25, u<span class="s1">&#39;Total Inspections&#39;</span>: 4<span class="o">}</span>
+<span class="o">[</span>souptests<span class="o">]</span>
+heffalump:souptests cewing$
+</pre></div>
+</div>
+<p>Alright.  That&#8217;s working nicely.  The final step for today is to knit the two
+sets of data together into a single dictionary of data. Go ahead and do that in
+your <code class="docutils literal"><span class="pre">main</span></code> block. When you&#8217;re done, remove the constraint on how many
+listings to process and run the scraper over the full set. Finish up by running
+it one more time without the <code class="docutils literal"><span class="pre">test</span></code> in the call so you fetch fresh data from
+the King County servers.</p>
+<p>Congratulations, you&#8217;ve built a successful web scraper.  Fun, eh?</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Scraping Health Inspection Data from King County</a><ul>
+<li><a class="reference internal" href="#step-1-fetch-search-results">Step 1: Fetch Search Results</a></li>
+<li><a class="reference internal" href="#step-2-parse-search-results">Step 2: Parse Search Results</a></li>
+<li><a class="reference internal" href="#step-3-extract-listing-information">Step 3: Extract Listing Information</a><ul>
+<li><a class="reference internal" href="#a-find-individual-listings">3a: Find Individual Listings</a></li>
+<li><a class="reference internal" href="#b-extract-metadata">3b: Extract Metadata</a></li>
+<li><a class="reference internal" href="#c-store-metadata">3c: Store Metadata</a></li>
+<li><a class="reference internal" href="#d-extract-inspection-data">3d: Extract Inspection Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

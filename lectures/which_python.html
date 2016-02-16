@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Which Python? &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="which-python">
+<h1>Which Python?<a class="headerlink" href="#which-python" title="Permalink to this headline">¶</a></h1>
+<p>There are two versions of Python we might possibly use for this course: 2.7.x
+or 3.x.</p>
+<p>For a number of reasons, we have chosen to teach this course in Python 2.7. For
+the time being, Python 2 is the version you are most likely to see in a
+professiona situation. Every company we spoke with here in Seattle uses it, and
+the large pre-existing code base built in Python 2 means that it will be a
+while before Python 3 is the default Python to learn.</p>
+<p>That being said, there are some things you can do now to begin writing code
+that will be more portable forward to Python 3.  This class will be taught with
+those steps in mind.</p>
+<div class="section" id="bytes-and-unicode">
+<h2>Bytes and Unicode<a class="headerlink" href="#bytes-and-unicode" title="Permalink to this headline">¶</a></h2>
+<p>One of the largest changes from Python 2 to Python three concerns the
+difference in handling bytes and unicode.</p>
+<p>In Python 2, a <code class="docutils literal"><span class="pre">string</span></code> literal is written thusly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s1">&#39;I am a string&#39;</span>
+</pre></div>
+</div>
+<p>It is extremely common in Python 2 code to use string literals to represent
+textual objects&#8211;things meant to be read as text by humans. This is fine so
+long as the only characters in your text are in the ASCII character set
+(basic English). However, this is less and less often the case. It is very
+common these days to see international characters in text that passes
+through your programs.</p>
+<p>Python 2 can handle these international characters using a <code class="docutils literal"><span class="pre">unicode</span></code> literal:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s1">u&#39;I am a string with élan&#39;</span>
+</pre></div>
+</div>
+<p>Enocding a <code class="docutils literal"><span class="pre">unicode</span></code> literal transforms it to a string literal:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span> <span class="o">=</span> <span class="s1">u&#39;I am a string with élan&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar</span> <span class="o">=</span> <span class="n">foo</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar</span>
+<span class="go">&#39;I am a string with \xc3\xa9lan&#39;</span>
+</pre></div>
+</div>
+<p>This shows that in fact, a <code class="docutils literal"><span class="pre">string</span></code> is a sequence of <strong>bytes</strong>.</p>
+<p>Python 2 allows for implicit conversion between unicode and bytes, but Python 3
+does not.</p>
+<p>In Python 3 you must hold text in your Python programs as <code class="docutils literal"><span class="pre">unicode</span></code> objects,
+and only encode to <code class="docutils literal"><span class="pre">bytes</span></code> when passing that data out (to file, network,
+buffer).</p>
+<p>Similarly, you must <em>decode</em> bytes into unicode when you bring data in to your
+program.</p>
+<p>To help build the rigor needed to support this while still writing Python 2, we
+will follow this convention:</p>
+<ul class="simple">
+<li>All textual data in our programs should be <em>explicitly</em> unicode: <code class="docutils literal"><span class="pre">u'élan'</span></code>.</li>
+<li>All binary data will be written <em>explicitly</em> as byte string: <code class="docutils literal"><span class="pre">b'\xc3\xa9lan</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="integer-vs-float-division">
+<h2>Integer vs. Float Division<a class="headerlink" href="#integer-vs-float-division" title="Permalink to this headline">¶</a></h2>
+<p>In Python there are two division operators: <code class="docutils literal"><span class="pre">/</span></code> and <code class="docutils literal"><span class="pre">//</span></code>. In Python 3 these
+are <code class="docutils literal"><span class="pre">division</span></code> and <code class="docutils literal"><span class="pre">integer</span> <span class="pre">division</span></code> (also known as <code class="docutils literal"><span class="pre">floored</span> <span class="pre">division</span></code>):</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="go">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">//</span> <span class="mi">2</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="go">1.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span> <span class="o">//</span> <span class="mi">2</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>But in Python 2, things are a bit different. The <code class="docutils literal"><span class="pre">//</span></code> operator works
+similarly (it still gives you the <code class="docutils literal"><span class="pre">floored</span></code> result). The <code class="docutils literal"><span class="pre">/</span></code> operator is a
+completely different story. The return values for both depend on what you give
+them, and the <code class="docutils literal"><span class="pre">/</span></code> operator may work as floored division if you give use
+integers:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">//</span> <span class="mi">2</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="go">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">1.0</span> <span class="o">//</span> <span class="mi">2</span>
+<span class="go">0.0</span>
+</pre></div>
+</div>
+<p>You should always be explicit which version of division you are using.  If you
+want integer or floored results, Explicitly use the <code class="docutils literal"><span class="pre">//</span></code> operator.</p>
+<p>And remember to be aware that much existing code does not carefully make this
+distinction. You should always be alert for potential problems arising from
+this discrepancy.</p>
+</div>
+<div class="section" id="test-test-test">
+<h2>Test Test Test<a class="headerlink" href="#test-test-test" title="Permalink to this headline">¶</a></h2>
+<p>Subtle differences like floored versus true division are sure to result in bugs
+during transition from Python 2 to Python 3.</p>
+<p>For this reason, one of the keys to successful porting is establishing
+excellent test coverage.</p>
+<p>The more of your code is covered by extensive, thorough tests, the more easily
+you can rest assured that a port from 2 to 3 will go as smoothly as possible.</p>
+<p>For this reason, we will emphasize testing in this class.</p>
+<p>You will write unit tests, integration tests and functional tests.</p>
+<p>Establishing a habit of solid testing is the best tool you can use to ensure
+safe transitions to Python 3.</p>
+</div>
+<div class="section" id="more-to-learn">
+<h2>More to Learn<a class="headerlink" href="#more-to-learn" title="Permalink to this headline">¶</a></h2>
+<p>There are other techniques we will touch on as the class wears on, but that&#8217;s
+enough to go on for now.</p>
+<p>Please take some time to watch <a class="reference external" href="https://www.youtube.com/watch?v=nx0sXSeJbmI">this video</a> by Tres Seaver from PyCon 2014
+about porting code to Python 3 to get a sense of the larger picture.</p>
+<p>In addition, you will want to bookmark <a class="reference external" href="http://python3porting.com">Porting to Python 3</a> by Lennart
+Regebro. In particular, the chapter on <a class="reference external" href="http://python3porting.com/preparing.html">preparing for Python 3</a> is an
+excellent guide to strategies you can use today.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Which Python?</a><ul>
+<li><a class="reference internal" href="#bytes-and-unicode">Bytes and Unicode</a></li>
+<li><a class="reference internal" href="#integer-vs-float-division">Integer vs. Float Division</a></li>
+<li><a class="reference internal" href="#test-test-test">Test Test Test</a></li>
+<li><a class="reference internal" href="#more-to-learn">More to Learn</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

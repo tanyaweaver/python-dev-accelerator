@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>401 Python: Lecture Notes &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Implement a Queue in Python &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -56,33 +56,36 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="python-lecture-notes">
-<h1>401 Python: Lecture Notes<a class="headerlink" href="#python-lecture-notes" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-code-samples"></span><p>This is a comprehensive list of the lectures for this course.
-Lectures are often available both as HTML and as slides.
-Slides will be presented in class, but the full HTML will serve as long-form lecture notes.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="async.html">Concurrency</a></li>
-<li class="toctree-l1"><a class="reference internal" href="boto.html">Manage AWS Resources with Boto</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cgi_wsgi.html">Getting Data In</a></li>
-<li class="toctree-l1"><a class="reference internal" href="frameworks_and_wsgi.html">Introduction to Web Frameworks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="http.html">Understanding the HTTP Protocol</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_django.html">An Introduction To Django</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_python_1.html">Introduction To Python: Part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jenkins.html">Automate Tests with Travis CI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_apis.html">Extracting Data from the Web, II</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lettuce.html">Behavior Driven Development with Lettuce</a></li>
-<li class="toctree-l1"><a class="reference internal" href="protocols.html">Network Protocols in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_packages.html">Distributing Python Packages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="scraping.html">Extracting Data from the Web</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shell.html">Shell Customizations for Python Development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="simple_wsgi_deployment.html">Deploying a Simple WSGI Application on AWS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sockets.html">TCP/IP and Sockets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sql_persistence_in_python.html">SQL Persistence in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="virtualenv.html">Working with Virtualenv</a></li>
-<li class="toctree-l1"><a class="reference internal" href="which_python.html">Which Python?</a></li>
+  <div class="section" id="implement-a-queue-in-python">
+<h1>Implement a Queue in Python<a class="headerlink" href="#implement-a-queue-in-python" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-implement-a-queue-in-python"></span><p>Begin by reading about the <a class="reference external" href="http://www.princeton.edu/~achaney/tmve/wiki100k/docs/Queue_(data_structure).html">Queue data structure</a>.</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>When you&#8217;re done, create a new branch in your data structures repository.  On
+that branch, write tests for and then implement a queue with the following
+features:</p>
+<ul class="simple">
+<li><strong>enqueue(value)</strong>: adds value to the queue</li>
+<li><strong>dequeue()</strong>: removes the correct item from the queue and returns its value
+(should raise an error if the queue is empty)</li>
+<li><strong>peek()</strong>: returns the next value in the queue without dequeueing it. If the
+queue is empty, returns None</li>
+<li><strong>size()</strong>: return the size of the queue.  Should return 0 if the queue is
+empty.</li>
 </ul>
+<p>As with the linked list and stack assignments before this, you may not use any
+existing Python implementation to create your queue.</p>
+<p>You should update the repository README with information about the Queue you
+implemented, including any resources or collaborations you used.</p>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>When your tasks are complete and all tests are passing, submit a pull request
+from your queue branch back to master.  Copy the URL for that pull request and
+submit it.  After you submit your assignment, you may merge your queue branch
+back to master.</p>
+<p>Use the comment feature in Canvas to submit questions, comments and
+reflections.</p>
 </div>
 </div>
 
@@ -92,6 +95,15 @@ Slides will be presented in class, but the full HTML will serve as long-form lec
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Implement a Queue in Python</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">

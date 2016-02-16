@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tasks &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
+    <link rel="next" title="Sign Up for a Hacker News Account" href="hacker_news_account.html" />
+    <link rel="prev" title="Complete Your GitHub Profile" href="github_profile.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="hacker_news_account.html" title="Sign Up for a Hacker News Account"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="github_profile.html" title="Complete Your GitHub Profile"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>Read a bit about the <a class="reference external" href="http://en.wikipedia.org/wiki/Graph_(abstract_data_type)">Graph data structure</a>.</p>
+<div class="section" id="tasks">
+<h1>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h1>
+<p>Once you have a grasp of the basic idea, implement a simple graph (unweighted,
+directed) in Python.  You may use any of the Python primitive data types that
+are available without importing any additional libraries (str, unicode, dict,
+list, tuple).</p>
+<p>Your graph should support the following operations:</p>
+<ul class="simple">
+<li><strong>g.nodes()</strong>: return a list of all nodes in the graph</li>
+<li><strong>g.edges()</strong>: return a list of all edges in the graph</li>
+<li><strong>g.add_node(n)</strong>: adds a new node &#8216;n&#8217; to the graph</li>
+<li><strong>g.add_edge(n1, n2)</strong>: adds a new edge to the graph connecting &#8216;n1&#8217; and
+&#8216;n2&#8217;, if either n1 or n2 are not already present in the graph, they should be
+added.</li>
+<li><strong>g.del_node(n)</strong>: deletes the node &#8216;n&#8217; from the graph, raises an error if no
+such node exists</li>
+<li><strong>g.del_edge(n1, n2)</strong>: deletes the edge connecting &#8216;n1&#8217; and &#8216;n2&#8217; from the
+graph, raises an error if no such edge exists</li>
+<li><strong>g.has_node(n)</strong>: True if node &#8216;n&#8217; is contained in the graph, False if not.</li>
+<li><strong>g.neighbors(n)</strong>: returns the list of all nodes connected to &#8216;n&#8217; by edges,
+raises an error if n is not in g</li>
+<li><strong>g.adjacent(n1, n2)</strong>: returns True if there is an edge connecting n1 and
+n2, False if not, raises an error if either of the supplied nodes are not in
+g</li>
+</ul>
+<p>Begin by creating a new branch &#8220;simple_graph&#8221; in your data-structures
+repository.  For each method of your graph class (including the constructor),
+write tests first that demonstrates the functionality of that method, then
+implement the method to make the tests pass.</p>
+<p>Focus on making small, atomic commits to git with well-written and meaningful
+commit messages.</p>
+<p>Remember to update your README file with a description of this new data type as
+well as any additional sources, references or collaborations you may have used
+in completing the work.</p>
+</div>
+<div class="section" id="submitting-your-work">
+<h1>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h1>
+<p>When your work is complete and all tests are passing, push your work to github
+and issue a Pull Request to your master branch.  Submit the URL for your pull
+request.  After this is complete, you may merge your work to master.</p>
+<p>As usual, use the comments function in canvas to submit questions, comments and
+reflections on this work.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="github_profile.html"
+                        title="previous chapter">Complete Your GitHub Profile</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="hacker_news_account.html"
+                        title="next chapter">Sign Up for a Hacker News Account</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="hacker_news_account.html" title="Sign Up for a Hacker News Account"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="github_profile.html" title="Complete Your GitHub Profile"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

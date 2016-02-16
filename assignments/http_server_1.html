@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>401 Python: Lecture Notes &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Socket HTTP Server, Step 1 &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -56,33 +56,44 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="python-lecture-notes">
-<h1>401 Python: Lecture Notes<a class="headerlink" href="#python-lecture-notes" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-code-samples"></span><p>This is a comprehensive list of the lectures for this course.
-Lectures are often available both as HTML and as slides.
-Slides will be presented in class, but the full HTML will serve as long-form lecture notes.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="async.html">Concurrency</a></li>
-<li class="toctree-l1"><a class="reference internal" href="boto.html">Manage AWS Resources with Boto</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cgi_wsgi.html">Getting Data In</a></li>
-<li class="toctree-l1"><a class="reference internal" href="frameworks_and_wsgi.html">Introduction to Web Frameworks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="http.html">Understanding the HTTP Protocol</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_django.html">An Introduction To Django</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_python_1.html">Introduction To Python: Part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jenkins.html">Automate Tests with Travis CI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_apis.html">Extracting Data from the Web, II</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lettuce.html">Behavior Driven Development with Lettuce</a></li>
-<li class="toctree-l1"><a class="reference internal" href="protocols.html">Network Protocols in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_packages.html">Distributing Python Packages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="scraping.html">Extracting Data from the Web</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shell.html">Shell Customizations for Python Development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="simple_wsgi_deployment.html">Deploying a Simple WSGI Application on AWS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sockets.html">TCP/IP and Sockets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sql_persistence_in_python.html">SQL Persistence in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="virtualenv.html">Working with Virtualenv</a></li>
-<li class="toctree-l1"><a class="reference internal" href="which_python.html">Which Python?</a></li>
+  <div class="section" id="socket-http-server-step-1">
+<h1>Socket HTTP Server, Step 1<a class="headerlink" href="#socket-http-server-step-1" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-socket-http-server-step-1"></span><p>Building on the foundation of your Echo Server, you will begin to implement a
+simple HTTP server.</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>Create a new repository called &#8216;http-server&#8217; in GitHub for this work.  Make
+sure it contains an appropriate license and .gitignore file.  Make a branch
+&#8220;step1&#8221; from master to do your work for this assignment.</p>
+<ul class="simple">
+<li>Implement a function called response_ok that will return a well formed HTTP
+&#8220;200 OK&#8221; response as a byte string suitable for transmission through a
+socket. This method should accept no arguments and return a fully-formed
+proper response.</li>
+<li>Implement a function called response_error that will return a well formed
+HTTP &#8220;500 Internal Server Error&#8221; response.</li>
+<li>Update the server loop you built for the echo server so that it:<ul>
+<li>accumulates an incoming request into a variable</li>
+<li>&#8220;logs&#8221; that request by printing it to stdout</li>
+<li>returns a well-formed HTTP 200 response to the client.</li>
 </ul>
+</li>
+</ul>
+<p>As usual, write unit tests demonstrating each function you write before you
+implement the code to achieve it.  When you&#8217;ve finished the server loop, write
+a functional test that demonstrates that it works correctly.</p>
+<p>Include a solid README file with a description of the server you&#8217;re building.
+Include any sources or collaborations you used.</p>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>When you are done and your tests are all passing, push your work to GitHub and
+submit a pull request from the step1 branch back to master.  Copy the URL of
+the pull request.  After you&#8217;ve created the pull request you may merge the
+step1 branch back to master.</p>
+<p>Submit the URL of your pull request.</p>
+<p>As with every primary submission, use the Comments feature for this submission
+to add questions, comments and reflections on the work you have done so far.</p>
 </div>
 </div>
 
@@ -92,6 +103,15 @@ Slides will be presented in class, but the full HTML will serve as long-form lec
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Socket HTTP Server, Step 1</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">

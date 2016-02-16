@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>401 Python: Lecture Notes &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Learning Journal, Final Submission &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -56,34 +56,40 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="python-lecture-notes">
-<h1>401 Python: Lecture Notes<a class="headerlink" href="#python-lecture-notes" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-code-samples"></span><p>This is a comprehensive list of the lectures for this course.
-Lectures are often available both as HTML and as slides.
-Slides will be presented in class, but the full HTML will serve as long-form lecture notes.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="async.html">Concurrency</a></li>
-<li class="toctree-l1"><a class="reference internal" href="boto.html">Manage AWS Resources with Boto</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cgi_wsgi.html">Getting Data In</a></li>
-<li class="toctree-l1"><a class="reference internal" href="frameworks_and_wsgi.html">Introduction to Web Frameworks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="http.html">Understanding the HTTP Protocol</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_django.html">An Introduction To Django</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro_to_python_1.html">Introduction To Python: Part 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jenkins.html">Automate Tests with Travis CI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_apis.html">Extracting Data from the Web, II</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lettuce.html">Behavior Driven Development with Lettuce</a></li>
-<li class="toctree-l1"><a class="reference internal" href="protocols.html">Network Protocols in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_packages.html">Distributing Python Packages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="scraping.html">Extracting Data from the Web</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shell.html">Shell Customizations for Python Development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="simple_wsgi_deployment.html">Deploying a Simple WSGI Application on AWS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sockets.html">TCP/IP and Sockets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sql_persistence_in_python.html">SQL Persistence in Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="virtualenv.html">Working with Virtualenv</a></li>
-<li class="toctree-l1"><a class="reference internal" href="which_python.html">Which Python?</a></li>
-</ul>
+  <div class="section" id="learning-journal-final-submission">
+<h1>Learning Journal, Final Submission<a class="headerlink" href="#learning-journal-final-submission" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-learning-journal-final-submission"></span><p>Take the time to complete the work of building your learning journal.
+Incorporate your mockups from the class pre-work.  Update the adding of entries
+so that you use a separate page, rather than the form in the list page as in
+the tutorial.</p>
+<p>Do your work on a branch, ensuring that your master branch is kept safe. Write
+tests for new views you create, and adjust existing tests to match your
+mockups. Make a pull request back to your master branch when you are finished
+and deploy your completed work to Heroku.</p>
+<p>Finally, for your submission, a special pull request.</p>
+<p>On your development machine, check out the last commit you made to the
+learning-journal repository prior to starting work on step one of the learning
+journal.  You can do so by providing the commit hash as the argument to <code class="docutils literal"><span class="pre">git</span>
+<span class="pre">checkout</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ git checkout 1a39dc40
+</pre></div>
 </div>
+<p>Once you&#8217;ve made that checkout, you will see that you are in &#8220;detached HEAD&#8221;
+state.  From here create a new branch called start:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ git checkout -b start
+</pre></div>
+</div>
+<p>Then, push this branch up to your repository in github:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ git push -u origin start
+</pre></div>
+</div>
+<p>Finally, make a pull request in github from your master branch to the new start
+branch.  This will result in a pull request containing all the code you&#8217;ve
+written during the tutorial. <strong>Do not merge this pull request</strong>.</p>
+<p>To submit this assignment, use the text box to add two links.  One will be the
+link to your pull request in github.  The other will be the link to your
+deployed learning journal on Heroku.  Please ensure that you have DNS set up so
+that the link is not a Heroku app link, but your own domain name.</p>
 </div>
 
 
