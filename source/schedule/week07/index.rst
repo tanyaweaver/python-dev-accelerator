@@ -10,11 +10,13 @@ Week Seven
 
     This document contains no slides.
 
-.. toctree::
-   :maxdepth: 2
+The theme for the week is undecided.
 
-   mon
-   tue
-   wed
-   thu
-   fri
+.. toctree::
+   :maxdepth: 1
+
+   /schedule/week07/mon
+   /schedule/week07/tue
+   /schedule/week07/wed
+   /schedule/week07/thu
+   /schedule/week07/fri

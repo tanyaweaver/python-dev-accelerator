@@ -10,11 +10,13 @@ Week Six
 
     This document contains no slides.
 
-.. toctree::
-   :maxdepth: 2
+The theme for the week is undecided.
 
-   mon
-   tue
-   wed
-   thu
-   fri
+.. toctree::
+   :maxdepth: 1
+
+   /schedule/week06/mon
+   /schedule/week06/tue
+   /schedule/week06/wed
+   /schedule/week06/thu
+   /schedule/week06/fri
