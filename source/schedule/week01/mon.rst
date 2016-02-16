@@ -42,5 +42,5 @@ Demo
 Assignments
 ===========
 
-* :doc:`/assignments/pimp_your_editor   `
+* :doc:`/assignments/pimp_your_editor`
 * :doc:`/assignments/break_these_funcs`
