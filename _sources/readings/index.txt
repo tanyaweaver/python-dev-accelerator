@@ -1,13 +1,19 @@
-********
-Readings
-********
+.. slideconf::
+    :autoslides: False
 
-Readings to help explain some of the concepts in class
+***************************
+401 Python: Course Readings
+***************************
 
+.. slide:: Code Samples
+    :level: 1
+
+    This document contains no slides.
+
+A comprehensive list of readings for the Code Fellows Python 401 course.
 
 .. toctree::
-    :maxdepth: 2
+   :maxdepth: 1
+   :glob:
 
-    day01/index
-    day02/index
-    day03/index
+   /readings/*
