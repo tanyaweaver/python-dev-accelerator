@@ -198,16 +198,74 @@ conducting Code Fellows business or participating in Code Fellows classes,
 events, or activities, shall maintain an environment free of discrimination,
 including harassment, bullying, or retaliation.
 
+Pre-Work
+========
+
+.. include:: schedule/prework.rst
+    :start-line: 12
+
 Course Schedule
 ===============
 
-To find the assignments, readings, lecture notes and other materials for a
-given day, please select the day from the list below.
+Week 01
+-------
 
-.. toctree::
-    :maxdepth: 3
+.. include:: schedule/week01/index.rst
+    :start-line: 12
 
-    Weekly Schedule <schedule/index>
+Week 02
+-------
+
+.. include:: schedule/week02/index.rst
+    :start-line: 12
+
+Week 03
+-------
+
+.. include:: schedule/week03/index.rst
+    :start-line: 12
+
+Week 04
+-------
+
+.. include:: schedule/week04/index.rst
+    :start-line: 12
+
+Week 05
+-------
+
+.. include:: schedule/week05/index.rst
+    :start-line: 12
+
+Week 06
+-------
+
+.. include:: schedule/week06/index.rst
+    :start-line: 12
+
+Week 07
+-------
+
+.. include:: schedule/week07/index.rst
+    :start-line: 12
+
+Week 08
+-------
+
+.. include:: schedule/week08/index.rst
+    :start-line: 12
+
+Week 09
+-------
+
+.. include:: schedule/week09/index.rst
+    :start-line: 12
+
+Week 10
+-------
+
+.. include:: schedule/week10/index.rst
+    :start-line: 12
 
 All Course materials
 ====================

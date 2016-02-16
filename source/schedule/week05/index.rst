@@ -10,13 +10,15 @@ Week Five
 
     This document contains no slides.
 
-Theme of the Week:  PROJECT WEEK!
+The theme of the week is "Get It Done!"
+
+It's PROJECT WEEK!!!
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   mon
-   tue
-   wed
-   thu
-   fri
+   /schedule/week05/mon
+   /schedule/week05/tue
+   /schedule/week05/wed
+   /schedule/week05/thu
+   /schedule/week05/fri

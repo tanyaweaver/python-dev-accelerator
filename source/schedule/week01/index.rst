@@ -10,11 +10,13 @@ Week One
 
     This document contains no slides.
 
-.. toctree::
-   :maxdepth: 2
+The theme for the week is Python, Python, Python!
 
-   mon
-   tue
-   wed
-   thu
-   fri
+.. toctree::
+   :maxdepth: 1
+
+   /schedule/week01/mon
+   /schedule/week01/tue
+   /schedule/week01/wed
+   /schedule/week01/thu
+   /schedule/week01/fri

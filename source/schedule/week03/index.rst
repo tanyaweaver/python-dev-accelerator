@@ -10,11 +10,13 @@ Week Three
 
     This document contains no slides.
 
-.. toctree::
-   :maxdepth: 2
+The theme of the week is Pyramid.
 
-   mon
-   tue
-   wed
-   thu
-   fri
+.. toctree::
+   :maxdepth: 1
+
+   /schedule/week03/mon
+   /schedule/week03/tue
+   /schedule/week03/wed
+   /schedule/week03/thu
+   /schedule/week03/fri
