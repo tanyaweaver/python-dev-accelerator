@@ -1,6 +1,8 @@
 .. slideconf::
     :autoslides: False
 
+.. _learning_resources_chapter:
+
 *************************
 Useful Learning Resources
 *************************
@@ -19,6 +21,8 @@ Python Language Resources
 
 As a Python programmer, you'll want to keep a bookmark pointed at the `official Python documentation <https://docs.python.org/2/>`_, especially the documentation for the `standard library <https://docs.python.org/2/library/index.html>`_.
 However, there are a number of additional resources you can (and should) use to help build your Python chops.
+
+.. _learning_resources_beginner:
 
 For the beginner
 ----------------
@@ -64,6 +68,8 @@ I've drawn them both from my own usage of the various tools, and from `a wonderf
 `The poster she presented at PyCon 2014 <http://planningadinner.blogspot.com/2014/04/the-poster.html>`_ as a result of that research offers some great hints about the aspects of Python programming best covered by each resource.
 I urge any new student of Python to take the time to look over this poster to help determine the best path forward for themselves.
 
+.. _learning_resources_next_steps:
+
 Next Steps
 ----------
 
@@ -75,6 +81,8 @@ Next Steps
 `OpenHatch <https://openhatch.org/wiki/Intermediate_Python_Workshop/Projects>`_:
   The Open Hatch project offers a number of workshops with well-paced intermediate tutorials for Python programming.
   A great place to go once you have the basics down and are ready for more challenging work.
+
+.. _learning_resources_katas:
 
 Code Katas
 ----------
@@ -103,6 +111,8 @@ Full Stack Python
 
 `Matt Makai <https://www.linkedin.com/in/matthewmakai>`_, a developer evangelist for Twilio, maintains a site called `Full Stack Python <http://www.fullstackpython.com>`_ with a vast number of links to learning resources in Python.
 One of the most useful is his list of `learning resources <http://www.fullstackpython.com/best-python-resources.html>`_, which expands well beyond what I've listed here.
+
+.. _learning_resources_ipython:
 
 iPython Interpreter Resources
 =============================
