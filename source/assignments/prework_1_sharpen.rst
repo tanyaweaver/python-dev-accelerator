@@ -18,9 +18,9 @@ To help ease yourself into the experience it is important that you start limberi
 Be sure to spend at least one or two hours each day writing Python code.
 What you write is not as important as generally exercising your skills in thinking in Python.
 
-If you are brand new to python, begin with one of the learning resources listed here.
+If you are brand new to python, begin with one of these :ref:`learning resources <learning_resources_beginner>`.
 
-If you are comfortable with the basics of Python, stretch your skills by trying out some of the exercises in one of the websites listed under "Interview Materials" in the Supplemental Materials and Readings module of this course.
+If you are comfortable with the basics of Python, stretch your skills by trying out some of the exercises in one of :ref:`these websites <learning_resources_katas>`.
 
 Submitting Your Work
 ====================
