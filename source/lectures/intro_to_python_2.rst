@@ -31,6 +31,7 @@ In this lecture we'll get to know more about some of the core constructs of Pyth
 
             * Values and Types
             * Expressions and Statements
+            * Symbols and Binding
             * Blocks
             * Introduction to Functions
             * REPL, iPython, ``help``, and ``dir``
@@ -1249,6 +1250,29 @@ You can place values directly into the list, or symbols.
 If you use symbols, the values to which they are bound are actually stored.
 This creates another *reference* to the value, in addition to the reference from the symbol.
 
+.. slide:: Lists
+    :level: 3
+
+    Lists are ordered containers of values
+
+    .. rst-class:: build
+    .. container::
+
+        Build one with the *list object literal*: ``[]``:
+
+        .. code-block:: python
+
+            a_list = [2, 3, 5, 9]
+            a_list_of_strings = [u'this', u'that', u'the', u'other']
+            one, two, three = [1, 2, 3]
+            newlist = [one, two, three]
+
+        You may use literal values, or symbols
+
+        Values are always stored
+
+        Increases the references to contained values by 1
+
 Tuples
 ------
 
@@ -1261,13 +1285,38 @@ We construct a ``tuple`` using the ``()`` object literal:
     a_tuple = (2, 3, 4, 5)
     a_tuple_of_strings = (u'this', u'that', u'the', u'other')
     one, two, three = (1, 2, 3)
-    newlist = (one, two, three)
+    newtuple = (one, two, three)
 
 Like lists, you can place values or symbols into a tuple
 Like lists, placing a symbol stores its value and creates a new *reference* to that value.
 
 However, tuples are **not** the same as lists.
 The exact difference is a topic for next session.
+
+.. slide:: Tuples
+    :level: 3
+
+    Tuples are ordered containers of values
+
+    .. rst-class:: build
+    .. container::
+
+        Build one with the *tuple object literal*: ``()``:
+
+        .. code-block:: python
+
+            a_tuple = (2, 3, 4, 5)
+            a_tuple_of_strings = (u'this', u'that', u'the', u'other')
+            one, two, three = (1, 2, 3)
+            newtuple = (one, two, three)
+
+        You may use literal values, or symbols
+
+        Values are always stored
+
+        Increases the references to contained values by 1
+
+        *Not the same thing* as lists (more on this later)
 
 There are other container types, but these two will do for now.
 
@@ -1298,6 +1347,31 @@ Notice that after the loop has finished, the *loop variable* is still *in scope*
     In [12]: item
     Out[12]: 5
 
+.. slide:: For Loops
+    :level: 3
+
+    Repeat an action for each item in a collection:
+
+    .. rst-class:: build
+    .. container::
+
+        .. code-block:: ipython
+
+            In [10]: a_list = [2, 3, 4, 5]
+            In [11]: for item in a_list:
+               ....:     print(item)
+               ....:
+
+        Each time through, the *loop variable* is bound to the next value
+
+        .. container::
+
+            At the end, the *loop variable* is still *in scope*:
+
+            .. code-block:: language
+
+                In [12]: item
+                Out[12]: 5
 
 Range
 -----
@@ -1312,11 +1386,569 @@ You can use it when you need to perform some operatin a set number of times.
     Out[12]: [0, 1, 2, 3, 4, 5]
 
     In [13]: for i in range(6):
-       ....:     print(u'*', end=u' ')
+       ....:     print(u'spam', end=u' ')
        ....:
-    * * * * * *
+    spam spam spam spam spam spam
 
 That will be enough to work with for the time being.
 Each of these has intricacies we will explore further in later lessons.
 For now, let's turn to the issue of the larger organization of our code, and ``Modules`` and ``Packages``.
 
+.. slide:: ``range()``
+    :level: 3
+
+    Builds a list of numbers automatically
+
+    .. rst-class:: build
+    .. container::
+
+        In Python 3 it behaves differently (more later)
+
+        .. container::
+
+            Use it in *for loops* when you just want to do something ``n`` times:
+
+            .. code-block:: ipython
+
+                In [12]: range(6)
+                Out[12]: [0, 1, 2, 3, 4, 5]
+                In [13]: for i in range(6):
+                   ....:     print(u'spam', end=u' ')
+                   ....:
+                spam spam spam spam spam spam
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Modules, Packages and Namespaces
+================================
+
+
+In Python, the structure of your code is determined by whitespace.
+How you *indent* your code determines how it is structured.
+We say that Python is *whitespace significant*
+
+::
+
+    block statement:
+        some code body
+        some more code body
+        another block statement:
+            code body in
+            that block
+
+The colon that terminates a block statement is also important.
+You can put a one-liner after the colon:
+
+.. code-block:: ipython
+
+    In [167]: x = 12
+    In [168]: if x > 4: print(x)
+    12
+
+But this should **only** be done if it makes your code **more** readable.
+
+When indenting your code you *could* use any number of spaces, a tab, or even a mixture of tabs and spaces.
+However, if you want anyone to take you seriously as a Python developer, **Always use four spaces**.
+
+Other than indenting -- the spacing in your code doesn't matter, technically.
+
+.. code-block:: python
+
+    x = 3*4+12/func(x,y,z)
+    x = 3*4 + 12 /   func (x,   y, z)
+
+But you should strive for proper style.
+Code that is in a uniform, predictable style is easier to parse, and therefore easier to understand.
+You've already installed a linter in your editor so that it can watch over your style.
+Use it.
+
+And take some time to read the :pep:`Python style guide, PEP 8 <0008>`.
+
+
+.. slide:: Code Structure Review
+    :level: 3
+
+    Whitespace is significant::
+
+        block statement:
+            some code body
+            another block statement:
+                more code body
+
+    .. rst-class:: build
+    .. container::
+
+        The ``:`` is also important
+
+        .. container::
+
+            You *can* write a short one-liner after it
+
+            .. code-block:: ipython
+
+                In [167]: x = 12
+                In [168]: if x > 4: print(x)
+                12
+
+        Only if *more readable*
+
+.. slide:: The Cardinal Rule
+    :level: 3
+
+    .. rst-class:: large centered
+
+    **ALWAYS INDENT WITH 4 SPACES**
+
+.. slide:: Code Structure Review
+    :level: 3
+
+    Other than indentation, space is not important
+
+    .. rst-class:: build
+    .. container::
+
+        But style matters
+
+        .. container::
+
+            This is just fugly code:
+
+            .. code-block:: python
+
+                x = 3*4+12/func(x,y,z)
+                x = 3*4 + 12 /   func (x,   y, z)
+
+        Use your editor's style linter
+
+        And get to know :pep:`8`
+
+Beyond the realm of a single Python file, code is organized into ``modules`` and ``packages``.
+But to understand these, we have to talk briefly about ``namespaces``.
+
+Namespaces
+----------
+
+Try this in your interpreter:
+
+.. code-block:: ipython
+
+    In [35]: import this
+
+What you see there is "The Zen of Python".
+It's an easter-egg that's been in Python `since version 2.2.1 <http://www.wefearchange.org/2010/06/import-this-and-zen-of-python.html>`_.
+It comes from an email sent to the Python mailing list in 1999 by Tim Peters.
+
+Notice that last line?
+
+.. epigraph::
+
+   Namespaces are one honking great idea -- let's do more of those!
+
+   -- The Zen of Python, Tim Peters
+
+Python is *all about* namespaces.
+We've already met them in the form of *local names* in the scope of a function.
+In fact, the reason functions have *local names* is because like any other object in Python function have a namespace.
+We can see it by calling the builting function :func:`locals <python2:locals>` (:py:func:`py3 <locals>`) inside a function:
+
+.. code-block:: ipython
+
+    In [1]: def mynamespace(a, b, c=u'default'):
+       ...:     print(locals())
+       ...:
+
+    In [2]: mynamespace(1, 2)
+    {'c': 'default', 'a': 1, 'b': 2}
+
+We've also seen it when we use ``dir`` to inspect an object in Python.
+What you see is the namespace of that object.
+
+.. slide:: Namespaces
+    :level: 3
+
+    .. code-block:: ipython
+
+        In [3]: import this
+
+    .. rst-class:: build
+    .. container::
+
+        Namespaces are key to Python
+
+        We met them in functions, described as *local scope*
+
+        And when we use the ``dir`` function to inspect an object
+
+        The resulting list is all names in the object's namespace
+
+        We also see them in the ``.`` operator:
+
+        ``name.another_name``
+
+
+Another place we see namespaces is in *those dots*:
+
+    ``name.another_name``
+
+The "dot" indicates that you are looking for ``another_name`` in the *namespace* of the object bound to ``name``.
+It could be any number of things:
+
+* name in a module
+* module in a package
+* attribute of an object
+* method of an object
+
+Modules
+-------
+
+In Python, a *module* is a kind of namespace.
+It might be a single file, or it could be a collection of files that define a shared API.
+As we have said before, to a first approximation, you can think of the files you write that end in ``.py`` as modules.
+
+You can use the :keyword:`import <python2:import>` (:py:keyword:`py3 <import>`) statement to gain access to the names in a module.
+In combination with ``import`` the :keyword:`from <python2:from>` (:py:keyword:`py3 <from>`) statement provides a flexible syntax for accessing code.
+The module must be in your ``PYTHONPATH``.
+If, for example, there is a module ``modulename.py`` in that path, then any of these forms will work:
+
+.. code-block:: python
+
+    import modulename
+
+This binds the symbol ``modulename`` in the current namespace to the module ``modulename``.
+All the names in the namespace of that module may be accessed from that module object by the ``.`` operator.
+
+.. code-block:: python
+
+    from modulename import this, that
+
+This binds the value that are bound to the name ``this`` and ``that`` in ``modulename`` to the same names in the current namespace.
+No other names from ``modulename`` are brought in.
+And nor is the ``modulename`` module, either.
+
+.. code-block:: python
+
+    import modulename as a_new_name
+
+This binds the symbol ``a_new_name`` in the current namespace to the module ``modulename``.
+Again, the names in the module namespace may be reference by the ``.`` operator from ``a_new_name``.
+
+.. code-block:: python
+
+    from modulename import this as that
+
+This binds to the name ``that`` in the current namespace the value from ``modulename`` that was bound to the symbol ``this``.
+This import form (and the previous one) *alias* the objects under new names, and can be useful in the case of name collisions across different modules.
+
+.. slide:: Modules
+    :level: 3
+
+    A Module is a Python file (mostly)
+
+    .. rst-class:: build
+    .. container::
+
+        A module is also a kind of namespace
+
+        Every name bound in the module is part of that namespace
+
+        Use ``import`` and ``from`` to get at them from outside:
+
+        .. code-block:: python
+
+            import modulename
+            from modulename import this, that
+            import modulename as a_new_name
+            from modulename import this as that
+
+Packages
+--------
+
+A package is a module with other modules in it.
+On a filesystem, this is represented as a directory that contains one or more ``.py`` files, one of which **must** be called ``__init__.py``.
+A package is also a namespace.
+You can likewise use ``import`` to gain access to the package, the modules it contains, and the names within them.
+
+::
+
+    packagename/
+    ├── __init__.py
+    └── modulename.py
+
+.. code-block:: python
+
+    import packagename.modulename
+
+This binds the module ``modulename`` to the name ``packagename.modulename`` in the current namespace.
+Names within the module may be accessed using the ``.`` operator from that name.
+
+.. code-block:: python
+
+    from packagename.modulename import this, that
+
+This binds the values of ``this`` and ``that`` in the ``modulename`` namespace to the same names in the current namespace.
+The name ``packagename.modulename`` is not bound.
+
+.. code-block:: python
+
+    from packagename import modulename
+
+This binds the module ``modulename`` to that same name in the current namespace.
+The name ``packagename`` is not bound.
+
+For more information, you can read `this article on Python imports <http://effbot.org/zone/import-confusion.htm>`_.
+
+.. slide:: Packages
+    :level: 3
+
+    Folders that contain at least ``__init__.py``::
+
+        packagename/
+        ├── __init__.py
+        └── modulename.py
+
+    .. rst-class:: build
+    .. container::
+
+        It's also a module that contains other modules
+
+        It is also a namespace
+
+        Use ``import`` and ``from`` to access the contents
+
+        .. code-block:: python
+
+            import packagename.modulename
+            from packagename.modulename import this, that
+            from packagename import modulename
+
+
+.. slide:: A Cardinal Rule
+    :level: 3
+
+    You see this sometimes:
+
+    .. rst-class:: build
+    .. container::
+
+        .. code-block:: python
+
+            from modulename import *
+
+        .. rst-class:: large centered
+
+        **Don't Do This**
+
+
+Import
+------
+
+When you import a module, or a symbol from a module, the Python code is *compiled* to **bytecode**.
+The result is a ``.pyc`` file.
+In Python 2, these files are alongside the ``.py`` files.
+In Python 3, they go in a special folder called ``__pycache__``.
+
+This process **executes all code at the module scope**.
+For this reason, it's a very good idea to avoid statements at module-scope that have global side-effects.
+
+.. slide:: Import Effects
+    :level: 3
+
+    Using ``import`` compiles module code to *bytecode*
+
+    .. rst-class:: build
+    .. container::
+
+        Creates a ``module.pyc`` file
+
+        Look in ``__pycache__`` in Python 3
+
+        This **executes all code at the module scope**
+
+        avoid module-scope statements with global side-effects
+
+
+The code in a module is NOT re-run when imported again.
+Python is aware that bytecode exists and uses it directly.
+The module must be explicitly :func:`reloaded <python2:reload>` (:func:`py3 <reload>`) to be re-run.
+
+.. code-block:: python
+
+    import modulename
+    reload(modulename)
+
+Be careful when doing this.
+It can have unexpected effects if you are working with multiple modules that import each-other.
+
+.. slide:: Reload
+    :level: 3
+
+    Code is not re-run when imported again
+
+    .. rst-class:: build
+    .. container::
+
+        Python uses the bytecode instead
+
+        use ``reload``:
+
+        .. code-block:: python
+
+            import modulename
+            reload(modulename)
+
+        Be careful with this one
+
+        Strange things can happen
+
+
+Running a Module
+----------------
+
+In addition to importing modules, you can ``run`` them.
+We have seen this briefly before.
+There are a few ways to do this:
+
+* ``$ python hello.py``   -- must be in current working directory
+* ``$ python -m hello``   -- any module on PYTHONPATH anywhere on the system
+* ``$ ./hello.py``        -- put ``#!/usr/bin/env python``  at top of module (Unix)
+* ``In [149]: run hello.py``     -- at the IPython prompt -- running a module brings its names into the interactive namespace
+
+  .. slide:: Running a Module
+      :level: 3
+
+      ``$ python hello.py``
+
+      .. rst-class:: build
+      .. container::
+
+          ``$ python -m hello``
+
+          ``$ ./hello.py`` (with ``#!/usr/bin/env python``)
+
+          ``In [149]: run hello.py``
+
+Like importing, running a module executes all statements at the module level.
+But there's an important difference.
+Every module has a ``__name__`` symbol in it's namespace
+When you import the module, that symbol is bound to the name of the module file.
+But when you *run* a module, it is bound to the string ``"__main__"``.
+
+This allows you to create blocks of code protected by a conditional that checks for this.
+The contained code is only run when the module is *run*.
+
+.. code-block:: python
+
+    if __name__ == '__main__':
+        # Do something interesting here
+        # It will only happen when the module is run
+
+.. slide:: Import vs. Run
+    :level: 3
+
+    When importing:
+
+    ``module.__name__`` is the filename of ``module``.
+
+    .. rst-class:: build
+    .. container::
+    
+        But when running ``module``
+
+        ``module.__name__`` is ``"__main__"``
+
+        Write runtime code in modules:
+
+        .. code-block:: python
+        
+            if __name__ == '__main__':
+                # Do something interesting here
+                # It will only happen when the module is run
+
+Main Blocks
+***********
+
+This pattern is very common.
+It's useful in a number of cases.
+You can put code here that lets your module be a utility script.
+You can put code here that demonstrates the functions contained in your module.
+And you can put code here that *proves* that your module code works.
+
+.. slide:: Main Blocks
+    :level: 3
+
+    This pattern is common, useful
+
+    .. rst-class:: build
+    .. container::
+
+        Use it for runtime code that makes your module a script
+
+        Use it for code that demonstrates the functions in your module
+
+        Use it for code that proves your module works
+
+        [demo]
+
+Assert
+******
+
+Writing *tests* that demonstrate that your program works is an important part of learning to program.
+The python :keyword:`assert <python2:assert>` (:py:keyword:`py3 <assert>`) statement is useful in writing simple ``main`` blocks that test your code.
+It is followed by a Python expression which is evaluated for its boolean value.
+If the value is False, an ``AssertionError`` is raised.
+
+.. code-block:: python
+
+    # calculations.py
+    def add(n1, n2):
+        """return the sum of n1 and n2"""
+        return n1 + n2
+
+    if __name__ == '__main__':
+        # adding produces the right sum
+        assert add(3, 4) == 7
+        # adding does not produce the wrong sum
+        assert add(3, 4) != 10
+
+.. slide:: Assert
+    :level: 3
+
+    Tests prove your code works
+
+    .. rst-class:: build
+    .. container::
+    
+        Writing tests is important in learning to program
+
+        Add simple tests with ``assert``:
+
+        .. code-block:: python
+
+            # calculations.py
+            def add(n1, n2):
+                """return the sum of n1 and n2"""
+                return n1 + n2
+
+            if __name__ == '__main__':
+                # adding produces the right sum
+                assert add(3, 4) == 7
+                # adding does not produce the wrong sum
+                assert add(3, 4) != 10
+
+We'll learn more about testing soon.
