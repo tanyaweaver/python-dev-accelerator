@@ -61,3 +61,4 @@ docs/_build/
 
 *.sublime-*
 pip-selfcheck.json
+.ipynb_checkpoints
