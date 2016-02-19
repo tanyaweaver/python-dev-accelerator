@@ -15,8 +15,8 @@ Introduction To Python: Part 2
 In this lecture we'll get to know more about some of the core constructs of Python programming:
 
 * Functions
-* Booleans and Conditionals
-* Looping and Containers
+* Conditionals and Booleans
+* Simple Looping and Containers
 * Modules and Packages
 
 .. slide:: Quick Review
@@ -708,13 +708,164 @@ Try writing this function in Python yourself!
 
 
 
-Booleans and Conditionals
+Conditionals and Booleans
 =========================
 
-What does it mean to be true or false in Python?
+Making decisions in programming is quite important.
+We call the language constructs that support decision making *conditionals*.
+Conditionals depend on *boolean logic* (logic based on ``True`` and ``False``).
+Let's learn more about how Python handles conditionals and booleans.
 
-Truthiness
-----------
+Conditionals
+------------
+
+Python supports conditionals through the :keyword:`if <python2:if>` (:py:keyword:`py3 <if>`) statement.
+It looks an awful lot like ``if`` in other languages::
+
+    if <expression>:
+        <do truthy things>
+
+And like in other languages, there is support for an :keyword:`else <python2:else>` (:py:keyword:`py3 <else>`) clause.
+This is executed when the ``<expression>`` is falsy::
+
+    if <expression>:
+        <do truthy things>
+    else:
+        <do falsy things>
+
+Python also supports multiple test expressions through the use of the :keyword:`elif <python2:elif>` (:py:keyword:`py3 <elif>`) clause.
+You may have as many alternate tests as you wish.
+They are evaluated in order from the top to the bottom.
+The block of code contained under the first one that matches is executed and all other clauses are ignored.
+
+::
+
+    if <expression1>:
+        <do truthy things>
+    elif <expression2>:
+        <do other truthy things>
+    else:
+        <do falsy things>
+
+.. slide:: Conditionals
+    :level: 3
+
+    Use the ``if`` statement:
+
+    .. code-block:: python
+
+        if a:
+            print(u'a is true')
+
+.. slide:: Conditionals
+    :level: 3
+
+    Use the ``if`` statement:
+
+    .. code-block:: python
+
+        if a:
+            print(u'a is true')
+        else:
+            print(u'a is false')
+
+.. slide:: Conditionals
+    :level: 3
+
+    Use the ``if`` statement:
+
+    .. code-block:: python
+
+        if a:
+            print(u'a is true')
+        elif b:
+            print(u'b is true')
+        elif c:
+            print(u'c is true')
+        else:
+            print(u'is there no truth in the world?')
+
+Make certain you understand the difference between these two programs:
+
+.. code-block:: python
+
+    if a:
+        print(u'a')
+    elif b:
+        print(u'b')
+
+.. code-block:: python
+
+    if a:
+        print(u'a')
+    if b:
+        print(u'b')
+
+Notice that the test expression can be any valid Python expression.
+Remember, evaluating an expression always results in a value.
+Since all Python values have a boolean value, any valid expression will work.
+
+Also notice that the test expression does not need to be contained in parentheses.
+This is quite different from most other languages.
+Only use parentheses in test expressions if you are trying to defeat standard operator precedence.
+
+.. slide:: Conditional Details
+    :level: 3
+
+    Make sure you understand the difference:
+
+    .. rst-class:: build
+    .. container::
+
+        .. code-block:: python
+
+            if a:
+                print(u'a')
+            elif b:
+                print(u'b')
+            # versus
+            if a:
+                print(u'a')
+            if b:
+                print(u'b')
+
+        Any valid Python expression can be used as a test
+
+        You don't need to put the test in parentheses
+
+        Python has **No Switch Construct**
+
+Switch
+******
+
+Many languages (JavaScript among them) have a ``switch`` construct.
+
+.. code-block:: js
+
+    switch (expr) {
+      case "Oranges":
+        document.write("Oranges are $0.59 a pound.<br>");
+        break;
+      case "Apples":
+        document.write("Apples are $0.32 a pound.<br>");
+        break;
+      case "Mangoes":
+      case "Papayas":
+        document.write("Mangoes and papayas are $2.79 a pound.<br>");
+        break;
+      default:
+        document.write("Sorry, we are out of " + expr + ".<br>");
+    }
+
+This form is **not present in Python**.
+Instead, you are encouraged to use the ``if...elif...else`` conditional construction.
+Another option is to use a dictionary (more on what that means in our next lesson).
+
+So we can make decisions using ``if``, depending on whether the test statement is true or False.
+But what does it mean to be true or false in Python?
+
+Booleans
+--------
 
 In Python, there are two boolean objects: ``True`` and ``False``.
 Each is an *object literal*, that is to say, simply writing them as-is evaluates to the object itself.
@@ -764,13 +915,10 @@ Everything else is *truthy*
 
         **Everything Else**
 
-The ``if`` Keyword
-------------------
-
 Any object in Python, when passed to the ``bool()`` type object, will evaluate to ``True`` or ``False``.
 But you rarely need to use this feature yourself.
-When you use the :keyword:`if <python2:if>` (:py:keyword:`py3 <if>`) statement, it automatically does this to the expression provided.
-Which means that this is redundant, and not Pythonic:
+When you use the :keyword:`if <python2:if>` (:py:keyword:`py3 <if>`) statement, it automatically reads the boolean value of its test expression.
+Which means that these forms are redundant, and not Pythonic:
 
 .. code-block:: python
 
@@ -784,7 +932,7 @@ Which means that this is redundant, and not Pythonic:
     if bool(xx) == True:
         do_something()
 
-Instead, use what Python gives you:
+Instead, you should use what Python gives you:
 
 .. code-block:: python
 
@@ -799,7 +947,7 @@ Instead, use what Python gives you:
 
     .. rst-class:: build
     .. container::
-    
+
         These are not Pythonic:
 
         .. code-block:: python
@@ -821,10 +969,10 @@ Instead, use what Python gives you:
             if xx:
                 do_something()
 
-
 Boolean Operators
------------------
+*****************
 
+Boolean operators allow us to combine and alter boolean values in a number of ways.
 Python has three boolean operators, :keyword:`and <python2:and>` (:py:keyword:`py3 <and>`), :keyword:`or <python2:or>` (:py:keyword:`py3 <or>`) and :keyword:`not <python2:not>` (:py:keyword:`py3 <not>`).
 Both ``and`` and ``or`` are binary operators (require a operand on the left and right of the keyword), and evaluate from left to right.
 
@@ -1075,143 +1223,60 @@ Here's an even better solution:
               Out[6]: 4
 
 
+Simple Looping and Containers
+=============================
+
+In order to do something interesting for homework, we are going to need to touch on looping and containers.
+We will visit them more in-depth in a later lesson.
+This is just a quick introduction
 
 
+Lists
+-----
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Basics
-------
-
-It turns out you can't really do much at all without at least a container type,
-conditionals and looping...
-
-
-.. nextslide:: if
-
-``if`` and ``elif`` allow you to make decisions:
-
-.. code-block:: python
-
-    if a:
-        print(u'a')
-    elif b:
-        print(u'b')
-    elif c:
-        print(u'c')
-    else:
-        print(u'that was unexpected')
-
-
-.. nextslide:: if
-
-What's the difference between these two:
-
-.. code-block:: python
-
-    if a:
-        print(u'a')
-    elif b:
-        print(u'b')
-    ## versus...
-    if a:
-        print(u'a')
-    if b:
-        print(u'b')
-
-
-.. nextslide:: switch?
-
-Many languages have a ``switch`` construct:
-
-.. code-block:: js
-
-    switch (expr) {
-      case "Oranges":
-        document.write("Oranges are $0.59 a pound.<br>");
-        break;
-      case "Apples":
-        document.write("Apples are $0.32 a pound.<br>");
-        break;
-      case "Mangoes":
-      case "Papayas":
-        document.write("Mangoes and papayas are $2.79 a pound.<br>");
-        break;
-      default:
-        document.write("Sorry, we are out of " + expr + ".<br>");
-    }
-
-.. nextslide:: switch?
-
-**Not Python**
-
-use ``if..elif..elif..else``
-
-(or a dictionary, or subclassing....)
-
-
-.. nextslide:: lists
-
-A way to store a bunch of stuff in order
-
-Pretty much like an "array" or "vector" in other languages
+A :class:`list <python2:list>` (:py:class:`py3 <list>`) is a container that stores values in order.
+It is pretty much like an "array" or "vector" in other languages.
+We can construct one using the ``list`` object literal: ``[]``:
 
 .. code-block:: python
 
     a_list = [2, 3, 5, 9]
     a_list_of_strings = [u'this', u'that', u'the', u'other']
+    one, two, three = [1, 2, 3]
+    newlist = [one, two, three]
 
+You can place values directly into the list, or symbols.
+If you use symbols, the values to which they are bound are actually stored.
+This creates another *reference* to the value, in addition to the reference from the symbol.
 
-.. nextslide:: tuples
+Tuples
+------
 
-Another way to store an ordered list of things
+The :class:`tuple <python2:tuple>` (:py:class:`py3 <tuple>`) is another container type.
+It also stores values in order.
+We construct a ``tuple`` using the ``()`` object literal:
 
 .. code-block:: python
 
     a_tuple = (2, 3, 4, 5)
     a_tuple_of_strings = (u'this', u'that', u'the', u'other')
+    one, two, three = (1, 2, 3)
+    newlist = (one, two, three)
 
+Like lists, you can place values or symbols into a tuple
+Like lists, placing a symbol stores its value and creates a new *reference* to that value.
 
-Tuples are **not** the same as lists.
-
+However, tuples are **not** the same as lists.
 The exact difference is a topic for next session.
 
+There are other container types, but these two will do for now.
 
-.. nextslide:: for
+For Loops
+---------
 
-Sometimes called a 'determinate' loop
-
-When you need to do something to everything in a sequence
+The :keyword:`for <python2:for>` (:py:keyword:`py3 <for>`) statement in Python defines a *for loop*.
+The *for loop* is also sometimes called a 'determinate' loop, because it will repeat a determined number of times.
+You use a *for loop* when you need to take some action on every item in a container.
 
 .. code-block:: ipython
 
@@ -1225,12 +1290,21 @@ When you need to do something to everything in a sequence
     4
     5
 
+As the loop repeats, each item from the container is bound, successively, to the *loop variable*.
+Notice that after the loop has finished, the *loop variable* is still *in scope*:
 
-.. nextslide:: range() and for
+.. code-block:: ipython
 
-Range builds lists of numbers automatically
+    In [12]: item
+    Out[12]: 5
 
-Use it when you need to do something a set number of times
+
+Range
+-----
+
+The :func:`range <python2:range>` builtin automatically builds a list of numbers.
+In :class:`python 3 <range>` it operates differently (more on that in a later lesson).
+You can use it when you need to perform some operatin a set number of times.
 
 .. code-block:: ipython
 
@@ -1242,11 +1316,7 @@ Use it when you need to do something a set number of times
        ....:
     * * * * * *
 
+That will be enough to work with for the time being.
+Each of these has intricacies we will explore further in later lessons.
+For now, let's turn to the issue of the larger organization of our code, and ``Modules`` and ``Packages``.
 
-.. nextslide:: Intricacies
-
-This is enough to get you started.
-
-Each of these have intricacies special to python
-
-We'll get to those over the next couple of classes
