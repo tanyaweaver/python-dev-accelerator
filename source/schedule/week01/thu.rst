@@ -28,5 +28,6 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/mailroom_madness_2_building`
 * :doc:`/assignments/deliberate_programming`
 * :doc:`/assignments/daily_lj_entry`
