@@ -24,6 +24,8 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
+    <link rel="next" title="Introduction To Python: Part 2" href="../../lectures/intro_to_python_2.html" />
+    <link rel="prev" title="Introduction To Python: Part 1" href="../../lectures/intro_to_python_1.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -47,6 +49,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../lectures/intro_to_python_2.html" title="Introduction To Python: Part 2"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../../lectures/intro_to_python_1.html" title="Introduction To Python: Part 1"
+             accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -56,25 +64,195 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="tuesday">
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="tuesday">
 <h1>Tuesday<a class="headerlink" href="#tuesday" title="Permalink to this headline">¶</a></h1>
 <span class="admonition-course-presentations"></span><div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Deepen our understanding of functions in Python, including scoping and recursion</li>
+<li>Build a strong knowledgs of Boolean values, and how to use them Pythonically</li>
+<li>Learn a bit about looping and the basic container types</li>
+<li>Discover Modules, Packages and namespaces and learn to import names</li>
+<li>Learn about TDD principles</li>
+<li>Develop a small project using TDD and <a class="reference external" href="http://pytest.org/latest/">pytest</a></li>
+</ul>
 </div>
 <div class="section" id="readings">
 <h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://effbot.org/zone/import-confusion.htm">http://effbot.org/zone/import-confusion.htm</a></li>
+<li>Watch Ned Batchelder from the EdX project <a class="reference external" href="https://www.youtube.com/watch?v=FxSsnHeWQBY">talk about testing</a> (~40 min)</li>
+</ul>
 </div>
 <div class="section" id="review">
 <h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<p>Review materials from the previous lesson:</p>
+<ul class="simple">
+<li>Values and Types</li>
+<li>Expressions and Statements</li>
+<li>Symbols and Binding</li>
+<li>Blocks</li>
+<li>Introduction to Functions</li>
+<li>REPL, iPython, <code class="docutils literal"><span class="pre">help</span></code>, and <code class="docutils literal"><span class="pre">dir</span></code></li>
+</ul>
 </div>
 <div class="section" id="concepts">
 <h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/intro_to_python_2.html">Introduction To Python: Part 2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_2.html#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_2.html#conditionals-and-booleans">Conditionals and Booleans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_2.html#simple-looping-and-containers">Simple Looping and Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_2.html#modules-packages-and-namespaces">Modules, Packages and Namespaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/tdd_with_pytest.html">Test Driven Development with <code class="docutils literal"><span class="pre">pytest</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/tdd_with_pytest.html#what-is-tdd">What is TDD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/tdd_with_pytest.html#exploring-tdd">Exploring TDD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/tdd_with_pytest.html#wrap-up">Wrap Up</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Recursion</li>
+<li>Conditionals and Boolean Return Values</li>
+<li>Test Driven Development with pytest</li>
+</ul>
 </div>
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../../assignments/math_series.html"><em>Mathematical Series</em></a></li>
+<li><a class="reference internal" href="../../assignments/twitter_account.html"><em>Create a Twitter Account</em></a></li>
+</ul>
+<p>If you finish those, spend time running through the next four chapters of <a class="reference external" href="http://interactivepython.org/runestone/static/thinkcspy/index.html">How to Think Like a Computer Scientist</a>
+Sign up for an account and read and work through the exercises in:</p>
+<ul class="simple">
+<li>Chapter 4: <a class="reference external" href="http://interactivepython.org/runestone/static/thinkcspy/PythonTurtle/intro-HelloLittleTurtles.html">Python Turtle Graphics</a></li>
+<li>Chapter 5: <a class="reference external" href="http://interactivepython.org/runestone/static/thinkcspy/PythonModules/modules.html">Python Modules</a></li>
+<li>Chapter 6: <a class="reference external" href="http://interactivepython.org/runestone/static/thinkcspy/Functions/functions.html">Functions</a></li>
+<li>Chapter 7: <a class="reference external" href="http://interactivepython.org/runestone/static/thinkcspy/Selection/BooleanValuesandBooleanExpressions.html">Selection</a></li>
+</ul>
+<p>There is no submission for these review materials.</p>
 </div>
 </div>
 
@@ -97,6 +275,12 @@
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../../lectures/intro_to_python_1.html"
+                        title="previous chapter">Introduction To Python: Part 1</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../lectures/intro_to_python_2.html"
+                        title="next chapter">Introduction To Python: Part 2</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
@@ -120,6 +304,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../../lectures/intro_to_python_2.html" title="Introduction To Python: Part 2"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../../lectures/intro_to_python_1.html" title="Introduction To Python: Part 1"
+             >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>

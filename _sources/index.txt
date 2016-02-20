@@ -209,11 +209,11 @@ Course Schedule
 
 Under Construction
 
-.. Week 01
-.. -------
+Week 01
+-------
 
-.. .. include:: schedule/week01/index.rst
-..     :start-line: 12
+.. include:: schedule/week01/index.rst
+    :start-line: 12
 
 .. Week 02
 .. -------
@@ -276,20 +276,20 @@ Direct links to all course materials, without reference to schedule
 
 Under Construction
 
-.. Lecture Notes
-.. -------------
+Lecture Notes
+-------------
 
-.. .. include:: lectures/index.rst
-..     :start-line: 12
+.. include:: lectures/index.rst
+    :start-line: 12
 
-.. Assignments
-.. -----------
+Assignments
+-----------
 
-.. .. include:: assignments/index.rst
-..     :start-line: 12
+.. include:: assignments/index.rst
+    :start-line: 12
 
-.. Readings
-.. --------
+Readings
+--------
 
-.. .. include:: readings/index.rst
-..     :start-line: 12
+.. include:: readings/index.rst
+    :start-line: 12

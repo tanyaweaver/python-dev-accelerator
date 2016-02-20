@@ -1,0 +1,783 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Test Driven Development with pytest &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="Tuesday" href="../schedule/week01/tue.html" />
+    <link rel="next" title="Wednesday" href="../schedule/week01/wed.html" />
+    <link rel="prev" title="Introduction To Python: Part 2" href="intro_to_python_2.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../schedule/week01/wed.html" title="Wednesday"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro_to_python_2.html" title="Introduction To Python: Part 2"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week01/tue.html" accesskey="U">Tuesday</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="test-driven-development-with-pytest">
+<h1>Test Driven Development with <code class="docutils literal"><span class="pre">pytest</span></code><a class="headerlink" href="#test-driven-development-with-pytest" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-test-driven-development-with-pytest"></span><p>In this session, we will learn the basics of Test Driven Development.
+Our tool for accomplishing this will be <a class="reference external" href="http://pytest.org/latest/">pytest</a>, a powerful and pluggable test runner.</p>
+<div class="section" id="what-is-tdd">
+<h2>What is TDD<a class="headerlink" href="#what-is-tdd" title="Permalink to this headline">¶</a></h2>
+<blockquote class="epigraph">
+<div><p>Untested code is broken by design</p>
+<p class="attribution">&mdash;Surely Somebody</p>
+</div></blockquote>
+<p>As developers, we all &#8220;know&#8221; that we need to write tests.
+But developing the discipline to do so is a burden.
+Especially when you are brand new.
+You have so many other things to deal with, so many things to learn.
+Surely there are more important things you need to do, right?</p>
+<p><strong>NO</strong></p>
+<p>There is no more important discipline you can develop than writing tests.</p>
+<span class="admonition-test-driven-development"></span><div class="section" id="defining-the-problem">
+<h3>Defining The Problem<a class="headerlink" href="#defining-the-problem" title="Permalink to this headline">¶</a></h3>
+<p>So why do so many of us not write tests?
+I can&#8217;t speak for anyone else.
+But for me the biggest hurdle is that test writing is so <em>different</em> and so <em>unrelated</em> to the work I&#8217;m doing in developing software.</p>
+<p>I develop interactively, building an understanding of the problem I&#8217;m facing by working in the interpreter until I feel I&#8217;ve got a good understanding of the problem.
+Only then do I move to the editor and begin building actual code.
+By that time, I&#8217;m so accustomed to working in the terminal, that interactively &#8220;testing&#8221; my work by poking at it in an interpreter seems intuitive.</p>
+<p>Once I&#8217;ve finished a solution, and played with it enough interactively to believe it works, writing tests for it becomes <em>another thing</em> I have to do.
+Now that I&#8217;ve done my primary job, I have to move over to this other file, write a bunch more code, and run it repeatedly.
+The work feels so <em>extraneous</em> to what I consider my <em>real job</em> that I am sorely tempted to skip it.</p>
+<p>(I&#8217;m embarassed to say I often give in to the temptation too)</p>
+<p>The problem is that the act of <em>testing</em> is too far removed from <em>development</em>.
+It happens at a different time than my development work.
+And it happens in a different conceptual space than my development work.</p>
+<span class="admonition-defining-the-problem"></span></div>
+<div class="section" id="proposing-a-solution">
+<h3>Proposing a Solution<a class="headerlink" href="#proposing-a-solution" title="Permalink to this headline">¶</a></h3>
+<p>The solution should be pretty clear.
+If the problem is that development and testing are too far apart, then move them closer together.
+This is the aim of Test Driven Development.
+To close both the temporal and conceptual gaps between the worlds of development and testing.</p>
+<div class="section" id="closing-the-conceptual-gap">
+<h4>Closing the Conceptual Gap<a class="headerlink" href="#closing-the-conceptual-gap" title="Permalink to this headline">¶</a></h4>
+<p>The conceptual gap is that space between what is perceived <em>development</em> work and what seems to be <em>testing</em> work.</p>
+<p>Especially in interpreted languages like Python, it&#8217;s easy to get started solving a problem by playing with the code.
+We open an interpreter and write some lines.
+We try different approaches, explore possible solutions.
+We reject failed paths and zero in on a correct answer.
+It&#8217;s a process of coming to understand the shape of the problem we&#8217;ve been asked to solve.</p>
+<p>What we don&#8217;t notice is that this process is not actually one of <em>development</em> but of <em>testing</em>.
+Thinking of this as development is actually backwards.</p>
+<p>What if we were to put the label <em>testing</em> on this type of work instead?
+Then we could start by writing <em>tests</em> that help us to determine the shape of our problem.
+Then, implementing code to make the tests pass proves that we have achieved a <em>correct</em> solution.</p>
+<span class="admonition-the-conceptual-gap"></span><p>Let&#8217;s imagine that later we discover we have a poor understanding of the problem.
+Maybe the problem is a little different than we at first believed.
+Maybe there are edge cases we didn&#8217;t anticipate.</p>
+<p>At that point, we can return to our tests.
+update them to better describe our new understanding.
+Or we can add new tests to cover the unexpected circumstances we are now aware of.</p>
+<p>These new tests will fail.
+So we can return to our implementation code.
+We update it so that our new tests pass, an ensure the other tests keep passing.
+And when we are done, we know we have a working system.</p>
+<span class="admonition-test-implement-cycle"></span><p>This is the cycle of Test Driven Development.
+Some developers call it <strong>&#8220;Red-Green-Refactor&#8221;</strong></p>
+<p>We start by writing a test that shows what what want to have happen (<strong>Red</strong>)</p>
+<p>Then we implement code that makes that test pass (<strong>Green</strong>)</p>
+<p>And then as our understanding of the problem evolves, we update (<strong>Refactor</strong>)</p>
+<p>It&#8217;s a nice, neat cycle.</p>
+<span class="admonition-red-green-refactor"></span></div>
+<div class="section" id="closing-the-temporal-gap">
+<h4>Closing the Temporal Gap<a class="headerlink" href="#closing-the-temporal-gap" title="Permalink to this headline">¶</a></h4>
+<p>The temporal gap is the space in time between when we write implementation code and when we write tests.</p>
+<p>Traditionally, we do our development and then, later, we write tests.
+When we do this, the large temporal gap makes it hard to actually do the work of writing the tests.
+It&#8217;s entirely too tempting to say our <em>real work</em> is done.</p>
+<p>What if we were to move the act of development and the act of testing much closer in time?
+What if we focused on writing small tests, then small functions, then refactoring?
+Could we bring the two so close in time that the two separate acts become one?</p>
+<p>Test Driven Development seeks to close this gap.
+In &#8220;true&#8221; TDD, you are supposed to write no more test than is needed to have it fail.
+Then you write no more code than you need to make the test pass.
+Then you repeat.</p>
+<p>Again, this is the <strong>&#8220;Red-Green-Refactor&#8221;</strong> cycle.
+If we successfully implement this approach, then the temporal gap between development and testing disappears.
+The impediments to testing evaporate.
+And we can write well tested code all the time.</p>
+<span class="admonition-the-temporal-gap"></span></div>
+</div>
+</div>
+<div class="section" id="exploring-tdd">
+<h2>Exploring TDD<a class="headerlink" href="#exploring-tdd" title="Permalink to this headline">¶</a></h2>
+<p>Enough theory, let&#8217;s set about exploring TDD by building a little project using it.
+At the same time, we&#8217;ll learn a bit about the <code class="docutils literal"><span class="pre">pytest</span></code> testing framework.</p>
+<div class="section" id="project-setup">
+<h3>Project Setup<a class="headerlink" href="#project-setup" title="Permalink to this headline">¶</a></h3>
+<p>Begin by creating a project directory, then move into that directory.</p>
+<div class="highlight-bash"><div class="highlight"><pre>Banks:~ cewing$ mkdir tdd-play
+Banks:~ cewing$ <span class="nb">cd</span> tdd-play
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<p>Next, let&#8217;s create a virtualenv in this directory and activate it.</p>
+<div class="highlight-bash"><div class="highlight"><pre>Banks:tdd-play cewing$ python3 -m venv ./
+Banks:tdd-play cewing$ <span class="nb">source</span> bin/activate
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<p>Development of <code class="docutils literal"><span class="pre">pip</span></code> and <code class="docutils literal"><span class="pre">setuptools</span></code> has been very rapid lately.
+And the new developments in each are usually worth having on board.
+So I generally follow the creation of a new virtualenv with a quick update of <code class="docutils literal"><span class="pre">pip</span></code> and <code class="docutils literal"><span class="pre">setuptools</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ pip install -U pip setuptools
+...
+Successfully installed pip setuptools
+Cleaning up...
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<p>Now, let&#8217;s install our tools for this project.
+We&#8217;ll start with <code class="docutils literal"><span class="pre">pytest</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ pip install pytest
+...
+Successfully installed py-1.4.31 pytest-2.8.7
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<span class="admonition-prepare-for-a-project"></span><p>The <code class="docutils literal"><span class="pre">pytest</span></code> package provides a customized test runner with lots of bells and whistles.
+It also makes it very easy to start writing tests.
+When you invoke the command it begins looking for Python files with names that start with <code class="docutils literal"><span class="pre">test_</span></code>.
+Once it finds them, it reads them and looks for functions with names that start with <code class="docutils literal"><span class="pre">test_</span></code>.
+After gathering them together, it runs them all, one at a time.
+At the end, it reports the results to you.</p>
+<span class="admonition-pytest-basics"></span><p>Let&#8217;s make a directory to hold our code for this project.
+We&#8217;ll call it <code class="docutils literal"><span class="pre">src</span></code> because that&#8217;s the conventional name for such directories.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ mkdir src
+</pre></div>
+</div>
+<p>Then, create a new file in this directory.
+Call it <code class="docutils literal"><span class="pre">test_ack.py</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ touch src/test_ack.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="our-first-test">
+<h3>Our First Test<a class="headerlink" href="#our-first-test" title="Permalink to this headline">¶</a></h3>
+<p>We can get started with just that.
+Open the <code class="docutils literal"><span class="pre">src</span></code> directory in your text editor.
+In the <code class="docutils literal"><span class="pre">test_ack.py</span></code> file, add the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="k">def</span> <span class="nf">test_foo</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<span class="admonition-first-test"></span><p>We&#8217;ve now written a test.
+Let&#8217;s run it:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ py.test
+<span class="o">=======================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">========================</span>
+platform darwin -- Python 3.5.1, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
+rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
+collected <span class="m">1</span> items
+
+src/test_ack.py <span class="nv">F</span>
+
+<span class="o">=============================</span> <span class="nv">FAILURES</span> <span class="o">=============================</span>
+_____________________________ test_foo _____________________________
+
+    def test_foo<span class="o">()</span>:
+&gt;       assert <span class="nv">1</span> <span class="o">==</span> 0
+E       assert <span class="nv">1</span> <span class="o">==</span> 0
+
+src/test_ack.py:5: <span class="nv">AssertionError</span>
+<span class="o">=====================</span> <span class="m">1</span> failed in 0.22 <span class="nv">seconds</span> <span class="o">=====================</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">pytest</span></code> test runner found our <code class="docutils literal"><span class="pre">test_ack.py</span></code> file.
+It found the <code class="docutils literal"><span class="pre">test_foo</span></code> function defined in it.
+And it ran the test.</p>
+<p>The test raised an AssertionError because one is definitely not equal to two.
+Then <code class="docutils literal"><span class="pre">pytest</span></code> captured that error and reported it to us as a failing test.</p>
+<span class="admonition-run-your-test"></span><p>Next, let&#8217;s make our test pass.
+Change the code in <code class="docutils literal"><span class="pre">test_foo</span></code> so that the assertion is true:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="k">def</span> <span class="nf">test_foo</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>And then re-run your tests:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ py.test
+<span class="o">=======================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">========================</span>
+platform darwin -- Python 3.5.1, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
+rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
+collected <span class="m">1</span> items
+
+src/test_ack.py .
+
+<span class="o">=====================</span> <span class="m">1</span> passed in 0.17 <span class="nv">seconds</span> <span class="o">=====================</span>
+</pre></div>
+</div>
+<p>Great!</p>
+<p>We&#8217;ve made our first <strong>&#8220;Red-Green-Refactor&#8221;</strong> cycle.
+But it&#8217;s kind of a pain to have to go back and re-run our tests after changing that file.
+Can we get <code class="docutils literal"><span class="pre">pytest</span></code> to do that for us?
+Yes we can!</p>
+<span class="admonition-fix-the-test"></span></div>
+<div class="section" id="test-on-save">
+<h3>Test On Save<a class="headerlink" href="#test-on-save" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">pytest</span></code> system is pluggable.
+We can install plugins to provide different kinds of functionality.
+That includes letting us automatically re-run our tests every time a test in our project is updated.
+To get that particular functionality, let&#8217;s install <code class="docutils literal"><span class="pre">pytest-xdist</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ pip install pytest-xdist
+...
+Successfully installed apipkg-1.4 execnet-1.4.1 pytest-xdist-1.14
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<span class="admonition-test-on-save"></span><p>To use this new feature, we invoke the <code class="docutils literal"><span class="pre">py.test</span></code> command with the <code class="docutils literal"><span class="pre">-f</span></code> option:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ py.test -f
+<span class="o">=============================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">==============================</span>
+platform darwin -- Python 3.5.1, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
+rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
+plugins: xdist-1.14
+collected <span class="m">1</span> items
+collected <span class="m">1</span> items
+
+src/test_ack.py .
+
+<span class="o">===========================</span> <span class="m">1</span> passed in 0.19 <span class="nv">seconds</span> <span class="o">===========================</span>
+<span class="c1">####################### waiting for changes ########################</span>
+<span class="c1">### Watching:   /Users/cewing/projects/training/codefellows/tests/tdd-play</span>
+</pre></div>
+</div>
+<p>If you don&#8217;t see color output for the line reporting our test passed, try this:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ py.test -f --color<span class="o">=</span>yes
+</pre></div>
+</div>
+<p>Now that that&#8217;s in place, let&#8217;s begin working on our project.</p>
+<span class="admonition-invoking-failloop-mode"></span></div>
+<div class="section" id="the-ackermann-function">
+<h3>The Ackermann Function<a class="headerlink" href="#the-ackermann-function" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="http://en.wikipedia.org/wiki/Ackermann_function">Ackermann Function</a> is a recursive mathematical function.
+Its primary characteristic is that for even very small inputs it produces very large outputs.
+It also recurses a very high number of times in computing its value.
+For that reason, it is sometimes used to demonstrate the effectiveness of compiler&#8217;s optimizations for recursion.</p>
+<p>The function takes two inputs, <code class="docutils literal"><span class="pre">m</span></code> and <code class="docutils literal"><span class="pre">n</span></code>, and produces a single numeric value.
+The wikipedia page for the function gives a nice table of output values, given values for the two inputs.
+Here&#8217;s a sampling:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="12%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="19%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">m\n</th>
+<th class="head">0</th>
+<th class="head">1</th>
+<th class="head">2</th>
+<th class="head">3</th>
+<th class="head">4</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>0</strong></td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr class="row-odd"><td><strong>1</strong></td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr class="row-even"><td><strong>2</strong></td>
+<td>3</td>
+<td>5</td>
+<td>7</td>
+<td>9</td>
+<td>11</td>
+</tr>
+<tr class="row-odd"><td><strong>3</strong></td>
+<td>5</td>
+<td>13</td>
+<td>29</td>
+<td>61</td>
+<td>125</td>
+</tr>
+</tbody>
+</table>
+<span class="admonition-ackermann-function"></span><p>So this is the problem domain we have to solve.
+Without thinking too deeply about it, we can see we need to write a function that will take two numbers and return one.
+We can also see that, for example, if both of the inputs are <code class="docutils literal"><span class="pre">0</span></code>, then the output is expected to be <code class="docutils literal"><span class="pre">1</span></code>.
+That&#8217;s testable, so lets test it.</p>
+<p>Back in your text editor, add a new test to the <code class="docutils literal"><span class="pre">test_ack.py</span></code> file.
+Let&#8217;s call it <code class="docutils literal"><span class="pre">test_ackermann_0_0</span></code>.
+We&#8217;ll start with the smallest amount of code that will fail:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_ackermann_0_0</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">ackermann</span> <span class="kn">import</span> <span class="n">ackermann</span>
+</pre></div>
+</div>
+<span class="admonition-break-it-down"></span><p>Notice that our tests started running again as soon as we saved that file.
+Here&#8217;s what the error says:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c1"># MODIFIED /Users/cewing/projects/training/codefellows/tests/tdd-play/src/test_ack.py</span>
+<span class="o">=============================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">==============================</span>
+platform darwin -- Python 3.5.1, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
+rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
+plugins: xdist-1.14
+collected <span class="m">2</span> items
+collected <span class="m">2</span> items
+
+src/test_ack.py .F
+
+<span class="o">===================================</span> <span class="nv">FAILURES</span> <span class="o">===================================</span>
+______________________________ test_ackermann_0_0 ______________________________
+
+    def test_ackermann_0_0<span class="o">()</span>:
+&gt;       from ackermann import ackermann
+E       ImportError: No module named <span class="s1">&#39;ackermann&#39;</span>
+
+src/test_ack.py:9: <span class="nv">ImportError</span>
+<span class="o">======================</span> <span class="m">1</span> failed, <span class="m">1</span> passed in 0.21 <span class="nv">seconds</span> <span class="o">======================</span>
+<span class="c1">########################## LOOPONFAILING ###########################</span>
+src/test_ack.py::test_ackermann_0_0
+<span class="c1">####################### waiting for changes ########################</span>
+<span class="c1">### Watching:   /Users/cewing/projects/training/codefellows/tests/tdd-play</span>
+</pre></div>
+</div>
+<p>Okay, so we have an ImportError.
+We don&#8217;t have an <code class="docutils literal"><span class="pre">ackermann.py</span></code> module anywhere.
+And it certainly doesn&#8217;t contain an <code class="docutils literal"><span class="pre">ackermann</span></code> function.
+Let&#8217;s fix that, minimally.</p>
+<p>Create a new file in the same <code class="docutils literal"><span class="pre">src</span></code> folder, called <code class="docutils literal"><span class="pre">ackermann.py</span></code>.
+Then add the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># -*- coding: utf-8 -*-</span>
+
+
+<span class="k">def</span> <span class="nf">ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<span class="admonition-green-time"></span><p>And again, our tests will run themselves.
+This time, they&#8217;ll run the failing test once.
+And then, because that passes, they will re-run all the tests to make sure we didn&#8217;t break anything else.</p>
+<div class="highlight-python"><div class="highlight"><pre># MODIFIED /Users/cewing/projects/training/codefellows/tests/tdd-play/src/ackermann.py
+============================= test session starts ==============================
+platform darwin -- Python 3.5.1, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
+rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
+plugins: xdist-1.14
+collected 3 items
+collected 3 items
+
+src/test_ack.py .
+
+=========================== 1 passed in 0.01 seconds ===========================
+============================= test session starts ==============================
+platform darwin -- Python 3.5.1, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
+rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
+plugins: xdist-1.14
+collected 2 items
+collected 2 items
+
+src/test_ack.py ..
+
+=========================== 2 passed in 0.20 seconds ===========================
+####################### waiting for changes ########################
+### Watching:   /Users/cewing/projects/training/codefellows/tests/tdd-play
+</pre></div>
+</div>
+<p>Let&#8217;s return to our test now and make it test something useful.
+Let&#8217;s assert that when we call that function with <code class="docutils literal"><span class="pre">0</span></code> and <code class="docutils literal"><span class="pre">0</span></code> that we get <code class="docutils literal"><span class="pre">1</span></code> back:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in test_ack.py</span>
+<span class="k">def</span> <span class="nf">test_ackermann_0_0</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">ackermann</span> <span class="kn">import</span> <span class="n">ackermann</span>
+    <span class="k">assert</span> <span class="n">ackermann</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>And when our tests run again, there will be one failure.</p>
+<p>Now let&#8217;s return to our implementation code in <code class="docutils literal"><span class="pre">ackermann.py</span></code>.
+We can write just enough to make that test pass:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in ackermann.py</span>
+<span class="k">def</span> <span class="nf">ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<span class="admonition-red-green-refactor"></span><p>And again, the tests are green!</p>
+<p>Let&#8217;s try a different number combination.
+For the inputs <code class="docutils literal"><span class="pre">0</span></code> and <code class="docutils literal"><span class="pre">1</span></code> the function should return <code class="docutils literal"><span class="pre">2</span></code>.
+Let&#8217;s add a new test that claims that is true:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in test_ack.py</span>
+<span class="k">def</span> <span class="nf">test_ackermann_0_1</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">ackermann</span> <span class="kn">import</span> <span class="n">ackermann</span>
+    <span class="k">assert</span> <span class="n">ackermann</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>That turns our tests red again.
+Two are passing, but one is not.
+Let&#8217;s add some code that fixes that.
+Maybe at this point, we should look at the definition of the function.
+Wikipedia says that if <code class="docutils literal"><span class="pre">m</span></code> is equal to <code class="docutils literal"><span class="pre">0</span></code>, then the return value of the function is <code class="docutils literal"><span class="pre">n</span> <span class="pre">+</span> <span class="pre">1</span></code>.
+We understand that.
+Let&#8217;s make our function do that.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in ackermann.py</span>
+<span class="k">def</span> <span class="nf">ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<span class="admonition-deepen-our-understanding"></span><p>And our tests are back to being green.
+Let&#8217;s add another test and see if that holds true for the next values from our table.
+For <code class="docutils literal"><span class="pre">m</span> <span class="pre">=</span> <span class="pre">0</span></code> and <code class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">2</span></code> the function should return <code class="docutils literal"><span class="pre">3</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in test_ack.py</span>
+<span class="k">def</span> <span class="nf">test_ackermann_0_2</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">ackermann</span> <span class="kn">import</span> <span class="n">ackermann</span>
+    <span class="k">assert</span> <span class="n">ackermann</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<p>Oooooh!  Our tests are <em>still green</em>!
+Does that mean we are done?
+Well, there are still quite a few tests left to write, even to finish out the table we have above.
+We can&#8217;t really be sure we are finished until all of them pass.
+But who wants to write 16 more tests?</p>
+<p>Let&#8217;s use the power of our testing framework to help us out of this jam.</p>
+<span class="admonition-repetition-sucks"></span><p>In <code class="docutils literal"><span class="pre">pytest</span></code>, you can <em>parametrize</em> tests.
+This allows you to specify a single test, and a list of inputs you will provide.
+The framework will run the test once for each input in your list.
+We can use this to write just one test that will test all the values in our handy chart above.</p>
+<p>Let&#8217;s begin by <em>refactoring</em> our test so we only need one.
+Back in <code class="docutils literal"><span class="pre">test_ack.py</span></code> let&#8217;s erase our <code class="docutils literal"><span class="pre">test_ackerman_m_n</span></code> tests.
+We&#8217;ll replace them with a single function where <code class="docutils literal"><span class="pre">m</span></code>, <code class="docutils literal"><span class="pre">n</span></code> and the expected result are <em>paramters</em> of the test:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in test_ack.py</span>
+<span class="k">def</span> <span class="nf">test_ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">ackermann</span> <span class="kn">import</span> <span class="n">ackermann</span>
+    <span class="k">assert</span> <span class="n">ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>As expected, our tests are failing again.
+Let&#8217;s fix that.
+First, at the top of the file, import the <code class="docutils literal"><span class="pre">pytest</span></code> package.
+The tools we want are there.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># at the top of test_ack.py, just below the coding statement</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+</pre></div>
+</div>
+<p>Then, on the line just above our test function, add the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s1">&#39;m, n, result&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)])</span>
+<span class="k">def</span> <span class="nf">test_ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+    <span class="c1"># our test code here.</span>
+</pre></div>
+</div>
+<p>And if you&#8217;ve done your job correctly, then you should see <em>four</em> tests run and all pass.
+For each of the input sets in our new line of code, a single test is run.</p>
+<span class="admonition-parametrize"></span><p>The <code class="docutils literal"><span class="pre">pytest.mark.parametrize</span></code> call takes as its first argument a string that names the parameters for the test, separated by commas.
+This list should exactly match the parameters you listed in the test below.
+The second argument to the call is a list of tuples.
+Each tuple will supply the arguments for one call of the test function.
+So there must be the same number of items in each as in the parameter list of the test.</p>
+<span class="admonition-parametrize-usage"></span><p>We can now add the rest of our chart to the file in the same place.
+But that will make for a really long line of code.
+It won&#8217;t be very readable.
+Let&#8217;s make a module constant instead.
+Then we can use that constant in the call to <code class="docutils literal"><span class="pre">pytest.mark.parametrize</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in test_ack.py</span>
+<span class="n">ACK_TABLE</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Fill out the entire table.
+There should be twenty tuples.
+Then, update the test code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in test_ack.py</span>
+<span class="nd">@pytest.mark.parametrize</span><span class="p">(</span><span class="s1">&#39;m, n, result&#39;</span><span class="p">,</span> <span class="n">ACK_TABLE</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+    <span class="c1"># our test code here.</span>
+</pre></div>
+</div>
+<span class="admonition-final-steps"></span><span class="admonition-ackermann-s-function-defined"></span><p>When you save your file, you should see 21 tests run.
+Six of them will pass, but the rest will fail.
+Now we can finish implementing our ackermann function.</p>
+<p>Back in <code class="docutils literal"><span class="pre">ackermann.py</span></code>, implement the rest of the function.
+Wikipedia gives us this:</p>
+<div class="highlight-python"><div class="highlight"><pre>if m &gt; 0 and n == 0 --&gt; ackerman(m - 1, 1)
+if m &gt; 0 and n &gt; 0 --&gt; ackerman(m -1, ackerman(m, n - 1))
+</pre></div>
+</div>
+<p>Armed with that information, can you finish implementing the <code class="docutils literal"><span class="pre">ackermann</span></code> function and make the tests pass?</p>
+</div>
+</div>
+<div class="section" id="wrap-up">
+<h2>Wrap Up<a class="headerlink" href="#wrap-up" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ve learned a lot here.
+We discussed the reasons that testing has traditionally been so hard to get done.
+We learned about one approach to solving the problem: Test Driven Development.
+We also learned about a testing framework in Python that has tools to help us to do TDD.
+And finally, we implemented a little project using TDD principles.</p>
+<p>Now, you go and use these tools for your work tonight and going forward.</p>
+<span class="admonition-summary"></span></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Test Driven Development with <code class="docutils literal"><span class="pre">pytest</span></code></a><ul>
+<li><a class="reference internal" href="#what-is-tdd">What is TDD</a><ul>
+<li><a class="reference internal" href="#defining-the-problem">Defining The Problem</a></li>
+<li><a class="reference internal" href="#proposing-a-solution">Proposing a Solution</a><ul>
+<li><a class="reference internal" href="#closing-the-conceptual-gap">Closing the Conceptual Gap</a></li>
+<li><a class="reference internal" href="#closing-the-temporal-gap">Closing the Temporal Gap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exploring-tdd">Exploring TDD</a><ul>
+<li><a class="reference internal" href="#project-setup">Project Setup</a></li>
+<li><a class="reference internal" href="#our-first-test">Our First Test</a></li>
+<li><a class="reference internal" href="#test-on-save">Test On Save</a></li>
+<li><a class="reference internal" href="#the-ackermann-function">The Ackermann Function</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#wrap-up">Wrap Up</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro_to_python_2.html"
+                        title="previous chapter">Introduction To Python: Part 2</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../schedule/week01/wed.html"
+                        title="next chapter">Wednesday</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../schedule/week01/wed.html" title="Wednesday"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro_to_python_2.html" title="Introduction To Python: Part 2"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week01/tue.html" >Tuesday</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>
