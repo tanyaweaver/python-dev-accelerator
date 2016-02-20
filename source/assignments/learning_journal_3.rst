@@ -31,7 +31,7 @@ When the work is done, take screen shots of your app as it runs online at
 Heroku. Submit that screenshot and a link to the pull request you created for
 the step1 branch.
 
-Use the comment feature here in canvas to submit the following:
+Use the comment feature in canvas to submit the following:
 
 * At least one well-formed question about the work you did for this assignment
 * At least one comment on what went well
