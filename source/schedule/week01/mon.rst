@@ -48,6 +48,7 @@ Assignments
 * :doc:`/assignments/break_these_funcs`
 * :doc:`/assignments/connect_online`
 * :doc:`/assignments/update_canvas`
+* :doc:`/assignments/read_course_intro`
 * :doc:`/assignments/daily_lj_entry`
 
 If you finish those, spend time running through the first three chapters of `How to Think Like a Computer Scientist <http://interactivepython.org/runestone/static/thinkcspy/index.html>`_

@@ -28,4 +28,5 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/deliberate_programming`
 * :doc:`/assignments/daily_lj_entry`

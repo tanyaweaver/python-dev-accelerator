@@ -28,4 +28,6 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/lightning_talks`
+* :doc:`/assignments/clean_code`
 * :doc:`/assignments/daily_lj_entry`
