@@ -28,3 +28,4 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/daily_lj_entry`

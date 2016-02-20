@@ -59,6 +59,7 @@ Assignments
 
 * :doc:`/assignments/math_series`
 * :doc:`/assignments/twitter_account`
+* :doc:`/assignments/daily_lj_entry`
 
 If you finish those, spend time running through the next four chapters of `How to Think Like a Computer Scientist <http://interactivepython.org/runestone/static/thinkcspy/index.html>`_
 Sign up for an account and read and work through the exercises in:
