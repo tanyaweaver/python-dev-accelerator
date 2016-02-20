@@ -10,9 +10,10 @@ Read Deliberately Practice Programming
 
     This document contains no slides.
 
-Read `Deliberately Practice Programming`_ by Chris Bui
-
 .. warning:: The following is an internet archive link, the original post has been removed.
+             I have communicated with the author and he is working on recovering the original.
+
+Read `Deliberately Practice Programming`_ by Chris Bui
 
 .. _Deliberately Practice Programming: https://web.archive.org/web/20140118105145/http://christopherdbui.com/post/2014/01/05/deliberately-practicing-programming.html
 

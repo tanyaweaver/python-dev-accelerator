@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Mail Room Madness: Building &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
+    <link rel="next" title="Mashup Part 1: Scraping Data from King County" href="mashup_1_scraper.html" />
+    <link rel="prev" title="Mail Room Madness: Planning" href="mailroom_madness_1_planning.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mashup_1_scraper.html" title="Mashup Part 1: Scraping Data from King County"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mailroom_madness_1_planning.html" title="Mail Room Madness: Planning"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="mail-room-madness-building">
+<h1>Mail Room Madness: Building<a class="headerlink" href="#mail-room-madness-building" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-mail-room-madness-building"></span><div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>You work in the mail room at a local charity.
+Part of your job is to write incredibly boring, repetitive emails thanking your donors for their generous gifts.
+You are tired of doing this over an over again, so you&#8217;ve decided to let Python help you out of a jam.</p>
+<p>You want to write a small command-line script that can handle some of the tasks associated with this job for you.
+Here&#8217;s a list of the things you want to be able to do:</p>
+<ul class="simple">
+<li>The script should have a data structure that holds a list of your donors and a history of the amounts they have donated.</li>
+<li>When run, the script should prompt the user to choose from a menu of 2 actions: &#8216;Send a Thank You&#8217; or &#8216;Create a Report&#8217;.</li>
+<li>If the user selects &#8216;Send a Thank You&#8217;, prompt for a Full Name.<ul>
+<li>If the user types &#8216;list&#8217;, show them a list of the donor names and re-prompt</li>
+<li>If the user types a name not in the list, add that name to the data structure and use it.</li>
+<li>If the user types a name in the list, use it.</li>
+<li>Once a name has been selected, prompt for a donation amount.</li>
+<li>Verify that the amount is in fact a number, and re-prompt if it isn&#8217;t.</li>
+<li>Once an amount has been given, add that amount to the donation history of the selected user.</li>
+<li>Finally, use string formatting to compose an email thanking the donor for their generous donation.
+Print the email to the terminal and return to the original prompt.</li>
+</ul>
+</li>
+</ul>
+<p><strong>You need not persist the new donors when the script quits running.</strong></p>
+<ul class="simple">
+<li>If the user (you) selected &#8216;Create a Report&#8217; Print a list of your donors,
+sorted by total historical donation amount.<ul>
+<li>Include Donor Name, total donated, number of donations and average donation amount as values in each row.</li>
+<li>Using string formatting, format the output rows as nicely as possible.
+The end result should be tabular (values in each column should align with those above and below)</li>
+<li>After printing this report, return to the original prompt.</li>
+</ul>
+</li>
+<li>At any point, the user should be able to quit their current task and return to the original prompt.</li>
+<li>From the original prompt, the user should be able to quit the script cleanly.</li>
+</ul>
+</div>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>Using all you&#8217;ve learned so far, complete your mailroom program.
+For guidance, use the pseudocode and flow chart you created previously.</p>
+<ul class="simple">
+<li>use dicts where appropriate</li>
+<li>see if you can use a dict to switch between the users selections</li>
+<li>Try to use a dict and the .format() method to do the letter as one big template &#8211; rather than building up a big string in parts.</li>
+<li>For extra fun, see if you can use a file to preserve the donation list and changes made to it while the program is running.</li>
+</ul>
+<p>Begin by creating a new repository called <code class="docutils literal"><span class="pre">mailroom</span></code> in GitHub.
+Create the repository with a Python <code class="docutils literal"><span class="pre">.gitignore</span></code> file and a reasonable license (MIT is good).
+Clone that repository locally.
+Once you have it cloned, immediately create a branch called <code class="docutils literal"><span class="pre">implementation</span></code>.
+Do your work on that branch.</p>
+<p>Add a <code class="docutils literal"><span class="pre">setup.py</span></code> file that defines your program as a distribution.
+This file will allow you to install your program.
+Make sure that code you want to distribute to end users is included in the distribution.
+Use a console script entry point to register your main program entry point.
+If your program is installed, a user should be able to execute it at the command line:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ mailroom
+</pre></div>
+</div>
+<p>Add a <code class="docutils literal"><span class="pre">tox.ini</span></code> file that runs your tests in both Python 2.7 and Python 3.5
+Make sure your tests pass in both Python environments.
+To run your tests, you should be able simply to run tox:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ tox
+</pre></div>
+</div>
+<p>Create whatever functions you require in order to accomplish your tasks.
+Organize the code in a way that makes the most sense to you.
+If you want to work entirely in one module, that&#8217;s fine.
+If you&#8217;d prefer to create a package with multiple modules, that is also fine.</p>
+<p>For each and every function you write, use TDD methods to ensure that you have well-tested code.
+If you have functions with branching logic, you <em>will need</em> to have more than one test for that function.
+Remember, each test should be only as complex as it needs to be to test <em>one thing</em>.
+Your tests are as much a part of this assignment as the code itself.
+Do not neglect them.</p>
+<p>The only exceptions to the testing requirements are functions which require user input.
+Remember <a class="reference external" href="https://www.youtube.com/watch?v=DJtef410XaM">the video you watched</a> and the lessons it taught about clean architecture.</p>
+<p>As you work, commit early and often.
+Write commit messages that are clear, concise and meaningful.
+In your code pairings, switch the driver and navigator roles often.</p>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>When you are done implementing the entire program and all your tests are passing push your code to github.
+Open a pull request from your <code class="docutils literal"><span class="pre">implementation</span></code> branch to the <code class="docutils literal"><span class="pre">master</span></code> branch (which should only contain the README, the <code class="docutils literal"><span class="pre">.gitignore</span></code> and the license)
+Copy the URL of that pull request and submit it in Canvas.</p>
+<p>Use the comment feature in canvas to submit the following:</p>
+<ul class="simple">
+<li>At least one well-formed question about the work you did for this assignment</li>
+<li>At least one comment on what went well</li>
+<li>At least one comment on what was particularly difficult or challenging</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mail Room Madness: Building</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mailroom_madness_1_planning.html"
+                        title="previous chapter">Mail Room Madness: Planning</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mashup_1_scraper.html"
+                        title="next chapter">Mashup Part 1: Scraping Data from King County</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mashup_1_scraper.html" title="Mashup Part 1: Scraping Data from King County"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mailroom_madness_1_planning.html" title="Mail Room Madness: Planning"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>
