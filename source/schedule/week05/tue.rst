@@ -9,3 +9,9 @@ Tuesday
     :level: 1
 
     This document contains no slides.
+
+
+Assignments
+===========
+
+* :doc:`/assignments/daily_lj_entry`
