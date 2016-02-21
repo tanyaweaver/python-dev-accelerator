@@ -10,7 +10,7 @@ TCP/IP and Sockets
 
     This document contains no slides.
 
-First, preview the **Sockets and Networking** quiz in Canvas.  Then, read the
+First, preview the **Networking and Sockets** quiz in Canvas.  Then, read the
 following articles about the TCP/IP Stack and Sockets:
 
 * Kessler - `TCP/IP`_ (sections 1 and 2)
