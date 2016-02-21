@@ -18,6 +18,7 @@ Readings
 
 * Watch `The Clean Architecture in Python <https://www.youtube.com/watch?v=DJtef410XaM>`_ by Brandon Rhodes (chair of PyCon in Portland in 2016 and 2017)
   Use the lessons in your work planning the ``Mailroom Madness`` program.
+* Read `Packaging and Distributing Projects <https://packaging.python.org/en/latest/distributing/>`_
 
 Review
 ======
@@ -33,6 +34,5 @@ Assignments
 
 * :doc:`/assignments/trigrams`
 * :doc:`/assignments/mailroom_madness_1_planning`
-* :doc:`/assignments/lightning_talks`
 * :doc:`/assignments/clean_code`
 * :doc:`/assignments/daily_lj_entry`
