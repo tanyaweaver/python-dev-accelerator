@@ -13,4 +13,6 @@ Friday
 Assignments
 ===========
 
+* :doc:`/assignments/proper_parenthetics`
+* :doc:`/assignment/http_server_final`
 * :doc:`/assignments/daily_lj_entry`

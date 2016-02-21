@@ -29,4 +29,5 @@ Assignments
 ===========
 
 * :doc:`/assignments/queue`
+* :doc:`/assignments/reddit_account`
 * :doc:`/assignments/daily_lj_entry`

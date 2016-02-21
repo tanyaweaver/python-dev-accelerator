@@ -28,5 +28,8 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/protocols`
 * :doc:`/assignments/stack`
+* :doc:`/assignments/http_server_1`
+* :doc:`/assignments/linkedin_profile`
 * :doc:`/assignments/daily_lj_entry`

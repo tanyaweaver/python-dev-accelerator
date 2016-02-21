@@ -29,4 +29,6 @@ Assignments
 ===========
 
 * :doc:`/assignments/doubly_linked_list`
+* :doc:`/assignments/http_server_2`
+* :doc:`/assignments/hacker_news_account`
 * :doc:`/assignments/daily_lj_entry`
