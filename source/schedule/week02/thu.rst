@@ -29,5 +29,6 @@ Assignments
 ===========
 
 * :doc:`/assignments/queue`
+* :doc:`/assignments/http_server_3`
 * :doc:`/assignments/reddit_account`
 * :doc:`/assignments/daily_lj_entry`
