@@ -59,6 +59,7 @@ Assignments
 
 * :doc:`/assignments/math_series`
 * :doc:`/assignments/twitter_account`
+* :doc:`/assignments/lightning_talks`
 * :doc:`/assignments/daily_lj_entry`
 
 If you finish those, spend time running through the next four chapters of `How to Think Like a Computer Scientist <http://interactivepython.org/runestone/static/thinkcspy/index.html>`_
