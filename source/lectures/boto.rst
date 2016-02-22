@@ -367,7 +367,7 @@ You can use that DNS name to ssh into the running instance.
 
 .. ifnotslides::
 
-    .. code-block:: bash
+    .. code-block:: text
 
         $ ssh -i ~/.ssh/pk-aws.pem ubuntu@ec2-your.dns.name.amazonaws.com
         The authenticity of host 'ec2-54-203-88-113.us-west-2.compute.amazonaws.com (54.203.88.113)' can't be established.

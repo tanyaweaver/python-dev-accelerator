@@ -1368,7 +1368,7 @@ Notice that after the loop has finished, the *loop variable* is still *in scope*
 
             At the end, the *loop variable* is still *in scope*:
 
-            .. code-block:: language
+            .. code-block:: ipython
 
                 In [12]: item
                 Out[12]: 5

@@ -171,7 +171,7 @@ it has the right tables.
 
 In Django, this is done with the ``syncdb`` command:
 
-.. code-block:: bash
+.. code-block:: text
 
         (djangoenv)$ python manage.py syncdb
         Creating tables ...
