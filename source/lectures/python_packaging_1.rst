@@ -10,7 +10,7 @@ An Introduction to Python Packaging
 
     .. rst-class:: center
 
-    In which we learn to make our code shareable.
+    In which we learn to share with others.
 
 
 We've created a small project that implemented the Ackermann function.
