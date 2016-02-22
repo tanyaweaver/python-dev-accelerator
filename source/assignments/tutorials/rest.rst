@@ -1,3 +1,5 @@
+:orphan:
+
 .. _rest_exercise:
 
 *****************************************
@@ -379,7 +381,7 @@ objects, we'll need to create a file which contains a ``geojson``
 
 The structure of such a collection looks like this:
 
-.. code-block:: json
+.. code-block:: text
 
     {'type': 'FeatureCollection', 'features': [...]}
 
