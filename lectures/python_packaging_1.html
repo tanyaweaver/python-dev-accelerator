@@ -1,0 +1,727 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>An Introduction to Python Packaging &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="Wednesday" href="../schedule/week01/wed.html" />
+    <link rel="next" title="Thursday" href="../schedule/week01/thu.html" />
+    <link rel="prev" title="Wednesday" href="../schedule/week01/wed.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../schedule/week01/thu.html" title="Thursday"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../schedule/week01/wed.html" title="Wednesday"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week01/wed.html" accesskey="U">Wednesday</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="an-introduction-to-python-packaging">
+<h1>An Introduction to Python Packaging<a class="headerlink" href="#an-introduction-to-python-packaging" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-intro-to-python-packaging"></span><p>We&#8217;ve created a small project that implemented the Ackermann function.
+In building it, we used Test Driven Development.
+This means that we have a well-tested function that could be of use to another developer.</p>
+<p>We&#8217;ve also used code that others have written for us.
+Our tests make use of the <code class="docutils literal"><span class="pre">pytest</span></code> module.
+And our TDD set up uses the pytest plugin <code class="docutils literal"><span class="pre">pytest-xdist</span></code>.
+Both of these packages were written by other developers, but are available for us to install and use.</p>
+<p>How does that work?</p>
+<p>These packages are also &#8220;distributions&#8221;.</p>
+<p>And you can make your code into distributions as well.</p>
+<span class="admonition-distributions"></span><div class="section" id="python-distributions-a-history">
+<h2>Python Distributions - A History<a class="headerlink" href="#python-distributions-a-history" title="Permalink to this headline">¶</a></h2>
+<p>Packaging and distribution in Python is a contentious issue.
+Debates rage over <em>the right way</em>.
+More than one strong-hearted developer has been broken on the rocks of trying to establish a standard.</p>
+<p>Luckily, there is now <a class="reference external" href="http://python-packaging-user-guide.readthedocs.org">a standard</a> that points to the future.
+You can follow it to ensure that you are doing &#8220;the right thing™&#8221;.</p>
+<span class="admonition-the-packaging-bible"></span><div class="section" id="distutils-and-setuptools">
+<h3>Distutils and Setuptools<a class="headerlink" href="#distutils-and-setuptools" title="Permalink to this headline">¶</a></h3>
+<p>A <code class="docutils literal"><span class="pre">distribution</span></code> is defined by the <a class="reference external" href="http://python-packaging-user-guide.readthedocs.org/en/latest/glossary.html#term-distribution">packaging glossary</a> as:</p>
+<div class="highlight-python"><div class="highlight"><pre>A Python distribution is a versioned archive file that contains Python packages, modules, and other resource files that are used to distribute a Release.
+The distribution file is what an end-user will download from the internet and install.
+</pre></div>
+</div>
+<p>In the early days of Python, there was no such thing as a distrubution.
+If you wanted to install someone else&#8217;s code, you had to download and build the code manually and move it into your PYTHONPATH yourself.
+This was not particularly simple or convenient.</p>
+<p>In 1998 a group of Python developers organized a discussion of this problem.
+The came up with the idea of a special file you could add to your package code, called <code class="docutils literal"><span class="pre">setup.py</span></code>.
+Through this file you could issue commands that would allow you to do a number of useful things.
+You could create a compressed archive of your package to send to other developers.
+You could install such an archive automatically into your PYTHONPATH.
+And you could even compile C extensions to your code to make binaries that can be shared wtih others.</p>
+<p>This work became the <a class="reference external" href="http://docs.python.org/2/distutils/index.html#distutils-index" title="(in Python v2.7)"><span class="xref std std-ref">distutils library</span></a> (<a class="reference external" href="http://docs.python.org/3/distutils/index.html#distutils-index" title="(in Python v3.5)"><span class="xref std std-ref">py3</span></a>).
+It was added to the Python standard library in 2000 in version 1.6.</p>
+<p>In 2002, Richard Jones began working on an online catalog of available Python distributions.
+By 2003, the index was up and running as the Python Package Index (PyPI), also known as the &#8220;cheeseshop&#8221; after the well known comedy sketch.
+This index allowed developers to find packages online.
+Then they could download the packages and use the included <code class="docutils literal"><span class="pre">setup.py</span></code> file to install them.</p>
+<p>Providing support for this type of discovery allowed developers to create packages with more and more dependencies.
+Eventually, the pressure of dependency management led to a need to be able to install a package <em>and all its dependencies</em>.</p>
+<p>In 2004 Phillip Eby started to work on a set of extensions to <code class="docutils literal"><span class="pre">distutils</span></code> he called <a class="reference external" href="https://pythonhosted.org/setuptools/">setuptools</a>.
+The <code class="docutils literal"><span class="pre">setuptools</span></code> library provided complex dependency management, automated recognition of version precedence, and an automatic installation tool called <code class="docutils literal"><span class="pre">easy_install</span></code>.
+Though it has never landed in the standard library, <code class="docutils literal"><span class="pre">setuptools</span></code> has become the primary means for creating and distributing Python packages.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Much of this history is derived from <a class="reference external" href="http://blog.startifact.com/posts/older/a-history-of-python-packaging.html">this blog post</a> from 2009.
+It isn&#8217;t a complete history, but it&#8217;s good.
+There are also several other posts on that blog well worth reading.</p>
+</div>
+<span class="admonition-history"></span></div>
+</div>
+<div class="section" id="creating-a-python-distribution">
+<h2>Creating a Python Distribution<a class="headerlink" href="#creating-a-python-distribution" title="Permalink to this headline">¶</a></h2>
+<p>Both of these libraries work off of the idea of a file called <code class="docutils literal"><span class="pre">setup.py</span></code>.
+This file is responsible for establishing a set of <em>metadata</em> about a distribution and the code it contains.</p>
+<p>A <code class="docutils literal"><span class="pre">setup.py</span></code> file contains two main Python statements.
+The first is an import statement that pulls the <code class="docutils literal"><span class="pre">setup</span></code> function into the module namespace.
+The second calls the function, with a series of keyword arguments that set up metadata.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">setup</span> <span class="p">(</span>
+    <span class="c1"># ... metadata keyword arguments go here</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>There are <em>lots</em> of these keyword arguments, and it&#8217;s a lot easier to explore them interactively.
+Let&#8217;s turn our <em>ackermann</em> implementation (and its tests) into a simple python distribution.</p>
+<span class="admonition-distribution-basics"></span><div class="section" id="create-setup-py">
+<h3>Create <code class="docutils literal"><span class="pre">setup.py</span></code><a class="headerlink" href="#create-setup-py" title="Permalink to this headline">¶</a></h3>
+<p>Begin, by returning to the <code class="docutils literal"><span class="pre">tdd-tests</span></code> folder you created earlier.</p>
+<div class="highlight-bash"><div class="highlight"><pre>Banks:~ cewing$ <span class="nb">cd</span> path/to/tdd-tests
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<p>Then, activate our virtual environment so our work will be isolated from our system.</p>
+<div class="highlight-bash"><div class="highlight"><pre>Banks:tdd-play cewing$ <span class="nb">source</span> bin/activate
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<p>In this directory, create a new file called <code class="docutils literal"><span class="pre">setup.py</span></code>.
+Open that file in your text editor.
+In <code class="docutils literal"><span class="pre">setup.py</span></code> add the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">setup</span><span class="p">()</span>
+</pre></div>
+</div>
+<span class="admonition-modify-ackermann"></span></div>
+<div class="section" id="set-basic-metadata">
+<h3>Set Basic Metadata<a class="headerlink" href="#set-basic-metadata" title="Permalink to this headline">¶</a></h3>
+<p>This is the basic skeleton for a <code class="docutils literal"><span class="pre">setup.py</span></code> file.
+There are a lot of different options we can use in the call to <code class="docutils literal"><span class="pre">setup</span></code>.
+Let&#8217;s begin with an easy one, the <em>name</em> of our distribution.
+We&#8217;ll call the distribution by the same name as the module (and the function defined inside it):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ackermann&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>In truth, we can use any name at all here.
+This name is how other developers can refer to our distribution when they wish to install it.
+As is, our distribution could be installed with <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">ackermann</span></code>.
+Perhaps we want to be more explicit that this is a Python implementation.
+We could change the name to <code class="docutils literal"><span class="pre">py-ackermann</span></code> or the like, without altering anything else about the code.</p>
+<p>We can also specify a description for our package.
+The description should be a single, short sentence that clarifies what our package does.
+There is also a <code class="docutils literal"><span class="pre">long_description</span></code> argument available.
+The value will be used as the text of the distribution&#8217;s home page on PyPI.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ackermann&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A Python implementation of the Ackermann Function.&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<span class="admonition-package-metadata"></span><p>It&#8217;s important to establish a <em>version number</em> for your source packages.
+Doing so signals that your code has reached a level of completeness.
+As you make changes to the code, you can increment the version number.
+This is a signal to others that your package has changed and new features may be available.</p>
+<p>Python encourages using <a class="reference external" href="http://python-packaging-user-guide.readthedocs.org/en/latest/distributing/#semantic-versioning-preferred">semantic versioning</a>.
+But any versioning scheme is fine so long as it is compliant with the standards of <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0440"><strong>PEP 440</strong></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ackermann&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A Python implementation of the Ackermann Function.&quot;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="mf">0.1</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<span class="admonition-version-number"></span><p>We should probably also add a bit of metadata about ourselves.
+This will allow users of the package to know who to contact in case of problems.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ackermann&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A Python implementation of the Ackermann Function.&quot;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Cris Ewing&quot;</span><span class="p">,</span>  <span class="c1"># use your own name, of course</span>
+    <span class="n">author_email</span><span class="o">=</span><span class="s2">&quot;cris@crisewing.com&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<span class="admonition-personal-metadata"></span><p>If our code is licensed, then we can specify the license in <code class="docutils literal"><span class="pre">setup</span></code> as well.
+It&#8217;s important to consider the license you want to use for your open source packages.
+The license allows other developers to understand how you allow your code to be re-used.
+If there is no license in a package, then the code is <a class="reference external" href="http://programmers.stackexchange.com/questions/148146/open-source-code-with-no-license-can-i-fork-it">copyright by default</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ackermann&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A Python implementation of the Ackermann Function.&quot;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Cris Ewing&quot;</span><span class="p">,</span>  <span class="c1"># use your own name, of course</span>
+    <span class="n">author_email</span><span class="o">=</span><span class="s2">&quot;cris@crisewing.com&quot;</span><span class="p">,</span>
+    <span class="n">license</span><span class="o">=</span><span class="s1">&#39;MIT&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<span class="admonition-license-metadata"></span></div>
+<div class="section" id="find-source-code">
+<h3>Find Source Code<a class="headerlink" href="#find-source-code" title="Permalink to this headline">¶</a></h3>
+<p>Finally, we want to tell setuptools how to find the code for our distribution.
+There are a few options to the <code class="docutils literal"><span class="pre">setup</span></code> function related to this:</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">py_modules</span></code></dt>
+<dd>Use this option to specify individual Python modules that should be part of your distribution.
+The value of the argument should be a list containing the name(s) of the module(s), without the <code class="docutils literal"><span class="pre">.py</span></code> extension.</dd>
+<dt><code class="docutils literal"><span class="pre">packages</span></code></dt>
+<dd>Use this option to specify entire packages of code that should be part of your source.
+When a package is included, any modules or packages inside it will also be part of the distribution
+The value should be a list containing the name(s) of filesystem folder(s).
+The named folders are expected to contain an <code class="docutils literal"><span class="pre">__init__.py</span></code> file.</dd>
+<dt><code class="docutils literal"><span class="pre">package_dir</span></code></dt>
+<dd>The value of this option is a dictionary rather than a list.
+Use it when your source code is <em>not</em> located directly in the same folder as <code class="docutils literal"><span class="pre">setup.py</span></code>.
+The values you provide here will affect the way the values in the two previous arguments are used.</dd>
+</dl>
+<p>In our case, we have no packages in our distribution.
+So we won&#8217;t need that argument.</p>
+<p>We do have a module.
+It&#8217;s called <code class="docutils literal"><span class="pre">ackermann.py</span></code>, so the name <code class="docutils literal"><span class="pre">ackermann</span></code> must be in our <code class="docutils literal"><span class="pre">py_modules</span></code> list.
+We also have a <code class="docutils literal"><span class="pre">test_ack.py</span></code> module, but we don&#8217;t want that to be included in our distribution.
+We can leave the name out of our <code class="docutils literal"><span class="pre">py_modules</span></code> list.</p>
+<p>And in our case, our module is not located at the root of the package.
+Instead it lives in a <code class="docutils literal"><span class="pre">src</span></code> directory.
+We&#8217;ll need to use the <code class="docutils literal"><span class="pre">package_dir</span></code> argument to point <code class="docutils literal"><span class="pre">setuptools</span></code> in the right direction.
+We use a key of an empty string to indicate that the directory we are pointing to should be considered the root.
+Then the value is <code class="docutils literal"><span class="pre">src</span></code>, telling <code class="docutils literal"><span class="pre">setuptools</span></code> to use that directory as the root of our source.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ackermann&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A Python implementation of the Ackermann Function.&quot;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Cris Ewing&quot;</span><span class="p">,</span>  <span class="c1"># use your own name, of course</span>
+    <span class="n">author_email</span><span class="o">=</span><span class="s2">&quot;cris@crisewing.com&quot;</span><span class="p">,</span>
+    <span class="n">license</span><span class="o">=</span><span class="s1">&#39;MIT&#39;</span><span class="p">,</span>
+    <span class="n">py_modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ackermann&#39;</span><span class="p">],</span>
+    <span class="n">package_dir</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="s1">&#39;src&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>And that&#8217;s all we require to make our <code class="docutils literal"><span class="pre">ackermann</span></code> package into a distribution.</p>
+<span class="admonition-source-metadata"></span></div>
+</div>
+<div class="section" id="installing-a-distribution">
+<h2>Installing a Distribution<a class="headerlink" href="#installing-a-distribution" title="Permalink to this headline">¶</a></h2>
+<p>One of the benefits of using <code class="docutils literal"><span class="pre">setup.py</span></code> is that it allows us to install a distribution.
+We do so by <em>running</em> the <code class="docutils literal"><span class="pre">setup.py</span></code>, with the <code class="docutils literal"><span class="pre">install</span></code> argument.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ python setup.py install
+</pre></div>
+</div>
+<p>We can do the same thing by using pip and pointing it at our current directory:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ pip install .
+</pre></div>
+</div>
+<p>Once this is done, then your distribution has been installed into the Python in our current virtual environment.
+We can now start up python and use the code we wrote yesterday:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ackermann</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">ackermann</span><span class="p">)</span>
+<span class="go">[&#39;__builtins__&#39;, &#39;__cached__&#39;, &#39;__doc__&#39;, &#39;__file__&#39;, &#39;__loader__&#39;,</span>
+<span class="go"> &#39;__name__&#39;, &#39;__package__&#39;, &#39;__spec__&#39;, &#39;ackermann&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ackermann</span><span class="o">.</span><span class="n">ackermann</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">125</span>
+</pre></div>
+</div>
+<p>That&#8217;s wonderful!</p>
+<span class="admonition-installing-a-distro"></span><div class="section" id="developing-distribution-code">
+<h3>Developing Distribution Code<a class="headerlink" href="#developing-distribution-code" title="Permalink to this headline">¶</a></h3>
+<p>Installing a distribution is great.
+It makes the code we&#8217;ve written available to be imported and used anywhere.
+However, it does so by placing copies of that code into the <code class="docutils literal"><span class="pre">site-packages</span></code> directory for the active Python.
+If we make changes to our code, those changes are <em>not</em> reflected in that copied code.</p>
+<p>There&#8217;s a better way.</p>
+<span class="admonition-problems"></span><p>We can install our code using the <code class="docutils literal"><span class="pre">develop</span></code> argument to <code class="docutils literal"><span class="pre">setup.py</span></code>.
+Then Python will <em>link</em> our code into the <code class="docutils literal"><span class="pre">site-packages</span></code> directory.
+And changes we make will be available immediately.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ python setup.py develop
+</pre></div>
+</div>
+<p>The same may be accomplished with the <code class="docutils literal"><span class="pre">pip</span></code> <em>editable</em> flag (<code class="docutils literal"><span class="pre">-e</span></code>):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ pip install -e .
+</pre></div>
+</div>
+<p>Now if we make changes to our source code, we can see them in our python interpreter.</p>
+<p>Open <code class="docutils literal"><span class="pre">ackermann.py</span></code> in your editor and make the following change:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># add this import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="k">def</span> <span class="nf">ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span> <span class="c1"># and add this line of code</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>Now, restart python and re-import ackermann to see the changes in action:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ackermann</span> <span class="kn">import</span> <span class="n">ackermann</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ackermann</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">hello</span>
+<span class="go">hello</span>
+<span class="go">hello</span>
+<span class="go">hello</span>
+<span class="go">hello</span>
+<span class="go">hello</span>
+<span class="go">hello</span>
+<span class="go">hello</span>
+<span class="go">hello</span>
+<span class="go">hello</span>
+<span class="go">6</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<span class="admonition-develop-mode"></span></div>
+</div>
+<div class="section" id="specifying-dependencies">
+<h2>Specifying Dependencies<a class="headerlink" href="#specifying-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>If the code we write uses any Python packages that are not in the standard library, that package is a dependency.
+In order for our code to run, we must <em>also</em> install that package.
+The <code class="docutils literal"><span class="pre">setup</span></code> function allows for this, providing an argument that lists dependencies by name.
+For example, if we require a package named <code class="docutils literal"><span class="pre">foo</span></code>, we could add it to our <code class="docutils literal"><span class="pre">setup.py</span></code>.
+Then installing our package would cause the <code class="docutils literal"><span class="pre">foo</span></code> package also to be installed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup</span><span class="p">(</span>
+    <span class="c1"># ...</span>
+    <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<span class="admonition-dependency-management"></span><p>Our package does not require any dependencies to run.
+But we do use the <code class="docutils literal"><span class="pre">pytest</span></code> and <code class="docutils literal"><span class="pre">pytest-xdist</span></code> packages when testing.
+The <code class="docutils literal"><span class="pre">setup</span></code> function also allows for this, with the <code class="docutils literal"><span class="pre">extras_require</span></code> argument.
+The argument takes a dict as an argument.
+The keys of the dict are the names of &#8220;extras&#8221; (installation options for our package).
+The values are lists of packages that are required in order for that functionality to be available.</p>
+<p>Let&#8217;s add a <code class="docutils literal"><span class="pre">test</span></code> extra that will automatically install the packages our tests require.
+In our <code class="docutils literal"><span class="pre">setup.py</span></code>, add the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup</span><span class="p">(</span>
+    <span class="c1"># ...</span>
+    <span class="n">install_requires</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">extras_require</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pytest&#39;</span><span class="p">,</span> <span class="s1">&#39;pytest-xdist&#39;</span><span class="p">]},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<span class="admonition-extras"></span><p>To prove that this works, we&#8217;ll destroy our current virtualenv and then start over.</p>
+<p>First, deactivate the current virtualenv.
+Then, from the <code class="docutils literal"><span class="pre">tdd-play</span></code> directory, remove everything <strong>except</strong> <code class="docutils literal"><span class="pre">setup.py</span></code> and the <code class="docutils literal"><span class="pre">src</span></code> directory:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ deactivate
+Banks:tdd-play cewing$ rm -r bin include lib *.json *.egg-info
+</pre></div>
+</div>
+<p>Next, make a new virtualenv.
+Update pip and setuptools, just in case.
+Finally, install our package <em>with the test extra</em>:</p>
+<div class="highlight-bash"><div class="highlight"><pre>Banks:tdd-play cewing$ python3 -m venv ./
+...
+Banks:tdd-play cewing$ <span class="nb">source</span> bin/activate
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ pip install -U pip setuptools
+...
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ pip install -e .<span class="o">[</span>test<span class="o">]</span>
+...
+Successfully installed ackermann apipkg-1.4 execnet-1.4.1 py-1.4.31 pytest-2.8.7 pytest-xdist-1.14
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<p>And now, we should be able to run our tests, just as before:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ py.test
+<span class="o">=======================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">========================</span>
+platform darwin -- Python 3.5.1, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
+rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
+plugins: xdist-1.14
+collected <span class="m">21</span> items
+
+src/test_ack.py .....................
+
+<span class="o">====================</span> <span class="m">21</span> passed in 0.28 <span class="nv">seconds</span> <span class="o">=====================</span>
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<span class="admonition-proof-of-success"></span></div>
+<div class="section" id="command-line-python">
+<h2>Command-Line Python<a class="headerlink" href="#command-line-python" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, we might want to allow users to use our code outside a Python interpreter.
+Perhaps our code provides a utility that would be of use on the command line.
+We can tell <code class="docutils literal"><span class="pre">setup.py</span></code> to provide access to that code as a <code class="docutils literal"><span class="pre">console</span> <span class="pre">script</span></code>.</p>
+<p>In computer science, we refer to the functions in our that users interact with directly as <em>entry points</em>.
+They are the doorways that provide access to our code.
+In <code class="docutils literal"><span class="pre">setup.py</span></code> we can specify entry points to our code.
+The argument is called <code class="docutils literal"><span class="pre">entry_points</span></code>, and the value is a dict.
+The keys of the dict are different categories of entry point.
+The values of the dict are lists of &#8220;entry point specifiers&#8221; that belong in that category.
+For our purposes, we can just use the <code class="docutils literal"><span class="pre">console_scripts</span></code> category.
+Entry points in this category will be built into executable scripts when our package is installed.</p>
+<span class="admonition-command-line-python"></span><p>Add the following to our <code class="docutils literal"><span class="pre">setup.py</span></code> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup</span><span class="p">(</span>
+    <span class="c1"># ...</span>
+    <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;ackermann = ackermann:main&quot;</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Let&#8217;s look at the &#8220;entry point specifier&#8221; we just added.
+Specifiers take the following form:</p>
+<div class="highlight-python"><div class="highlight"><pre>executable_name = python_module.path:function_name
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">executable_name</span></code> is the name that will be used on the command line.
+You can make it anything you like.
+The <code class="docutils literal"><span class="pre">python_module.path</span></code> is the import path that leads to the module in which your code is defined.
+The <code class="docutils literal"><span class="pre">function</span></code> is the name of the actual executable function that will run when the <code class="docutils literal"><span class="pre">executable_name</span></code> is invoked from the command line.</p>
+<span class="admonition-in-setup-py"></span><p>Our ackermann module does not contain a <code class="docutils literal"><span class="pre">main</span></code> function.
+Let&#8217;s add one.</p>
+<p>We&#8217;d like to be able to specify the two values to use on the command line.
+We can use the Python <code class="docutils literal"><span class="pre">sys.argv</span></code> to get these values.
+Then we can call our ackermann function, pass in the values from sys.argv and print the result.</p>
+<p>If an error happens, we can handle it by telling the user to try a different pair of values.
+If the user provides fewer (or more) than two values, we can print a usage message to help them out.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># other, existing code ...</span>
+
+<span class="n">USAGE</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Usage: ackermann m n</span>
+
+<span class="s2">    where m and n are required and should be integers</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">USAGE</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">ackermann</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;We can&#39;t calculate the result, try using m &lt; 3 and n &lt; 4&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<span class="admonition-in-ackermann-py"></span><p>Now, we have a <code class="docutils literal"><span class="pre">main</span></code> function that will use arguments the user passes on the command line to run our <code class="docutils literal"><span class="pre">ackermann</span></code> function.
+And we&#8217;ve specified an entry point in our <code class="docutils literal"><span class="pre">setup.py</span></code> file.
+Our last step is to make that script available as a console script.
+To do this, our package metadata (which has changed) must be re-read.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ pip install -e .
+</pre></div>
+</div>
+<p>Check in the <code class="docutils literal"><span class="pre">bin</span></code> directory, you should see a new executable named <code class="docutils literal"><span class="pre">ackermann</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ ls bin
+ackermann           pip3
+activate            pip3.5
+activate.csh        py.test
+activate.fish       py.test-2.7
+activate_this.py    python
+easy_install        python3
+easy_install-3.5    python3.5
+pip
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<span class="admonition-changing-metadata"></span><p>And we can use it:</p>
+<div class="highlight-text"><div class="highlight"><pre>[tdd-play]
+Banks:tdd-play cewing$ ackermann 3 4
+125
+[tdd-play]
+Banks:tdd-play cewing$ ackermann
+
+Usage: ackermann m n
+
+    where m and n are required and should be integers
+
+
+[tdd-play]
+Banks:tdd-play cewing$ ackermann 4 4
+We can&#39;t calculate the result, try using m &lt; 3 and n &lt; 4
+[tdd-play]
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<span class="admonition-using-the-new-toy"></span></div>
+<div class="section" id="wrap-up">
+<h2>Wrap Up<a class="headerlink" href="#wrap-up" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ve learned a lot here today.</p>
+<ul class="simple">
+<li>a bit of the history of Python packaging and distribution</li>
+<li>how to create a simple distribution using <code class="docutils literal"><span class="pre">setup.py</span></code></li>
+<li>how to install our distribution, both permanently, and for further development</li>
+<li>how to specify the dependencies of our distribution</li>
+<li>how to manage dependencies for testing separately from those needed for installation</li>
+<li>how to make certain code available on the command line as a console script</li>
+</ul>
+<p>You&#8217;ll use these tools over the next few days in your homework.</p>
+<span class="admonition-summary"></span></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">An Introduction to Python Packaging</a><ul>
+<li><a class="reference internal" href="#python-distributions-a-history">Python Distributions - A History</a><ul>
+<li><a class="reference internal" href="#distutils-and-setuptools">Distutils and Setuptools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-a-python-distribution">Creating a Python Distribution</a><ul>
+<li><a class="reference internal" href="#create-setup-py">Create <code class="docutils literal"><span class="pre">setup.py</span></code></a></li>
+<li><a class="reference internal" href="#set-basic-metadata">Set Basic Metadata</a></li>
+<li><a class="reference internal" href="#find-source-code">Find Source Code</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installing-a-distribution">Installing a Distribution</a><ul>
+<li><a class="reference internal" href="#developing-distribution-code">Developing Distribution Code</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#specifying-dependencies">Specifying Dependencies</a></li>
+<li><a class="reference internal" href="#command-line-python">Command-Line Python</a></li>
+<li><a class="reference internal" href="#wrap-up">Wrap Up</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../schedule/week01/wed.html"
+                        title="previous chapter">Wednesday</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../schedule/week01/thu.html"
+                        title="next chapter">Thursday</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../schedule/week01/thu.html" title="Thursday"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../schedule/week01/wed.html" title="Wednesday"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week01/wed.html" >Wednesday</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

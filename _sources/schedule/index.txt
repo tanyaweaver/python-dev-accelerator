@@ -1,3 +1,5 @@
+:orphan:
+
 .. slideconf::
     :autoslides: False
 

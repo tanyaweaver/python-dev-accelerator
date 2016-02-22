@@ -1,3 +1,5 @@
+:orphan:
+
 ***************************
 Task Automation with Fabric
 ***************************
@@ -114,7 +116,7 @@ Fabric Basics
 This command looks for a file in your present working directory called
 ``fabfile`` or ``fabfile.py``. If there is none, it will throw an error:
 
-.. code-block:: bash
+.. code-block:: text
 
     [fabrictests]
     heffalump:fabrictests cewing$ fab

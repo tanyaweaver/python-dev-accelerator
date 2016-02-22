@@ -26,6 +26,11 @@ Review
 Concepts
 ========
 
+.. toctree::
+   :maxdepth: 2
+
+   /lectures/python_packaging_1
+
 Demo
 ====
 
