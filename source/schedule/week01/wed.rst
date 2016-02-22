@@ -13,6 +13,9 @@ Wednesday
 Objectives
 ==========
 
+* Learn about Python packaging and distributions
+* Make a distribution of a small project
+
 Readings
 ========
 
@@ -29,6 +32,7 @@ Concepts
 .. toctree::
    :maxdepth: 2
 
+   /lectures/intro_to_python_3
    /lectures/python_packaging_1
 
 Demo
