@@ -12,6 +12,9 @@ Introduction To Python: Part 4
 
     In which we learn about some Python quirks.
 
+Lists and Tuples
+================
+
 
 Mutability and Immutability
 ===========================
