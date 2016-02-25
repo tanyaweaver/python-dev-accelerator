@@ -62,16 +62,19 @@ To be counted as a sequence, the object should support at least the following op
         * Length
         * Iteration
 
-There are a number of data types in Python that fulfill this contract.
+There are a number of standard data types in Python that fulfill this contract.
 
-* Byte strings
-* Unicode strings
-* lists
-* tuples
-* bytearrays
-* buffers
-* array.arrays
-* xrange objects (py2) or range objects (py3) [almost]
+========================= ====================
+Python 2                  Python 3
+========================= ====================
+byte string (str)         byte string (bytes)
+unicode string (unicode)  unicode string (str)
+list                      list
+tuple                     tuple
+bytearray                 bytearray
+buffer                    memoryview
+xrange object             range object
+========================= ====================
 
 Of these types, the ones you will most often use are the string types, lists and tuples.
 The others are largely crafted for special purposes and you will rarely see them.
