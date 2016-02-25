@@ -29,58 +29,120 @@ The *other* sequence types.
 Lists
 -----
 
+We've see the :ref:`list <python2:typesseq>` (:py:class:`py3 <list>`) before.
+And we know that we can construct them using the list object literal: ``[]``.
+
+.. code-block:: ipython
+
+    In [1]: []
+    Out[1]: []
+    In [2]: [1,2,3]
+    Out[2]: [1, 2, 3]
+    In [3]: [1, 'a', 7.34]
+    Out[3]: [1, 'a', 7.34]
+
+We can also call the ``list`` type object.
+It can accept an optional argument which is any sequence type:
+
+.. code-block:: ipython
+
+    In [6]: list()
+    Out[6]: []
+    In [7]: list(range(4))
+    Out[7]: [0, 1, 2, 3]
+    In [8]: list('abc')
+    Out[8]: ['a', 'b', 'c']
+
 .. slide:: Lists
     :level: 3
 
     We've seen construction with list literals (``[]``):
 
-    .. code-block:: ipython
+    .. rst-class:: build
+    .. container::
 
-        In [1]: []
-        Out[1]: []
-        In [2]: [1,2,3]
-        Out[2]: [1, 2, 3]
-        In [3]: [1, 'a', 7.34]
-        Out[3]: [1, 'a', 7.34]
+        .. code-block:: ipython
 
-    We can also call the ``list`` type object:
+            In [1]: []
+            Out[1]: []
+            In [2]: [1,2,3]
+            Out[2]: [1, 2, 3]
+            In [3]: [1, 'a', 7.34]
+            Out[3]: [1, 'a', 7.34]
 
-    .. code-block:: ipython
+        We can also call the ``list`` type object:
 
-        In [6]: list()
-        Out[6]: []
-        In [7]: list(range(4))
-        Out[7]: [0, 1, 2, 3]
-        In [8]: list('abc')
-        Out[8]: ['a', 'b', 'c']
+        .. code-block:: ipython
 
+            In [6]: list()
+            Out[6]: []
+            In [7]: list(range(4))
+            Out[7]: [0, 1, 2, 3]
+            In [8]: list('abc')
+            Out[8]: ['a', 'b', 'c']
+
+A list is a *heterogenous*, *ordered* collection.
+This means it can contain values of different types.
+Each element in a list is a value.
+Even if you add a name to a list, it is the value the name is bound to that is actually stored.
+And like all values, the values in a list can have none, one, or more than one name bound to them.
+When you store a value in a list, it creates a reference to that value.
+
+.. code-block:: ipython
+
+    In [9]: name = u'Brian'
+    In [10]: a = [1, 2, name]
+    In [11]: b = [3, 4, name]
+    In [12]: a[2]
+    Out[12]: u'Brian'
+    In [13]: b[2]
+    Out[13]: u'Brian'
+    In [14]: a[2] is b[2]
+    Out[14]: True
 
 .. slide:: List Elements
     :level: 3
 
     Lists are *heterogenous*, *ordered* collections.
 
-    Elements need not be of a single type
+    .. rst-class:: build
+    .. container::
 
-    Each element in a list is a value
+        Elements need not be of a single type
 
-    Membership in a list adds a reference to the value
+        Each element in a list is a value
 
-    .. code-block:: ipython
+        Membership in a list adds a reference to the value
 
-        In [9]: name = u'Brian'
-        In [10]: a = [1, 2, name]
-        In [11]: b = [3, 4, name]
-        In [12]: a[2]
-        Out[12]: u'Brian'
-        In [13]: b[2]
-        Out[13]: u'Brian'
-        In [14]: a[2] is b[2]
-        Out[14]: True
+        .. code-block:: ipython
+
+            In [9]: name = u'Brian'
+            In [10]: a = [1, 2, name]
+            In [11]: b = [3, 4, name]
+            In [12]: a[2]
+            Out[12]: u'Brian'
+            In [13]: b[2]
+            Out[13]: u'Brian'
+            In [14]: a[2] is b[2]
+            Out[14]: True
 
 
 Tuples
 ------
+
+We've also seen the :class:`tuple <python2:tuple>` (:py:class:`py3 <tuple>`) before.
+We know that we can construct them using the tuple object literal: ``()``.
+
+.. code-block:: ipython
+
+    In [15]: ()
+    Out[15]: ()
+    In [16]: (1, 2)
+    Out[16]: (1, 2)
+    In [17]: (1, 'a', 7.65)
+    Out[17]: (1, 'a', 7.65)
+    In [18]: (1,)
+    Out[18]: (1,)
 
 .. slide:: Tuples
     :level: 3
@@ -97,6 +159,32 @@ Tuples
         Out[17]: (1, 'a', 7.65)
         In [18]: (1,)
         Out[18]: (1,)
+
+As it turns out, though, you don't even need the parentheses to construct a tuple.
+Separating a number of literal values, or bound names, with commas is enough:
+
+.. code-block:: ipython
+
+    In [161]: t = (1,2,3)
+    In [162]: t
+    Out[162]: (1, 2, 3)
+    In [163]: t = 1,2,3
+    In [164]: t
+    Out[164]: (1, 2, 3)
+    In [165]: type(t)
+    Out[165]: tuple
+
+In fact, the comma is actually the only required part.
+If you try to construct a tuple with one element without a comma, it will not turn out as you expect:
+
+.. code-block:: ipython
+
+    In [156]: t = ( 3 )
+    In [157]: type(t)
+    Out[157]: int
+    In [158]: t = (3,)
+    In [160]: type(t)
+    Out[160]: tuple
 
 .. slide:: Tuples and Commas...
     :level: 3
@@ -128,6 +216,19 @@ Tuples
             In [160]: type(t)
             Out[160]: tuple
 
+You can also construct a tuple by calling the ``tuple`` type object.
+It accepts an optional argument which can be any sequence type.
+The sequence will be converted to a tuple:
+
+.. code-block:: ipython
+
+    In [20]: tuple()
+    Out[20]: ()
+    In [21]: tuple(range(4))
+    Out[21]: (0, 1, 2, 3)
+    In [22]: tuple('garbanzo')
+    Out[22]: ('g', 'a', 'r', 'b', 'a', 'n', 'z', 'o')
+
 .. slide:: Converting to Tuple
     :level: 3
 
@@ -142,6 +243,13 @@ Tuples
         In [22]: tuple('garbanzo')
         Out[22]: ('g', 'a', 'r', 'b', 'a', 'n', 'z', 'o')
 
+
+A tuple is a *heterogenous*, *ordered* collection.
+This means it can contain values of different types.
+Each element in a tuple is a value.
+Even if you add a name to a tuple, it is the value the name is bound to that is actually stored.
+And like all values, the values in a list can have none, one, or more than one name bound to them.
+When you store a value in a tuple, it creates a reference to that value.
 
 .. slide:: Tuple Elements
     :level: 3
@@ -177,7 +285,6 @@ Tuples
 
 So if the list and the tuple are essentially identical, why does Python have both?
 
-
 Mutability
 ==========
 
@@ -208,6 +315,10 @@ image from flickr by `illuminaut`_, (CC by-nc-sa)
 Mutability in Python
 --------------------
 
+All objects in Python fall into one of two camps: mutable and immutable.
+Objects which are mutable may be *changed in place*.
+Objects which are immutable *may not be changed*.
+
 .. slide:: Mutability in Python
     :level: 3
 
@@ -226,16 +337,18 @@ Mutability in Python
 The Types We Know
 -----------------
 
-========= =======
-Immutable Mutable
-========= =======
-Unicode   List
-String    Dict
-Integer   Set
-Float
-Tuple
-FrozenSet
-========= =======
+Here's a table showing the types we know so far, split into the two categories of mutable and immutable
+
+======= =========
+Mutable Immutable
+======= =========
+List    Unicode
+Dict    String
+Set     Integer
+        Float
+        Tuple
+        FrozenSet
+======= =========
 
 .. slide:: The Types We Know
     :level: 3
@@ -251,6 +364,20 @@ FrozenSet
     FrozenSet
     ========= =======
 
+Lists are mutable.
+Try this out:
+
+.. code-block:: ipython
+
+    In [28]: food = [u'spam', u'eggs', u'ham']
+
+    In [29]: food
+    Out[29]: [u'spam', u'eggs', u'ham']
+
+    In [30]: food[1] = u'raspberries'
+
+    In [31]: food
+    Out[31]: [u'spam', u'raspberries', u'ham']
 
 .. slide:: Lists Are Mutable
     :level: 3
@@ -266,6 +393,21 @@ FrozenSet
         In [31]: food
         Out[31]: [u'spam', u'raspberries', u'ham']
 
+Tuples, on the other hand, are immutable.
+If we try the same thing with a tuple:
+
+.. code-block:: ipython
+
+    In [32]: food = (u'spam', u'eggs', u'ham')
+    In [33]: food
+    Out[33]: (u'spam', u'eggs', u'ham')
+    In [34]: food[1] = u'raspberries'
+    ---------------------------------------------------------------------------
+    TypeError                                 Traceback (most recent call last)
+    <ipython-input-34-0c3401794933> in <module>()
+    ----> 1 food[1] = u'raspberries'
+
+    TypeError: 'tuple' object does not support item assignment
 
 .. slide:: Tuples Are Not
     :level: 3
@@ -284,6 +426,36 @@ FrozenSet
         ----> 1 food[1] = u'raspberries'
 
         TypeError: 'tuple' object does not support item assignment
+
+We must be aware of the mutability of the types we use when binding values.
+For example, consider this short program:
+
+.. code-block:: ipython
+
+    In [36]: original = [1, 2, 3]
+    In [37]: altered = original
+    In [38]: for i in range(len(original)):
+       ....:     if True:
+       ....:         altered[i] += 1
+       ....:
+
+What is the result of running this code?
+
+.. code-block:: ipython
+
+    In [39]: altered
+    Out[39]: [2, 3, 4]
+
+    In [40]: original
+    Out[40]: [2, 3, 4]
+
+First we bind the symbol ``original`` to the list containing 1, 2 and 3.
+Next, we bind the symbol ``altered``.
+But to what?
+
+Remember that we only ever bind names to values.
+In [37] above, we are binding ``altered`` to the value that ``original`` is bound to.
+In other words, both symbols *are bound to the same value*.
 
 .. slide:: Watch When Binding
     :level: 3
@@ -313,6 +485,35 @@ FrozenSet
 
             In [40]: original
             Out[40]: [2, 3, 4]
+
+There are other potential gotchas involving mutability.
+Consider the follow example of code.
+It looks like a quick way to set up a bunch of bins for us to sort our words into.
+
+.. code-block:: ipython
+
+    In [13]: bins = [ [] ] * 5
+    In [14]: bins
+    Out[14]: [[], [], [], [], []]
+    In [15]: words = [u'one', u'three', u'rough', u'sad', u'goof']
+    In [16]: for word in words:
+       ....:     bins[len(word)-1].append(word)
+       ....:
+
+But in fact, it's a deadly trap.
+We are concatenating together a list five times.
+That list contains one list.
+The new list contains that same one list... *five times!*
+
+.. code-block:: ipython
+
+    In [65]: bins
+    Out[65]:
+    [[u'one', u'three', u'rough', u'sad', u'goof'],
+     [u'one', u'three', u'rough', u'sad', u'goof'],
+     [u'one', u'three', u'rough', u'sad', u'goof'],
+     [u'one', u'three', u'rough', u'sad', u'goof'],
+     [u'one', u'three', u'rough', u'sad', u'goof']]
 
 
 .. slide:: Other Gotchas
@@ -355,6 +556,31 @@ FrozenSet
 
         We got a list containing five pointers to a single *mutable* object.
 
+We must also avoid using mutable objects as default values for functions:
+
+.. code-block:: ipython
+
+    In [71]: def accumulator(count, list=[]):
+       ....:     for i in range(count):
+       ....:         list.append(i)
+       ....:     return list
+       ....:
+
+When the ``def`` statement is executed, the value of the default is baked into the constructed function object.
+This means that the default value *any time the function is called* is a single, mutable object.
+So the first time we call the function:
+
+.. code-block:: ipython
+
+    In [72]: accumulator(5)
+    Out[72]: [0, 1, 2, 3, 4]
+
+And the second time?
+
+.. code-block:: ipython
+
+    In [73]: accumulator(7)
+    Out[73]: [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 5, 6]
 
 .. slide:: Mutable Default Argument
     :level: 3
@@ -388,11 +614,20 @@ Mutable Sequence Methods
 We've seen a number of operations supported by all sequence types.
 Mutable sequences (the List), have a number of other methods that are used to change the list.
 
-You can find all these in the :ref:`Standard Library Documentation <typesseq-mutable>`:
-
+We can find all these in the standard library documentation for :ref:`python2:typesseq-mutable` (:py:ref:`py3 <typesseq-mutable>`)
 
 Assignment
 ----------
+
+Using the *subscription operator* in combination with assignment allows us to change a single element within a list.
+This operates pretty much the same as *arrays* in most languages:
+
+.. code-block:: ipython
+
+    In [100]: list = [1, 2, 3]
+    In [101]: list[2] = 10
+    In [102]: list
+    Out[102]: [1, 2, 10]
 
 .. slide:: Assignment
     :level: 3
@@ -414,6 +649,33 @@ Assignment
 
 Growing the List
 ----------------
+
+We can grow a list using one of three methods.
+
+The ``.append()`` method adds a single item to the end of the list.
+
+.. code-block:: ipython
+
+    In [74]: food = [u'spam', u'eggs', u'ham']
+    In [75]: food.append(u'sushi')
+    In [76]: food
+    Out[76]: [u'spam', u'eggs', u'ham', u'sushi']
+
+The ``.insert()`` method adds a single item at a given position in the list.
+
+.. code-block:: ipython
+
+    In [77]: food.insert(0, u'beans')
+    In [78]: food
+    Out[78]: [u'beans', u'spam', u'eggs', u'ham', u'sushi']
+
+The ``.extend()`` method takes a sequence as its argument, and adds all the items in it to the end of the list.
+
+.. code-block:: ipython
+
+    In [79]: food.extend([u'bread', u'water'])
+    In [80]: food
+    Out[80]: [u'beans', u'spam', u'eggs', u'ham', u'sushi', u'bread', u'water']
 
 .. slide:: Growing the List
     :level: 3
@@ -452,6 +714,18 @@ Growing the List
                 In [80]: food
                 Out[80]: [u'beans', u'spam', u'eggs', u'ham', u'sushi', u'bread', u'water']
 
+Remember, we can pass *any* sequence type as an argument to ``extend``.
+Sometimes this has unexpected results:
+
+.. code-block:: ipython
+
+    In [85]: food
+    Out[85]: [u'beans', u'spam', u'eggs', u'ham', u'sushi', u'bread', u'water']
+    In [86]: food.extend(u'spaghetti')
+    In [87]: food
+    Out[87]:
+    [u'beans', u'spam', u'eggs', u'ham', u'sushi', u'bread', u'water',
+     u's', u'p', u'a', u'g', u'h', u'e', u't', u't', u'i']
 
 .. slide:: More on Extend
     :level: 3
@@ -471,6 +745,31 @@ Growing the List
 
 Shrinking the List
 ------------------
+
+There are also a number of methods available that allow us to shrink a list.
+
+The ``.pop()`` method removes an item from the end of a list and returns its value.
+If the optional ``index`` argument is passed, the item at that index is removed and returned instead.
+If the method is called on an empty list, or the provided ``index`` argument is out of range, this causes an ``IndexError``.
+
+.. code-block:: ipython
+
+    In [203]: food = ['spam', 'eggs', 'ham', 'toast']
+    In [204]: food.pop()
+    Out[204]: 'toast'
+    In [205]: food.pop(0)
+    Out[205]: 'spam'
+    In [206]: food
+    Out[206]: ['eggs', 'ham']
+
+The ``.remove()`` method removes the value provided as its argument from the list.
+If that value is not present in the list, it causes a ``ValueError``.
+
+.. code-block:: ipython
+
+    In [207]: food.remove('ham')
+    In [208]: food
+    Out[208]: ['eggs']
 
 .. slide:: Shrinking the List
     :level: 3
@@ -505,6 +804,20 @@ Shrinking the List
                 Out[208]: ['eggs']
 
             (``ValueError`` if not in list)
+
+We can even remove entire chunks of a list using the ``del`` keyword on a slice of the list:
+
+.. code-block:: ipython
+
+    In [92]: nums = range(10)
+    In [93]: nums
+    Out[93]: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    In [94]: del nums[1:6:2]
+    In [95]: nums
+    Out[95]: [0, 2, 4, 6, 7, 8, 9]
+    In [96]: del nums[-3:]
+    In [97]: nums
+    Out[97]: [0, 2, 4, 6]
 
 .. slide:: Removing Chunks of a List
     :level: 3
@@ -1644,7 +1957,7 @@ In fact, there are a number of tools that are provided to facilitate just that.
 
     .. rst-class:: build
     .. container::
-    
+
         Applies the function to each item in the list, returning another list
 
         .. code-block:: ipython
