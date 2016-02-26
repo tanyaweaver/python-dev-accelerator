@@ -13,6 +13,11 @@ Wednesday
 Objectives
 ==========
 
+* Understand the difference between mutable and immutable types in Python
+* Understand why the difference is important
+* Learn how to work with exceptions in Python to handle and communicate error conditions
+* Learn more advanced semantics for passing arguments to functions
+* Understand the basics of using functional programming style in Python
 * Learn about Python packaging and distributions
 * Make a distribution of a small project
 

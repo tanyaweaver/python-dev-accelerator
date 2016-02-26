@@ -840,6 +840,27 @@ We can even remove entire chunks of a list using the ``del`` keyword on a slice 
 Copying Lists
 -------------
 
+We can create copies of ``list`` objects in Python using *slicing*.
+If we provide no arguments to the slice operator, the result is to create a copy of the entire list:
+
+.. code-block:: ipython
+
+    In [227]: food = ['spam', 'eggs', 'ham', 'sushi']
+    In [228]: some_food = food[1:3]
+    In [229]: some_food[1] = 'bacon'
+    In [230]: food
+    Out[230]: ['spam', 'eggs', 'ham', 'sushi']
+    In [231]: some_food
+    Out[231]: ['eggs', 'bacon']
+
+.. code-block:: ipython
+
+    In [232]: food
+    Out[232]: ['spam', 'eggs', 'ham', 'sushi']
+    In [233]: food2 = food[:]
+    In [234]: food is food2
+    Out[234]: False
+
 .. slide:: Copying Lists
     :level: 3
 
@@ -867,6 +888,9 @@ Copying Lists
             In [233]: food2 = food[:]
             In [234]: food is food2
             Out[234]: False
+
+Making a copy this way results in what we call a *shallow copy*.
+More about this in a bit.
 
 .. slide:: Shallow Copies
     :level: 3
@@ -906,6 +930,35 @@ Consider the following common pattern:
 
 This looks benign enough.
 But changing a list while you are iterating over it can be the cause of some pernicious bugs.
+For example, try this out:
+
+.. code-block:: ipython
+
+    In [121]: lst = range(10)
+    In [122]: lst
+    Out[122]: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    In [123]: for x in lst:
+       .....:     lst.remove(x)
+       .....:
+
+At this point, what do we expect the ``list`` object to contain?
+
+.. code-block:: ipython
+
+    In [124]: lst
+    Out[124]: [1, 3, 5, 7, 9]
+
+We can use a copy of the list to solve this problem.
+By iterating over the copy of the list while mutating the original, we get the results we wanted:
+
+.. code-block:: ipython
+
+    In [126]: lst = range(10)
+    In [127]: for x in lst[:]:
+       .....:     lst.remove(x)
+       .....:
+    In [128]: lst
+    Out[128]: []
 
 .. slide:: The Problem
     :level: 3
@@ -924,7 +977,7 @@ But changing a list while you are iterating over it can be the cause of some per
     .. rst-class:: build
     .. container::
 
-        What do you expect ``x`` to be now?
+        What do you expect ``list`` to be now?
 
         .. code-block:: ipython
 
@@ -944,9 +997,6 @@ But changing a list while you are iterating over it can be the cause of some per
            .....:
         In [128]: list
         Out[128]: []
-
-A bit more on mutability (and copies)
-=====================================
 
 We've talked about this: mutable objects can have their contents changed in place.
 Immutable objects can not.
@@ -1049,7 +1099,19 @@ But if they do no, you can use the ``copy`` module to make one.
             In [45]: list3
             Out[45]: [[1, 2, 3], ['a', 'b', 'c']]
 
-``deepcopy`` recurses through the object, making copies of everything as it goes.
+Copies made by ``copy.copy`` are still shallow.
+But the ``copy`` module also offers ``copy.deepcopy``.
+This function recurses through the object, making copies of everything as it goes.
+The result is a copy that is entirely independent from the original, all the way down.
+
+.. code-block:: ipython
+
+    In [42]: list4 = copy.deepcopy(list3)
+    In [43]: list4[0].append(4)
+    In [44]: list4
+    Out[44]: [[1, 2, 3, 4], ['a', 'b', 'c']]
+    In [45]: list3
+    Out[45]: [[1, 2, 3], ['a', 'b', 'c']]
 
 I happened on `this thread on stack overflow <http://stackoverflow.com/questions/3975376/understanding-dict-copy-shallow-or-deep>`_
 The OP is pretty confused -- can you sort it out?
@@ -1062,7 +1124,7 @@ Miscellaneous List Methods
 These methods change a list in place and are not available on immutable sequence types.
 Because these methods mutate the list in place, they have a return value of ``None``
 
-``.reverse()``:
+The ``.reverse()`` method reverses a list in place:
 
 .. code-block:: ipython
 
@@ -1071,7 +1133,7 @@ Because these methods mutate the list in place, they have a return value of ``No
     In [131]: food
     Out[131]: [u'ham', u'eggs', u'spam']
 
-``.sort()``:
+The ``.sort()`` method sorts the list in ascending order:
 
 .. code-block:: ipython
 
@@ -1108,6 +1170,20 @@ Because these methods mutate the list in place, they have a return value of ``No
                 In [133]: food
                 Out[133]: [u'eggs', u'ham', u'spam']
 
+If we prefer a different order for your sorting, we can supply the optional ``key`` parameter.
+The argument must be a function which takes one parameter.
+It will be called for each item in the list.
+The value it returns will be used as the value on which to sort the list:
+
+.. code-block:: ipython
+
+    In [137]: def third_letter(string):
+       .....:     return string[2]
+       .....:
+    In [138]: food.sort(key=third_letter)
+    In [139]: food
+    Out[139]: [u'spam', u'eggs', u'ham']
+
 .. slide:: Control Sorting
     :level: 3
 
@@ -1131,7 +1207,12 @@ Because these methods mutate the list in place, they have a return value of ``No
             In [139]: food
             Out[139]: [u'spam', u'eggs', u'ham']
 
+        Don't forget the ``sorted`` builtin, either.
 
+If we would rather create a sorted copy of our list, we can make use of the :func:`sorted <python2:sorted` builtin (:py:func:`py3 <sorted>`).
+This function takes a list as its first argument.
+The remaining arguments are the same as for the ``list.sort`` method.
+The function returns a new list which has been sorted, and leaves the original unmodified.
 
 List Performance
 ================
@@ -1262,14 +1343,51 @@ And a few final guidelines:
 
       * list
 
-
-
-
-
 Exception Handling
 ==================
 
 Exceptions in Python are used to control program flow when things go wrong.
+To handle exceptions, we use the :keyword:`try <python2:try>` (:py:keyword:`py3 <try>`).
+This keyword forms another branching structure, like ``if ... else``:
+
+.. code-block:: python
+
+    try:
+        do_something()
+        f = open('missing.txt')
+        process(f)   # never called if file missing
+    except IOError:
+        print("couldn't open missing.txt")
+
+If an error occurs as a result of any of the statements in the ``try`` block, that error will be compared with the exception class specified in the :keyword:`except <python2:except>` (:py:keyword:`py3 <except>`) block.
+If the exception raised is an instance of, or an instance of a subclass of that exception class, the statements in the ``except`` block will be executed.
+
+Using the ``except`` keyword without providing a comparison exception class is called a ``bare except``.
+This is considered very bad style, as it can hide problems in our code.
+It's not really better to use the ``Exception`` class as the comparison either.
+That is the base class for *all* Python exceptions, so the end result is the same.
+
+.. warning:: Never Do this:
+
+             .. code-block:: python
+
+                try:
+                    do_something()
+                    f = open('missing.txt')
+                    process(f)   # never called if file missing
+                except:
+                    print("couldn't open missing.txt")
+
+             And this is no better, really:
+
+             .. code-block:: python
+
+                try:
+                    do_something()
+                    f = open('missing.txt')
+                    process(f)   # never called if file missing
+                except Exception:
+                    print("couldn't open missing.txt")
 
 .. slide:: Exception Handling
     :level: 2
@@ -1320,6 +1438,39 @@ Exceptions in Python are used to control program flow when things go wrong.
         except Exception:
             print("couldn't open missing.txt")
 
+In programming there are two approaches to dealing with code that might cause errors to occur.
+The first is to test first to see if the error will happen, and do something different if it won't:
+
+.. code-block:: python
+
+    do_something()
+    if os.path.exists('missing.txt'):
+        f = open('missing.txt')
+        process(f)   # never called if file missing
+
+The second approach is to allow the exceptions to happen, and then handle them when they do:
+
+.. code-block:: python
+
+    try:
+        f = open('missing.txt')
+    except IOError:
+        deal_with_it()
+    else:
+        process(f)
+
+This latter approach is considered to be *more Pythonic*.
+We call this approach *EAFP*:
+
+.. epigraph::
+
+   it's Easier to Ask Forgiveness than Permission
+
+   -- Grace Hopper
+
+It isn't always that cut-and-dried, but it's a good starting point.
+For a more nuanced take on this, you should watch `Alex Martelli's PyCon Talk from 2012 <http://www.youtube.com/watch?v=AZDWveIdqjY>`_
+
 .. slide:: Exceptions > Tests
     :level: 3
 
@@ -1354,6 +1505,11 @@ Exceptions in Python are used to control program flow when things go wrong.
 
     (Pycon talk by Alex Martelli)
 
+In general, it's a good idea to allow exceptions to happen.
+Python provides excellent tracebacks and error messages.
+They are helpful to developers and even useful to end users.
+We should only catch exceptions that happen if we *can* and *will* do something about them.
+
 .. slide:: What to Catch?
     :level: 3
 
@@ -1362,6 +1518,20 @@ Exceptions in Python are used to control program flow when things go wrong.
     Only catch exceptions if you *can* and *will* do something about them.
 
     (much better debugging info when an error does occur)
+
+The ``try ... except`` clause can be extended with an ``else`` clause.
+The code in this block is executed only if *no exception* occurs.
+This can be a great way to isolate code that is entirely dependent on the success of the code in the ``try`` block.
+
+.. code-block:: python
+
+    try:
+        do_something()
+        f = open('missing.txt')
+    except IOError:
+        print(u"couldn't open missing.txt")
+    else:
+        process(f)
 
 .. slide:: ``else`` Clause
     :level: 3
@@ -1383,6 +1553,21 @@ Exceptions in Python are used to control program flow when things go wrong.
 
         Code in the ``else:`` block is run only when *no exception*
 
+We can also enhance ``try ... except`` with a ``finally`` clause.
+The code in this block is executed *whether or not* an exception handles.
+This is an opportunity to do tasks that must happen in any case: closing file handles, terminating network sessions, etc.
+
+.. code-block:: python
+
+    try:
+        do_something()
+        f = open('missing.txt')
+        process(f)   # never called if file missing
+    except IOError:
+        print(u"couldn't open missing.txt")
+    finally:
+        do_some_clean_up
+
 .. slide:: ``finally`` Clause
     :level: 3
 
@@ -1400,9 +1585,46 @@ Exceptions in Python are used to control program flow when things go wrong.
             except IOError:
                 print(u"couldn't open missing.txt")
             finally:
-                do_some_clean-up
+                do_some_clean_up
 
         Code in the ``finally:`` block will *always* run
+
+.. note:: The ``try`` keyword must always be paired with at least one other keyword.
+          The most common pair is the ``try ... except`` pairing.
+          You can even add more ``except`` clauses to handle different types of errors.
+          But you *can* omit any ``except`` clause **if and only if** you use a ``finally`` clause.
+
+When errors do occur, the exception instances that are raised often have information that can be used in handling the exception.
+If you want to do so, you can use ``as`` in your except clause to bind the exception instance to a symbol.
+Then in the except block, you can read attributes of the exception and use the information as you wish:
+
+.. code-block:: python
+
+    try:
+        do_something()
+        f = open('missing.txt')
+    except IOError as the_error:
+        print(the_error)
+        the_error.extra_info = "some more information"
+        raise
+
+Before the introduction of ``as`` in an ``except`` statement in Python 2.6, we could achieve this same thing by using a comma to separate the exception instance from the symbol to which it would be bound.
+This form is still out there in legacy code bases.
+If dropping support for Python 2.5 and earlier is possible (as it should usually be), you should update this form whenever you see it:
+
+.. code-block:: python
+
+    try:
+        f = open('missing.txt')
+    except IOError, the_error:
+       print(the_error)
+
+This can be particularly useful when you are handling several different exception types with a single except clause:
+
+.. code-block:: python
+
+    except (IOError, BufferError, OSError) as the_error:
+        do_something_with(the_error)
 
 .. slide:: Using Exception Instances
     :level: 3
@@ -1418,7 +1640,7 @@ Exceptions in Python are used to control program flow when things go wrong.
                 do_something()
                 f = open('missing.txt')
             except IOError as the_error:
-                print the_error
+                print(the_error)
                 the_error.extra_info = "some more information"
                 raise
 
@@ -1428,6 +1650,21 @@ Exceptions in Python are used to control program flow when things go wrong.
 
             except (IOError, BufferError, OSError) as the_error:
                 do_something_with(the_error)
+
+When writing code, it can be useful for us to be able to control the exceptions that happen when our code is used.
+The :keyword:`raise <python2:raise>` keyword (:py:keyword:`py3 <raise>`) allows us to create exception instances and throw them.
+
+.. code-block:: python
+
+    def divide(a,b):
+        if b == 0:
+            raise ZeroDivisionError("b can not be zero")
+        else:
+            return a / b
+
+You can create custom exceptions by sub-classing any of the :ref:`built-in exception types <python2:bltin-exceptions>` (:py:ref:`py3 <bltin-exceptions>`).
+However, consider carefully using one of the existing classes instead.
+There are 32 in Python 2 and 47 in Python 3.  Plenty to handle most situations well.
 
 .. slide:: Raising Exceptions
     :level: 3
@@ -1467,6 +1704,27 @@ Exceptions in Python are used to control program flow when things go wrong.
 
         For the most part, you can/should use a built in one
 
+Remember always that in programming exceptions are a form of communications.
+The kind of exception that is raised tells developers about what went wrong.
+We should always make an effort to choose the best possible exception class to describe our particular problem.
+
+Consider the example of the Ackermann function we've been working on.
+A user might attempt to call the function while providing non-integers as arguments.
+We could protect ourselves against this problem like so::
+
+    if (not isinstance(m, int)) or (not isinstance(n, int)):
+        raise ValueError
+
+But is it the *value* of the input that is the problem here?
+Not really.
+The real issue is the *type* that was passed.
+This would be a better communication of the situation::
+
+    if (not isinstance(m, int)) or (not isinstance(n, int)):
+        raise TypeError
+
+But again, *EAFP*, should we really be checking in the first place?
+
 .. slide:: Exceptions are Communication
     :level: 3
 
@@ -1489,18 +1747,25 @@ Exceptions in Python are used to control program flow when things go wrong.
             if (not isinstance(m, int)) or (not isinstance(n, int)):
                 raise TypeError
 
-        but should you be checking type anyway? (EAFP)
-
-
-
-
-
-
+        but should we be checking type anyway? (EAFP)
 
 Advanced Argument Passing
 =========================
 
-When defining a function, you can specify only what you need -- in any order
+When defining a function, we can specify only what we need -- in any order.
+
+.. code-block:: ipython
+
+    In [150]: from __future__ import print_function
+    In [151]: def fun(x, y=0, z=0):
+       .....:     print(x, y, z, end=" ")
+       .....:
+    In [152]: fun(1, 2, 3)
+    1 2 3
+    In [153]: fun(1, z=3)
+    1 0 3
+    In [154]: fun(1, z=3, y=2)
+    1 2 3
 
 .. slide:: Keyword arguments
     :level: 3
@@ -1524,6 +1789,25 @@ When defining a function, you can specify only what you need -- in any order
             1 0 3
             In [154]: fun(1, z=3, y=2)
             1 2 3
+
+One fun feature is that we can use *variables* as default values.
+
+.. code-block:: ipython
+
+    In [156]: y = 4
+    In [157]: def fun(x=y):
+        print(u"x is: %s" % x)
+       .....:
+    In [158]: fun()
+    x is: 4
+
+Since defaults are evaluated when a function is defined, once the function object exists, the variable can be changed without altering the function.
+
+.. code-block:: ipython
+
+    In [159]: y = 6
+    In [160]: fun()
+    x is: 4
 
 .. slide:: Variable Defaults
     :level: 3
@@ -1549,6 +1833,59 @@ When defining a function, you can specify only what you need -- in any order
             In [159]: y = 6
             In [160]: fun()
             x is: 4
+
+We've seen using ``*`` and ``**`` for variable parameter lists:
+
+.. code-block:: ipython
+
+    In [10]: def f(*args, **kwargs):
+       ....:     print(u"the positional arguments are: %s" % unicode(args))
+       ....:     print(u"the optional arguments are: %s" % unicode(kwargs))
+       ....:
+    In [11]: f(2, 3, this=5, that=7)
+    the positional arguments are: (2, 3)
+    the optional arguments are: {'this': 5, 'that': 7}
+
+What isn't immediately apparent from that usage is that *internally* to a function object, parameters are represented as
+
+* a tuple of positional arguments
+* a dict of keyword arguments
+
+This has interesting implications.
+For example, consider the following function:
+
+.. code-block:: ipython
+
+    In [1]: def f(x, y, w=0, h=0):
+       ...:     msg = u"position: %s, %s -- shape: %s, %s"
+       ...:     print(msg % (x, y, w, h))
+       ...:
+
+We can use the same ``*`` and ``**`` operators (splat and double-splat) to pass tuples and dicts as arguments:
+
+.. code-block:: ipython
+
+    In [2]: position = (3, 4)
+    In [3]: size = {'h': 10, 'w': 20}
+    In [4]: f(*position, **size)
+    position: 3, 4 -- shape: 20, 10
+
+Remember the string ``.format()`` method?
+It can take keyword arguments if the placeholders in the format string are named.
+
+.. code-block:: ipython
+
+    In [24]: u"My name is {first} {last}".format(last=u"Ewing", first=u"Cris")
+    Out[24]: u'My name is Cris Ewing'
+
+You can also use a ``dict`` with keys and values to accomplish the same thing:
+
+.. code-block:: ipython
+
+    In [25]: d = {u"last": u"Ewing", u"first": u"Cris"}
+
+    In [26]: u"My name is {first} {last}".format(**d)
+    Out[26]: u'My name is Cris Ewing'
 
 .. slide:: Parameters in Variables
     :level: 3
@@ -1624,6 +1961,30 @@ When defining a function, you can specify only what you need -- in any order
                 In [26]: u"My name is {first} {last}".format(**d)
                 Out[26]: u'My name is Cris Ewing'
 
+Finally, a reminder about using mutable objects as default values for optional parameters.
+We know the problem with this function:
+
+.. code-block:: ipython
+
+    In [11]: def fun(x, a=[]):
+       ....:     a.append(x)
+       ....:     print(a)
+       ....:
+
+It's often useful to use a *flag value* as a default to signal when you want a mutable object to be used:
+
+.. code-block:: ipython
+
+    In [15]: def fun(x, a=None):
+       ....:     if a is None:
+       ....:         a = []
+       ....:     a.append(x)
+       ....:     print(a)
+    In [16]: fun(3)
+    [3]
+    In [17]: fun(4)
+    [4]
+
 .. slide:: Mutable Defaults
     :level: 3
 
@@ -1680,6 +2041,23 @@ Comprehensions (list, dict and set) allow us to compress loop expressions into a
 They can also be very efficient because they save the creation of intermediate values.
 They are one piece of the functional programming story in Python.
 
+List Comprehensions
+-------------------
+
+Consider the following loop structure, a very common pattern:
+
+.. code-block:: python
+
+    new_list = []
+    for variable in a_list:
+        new_list.append(expression)
+
+With a *list comprehension* we can express the same thing in one clean line of code:
+
+.. code-block:: python
+
+    new_list = [expression for variable in a_list]
+
 .. slide:: Comprehensions
     :level: 2
 
@@ -1705,8 +2083,20 @@ They are one piece of the functional programming story in Python.
 
                 new_list = [expression for variable in a_list]
 
-List Comprehensions
--------------------
+What about nested *for* loops?
+
+.. code-block:: python
+
+    new_list = []
+    for var in a_list:
+        for var2 in a_list2:
+            new_list.append(expr)
+
+We can use multiple ``for`` clauses in a comprehension to express the same thing:
+
+.. code-block:: python
+
+    new_list =  [expr for var in a_list for var2 in a_list2]
 
 .. slide:: Nested Loops
     :level: 3
@@ -1731,6 +2121,21 @@ List Comprehensions
 
         You get the "outer product": all combinations.
 
+We can even use ``if`` in a comprehension to account for conditionals in the loop:
+
+.. code-block:: python
+
+    new_list = []
+    for var in a_list:
+        if something_is_true:
+            new_list.append(expr)
+
+This can also be expressed in a single statement.
+
+.. code-block:: python
+
+    new_list = [expr for var in a_list if something_is_true]
+
 .. slide:: Conditionals in Comprehensions
     :level: 3
 
@@ -1751,6 +2156,27 @@ List Comprehensions
         .. code-block:: python
 
             new_list = [expr for var in a_list if something_is_true]
+
+Examples
+********
+
+.. code-block:: ipython
+
+    In [341]: [x ** 2 for x in range(3)]
+    Out[341]: [0, 1, 4]
+
+    In [342]: [x + y for x in range(3) for y in range(5, 7)]
+    Out[342]: [5, 6, 6, 7, 7, 8]
+
+    In [343]: [x * 2 for x in range(6) if not x % 2]
+    Out[343]: [0, 4, 8]
+
+.. code-block:: python
+
+    [name for name in dir(__builtin__) if "Error" in name]
+    ['ArithmeticError',
+     'AssertionError',
+     'AttributeError',
 
 .. slide:: Examples
     :level: 3
@@ -1781,8 +2207,20 @@ List Comprehensions
 Set Comprehensions
 ------------------
 
-You can do it with sets, too:
+We can create comprehensions that build sets, too.
+Simple loops like this:
 
+.. code-block:: python
+
+    new_set = set()
+    for value in a_sequence:
+        new_set.add(value)
+
+can be translated to this:
+
+.. code-block:: python
+
+    new_set = {value for value in a_sequence}
 
 .. slide:: Set Comprehensions
     :level: 3
@@ -1802,6 +2240,22 @@ You can do it with sets, too:
             new_set = set()
             for value in a_sequence:
                 new_set.add(value)
+
+Example
+*******
+
+How can we find all the vowels in a given string?
+
+.. code-block:: ipython
+
+    In [19]: s = "a not very long string"
+
+    In [20]: vowels = set('aeiou')
+
+    In [21]: { let for let in s if let in vowels }
+    Out[21]: {'a', 'e', 'i', 'o'}
+
+As a side note, why do we use ``set('aeiou')`` rather than just ``"aeiou"``\ ?
 
 .. slide:: Example
     :level: 3
@@ -1828,6 +2282,20 @@ Dict Comprehensions
 
 And of course, you can do comprehensions with ``dicts`` too.
 
+A simple loop building a ``dict``
+
+.. code-block:: python
+
+    new_dict = {}
+    for key, value in a_sequence:
+        new_dict[key] = value
+
+can be expressed instead like so:
+
+.. code-block:: python
+
+    new_dict = { key:value for key, value in a_sequence}
+
 .. slide:: Dict Comprehensions
     :level: 3
 
@@ -1846,6 +2314,19 @@ And of course, you can do comprehensions with ``dicts`` too.
             new_dict = {}
             for key, value in a_sequence:
                 new_dict[key] = value
+
+Example
+*******
+
+Let's build a mapping of integers to string templates:
+
+.. code-block:: ipython
+
+    In [22]: {i: "this_{0}".format(i) for i in range(5)}
+    Out[22]: {0: 'this_0', 1: 'this_1', 2: 'this_2',
+              3: 'this_3', 4: 'this_4'}
+
+Could you accomplish the same thing with the ``dict`` type object constructor?
 
 .. slide:: Example
     :level: 3
@@ -1893,7 +2374,24 @@ Do you remember the difference between those two?
 
         Called "Anonymous": it doesn't need a name.
 
-A lambda function is a python object, it can be stored in a list or other container.
+A lambda function is a python function object, it can be stored in a list or other container.
+
+.. code-block:: ipython
+
+    In [6]: l = [lambda x, y: x + y]
+
+    In [7]: l
+    Out[7]: [<function __main__.<lambda>>]
+
+    In [8]: type(l[0])
+    Out[8]: function
+
+And then you can call them:
+
+.. code-block:: ipython
+
+    In [9]: l[0](3,4)
+    Out[9]: 7
 
 .. slide:: Lambdas are Objects
     :level: 3
@@ -1921,6 +2419,19 @@ A lambda function is a python object, it can be stored in a list or other contai
             In [9]: l[0](3,4)
             Out[9]: 7
 
+As it turns out, you can do the same thing with "regular" functions too.
+They are also first-class objects and can be handled as if they were data:
+
+.. code-block:: ipython
+
+    In [12]: def fun(x,y):
+       ....:     return x + y
+       ....:
+    In [13]: l = [fun]
+    In [14]: type(l[0])
+    Out[14]: function
+    In [15]: l[0](3, 4)
+    Out[15]: 7
 
 .. slide:: Functions are Objects
     :level: 3
@@ -1938,9 +2449,8 @@ A lambda function is a python object, it can be stored in a list or other contai
         In [15]: l[0](3, 4)
         Out[15]: 7
 
-
-
-
+Comprehensions and lambdas are tools in the Python toolbox.
+Using them appropriately can allow us to approach programming in a *functional* style.
 
 
 Functional Programming
@@ -1949,6 +2459,25 @@ Functional Programming
 Python is not primarily a functional language.
 However, there is nothing to stop you using Python in a functional style.
 In fact, there are a number of tools that are provided to facilitate just that.
+We've met comprehensions and lambdas above.
+Here are a few more you can use.
+
+The :func:`map <python2:map>` function (:py:func:`py3 <map>`) is used to apply a function to a sequence of objects:
+
+.. code-block:: ipython
+
+    In [23]: lst = [2, 5, 7, 12, 6, 4]
+    In [24]: def fun(x):
+                 return x * 2 + 10
+    In [25]: map(fun, lst)
+    Out[25]: [14, 20, 24, 34, 22, 18]
+
+But if the function is as small as that, and you aren't going to use it elsewhere, use a lambda:
+
+.. code-block:: ipython
+
+    In [26]: map(lambda x: x * 2 + 10, lst)
+    Out[26]: [14, 20, 24, 34, 22, 18]
 
 .. slide:: ``map``
     :level: 3
@@ -1977,6 +2506,16 @@ In fact, there are a number of tools that are provided to facilitate just that.
             Out[26]: [14, 20, 24, 34, 22, 18]
 
 
+The :func:`filter <python2:filter>` function (:py:func:`py3 <filter>`) omits items from a sequence using a boolean *filter function*.
+The returned list will only contain values for which the function returns ``True``.
+For example, to get only the even number in a sequence:
+
+.. code-block:: ipython
+
+    In [27]: lst = [2, 5, 7, 12, 6, 4]
+    In [28]: filter(lambda x: not x % 2, lst)
+    Out[28]: [2, 12, 6, 4]
+
 .. slide:: ``filter``
     :level: 3
 
@@ -1994,6 +2533,25 @@ In fact, there are a number of tools that are provided to facilitate just that.
                 In [27]: lst = [2, 5, 7, 12, 6, 4]
                 In [28]: filter(lambda x: not x % 2, lst)
                 Out[28]: [2, 12, 6, 4]
+
+The :func:`reduce <python2:reduce>` function (:py:func:`py3 <reduce>`) reduces a sequence of objects to a single return value.
+The provided function must take two arguments and return one value.
+It is called on the first pair in the sequence, then called again with the result and the third item in the sequence, and so on:
+
+For example, to get the sum of a series of integers:
+
+.. code-block:: ipython
+
+    In [30]: l = [2, 5, 7, 12, 6, 4]
+    In [31]: reduce(lambda x, y: x + y, l)
+    Out[31]: 36
+
+Or to get the product:
+
+.. code-block:: ipython
+
+    In [32]: reduce(lambda x,y: x*y, l)
+    Out[32]: 20160
 
 .. slide:: ``reduce``
     :level: 3
@@ -2020,6 +2578,18 @@ In fact, there are a number of tools that are provided to facilitate just that.
             In [32]: reduce(lambda x,y: x*y, l)
             Out[32]: 20160
 
+You might ask (and many have), couldn't we do all of this with comprehensions?
+The answer is an unambiguous **yes**:
+
+.. code-block:: ipython
+
+    In [33]: [x + 2 + 10 for x in l]
+    Out[33]: [14, 17, 19, 24, 18, 16]
+    In [34]: [x for x in l if not x % 2]
+    Out[34]: [2, 12, 6, 4]
+
+The exception of course is ``reduce``, but BDFL Guido Van Rossum has been known to assert that almost all uses of reduce really just boil down to :func:`sum <python2:sum>` (:py:func:`py3 <sum>`) anyway.
+
 .. slide:: Comprehensions
     :level: 3
 
@@ -2041,6 +2611,13 @@ In fact, there are a number of tools that are provided to facilitate just that.
 
         But Guido thinks almost all uses of reduce are really ``sum()``
 
+Comprehensions, lambdas, and ``map``, ``filter``, and ``reduce`` are *functional programming* tools.
+Historically speaking, ``map``, ``filter``, and ``reduce`` predate comprehensions.
+There are those who prefer that syntax.
+In addition, the ``map-reduce`` algorithm is a big concept these days.
+It's often used to manage the processing of large amounts of data in parallel.
+It's good to be aware of these tools in Python and understand how they work.
+
 .. slide:: Functional Programming
     :level: 3
 
@@ -2058,6 +2635,24 @@ In fact, there are a number of tools that are provided to facilitate just that.
         Used for parallel processing of "Big Data" in NoSQL databases.
 
         (Hadoop, EMR, MongoDB, etc.)
+
+One final *nifty trick* with lambda functions.
+Lambdas can, of course, use keyword arguments.
+And if you remember, the default values for keyword arguments are evaluated *when a function is defined*.
+
+This combination turns out to be pretty handy at times:
+
+.. code-block:: ipython
+
+    In [186]: l = []
+    In [187]: for i in range(3):
+       .....:     l.append(lambda x, e=i: x**e)
+       .....:
+    In [189]: for f in l:
+       .....:     print(f(3))
+    1
+    3
+    9
 
 .. slide:: A Lambda Trick
     :level: 3
