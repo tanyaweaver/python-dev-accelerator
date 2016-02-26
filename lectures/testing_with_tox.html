@@ -1,0 +1,447 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Testing With Tox &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="Thursday" href="../schedule/week01/thu.html" />
+    <link rel="next" title="Friday" href="../schedule/week01/fri.html" />
+    <link rel="prev" title="Introduction To Python: Part 4" href="intro_to_python_4.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../schedule/week01/fri.html" title="Friday"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro_to_python_4.html" title="Introduction To Python: Part 4"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week01/thu.html" accesskey="U">Thursday</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="testing-with-tox">
+<h1>Testing With Tox<a class="headerlink" href="#testing-with-tox" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-testing-with-tox"></span><p>One of our goals for this course is to become comfortable with the practice of writing Python that is <em>cross-compatible</em>.
+This means we want to consistently write programs that will run equally well under Python 2 and Python 3.
+The foundation of such programming rests on testing.
+Without solid tests, you can never be sure that your code actually works.
+Or, as we have seen before:</p>
+<blockquote class="epigraph">
+<div><p>Untested code is broken by design</p>
+<p class="attribution">&mdash;Surely Somebody</p>
+</div></blockquote>
+<span class="admonition-justification"></span><p>But it isn&#8217;t enough just to test our code in one version of Python.
+Just because something works when run in Python 2 is no guarantee that it will work in Python 3.
+We really need to run our tests consistently in both environments.</p>
+<p>But this requirement introduces once again a complication that can make the distance between development and testing larger.
+We want to keep that distance as small as possible.
+That will help to prevent us from falling back to the old habits of writing tests last, if ever.
+To help close the gap, <a class="reference external" href="https://tox.readthedocs.org">tox</a> allows us to run tests in any number of different Python environments.</p>
+<p>Tox is based on <code class="docutils literal"><span class="pre">virtualenv</span></code>.
+It allows us to configure a project to run in a number of different environments.
+When we execute the <code class="docutils literal"><span class="pre">tox</span></code> command, it builds a virtualenv for each of the configured environments and executes our tests in each.
+It reports the results as they happen, so we can see quickly the fruits of our labor.</p>
+<span class="admonition-testing-with-tox"></span><div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>We are going to work today on setting up tox to test our Ackermann Function project in both Python 2.7 and Python 3.5.
+By the end of the exercise, we&#8217;ll be able to assert with confidence that our code is compatible across both versions of Python.</p>
+<p>We&#8217;ll begin by returning to the directory where we first created our Ackermann project.
+Then we will activate the virtualenv we&#8217;ve been working in this week:</p>
+<div class="highlight-bash"><div class="highlight"><pre>Banks:~ cewing$ <span class="nb">cd</span> path/to/tdd-play
+Banks:tdd-play cewing$ <span class="nb">source</span> bin/activate
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<p>Our next step is to install the <code class="docutils literal"><span class="pre">tox</span></code> package.
+We could do this directly with <code class="docutils literal"><span class="pre">pip</span></code>.
+But as we learned yesterday, it&#8217;s better for us to declare the dependencies of our packages in <code class="docutils literal"><span class="pre">setup.py</span></code>.
+That way, we can allow python packaging tools to install them for us.</p>
+<p>Our package is certainly not going to depend on <code class="docutils literal"><span class="pre">tox</span></code> just to be installed.
+Really, <code class="docutils literal"><span class="pre">tox</span></code> is a dependency for our tests.
+Remember, we can add <em>optional</em> dependencies using the concept of <em>setuptools extras</em>.
+And we have alread created a <code class="docutils literal"><span class="pre">test</span></code> extra so we could depend on <code class="docutils literal"><span class="pre">pytest</span></code> and <code class="docutils literal"><span class="pre">pytest-xdist</span></code>.
+Let&#8217;s add <code class="docutils literal"><span class="pre">tox</span></code> as a new testing dependency for our distribution:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in setup.py</span>
+
+<span class="n">extras_require</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pytest&#39;</span><span class="p">,</span> <span class="s1">&#39;pytest-xdist&#39;</span><span class="p">,</span> <span class="s1">&#39;tox&#39;</span><span class="p">]},</span>
+</pre></div>
+</div>
+<p>Now that we&#8217;ve updated the requirements for our <code class="docutils literal"><span class="pre">test</span></code> extra, let&#8217;s re-install our distribution with <code class="docutils literal"><span class="pre">pip</span></code> and allow it to resolve the new dependency:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ pip install -e .<span class="o">[</span>test<span class="o">]</span>
+Obtaining file:///Users/cewing/projects/training/codefellows/tests/tdd-play
+...
+Successfully installed ackermann-0.1 pluggy-0.3.1 tox-2.3.1 virtualenv-14.0.6
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<span class="admonition-installation"></span><p>Great!
+Now we are ready to begin configuring our project to use <code class="docutils literal"><span class="pre">tox</span></code>.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">Tox</span></code> uses <a class="reference external" href="https://en.wikipedia.org/wiki/INI_file">ini-style</a> configuration files to manage settings for testing.
+In Python, support for reading <code class="docutils literal"><span class="pre">.ini</span></code> files is provided by the <a class="reference external" href="http://docs.python.org/3/library/configparser.html#module-configparser" title="(in Python v3.5)"><code class="xref py py-mod docutils literal"><span class="pre">configparser</span></code></a> module (in Python 2, it&#8217;s called <a class="reference external" href="http://docs.python.org/2/library/configparser.html#module-ConfigParser" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">ConfigParser</span></code></a>).
+The format supports <em>settings</em> specified in <code class="docutils literal"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">value</span></code> pairs, one to a line.
+The settings may be organized in <em>sections</em>, which are delineated by <code class="docutils literal"><span class="pre">[sectionname]</span></code> in square brackets.</p>
+<p>In order to configure our project to use tox, we must create a file called <code class="docutils literal"><span class="pre">tox.ini</span></code> at the top level of our project, adjacent to our <code class="docutils literal"><span class="pre">setup.py</span></code> file:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ touch tox.ini
+</pre></div>
+</div>
+<span class="admonition-configuration"></span><div class="section" id="global-configuration">
+<h3>Global Configuration<a class="headerlink" href="#global-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Our first step in configuring <code class="docutils literal"><span class="pre">tox</span></code> is to tell it which versions of Python we will want to test.
+Tox can run tests in any version of Python 2 starting with 2.6, any version of Python 3 starting with 3.2, in jython (java-based Python interpreter) and pypy (python written in python).
+We want to use Python 2.7 and Python 3.5, so we add the following to our <code class="docutils literal"><span class="pre">tox.ini</span></code> file:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="k">[tox]</span>
+<span class="na">envlist</span> <span class="o">=</span> <span class="s">py27, py35</span>
+</pre></div>
+</div>
+<p>In order for tox to function correctly when we do so, we must have access to Python executables for each named version.
+By default tox will look for executables named <code class="docutils literal"><span class="pre">python2.7</span></code>, <code class="docutils literal"><span class="pre">python3.5</span></code> etc., but we can control that with the <cite>per-environment configuration settings &lt;tox-config-perenv&gt;</cite> described below.</p>
+<p>Settings the <code class="docutils literal"><span class="pre">[tox]</span></code> section of <code class="docutils literal"><span class="pre">tox.ini</span></code> are <em>global</em> settings.
+They control the over-all operation of tox within our project.
+There are <a class="reference external" href="https://tox.readthedocs.org/en/latest/config.html">a number of other global settings</a> available.
+But that will get us started for today.</p>
+<span class="admonition-global-configuration"></span></div>
+<div class="section" id="per-environment-configuration">
+<span id="tox-config-perenv"></span><h3>Per-Environment Configuration<a class="headerlink" href="#per-environment-configuration" title="Permalink to this headline">¶</a></h3>
+<p>We must also set up configuration for the testing environments that will be built to run our tests.
+Configuration that applies to all testing environments listed in <code class="docutils literal"><span class="pre">envlist</span></code> goes in the <code class="docutils literal"><span class="pre">[testenv]</span></code> section.
+If you have any configuration that applies only to one of the environments, you can place it in a section called <code class="docutils literal"><span class="pre">[testenv:&lt;envname&gt;]</span></code>.
+The <code class="docutils literal"><span class="pre">&lt;envname&gt;</span></code> must match one of the environment names listed in <code class="docutils literal"><span class="pre">envlist</span></code>.</p>
+<p>Our needs for this project are pretty simple.
+We don&#8217;t need anything particularly complex or different per environment.
+Let&#8217;s add the following to our <code class="docutils literal"><span class="pre">tox.ini</span></code> file:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="k">[testenv]</span>
+<span class="na">commands</span> <span class="o">=</span> <span class="s">py.test</span>
+<span class="na">deps</span> <span class="o">=</span><span class="s"></span>
+<span class="s">    pytest</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">commands</span></code> setting allows us to specify exactly the command we want to use to run our tests.
+The <code class="docutils literal"><span class="pre">deps</span></code> setting allows us to specify dependencies our tests will require.
+It is essentially the same as our <code class="docutils literal"><span class="pre">[test]</span></code> extra, but we don&#8217;t need to provide tox (because tox is running the tests) or pytest-xdist (since we are not doing TDD here).</p>
+<p>Another potentially useful configuration setting for testing environments is <code class="docutils literal"><span class="pre">basepython</span></code>.
+This setting takes a name (which must be available in <code class="docutils literal"><span class="pre">$PATH</span></code>) or an absolute path to the Python executable which will be used for the specified environment.
+This setting should not be used in the <code class="docutils literal"><span class="pre">[testenv]</span></code> shared configuration section, but only in a <code class="docutils literal"><span class="pre">[testenv:&lt;envname&gt;]</span></code> section.</p>
+<span class="admonition-per-env-configuration"></span><p>There are <a class="reference external" href="https://tox.readthedocs.org/en/latest/config.html#virtualenv-test-environment-settings">plenty more options</a> available to use per testing environment, but these will get us started today.</p>
+<p>The full <code class="docutils literal"><span class="pre">tox.ini</span></code> file for our project:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="k">[tox]</span>
+<span class="na">envlist</span> <span class="o">=</span> <span class="s">py27, py35</span>
+
+<span class="k">[testenv]</span>
+<span class="na">commands</span> <span class="o">=</span> <span class="s">py.test</span>
+<span class="na">deps</span> <span class="o">=</span><span class="s"></span>
+<span class="s">    pytest</span>
+</pre></div>
+</div>
+<span class="admonition-complete-configuration"></span></div>
+</div>
+<div class="section" id="execution">
+<h2>Execution<a class="headerlink" href="#execution" title="Permalink to this headline">¶</a></h2>
+<p>Now that everything is set with our configuration, we can go ahead and run our tests.
+To do so, invoke the <code class="docutils literal"><span class="pre">tox</span></code> command, which should be available in our virtualenv.
+You will see significant output as tox builds the virtual environments for each testenv, installs requirements, and then runs the tests and reports the outcomes:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ tox
+GLOB sdist-make: /Users/cewing/projects/training/codefellows/tests/tdd-play/setup.py
+py27 create: /Users/cewing/projects/training/codefellows/tests/tdd-play/.tox/py27
+py27 installdeps: pytest
+py27 inst: /Users/cewing/projects/training/codefellows/tests/tdd-play/.tox/dist/ackermann-0.1.zip
+py27 installed: <span class="nv">ackermann</span><span class="o">==</span>0.1,py<span class="o">==</span>1.4.31,pytest<span class="o">==</span>2.8.7,wheel<span class="o">==</span>0.29.0
+py27 runtests: <span class="nv">PYTHONHASHSEED</span><span class="o">=</span><span class="s1">&#39;3870038194&#39;</span>
+py27 runtests: commands<span class="o">[</span>0<span class="o">]</span> <span class="p">|</span> py.test
+<span class="o">========================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">========================================</span>
+platform darwin -- Python 2.7.11, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
+rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
+collected <span class="m">21</span> items
+
+src/test_ack.py .....................
+
+<span class="o">=====================================</span> <span class="m">21</span> passed in 0.19 <span class="nv">seconds</span> <span class="o">=====================================</span>
+py35 create: /Users/cewing/projects/training/codefellows/tests/tdd-play/.tox/py35
+py35 installdeps: pytest
+py35 inst: /Users/cewing/projects/training/codefellows/tests/tdd-play/.tox/dist/ackermann-0.1.zip
+py35 installed: <span class="nv">ackermann</span><span class="o">==</span>0.1,py<span class="o">==</span>1.4.31,pytest<span class="o">==</span>2.8.7,wheel<span class="o">==</span>0.29.0
+py35 runtests: <span class="nv">PYTHONHASHSEED</span><span class="o">=</span><span class="s1">&#39;3870038194&#39;</span>
+py35 runtests: commands<span class="o">[</span>0<span class="o">]</span> <span class="p">|</span> py.test
+<span class="o">========================================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">========================================</span>
+platform darwin -- Python 3.5.1, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
+rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
+collected <span class="m">21</span> items
+
+src/test_ack.py .....................
+
+<span class="o">=====================================</span> <span class="m">21</span> passed in 0.20 <span class="nv">seconds</span> <span class="o">=====================================</span>
+______________________________________________ summary ______________________________________________
+  py27: commands succeeded
+  py35: commands succeeded
+  congratulations :<span class="o">)</span>
+<span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$
+</pre></div>
+</div>
+<span class="admonition-run-the-tests"></span><p>Make sure we see something like that in your terminal.
+If we see test failures in either version, we return to our package and update our code.
+We will use the TDD principles we established earlier in this module.
+Then we can re-run the tests with tox once we believe the fix to have been made.
+When all our tests are passing in all the environments we have specified, we can check our code in to GitHub and go home!</p>
+<span class="admonition-workflow"></span><div class="section" id="caching">
+<h3>Caching<a class="headerlink" href="#caching" title="Permalink to this headline">¶</a></h3>
+<p>Tox saves time on running tests by creating a working directory where it keeps the virtualenvs it creates for running tests.
+This amounts to a simple cache of the packages installed for each environment.
+If you suspect that things are out-of-whack with the installed environments you can force them to be re-built using the <code class="docutils literal"><span class="pre">--rebuild</span></code> (or <code class="docutils literal"><span class="pre">-r</span></code>) argument to <code class="docutils literal"><span class="pre">tox</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
+Banks:tdd-play cewing$ tox -r
+</pre></div>
+</div>
+<span class="admonition-caching"></span></div>
+</div>
+<div class="section" id="wrap-up">
+<h2>Wrap-Up<a class="headerlink" href="#wrap-up" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ve learned a lot here.</p>
+<ul class="simple">
+<li>We know how to install tox as a test dependency for our packages.</li>
+<li>We know how to configure tox to run tests in multiple Python environments.</li>
+<li>We know how to configure specific environments individually.</li>
+<li>We know now to run our tests and to force a rebuilding of the test environments.</li>
+</ul>
+<p>That&#8217;s about enough for now.
+You&#8217;ll be required to use this knowledge in your homework tonight (and going forward from here).</p>
+<span class="admonition-summary"></span></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Testing With Tox</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#global-configuration">Global Configuration</a></li>
+<li><a class="reference internal" href="#per-environment-configuration">Per-Environment Configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#execution">Execution</a><ul>
+<li><a class="reference internal" href="#caching">Caching</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#wrap-up">Wrap-Up</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro_to_python_4.html"
+                        title="previous chapter">Introduction To Python: Part 4</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../schedule/week01/fri.html"
+                        title="next chapter">Friday</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../schedule/week01/fri.html" title="Friday"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro_to_python_4.html" title="Introduction To Python: Part 4"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week01/thu.html" >Thursday</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

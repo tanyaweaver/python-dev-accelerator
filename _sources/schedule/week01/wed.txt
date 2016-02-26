@@ -13,6 +13,15 @@ Wednesday
 Objectives
 ==========
 
+* Learn about the basic sequence types in Python
+* Learn about iteration, more in depth
+* Understand how to work with strings
+* Understand how to work with dictionaries and sets
+* Have a basic understanding of opening and reading files
+* Understand how to use paths in Python
+* Learn about Python packaging and distributions
+* Make a distribution of a small project
+
 Readings
 ========
 
@@ -29,6 +38,7 @@ Concepts
 .. toctree::
    :maxdepth: 2
 
+   /lectures/intro_to_python_3
    /lectures/python_packaging_1
 
 Demo
