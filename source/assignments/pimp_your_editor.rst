@@ -16,7 +16,7 @@ while to take the time to make it your friend.
 Tasks
 =====
 
-Read `the assignment text <readings/sublime_as_ide>`_ to get some ideas about
+Read :doc:`the assignment text </readings/sublime_as_ide>`_ to get some ideas about
 how you can improve your text editor.  If you are not a Sublime Text user,
 consider it a challenge to learn how to make similar improvements to your
 editor of choice.
