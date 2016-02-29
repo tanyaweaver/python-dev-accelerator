@@ -21,10 +21,8 @@ Your entry may contain code examples, links to additional resources you found, o
 I have found a correlation between students who write consistently in their journals, and students who succeed in class.
 Take this assignment seriously.
 
-Early in class, you will make these entries in the `class learning journal`_.
+Early in class, you will make these entries in the `class learning journal <https://sea401d2.crisewing.com>`_.
 Once you have created and deployed your own learning journal, you will put your entries there.
-
-.. _class learning journal: http://google.com
 
 Submitting Your Work
 ====================
