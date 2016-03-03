@@ -833,6 +833,9 @@ And now, we should be able to run our tests, just as before:
             [tdd-play]
             Banks:tdd-play cewing$ py.test
 
+
+.. _python_packaging_cli_python:
+
 Command-Line Python
 ===================
 
