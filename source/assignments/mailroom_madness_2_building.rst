@@ -35,12 +35,14 @@ Do your work on that branch.
 Add a ``setup.py`` file that defines your program as a distribution.
 This file will allow you to install your program.
 Make sure that code you want to distribute to end users is included in the distribution.
-Use a console script entry point to register your main program entry point.
-If your program is installed, a user should be able to execute it at the command line:
 
-.. code-block:: bash
+optional:
+  Use :ref:`a console script entry point <python_packaging_cli_python>` to register your main program entry point.
+  If your program is installed, a user should be able to execute it at the command line:
 
-    $ mailroom
+  .. code-block:: bash
+
+      $ mailroom
 
 Add a ``tox.ini`` file that runs your tests in both Python 2.7 and Python 3.5
 Make sure your tests pass in both Python environments.
