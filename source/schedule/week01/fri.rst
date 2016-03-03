@@ -13,7 +13,8 @@ Friday
 Readings
 ========
 
-Watch Brandon Rhodes talk about `Python Data Types <https://youtu.be/fYlnfvKVDoM?t=5m16s>`_
+* Watch Brandon Rhodes talk about `Python Data Types <https://youtu.be/fYlnfvKVDoM?t=5m16s>`_
+* Watch Clayton Parker's PyCon talk `So You Think You Can PDB? <https://www.youtube.com/watch?v=P0pIW5tJrRM>`_
 
 
 Assignments
