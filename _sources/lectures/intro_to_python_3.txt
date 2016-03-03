@@ -2229,6 +2229,26 @@ Sets
 
 A ``set`` is an unordered collection of distinct values.
 You can think of a set as a dict which has only keys and no values.
+You can create a set using the set literal (``{}``) or the set type object:
+
+.. code-block:: ipython
+
+    In [4]: {1, 2, 3}
+    Out[4]: {1, 2, 3}
+    In [5]: set()
+    Out[5]: set()
+    In [6]: set([1, 2, 3])
+    Out[6]: {1, 2, 3}
+    In [7]: {1, 2, 3}
+    Out[7]: {1, 2, 3}
+    In [8]: s = set()
+    In [9]: s.update([1, 2, 3])
+    In [10]: s
+    Out[10]: {1, 2, 3}
+    In [11]: s.add(4)
+    In [12]: s
+    Out[12]: {1, 2, 3, 4}
+
 
 .. slide:: Sets
     :level: 3
@@ -2262,6 +2282,17 @@ You can think of a set as a dict which has only keys and no values.
         Out[12]: {1, 2, 3, 4}
 
 
+Sets share a lot of properties with dicts.
+Members of a set must be hashable, like dictionary keys, and for the same reason.
+Sets are also unordered, and so you cannot index them:
+
+.. code-block:: ipython
+
+    >>> s[1]
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    TypeError: 'set' object does not support indexing
+
 .. slide:: Set Properties
     :level: 3
 
@@ -2280,6 +2311,29 @@ You can think of a set as a dict which has only keys and no values.
             Traceback (most recent call last):
               File "<stdin>", line 1, in <module>
             TypeError: 'set' object does not support indexing
+
+Set support similar operations to dicts as well.
+
+.. code-block:: ipython
+
+    In [1]: s = set([1])
+    In [2]: s.pop()
+    Out[2]: 1
+    In [3]: s.pop()
+    ---------------------------------------------------------------------------
+    KeyError                                  Traceback (most recent call last)
+    <ipython-input-3-e76f41daca5e> in <module>()
+    ----> 1 s.pop()
+    KeyError: 'pop from an empty set'
+
+    In [4]: s = set([1,2,3])
+    In [5]: s.remove(2)
+    In [6]: s.remove(2)
+    ---------------------------------------------------------------------------
+    KeyError                                  Traceback (most recent call last)
+    <ipython-input-6-542ac1b736c7> in <module>()
+    ----> 1 s.remove(2)
+    KeyError: 2
 
 .. slide:: Set Methods
     :level: 3
@@ -2305,6 +2359,23 @@ You can think of a set as a dict which has only keys and no values.
         ----> 1 s.remove(2)
         KeyError: 2
 
+Beyond all this, sets also operate as traditional mathematical sets.
+You get all the operations you might remember from set theory class:
+
+.. code-block:: python
+
+    s.isdisjoint(other)
+
+    s.issubset(other)
+
+    s.union(other, ...)
+
+    s.intersection(other, ...)
+
+    s.difference(other, ...)
+
+    s.symmetric_difference( other, ...)
+
 .. slide:: Sets Are Sets
     :level: 3
 
@@ -2324,6 +2395,18 @@ You can think of a set as a dict which has only keys and no values.
 
         s.symmetric_difference( other, ...)
 
+Finally, if you need to have an immutable object that functions like a set, Python provides the ``frozenset`` type.
+It works just like a set, except that once constructed it may not be altered:
+
+.. code-block:: python
+
+    >>> fs = frozenset((3,8,5))
+    >>> fs.add(9)
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    AttributeError: 'frozenset' object has no attribute 'add'
+
+
 .. slide:: Frozen Set
     :level: 3
 
@@ -2342,7 +2425,24 @@ You can think of a set as a dict which has only keys and no values.
 File Reading and Writing
 ========================
 
-Handling files in Python.
+It's often useful in programming to be able to open files in order to read data from them, or write data to them.
+Python has, for a long time, had a built-in function ``open`` which handled this operation.
+However, this builtin was created in the days before unicode was widely used, and it does not handle text that contains unicode particularly well.
+
+For this reason, we have moved away from using the built-in ``open`` and toward using the ``open`` function from the ``io`` module.
+The ``io.open`` function is available in both Python 2 (2.6 and 2.7) and Python 3 and so provides a cross-compatible approach to opening files.
+
+.. code-block:: python
+
+    import io
+    f = io.open('secrets.txt', encoding='utf-8')
+    secret_data = f.read()
+    f.close()
+
+By default, files are opened in "read text" mode, which automatically decode the bytes contained in the file to unicode.
+You may provide an ``encoding`` keyword argument to control the "codec" that is used to perform this conversion.
+The most common codec you will use is "utf-8".
+If you do not provide an ``encoding``, then Python will default to the value of ``sys.getdefaultencoding()``, which is nearly always "ascii".
 
 .. slide:: Files
     :level: 3
@@ -2362,6 +2462,18 @@ Handling files in Python.
 
     switch away from using the ``open`` builtin
 
+If you have needs other than reading unicode test, you may use the ``mode`` argument (``'rb'`` below) to control aspects of your interaction with the file.
+
+For example, the ``rb`` mode opens a file for reading bytes.
+When you read data from a file opened in ``rb`` mode, it will be a bytestring.
+If you need to convert it to unicode, you can call ``decode`` on it at that point.
+
+.. code-block:: python
+
+    f = io.open('secrets.bin', 'rb')
+    secret_data = f.read()
+    f.close()
+
 .. slide:: Binary Files
     :level: 3
 
@@ -2372,6 +2484,12 @@ Handling files in Python.
         f.close()
 
     ``secret_data``  is a byte string
+
+There are a number of modes available for files.
+Unfortunately, Python's own documentation of the meaning of these modes is not very clear.
+You can use `the man page for the unix command fopen <http://www.manpagez.com/man/3/fopen/>`_ which supports the same modes, and has much better information.
+One thing you should be careful of.
+Merely opening a file in `w` mode will always truncate the file, rendering it empty.
 
 
 .. slide:: File Opening Modes
@@ -2398,6 +2516,11 @@ Handling files in Python.
 
         **Gotcha** -- 'w' modes always clear the file
 
+When you open a file with ``io.open`` it defaults to using "Universal Newline" mode.
+This means that while some operating systems use different characters as line endings, Python will always translate them into the \*nix-tyle ``"\n"`` when you read data from the file.
+The ``"\n"`` characters are translated back to OS-Native line endings when you write data out to a file.
+You should always use the ``"\n"`` character as a line ending when writing strings in Python.
+
 .. slide:: Text File Notes
     :level: 3
 
@@ -2410,6 +2533,11 @@ Handling files in Python.
     * ``io.open()`` returns "stream" objects
     * You can treat them as file objects (more soon on what that means)
 
+You should be aware that although there is no difference between reading in bytes or text mode on Unix operating systems, the two are quite different in Windows.
+You'll be tempted to accept the default and always open files in ``text`` mode.
+This **will break binary files on Windows**.
+Don't do it.
+Get in the habit of *thinking carefully* about whether the content of the file you are reading is text or binary data.
 
 .. slide:: Gotcha
     :level: 3
@@ -2425,6 +2553,16 @@ Handling files in Python.
 
         Get in the habit of thinking about whether you want data or text.
 
+
+Beyond the ``mode`` and ``encoding`` parameters we've discussed, there are a number of other parameters to the ``io.open`` function.
+
+The required first argument is the ``path`` to the file you wish to open.
+
+The ``errors`` parameter allows you to control how errors in decoding file bytes to Python unicode are handled.
+You may specify that you wish to ``ignore`` errors, ``replace`` broken characters with a specific identifier, or use ``strict`` mode to force errors to terminate reading.
+
+The other parameters are more advanced and will not come up often in your work with files.
+You may read about them in the :mod:`io module documentation <python2:io>` (:py:mod:`py3 <io>`).
 
 .. slide:: ``io.open()`` Parameters:
     :level: 3
@@ -2453,8 +2591,18 @@ Handling files in Python.
         ``closedfd`` controls close() behavior if a file descriptor, rather than a
           name is passed in (advanced usage!)
 
-(https://docs.python.org/2/library/io.html?highlight=io.open#io.open)
 
+Once you have an open file, you can read from it.
+The ``read`` method accepts an optional argument of a number of bytes to read.
+If you provide no value, the entire file (starting at your current position) is read.
+
+.. code-block:: python
+
+    header_size = 4096
+    f = open('secrets.txt')
+    secret_header = f.read(header_size)
+    secret_rest = f.read()
+    f.close()
 
 .. slide:: File Reading
     :level: 3
@@ -2468,6 +2616,13 @@ Handling files in Python.
         secret_header = f.read(header_size)
         secret_rest = f.read()
         f.close()
+
+Files are iterators, which means you can iterate through the lines of text they contain like so:
+
+.. code-block:: python
+
+    for line in io.open('secrets.txt'):
+        print line
 
 .. slide:: Common Idioms
     :level: 3
@@ -2491,6 +2646,19 @@ Handling files in Python.
                     break
                 do_something_with_line()
 
+In addition, the ``readline`` method will read a single line at a time.
+The ``readlines`` method will read a file and return a list containing the lines of the file.
+
+If you wish to write text to a file you've opened in ``w`` mode, you may do so with the ``write`` method:
+Newlines are **not** automatically appended to text written this way.
+If you want lines in your file, you must write the newline characters yourself (or place them in your text).
+
+.. code-block:: python
+
+    outfile = io.open('output.txt', 'w')
+    for i in range(10):
+        outfile.write("this is line: {0}\n".format(i))
+
 .. slide:: File Writing
     :level: 3
 
@@ -2499,6 +2667,39 @@ Handling files in Python.
         outfile = io.open('output.txt', 'w')
         for i in range(10):
             outfile.write("this is line: {0}\n".format(i))
+
+When you've opened a file in a "read" mode, you have the following methods available:
+
+.. code-block:: python
+
+    f.read() f.readline() f.readlines()
+
+In "write" mode, you have rough equivalents.
+The ``write`` method writes a string to an open file.
+The ``writelines`` method takes a sequence of strings and writes them to a file.
+Remember, newlines are not automatically added (despite the name).
+
+.. code-block:: python
+
+    f.write(str) f.writelines(seq)
+
+In any mode, a file has a few methods you can use to navigate through the file.
+
+The ``file.seek(offset)`` method will move the file pointer to the byte of the file given by 'offset'.
+The ``file.tell()`` method will return the byte number of the current position of the file pointer.
+
+.. code-block:: python
+
+    f.seek(offset) f.tell()
+
+Finally, whenever you open a file, you must also close it.
+On certain operating systems, if you fail to do so it can render the file unusable by any other process.
+
+
+.. code-block:: python
+
+    file.close()
+
 
 .. slide:: File Methods
     :level: 3
@@ -2523,6 +2724,34 @@ Handling files in Python.
             .. code-block:: python
 
                 f.flush() f.close()
+
+In Python, we say that anything which implements both the ``read`` and ``write`` method is *File-like*.
+There are a number of types which are file-like:
+
+* loggers
+* ``sys.stdout``
+* ``urllib.open()``
+* pipes, subprocesses
+* StringIO
+
+When you have a file-like object you can treat is as if it were a file.
+A common use-case for this involves using the ``io.StringIO`` class.
+This class constructs an in-memory buffer that operates just like a file:
+
+.. code-block:: python
+
+    In [417]: from io import StringIO
+    In [420]: f = StringIO()
+    In [421]: f.write(u"somestuff")
+    In [422]: f.seek(0)
+    In [423]: f.read()
+    Out[423]: 'somestuff'
+
+When writing tests for file-handling code this can be very useful.
+It allows you to make "fake files" that operate just like the real thing.
+
+Legacy code will often contain references to *modules* named ``StringIO`` or ``cStringIO``.
+These modules should be considered superseded by the ``io.StringIO`` class.
 
 .. slide:: File Like Objects
     :level: 3
@@ -2571,6 +2800,17 @@ Paths and Directories
 =====================
 
 In Python, paths are often handled with simple strings (or Unicode strings)
+You can make absolute paths::
+
+    b"/home/cris/stuff.txt"
+    u'/usr/local/bin/python3'
+
+or relative paths::
+
+    u'./secret.txt'
+    b'src/test_ack.py'
+
+Either relative or absolute paths, bytes or unicode objects will work as the ``path`` argument to ``io.open()``.
 
 .. slide:: Paths and Directories
     :level: 3
@@ -2598,6 +2838,25 @@ In Python, paths are often handled with simple strings (or Unicode strings)
                 u'/home/chris/secret.txt'
 
         Either work with ``open()`` , etc.
+
+The ``os`` module from the Python standard library gives you a number of useful tools for interacting with paths.
+You can get the current working directory with ``os.getcwd``.
+You can change directories with ``os.chdir``.
+You can turn any relative path into an absolute path with ``os.path.abspath``.
+You can obtain the relative path from your current location to any absolute path with ``os.path.relpath()``.
+
+.. code-block:: python
+
+    os.getcwd() -- os.getcwdu() (u for Unicode)
+    os.chdir(path)
+    os.path.abspath()
+    os.path.relpath()
+
+It's possible to list the contents of a directory with ``os.listdir``.
+You can make new directories with ``os.mkdir``.
+You can even walk an entire file system using ``os.walk``.
+
+There's much, much more to learn.  Check out the :mod:`documentation <python2:os>` (:py:mod:`py3 <os>`)
 
 .. slide:: ``os`` Module
     :level: 3
@@ -2636,6 +2895,30 @@ In Python, paths are often handled with simple strings (or Unicode strings)
         (all platform independent)
 
         (higher level stuff in ``shutil``  module)
+
+Finally, if you'd prefer to work with paths in an Object-oriented style, the Python 3 standard library has added a new module, :py:mod:`pathlib`.
+This module can also be pip installed in Python 2 for compatibility.
+
+With the module, you can create paths as objects, and then work with methods on them.
+This allows you access to all the operations in ``os.path`` and more.
+
+.. code-block:: ipython
+
+    In [1]: import pathlib
+    In [2]: pth = pathlib.Path('.')
+    In [3]: pth.is_dir()
+    Out[3]: True
+    In [4]: pth.absolute()
+    Out[4]: PosixPath('/Users/cewing/projects/training/codefellows/existing_course_repos/python-dev-accelerator')
+    In [5]: for f in pth.iterdir():
+       ...:     print(f)
+       ...:
+    .git
+    .gitignore
+    bin
+    build
+    cfpython.sublime-project
+    ...
 
 .. slide:: ``pathlib`` Module
     :level: 3

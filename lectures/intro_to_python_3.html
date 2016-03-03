@@ -1006,18 +1006,250 @@ If the key is <em>not</em> present, then the default value is stored and returne
 <div class="section" id="sets">
 <h3>Sets<a class="headerlink" href="#sets" title="Permalink to this headline">¶</a></h3>
 <p>A <code class="docutils literal"><span class="pre">set</span></code> is an unordered collection of distinct values.
-You can think of a set as a dict which has only keys and no values.</p>
-<span class="admonition-sets"></span><span class="admonition-constructors"></span><span class="admonition-set-properties"></span><span class="admonition-set-methods"></span><span class="admonition-sets-are-sets"></span><span class="admonition-frozen-set"></span></div>
+You can think of a set as a dict which has only keys and no values.
+You can create a set using the set literal (<code class="docutils literal"><span class="pre">{}</span></code>) or the set type object:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+<span class="gh">Out[4]: </span><span class="go">{1, 2, 3}</span>
+<span class="gp">In [5]: </span><span class="nb">set</span><span class="p">()</span>
+<span class="gh">Out[5]: </span><span class="go">set()</span>
+<span class="gp">In [6]: </span><span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gh">Out[6]: </span><span class="go">{1, 2, 3}</span>
+<span class="gp">In [7]: </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+<span class="gh">Out[7]: </span><span class="go">{1, 2, 3}</span>
+<span class="gp">In [8]: </span><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="gp">In [9]: </span><span class="n">s</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">In [10]: </span><span class="n">s</span>
+<span class="gh">Out[10]: </span><span class="go">{1, 2, 3}</span>
+<span class="gp">In [11]: </span><span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">In [12]: </span><span class="n">s</span>
+<span class="gh">Out[12]: </span><span class="go">{1, 2, 3, 4}</span>
+</pre></div>
+</div>
+<span class="admonition-sets"></span><span class="admonition-constructors"></span><p>Sets share a lot of properties with dicts.
+Members of a set must be hashable, like dictionary keys, and for the same reason.
+Sets are also unordered, and so you cannot index them:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s2">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">TypeError</span><span class="p">:</span> <span class="s1">&#39;set&#39;</span> <span class="nb">object</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">support</span> <span class="n">indexing</span>
+</pre></div>
+</div>
+<span class="admonition-set-properties"></span><p>Set support similar operations to dicts as well.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">In [2]: </span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="gh">Out[2]: </span><span class="go">1</span>
+<span class="gp">In [3]: </span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-3-e76f41daca5e&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="ne">KeyError</span>: &#39;pop from an empty set&#39;
+
+<span class="gp">In [4]: </span><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="gp">In [5]: </span><span class="n">s</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">In [6]: </span><span class="n">s</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-6-542ac1b736c7&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">s</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="ne">KeyError</span>: 2
+</pre></div>
+</div>
+<span class="admonition-set-methods"></span><p>Beyond all this, sets also operate as traditional mathematical sets.
+You get all the operations you might remember from set theory class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">symmetric_difference</span><span class="p">(</span> <span class="n">other</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<span class="admonition-sets-are-sets"></span><p>Finally, if you need to have an immutable object that functions like a set, Python provides the <code class="docutils literal"><span class="pre">frozenset</span></code> type.
+It works just like a set, except that once constructed it may not be altered:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fs</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">AttributeError</span>: <span class="n">&#39;frozenset&#39; object has no attribute &#39;add&#39;</span>
+</pre></div>
+</div>
+<span class="admonition-frozen-set"></span></div>
 </div>
 <div class="section" id="file-reading-and-writing">
 <h2>File Reading and Writing<a class="headerlink" href="#file-reading-and-writing" title="Permalink to this headline">¶</a></h2>
-<p>Handling files in Python.</p>
-<span class="admonition-files"></span><span class="admonition-binary-files"></span><span class="admonition-file-opening-modes"></span><span class="admonition-text-file-notes"></span><span class="admonition-gotcha"></span><span class="admonition-io-open-parameters"></span><p>(<a class="reference external" href="https://docs.python.org/2/library/io.html?highlight=io.open#io.open">https://docs.python.org/2/library/io.html?highlight=io.open#io.open</a>)</p>
-<span class="admonition-file-reading"></span><span class="admonition-common-idioms"></span><span class="admonition-file-writing"></span><span class="admonition-file-methods"></span><span class="admonition-file-like-objects"></span><span class="admonition-stringio"></span></div>
+<p>It&#8217;s often useful in programming to be able to open files in order to read data from them, or write data to them.
+Python has, for a long time, had a built-in function <code class="docutils literal"><span class="pre">open</span></code> which handled this operation.
+However, this builtin was created in the days before unicode was widely used, and it does not handle text that contains unicode particularly well.</p>
+<p>For this reason, we have moved away from using the built-in <code class="docutils literal"><span class="pre">open</span></code> and toward using the <code class="docutils literal"><span class="pre">open</span></code> function from the <code class="docutils literal"><span class="pre">io</span></code> module.
+The <code class="docutils literal"><span class="pre">io.open</span></code> function is available in both Python 2 (2.6 and 2.7) and Python 3 and so provides a cross-compatible approach to opening files.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">io</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;secrets.txt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="n">secret_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>By default, files are opened in &#8220;read text&#8221; mode, which automatically decode the bytes contained in the file to unicode.
+You may provide an <code class="docutils literal"><span class="pre">encoding</span></code> keyword argument to control the &#8220;codec&#8221; that is used to perform this conversion.
+The most common codec you will use is &#8220;utf-8&#8221;.
+If you do not provide an <code class="docutils literal"><span class="pre">encoding</span></code>, then Python will default to the value of <code class="docutils literal"><span class="pre">sys.getdefaultencoding()</span></code>, which is nearly always &#8220;ascii&#8221;.</p>
+<span class="admonition-files"></span><p>If you have needs other than reading unicode test, you may use the <code class="docutils literal"><span class="pre">mode</span></code> argument (<code class="docutils literal"><span class="pre">'rb'</span></code> below) to control aspects of your interaction with the file.</p>
+<p>For example, the <code class="docutils literal"><span class="pre">rb</span></code> mode opens a file for reading bytes.
+When you read data from a file opened in <code class="docutils literal"><span class="pre">rb</span></code> mode, it will be a bytestring.
+If you need to convert it to unicode, you can call <code class="docutils literal"><span class="pre">decode</span></code> on it at that point.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;secrets.bin&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">secret_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<span class="admonition-binary-files"></span><p>There are a number of modes available for files.
+Unfortunately, Python&#8217;s own documentation of the meaning of these modes is not very clear.
+You can use <a class="reference external" href="http://www.manpagez.com/man/3/fopen/">the man page for the unix command fopen</a> which supports the same modes, and has much better information.
+One thing you should be careful of.
+Merely opening a file in <cite>w</cite> mode will always truncate the file, rendering it empty.</p>
+<span class="admonition-file-opening-modes"></span><p>When you open a file with <code class="docutils literal"><span class="pre">io.open</span></code> it defaults to using &#8220;Universal Newline&#8221; mode.
+This means that while some operating systems use different characters as line endings, Python will always translate them into the *nix-tyle <code class="docutils literal"><span class="pre">&quot;\n&quot;</span></code> when you read data from the file.
+The <code class="docutils literal"><span class="pre">&quot;\n&quot;</span></code> characters are translated back to OS-Native line endings when you write data out to a file.
+You should always use the <code class="docutils literal"><span class="pre">&quot;\n&quot;</span></code> character as a line ending when writing strings in Python.</p>
+<span class="admonition-text-file-notes"></span><p>You should be aware that although there is no difference between reading in bytes or text mode on Unix operating systems, the two are quite different in Windows.
+You&#8217;ll be tempted to accept the default and always open files in <code class="docutils literal"><span class="pre">text</span></code> mode.
+This <strong>will break binary files on Windows</strong>.
+Don&#8217;t do it.
+Get in the habit of <em>thinking carefully</em> about whether the content of the file you are reading is text or binary data.</p>
+<span class="admonition-gotcha"></span><p>Beyond the <code class="docutils literal"><span class="pre">mode</span></code> and <code class="docutils literal"><span class="pre">encoding</span></code> parameters we&#8217;ve discussed, there are a number of other parameters to the <code class="docutils literal"><span class="pre">io.open</span></code> function.</p>
+<p>The required first argument is the <code class="docutils literal"><span class="pre">path</span></code> to the file you wish to open.</p>
+<p>The <code class="docutils literal"><span class="pre">errors</span></code> parameter allows you to control how errors in decoding file bytes to Python unicode are handled.
+You may specify that you wish to <code class="docutils literal"><span class="pre">ignore</span></code> errors, <code class="docutils literal"><span class="pre">replace</span></code> broken characters with a specific identifier, or use <code class="docutils literal"><span class="pre">strict</span></code> mode to force errors to terminate reading.</p>
+<p>The other parameters are more advanced and will not come up often in your work with files.
+You may read about them in the <a class="reference external" href="http://docs.python.org/2/library/io.html#module-io" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">io</span> <span class="pre">module</span> <span class="pre">documentation</span></code></a> (<a class="reference external" href="http://docs.python.org/3/library/io.html#module-io" title="(in Python v3.5)"><code class="xref py py-mod docutils literal"><span class="pre">py3</span></code></a>).</p>
+<span class="admonition-io-open-parameters"></span><p>Once you have an open file, you can read from it.
+The <code class="docutils literal"><span class="pre">read</span></code> method accepts an optional argument of a number of bytes to read.
+If you provide no value, the entire file (starting at your current position) is read.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">header_size</span> <span class="o">=</span> <span class="mi">4096</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;secrets.txt&#39;</span><span class="p">)</span>
+<span class="n">secret_header</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">header_size</span><span class="p">)</span>
+<span class="n">secret_rest</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<span class="admonition-file-reading"></span><p>Files are iterators, which means you can iterate through the lines of text they contain like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;secrets.txt&#39;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">line</span>
+</pre></div>
+</div>
+<span class="admonition-common-idioms"></span><p>In addition, the <code class="docutils literal"><span class="pre">readline</span></code> method will read a single line at a time.
+The <code class="docutils literal"><span class="pre">readlines</span></code> method will read a file and return a list containing the lines of the file.</p>
+<p>If you wish to write text to a file you&#8217;ve opened in <code class="docutils literal"><span class="pre">w</span></code> mode, you may do so with the <code class="docutils literal"><span class="pre">write</span></code> method:
+Newlines are <strong>not</strong> automatically appended to text written this way.
+If you want lines in your file, you must write the newline characters yourself (or place them in your text).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">outfile</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;output.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is line: {0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+</pre></div>
+</div>
+<span class="admonition-file-writing"></span><p>When you&#8217;ve opened a file in a &#8220;read&#8221; mode, you have the following methods available:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In &#8220;write&#8221; mode, you have rough equivalents.
+The <code class="docutils literal"><span class="pre">write</span></code> method writes a string to an open file.
+The <code class="docutils literal"><span class="pre">writelines</span></code> method takes a sequence of strings and writes them to a file.
+Remember, newlines are not automatically added (despite the name).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In any mode, a file has a few methods you can use to navigate through the file.</p>
+<p>The <code class="docutils literal"><span class="pre">file.seek(offset)</span></code> method will move the file pointer to the byte of the file given by &#8216;offset&#8217;.
+The <code class="docutils literal"><span class="pre">file.tell()</span></code> method will return the byte number of the current position of the file pointer.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Finally, whenever you open a file, you must also close it.
+On certain operating systems, if you fail to do so it can render the file unusable by any other process.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<span class="admonition-file-methods"></span><p>In Python, we say that anything which implements both the <code class="docutils literal"><span class="pre">read</span></code> and <code class="docutils literal"><span class="pre">write</span></code> method is <em>File-like</em>.
+There are a number of types which are file-like:</p>
+<ul class="simple">
+<li>loggers</li>
+<li><code class="docutils literal"><span class="pre">sys.stdout</span></code></li>
+<li><code class="docutils literal"><span class="pre">urllib.open()</span></code></li>
+<li>pipes, subprocesses</li>
+<li>StringIO</li>
+</ul>
+<p>When you have a file-like object you can treat is as if it were a file.
+A common use-case for this involves using the <code class="docutils literal"><span class="pre">io.StringIO</span></code> class.
+This class constructs an in-memory buffer that operates just like a file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">417</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">420</span><span class="p">]:</span> <span class="n">f</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">421</span><span class="p">]:</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">u&quot;somestuff&quot;</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">422</span><span class="p">]:</span> <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">423</span><span class="p">]:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">423</span><span class="p">]:</span> <span class="s1">&#39;somestuff&#39;</span>
+</pre></div>
+</div>
+<p>When writing tests for file-handling code this can be very useful.
+It allows you to make &#8220;fake files&#8221; that operate just like the real thing.</p>
+<p>Legacy code will often contain references to <em>modules</em> named <code class="docutils literal"><span class="pre">StringIO</span></code> or <code class="docutils literal"><span class="pre">cStringIO</span></code>.
+These modules should be considered superseded by the <code class="docutils literal"><span class="pre">io.StringIO</span></code> class.</p>
+<span class="admonition-file-like-objects"></span><span class="admonition-stringio"></span></div>
 <div class="section" id="paths-and-directories">
 <h2>Paths and Directories<a class="headerlink" href="#paths-and-directories" title="Permalink to this headline">¶</a></h2>
-<p>In Python, paths are often handled with simple strings (or Unicode strings)</p>
-<span class="admonition-paths-and-directories"></span><span class="admonition-os-module"></span><span class="admonition-os-path-module"></span><span class="admonition-pathlib-module"></span><span class="admonition-quick-intro"></span></div>
+<p>In Python, paths are often handled with simple strings (or Unicode strings)
+You can make absolute paths:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">b</span><span class="s2">&quot;/home/cris/stuff.txt&quot;</span>
+<span class="s1">u&#39;/usr/local/bin/python3&#39;</span>
+</pre></div>
+</div>
+<p>or relative paths:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s1">u&#39;./secret.txt&#39;</span>
+<span class="n">b</span><span class="s1">&#39;src/test_ack.py&#39;</span>
+</pre></div>
+</div>
+<p>Either relative or absolute paths, bytes or unicode objects will work as the <code class="docutils literal"><span class="pre">path</span></code> argument to <code class="docutils literal"><span class="pre">io.open()</span></code>.</p>
+<span class="admonition-paths-and-directories"></span><p>The <code class="docutils literal"><span class="pre">os</span></code> module from the Python standard library gives you a number of useful tools for interacting with paths.
+You can get the current working directory with <code class="docutils literal"><span class="pre">os.getcwd</span></code>.
+You can change directories with <code class="docutils literal"><span class="pre">os.chdir</span></code>.
+You can turn any relative path into an absolute path with <code class="docutils literal"><span class="pre">os.path.abspath</span></code>.
+You can obtain the relative path from your current location to any absolute path with <code class="docutils literal"><span class="pre">os.path.relpath()</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">--</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwdu</span><span class="p">()</span> <span class="p">(</span><span class="n">u</span> <span class="k">for</span> <span class="n">Unicode</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>It&#8217;s possible to list the contents of a directory with <code class="docutils literal"><span class="pre">os.listdir</span></code>.
+You can make new directories with <code class="docutils literal"><span class="pre">os.mkdir</span></code>.
+You can even walk an entire file system using <code class="docutils literal"><span class="pre">os.walk</span></code>.</p>
+<p>There&#8217;s much, much more to learn.  Check out the <a class="reference external" href="http://docs.python.org/2/library/os.html#module-os" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">documentation</span></code></a> (<a class="reference external" href="http://docs.python.org/3/library/os.html#module-os" title="(in Python v3.5)"><code class="xref py py-mod docutils literal"><span class="pre">py3</span></code></a>)</p>
+<span class="admonition-os-module"></span><span class="admonition-os-path-module"></span><p>Finally, if you&#8217;d prefer to work with paths in an Object-oriented style, the Python 3 standard library has added a new module, <a class="reference external" href="http://docs.python.org/3/library/pathlib.html#module-pathlib" title="(in Python v3.5)"><code class="xref py py-mod docutils literal"><span class="pre">pathlib</span></code></a>.
+This module can also be pip installed in Python 2 for compatibility.</p>
+<p>With the module, you can create paths as objects, and then work with methods on them.
+This allows you access to all the operations in <code class="docutils literal"><span class="pre">os.path</span></code> and more.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="gp">In [2]: </span><span class="n">pth</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="gp">In [3]: </span><span class="n">pth</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span>
+<span class="gh">Out[3]: </span><span class="go">True</span>
+<span class="gp">In [4]: </span><span class="n">pth</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
+<span class="gh">Out[4]: </span><span class="go">PosixPath(&#39;/Users/cewing/projects/training/codefellows/existing_course_repos/python-dev-accelerator&#39;)</span>
+<span class="gp">In [5]: </span><span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">pth</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+<span class="gp">   ...: </span>    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">   ...:</span>
+<span class="go">.git</span>
+<span class="go">.gitignore</span>
+<span class="go">bin</span>
+<span class="go">build</span>
+<span class="go">cfpython.sublime-project</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<span class="admonition-pathlib-module"></span><span class="admonition-quick-intro"></span></div>
 </div>
 
 
