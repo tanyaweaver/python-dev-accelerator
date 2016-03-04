@@ -1,6 +1,14 @@
+.. slideconf::
+    :autoslides: False
+
 **********************
 Whiteboard Challenge 1
 **********************
+
+.. slide:: Whiteboard Challenge 1
+    :level: 1
+
+    This document contains no slides.
 
 Download the :download:`text file </downloads/corpora>`
 
