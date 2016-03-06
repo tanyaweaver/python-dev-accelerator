@@ -22,7 +22,7 @@ Network Basics
 
 .. figure:: /_static/network_topology.png
     :align: center
-    :width: 60%
+    :width: 50%
 
     http://en.wikipedia.org/wiki/Internet_Protocol_Suite
 
@@ -50,6 +50,12 @@ There are a number of valid schemes for the layering.
 Each of these has differing names and even number of layers.
 But at the heart, all describe the same process.
 The most common of these schemes is called the *TCP/IP Stack*.
+
+.. figure:: /_static/data_in_tcpip_stack.png
+    :align: left
+    :width: 100%
+
+    http://en.wikipedia.org/wiki/Internet_Protocol_Suite
 
 .. slide:: Computer Communications
     :level: 3
