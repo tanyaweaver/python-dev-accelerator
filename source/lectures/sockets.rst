@@ -226,7 +226,7 @@ There are certain **ports** which are commonly understood to belong to given app
 These ports are often referred to as **well-known ports**.
 For a cannonical list, you can check `this wikipedia page <http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers>`_.
 
-On all computers, there are a finite number of ports. The total is number is 65535. 
+On all computers, there are a finite number of ports. The total is number is 65535.
 This total number is grouped into a few different classes.
 
 Ports numbered 0 - 1023 are *reserved*.
@@ -261,7 +261,7 @@ You should not ususally use them for your own processes.
 
     .. rst-class:: build
     .. container::
-    
+
         65535 total ports on any machine
 
         0-1023 are *reserved*
@@ -322,7 +322,6 @@ Opening a **socket** creates a kind of transceiver that can send and/or receive 
     :level: 2
 
     .. rst-class:: build left
-    .. container::
 
     * *Internet* layer : **IP Address**
 
@@ -343,14 +342,14 @@ Sockets in Python
 -----------------
 
 Python provides a standard library module which provides socket functionality.
-It is called **socket**.
+It is called :mod:`socket <python2:socket>` (:py:mod:`py3 <socket>`).
 The library is really just a very thin wrapper around the system implementation of *BSD Sockets*.
 Let's spend a few minutes getting to know this module.
 We're going to do this next part together, so open up a terminal and start an iPython interpreter.
 
 
-To create a socket, you use the **socket** method of the ``socket`` library.
-It takes up to three optional positional arguments (here we use none to get the default behavior):
+To create a socket, you use the :func:`socket function <python2:socket.socket>` (:py:func:`py3 <socket.socket>`) from the ``socket`` library.
+This function takes up to three *optional* arguments (here we use none to get the default behavior):
 
 .. code-block:: ipython
 
@@ -468,7 +467,7 @@ Can we use the ``families`` dict above to figure this out?
 
     .. rst-class:: build
     .. container::
-    
+
         .. code-block:: ipython
 
             In [39]: families = get_constants('AF_')
@@ -517,7 +516,7 @@ Using the same approach as for the ``family``, find out the *default* type for o
 
     .. rst-class:: build
     .. container::
-    
+
         Will a socket remain open, will it allow two-way comms...
 
         .. code-block:: ipython
@@ -564,7 +563,7 @@ What is the *default* protocol used by our generic socket, ``foo``?
 
     .. rst-class:: build
     .. container::
-    
+
         .. code-block:: ipython
 
             In [45]: protocols = get_constants('IPPROTO_')
@@ -608,10 +607,10 @@ Using them allows you to create sockets with specific communications profiles:
     * Family : Addressing
     * Type : Semantics
     * Proto : Protocol
-    
+
     .. rst-class:: build
     .. container::
-    
+
         Can be used as positional args to ``socket`` constructor:
 
         .. code-block:: ipython
@@ -625,3 +624,576 @@ Using them allows you to create sockets with specific communications profiles:
                         proto=17,
                         laddr=('0.0.0.0', 0)>
 
+
+Communicating With Sockets
+==========================
+
+Sockets by themselves are not particularly useful.
+The purpose of a socket of course is to communicate with other sockets.
+In order to create a socket that is able to communicate with another socket, you must match the communications profile of the other socket.
+
+The ``socket`` library provides a function useful for this purpose: :func:`getaddrinfo <python2:socket.getaddrinfo>` (:py:func:`py3 <socket.getaddrinfo>`).
+This function takes two arguments.
+
+The first is either an IP address or a hostname.
+If you use a hostname, ``DNS`` (Domain Name Services) will be used to resolve the name to an IP address.
+If ``DNS`` is unavailable or misconfigured, this will cause an error.
+
+The second is either a port number, or a protocol name (like ``"http"``, ``"https"``, ``"smtp"``, ...)
+If you use the name of a protocol, it will be converted into the well-known port reserved for that protocol.
+This will not work for protocols which work outside the range of well-known ports.
+
+.. code-block:: ipython
+
+    In [11]: socket.getaddrinfo('127.0.0.1', 'http')
+    Out[11]:
+    [(<AddressFamily.AF_INET: 2>,
+      <SocketKind.SOCK_DGRAM: 2>,
+      17,
+      '',
+      ('127.0.0.1', 80)),
+     (<AddressFamily.AF_INET: 2>,
+      <SocketKind.SOCK_STREAM: 1>,
+      6,
+      '',
+      ('127.0.0.1', 80))]
+
+The return value from this function is always a list.
+The list will contain zero or more 5-tuples.
+The elements in the 5-tuple are, in order:
+
+* socket family
+* socket type
+* socket protocol
+* canonical name (this is generally empty, you must request it via a flag in the socket library)
+* socket address (this will always be a tuple of IP and Port)
+
+.. note:: If the family of the socket is IPv4 (``AF_INET``), the address will contain 2 elements: address and port.
+          IPv6 (``AF_INET6``), the address will contain 4 elements: address, port, flow info, and scope id.
+
+These tuples can be used to create appropriate sockets to connect to the remote address.
+To illustrate this point, let's create a server socket and client socket and send a message back and forth.
+
+.. slide:: Communicating w/ Sockets
+    :level: 3
+
+    Single sockets are of no particular value
+
+    .. rst-class:: build
+    .. container::
+
+        They should work in pairs
+
+        To communicate, must have same *comms profile*
+
+        Get the profile of an existing socket with ``socket.getaddrinfo``:
+
+        .. code-block:: ipython
+
+            In [11]: socket.getaddrinfo('127.0.0.1', 'http')
+            Out[11]:
+            [(<AddressFamily.AF_INET: 2>,
+              <SocketKind.SOCK_DGRAM: 2>,
+              17,
+              '',
+              ('127.0.0.1', 80)),
+             (<AddressFamily.AF_INET: 2>,
+              <SocketKind.SOCK_STREAM: 1>,
+              6,
+              '',
+              ('127.0.0.1', 80))]
+
+Server Sockets
+--------------
+
+The most common relationship between two sockets on remote machines is that of a *server* and a *client*.
+The server socket waits in an open state for a client to communicate with it.
+Or perhaps it broadcasts messages so any client that is listening.
+
+We'll experiment with this relationship now to get an idea of how socket communications work in the real world.
+
+We start by creating a server socket with a specific communications profile.
+We'll use the IPv4 addressing system, streaming semantics and the ``TCP`` internet layer protocol:
+
+.. rst-class:: server
+.. code-block:: ipython
+
+    In [23]: server = socket.socket(socket.AF_INET,
+       ....:                        socket.SOCK_STREAM,
+       ....:                        socket.IPPROTO_TCP)
+    In [24]: server
+    Out[24]: <socket.socket fd=10, family=AddressFamily.AF_INET,
+                type=SocketKind.SOCK_STREAM, proto=6, laddr=('0.0.0.0', 0)>
+
+Once we've created a socket, the next step for a server is to :meth:`bind <python2:socket.socket.bind>` (:py:meth:`py3 <socket.socket.bind>`) to an address.
+The address *must* be provided in the appropriate form for the addressing system (a two-tuple for IPv4 or a four-tuple for IPv6).
+
+.. rst-class:: server
+.. code-block:: ipython
+
+    In [25]: address = ('127.0.0.1', 5000)
+    In [26]: server.bind(address)
+    In [27]: server
+    Out[27]: <socket.socket fd=10, family=AddressFamily.AF_INET,
+                type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 5000)>
+    In [28]:
+
+Notice that the ``laddr`` property of our socket has now updated to show the address to which we have bound.
+
+.. slide:: Server Socket
+    :level: 3
+
+    Create and bind a socket to an address:
+
+    .. rst-class:: build
+    .. container::
+
+        .. rst-class:: server
+        .. code-block:: ipython
+
+            In [23]: server = socket.socket(socket.AF_INET,
+               ....:                        socket.SOCK_STREAM,
+               ....:                        socket.IPPROTO_TCP)
+            In [24]: server
+            Out[24]: <socket.socket fd=10, family=AddressFamily.AF_INET,
+                        type=SocketKind.SOCK_STREAM, proto=6, laddr=('0.0.0.0', 0)>
+
+        .. rst-class:: server
+        .. code-block:: ipython
+
+            In [25]: address = ('127.0.0.1', 5000)
+            In [26]: server.bind(address)
+            In [27]: server
+            Out[27]: <socket.socket fd=10, family=AddressFamily.AF_INET,
+                        type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 5000)>
+            In [28]:
+
+Next, we use the :meth:`listen <python2:socket.socket.listen>` method (:py:meth:`py3 <socket.socket.listen>`) to prepare the socket to hear incoming connection requests.
+The sole argument to this method is an integer representing the *backlog*.
+This number controls how many incoming requests can be queued by the server socket while the connection between it and the client is established.
+An incoming request is placed in this queue, and is removed once an open connection is established (more on this below).
+
+.. rst-class:: server
+.. code-block:: ipython
+
+    In [29]: server.listen(1)
+    In [30]:
+
+The last step for our server preparation is to call the :meth:`accept <python2:socket.socket.accept>` method (:py:meth:`py3 <socket.socket.accept>`) to accept an incoming connection from a client.
+This method is *blocking*, which means that it will not return a value until a connection is actually made with a client socket.
+The return value is a two-tuple which will contain a *new socket* which is connected to the client, and a tuple containing the address of the client.
+Let's go ahead and call this method for our server to see it block:
+
+.. rst-class:: server
+.. code-block:: ipython
+
+    In [30]: conn, addr = server.accept()
+
+Notice now that our iPython prompt has not returned.
+Python is waiting for a client to connect to our server.
+Let's provide one now.
+
+.. slide:: Server Socket
+    :level: 3
+
+    Then prepare the socket for connections:
+
+    .. rst-class:: build
+    .. container::
+
+        .. rst-class:: server
+        .. code-block:: ipython
+
+            In [29]: server.listen(1)
+            In [30]:
+
+        And finally, ``accept`` an incoming connection:
+
+        .. rst-class:: server
+        .. code-block:: ipython
+
+            In [30]: conn, addr = server.accept()
+
+        Notice what happens to your terminal.
+
+.. _sockets_client_socket:
+
+Client Sockets
+--------------
+
+Our server socket is waiting in an iPython interpreter for a new connection.
+In order to create a client, we'll need to run a *new interpreter*.
+Open a second terminal and run a new iPython process.
+
+To set up the client socket, we must ensure that it has the same communications profile as the server socket we have created.
+We can manually do this, but it's probably better to use the ``getaddrinfo`` method described above to get the right information.
+We can ask for any socket that might be available on our local machine using port 5000.
+Then we can filter that list and grab the first value that provides the type of semantics we want (streaming):
+
+.. rst-class:: client
+.. code-block:: ipython
+
+    In [1]: import socket
+    In [2]: infos = socket.getaddrinfo('127.0.0.1', 5000)
+    In [3]: len(infos)
+    Out[3]: 2
+    In [4]: stream_info = [i for i in infos if i[1] == socket.SOCK_STREAM][0]
+    In [5]: stream_info
+    Out[5]:
+    (<AddressFamily.AF_INET: 2>,
+     <SocketKind.SOCK_STREAM: 1>,
+     6,
+     '',
+     ('127.0.0.1', 5000))
+
+.. slide:: Client Socket
+    :level: 3
+
+    Open a new iPython terminal for a client.
+
+    .. rst-class:: build
+    .. container::
+
+        Use the ``getaddrinfo`` function to find appropriate connection parameters for the client:
+
+        .. rst-class:: client
+        .. code-block:: ipython
+
+            In [1]: import socket
+            In [2]: infos = socket.getaddrinfo('127.0.0.1', 5000)
+            In [3]: len(infos)
+            Out[3]: 2
+            In [4]: stream_info = [i for i in infos if i[1] == socket.SOCK_STREAM][0]
+            In [5]: stream_info
+            Out[5]:
+            (<AddressFamily.AF_INET: 2>,
+             <SocketKind.SOCK_STREAM: 1>,
+             6,
+             '',
+             ('127.0.0.1', 5000))
+
+Remember that the three arguments required to set up a customized socket are the ``family``, ``type``, and ``protocol``.
+These are also the first three elements in the five-tuples returned by ``getaddrinfo``.
+We can use slicing and argument unpacking to generate a new socket directly from this info:
+
+.. rst-class:: client
+.. code-block:: ipython
+
+    In [6]: client = socket.socket(*stream_info[:3])
+    In [7]: client
+    Out[7]: <socket.socket fd=9, family=AddressFamily.AF_INET,
+            type=SocketKind.SOCK_STREAM, proto=6, laddr=('0.0.0.0', 0)>
+
+Once our client socket is set up, we need to :meth:`connect <python2:socket.socket.connect>` (:py:meth:`py3 <socket.socket.connect>`) to our server socket.
+We can use the last item in the five-tuple from our ``stream_info`` as the argument to the ``connect`` method.
+Before we do so, though, make sure you can also see the window where your ``server`` socket is waiting.
+
+.. rst-class:: client
+.. code-block:: ipython
+
+    In [8]: client.connect(stream_info[-1])
+    In [9]:
+
+.. slide:: Client Socket
+    :level: 3
+
+    Use the values from our ``stream_info`` tuple to build a new client socket:
+
+    .. rst-class:: build
+    .. container::
+
+        .. rst-class:: client
+        .. code-block:: ipython
+
+            In [6]: client = socket.socket(*stream_info[:3])
+            In [7]: client
+            Out[7]: <socket.socket fd=9, family=AddressFamily.AF_INET,
+                    type=SocketKind.SOCK_STREAM, proto=6, laddr=('0.0.0.0', 0)>
+
+        Before you connect, make sure you can see the server terminal
+
+        .. rst-class:: client
+        .. code-block:: ipython
+
+            In [8]: client.connect(stream_info[-1])
+            In [9]:
+
+        You should see the call to ``accept`` return
+
+You should see that the call to ``accept`` in your server interpreter has now returned.
+Let's see the values that have been bound to ``conn`` and ``addr``:
+
+.. rst-class:: server
+.. code-block:: ipython
+
+    In [32]: conn
+    Out[32]: <socket.socket fd=11, family=AddressFamily.AF_INET,
+                type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 5000),
+                raddr=('127.0.0.1', 55971)>
+    In [33]: addr
+    Out[33]: ('127.0.0.1', 55971)
+
+And let's check the address claimed by our client socket:
+
+.. rst-class:: client
+.. code-block:: ipython
+
+    In [10]: client
+    Out[10]: <socket.socket fd=9, family=AddressFamily.AF_INET,
+                type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 55971),
+                raddr=('127.0.0.1', 5000)>
+
+The ``laddr``and ``raddr`` properties of our two sockets show that they are connected to each-other.
+And now we can use them to send messages back and forth.
+
+Sending and Receiving
+---------------------
+
+Let's start by sending a message from our client to our server.
+There are two methods we could use to do this.
+
+The first, :meth:`send <python2:socket.socket.send>` (:py:meth:`py3 <socket.socket.send>`), takes a byte string to be sent, and returns the number of bytes that were actually sent.
+If the any of the data remains unsent, our application is responsible for re-trying to send the remainder.
+
+The second, :meth:`sendall <python2:socket.socket.sendall>` (:py:meth:`py3 <socket.socket.sendall>`), takes a byte string to be sent as well.
+However, with this method the entire string is sent, or the method will return an error.
+The return value if the message is sent is ``None``.
+If an error occurs, there is no way to know exactly how much of the data was successfully sent, if any.
+The type of the error raised is useful in determining what exactly went wrong.
+
+Let's use the second method to send a message from our client to the server:
+
+.. rst-class:: client
+.. code-block:: ipython
+
+    In [11]: message = u'This is a fancy message, containing über-important information'
+    In [12]: client.sendall(message.encode('utf8'))
+    In [13]:
+
+.. slide:: Sending a Message
+    :level: 3
+
+    Messages must be byte strings, never unicode.
+
+    .. rst-class:: build
+    .. container::
+
+        ``socket.send(msg)`` returns number of bytes sent
+
+        Must check if complete
+
+        ``socket.sendall(msg)`` sends all or throws an exception.
+
+        The type of exception tells what went wrong.
+
+        .. rst-class:: client
+        .. code-block:: ipython
+
+            In [11]: message = u'This is a fancy message, containing über-important information'
+            In [12]: client.sendall(message.encode('utf8'))
+            In [13]:
+
+Notice that we *must* encode the message we want to send into a byte string before it is passed to the socket.
+Sockets *cannot* accept unicode strings.
+
+Now that we have sent a message from the client, we can turn to the server to receive it.
+Remember that the server socket returned a new socket we called ``conn`` which is the actuall connection to the client.
+We will use the :meth:`recv <python2:socket.socket.recv>` method (:py:meth:`py3 <socket.socket.recv>`) on this socket.
+The method takes a single, required argument, an integer which represents the number of bytes to read from the socket.
+If the length of the return value of this call is less than the number of bytes we requested, then we can know that the message has been completely received.
+
+.. rst-class:: server
+.. code-block:: ipython
+
+    In [34]: buffer_length = 8
+    In [35]: message_complete = False
+    In [36]: while not message_complete:
+       ....:     part = conn.recv(buffer_length)
+       ....:     print(part.decode('utf8'))
+       ....:     if len(part) < buffer_length:
+       ....:         break
+       ....:
+    This is
+    a fancy
+    message,
+     contain
+    ing übe
+    r-import
+    ant info
+    rmation
+    In [37]:
+
+Notice that there are only seven bytes in that last line.
+That signals to us that we have received everything the client has sent.
+
+.. slide:: Receive the Message
+    :level: 3
+
+    In the server terminal:
+
+    .. rst-class:: server
+    .. code-block:: ipython
+
+        In [34]: buffer_length = 8
+        In [35]: message_complete = False
+        In [36]: while not message_complete:
+           ....:     part = conn.recv(buffer_length)
+           ....:     print(part.decode('utf8'))
+           ....:     if len(part) < buffer_length:
+           ....:         break
+           ....:
+        This is
+        a fancy
+        message,
+         contain
+        ing übe
+        r-import
+        ant info
+        rmation
+        In [37]:
+
+At this point, we can send a message back to the client.
+Again, we want to use the ``conn`` socket that the server passed us when the client connected.
+And we must not forget to encode the message we send to bytes.
+
+.. rst-class:: server
+.. code-block:: ipython
+
+    In [37]: message = "I hear you, loud and clear!"
+    In [38]: conn.sendall(message.encode('utf8'))
+    In [39]:
+
+Back on the client side, we can use the same ``recv`` method to receive the message the server has sent back to us.
+
+.. rst-class:: client
+.. code-block:: ipython
+
+    In [13]: buffer_length = 8
+    In [14]: reply_complete = False
+    In [15]: while not reply_complete:
+       ....:     part = client.recv(buffer_length)
+       ....:     print(part.decode('utf8'))
+       ....:     if len(part) < buffer_length:
+       ....:         break
+       ....:
+    I hear y
+    ou, loud
+     and cle
+    ar!
+    In [16]:
+
+.. slide:: Send a Reply
+    :level: 3
+
+    In the server:
+
+    .. rst-class:: server
+    .. code-block:: ipython
+
+        In [37]: message = "I hear you, loud and clear!"
+        In [38]: conn.sendall(message.encode('utf8'))
+        In [39]:
+
+    .. rst-class:: build
+    .. container::
+
+        .. container::
+
+            And in the client:
+
+            .. rst-class:: client
+            .. code-block:: ipython
+
+                In [13]: buffer_length = 8
+                In [14]: reply_complete = False
+                In [15]: while not reply_complete:
+                   ....:     part = client.recv(buffer_length)
+                   ....:     print(part.decode('utf8'))
+                   ....:     if len(part) < buffer_length:
+                   ....:         break
+                   ....:
+                I hear y
+                ou, loud
+                 and cle
+                ar!
+
+Now that the exchange is complete, we can close both the client socket, and the connection socket set up by the server:
+
+.. rst-class:: server
+.. code-block:: ipython
+
+    In [39]: conn.close()
+    In [40]:
+
+.. rst-class:: client
+.. code-block:: ipython
+
+    In [16]: client.close()
+    In [17]:
+
+Remember, our server socket is still open.
+Now that we are done processing a single client connection, we can make a new call to ``accept`` to prepare for another.
+But enough for now.
+Let's close the server socket too.
+
+.. rst-class:: server
+.. code-block:: ipython
+
+    In [40]: server.close()
+    In [41]:
+
+.. slide:: Clean Up
+    :level: 3
+
+    Both the client:
+
+    .. rst-class:: client
+    .. code-block:: ipython
+
+        In [16]: client.close()
+        In [17]:
+
+    .. rst-class:: build
+    .. container::
+
+        .. container::
+
+            And the server:
+
+            .. rst-class:: server
+            .. code-block:: ipython
+
+                In [39]: conn.close()
+                In [40]:
+
+        .. container::
+
+            Close the server socket too:
+
+            .. rst-class:: server
+            .. code-block:: ipython
+
+                In [40]: server.close()
+                In [41]:
+
+Wrap Up
+=======
+
+In this lesson we've learned a bit about the TCP/IP stack.
+We also learned how Python allows us to communicate with another machine from the *application layer* using *sockets*.
+We learned about the ways in which we can customize sockets to use different communications profiles.
+And we learned how to get information about the profiles used by the sockets we want to connect to.
+Finally, we learned how to pass messages through sockets and read them from the socket where they are received.
+
+You'll use this skill to create a simple :doc:`/assignments/http_server_0_echo`.
+
+.. slide:: Summary
+    :level: 3
+
+    .. rst-class:: build
+
+    * TCP/IP Stack
+    * Sockets allow communications from the *application layer*
+    * Sockets may be customized
+    * We can set up pairs of sockets to communicate
+    * We can send and receive messages

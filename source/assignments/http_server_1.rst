@@ -16,9 +16,8 @@ simple HTTP server.
 Tasks
 =====
 
-Create a new repository called 'http-server' in GitHub for this work.  Make
-sure it contains an appropriate license and .gitignore file.  Make a branch
-"step1" from master to do your work for this assignment.
+Use your 'http-server' repository in GitHub for this work.
+Make a branch "step1" from master to do your work for this assignment.
 
 * Implement a function called response_ok that will return a well formed HTTP
   "200 OK" response as a byte string suitable for transmission through a
