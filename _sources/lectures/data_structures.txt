@@ -1,0 +1,448 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "skip"
+    }
+   },
+   "source": [
+    "https://gettingreal.37signals.com/ch02_Whats_Your_Problem.php"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# Data Structures: An Overview"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Motivation"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "### History"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "Babbage designed the Difference Machine: https://www.youtube.com/watch?v=be1EM3gQkAY to build error-free mathmatical tables.  He automated the process of creating printing plates, thereby reducing the typesetting errors of the time."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "He then generalized the Difference Machine to the first (if it had been built) Turing-complete computer.  It has an arithmetic logic, memory, and control flow (branching & loops).\n",
+    "\n",
+    "Ada Lovelace wrote the first algorithm to compute the Bernoulli (Kowa) sequence for the Babbage Analytical Engine."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*\"As soon as an Analytical Engine exists, it will necessarily guide the future course of the science. Whenever any result is sought by its aid, the question will then arise—By what course of calculation can these results be arrived at by the machine in the shortest time?\"*\n",
+    "\n",
+    "~ Charles Babbage\n",
+    "Passages from the Life of a Philosopher\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "Babbage's design was revolutionary in that the computer could store and then retrieve data.  Then it was \"pegs in a barrel\" --like a music box.  Today it it's groups of bits (GOBs)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "### Storing and Fetching \n",
+    "\n",
+    "* The Analytical Engine only used fixed point arithmetic (column width of 50).\n",
+    "\n",
+    "* Data Structures improve the storing and/or fetching of GOBS.\n",
+    "\n",
+    "* Data Structures organize GOBs\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "### Collections"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "GOBs are organized into data structures.  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "These are then grouped into data types:  \n",
+    "\n",
+    "* Primitive\n",
+    "* Composite\n",
+    "* Abstract Data Types (ADT)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "#### Primitive\n",
+    "\n",
+    "<table>\n",
+    "\t<thead>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<th>type</th>\n",
+    "\t\t\t<th>values</th>\n",
+    "\t\t\t<th>implementation</th>\n",
+    "\t\t</tr>\n",
+    "\t</thead>\n",
+    "\t<body>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<td>Boolean</td>\n",
+    "\t\t\t<td>true or false</td>\n",
+    "\t\t\t<td>bool</td>\n",
+    "\t\t</tr>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<td>Character</td>\n",
+    "\t\t\t<td>grapheme or unicode point</td>\n",
+    "\t\t\t<td>s[n] or ord(s[n])</td>\n",
+    "\t\t</tr>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<td>Floating Point</td>\n",
+    "\t\t\t<td>single-precision real numbers</td>\n",
+    "\t\t\t<td>--</td>\n",
+    "\t\t</tr>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<td>Double precision</td>\n",
+    "\t\t\t<td>wider float</td>\n",
+    "\t\t\t<td>float</td>\n",
+    "\t\t</tr>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<td>Integer</td>\n",
+    "\t\t\t<td>integral or fixed-precision values</td>\n",
+    "\t\t\t<td>int</td>\n",
+    "\t\t</tr>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<td>Enumeration</td>\n",
+    "\t\t\t<td>small set of uniquely-name values</td>\n",
+    "\t\t\t<td>NamedTuple</td>\n",
+    "\t\t</tr>\n",
+    "\t</body>\n",
+    "</table>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "#### Composite\n",
+    "\n",
+    "<table>\n",
+    "\t<thead>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<th>type</th>\n",
+    "\t\t\t<th>definition</th>\n",
+    "\t\t\t<th>implementation</th>\n",
+    "\t\t</tr>\n",
+    "\t</thead>\n",
+    "\t<body>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<td>Array</td>\n",
+    "\t\t\t<td>true or false</td>\n",
+    "\t\t\t<td>bool</td>\n",
+    "\t\t</tr>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<td>Record</td>\n",
+    "\t\t\t<td>value containing other values --static & fixed</td>\n",
+    "\t\t\t<td>tuple</td>\n",
+    "\t\t</tr>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<td>Union</td>\n",
+    "\t\t\t<td>specifies primitive values</td>\n",
+    "\t\t\t<td>--</td>\n",
+    "\t\t</tr>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<td>Union</td>\n",
+    "\t\t\t<td>specifies primitive values</td>\n",
+    "\t\t\t<td>--</td>\n",
+    "\t\t</tr>\n",
+    "\t</body>\n",
+    "</table>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "#### Abstract Data Types\n",
+    "\n",
+    "* Collection (Container)  \n",
+    "* List\n",
+    "* Stack\n",
+    "* Queue\n",
+    "* Deque (Double-ended queue)\n",
+    "* Priority queue\n",
+    "* Associative array\n",
+    "* Multimap\n",
+    "* Multiset \n",
+    "* Set \n",
+    "* Tree\n",
+    "* Graph"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "For this class:"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "We will *consume* primitive and composite data types.  \n",
+    "\n",
+    "* These are encapsulated quite nicely by Python.\n",
+    "* We care about what they do"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "We will *implement* ADT\n",
+    "\n",
+    "* We care about performance\n",
+    "* We look at their attributes and operations."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Definition\n",
+    "\n",
+    "Abstract Data Type:\n",
+    "\n",
+    "A set of data values and associated operations that are precisely specified independent of any particular implementation.\n",
+    "\n",
+    "Note: Since the data values and operations are defined with mathematical precision, rather than as an implementation in a computer language, we may reason about effects of the operations, relations to other abstract data types, whether a program implements the data type, etc.\n",
+    "\n",
+    "Paul E. Black, \"abstract data type\", in Dictionary of Algorithms and Data Structures [online], Vreda Pieterse and Paul E. Black, eds. 10 February 2005. (accessed TODAY) Available from: http://www.nist.gov/dads/HTML/abstractDataType.html\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "ADT is a mathmatical model of a data structure.  \n",
+    "* A *developer* implements the data structure.\n",
+    "* A *user* expects certain behaviors from the implementation."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Attributes\n",
+    "\n",
+    "* index, key\n",
+    "* node\n",
+    "* edge\n",
+    "* length, size\n",
+    "* value, cargo, information\n",
+    "* next\n",
+    "* previous\n",
+    "* leaf\n",
+    "* head\n",
+    "* tail"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Operations\n",
+    "\n",
+    "<table>\n",
+    "\t<thead>\n",
+    "\t\t<tr>\n",
+    "\t\t\t<th>operation</th>\n",
+    "\t\t\t<th>definition</th>\n",
+    "\t\t\t<th>aka</th>\n",
+    "\t\t</tr>\n",
+    "\t</thead>\n",
+    "\n",
+    "<body>\n",
+    "\t<tr>\n",
+    "\t\t<td>SEARCH(S, k)</td>\n",
+    "\t\t<td>A query that, given a set S and a key value k, returns a pointer x to an element in S such that x.key = k, or NIL if no such element belongs to S.</td>\n",
+    "\t\t<td>traverse, walk</td>\n",
+    "\t</tr>\n",
+    "\t<tr>\n",
+    "\t\t<td>INSERT(S, x)</td>\n",
+    "\t\t<td>A modifying operation that augments the set S with the element pointed to by x. We usually assume that any attributes in element x needed by the set implementation have already been initialized.</td>\n",
+    "\t\t<td>push(head), add(tail)</td>\n",
+    "\t</tr>\n",
+    "\t<tr>\n",
+    "\t\t<td>DELETE(S, x)</td>\n",
+    "\t\t<td>A modifying operation that, given a pointer x to an element in the set S, removes x from S. (Note that this operation takes a pointer to an element x, not a key value.)</td>\n",
+    "\t\t<td>remove, pop</td>\n",
+    "\t</tr>\n",
+    "\t<tr>\n",
+    "\t\t<td>MINIMUM(S)</td>\n",
+    "\t\t<td>A query on a totally ordered set S that returns a pointer to the element of S with the smallest key.</td>\n",
+    "\t\t<td></td>\n",
+    "\t</tr>\n",
+    "\t<tr>\n",
+    "\t\t<td>MAXIMUM(S)</td>\n",
+    "\t\t<td>A query on a totally ordered set S that returns a pointer to the element of S with the largest key.</td>\n",
+    "\t\t<td></td>\n",
+    "\t</tr>\n",
+    "\t<tr>\n",
+    "\t\t<td>SUCCESSOR(S, x)</td>\n",
+    "\t\t<td>A query that, given an element x whose key is from a totally ordered set S, returns a pointer to the next larger element in S, or NIL if x is the maximumelement.</td>\n",
+    "\t\t<td>next</td>\n",
+    "\t</tr>\n",
+    "\t    <td>PREDECESSOR(S, x)</td>\n",
+    "\t    <td>A query that, given an element x whose key is from a totally ordered set S,returns a pointer to the next smaller element in S, or NIL if x is the minimum element.</td>\n",
+    "\t    <td>previous, prior</td>\n",
+    "</body>\n",
+    "</table>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Slideshow",
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.5.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}

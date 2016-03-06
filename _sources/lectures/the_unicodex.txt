@@ -1,0 +1,307 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# Breaking the Unicodex:\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "# (The way of pain & suffering)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "## Have Faith"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "## Trust "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "## Verify"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# Unicode (חב״ד)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "collapsed": false,
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['וַיְהִי', 'בִּימֵי', 'שְׁפֹט', 'הַשֹּׁפְטִים', 'וַיְהִי', 'רָעָב', 'בָּאָרֶץ']\n",
+      "zeroth item = וַיְהִי\n",
+      "וַיְהִי\n",
+      "בִּימֵי\n",
+      "שְׁפֹט\n",
+      "הַשֹּׁפְטִים\n",
+      "וַיְהִי\n",
+      "רָעָב\n",
+      "בָּאָרֶץ\n"
+     ]
+    }
+   ],
+   "source": [
+    "#http://www.chabad.org/library/bible_cdo/aid/16453/jewish/Chapter-1.htm\n",
+    "ruth = u'וַיְהִי בִּימֵי שְׁפֹט הַשֹּׁפְטִים וַיְהִי רָעָב בָּאָרֶץ'\n",
+    "ruth_list = ruth.split() \n",
+    "print(ruth_list)\n",
+    "print (\"zeroth item = {0}\".format(ruth_list[0]))\n",
+    "for token in  ruth_list:\n",
+    "    print(token)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# QBible"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "collapsed": false,
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "zeroth item = וַיְהִי\n",
+      "וַיְהִי\n",
+      "בִּימֵי\n",
+      "שְׁפֹט\n",
+      "הַשֹּׁפְטִים\n",
+      "וַיְהִי\n",
+      "רָעָב\n",
+      "בָּאָרֶץ\n",
+      "וַיֵּלֶ\n",
+      "אִישׁ\n",
+      "מִבֵּית\n",
+      "לֶחֶם\n",
+      "יְהוּדָה\n",
+      "לָגוּר\n",
+      "בִּשְׂדֵי\n",
+      "מוֹאָב\n",
+      "הוּא\n",
+      "וְאִשְׁתּוֹ\n",
+      "וּשְׁנֵי\n",
+      "בָנָיו\n"
+     ]
+    }
+   ],
+   "source": [
+    "#http://www.qbible.com/hebrew-old-testament/ruth/1.html#1\n",
+    "qbible_ruth = u'וַיְהִי בִּימֵי שְׁפֹט הַשֹּׁפְטִים וַיְהִי רָעָב בָּאָרֶץ וַיֵּלֶ אִישׁ מִבֵּית לֶחֶם יְהוּדָה לָגוּר בִּשְׂדֵי מוֹאָב הוּא וְאִשְׁתּוֹ וּשְׁנֵי בָנָיו'\n",
+    "qbible_ruth_list = qbible_ruth.split()\n",
+    "print (\"zeroth item = {0}\".format(qbible_ruth_list[0]))\n",
+    "for token in  qbible_ruth_list:\n",
+    "    print(token)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# Bible Hub"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "collapsed": false,
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "zeroth item = וַתֹּ֤אמֶר\n",
+      "וַתֹּ֤אמֶר\n",
+      "רוּת֙\n",
+      "אַל־תִּפְגְּעִי־בִ֔י\n",
+      "לְעָזְבֵ֖ךְ\n",
+      "לָשׁ֣וּב\n",
+      "מֵאַחֲרָ֑יִךְ\n",
+      "כִּ֠י\n",
+      "אֶל־אֲשֶׁ֨ר\n",
+      "תֵּלְכִ֜י\n",
+      "אֵלֵ֗ךְ\n",
+      "וּבַאֲשֶׁ֤ר\n",
+      "תָּלִ֙ינִי֙\n",
+      "אָלִ֔ין\n",
+      "עַמֵּ֣ךְ\n",
+      "עַמִּ֔י\n",
+      "וֵאלֹהַ֖יִךְ\n",
+      "אֱלֹהָֽי׃\n"
+     ]
+    }
+   ],
+   "source": [
+    "#http://biblehub.com/text/ruth/1-16.htm\n",
+    "biblehub_ruth = u'וַתֹּ֤אמֶר רוּת֙ אַל־תִּפְגְּעִי־בִ֔י לְעָזְבֵ֖ךְ לָשׁ֣וּב מֵאַחֲרָ֑יִךְ כִּ֠י אֶל־אֲשֶׁ֨ר תֵּלְכִ֜י אֵלֵ֗ךְ וּבַאֲשֶׁ֤ר תָּלִ֙ינִי֙ אָלִ֔ין עַמֵּ֣ךְ עַמִּ֔י וֵאלֹהַ֖יִךְ אֱלֹהָֽי׃'\n",
+    "biblehub_lst = biblehub_ruth.split()\n",
+    "print (\"zeroth item = {0}\".format(biblehub_lst[0]))\n",
+    "for token in  biblehub_lst:\n",
+    "    print(token)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "collapsed": true,
+    "slideshow": {
+     "slide_type": "skip"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "#bible_hub consonants only\n",
+    "cbible_hub_ruth = u'ותאמר רות אל־תפגעי־בי לעזבך לשוב מאחריך כי אל־אשר תלכי אלך ובאשר תליני אלין עמך עמי ואלהיך אלהי'\n",
+    "cbible_hub_ruth_lst = cbible_hub_ruth.split()\n",
+    "for token in  cbible_hub_ruth.split():\n",
+    "    print(token)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "# German Bible"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "collapsed": true,
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "וַיְהִ֗י\n",
+      "בִּימֵי֙\n",
+      "שְׁפֹ֣ט\n",
+      "הַשֹּׁפְטִ֔ים\n",
+      "וַיְהִ֥י\n",
+      "רָעָ֖ב\n",
+      "בָּאָ֑רֶץ\n",
+      "וַיֵּ֨לֶךְ\n",
+      "אִ֜ישׁ\n",
+      "מִבֵּ֧ית\n",
+      "לֶ֣חֶם\n",
+      "יְהוּדָ֗ה\n",
+      "לָגוּר֙\n"
+     ]
+    }
+   ],
+   "source": [
+    "#https://www.academic-bible.com\n",
+    "\n",
+    "ruth_de = u'וַיְהִ֗י בִּימֵי֙ שְׁפֹ֣ט הַשֹּׁפְטִ֔ים וַיְהִ֥י רָעָ֖ב בָּאָ֑רֶץ וַיֵּ֨לֶךְ אִ֜ישׁ מִבֵּ֧ית לֶ֣חֶם יְהוּדָ֗ה לָגוּר֙'\n",
+    "for token in  ruth_de.split():\n",
+    "    print(token)"
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Slideshow",
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.5.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}

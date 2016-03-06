@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Socket HTTP Server, Step 1 &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Socket Echo Server &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="next" title="Socket HTTP Server, Step 2" href="http_server_2.html" />
-    <link rel="prev" title="Socket Echo Server" href="http_server_0_echo.html" />
+    <link rel="next" title="Socket HTTP Server, Step 1" href="http_server_1.html" />
+    <link rel="prev" title="Acquire a Heroku Account" href="heroku_account.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -50,10 +50,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="http_server_2.html" title="Socket HTTP Server, Step 2"
+          <a href="http_server_1.html" title="Socket HTTP Server, Step 1"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="http_server_0_echo.html" title="Socket Echo Server"
+          <a href="heroku_account.html" title="Acquire a Heroku Account"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
@@ -178,43 +178,68 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="socket-http-server-step-1">
-<h1>Socket HTTP Server, Step 1<a class="headerlink" href="#socket-http-server-step-1" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-socket-http-server-step-1"></span><p>Building on the foundation of your Echo Server, you will begin to implement a
-simple HTTP server.</p>
+<div class="section" id="socket-echo-server">
+<h1>Socket Echo Server<a class="headerlink" href="#socket-echo-server" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-socket-echo-server"></span><p>In this assignment you will build an echo server using Python sockets.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Use your &#8216;http-server&#8217; repository in GitHub for this work.
-Make a branch &#8220;step1&#8221; from master to do your work for this assignment.</p>
+<p>Create a new repository called &#8216;http-server&#8217; in GitHub for this work.
+Make sure it contains an appropriate license and .gitignore file.
+Make a branch &#8220;echo&#8221; from master to do your work for this assignment.</p>
+<p>Create two new python modules in your repository, <code class="docutils literal"><span class="pre">client.py</span></code> and <code class="docutils literal"><span class="pre">server.py</span></code>.
+In addition, create a <code class="docutils literal"><span class="pre">test_servers.py</span></code> file to contain your tests.</p>
+<p>Add a <code class="docutils literal"><span class="pre">setup.py</span></code> file so you can install your package.
+And a <code class="docutils literal"><span class="pre">tox.ini</span></code> file so you can run your tests in both Python 2.7 and Python 3.5</p>
+<div class="section" id="the-client">
+<h3>The Client<a class="headerlink" href="#the-client" title="Permalink to this headline">¶</a></h3>
+<p>In your <code class="docutils literal"><span class="pre">client.py</span></code> file, create a function <code class="docutils literal"><span class="pre">client</span></code> which takes one required parameter, <code class="docutils literal"><span class="pre">message</span></code>.
+When called, the <code class="docutils literal"><span class="pre">client</span></code> function should open a socket connection to the server.
+It should send the message passed as an argument to the server through the socket.
+It should accumulate any reply sent by the server into a string.
+Once the full reply is received, it should close the socket and return the message.</p>
+<p>This file should contain an <code class="docutils literal"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code> block so it can be run as a script.
+This script should be called from the command line with a single argument which is the message to send.
+The script should print the reply from the server to the terminal where the script was run:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ python client.py <span class="s2">&quot;this is the message to send&quot;</span>
+this is the reply received.
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-server">
+<h3>The Server<a class="headerlink" href="#the-server" title="Permalink to this headline">¶</a></h3>
+<p>In your <code class="docutils literal"><span class="pre">server.py</span></code> file, create a function <code class="docutils literal"><span class="pre">server</span></code> which takes no arguments.
+When run, this function should start a server running.
+The server should continue running, sending responses for any messages it receives.
+When the user presses <code class="docutils literal"><span class="pre">ctrl-d</span></code> (the keyboard interrupt), the server should cleanly exit.
+All open sockets should be closed.</p>
+<p>The server should accept incoming connections.
+It should receive messages sent from those connections and <em>echo them back</em> exactly as received.
+Once an entire message has been received and echoed, the connection to the client should be closed.</p>
+<p>The server <em>must remain running and accepting connections</em>.</p>
+</div>
+<div class="section" id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h3>
+<p>The tests you write for this work may be considered <em>functional</em> tests, as opposed to <em>unit</em> tests.
+They will test the system, rather than either individual function.
+Your tests should use the client function from <code class="docutils literal"><span class="pre">client.py</span></code> to send test messages and return the replies sent by the server.
+They should assert that the message sent is identical to the reply received.</p>
+<p>The following conditions should be tested:</p>
 <ul class="simple">
-<li>Implement a function called response_ok that will return a well formed HTTP
-&#8220;200 OK&#8221; response as a byte string suitable for transmission through a
-socket. This method should accept no arguments and return a fully-formed
-proper response.</li>
-<li>Implement a function called response_error that will return a well formed
-HTTP &#8220;500 Internal Server Error&#8221; response.</li>
-<li>Update the server loop you built for the echo server so that it:<ul>
-<li>accumulates an incoming request into a variable</li>
-<li>&#8220;logs&#8221; that request by printing it to stdout</li>
-<li>returns a well-formed HTTP 200 response to the client.</li>
+<li>messages shorter than one <em>buffer</em> in length</li>
+<li>messages longer than several buffers in length</li>
+<li>messages that are an exact multiple of one buffer in length</li>
+<li>messages containing non-ascii characters</li>
 </ul>
-</li>
-</ul>
-<p>As usual, write unit tests demonstrating each function you write before you
-implement the code to achieve it.  When you&#8217;ve finished the server loop, write
-a functional test that demonstrates that it works correctly.</p>
-<p>Include a solid README file with a description of the server you&#8217;re building.
-Include any sources or collaborations you used.</p>
+</div>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When you are done and your tests are all passing, push your work to GitHub and
-submit a pull request from the step1 branch back to master.  Copy the URL of
-the pull request.  After you&#8217;ve created the pull request you may merge the
-step1 branch back to master.</p>
-<p>Submit the URL of your pull request.</p>
+<p>When you are finished implementing your server and client and all your tests are passing both in Python 2 and Python 3, push your changes to the <em>echo</em> branch to github.
+Open a pull request from the <em>echo</em> branch to your master.
+Paste the URL of this pull request as your submission.</p>
 <p>As with every primary submission, use the Comments feature for this submission
 to add questions, comments and reflections on the work you have done so far.</p>
+<p>Once you have submitted your assignment, you may merge your <em>echo</em> branch back to master in preparation for the next step in this assignment series.</p>
 </div>
 </div>
 
@@ -226,19 +251,24 @@ to add questions, comments and reflections on the work you have done so far.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Socket HTTP Server, Step 1</a><ul>
-<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#">Socket Echo Server</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#the-client">The Client</a></li>
+<li><a class="reference internal" href="#the-server">The Server</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="http_server_0_echo.html"
-                        title="previous chapter">Socket Echo Server</a></p>
+  <p class="topless"><a href="heroku_account.html"
+                        title="previous chapter">Acquire a Heroku Account</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="http_server_2.html"
-                        title="next chapter">Socket HTTP Server, Step 2</a></p>
+  <p class="topless"><a href="http_server_1.html"
+                        title="next chapter">Socket HTTP Server, Step 1</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -263,10 +293,10 @@ to add questions, comments and reflections on the work you have done so far.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="http_server_2.html" title="Socket HTTP Server, Step 2"
+          <a href="http_server_1.html" title="Socket HTTP Server, Step 1"
              >next</a> |</li>
         <li class="right" >
-          <a href="http_server_0_echo.html" title="Socket Echo Server"
+          <a href="heroku_account.html" title="Acquire a Heroku Account"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>

@@ -1,0 +1,496 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Data Structures: An Overview &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="next" title="Introduction to Web Frameworks" href="frameworks_and_wsgi.html" />
+    <link rel="prev" title="Getting Data In" href="cgi_wsgi.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="frameworks_and_wsgi.html" title="Introduction to Web Frameworks"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cgi_wsgi.html" title="Getting Data In"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<p><a class="reference external" href="https://gettingreal.37signals.com/ch02_Whats_Your_Problem.php">https://gettingreal.37signals.com/ch02_Whats_Your_Problem.php</a></p>
+<div class="section" id="Data-Structures:-An-Overview">
+<h1>Data Structures: An Overview<a class="headerlink" href="#Data-Structures:-An-Overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Motivation">
+<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="History">
+<h3>History<a class="headerlink" href="#History" title="Permalink to this headline">¶</a></h3>
+<p>Babbage designed the Difference Machine:
+<a class="reference external" href="https://www.youtube.com/watch?v=be1EM3gQkAY">https://www.youtube.com/watch?v=be1EM3gQkAY</a> to build error-free
+mathmatical tables. He automated the process of creating printing
+plates, thereby reducing the typesetting errors of the time.</p>
+<p>He then generalized the Difference Machine to the first (if it had been
+built) Turing-complete computer. It has an arithmetic logic, memory, and
+control flow (branching &amp; loops).</p>
+<p>Ada Lovelace wrote the first algorithm to compute the Bernoulli (Kowa)
+sequence for the Babbage Analytical Engine.</p>
+<p><em>&#8220;As soon as an Analytical Engine exists, it will necessarily guide the
+future course of the science. Whenever any result is sought by its aid,
+the question will then arise—By what course of calculation can these
+results be arrived at by the machine in the shortest time?&#8221;</em></p>
+<blockquote>
+<div>Charles Babbage Passages from the Life of a Philosopher</div></blockquote>
+<p>Babbage&#8217;s design was revolutionary in that the computer could store and
+then retrieve data. Then it was &#8220;pegs in a barrel&#8221; &#8211;like a music box.
+Today it it&#8217;s groups of bits (GOBs).</p>
+</div>
+<div class="section" id="Storing-and-Fetching">
+<h3>Storing and Fetching<a class="headerlink" href="#Storing-and-Fetching" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>The Analytical Engine only used fixed point arithmetic (column width
+of 50).</li>
+<li>Data Structures improve the storing and/or fetching of GOBS.</li>
+<li>Data Structures organize GOBs</li>
+</ul>
+</div>
+<div class="section" id="Collections">
+<h3>Collections<a class="headerlink" href="#Collections" title="Permalink to this headline">¶</a></h3>
+<p>GOBs are organized into data structures.</p>
+<p>These are then grouped into data types:</p>
+<ul class="simple">
+<li>Primitive</li>
+<li>Composite</li>
+<li>Abstract Data Types (ADT)</li>
+</ul>
+<div class="section" id="Primitive">
+<h4>Primitive<a class="headerlink" href="#Primitive" title="Permalink to this headline">¶</a></h4>
+<table><div class="highlight-python"><div class="highlight"><pre>&lt;thead&gt;
+    &lt;tr&gt;
+        &lt;th&gt;type&lt;/th&gt;
+        &lt;th&gt;values&lt;/th&gt;
+        &lt;th&gt;implementation&lt;/th&gt;
+    &lt;/tr&gt;
+&lt;/thead&gt;
+&lt;body&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Boolean&lt;/td&gt;
+        &lt;td&gt;true or false&lt;/td&gt;
+        &lt;td&gt;bool&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Character&lt;/td&gt;
+        &lt;td&gt;grapheme or unicode point&lt;/td&gt;
+        &lt;td&gt;s[n] or ord(s[n])&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Floating Point&lt;/td&gt;
+        &lt;td&gt;single-precision real numbers&lt;/td&gt;
+        &lt;td&gt;--&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Double precision&lt;/td&gt;
+        &lt;td&gt;wider float&lt;/td&gt;
+        &lt;td&gt;float&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Integer&lt;/td&gt;
+        &lt;td&gt;integral or fixed-precision values&lt;/td&gt;
+        &lt;td&gt;int&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Enumeration&lt;/td&gt;
+        &lt;td&gt;small set of uniquely-name values&lt;/td&gt;
+        &lt;td&gt;NamedTuple&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/body&gt;
+</pre></div>
+</div>
+</table></div>
+<div class="section" id="Composite">
+<h4>Composite<a class="headerlink" href="#Composite" title="Permalink to this headline">¶</a></h4>
+<table><div class="highlight-python"><div class="highlight"><pre>&lt;thead&gt;
+    &lt;tr&gt;
+        &lt;th&gt;type&lt;/th&gt;
+        &lt;th&gt;definition&lt;/th&gt;
+        &lt;th&gt;implementation&lt;/th&gt;
+    &lt;/tr&gt;
+&lt;/thead&gt;
+&lt;body&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Array&lt;/td&gt;
+        &lt;td&gt;true or false&lt;/td&gt;
+        &lt;td&gt;bool&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Record&lt;/td&gt;
+        &lt;td&gt;value containing other values --static &amp; fixed&lt;/td&gt;
+        &lt;td&gt;tuple&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Union&lt;/td&gt;
+        &lt;td&gt;specifies primitive values&lt;/td&gt;
+        &lt;td&gt;--&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Union&lt;/td&gt;
+        &lt;td&gt;specifies primitive values&lt;/td&gt;
+        &lt;td&gt;--&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/body&gt;
+</pre></div>
+</div>
+</table></div>
+<div class="section" id="Abstract-Data-Types">
+<h4>Abstract Data Types<a class="headerlink" href="#Abstract-Data-Types" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Collection (Container)</li>
+<li>List</li>
+<li>Stack</li>
+<li>Queue</li>
+<li>Deque (Double-ended queue)</li>
+<li>Priority queue</li>
+<li>Associative array</li>
+<li>Multimap</li>
+<li>Multiset</li>
+<li>Set</li>
+<li>Tree</li>
+<li>Graph</li>
+</ul>
+<p>For this class:</p>
+<p>We will <em>consume</em> primitive and composite data types.</p>
+<ul class="simple">
+<li>These are encapsulated quite nicely by Python.</li>
+<li>We care about what they do</li>
+</ul>
+<p>We will <em>implement</em> ADT</p>
+<ul class="simple">
+<li>We care about performance</li>
+<li>We look at their attributes and operations.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="Definition">
+<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
+<p>Abstract Data Type:</p>
+<p>A set of data values and associated operations that are precisely
+specified independent of any particular implementation.</p>
+<p>Note: Since the data values and operations are defined with mathematical
+precision, rather than as an implementation in a computer language, we
+may reason about effects of the operations, relations to other abstract
+data types, whether a program implements the data type, etc.</p>
+<p>Paul E. Black, &#8220;abstract data type&#8221;, in Dictionary of Algorithms and
+Data Structures [online], Vreda Pieterse and Paul E. Black, eds. 10
+February 2005. (accessed TODAY) Available from:
+<a class="reference external" href="http://www.nist.gov/dads/HTML/abstractDataType.html">http://www.nist.gov/dads/HTML/abstractDataType.html</a></p>
+<div class="line-block">
+<div class="line">ADT is a mathmatical model of a data structure.</div>
+<div class="line">* A <em>developer</em> implements the data structure. * A <em>user</em> expects
+certain behaviors from the implementation.</div>
+</div>
+</div>
+<div class="section" id="Attributes">
+<h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>index, key</li>
+<li>node</li>
+<li>edge</li>
+<li>length, size</li>
+<li>value, cargo, information</li>
+<li>next</li>
+<li>previous</li>
+<li>leaf</li>
+<li>head</li>
+<li>tail</li>
+</ul>
+</div>
+<div class="section" id="Operations">
+<h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
+<table><div class="highlight-python"><div class="highlight"><pre>&lt;thead&gt;
+    &lt;tr&gt;
+        &lt;th&gt;operation&lt;/th&gt;
+        &lt;th&gt;definition&lt;/th&gt;
+        &lt;th&gt;aka&lt;/th&gt;
+    &lt;/tr&gt;
+&lt;/thead&gt;
+</pre></div>
+</div>
+<body><div class="highlight-python"><div class="highlight"><pre>&lt;tr&gt;
+    &lt;td&gt;SEARCH(S, k)&lt;/td&gt;
+    &lt;td&gt;A query that, given a set S and a key value k, returns a pointer x to an element in S such that x.key = k, or NIL if no such element belongs to S.&lt;/td&gt;
+    &lt;td&gt;traverse, walk&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;INSERT(S, x)&lt;/td&gt;
+    &lt;td&gt;A modifying operation that augments the set S with the element pointed to by x. We usually assume that any attributes in element x needed by the set implementation have already been initialized.&lt;/td&gt;
+    &lt;td&gt;push(head), add(tail)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;DELETE(S, x)&lt;/td&gt;
+    &lt;td&gt;A modifying operation that, given a pointer x to an element in the set S, removes x from S. (Note that this operation takes a pointer to an element x, not a key value.)&lt;/td&gt;
+    &lt;td&gt;remove, pop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;MINIMUM(S)&lt;/td&gt;
+    &lt;td&gt;A query on a totally ordered set S that returns a pointer to the element of S with the smallest key.&lt;/td&gt;
+    &lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;MAXIMUM(S)&lt;/td&gt;
+    &lt;td&gt;A query on a totally ordered set S that returns a pointer to the element of S with the largest key.&lt;/td&gt;
+    &lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;SUCCESSOR(S, x)&lt;/td&gt;
+    &lt;td&gt;A query that, given an element x whose key is from a totally ordered set S, returns a pointer to the next larger element in S, or NIL if x is the maximumelement.&lt;/td&gt;
+    &lt;td&gt;next&lt;/td&gt;
+&lt;/tr&gt;
+    &lt;td&gt;PREDECESSOR(S, x)&lt;/td&gt;
+    &lt;td&gt;A query that, given an element x whose key is from a totally ordered set S,returns a pointer to the next smaller element in S, or NIL if x is the minimum element.&lt;/td&gt;
+    &lt;td&gt;previous, prior&lt;/td&gt;
+</pre></div>
+</div>
+</body></table><div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [1]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Data Structures: An Overview</a><ul>
+<li><a class="reference internal" href="#Motivation">Motivation</a><ul>
+<li><a class="reference internal" href="#History">History</a></li>
+<li><a class="reference internal" href="#Storing-and-Fetching">Storing and Fetching</a></li>
+<li><a class="reference internal" href="#Collections">Collections</a><ul>
+<li><a class="reference internal" href="#Primitive">Primitive</a></li>
+<li><a class="reference internal" href="#Composite">Composite</a></li>
+<li><a class="reference internal" href="#Abstract-Data-Types">Abstract Data Types</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Definition">Definition</a></li>
+<li><a class="reference internal" href="#Attributes">Attributes</a></li>
+<li><a class="reference internal" href="#Operations">Operations</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cgi_wsgi.html"
+                        title="previous chapter">Getting Data In</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="frameworks_and_wsgi.html"
+                        title="next chapter">Introduction to Web Frameworks</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="frameworks_and_wsgi.html" title="Introduction to Web Frameworks"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cgi_wsgi.html" title="Getting Data In"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

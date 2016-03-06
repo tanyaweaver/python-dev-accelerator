@@ -16,6 +16,8 @@ Objectives
 Readings
 ========
 
+* `The Internet: HTTP and HTML <https://www.youtube.com/watch?v=kBXQZMmiA4s>`_
+
 Review
 ======
 
