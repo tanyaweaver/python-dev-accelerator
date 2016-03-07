@@ -6,38 +6,39 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Wednesday &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Queue &mdash; Python Dev Accelerator 2.0 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
+        URL_ROOT:    '../',
         VERSION:     '2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
-    <link rel="next" title="Linked List" href="../../lectures/doubly_linked_list.html" />
-    <link rel="prev" title="Introduction To Python: Part 5" href="../../lectures/intro_to_python_5_classes.html" />
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="401 Python: Lecture Notes" href="index.html" />
+    <link rel="next" title="Extracting Data from the Web" href="scraping.html" />
+    <link rel="prev" title="Distributing Python Packages" href="python_packages.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
-<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
 
   </head>
   <body role="document">
 <div class="header">
   <div class="logo">
-    <a href="../../index.html">
-      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
       <p>Code Fellows</p>
     </a>
   </div>
@@ -47,15 +48,16 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../lectures/doubly_linked_list.html" title="Linked List"
+          <a href="scraping.html" title="Extracting Data from the Web"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/intro_to_python_5_classes.html" title="Introduction To Python: Part 5"
+          <a href="python_packages.html" title="Distributing Python Packages"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Lecture Notes</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -178,46 +180,35 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="wednesday">
-<h1>Wednesday<a class="headerlink" href="#wednesday" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-course-presentations"></span><div class="section" id="objectives">
-<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Queue">
+<h1>Queue<a class="headerlink" href="#Queue" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Motivation">
+<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Gain a deeper understanding of Class programming in Python</li>
-<li>Discover the qualities of the doubly linked list</li>
-<li>Deepen our implementation of the HTTP server</li>
+<li>Sequential</li>
+<li>Limited Access</li>
+<li>F.I.F.O.</li>
 </ul>
 </div>
-<div class="section" id="readings">
-<h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Definition">
+<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
+<p>A queue is a data structure where elements are inserted into and removed
+from a container using the first-in-first-out principle.</p>
 </div>
-<div class="section" id="review">
-<h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="concepts">
-<h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../lectures/doubly_linked_list.html">Linked List</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/doubly_linked_list.html#Motivation">Motivation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/doubly_linked_list.html#Definition">Definition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/doubly_linked_list.html#Attributes">Attributes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/doubly_linked_list.html#Operations">Operations</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="demo">
-<h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="assignments">
-<h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Attributes">
+<h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../../assignments/doubly_linked_list.html"><em>Implement a Doubly-Linked List in Python</em></a></li>
-<li><a class="reference internal" href="../../assignments/http_server_2.html"><em>Socket HTTP Server, Step 2</em></a></li>
-<li><a class="reference internal" href="../../assignments/hacker_news_account.html"><em>Sign Up for a Hacker News Account</em></a></li>
-<li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
+<li>head</li>
+<li>size</li>
+<li>is_empty</li>
+</ul>
+</div>
+<div class="section" id="Operations">
+<h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>enqueue()</li>
+<li>dequeue()</li>
+<li>clear()</li>
 </ul>
 </div>
 </div>
@@ -228,28 +219,26 @@ div.nboutput  > :nth-child(2).stderr {
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Wednesday</a><ul>
-<li><a class="reference internal" href="#objectives">Objectives</a></li>
-<li><a class="reference internal" href="#readings">Readings</a></li>
-<li><a class="reference internal" href="#review">Review</a></li>
-<li><a class="reference internal" href="#concepts">Concepts</a></li>
-<li><a class="reference internal" href="#demo">Demo</a></li>
-<li><a class="reference internal" href="#assignments">Assignments</a></li>
+<li><a class="reference internal" href="#">Queue</a><ul>
+<li><a class="reference internal" href="#Motivation">Motivation</a></li>
+<li><a class="reference internal" href="#Definition">Definition</a></li>
+<li><a class="reference internal" href="#Attributes">Attributes</a></li>
+<li><a class="reference internal" href="#Operations">Operations</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../../lectures/intro_to_python_5_classes.html"
-                        title="previous chapter">Introduction To Python: Part 5</a></p>
+  <p class="topless"><a href="python_packages.html"
+                        title="previous chapter">Distributing Python Packages</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../../lectures/doubly_linked_list.html"
-                        title="next chapter">Linked List</a></p>
+  <p class="topless"><a href="scraping.html"
+                        title="next chapter">Extracting Data from the Web</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -268,15 +257,16 @@ div.nboutput  > :nth-child(2).stderr {
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../lectures/doubly_linked_list.html" title="Linked List"
+          <a href="scraping.html" title="Extracting Data from the Web"
              >next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/intro_to_python_5_classes.html" title="Introduction To Python: Part 5"
+          <a href="python_packages.html" title="Distributing Python Packages"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Lecture Notes</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
