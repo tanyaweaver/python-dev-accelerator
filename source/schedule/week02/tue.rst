@@ -30,11 +30,13 @@ Concepts
    /lectures/protocols
    /lectures/http
    /lectures/stack
+   /lectures/intro_to_python_5_classes
 
 Demo
 ====
 
-IMAP protocol interaction
+* IMAP protocol interaction
+* Class programming basics
 
 Assignments
 ===========
