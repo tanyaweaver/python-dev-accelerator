@@ -24,8 +24,17 @@ Review
 Concepts
 ========
 
+.. toctree::
+   :maxdepth: 2
+
+   /lectures/protocols
+   /lectures/http
+   /lectures/stack
+
 Demo
 ====
+
+IMAP protocol interaction
 
 Assignments
 ===========
