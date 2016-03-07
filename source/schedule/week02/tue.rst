@@ -13,6 +13,12 @@ Tuesday
 Objectives
 ==========
 
+* Learn about the protocols machines use to communicate with each-other
+* Learn to use a Python library to interact with an IMAP server
+* Learn the basics of the HTTP protocol
+* Discover the qualities of a stack
+* Learn the absolute basics of Class programming in Python
+
 Readings
 ========
 

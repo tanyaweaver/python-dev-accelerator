@@ -13,6 +13,9 @@ Thursday
 Objectives
 ==========
 
+* Learn a very small bit about concurrent and asynchronous programming in Python
+* Discover the qualities of the queue
+
 Readings
 ========
 
@@ -21,6 +24,12 @@ Review
 
 Concepts
 ========
+
+.. toctree::
+   :maxdepth: 2
+
+   /lectures/queue
+   /lectures/async
 
 Demo
 ====

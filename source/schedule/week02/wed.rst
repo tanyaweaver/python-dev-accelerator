@@ -13,6 +13,10 @@ Wednesday
 Objectives
 ==========
 
+* Gain a deeper understanding of Class programming in Python
+* Discover the qualities of the doubly linked list
+* Deepen our implementation of the HTTP server
+
 Readings
 ========
 
@@ -21,6 +25,11 @@ Review
 
 Concepts
 ========
+
+.. toctree::
+   :maxdepth: 2
+
+   /lectures/doubly_linked_list
 
 Demo
 ====

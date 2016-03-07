@@ -13,6 +13,12 @@ Monday
 Objectives
 ==========
 
+* Learn about the TCP/IP stack and the layers of activity it represents
+* Learn how to use sockets to send messages between machines
+* Learn about the rationale behind creating data structures
+* Discover the qualities of an array
+* Discover the qualities of a singly linked list
+
 Readings
 ========
 
