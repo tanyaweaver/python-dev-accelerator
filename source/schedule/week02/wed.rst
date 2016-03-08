@@ -20,6 +20,9 @@ Objectives
 Readings
 ========
 
+* `James Knight: Python's Super Considered Harmful <https://fuhm.net/super-harmful/>`_
+* `Raymond Hettinger: Super is Super <https://www.youtube.com/watch?v=EiOglTERPEo>`_
+
 Review
 ======
 
@@ -30,6 +33,7 @@ Concepts
    :maxdepth: 2
 
    /lectures/doubly_linked_list
+.. /lectures/intro_to_python_6_advanced_classes
 
 Demo
 ====

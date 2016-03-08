@@ -19,6 +19,8 @@ Objectives
 Readings
 ========
 
+* `Jack Diedrich: Stop Writing Classes <https://www.youtube.com/watch?v=o9pEzgHorH0>`_
+
 Review
 ======
 
