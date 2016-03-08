@@ -17,12 +17,13 @@ Objectives
 * Learn to use a Python library to interact with an IMAP server
 * Learn the basics of the HTTP protocol
 * Discover the qualities of a stack
-* Learn the absolute basics of Class programming in Python
+* Extend our class knowledge to subclassing and composition
 
 Readings
 ========
 
 * `The Internet: HTTP and HTML <https://www.youtube.com/watch?v=kBXQZMmiA4s>`_
+* `Raymond Hettinger: The Art of Subclassing <https://www.youtube.com/watch?v=miGolgp9xq8>`_
 
 Review
 ======
@@ -36,7 +37,7 @@ Concepts
    /lectures/protocols
    /lectures/http
    /lectures/stack
-   /lectures/intro_to_python_5_classes
+   /lectures/inheritance_v_composition
 
 Demo
 ====

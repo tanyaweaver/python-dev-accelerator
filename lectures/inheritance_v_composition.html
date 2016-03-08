@@ -1,0 +1,511 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python Classes: Inheritance v. Composition &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="Tuesday" href="../schedule/week02/tue.html" />
+    <link rel="next" title="Wednesday" href="../schedule/week02/wed.html" />
+    <link rel="prev" title="Stack" href="stack.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../schedule/week02/wed.html" title="Wednesday"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="stack.html" title="Stack"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week02/tue.html" accesskey="U">Tuesday</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="python-classes-inheritance-v-composition">
+<h1>Python Classes: Inheritance v. Composition<a class="headerlink" href="#python-classes-inheritance-v-composition" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-inheritance-v-composition"></span><p>In this lesson we will talk about how to build classes based on existing classes.
+There are two approaches to doing this, <a class="reference internal" href="#inheritance-description"><span>inheritance</span></a> and composition.
+Each has its strengths and weaknesses.
+We&#8217;ll look at each here.</p>
+<div class="section" id="inheritance">
+<span id="inheritance-description"></span><h2>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this headline">¶</a></h2>
+<p>In object-oriented programming (OOP), inheritance is a way to reuse code of existing objects.
+It&#8217;s good when you want to establish a subtype from an existing object.
+Objects are defined by classes, classes can inherit attributes and behavior from pre-existing classes.
+The resulting classes are known as <a class="reference external" href="http://en.wikipedia.org/wiki/Inheritance_%28object-oriented_programming%29">derived classes or subclasses</a>.</p>
+<p>A subclass &#8220;inherits&#8221; all the attributes (methods, etc) of the parent class.
+We can create new attributes or methods to <em>add</em> to the behavior of the parent
+We can change (&#8220;override&#8221;) some or all of the attributes or methods to <em>change</em> the behavior.
+We can also <em>extend</em> the behavior of the parent by using the original methods and adding a bit more.</p>
+<p>We indicate that a new class should inherit from an existing class by placing the name of the existing class in the list of base classes.
+The class(es) named in the list of base classes must be in the current namespace when the class statement is evaluated.
+For compatibility across Python 2 and 3, any new classes we create wil always inherit from <em>at least</em> <code class="docutils literal"><span class="pre">object</span></code>.
+This basic class sits at the top of the Python data model, and is in the <code class="docutils literal"><span class="pre">__builtin__</span></code> namespace.</p>
+<p>This is a pseudocode model for the simplest subclass in Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Subclass</span><span class="p">(</span><span class="n">Superclass</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">Subclass</span></code>  now has exactly the same behavior as <code class="docutils literal"><span class="pre">Superclass</span></code></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When we put <code class="docutils literal"><span class="pre">object</span></code> in the base class list, it means we are inheriting from object &#8211; getting the core functionality of all objects.</p>
+</div>
+<span class="admonition-inheritance"></span><div class="section" id="overriding-attributes">
+<h3>Overriding attributes<a class="headerlink" href="#overriding-attributes" title="Permalink to this headline">¶</a></h3>
+<p>One of the core purposes of a subclass is to <em>change</em> the behavior of the parent class in some useful way.
+We call this <em>overriding</em> the inherited behavior.
+Overriding attributes of a parent class in Python is as simple as creating a new attribute with the same name:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+
+<span class="k">class</span> <span class="nc">NewCircle</span><span class="p">(</span><span class="n">Circle</span><span class="p">):</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span>
+
+<span class="n">nc</span> <span class="o">=</span> <span class="n">NewCircle</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nc</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
+<span class="n">blue</span>
+</pre></div>
+</div>
+<p>Any instances of the new class will have the <code class="docutils literal"><span class="pre">blue</span></code> color.
+Instances of the original class will have the <code class="docutils literal"><span class="pre">red</span></code> color.</p>
+<span class="admonition-overriding-attributes"></span></div>
+<div class="section" id="overriding-methods">
+<h3>Overriding methods<a class="headerlink" href="#overriding-methods" title="Permalink to this headline">¶</a></h3>
+<p>Overriding methods works in exactly the same way (remember, a method <em>is</em> an attribute in python).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="o">...</span>
+    <span class="k">def</span> <span class="nf">grow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;grows the circle&#39;s diameter by factor&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diameter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">diameter</span> <span class="o">*</span> <span class="n">factor</span>
+<span class="o">...</span>
+
+<span class="k">class</span> <span class="nc">NewCircle</span><span class="p">(</span><span class="n">Circle</span><span class="p">):</span>
+<span class="o">...</span>
+    <span class="k">def</span> <span class="nf">grow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;grows the area by factor...&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diameter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">diameter</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Instances of the new circle class will have the new behavior for the <code class="docutils literal"><span class="pre">grow</span></code> method.
+Instances of the existing class will continue to have the old behavior.</p>
+<span class="admonition-overriding-methods"></span><p>When overriding behavior for a subclass, remember that in good OO programming a subclass should be substantially similar to its parents.
+If you have a system which uses the parent class, you should be able to use the subclass in all the same places, and in all the same ways.
+This is known as the &#8220;Liskov Substitution Principle&#8221;.
+The authors of <code class="docutils literal"><span class="pre">Think</span> <span class="pre">Python</span></code> put it this way:</p>
+<div class="highlight-python"><div class="highlight"><pre>whenever you override a method, the interface of the new method should be
+the same as the old.  It should take the same parameters, return the same
+type, and obey the same preconditions and postconditions.
+
+If you obey this rule, you will find that any function designed to work
+with an instance of a superclass, like a Deck, will also work with
+instances of subclasses like a Hand or PokerHand.  If you violate this
+rule, your code will collapse like (sorry) a house of cards.
+
+-- [ThinkPython 18.10]
+</pre></div>
+</div>
+<span class="admonition-liskov-substitution-principle"></span></div>
+<div class="section" id="extending-methods">
+<h3>Extending Methods<a class="headerlink" href="#extending-methods" title="Permalink to this headline">¶</a></h3>
+<p>Wanting or needing to override <code class="docutils literal"><span class="pre">__init__</span></code> is very common.
+After all, we are trying to modify how the parent class works.
+However, we often also want to do some or all of the things that the parent class does with <code class="docutils literal"><span class="pre">__init__</span></code>.
+We really want to <em>extend</em> the functionality of the parent class <code class="docutils literal"><span class="pre">__init__</span></code>.
+Think &#8220;do everything my parent does, plus this other stuff&#8221;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diameter</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">diameter</span> <span class="o">=</span> <span class="n">diameter</span>
+<span class="o">...</span>
+<span class="k">class</span> <span class="nc">CircleR</span><span class="p">(</span><span class="n">Circle</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="n">diameter</span> <span class="o">=</span> <span class="n">radius</span><span class="o">*</span><span class="mi">2</span>
+        <span class="n">Circle</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diameter</span><span class="p">)</span>
+</pre></div>
+</div>
+<span class="admonition-extending"></span><p>You can do the same thing with the any methods of the parent class.
+There isn&#8217;t anything special about the <code class="docutils literal"><span class="pre">__init__</span></code> method (except that it is called automatically).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="o">...</span>
+    <span class="k">def</span> <span class="nf">get_area</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diameter</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">diameter</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+
+<span class="k">class</span> <span class="nc">CircleR2</span><span class="p">(</span><span class="n">Circle</span><span class="p">):</span>
+<span class="o">...</span>
+    <span class="k">def</span> <span class="nf">get_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Circle</span><span class="o">.</span><span class="n">get_area</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="attribute-resolution-order">
+<h3>Attribute resolution order<a class="headerlink" href="#attribute-resolution-order" title="Permalink to this headline">¶</a></h3>
+<p>We have discussed how Python looks up attributes of a class instance.
+It starts in the namespace of the instance, and then looks in the namespace of the class.
+What happens when your class is a subclass?
+If the name is not found in the namespace of our instance, or in the class, then the search continues in the parent class, and so on.</p>
+<ul class="simple">
+<li>Is it an instance attribute?</li>
+<li>Is it a class attribute?</li>
+<li>Is it a superclass attribute?</li>
+<li>Is it a super-superclass attribute?</li>
+<li>...</li>
+</ul>
+<span class="admonition-attribute-resolution"></span><p>The process of looking up attributes of a class in an inheritance hierarchy seems relatively straightforward.
+But Python also supports multiple inheritance (two or more names in the base class list).
+What happens then?</p>
+<p>In Python 2.3 a new algorithm was added to Python to clarify this question.
+The clearest documentation of it can be found in <a class="reference external" href="https://www.python.org/download/releases/2.3/mro/">the release notes for 2.3</a>
+and in a blog post on the <a class="reference external" href="http://python-history.blogspot.com/2010/06/method-resolution-order.html">History of Python blog</a>.</p>
+<p>For our purposes, it is enough to say that if you have any questions, you can use the <code class="docutils literal"><span class="pre">Class.mro()</span></code> method of any new-style class to get the ordered list of its parent classes:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [37]: </span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span>
+<span class="gp">   ....:</span>
+<span class="gp">In [38]: </span><span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;B&#39;</span>
+<span class="gp">   ....:</span>
+<span class="gp">In [39]: </span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">A</span><span class="p">):</span> <span class="k">pass</span>
+<span class="gp">   ....:</span>
+<span class="gp">In [40]: </span><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span> <span class="k">pass</span>
+<span class="gp">   ....:</span>
+<span class="gp">In [41]: </span><span class="n">D</span><span class="o">.</span><span class="n">mro</span><span class="p">()</span>
+<span class="gh">Out[41]: </span><span class="go">[__main__.D, __main__.C, __main__.A, __main__.B, object]</span>
+<span class="gp">In [42]: </span><span class="n">D</span><span class="o">.</span><span class="n">x</span>
+<span class="gh">Out[42]: </span><span class="go">&#39;A&#39;</span>
+<span class="gp">In [43]: </span><span class="k">class</span> <span class="nc">E</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span> <span class="k">pass</span>
+<span class="gp">   ....:</span>
+<span class="gp">In [44]: </span><span class="n">E</span><span class="o">.</span><span class="n">mro</span><span class="p">()</span>
+<span class="gh">Out[44]: </span><span class="go">[__main__.E, __main__.B, __main__.C, __main__.A, object]</span>
+<span class="gp">In [45]: </span><span class="n">E</span><span class="o">.</span><span class="n">x</span>
+<span class="gh">Out[45]: </span><span class="go">&#39;B&#39;</span>
+</pre></div>
+</div>
+<span class="admonition-classobject-mro"></span><p>The acronym <code class="docutils literal"><span class="pre">MRO</span></code> stands for <code class="docutils literal"><span class="pre">Method</span> <span class="pre">Resolution</span> <span class="pre">Order</span></code>.
+Clearly, though, it applies to <em>all</em> attributes of a class, not just to methods.</p>
+<p>One final note, regarding the use of <code class="docutils literal"><span class="pre">object</span></code> in the base class list for a class.
+In Python 2, this is the way that we distinguish <em>new-style</em> classes from <em>old-style</em> classes.
+Old-style classes had a different way of dealing with attribute resolution.
+It faired poorly when used with multiple inheritance.
+New-style classes did better with this, especially after Python 2.3
+But old-style classes were still around.</p>
+<p>In Python 3, there is no such thing as old-style classes.
+<em>All</em> classes inherit from <code class="docutils literal"><span class="pre">object</span></code> whether specified or not.
+We provide the <code class="docutils literal"><span class="pre">object</span></code> base class to maintain compatibility between Python 2 and Python 3.</p>
+<span class="admonition-inherit-from-object"></span></div>
+<div class="section" id="when-to-subclass">
+<h3>When to Subclass<a class="headerlink" href="#when-to-subclass" title="Permalink to this headline">¶</a></h3>
+<p>Remember that we have stated previously that inheritance should be used primarily to promote code re-use.
+It&#8217;s really meant to be used when the thing you want to build <em>is a</em> variation on the parent class.</p>
+<p>If you want to be able to use your new class in all the places and in all the ways that you can use the parent, then it should inherit from the parent.
+But this is not the only possible choice.</p>
+</div>
+</div>
+<div class="section" id="composition">
+<h2>Composition<a class="headerlink" href="#composition" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s imagine that we have a class that needs to accumulate an arbitrary number of objects.
+A list can do that, so we should subclass list, right?</p>
+<p>The thing is, that in addition to being able to accumulate objects, lists support a number of other operations.
+We can iterate over the objects they contain.
+We can sort and reverse them.</p>
+<p>Does our new class need to do all those things?
+If the answer is no, then our new class might be better served by <em>containing</em> a list, rather than inheriting from it.</p>
+<p>Composition is another Object Oriented programming approach.
+We use it when we want to use some aspect of another class without promising <em>all</em> of the features of that other class.</p>
+<span class="admonition-composition"></span><p>Think about our example.
+Maybe accumulating objects is all we want this new class to do.
+No other functionality from a list is required.
+We can build our class to contain a list:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [46]: </span><span class="k">class</span> <span class="nc">Accumulator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">   ....: </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">   ....: </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_container</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">   ....: </span>    <span class="k">def</span> <span class="nf">accumulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="gp">   ....: </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="k">def</span> <span class="nf">stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">   ....: </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[:]</span>
+<span class="gp">   ....:</span>
+</pre></div>
+</div>
+<p>Now, we can build an instance of our <code class="docutils literal"><span class="pre">Accumulator</span></code> class and start accumulating stuff:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [47]: </span><span class="n">junk_drawer</span> <span class="o">=</span> <span class="n">Accumulator</span><span class="p">()</span>
+<span class="gp">In [48]: </span><span class="n">junk_drawer</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="s1">&#39;spatula&#39;</span><span class="p">)</span>
+<span class="gp">In [49]: </span><span class="n">junk_drawer</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="s1">&#39;cork screw&#39;</span><span class="p">)</span>
+<span class="gp">In [50]: </span><span class="n">junk_drawer</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="s1">&#39;old rubber band&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And every so often, we can even ask to see what&#8217;s in the junk drawer (though like any good junk drawer you can&#8217;t actually take anything out):</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [51]: </span><span class="n">junk_drawer</span><span class="o">.</span><span class="n">stuff</span><span class="p">()</span>
+<span class="gh">Out[51]: </span><span class="go">[&#39;spatula&#39;, &#39;cork screw&#39;, &#39;old rubber band&#39;]</span>
+
+<span class="gp">In [52]: </span><span class="n">junk_drawer</span><span class="o">.</span><span class="n">stuff</span><span class="p">()</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="gh">Out[52]: </span><span class="go">&#39;old rubber band&#39;</span>
+
+<span class="gp">In [53]: </span><span class="n">junk_drawer</span><span class="o">.</span><span class="n">stuff</span><span class="p">()</span>
+<span class="gh">Out[53]: </span><span class="go">[&#39;spatula&#39;, &#39;cork screw&#39;, &#39;old rubber band&#39;]</span>
+</pre></div>
+</div>
+<span class="admonition-composition"></span></div>
+<div class="section" id="type-based-dispatch">
+<h2>Type-Based Dispatch<a class="headerlink" href="#type-based-dispatch" title="Permalink to this headline">¶</a></h2>
+<p>One final word for this lesson about classes.
+We&#8217;ll occasionally see code that looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SomeClass</span><span class="p">):</span>
+    <span class="n">Do_something_with_other</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">Do_something_else</span>
+</pre></div>
+</div>
+<p>In general, it&#8217;s usually better to use &#8220;duck typing&#8221; (polymorphism).
+After all, if <code class="docutils literal"><span class="pre">other</span></code> has the right methods or attributes, then why would we care if it <em>is</em> an instance of <code class="docutils literal"><span class="pre">SomeClass</span></code>?
+But when it&#8217;s called for, you can use <code class="docutils literal"><span class="pre">isinstance</span></code>, or its cousin <code class="docutils literal"><span class="pre">issubclass</span></code>:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [54]: </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">junk_drawer</span><span class="p">,</span> <span class="n">Accumulator</span><span class="p">)</span>
+<span class="gh">Out[54]: </span><span class="go">True</span>
+
+<span class="gp">In [55]: </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">junk_drawer</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+<span class="gh">Out[55]: </span><span class="go">True</span>
+
+<span class="gp">In [56]: </span><span class="nb">issubclass</span><span class="p">(</span><span class="n">Accumulator</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+<span class="gh">Out[56]: </span><span class="go">True</span>
+
+<span class="gp">In [57]: </span><span class="nb">issubclass</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">Accumulator</span><span class="p">)</span>
+<span class="gh">Out[57]: </span><span class="go">False</span>
+</pre></div>
+</div>
+<span class="admonition-type-based-dispatch"></span></div>
+<div class="section" id="wrap-up">
+<h2>Wrap Up<a class="headerlink" href="#wrap-up" title="Permalink to this headline">¶</a></h2>
+<p>In this lecture we learned about subclassing and composition, two approaches to OO programming.
+We learned how to make a subclass in Python.
+We learned about the method resolution order and how attributes are looked up when inheritance is in play.
+We also learned about the difference between old- and new-style classes and how to maintain compatibility in Python 3.
+Finally, we learned how to use composition to gain access to some of the powers of another class without needing to inherit it all.</p>
+<p>As you work on your Data Structures assignments, consider how these new tools can help you.</p>
+<span class="admonition-summary"></span></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python Classes: Inheritance v. Composition</a><ul>
+<li><a class="reference internal" href="#inheritance">Inheritance</a><ul>
+<li><a class="reference internal" href="#overriding-attributes">Overriding attributes</a></li>
+<li><a class="reference internal" href="#overriding-methods">Overriding methods</a></li>
+<li><a class="reference internal" href="#extending-methods">Extending Methods</a></li>
+<li><a class="reference internal" href="#attribute-resolution-order">Attribute resolution order</a></li>
+<li><a class="reference internal" href="#when-to-subclass">When to Subclass</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#composition">Composition</a></li>
+<li><a class="reference internal" href="#type-based-dispatch">Type-Based Dispatch</a></li>
+<li><a class="reference internal" href="#wrap-up">Wrap Up</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="stack.html"
+                        title="previous chapter">Stack</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../schedule/week02/wed.html"
+                        title="next chapter">Wednesday</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../schedule/week02/wed.html" title="Wednesday"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="stack.html" title="Stack"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week02/tue.html" >Tuesday</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

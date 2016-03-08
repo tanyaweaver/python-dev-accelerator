@@ -18,6 +18,7 @@ Objectives
 * Learn about the rationale behind creating data structures
 * Discover the qualities of an array
 * Discover the qualities of a singly linked list
+* Learn the absolute basics of Class programming in Python
 
 Readings
 ========
@@ -39,6 +40,7 @@ Concepts
    /lectures/data_structures
    /lectures/array
    /lectures/linked_list
+   /lectures/intro_to_python_5_classes
 
 Demo
 ====
