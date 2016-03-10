@@ -33,10 +33,12 @@ Concepts
    :maxdepth: 2
 
    /lectures/doubly_linked_list
-.. /lectures/intro_to_python_6_advanced_classes
+   /lectures/intro_to_python_6_super_etc
 
 Demo
 ====
+
+* PyTest fixtures
 
 Assignments
 ===========
