@@ -15,6 +15,7 @@ Objectives
 
 * Learn a very small bit about concurrent and asynchronous programming in Python
 * Discover the qualities of the queue
+* Learn about properties in Python OO programming
 
 Readings
 ========
