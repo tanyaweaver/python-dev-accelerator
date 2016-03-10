@@ -324,7 +324,3 @@ implements an alternate constructor that *can*.
 (this is actually from the OrderedDict implementation in ``collections.py``)
 
 See also datetime.datetime.now(), etc....
-
-;alkdsjf;laskjfa;lskd
-
-;adslkjfd;lkafjsd
