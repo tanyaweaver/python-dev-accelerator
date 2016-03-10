@@ -32,6 +32,7 @@ Concepts
 
    /lectures/queue
    /lectures/async
+   /lectures/intro_to_python_7_properties
 
 Demo
 ====

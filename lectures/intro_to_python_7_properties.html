@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>A Python Class Miscellany &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="Thursday" href="../schedule/week02/thu.html" />
+    <link rel="next" title="Friday" href="../schedule/week02/fri.html" />
+    <link rel="prev" title="Concurrency" href="async.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../schedule/week02/fri.html" title="Friday"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="async.html" title="Concurrency"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week02/thu.html" accesskey="U">Thursday</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="a-python-class-miscellany">
+<h1>A Python Class Miscellany<a class="headerlink" href="#a-python-class-miscellany" title="Permalink to this headline">¶</a></h1>
+<p>In this lesson we will discuss some of the available features of Class programming in Python.
+We&#8217;ll be exploring the <code class="xref py py-func docutils literal"><span class="pre">property</span></code> function (<code class="xref py py-func docutils literal"><span class="pre">py3</span></code>).
+We&#8217;ll see how this function can help us to create attributes of our classes that are more dynamic.</p>
+<div class="section" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<div class="left container">
+<p>One of Python&#8217;s greatest strengths is the clarity of the syntax.
+Attribute access is simple and concise, and not too verbose:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="go">        def __init__(self):</span>
+<span class="go">                self.x = 5</span>
+<span class="gp">In [6]: </span><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="p">()</span>
+<span class="gp">In [7]: </span><span class="n">c</span><span class="o">.</span><span class="n">x</span>
+<span class="gh">Out[7]: </span><span class="go">5</span>
+<span class="gp">In [8]: </span><span class="n">c</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="gp">In [9]: </span><span class="n">c</span><span class="o">.</span><span class="n">x</span>
+<span class="gh">Out[9]: </span><span class="go">8</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getter-and-setters">
+<h3>Getter and Setters?<a class="headerlink" href="#getter-and-setters" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes, though, it would be nice to be able to do more that just set and fetch plain values.
+You might want to do some calculation using supplied values.
+You might want to check that the data supplied is valid before setting an attribute.
+You might want to keep two separate attributes synchronized.</p>
+<p>One possible approach is to define what are called <code class="docutils literal"><span class="pre">getters</span></code> and <code class="docutils literal"><span class="pre">setters</span></code>.
+These allow you to access an attribute through a method.
+But this approach is decidedly unpythonic:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">   ...: </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">   ...: </span>        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">   ...: </span>    <span class="k">def</span> <span class="nf">get_x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">   ...: </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+<span class="gp">   ...: </span>    <span class="k">def</span> <span class="nf">set_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="gp">   ...: </span>        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+<span class="gp">   ...:</span>
+<span class="gp">In [6]: </span><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="p">()</span>
+<span class="gp">In [7]: </span><span class="n">c</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span>
+<span class="gh">Out[7]: </span><span class="go">5</span>
+<span class="gp">In [8]: </span><span class="n">c</span><span class="o">.</span><span class="n">set_x</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">In [9]: </span><span class="n">c</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span>
+<span class="gh">Out[9]: </span><span class="go">8</span>
+</pre></div>
+</div>
+<p>Python programmers consider such an approach to be ugly and verbose.
+It&#8217;s widely used by other languages, particularly Java.
+But you don&#8217;t see it in Python written in the last decade.</p>
+</div>
+<div class="section" id="id1">
+<h3>Properties<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Luckily, Python provides a way to have our cake and eat it too.
+We can use the <code class="docutils literal"><span class="pre">property</span></code> function to combine a series of up to three functions into a single attribute.
+The three functions allow us to get, set and delete a property.
+The fourth argument is the docstring that will be attached to the resulting attribute.</p>
+<p>This approach allows us to retain the simple attribute access to <code class="docutils literal"><span class="pre">C.x</span></code>.
+But the functions are invoked on access.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="k">def</span> <span class="nf">_getx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+    <span class="k">def</span> <span class="nf">_setx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">def</span> <span class="nf">_delx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_getx</span><span class="p">,</span> <span class="n">_setx</span><span class="p">,</span> <span class="n">_delx</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;docstring&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are three possible function arguments to <code class="docutils literal"><span class="pre">property</span></code>.
+They provide functionality to <code class="docutils literal"><span class="pre">get</span></code>, <code class="docutils literal"><span class="pre">set</span></code>, and <code class="docutils literal"><span class="pre">delete</span></code> the resulting attribute.
+But only the first of the three is required.
+This can allow us to do interesting things like creating &#8220;read only&#8221; attributes:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [11]: </span><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">   ....: </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<span class="gp">   ....: </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">   ....: </span>    <span class="k">def</span> <span class="nf">getx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">   ....: </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+<span class="gp">   ....: </span>    <span class="n">x</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">getx</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;I am read only&quot;</span><span class="p">)</span>
+<span class="gp">   ....:</span>
+<span class="gp">In [12]: </span><span class="n">d</span> <span class="o">=</span> <span class="n">D</span><span class="p">()</span>
+<span class="gp">In [13]: </span><span class="n">d</span><span class="o">.</span><span class="n">x</span>
+<span class="gh">Out[13]: </span><span class="go">5</span>
+<span class="gp">In [14]: </span><span class="n">d</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-14-c83386d97be3&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">d</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="ne">AttributeError</span>: can&#39;t set attribute
+</pre></div>
+</div>
+<p>We&#8217;ve seen similar function calls inside a class definition before.
+The <code class="docutils literal"><span class="pre">staticmethod</span></code> and <code class="docutils literal"><span class="pre">classmethod</span></code> functions work in a similar fashion.
+We declare a method, and then bind a name to the result of calling the function with that method as an argument.</p>
+<p>We call this usage <em>imperative</em> because we are explicitly telling the code exactly what to do.
+The <em>imperative</em> style of adding a <code class="docutils literal"><span class="pre">property</span></code> to you class is clear, but it&#8217;s still a little verbose.
+And what is worse, it also has the effect of leaving all those defined method objects laying around where they litter the API of your class:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [19]: </span><span class="n">d</span><span class="o">.</span><span class="n">x</span>
+<span class="gh">Out[19]: </span><span class="go">5</span>
+<span class="gp">In [20]: </span><span class="n">d</span><span class="o">.</span><span class="n">getx</span>
+<span class="gh">Out[20]: </span><span class="go">&lt;bound method D.getx of &lt;__main__.D object at 0x1043a4a10&gt;&gt;</span>
+<span class="gp">In [21]: </span><span class="n">d</span><span class="o">.</span><span class="n">getx</span><span class="p">()</span>
+<span class="gh">Out[21]: </span><span class="go">5</span>
+</pre></div>
+</div>
+<p>Python provides us with a way to solve both these issues at once.
+We&#8217;ve seen it with both the <code class="docutils literal"><span class="pre">staticmethod</span></code> and <code class="docutils literal"><span class="pre">classmethod</span></code> functions too.
+We can also use <code class="docutils literal"><span class="pre">property</span></code> as a <strong>decorator</strong>, in a <em>declarative</em> style:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [22]: </span><span class="k">class</span> <span class="nc">E</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">   ....: </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<span class="gp">   ....: </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+<span class="gp">   ....: </span>    <span class="nd">@property</span>
+<span class="gp">   ....: </span>    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">   ....: </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+<span class="gp">   ....: </span>    <span class="nd">@x.setter</span>
+<span class="gp">   ....: </span>    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="gp">   ....: </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">value</span>
+<span class="gp">   ....:</span>
+<span class="gp">In [23]: </span><span class="n">e</span> <span class="o">=</span> <span class="n">E</span><span class="p">()</span>
+<span class="gp">In [24]: </span><span class="n">e</span><span class="o">.</span><span class="n">x</span>
+<span class="gh">Out[24]: </span><span class="go">5</span>
+<span class="gp">In [25]: </span><span class="n">e</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="gp">In [26]: </span><span class="n">e</span><span class="o">.</span><span class="n">x</span>
+<span class="gh">Out[26]: </span><span class="go">6</span>
+</pre></div>
+</div>
+<p>Consider the case of a class representing a Circle.
+Circles have several properties we might be interested in knowing about.
+They have a radius and a diameter.
+A circumference and an area, too.</p>
+<p>We can use properties to tie these all together:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+   <span class="o">...</span><span class="p">:</span>         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="nd">@property</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="k">def</span> <span class="nf">diameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+   <span class="o">...</span><span class="p">:</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="mi">2</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="nd">@diameter.setter</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="k">def</span> <span class="nf">diameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diameter</span><span class="p">):</span>
+   <span class="o">...</span><span class="p">:</span>         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">diameter</span> <span class="o">/</span> <span class="mf">2.0</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="nd">@property</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="k">def</span> <span class="nf">circumference</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+   <span class="o">...</span><span class="p">:</span>         <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="nd">@property</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+   <span class="o">...</span><span class="p">:</span>         <span class="k">return</span> <span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span>
+   <span class="o">...</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>And now, we can see how we retain a clean, Pythonic interface, but get the behavior we expect:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [10]: </span><span class="n">c1</span> <span class="o">=</span> <span class="n">Circle</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="gp">In [11]: </span><span class="n">c1</span><span class="o">.</span><span class="n">diameter</span>
+<span class="gh">Out[11]: </span><span class="go">2</span>
+
+<span class="gp">In [12]: </span><span class="n">c1</span><span class="o">.</span><span class="n">circumference</span>
+<span class="gh">Out[12]: </span><span class="go">6.283185307179586</span>
+
+<span class="gp">In [13]: </span><span class="n">c1</span><span class="o">.</span><span class="n">area</span>
+<span class="gh">Out[13]: </span><span class="go">3.141592653589793</span>
+
+<span class="gp">In [14]: </span><span class="n">c1</span><span class="o">.</span><span class="n">diameter</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="gp">In [15]: </span><span class="n">c1</span><span class="o">.</span><span class="n">radius</span>
+<span class="gh">Out[15]: </span><span class="go">2.0</span>
+
+<span class="gp">In [16]: </span><span class="n">c1</span><span class="o">.</span><span class="n">circumference</span>
+<span class="gh">Out[16]: </span><span class="go">12.566370614359172</span>
+
+<span class="gp">In [17]: </span><span class="n">c1</span><span class="o">.</span><span class="n">area</span>
+<span class="gh">Out[17]: </span><span class="go">12.566370614359172</span>
+
+<span class="gp">In [18]: </span><span class="n">c1</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="gp">In [19]: </span><span class="n">c1</span><span class="o">.</span><span class="n">area</span>
+<span class="gh">Out[19]: </span><span class="go">50.26548245743669</span>
+
+<span class="gp">In [20]: </span><span class="n">c1</span><span class="o">.</span><span class="n">circumference</span>
+<span class="gh">Out[20]: </span><span class="go">25.132741228718345</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">A Python Class Miscellany</a><ul>
+<li><a class="reference internal" href="#properties">Properties</a><ul>
+<li><a class="reference internal" href="#getter-and-setters">Getter and Setters?</a></li>
+<li><a class="reference internal" href="#id1">Properties</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="async.html"
+                        title="previous chapter">Concurrency</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../schedule/week02/fri.html"
+                        title="next chapter">Friday</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../schedule/week02/fri.html" title="Friday"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="async.html" title="Concurrency"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week02/thu.html" >Thursday</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>
