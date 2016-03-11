@@ -24,8 +24,7 @@ each component in our design falls into one of those three categories.
 Prerequisites
 =============
 
-In order to follow this tutorial, you will need to have several tools in place
-before you begin.
+In order to follow this tutorial, you will need to have several tools in place before you begin.
 
 1. `Python 2.7.x`_
 2. Virtualenv installed and properly configured
