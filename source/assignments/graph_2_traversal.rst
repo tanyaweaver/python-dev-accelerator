@@ -1,11 +1,11 @@
 .. slideconf::
     :autoslides: False
 
-***********************
-Build a Simple WSGI App
-***********************
+**************************
+Implement Graph Traversals
+**************************
 
-.. slide:: Build a Simple WSGI App
+.. slide:: Implement Graph Traversals
     :level: 1
 
     This document contains no slides.
