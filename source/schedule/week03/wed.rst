@@ -16,6 +16,10 @@ Objectives
 Readings
 ========
 
+* `Renderers in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/renderers.html>`_
+* `Template Handling in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/templates.html>`_
+* `Static Assets in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/assets.html>`_
+
 Review
 ======
 

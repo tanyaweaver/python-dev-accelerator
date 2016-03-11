@@ -16,6 +16,8 @@ Objectives
 Readings
 ========
 
+* `Handle Security in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/1.5-branch/narr/security.html>`_
+
 Review
 ======
 
