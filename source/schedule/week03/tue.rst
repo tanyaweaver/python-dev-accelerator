@@ -28,4 +28,5 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/binary_heap`
 * :doc:`/assignments/daily_lj_entry`

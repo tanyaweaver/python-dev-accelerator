@@ -28,4 +28,5 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/priority_queue`
 * :doc:`/assignments/daily_lj_entry`
