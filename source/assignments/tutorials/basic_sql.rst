@@ -351,21 +351,39 @@ Preprarations for Class
 
 In class we will be exploring interacting with a database using raw SQL and a more advanced concept called an ``ORM`` or Object-Relational Mapper.
 
+Install PostgreSQL
+******************
+
 The first step in working with PostgreSQL (or any other RDBMS) is to install the database software.
-Follow along with `this tutorial <https://www.codefellows.org/blogs/how-to-install-postgresql>`_ to install PostgreSQL on your development machine.
-Do not follow any of the steps dealing with setting up Rails.
-You won't need them.
+
+If you are using **OS X**, please follow `these steps <http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/>`_ to install PostgreSQL via `homebrew <http://brew.sh/>`_.
+
+If you are using **ubuntu linux**, please follow `these steps <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04>`_. Stop after the section ``Create a New Role`` (make a role with the same name as your login user).
+
+If you are using **windows**, follow `these steps <http://www.postgresqltutorial.com/install-postgresql/>`_.
+
+Create a Database
+*****************
 
 The second step is to create a database.
 Installing the PostgreSQL Software initializes the database system, but does not create a database for you to use.
 You must do this manually.
-You can use the provided ``createdb`` command to do so:
+
+There are two ways to accomplish this. For most, the best way is to use the ``createdb`` shell command:
 
 .. code-block:: bash
 
     $ createdb psycotest
 
-This will create a database called `psycotest` owned by the postgresql user with the same name as your current OS user.
+If you are using **windows** you'll instead need to `connect to the database with psql <http://www.postgresqltutorial.com/connect-to-postgresql-database/>`_ and use the ``CREATE DATABASE`` command from there:
+
+.. code-block:: psql
+
+    cewing=# CREATE DATABASE psycotest
+
+You can `read more about creating a database <http://www.postgresql.org/docs/current/static/manage-ag-createdb.html>`_ in the PostgreSQL documentation.
+
+This will create a database called `psycotest` owned by the *role* within PostgreSQL with the same name as your current OS user.
 In class we'll use this database to test out interacting via Python.
 
 Check to be sure that the database is now present, using the psql command:
@@ -388,7 +406,6 @@ Once connected you can list the databases in your server instance:
     -------------+--------+----------+-------------+-------------+-------------------
      cewing      | cewing | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
      dvdrental   | cewing | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
-     nngroup.com | cewing | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
      postgres    | cewing | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
      psycotest   | cewing | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
      template0   | cewing | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/cewing        +
@@ -419,11 +436,11 @@ In the session above we can see some of them:
 
 There is `much more to learn about psql`_ but that will get you going for now.
 
-.. _much more to learn about psql: http://www.postgresql.org/docs/9.4/static/app-psql.html
+.. _much more to learn about psql: http://www.postgresql.org/docs/current/static/app-psql.html
 
 
-Data Definition Layer
----------------------
+Create Tables
+*************
 
 A database is nothing without tables, so we need to create some.
 
@@ -441,7 +458,7 @@ At your psql command prompt, change the database you are interacting with to the
     psycotest=#
 
 Next, type the following SQL commands at the prompt.
-You can press enter to get newlines that match, psql will not evaluate what you have typed until you use a semi-colon to terminate the statement:
+You can press enter to get newlines that match, psql will not evaluate what you have typed *until you use a semi-colon* to terminate the statement:
 
 .. code-block:: psql
 
@@ -535,17 +552,26 @@ Working Environment
 In class you'll want to have a nice test environment available to work in.
 Your final task is to set that up.
 
-Begin by creating a virtualenv called ``psycopg2``:
+Create a folder to work in:
 
 .. code-block:: bash
 
-    Banks:~ cewing$ virtualenv psycopg2
+    Banks:~ cewing$ mkdir psycopg2
+
+Then create and activate a virtualenv in that directory:
+
+.. code-block:: bash
+
+    Banks:~ cewing$ cd psycopg2
+    Banks:~ cewing$ virtualenv ./
     New python executable in psycopg2/bin/python
-    Installing setuptools, pip...done.
-    Creating /Users/cewing/projects/psycopg2
-    Setting project for psycopg2 to /Users/cewing/projects/psycopg2
+    ...
+    Banks:psycopg2 cewing$ source bin/activate
     [psycopg2]
     Banks:psycopg2 cewing$
+
+.. note:: If you run into errors building psycopg2 on Ubuntu/Debian linux that say ``Error: pg_config executable not found``, you'll want to check out `this question <http://stackoverflow.com/questions/5420789/how-to-install-psycopg2-with-pip-on-python>`_ on stack overflow.
+
 
 Now that you've got the environment set up, and a project folder to work in, go ahead and install the software you'll need for class:
 
@@ -562,7 +588,7 @@ Now that you've got the environment set up, and a project folder to work in, go 
     Collecting sqlalchemy
       ...
       Running setup.py install for sqlalchemy
-    Successfully installed sqlalchemy-1.0.5
+    Successfully installed sqlalchemy-1.0.12
     [psycopg]
     Banks:psycopg cewing$
 
