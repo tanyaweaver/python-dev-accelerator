@@ -182,11 +182,10 @@ process and getting to a working application.</p>
 each component in our design falls into one of those three categories.</p>
 <div class="section" id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
-<p>In order to follow this tutorial, you will need to have several tools in place
-before you begin.</p>
+<p>In order to follow this tutorial, you will need to have several tools in place before you begin.</p>
 <ol class="arabic simple">
 <li><a class="reference external" href="https://www.python.org/download/">Python 2.7.x</a></li>
-<li><a class="reference external" href="../../lectures/day01/virtualenv.html">Virtualenv and Virtualenvwrapper</a> installed and properly configured</li>
+<li>Virtualenv installed and properly configured</li>
 <li>The <a class="reference external" href="https://www.codefellows.org/blogs/how-to-install-postgresql">PostgreSQL Database Engine</a> installed and properly configured</li>
 <li>A c compiler and Python development headers</li>
 <li>An account with <a class="reference external" href="https://github.com">GitHub</a></li>
@@ -198,13 +197,12 @@ before you begin.</p>
 <p>If all the pieces are in place, you are ready to proceed to the next level.</p>
 <div class="section" id="set-up-the-project-environment">
 <h3>Set Up the Project Environment<a class="headerlink" href="#set-up-the-project-environment" title="Permalink to this headline">¶</a></h3>
-<p>Since you&#8217;ve installed and configured <code class="docutils literal"><span class="pre">virtualenv</span></code> and <code class="docutils literal"><span class="pre">virtualenvwrapper</span></code>
-properly, this step is simple. Open a command shell and type the following:</p>
+<p>Since you&#8217;ve installed and configured <code class="docutils literal"><span class="pre">virtualenv</span></code> and properly, this step is simple.
+Open a command shell and type the following:</p>
 <div class="highlight-bash"><div class="highlight"><pre>$ mkproject learning-journal
 </pre></div>
 </div>
-<p>You should see output that looks like this (though your prompt and path names
-will look different):</p>
+<p>You should see output that looks like this (though your prompt and path names will look different):</p>
 <div class="highlight-bash"><div class="highlight"><pre>192:~ cewing$ mkproject learning-journal
 New python executable in learning-journal/bin/python
 Installing setuptools, pip...done.
@@ -586,7 +584,7 @@ a peek at my solution below.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock8'))">Peek At A Solution</a><br /><div id="hiddencodeblock8" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c1"># add this import at the top:</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock1'))">Peek At A Solution</a><br /><div id="hiddencodeblock1" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c1"># add this import at the top:</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 
 <span class="c1"># and define your class below the Base</span>
@@ -634,7 +632,7 @@ solution below.</p>
             element.style.display = "block"
     };
 </script>
-<a href="javascript:showhide(document.getElementById('hiddencodeblock9'))">Peek At A Solution</a><br /><div id="hiddencodeblock9" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c1"># make a module-level constant for the connection URI (you&#39;ll need it elsewhere):</span>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock2'))">Peek At A Solution</a><br /><div id="hiddencodeblock2" style="display: none"><div class="highlight-python"><div class="highlight"><pre><span class="c1"># make a module-level constant for the connection URI (you&#39;ll need it elsewhere):</span>
 <span class="n">DATABASE_URL</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
     <span class="s1">&#39;DATABASE_URL&#39;</span><span class="p">,</span>
     <span class="s1">&#39;postgresql://&lt;username&gt;:&lt;password&gt;@localhost:5432/learning-journal&#39;</span>

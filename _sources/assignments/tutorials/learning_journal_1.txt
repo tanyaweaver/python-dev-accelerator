@@ -24,11 +24,10 @@ each component in our design falls into one of those three categories.
 Prerequisites
 =============
 
-In order to follow this tutorial, you will need to have several tools in place
-before you begin.
+In order to follow this tutorial, you will need to have several tools in place before you begin.
 
 1. `Python 2.7.x`_
-2. `Virtualenv and Virtualenvwrapper`_ installed and properly configured
+2. Virtualenv installed and properly configured
 3. The `PostgreSQL Database Engine`_ installed and properly configured
 4. A c compiler and Python development headers
 5. An account with `GitHub`_
@@ -37,7 +36,6 @@ before you begin.
 .. _Heroku: https://heroku.com
 .. _GitHub: https://github.com
 .. _PostgreSQL Database Engine: https://www.codefellows.org/blogs/how-to-install-postgresql
-.. _Virtualenv and Virtualenvwrapper: ../../lectures/day01/virtualenv.html
 .. _Python 2.7.x: https://www.python.org/download/
 
 
@@ -50,15 +48,14 @@ If all the pieces are in place, you are ready to proceed to the next level.
 Set Up the Project Environment
 ------------------------------
 
-Since you've installed and configured ``virtualenv`` and ``virtualenvwrapper``
-properly, this step is simple. Open a command shell and type the following:
+Since you've installed and configured ``virtualenv`` and properly, this step is simple.
+Open a command shell and type the following:
 
 .. code-block:: bash
 
     $ mkproject learning-journal
 
-You should see output that looks like this (though your prompt and path names
-will look different):
+You should see output that looks like this (though your prompt and path names will look different):
 
 .. code-block:: bash
 

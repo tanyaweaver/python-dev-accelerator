@@ -187,18 +187,14 @@ div.nboutput  > :nth-child(2).stderr {
 <div class="section" id="what-is-sql">
 <h2>What is SQL<a class="headerlink" href="#what-is-sql" title="Permalink to this headline">¶</a></h2>
 <p><strong>SQL == Structured Query Language</strong></p>
-<p>It was first invented in the early 1970s at IBM. Based on <a class="reference external" href="http://en.wikipedia.org/wiki/Relational_algebra">Relational Algebra</a>
-and <a class="reference external" href="http://en.wikipedia.org/wiki/Tuple_relational_calculus">Tuple Relational Calculus</a>, it was used to get at data stored in their
-<code class="docutils literal"><span class="pre">System-R</span></code> database management system. The idea was picked up by
-<em>Relational Software</em> (now <em>Oracle</em>) in the late 1970s, and let to their
-release of <code class="docutils literal"><span class="pre">Oracle</span> <span class="pre">V2</span></code>, the first commercial Relational Database released in
-1979. IBM followed with <code class="docutils literal"><span class="pre">System/38</span></code>, <code class="docutils literal"><span class="pre">SQL/DS</span></code> and <code class="docutils literal"><span class="pre">DB2</span></code> between 1979 and
-1983.</p>
+<p>It was first invented in the early 1970s at IBM.
+Based on <a class="reference external" href="http://en.wikipedia.org/wiki/Relational_algebra">Relational Algebra</a> and <a class="reference external" href="http://en.wikipedia.org/wiki/Tuple_relational_calculus">Tuple Relational Calculus</a>, it was used to get at data stored in their <code class="docutils literal"><span class="pre">System-R</span></code> database management system.
+The idea was picked up by <em>Relational Software</em> (now <em>Oracle</em>) in the late 1970s, and let to their release of <code class="docutils literal"><span class="pre">Oracle</span> <span class="pre">V2</span></code>, the first commercial Relational Database, in 1979.
+IBM followed with <code class="docutils literal"><span class="pre">System/38</span></code>, <code class="docutils literal"><span class="pre">SQL/DS</span></code> and <code class="docutils literal"><span class="pre">DB2</span></code> between 1979 and 1983.</p>
 <p>source: <a class="reference external" href="http://en.wikipedia.org/wiki/SQL">http://en.wikipedia.org/wiki/SQL</a></p>
-<p>SQL, and Relational Database Management Systems (RDBMS) have been the de-facto
-standard for data persistence for 30+ years. Currently, there are more than 100
-RDBMS available, both proprietary and open-source. Most, if not all, include
-some implementation of SQL as their query language.</p>
+<p>SQL, and Relational Database Management Systems (RDBMS) have been the de-facto standard for data persistence for 30+ years.
+Currently, there are more than 100 RDBMS available, both proprietary and open-source.
+Most, if not all, include some implementation of SQL as their query language.</p>
 <p>source: <a class="reference external" href="http://en.wikipedia.org/wiki/List_of_relational_database_management_systems">http://en.wikipedia.org/wiki/List_of_relational_database_management_systems</a></p>
 <div class="section" id="big-players-in-sql">
 <h3>Big Players in SQL<a class="headerlink" href="#big-players-in-sql" title="Permalink to this headline">¶</a></h3>
@@ -223,13 +219,13 @@ some implementation of SQL as their query language.</p>
 <p>There are a few important concepts to understand when speaking about databases:</p>
 <div class="section" id="tables">
 <h3>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h3>
-<p>A table consists of <em>rows</em> (also called <em>records</em>) and <em>columns</em>.  Each
-row/record represents a single item. Each column represents a data point within
-that item. Most tables will have one column which is considered the <em>primary
-key</em> (but not all). This value will uniquely identify a single row out of all
-the rows in the table. The primary key of a table will be <em>indexed</em>, which
-allows the database system to find the row using that value spectacularly
-quickly. Columns other than the primary key can also be indexed.</p>
+<p>A table consists of <em>rows</em> (also called <em>records</em>) and <em>columns</em>.
+Each row/record represents a single item.
+Each column represents a data point within that item.
+Most tables will have one column which is considered the <em>primary key</em> (but not all).
+This value will uniquely identify a single row out of all the rows in the table.
+The primary key of a table will be <em>indexed</em>, which allows the database system to find the row using that value spectacularly quickly.
+Columns other than the primary key can also be indexed.</p>
 <p>Here is an example table which represents people in a system:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -281,30 +277,28 @@ quickly. Columns other than the primary key can also be indexed.</p>
 </div>
 <div class="section" id="relations">
 <h3>Relations<a class="headerlink" href="#relations" title="Permalink to this headline">¶</a></h3>
-<p>You can <em>model</em> things using tables like this.  Adding columns for all sorts of
-different data points. But what happens when not all of the items in a table
-share the <em>same</em> data points? Or what if some of the items need to have more
-than one value for a particular data point? Leaving columns empty in a row
-wastes memory and slows down querying.  Databases use <em>relations</em> to solve
-these types of problems.</p>
+<p>You can <em>model</em> things using tables like this.
+Adding columns for all sorts of different data points.
+But what happens when not all of the items in a table share the <em>same</em> data points?
+Or what if some of the items need to have more than one value for a particular data point?
+Leaving columns empty in a row wastes memory and slows down querying.
+Databases use <em>relations</em> to solve these types of problems.</p>
 <p>There are three basic types of relationships:</p>
 <dl class="build docutils">
 <dt>Many-to-one relationships:</dt>
-<dd>Used to represent relationships of ownership or belonging. Like product -&gt;
-manufacturer or book -&gt; author</dd>
+<dd>Used to represent relationships of ownership or belonging. Like product -&gt; manufacturer or book -&gt; author</dd>
 <dt>One-to-one relationships:</dt>
-<dd>Best used to represent aspects of an item which are not <em>core</em> to it. Like
-user (id, password) -&gt; user_profile (preferences, name, address)</dd>
+<dd>Best used to represent aspects of an item which are not <em>core</em> to it.
+Like user (id, password) -&gt; user_profile (preferences, name, address)</dd>
 <dt>Many-to-many relationships:</dt>
-<dd>Used to represent associations or membership.  Like users -&gt; groups or
-items -&gt; orders</dd>
+<dd>Used to represent associations or membership.
+Like users -&gt; groups or items -&gt; orders</dd>
 </dl>
 </div>
 <div class="section" id="relations-1">
 <h3>Relations: ∞ -&gt; 1<a class="headerlink" href="#relations-1" title="Permalink to this headline">¶</a></h3>
-<p>Many-to-one relationships are modelled using <em>Foreign Keys</em>. The <em>many</em> table
-has a column, the value of which is the <em>primary key</em> of the row from the <em>one</em>
-table.</p>
+<p>Many-to-one relationships are modelled using <em>Foreign Keys</em>.
+The <em>many</em> table has a column, the value of which is the <em>primary key</em> of the row from the <em>one</em> table.</p>
 <p>Consider the relationship of books to author:</p>
 <p><strong>People</strong>:</p>
 <table border="1" class="docutils">
@@ -362,18 +356,14 @@ table.</p>
 </tr>
 </tbody>
 </table>
-<p>By matching the value in the <code class="docutils literal"><span class="pre">author</span></code> column of the <code class="docutils literal"><span class="pre">books</span></code> table to the
-value in the <code class="docutils literal"><span class="pre">id</span></code> column of the <code class="docutils literal"><span class="pre">authors</span></code> table, you can see that Harry
-Houdini has two books belonging to him, while William Gibson only has one.</p>
+<p>By matching the value in the <code class="docutils literal"><span class="pre">author</span></code> column of the <code class="docutils literal"><span class="pre">books</span></code> table to the value in the <code class="docutils literal"><span class="pre">id</span></code> column of the <code class="docutils literal"><span class="pre">authors</span></code> table, you can see that Harry Houdini has two books belonging to him, while William Gibson only has one.</p>
 </div>
 <div class="section" id="relations-1-1">
 <h3>Relations: 1 -&gt; 1<a class="headerlink" href="#relations-1-1" title="Permalink to this headline">¶</a></h3>
-<p>One-to-one relationships are really just a special case of Many-to-one, and are
-also modelled with <em>Foreign Keys</em>. In this case, the column on the related
-table which holds the <em>primary key</em> of the target table has an additional
-<em>unique</em> constraint, so that only one related record can exist. The classic
-purpose is for data that doesn&#8217;t need to be accessed often, and is unique per
-record</p>
+<p>One-to-one relationships are really just a special case of Many-to-one, and are also modelled with <em>Foreign Keys</em>.
+In this case, the column on the related table which holds the <em>primary key</em> of the target table has an additional <em>unique</em> constraint
+This means that only one row in the related table may contain a given  target primary id.
+The classic purpose is for data that doesn&#8217;t need to be accessed often, and is unique per record.</p>
 <p>Consider this example of birth records:</p>
 <p><strong>People</strong>:</p>
 <table border="1" class="docutils">
@@ -441,24 +431,18 @@ record</p>
 </tr>
 </tbody>
 </table>
-<p>Each person is associated with one and only one birth record.  It wouldn&#8217;t make
-sense to have it otherwise. And with a proper database like postgresql, adding
-a <em>unique</em> constraint to the <code class="docutils literal"><span class="pre">people</span></code> column of the <code class="docutils literal"><span class="pre">birth</span> <span class="pre">records</span></code> table
-means that if you try to create a second record with the same value as one
-already present, an error will be raised. This concept is called
-<em>data integrity</em>, and some databases are better at preserving it than others.</p>
+<p>Each person is associated with one and only one birth record.
+It wouldn&#8217;t make sense to have it otherwise.
+And with a proper database like postgresql, adding a <em>unique</em> constraint to the <code class="docutils literal"><span class="pre">people</span></code> column of the <code class="docutils literal"><span class="pre">birth</span> <span class="pre">records</span></code> table means that if you try to create a second record with the same value as one already present, an error will be raised.
+This concept is called <em>data integrity</em>, and some databases are better at preserving it than others.</p>
 </div>
 <div class="section" id="id1">
 <h3>Relations: ∞ -&gt; ∞<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>Many-to-many relations are a bit trickier to model. No column in a database can
-contain more than one value, so there&#8217;s no way to define a <em>foreign key</em>-like
-construct that would work. Instead, this relationship is modelled using a third
-table, called a <em>join table</em>, which has two <em>foreign key</em> fields, one for each
-side of the relation.</p>
-<p>Often such a <em>join table</em> will have only three columns, the primary key for a
-given row, and the two foreign keys that form the bridge between the joined
-entities. But you can also add other columns to model data describing the
-qualities of the relationship itself.</p>
+<p>Many-to-many relations are a bit trickier to model.
+No column in a database can contain more than one value, so there&#8217;s no way to define a <em>foreign key</em>-like construct that would work.
+Instead, this relationship is modelled using a third table, called a <em>join table</em>, which has two <em>foreign key</em> fields, one for each side of the relation.</p>
+<p>Often such a <em>join table</em> will have only three columns, the primary key for a given row, and the two foreign keys that form the bridge between the joined entities.
+But you can also add other columns to model data describing the qualities of the relationship itself.</p>
 <p>Consider this set of tables, modelling the membership of people in groups:</p>
 <p><strong>People</strong>:</p>
 <table border="1" class="docutils">
@@ -541,31 +525,25 @@ qualities of the relationship itself.</p>
 </tr>
 </tbody>
 </table>
-<p>The <code class="docutils literal"><span class="pre">membership</span></code> table forms the connection between a person and the groups
-they belong to. By adding an <code class="docutils literal"><span class="pre">active</span></code> column to that table, it is possible to
-model the quality of a person&#8217;s membership in a group being <em>active</em> or
-<em>inactive</em>.  You might extend such a model, adding start and end dates or the
-names of positions held in a group by the person.</p>
+<p>The <code class="docutils literal"><span class="pre">membership</span></code> table forms the connection between a person and the groups they belong to.
+By adding an <code class="docutils literal"><span class="pre">active</span></code> column to that table, it is possible to model the quality of a person&#8217;s membership in a group being <em>active</em> or <em>inactive</em>.
+You might extend such a model, adding start and end dates or the names of positions held in a group by the person.</p>
 </div>
 </div>
 <div class="section" id="sql-syntax">
 <h2>SQL Syntax<a class="headerlink" href="#sql-syntax" title="Permalink to this headline">¶</a></h2>
-<p>SQL is a formal language with a limited syntax. The syntax can be broken into a
-set of <em>constructs</em>. If you are familiar with these constructs, you can read an
-SQL statement and understand its purpose.  And you can write statements of your
-own to interact with the database.</p>
+<p>SQL is a formal language with a limited syntax.
+The syntax can be broken into a set of <em>constructs</em>.
+If you are familiar with these constructs, you can read an SQL statement and understand its purpose.
+And you can write statements of your own to interact with the database.</p>
 <ul class="simple">
-<li><strong>Statements</strong> are discreet units that perform some action, like inserting
-records or querying</li>
-<li><strong>Clauses</strong> are sub-units of statements which indicate some action or
-condition</li>
-<li><strong>Expressions</strong> are elements that produce values, either unitary or as
-tables themselves</li>
-<li><strong>Predicates</strong> are conditionals which produce some boolean or three-valued
-truth value</li>
+<li><strong>Statements</strong> are discreet units that perform some action, like inserting records or querying</li>
+<li><strong>Clauses</strong> are sub-units of statements which indicate some action or condition</li>
+<li><strong>Expressions</strong> are elements that produce values, either unitary or as tables themselves</li>
+<li><strong>Predicates</strong> are conditionals which produce some boolean or three-valued truth value</li>
 </ul>
 <div class="build container">
-<a class="incremental reference internal image-reference" href="../_images/sql_anatomy.png"><img alt="../_images/sql_anatomy.png" class="incremental align-center" src="../_images/sql_anatomy.png" style="width: 700px;" /></a>
+<a class="reference internal image-reference" href="../_images/sql_anatomy.png"><img alt="../_images/sql_anatomy.png" class="align-center" src="../_images/sql_anatomy.png" style="width: 700px;" /></a>
 <p>image: CC-BY-SA by Ferdna <a class="reference external" href="http://en.wikipedia.org/wiki/File:SQL_ANATOMY_wiki.svg">http://en.wikipedia.org/wiki/File:SQL_ANATOMY_wiki.svg</a></p>
 </div>
 <div class="section" id="subsets">
@@ -598,12 +576,10 @@ truth value</li>
     <span class="k">WHERE</span> <span class="n">id</span><span class="o">=</span><span class="mi">6</span><span class="p">;</span>
 </pre></div>
 </div>
-<p class="last">Common operations in this layer include <code class="docutils literal"><span class="pre">INSERT</span></code>, <code class="docutils literal"><span class="pre">UPDATE</span></code> and
-<code class="docutils literal"><span class="pre">DELETE</span></code>.</p>
+<p class="last">Common operations in this layer include <code class="docutils literal"><span class="pre">INSERT</span></code>, <code class="docutils literal"><span class="pre">UPDATE</span></code> and <code class="docutils literal"><span class="pre">DELETE</span></code>.</p>
 </dd>
 <dt>Data Query:</dt>
-<dd><p class="first">Statements in this subset concern the retrieval of data from within the
-database:</p>
+<dd><p class="first">Statements in this subset concern the retrieval of data from within the database:</p>
 <div class="highlight-psql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">c</span>
   <span class="k">FROM</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">setting_value</span> <span class="k">AS</span> <span class="n">interests</span><span class="p">,</span> <span class="n">user_id</span>
           <span class="k">FROM</span> <span class="n">user_settings</span>
@@ -614,29 +590,25 @@ database:</p>
 <p class="last"><code class="docutils literal"><span class="pre">SELECT</span></code> is the only operation in this layer.</p>
 </dd>
 </dl>
-<p>If you wish to learn more about SQL, you could run through
-<a class="reference external" href="http://www.postgresqltutorial.com/">this tutorial</a> or any of a large number
-of others online. But for now, that will be sufficient for your current
-purposes.</p>
+<p>If you wish to learn more about SQL, you could run through <a class="reference external" href="http://www.postgresqltutorial.com/">this tutorial</a> or any of a large number of others online.
+But for now, that will be sufficient for your current purposes.</p>
 </div>
 </div>
 <div class="section" id="sql-persistence-in-python">
 <h2>SQL Persistence in Python<a class="headerlink" href="#sql-persistence-in-python" title="Permalink to this headline">¶</a></h2>
-<p>In Python, <a class="reference external" href="http://www.python.org/dev/peps/pep-0249/">PEP 249</a> describes a
-common API for interacting with a database called DB-API 2.</p>
+<p>In Python, <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0249"><strong>PEP 249</strong></a> describes a common API for interacting with a database called DB-API 2.</p>
 <p>The goal was to</p>
 <blockquote>
 <div>achieve a consistency leading to more easily understood modules, code
 that is generally more portable across databases, and a broader reach
 of database connectivity from Python</div></blockquote>
 <p>source: <a class="reference external" href="http://www.python.org/dev/peps/pep-0248/">http://www.python.org/dev/peps/pep-0248/</a></p>
-<p>It is important to remember that PEP 249 is <strong>only a specification</strong>. There is
-no code or package for DB-API 2 on it&#8217;s own.</p>
-<p>Since 2.5, the Python Standard Library has provided a <a class="reference external" href="http://docs.python.org/2/library/sqlite3.html">reference
-implementation of the api</a>
-based on SQLite3. Before Python 2.5, this package was available as <code class="docutils literal"><span class="pre">pysqlite</span></code></p>
-<p>To use the DB API with any database other than SQLite3, you must have an
-underlying API package available. Implementations are available for:</p>
+<p>It is important to remember that PEP 249 is <strong>only a specification</strong>.
+There is no code or package for DB-API 2 on it&#8217;s own.</p>
+<p>Since 2.5, the Python Standard Library has provided a <a class="reference external" href="http://docs.python.org/2/library/sqlite3.html#module-sqlite3" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">reference</span> <span class="pre">implementation</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">api</span></code></a> (<a class="reference external" href="http://docs.python.org/3/library/sqlite3.html#module-sqlite3" title="(in Python v3.5)"><code class="xref py py-mod docutils literal"><span class="pre">py3</span></code></a>) based on SQLite3.
+Before Python 2.5, this package was available as <code class="docutils literal"><span class="pre">pysqlite</span></code>.</p>
+<p>To use the DB API with any database other than SQLite3, you must have an underlying API package available.
+Implementations are available for:</p>
 <ul class="simple">
 <li>PostgreSQL (<strong>psycopg2</strong>, txpostgres, ...)</li>
 <li>MySQL (<strong>mysql-python</strong>, PyMySQL, ...)</li>
@@ -651,26 +623,24 @@ $ pip install mysql-python
 ...
 </pre></div>
 </div>
-<p>However, most api packages will require that the development headers for the
-underlying database system be available. Without these, the C symbols required
-for communication with the db are not present and the wrapper cannot work.</p>
-<p>During class, we worked on getting PostgreSQL installed on our machines. During
-this tutorial, we&#8217;ll be using that RDBMS and the <code class="docutils literal"><span class="pre">psycopg2</span></code> implementation of
-DBAPI2.</p>
+<p>However, most api packages will require that the development headers for the underlying database system be available.
+Without these, the C symbols required for communication with the db are not present and the wrapper cannot work.</p>
 <div class="section" id="preprarations-for-class">
 <h3>Preprarations for Class<a class="headerlink" href="#preprarations-for-class" title="Permalink to this headline">¶</a></h3>
-<p>In class we will be exploring interacting with a database using raw SQL and a
-more advanced concept called an <code class="docutils literal"><span class="pre">ORM</span></code> or Object-Relational Mapper.</p>
-<p>The first step in working with PostgreSQL (or any RDBMS) is to create a
-database. Installing the PostgreSQL Software initializes the database system,
-but does not create a database for you to use. You must do this manually. You
-can use the provided <code class="docutils literal"><span class="pre">createdb</span></code> command to do so:</p>
+<p>In class we will be exploring interacting with a database using raw SQL and a more advanced concept called an <code class="docutils literal"><span class="pre">ORM</span></code> or Object-Relational Mapper.</p>
+<p>The first step in working with PostgreSQL (or any other RDBMS) is to install the database software.
+Follow along with <a class="reference external" href="https://www.codefellows.org/blogs/how-to-install-postgresql">this tutorial</a> to install PostgreSQL on your development machine.
+Do not follow any of the steps dealing with setting up Rails.
+You won&#8217;t need them.</p>
+<p>The second step is to create a database.
+Installing the PostgreSQL Software initializes the database system, but does not create a database for you to use.
+You must do this manually.
+You can use the provided <code class="docutils literal"><span class="pre">createdb</span></code> command to do so:</p>
 <div class="highlight-bash"><div class="highlight"><pre>$ createdb psycotest
 </pre></div>
 </div>
-<p>This will create a database called <cite>psycotest</cite> owned by the postgresql user
-with the same name as your current OS user. In class we&#8217;ll use this database to
-test out interacting via Python.</p>
+<p>This will create a database called <cite>psycotest</cite> owned by the postgresql user with the same name as your current OS user.
+In class we&#8217;ll use this database to test out interacting via Python.</p>
 <p>Check to be sure that the database is now present, using the psql command:</p>
 <div class="highlight-bash"><div class="highlight"><pre>heffalump:psycopg2 cewing$ psql
 psql <span class="o">(</span>9.3.2<span class="o">)</span>
@@ -697,22 +667,23 @@ Type <span class="s2">&quot;help&quot;</span> <span class="k">for</span> help.
 </pre></div>
 </div>
 <p>You won&#8217;t have a list so long, but you should see <code class="docutils literal"><span class="pre">psycotest</span></code> listed.</p>
-<p>The <code class="docutils literal"><span class="pre">psql</span></code> command opens an interactive shell in PostgreSQL (similar to the
-Python interpreter). While you are in this shell you are working directly in
-the database system. If you do not designate a specific database with the
-<code class="docutils literal"><span class="pre">-d</span></code> flag when connecting, you will be connected to a database with the same
-name as the user who is connecting.  If no such database exists, then psql will
-fail to start.</p>
+<p>The <code class="docutils literal"><span class="pre">psql</span></code> command opens an interactive shell in PostgreSQL (similar to the Python interpreter).
+While you are in this shell you are working directly in the database system.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If you do not designate a specific database with the <code class="docutils literal"><span class="pre">-d</span></code> flag when connecting, you will be connected to a database with the same name as the user who is connecting.
+If no such database exists, then psql will fail to start.</p>
+</div>
 <p>Once the psql shell starts, you can simply type SQL commands directly into it.
-Your commands will be executed in the database to which you are connected. The
-psql shell provides a number of other, special commands.  In the session above
-we can see some of them:</p>
+Your commands will be executed in the database to which you are connected.
+The psql shell provides a number of other, special commands.
+In the session above we can see some of them:</p>
 <ul class="simple">
 <li><em>l</em> lists all the databases present in the server.</li>
-<li><em>c</em> allows you to change the database you are interacting with. Give it a
-database name as an argument.</li>
-<li><em>d</em> describes the tables in a database. It can also take the name of one
-table as an argument, in which case it describes the columns in that table.</li>
+<li><em>c</em> allows you to change the database you are interacting with.
+Give it a database name as an argument.</li>
+<li><em>d</em> describes the tables in a database.
+It can also take the name of one table as an argument, in which case it describes the columns in that table.</li>
 <li><em>q</em> exits from the terminal and returns you to your normal shell session.</li>
 </ul>
 <p>There is <a class="reference external" href="http://www.postgresql.org/docs/9.4/static/app-psql.html">much more to learn about psql</a> but that will get you going for now.</p>
@@ -723,16 +694,14 @@ table as an argument, in which case it describes the columns in that table.</li>
 <p>The set of SQL commands that create and modify tables within a database is
 called the <strong>Data Definition Layer</strong>.</p>
 <p>We&#8217;ll create a simple two-table database to play with in class.</p>
-<p>At your psql command prompt, change the database you are interacting with to
-the <code class="docutils literal"><span class="pre">psycotest</span></code> one you created above:</p>
+<p>At your psql command prompt, change the database you are interacting with to the <code class="docutils literal"><span class="pre">psycotest</span></code> one you created above:</p>
 <div class="highlight-psql"><div class="highlight"><pre><span class="gp">cewing=#</span> <span class="kp">\c</span> <span class="ss">psycotest</span>
 <span class="go">You are now connected to database &quot;psycotest&quot; as user &quot;cewing&quot;.</span>
 <span class="gp">psycotest=#</span>
 </pre></div>
 </div>
-<p>Next, type the following SQL commands at the prompt.  You can press enter to
-get newlines that match, psql will not evaluate what you have typed until you
-use a semi-colon to terminate the statement:</p>
+<p>Next, type the following SQL commands at the prompt.
+You can press enter to get newlines that match, psql will not evaluate what you have typed until you use a semi-colon to terminate the statement:</p>
 <div class="highlight-psql"><div class="highlight"><pre><span class="gp">psycotest=#</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">author</span><span class="p">(</span>
 <span class="gp">psycotest(#</span>   <span class="n">authorid</span> <span class="nb">serial</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
 <span class="gp">psycotest(#</span>   <span class="k">name</span> <span class="nb">varchar</span> <span class="p">(</span><span class="mf">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span>
@@ -747,8 +716,7 @@ use a semi-colon to terminate the statement:</p>
 <span class="gp">psycotest=#</span>
 </pre></div>
 </div>
-<p>Now, when you use the <code class="docutils literal"><span class="pre">\d</span></code> command to show the tables in this database, you
-should see the two you just created:</p>
+<p>Now, when you use the <code class="docutils literal"><span class="pre">\d</span></code> command to show the tables in this database, you should see the two you just created:</p>
 <div class="highlight-psql"><div class="highlight"><pre><span class="gp">psycotest=#</span> <span class="kp">\d</span>
 <span class="go">                List of relations</span>
 <span class="go"> Schema |        Name         |   Type   | Owner</span>
@@ -762,28 +730,22 @@ should see the two you just created:</p>
 <span class="gp">psycotest=#</span>
 </pre></div>
 </div>
-<p>Notice that there are actually 4 <em>relations</em>. The two tables you created and
-two <em>sequences</em> with names that match our primary keys. These relations are how
-PostgreSQL generates sequential integers to serve as primary keys. When a new
-row is created in one of the tables, the next value in the sequence is used as
-the value of the primary key for that row.</p>
-<p>Each table then has a set of <code class="docutils literal"><span class="pre">columns</span></code>. These columns define the types of
-data that the table is concerned with.</p>
-<p>In both tables we have a <code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span></code> column.  This column is used to
-identify rows in the database and must contain unique values.  The data type
-<code class="docutils literal"><span class="pre">serial</span></code> helps to ensure this as it automatically assigns integer values
-starting with 1 and counting upwards.</p>
-<p>In both tables we also have a column containing <code class="docutils literal"><span class="pre">VARCHAR</span></code> data. This type
-requires that we designate the maximum size of the data that will be held here.
-Each of these columns is marked as <code class="docutils literal"><span class="pre">NOT</span> <span class="pre">NULL</span></code>, meaning that a value is
-required.</p>
-<p>Finally, in the <code class="docutils literal"><span class="pre">book</span></code> table there is an <code class="docutils literal"><span class="pre">INTEGER</span></code> column which
-<code class="docutils literal"><span class="pre">REFERENCES</span></code> a column in the other table. This creates a <em>Foreign Key</em>
-relationship between the two tables.</p>
-<p>Relationships such as this are central to SQL databases and are the reason such
-systems are called <strong>RDBMSs</strong>, or Relational Database Management Systems.</p>
-<p>Using the <code class="docutils literal"><span class="pre">\d</span></code> command with a table name argument, you can see the
-description of each of the tables you&#8217;ve created:</p>
+<p>Notice that there are actually 4 <em>relations</em>.
+The two tables you created and two <em>sequences</em> with names that match our primary keys.
+These relations are how PostgreSQL generates sequential integers to serve as primary keys.
+When a new row is created in one of the tables, the next value in the sequence is used as the value of the primary key for that row.</p>
+<p>Each table then has a set of <code class="docutils literal"><span class="pre">columns</span></code>.
+These columns define the types of data that the table is concerned with.</p>
+<p>In both tables we have a <code class="docutils literal"><span class="pre">PRIMARY</span> <span class="pre">KEY</span></code> column.
+This column is used to identify rows in the database and must contain unique values.
+The data type <code class="docutils literal"><span class="pre">serial</span></code> helps to ensure this as it automatically assigns integer values starting with 1 and counting upwards.</p>
+<p>In both tables we also have a column containing <code class="docutils literal"><span class="pre">VARCHAR</span></code> data.
+This type requires that we designate the maximum size of the data that will be held here.
+Each of these columns is marked as <code class="docutils literal"><span class="pre">NOT</span> <span class="pre">NULL</span></code>, meaning that a value is required.</p>
+<p>Finally, in the <code class="docutils literal"><span class="pre">book</span></code> table there is an <code class="docutils literal"><span class="pre">INTEGER</span></code> column which <code class="docutils literal"><span class="pre">REFERENCES</span></code> a column in the other table.
+This creates a <em>Foreign Key</em> relationship between the two tables.</p>
+<p>Relationships such as this are central to SQL databases and are the reason such systems are called <strong>RDBMSs</strong>, or Relational Database Management Systems.</p>
+<p>Using the <code class="docutils literal"><span class="pre">\d</span></code> command with a table name argument, you can see the description of each of the tables you&#8217;ve created:</p>
 <div class="highlight-psql"><div class="highlight"><pre><span class="gp">psycotest=#</span> <span class="kp">\d</span> <span class="ss">author</span>
 <span class="go">                                     Table &quot;public.author&quot;</span>
 <span class="go">  Column  |          Type          |                         Modifiers</span>
@@ -815,10 +777,10 @@ description of each of the tables you&#8217;ve created:</p>
 </div>
 <div class="section" id="working-environment">
 <h3>Working Environment<a class="headerlink" href="#working-environment" title="Permalink to this headline">¶</a></h3>
-<p>In class you&#8217;ll want to have a nice test environment available to work in. Your
-final task is to set that up.</p>
-<p>Begin by creating a virtualenv project called <code class="docutils literal"><span class="pre">psycopg2</span></code>:</p>
-<div class="highlight-bash"><div class="highlight"><pre>Banks:~ cewing$ mkproject psycopg2
+<p>In class you&#8217;ll want to have a nice test environment available to work in.
+Your final task is to set that up.</p>
+<p>Begin by creating a virtualenv called <code class="docutils literal"><span class="pre">psycopg2</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre>Banks:~ cewing$ virtualenv psycopg2
 New python executable in psycopg2/bin/python
 Installing setuptools, pip...done.
 Creating /Users/cewing/projects/psycopg2
@@ -827,8 +789,7 @@ Setting project <span class="k">for</span> psycopg2 to /Users/cewing/projects/ps
 Banks:psycopg2 cewing$
 </pre></div>
 </div>
-<p>Now that you&#8217;ve got the environment set up, and a project folder to work in, go
-ahead and install the software you&#8217;ll need for class:</p>
+<p>Now that you&#8217;ve got the environment set up, and a project folder to work in, go ahead and install the software you&#8217;ll need for class:</p>
 <div class="highlight-bash"><div class="highlight"><pre>Banks:psycopg cewing$ pip install psycopg2
 Collecting psycopg2
   ...

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python Learning Journal: Step 3 &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Implement a Deque in Python &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,9 +24,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
-    <link rel="next" title="Learning Journal, Final Submission" href="learning_journal_final.html" />
-    <link rel="prev" title="Python Learning Journal: Step 2" href="learning_journal_2.html" />
+    <link rel="next" title="Implement a Doubly-Linked List in Python" href="doubly_linked_list.html" />
+    <link rel="prev" title="Read Deliberately Practice Programming" href="deliberate_programming.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,13 +50,12 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="learning_journal_final.html" title="Learning Journal, Final Submission"
+          <a href="doubly_linked_list.html" title="Implement a Doubly-Linked List in Python"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="learning_journal_2.html" title="Python Learning Journal: Step 2"
+          <a href="deliberate_programming.html" title="Read Deliberately Practice Programming"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -180,26 +178,31 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="python-learning-journal-step-3">
-<h1>Python Learning Journal: Step 3<a class="headerlink" href="#python-learning-journal-step-3" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-get-an-amazon-aws-account"></span><p>You&#8217;ve been writing your nightly journal entries in a group journal.  It&#8217;s time
-you had one of your own.</p>
+<div class="section" id="implement-a-deque-in-python">
+<h1>Implement a Deque in Python<a class="headerlink" href="#implement-a-deque-in-python" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-implement-a-deque-in-python"></span><p>Begin by reading about the <a class="reference external" href="https://en.wikipedia.org/wiki/Double-ended_deque">Deque data structure</a>.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Work through the <a class="reference external" href="tutorials/learning_journal_3">final step</a> of the three part Assignment to create a Python Learning Journal in the Pyramid web microframework.</p>
-<p>Throughout the week you&#8217;ll be working with a partner to complete this application.
-However, each student must deploy their work to Heroku individually.</p>
+<p>When you&#8217;re done, create a new branch in your data structures repository.
+On that branch, write tests for and then implement a deque with the following features:</p>
+<ul class="simple">
+<li><strong>append(val)</strong>: adds value to the end of the deque</li>
+<li><strong>appendleft(val)</strong>: adds a value to the front of the deque</li>
+<li><strong>pop()</strong>: removes a value from the end of the deque and returns it (raises an exception if the deque is empty)</li>
+<li><strong>popleft()</strong>: removes a value from the front of the deque and returns it (raises an exception if the deque is empty)</li>
+<li><strong>peek()</strong>: returns the next value that would be returned by <code class="docutils literal"><span class="pre">pop</span></code> but leaves the value in the deque (returns None if the deque is empty)</li>
+<li><strong>peekleft()</strong>: returns the next value that would be returned by <code class="docutils literal"><span class="pre">popleft</span></code> but leaves the value in the deque (returns None if the deque is empty)</li>
+<li><strong>size()</strong>: returns the count of items in the queue (returns 0 if the queue is empty)</li>
+</ul>
+<p>As with the linked list and stack assignments before this, you may not use any existing Python implementation to create your deque.</p>
+<p>You should update the repository README with information about the deque you implemented, including any resources or collaborations you used.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When the work is done, take screen shots of your app as it runs online at Heroku.
-Submit that screenshot and a link to the pull request you created for the step3 branch.</p>
-<p>Use the comment feature in canvas to submit the following:</p>
-<ul class="simple">
-<li>At least one well-formed question about the work you did for this assignment</li>
-<li>At least one comment on what went well</li>
-<li>At least one comment on what was particularly difficult or challenging</li>
-</ul>
+<p>When your tasks are complete and all tests are passing, submit a pull request from your deque branch back to master.
+Copy the URL for that pull request and submit it.
+After you submit your assignment, you may merge your deque branch back to master.</p>
+<p>Use the comment feature in Canvas to submit questions, comments and reflections.</p>
 </div>
 </div>
 
@@ -211,7 +214,7 @@ Submit that screenshot and a link to the pull request you created for the step3 
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Python Learning Journal: Step 3</a><ul>
+<li><a class="reference internal" href="#">Implement a Deque in Python</a><ul>
 <li><a class="reference internal" href="#tasks">Tasks</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>
@@ -219,11 +222,11 @@ Submit that screenshot and a link to the pull request you created for the step3 
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="learning_journal_2.html"
-                        title="previous chapter">Python Learning Journal: Step 2</a></p>
+  <p class="topless"><a href="deliberate_programming.html"
+                        title="previous chapter">Read Deliberately Practice Programming</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="learning_journal_final.html"
-                        title="next chapter">Learning Journal, Final Submission</a></p>
+  <p class="topless"><a href="doubly_linked_list.html"
+                        title="next chapter">Implement a Doubly-Linked List in Python</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -248,13 +251,12 @@ Submit that screenshot and a link to the pull request you created for the step3 
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="learning_journal_final.html" title="Learning Journal, Final Submission"
+          <a href="doubly_linked_list.html" title="Implement a Doubly-Linked List in Python"
              >next</a> |</li>
         <li class="right" >
-          <a href="learning_journal_2.html" title="Python Learning Journal: Step 2"
+          <a href="deliberate_programming.html" title="Read Deliberately Practice Programming"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

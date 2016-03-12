@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python Learning Journal: Step 3 &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Learning Journal Mockups &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
     <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
-    <link rel="next" title="Learning Journal, Final Submission" href="learning_journal_final.html" />
-    <link rel="prev" title="Python Learning Journal: Step 2" href="learning_journal_2.html" />
+    <link rel="next" title="Python Learning Journal: Step 1" href="learning_journal_1.html" />
+    <link rel="prev" title="Introduction to SQL" href="intro_to_sql.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,10 +51,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="learning_journal_final.html" title="Learning Journal, Final Submission"
+          <a href="learning_journal_1.html" title="Python Learning Journal: Step 1"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="learning_journal_2.html" title="Python Learning Journal: Step 2"
+          <a href="intro_to_sql.html" title="Introduction to SQL"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
@@ -180,26 +180,45 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="python-learning-journal-step-3">
-<h1>Python Learning Journal: Step 3<a class="headerlink" href="#python-learning-journal-step-3" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-get-an-amazon-aws-account"></span><p>You&#8217;ve been writing your nightly journal entries in a group journal.  It&#8217;s time
-you had one of your own.</p>
+<div class="section" id="learning-journal-mockups">
+<h1>Learning Journal Mockups<a class="headerlink" href="#learning-journal-mockups" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-learning-journal-mockups"></span><p>Over the first weeks of this course, you&#8217;ve been using the class learning journal for your daily journal entries.
+It&#8217;s time now to begin working on a journal of your own.</p>
+<p>You&#8217;ll be spending quite a bit of time looking at this journal, so you might as well make it look nice and behave well.
+To that end, I want you to make a mockup of the site in HTML and CSS.
+A mockup is a functional HTML prototype of the site you want to create.
+It should look like a real site, with forms, buttons and navigation links, but with no actual functionality.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Work through the <a class="reference external" href="tutorials/learning_journal_3">final step</a> of the three part Assignment to create a Python Learning Journal in the Pyramid web microframework.</p>
-<p>Throughout the week you&#8217;ll be working with a partner to complete this application.
-However, each student must deploy their work to Heroku individually.</p>
+<p>Create a Repository in GitHub called learning-journal.  The repository should have a README.md file and a standard Python .gitignore file. Clone the repository to your development machine. In the repository, create a new folder called mockups. In that folder, create four HTML files and a CSS stylesheet with the following specifications:</p>
+<ul class="simple">
+<li>The first should be a home page that shows a list of journal entries with just the title and date created.</li>
+<li>The second should be a detail page that shows a single entry.
+The title, text and created date should be displayed on this page.</li>
+<li>The third should be an HTML form page you will use to create a new entry.
+The title and text of the entry should be inputs in this form, empty at first.</li>
+<li>The fourth should be an HTML form page you will use to edit an existing entry.
+The title and text of the entry should be inputs in this form as well, pre-populated with the text from an entry.</li>
+<li>Each entry in the list on the home page should have a link that leads to the detail page.</li>
+<li>The home page should also have a UI element that allows you to start to create a new entry.
+It should link to the page with the create form.</li>
+<li>The detail page should have a UI element that allows editing the entry.
+It should link to the edit form page.</li>
+<li>There should be a UI element that leads back to the home page from anywhere in the site.</li>
+<li>You should make an effort to make the pages in your mockup look as unified as possible.
+Ensure that there is a common header, footer and navigation system shared among all the pages.</li>
+</ul>
+<p>You must also include a CSS stylesheet in your repository that contains the styles needed to display the site.
+If any javascript is required for the site to function properly, make sure it is included as well.</p>
+<p>The HTML mockup pages should use this stylesheet via a &#8220;link&#8221; tag in the HTML head section.</p>
+<p>You may use pre-existing CSS frameworks, like Bootstrap or Zurb Foundation, if you like.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When the work is done, take screen shots of your app as it runs online at Heroku.
-Submit that screenshot and a link to the pull request you created for the step3 branch.</p>
-<p>Use the comment feature in canvas to submit the following:</p>
-<ul class="simple">
-<li>At least one well-formed question about the work you did for this assignment</li>
-<li>At least one comment on what went well</li>
-<li>At least one comment on what was particularly difficult or challenging</li>
-</ul>
+<p>When you are satisfied with your mockup, please submit a link to the repository URL in GitHub.
+I will clone your repository and verify that it displays correctly and has all the required elements.</p>
+<p>Make the site as pleasing and personally attractive as you can.
+As I said earlier, you&#8217;ll be seeing a lot of the site during the course.</p>
 </div>
 </div>
 
@@ -211,7 +230,7 @@ Submit that screenshot and a link to the pull request you created for the step3 
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Python Learning Journal: Step 3</a><ul>
+<li><a class="reference internal" href="#">Learning Journal Mockups</a><ul>
 <li><a class="reference internal" href="#tasks">Tasks</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>
@@ -219,11 +238,11 @@ Submit that screenshot and a link to the pull request you created for the step3 
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="learning_journal_2.html"
-                        title="previous chapter">Python Learning Journal: Step 2</a></p>
+  <p class="topless"><a href="intro_to_sql.html"
+                        title="previous chapter">Introduction to SQL</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="learning_journal_final.html"
-                        title="next chapter">Learning Journal, Final Submission</a></p>
+  <p class="topless"><a href="learning_journal_1.html"
+                        title="next chapter">Python Learning Journal: Step 1</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -248,10 +267,10 @@ Submit that screenshot and a link to the pull request you created for the step3 
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="learning_journal_final.html" title="Learning Journal, Final Submission"
+          <a href="learning_journal_1.html" title="Python Learning Journal: Step 1"
              >next</a> |</li>
         <li class="right" >
-          <a href="learning_journal_2.html" title="Python Learning Journal: Step 2"
+          <a href="intro_to_sql.html" title="Introduction to SQL"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 

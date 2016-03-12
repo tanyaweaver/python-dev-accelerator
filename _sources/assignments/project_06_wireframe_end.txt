@@ -29,7 +29,7 @@ These will help to inform your creation of User Stories as preparations for proj
 Submitting Your Work
 ====================
 
-If you have created wireframes online, please submit a link to them (in progress is fine, they need not be complete yet).
+If you have created wireframes online, please submit a link to them.
 
 If you have created pen-and-paper wireframes, take a quick picture of them and upload that.
 

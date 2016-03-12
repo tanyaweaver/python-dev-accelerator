@@ -1,3 +1,15 @@
+.. slideconf::
+    :autoslides: False
+
+***************************
+Implement a Graph in Python
+***************************
+
+.. slide:: Implement a Graph in Python
+    :level: 1
+
+    This document contains no slides.
+
 Read a bit about the `Graph data structure <http://en.wikipedia.org/wiki/Graph_(abstract_data_type)>`_.
 
 Tasks

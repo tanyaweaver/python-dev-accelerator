@@ -11,7 +11,7 @@ Python.  However you may wish to bookmark the `postgreSQL documentation`_ and
 the `psycopg2 documentation`_ for future reference.
 
 .. _psycopg2 documentation: http://initd.org/psycopg/docs/
-.. _postgreSQL documentation: http://www.postgresql.org/docs/9.3/static/index.html
+.. _postgreSQL documentation: http://www.postgresql.org/docs/9.4/static/index.html
 
 
 Begin by activating the virtualenv we created in class:
