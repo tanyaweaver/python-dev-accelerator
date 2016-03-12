@@ -13,4 +13,5 @@ Friday
 Assignments
 ===========
 
+* :doc:`/assignments/learning_journal_mockup`
 * :doc:`/assignments/daily_lj_entry`

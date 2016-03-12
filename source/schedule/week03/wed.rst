@@ -36,3 +36,5 @@ Assignments
 
 * :doc:`/assignments/priority_queue`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/learning_journal_mockup` (due Thursday)
+* :doc:`/assignments/blog_post_outline` (due Friday)
