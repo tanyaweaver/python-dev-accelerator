@@ -18,8 +18,8 @@ Readings
 
 These readings will support the work you do on Thursday
 
-* `Renderers in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/renderers.html>`_
-* `Template Handling in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/templates.html>`_
+* `Session Handling in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/sessions.html>`_
+* `Handle Security in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/security.html>`_
 * `Static Assets in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/assets.html>`_
 
 Review
@@ -27,6 +27,14 @@ Review
 
 Concepts
 ========
+
+* Templates and template inheritance in Jinja2
+* View callables in Pyramid
+* Form handling in web applications
+* Testing views
+
+    - Unit tests
+    - Functional tests
 
 Demo
 ====

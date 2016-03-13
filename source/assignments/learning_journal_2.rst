@@ -20,10 +20,12 @@ Begin your work by creating a new ``step2`` branch in which to do today's work.
 
 With your partner, create and configure the following views for your learning journal:
 
-* The list view will display a list of all the entries in your learning journal, ordered so that the most recent is first.
+* The ``list`` view will display a list of all the entries in your learning journal, ordered so that the most recent is first.
   It should show only the titles and creation dates for each entry.
   This view should be the home page for your journal.
-* The detail view will display a single entry.
+* The ``detail`` view will display a single entry.
+* The ``add_entry`` view will display an empty form for a new entry.
+  When the form is submitted, the view will create a new entry and return the user to the detail view of that entry.
 
 The titles for each entry on the list must be a link.
 When clicked, the link should take the viewer to the detail view for that entry.

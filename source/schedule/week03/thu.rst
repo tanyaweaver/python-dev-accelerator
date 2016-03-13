@@ -16,15 +16,19 @@ Objectives
 Readings
 ========
 
-These readings will support the work you do on Friday.
-
-* `Handle Security in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/security.html>`_
+* `Deploying Pyramid to Heroku <http://docs.pylonsproject.org/projects/pyramid-cookbook/en/latest/deployment/heroku.html>`_
 
 Review
 ======
 
 Concepts
 ========
+
+* Authentication and authorization in Pyramid
+* Sessions in Pyramid
+* Cross-Site Request Forgery (and how to avoid it)
+* The 12-Factor application and ``os.environ``
+* Deploying Pyramid to Heroku
 
 Demo
 ====

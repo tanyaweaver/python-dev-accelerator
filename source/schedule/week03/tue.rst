@@ -21,12 +21,18 @@ These readings will support the work you do on Wednesday.
 * `Request Processing in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/router.html>`_
 * `Routes and URL Dispatch in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/urldispatch.html>`_
 * `View Callables in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/views.html>`_
+* `Renderers in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/renderers.html>`_
+* `Template Handling in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/templates.html>`_
 
 Review
 ======
 
 Concepts
 ========
+
+Database Sessions
+Testing with Databases
+
 
 Demo
 ====
