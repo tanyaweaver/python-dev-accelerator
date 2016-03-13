@@ -27,6 +27,7 @@ Concepts
 * Authentication and authorization in Pyramid
 * Sessions in Pyramid
 * Cross-Site Request Forgery (and how to avoid it)
+* The importance of password encryption (and how to accomplish it)
 * The 12-Factor application and ``os.environ``
 * Deploying Pyramid to Heroku
 
