@@ -32,7 +32,9 @@ Demo
 Assignments
 ===========
 
-* :doc:`/assignments/learning_journal_mockup`
+* :doc:`/assignments/learning_journal_3`
 * :doc:`/assignments/graph_1`
+* :doc:`/assignments/learning_journal_mockup`
+* :doc:`/assignments/project_04_readme`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/blog_post_outline` (due Friday)

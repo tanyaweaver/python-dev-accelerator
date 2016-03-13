@@ -37,6 +37,7 @@ Assignments
 * :doc:`/assignments/learning_journal_1`
 * :doc:`/assignments/binary_heap`
 * :doc:`/assignments/project_02_idea`
+* :doc:`/assignments/intro_to_jinja2`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/learning_journal_mockup` (due Thursday)
 * :doc:`/assignments/blog_post_outline` (due Friday)

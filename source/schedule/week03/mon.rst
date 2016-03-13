@@ -26,6 +26,7 @@ These readings will support the work you do on Tuesday:
 
 * `The SQLAlchemy ORM Tutorial <http://docs.sqlalchemy.org/en/rel_1_0/orm/tutorial.html>`_
   (Read up to and including the `section on querying <http://docs.sqlalchemy.org/en/rel_1_0/orm/tutorial.html#querying>`_)
+* `Command-Line Pyramid: The Interactive Shell <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/commandline.html#the-interactive-shell>`_
 
 Review
 ======

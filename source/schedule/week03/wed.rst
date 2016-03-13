@@ -34,7 +34,10 @@ Demo
 Assignments
 ===========
 
+
+* :doc:`/assignments/learning_journal_2`
 * :doc:`/assignments/priority_queue`
+* :doc:`/assignments/project_03_repo`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/learning_journal_mockup` (due Thursday)
 * :doc:`/assignments/blog_post_outline` (due Friday)
