@@ -10,8 +10,6 @@ Introduction to Jinja2 Templating
 
     This document contains no slides.
 
-Read this :doc:`Introduction to Jinja2 Templates <../readings/jinja2_walkthrough>`
-in preparation for your work on part 2 of the learning journal assignment.
+Read this :doc:`Introduction to Jinja2 Templates </assignments/tutorials/jinja2_walkthrough>` in preparation for your work on part 2 of the learning journal assignment.
 
-Submit questions, concerns and reflections about the topics covered using the
-text box.
+Submit questions, concerns and reflections about the topics covered using the text box.

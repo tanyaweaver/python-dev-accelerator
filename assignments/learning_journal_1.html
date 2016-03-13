@@ -186,15 +186,37 @@ div.nboutput  > :nth-child(2).stderr {
 It&#8217;s time you had one of your own.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Work through the <a class="reference external" href="tutorials/learning_journal_1">first step</a> of the three part Assignment to create a Python Learning Journal in the Pyramid web microframework.</p>
-<p>Throughout the week you&#8217;ll be working with a partner to complete this application.
-However, each student must deploy their work to Heroku individually.</p>
+<p>If you do not already have one, create a <code class="docutils literal"><span class="pre">learning-journal</span></code> repository in github.
+Add the application skeleton created in class to this repository.
+Ensure that the repository also contains a good Python <code class="docutils literal"><span class="pre">.gitignore</span></code> file and an appropriate OSS license.</p>
+<p>Once the basics are in place, create a new branch (<code class="docutils literal"><span class="pre">step1</span></code>) for today&#8217;s work.
+Do your work on this branch.</p>
+<p>Using what you learned today, both in class and in your readings, accomplish the following tasks for your learning journal:</p>
+<ul class="simple">
+<li>Remove the existing <code class="docutils literal"><span class="pre">MyModel</span></code> class from your <code class="docutils literal"><span class="pre">models.py</span></code> module.</li>
+<li>Create an <code class="docutils literal"><span class="pre">Entry</span></code> model in the <code class="docutils literal"><span class="pre">models.py</span></code> file.
+Your model must have the following attributes:<ul>
+<li>An integer <em>primary key</em> field called <code class="docutils literal"><span class="pre">id</span></code></li>
+<li>A <code class="docutils literal"><span class="pre">title</span></code> field which is required, must be unique, and is at most 128 characters in length
+(the title should explicitly accept unicode characters)</li>
+<li>A <code class="docutils literal"><span class="pre">text</span></code> field which is required and is of unlimited length
+(the text should explicitly accept unicode characters)</li>
+<li>A <code class="docutils literal"><span class="pre">created</span></code> field which represents the date and time at which an entry was created
+(the date should default to the current date and time, and should be stored in UTC, not local time)</li>
+</ul>
+</li>
+<li>Update the <code class="docutils literal"><span class="pre">initalize_db</span></code> script in your application (in the <code class="docutils literal"><span class="pre">scripts</span></code> directory) so that it does not create any new objects by default.</li>
+<li>Update the name of the entry point for the <code class="docutils literal"><span class="pre">initialize_db</span></code> script to something sane, perhaps <code class="docutils literal"><span class="pre">initialize_db</span></code>.</li>
+<li>Enhance the <code class="docutils literal"><span class="pre">pshell</span></code> command to allow you immediate access in an interactive session to your Entry model and a database session.</li>
+</ul>
+<p>For all the tasks having to do with your <code class="docutils literal"><span class="pre">Entry</span></code> model, ensure that you have tests in place that demonstrate that the model works as expected.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When the work is done, take screen shots of your app as it runs online at Heroku.
-Submit that screenshot and a link to the pull request you created for the step1 branch.</p>
-<p>Use the comment feature in canvas to submit the following:</p>
+<p>When you are done and all your tests are passing both in Python 2.7 and 3.5, push your work to GitHub and submit a pull request from the step1 branch back to master.
+Copy the URL of the pull request and submit it to Canvas.
+After you&#8217;ve created the pull request you may merge the step1 branch back to master.</p>
+<p>Use the comment feature in Canvas to add the following:</p>
 <ul class="simple">
 <li>At least one well-formed question about the work you did for this assignment</li>
 <li>At least one comment on what went well</li>

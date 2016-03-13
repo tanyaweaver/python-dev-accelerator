@@ -182,18 +182,37 @@ div.nboutput  > :nth-child(2).stderr {
 </style>
 <div class="section" id="python-learning-journal-step-3">
 <h1>Python Learning Journal: Step 3<a class="headerlink" href="#python-learning-journal-step-3" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-get-an-amazon-aws-account"></span><p>You&#8217;ve been writing your nightly journal entries in a group journal.  It&#8217;s time
-you had one of your own.</p>
+<span class="admonition-get-an-amazon-aws-account"></span><p>You&#8217;ve been writing your nightly journal entries in a group journal.
+It&#8217;s time you had one of your own.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Work through the <a class="reference external" href="tutorials/learning_journal_3">final step</a> of the three part Assignment to create a Python Learning Journal in the Pyramid web microframework.</p>
+<p>Begin by opening a new branch <code class="docutils literal"><span class="pre">step3</span></code> for the work in this assignment.</p>
+<p>With your partner, create and configure the following views for your learning journal:</p>
+<ul class="simple">
+<li>The <code class="docutils literal"><span class="pre">edit_entry</span></code> view will display a form populated with the values from an existing entry.
+When the form is submitted, the view will update the existing entry with the newly submitted values.</li>
+<li>The <code class="docutils literal"><span class="pre">login</span></code> view will display a form with inputs for username and password
+When the form is submitted, the view will validate the provided credentials and if validation passes, authenticate the user.</li>
+<li>The <code class="docutils literal"><span class="pre">logout</span></code> view will remove all authentication data, returning the viewer to an anonymous state.</li>
+</ul>
+<p>The <code class="docutils literal"><span class="pre">add_entry</span></code> and <code class="docutils literal"><span class="pre">edit_entry</span></code> views should be configured to be visible <em>only</em> to authenticated users.
+Additionally, the application should hide any links or buttons leading to these views if the user is not authenticated.</p>
+<p>Ensure that both the <code class="docutils literal"><span class="pre">add_entry</span></code> and <code class="docutils literal"><span class="pre">edit_entry</span></code> views are protected against CSRF attacks.</p>
+<p>Make sure that you have both <em>unit</em> and <em>functional</em> tests that demonstrate the full functionality of these three views.
+In particular, ensure that the access controls you have implemented work.
+Be sure that you cannot see the pages for adding or editing entries unless you have logged in.</p>
 <p>Throughout the week you&#8217;ll be working with a partner to complete this application.
 However, each student must deploy their work to Heroku individually.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When the work is done, take screen shots of your app as it runs online at Heroku.
-Submit that screenshot and a link to the pull request you created for the step3 branch.</p>
+<p>When your work is done and all tests are passing, push your work to GitHub.
+Open a new pull request from the <code class="docutils literal"><span class="pre">step3</span></code> branch to your master branch.
+Copy the URL for that pull request.</p>
+<p>Then merge the pull request so that you can deploy to heroku.
+Take screen shots of your app as it runs online at Heroku.
+Each partner will need to deploy to Heroku separately.</p>
+<p>Submit that screenshot and a link to the pull request you created for the step3 branch.</p>
 <p>Use the comment feature in canvas to submit the following:</p>
 <ul class="simple">
 <li>At least one well-formed question about the work you did for this assignment</li>

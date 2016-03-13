@@ -571,5 +571,3 @@ Next, we'll learn about how to use these underlying API packages through the
 lens of an Object Relational Manager, providing us with more automatic
 connections between our Python object layer and the underlying persistence
 model.
-
-

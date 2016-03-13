@@ -1,3 +1,5 @@
+:orphan:
+
 *******************
 Introduction to SQL
 *******************
@@ -358,9 +360,9 @@ The first step in working with PostgreSQL (or any other RDBMS) is to install the
 
 If you are using **OS X**, please follow `these steps <http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/>`_ to install PostgreSQL via `homebrew <http://brew.sh/>`_.
 
-If you are using **ubuntu linux**, please follow `these steps <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04>`_. Stop after the section ``Create a New Role`` (make a role with the same name as your login user).
+If you are using **ubuntu linux**, please follow `these instructions <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04>`_. Stop after the section ``Create a New Role`` (make a role with the same name as your login user).
 
-If you are using **windows**, follow `these steps <http://www.postgresqltutorial.com/install-postgresql/>`_.
+If you are using **windows**, follow `the steps here <http://www.postgresqltutorial.com/install-postgresql/>`_.
 
 Create a Database
 *****************

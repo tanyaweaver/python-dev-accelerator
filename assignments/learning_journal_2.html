@@ -182,18 +182,33 @@ div.nboutput  > :nth-child(2).stderr {
 </style>
 <div class="section" id="python-learning-journal-step-2">
 <h1>Python Learning Journal: Step 2<a class="headerlink" href="#python-learning-journal-step-2" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-python-learning-journal-step-2"></span><p>You&#8217;ve been writing your nightly journal entries in a group journal.  It&#8217;s time
-you had one of your own.</p>
+<span class="admonition-python-learning-journal-step-2"></span><p>You&#8217;ve been writing your nightly journal entries in a group journal.
+It&#8217;s time you had one of your own.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Work through the <a class="reference external" href="tutorials/learning_journal_2">second step</a> of the three part Assignment to create a Python Learning Journal in the Pyramid web microframework.</p>
-<p>Throughout the week you&#8217;ll be working with a partner to complete this application.
-However, each student must deploy their work to Heroku individually.</p>
+<p>Begin your work by creating a new <code class="docutils literal"><span class="pre">step2</span></code> branch in which to do today&#8217;s work.</p>
+<p>With your partner, create and configure the following views for your learning journal:</p>
+<ul class="simple">
+<li>The <code class="docutils literal"><span class="pre">list</span></code> view will display a list of all the entries in your learning journal, ordered so that the most recent is first.
+It should show only the titles and creation dates for each entry.
+This view should be the home page for your journal.</li>
+<li>The <code class="docutils literal"><span class="pre">detail</span></code> view will display a single entry.</li>
+<li>The <code class="docutils literal"><span class="pre">add_entry</span></code> view will display an empty form for a new entry.
+When the form is submitted, the view will create a new entry and return the user to the detail view of that entry.</li>
+</ul>
+<p>The titles for each entry on the list must be a link.
+When clicked, the link should take the viewer to the detail view for that entry.</p>
+<p>Ensure that there is a &#8220;home&#8221; button visible on both pages that returns the viewer to the home page.</p>
+<p>Your views should be tested.
+Write both <em>unit</em> tests of the view functions themselves, and <em>functional</em> tests that show the configured system works properly.</p>
+<p>You are working with a partner to complete this application.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When the work is done, take screen shots of your app as it runs online at Heroku.
-Submit that screenshot and a link to the pull request you created for the step2 branch.</p>
+<p>When your work is done and all your tests are passing, push all your work to GitHub.
+Open a new pull request from the <code class="docutils literal"><span class="pre">step2</span></code> branch to master.
+Submit the URL of that pull request to Canvas.</p>
+<p>Finally, merge your pull request to prepare for the work in <a class="reference internal" href="learning_journal_3.html"><em>Python Learning Journal: Step 3</em></a>.</p>
 <p>Use the comment feature in canvas to submit the following:</p>
 <ul class="simple">
 <li>At least one well-formed question about the work you did for this assignment</li>

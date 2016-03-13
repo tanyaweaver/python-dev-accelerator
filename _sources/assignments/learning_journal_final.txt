@@ -10,13 +10,16 @@ Learning Journal, Final Submission
 
     This document contains no slides.
 
-Take the time to complete the work of building your learning journal.
-Incorporate the mockups you've been working on.
-Update the adding of entries so that you use a separate page, rather than the form in the list page from the tutorial.
+Tasks
+=====
 
-Do your work on a branch, ensuring that your master branch is kept safe.
-Write tests for new views you create, and adjust existing tests to match your mockups.
-Make a pull request back to your master branch when you are finished and deploy your completed work to Heroku.
+In this step you will finish up the last bits of your learning journal work.
+Once you have completed all the work in steps 1-3, make sure you have merged all your shared work to master and have both deployed to heroku.
+Make sure you have good test coverage of your work and that everything is working well.
+Attach a domain name to your running Heroku app so that you can visit your learning journal at a real domain rather than the generated app URL from heroku.
+
+Submitting Your Work
+====================
 
 Finally, for your submission, a special pull request.
 
@@ -47,4 +50,18 @@ This will result in a pull request containing all the code you've written during
 To submit this assignment, use the text box to add two links.
 One will be the link to your pull request in github.
 The other will be the link to your deployed learning journal on Heroku.
-Please ensure that you have DNS set up so that the link is not a Heroku app link, but your own domain name.
+**Please ensure** that you have DNS set up so that the link is not a Heroku app link, but your own domain name.
+
+After Submitting
+================
+
+Once you have submitted the final learning journal assignment there is one more step to take.
+Your work on this assignment with your partner is finished.
+You will each proceed from here alone.
+
+First, fork the repository for the learning journal from the account where it lives into the other partner's account.
+Once this is finished, each partner will have a separate copy of the journal (though they are still officially connected by github).
+Each of you should spend the rest of the day (and the weekend) updating the templates for your copy of the journal to use the HTML mockups :doc:`you've been working on </assignments/learning_journal_mockup>`.
+Take pride in your accomplishment.
+Make sure it looks nice and works well.
+From now on, deploy updates to heroku from your own fork.
