@@ -250,11 +250,13 @@ Thus far, we haven't actually committed a transaction. If we open a second
 terminal and fire up the psql shell program, we can see that the data we've
 inserted is not yet *in* our database:
 
-.. code-block:: psql
+.. code-block:: bash
 
     heffalump:training.python_web cewing$ psql -d psycotest
     psql (9.3.2)
     Type "help" for help.
+
+.. code-block:: psql
 
     psycotest=# \d
                     List of relations
@@ -571,3 +573,5 @@ Next, we'll learn about how to use these underlying API packages through the
 lens of an Object Relational Manager, providing us with more automatic
 connections between our Python object layer and the underlying persistence
 model.
+
+For reference, please download :download:`the ORM code </downloads/basic_sqla_models.py>` required to interact with this book/author database.

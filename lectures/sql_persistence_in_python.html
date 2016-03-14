@@ -372,26 +372,27 @@ the results hit the database.</p>
 <p>Thus far, we haven&#8217;t actually committed a transaction. If we open a second
 terminal and fire up the psql shell program, we can see that the data we&#8217;ve
 inserted is not yet <em>in</em> our database:</p>
-<div class="highlight-psql"><div class="highlight"><pre>heffalump:training.python_web cewing$ psql -d psycotest
-psql (9.3.2)
-Type &quot;help&quot; for help.
+<div class="highlight-bash"><div class="highlight"><pre>heffalump:training.python_web cewing$ psql -d psycotest
+psql <span class="o">(</span>9.3.2<span class="o">)</span>
+Type <span class="s2">&quot;help&quot;</span> <span class="k">for</span> help.
+</pre></div>
+</div>
+<div class="highlight-psql"><div class="highlight"><pre><span class="gp">psycotest=#</span> <span class="kp">\d</span>
+<span class="go">                List of relations</span>
+<span class="go"> Schema |        Name         |   Type   | Owner</span>
+<span class="go">--------+---------------------+----------+--------</span>
+<span class="go"> public | author              | table    | cewing</span>
+<span class="go"> public | author_authorid_seq | sequence | cewing</span>
+<span class="go"> public | book                | table    | cewing</span>
+<span class="go"> public | book_bookid_seq     | sequence | cewing</span>
+<span class="go">(4 rows)</span>
 
-psycotest=# \d
-                List of relations
- Schema |        Name         |   Type   | Owner
---------+---------------------+----------+--------
- public | author              | table    | cewing
- public | author_authorid_seq | sequence | cewing
- public | book                | table    | cewing
- public | book_bookid_seq     | sequence | cewing
-(4 rows)
+<span class="gp">psycotest=#</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">author</span><span class="p">;</span>
+<span class="go"> authorid | name</span>
+<span class="go">----------+------</span>
+<span class="go">(0 rows)</span>
 
-psycotest=# select * from author;
- authorid | name
-----------+------
-(0 rows)
-
-psycotest=#
+<span class="gp">psycotest=#</span>
 </pre></div>
 </div>
 <p>In order for the values we&#8217;ve inserted to actually be persisted to the
@@ -667,6 +668,7 @@ from one API packge to another.</p>
 lens of an Object Relational Manager, providing us with more automatic
 connections between our Python object layer and the underlying persistence
 model.</p>
+<p>For reference, please download <a class="reference download internal" href="../_downloads/basic_sqla_models.py"><code class="xref download docutils literal"><span class="pre">the</span> <span class="pre">ORM</span> <span class="pre">code</span></code></a> required to interact with this book/author database.</p>
 </div>
 </div>
 
