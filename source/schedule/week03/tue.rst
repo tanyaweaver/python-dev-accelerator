@@ -31,9 +31,29 @@ Concepts
 ========
 
 * Getting Started with Pyramid
+
+    - Installing Pyramid
+    - Additional Packages Used by Pyramid
+    - Writing a "hello world" app
+    - Using the ``pcreate`` function to create a scaffold
+    - Using the ``pshell`` command to work interactively
+
 * Understanding the layout of a Pyramid Project
+
+    - What files are created in a scaffold
+    - Pyramid apps as "distributions"
+    - Pyramid's use of "entry points"
+
 * Database Sessions
+
+    - Scoped sessions and the request/response cycle
+    - Understanding session management and transactions
+
 * Testing with Databases, pytest and fixtures.
+
+    - Strategies for testing "models"
+    - Creating fixtures to manage database sessions
+    - Differences between testing and running
 
 
 Demo
