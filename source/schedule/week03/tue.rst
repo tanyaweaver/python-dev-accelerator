@@ -30,8 +30,10 @@ Review
 Concepts
 ========
 
-Database Sessions
-Testing with Databases
+* Getting Started with Pyramid
+* Understanding the layout of a Pyramid Project
+* Database Sessions
+* Testing with Databases, pytest and fixtures.
 
 
 Demo
