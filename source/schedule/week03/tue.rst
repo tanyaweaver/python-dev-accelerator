@@ -65,6 +65,8 @@ Concepts
 Demo
 ====
 
+* :download:`Pyramid Database Test Fixtures </downloads/pyramid_db_fixtures.py>`
+
 Assignments
 ===========
 
