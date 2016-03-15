@@ -376,7 +376,7 @@ Common Pyramid Context
 Keyword arguments you pass to ``render_template`` become the *context* passed
 to the template for rendering.
 
-Pyramid will `add values`_ to the *context* for jinja2 templates, including the
+Pyramid will :ref:`add values <pyramid:renderer_system_values>` to the *context* for jinja2 templates, including the
 ``request`` object. Within pyramid, the request object is a single location
 where you can access other important information like:
 
@@ -387,16 +387,11 @@ where you can access other important information like:
 * **route_url**: you can easily *reverse* urls from within your templates with
   ``request.route_url``.
 
-and much much more. The Pyramid ``request`` supports an `entire ecosystem`_ of
+and much much more. The Pyramid ``request`` supports an :ref:`entire ecosystem <pyramid:request_module>` of
 properties and methods that can come in useful.
-
-.. _add values: http://docs.pylonsproject.org/projects/pyramid/en/1.5-branch/narr/templates.html#system-values-used-during-rendering
-.. _entire ecosystem: http://docs.pylonsproject.org/docs/pyramid/en/latest/api/request.html
 
 
 Much, Much More
 ===============
 
-Make sure that you bookmark the Jinja2 documentation for later use::
-
-    http://jinja.pocoo.org/docs/templates/
+Make sure that you bookmark the `Jinja2 documentation <http://jinja.pocoo.org/docs/templates/>`_ for later use.
