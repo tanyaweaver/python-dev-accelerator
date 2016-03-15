@@ -13,6 +13,12 @@ Tuesday
 Objectives
 ==========
 
+* Learn about the ``heap`` data structure and its properties
+* Understand how to start a Pyramid project
+* Get familiar with how Pyramid works at a high level
+* Learn the way that database sessions are connected to the request/response cycle in Pyramid
+* Establish a model for testing database models within the world of pytest
+
 Readings
 ========
 
