@@ -13,6 +13,12 @@ Tuesday
 Objectives
 ==========
 
+* Learn about the ``heap`` data structure and its properties
+* Understand how to start a Pyramid project
+* Get familiar with how Pyramid works at a high level
+* Learn the way that database sessions are connected to the request/response cycle in Pyramid
+* Establish a model for testing database models within the world of pytest
+
 Readings
 ========
 
@@ -30,8 +36,30 @@ Review
 Concepts
 ========
 
-Database Sessions
-Testing with Databases
+* Getting Started with Pyramid
+
+    - Installing Pyramid
+    - Additional Packages Used by Pyramid
+    - Writing a "hello world" app
+    - Using the ``pcreate`` function to create a scaffold
+    - Using the ``pshell`` command to work interactively
+
+* Understanding the layout of a Pyramid Project
+
+    - What files are created in a scaffold
+    - Pyramid apps as "distributions"
+    - Pyramid's use of "entry points"
+
+* Database Sessions
+
+    - Scoped sessions and the request/response cycle
+    - Understanding session management and transactions
+
+* Testing with Databases, pytest and fixtures.
+
+    - Strategies for testing "models"
+    - Creating fixtures to manage database sessions
+    - Differences between testing and running
 
 
 Demo
