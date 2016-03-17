@@ -6,38 +6,39 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Friday &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Graphs &mdash; Python Dev Accelerator 2.0 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
+        URL_ROOT:    '../',
         VERSION:     '2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
-    <link rel="next" title="Manage AWS Resources with Boto" href="../../lectures/boto.html" />
-    <link rel="prev" title="Graph Sample" href="../../lectures/graph_example.html" />
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="Thursday" href="../schedule/week03/thu.html" />
+    <link rel="next" title="Graph Sample" href="graph_example.html" />
+    <link rel="prev" title="Thursday" href="../schedule/week03/thu.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
-<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
 
   </head>
   <body role="document">
 <div class="header">
   <div class="logo">
-    <a href="../../index.html">
-      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
       <p>Code Fellows</p>
     </a>
   </div>
@@ -47,15 +48,16 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../lectures/boto.html" title="Manage AWS Resources with Boto"
+          <a href="graph_example.html" title="Graph Sample"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/graph_example.html" title="Graph Sample"
+          <a href="../schedule/week03/thu.html" title="Thursday"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week03/thu.html" accesskey="U">Thursday</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -178,23 +180,47 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="friday">
-<h1>Friday<a class="headerlink" href="#friday" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-course-presentations"></span><div class="section" id="readings">
-<h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
-<p>These readings will support the work you begin on Monday</p>
+<div class="section" id="Graphs">
+<h1>Graphs<a class="headerlink" href="#Graphs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Motivation">
+<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
+<p>“Thus you see, most noble sir, how this type of solution bears little
+relationship to mathematics and I do not understand why you expect a
+mathematician to produce it rather than anyone else, for the solution is
+based on reason alone, and its discovery does not depend on any
+mathematical principle. Because of this, I do not know why even
+questions which bear so little relationship to mathematics are solved
+more quickly by mathematicians than by others. In the meantime most
+noble sir, you have a assigned this question to the geometry of position
+but I am ignorant as to what this new discipline involves, and as to
+which types of problem Leibniz and Wolff expected to see expressed this
+way.”</p>
+<p>— Leonhard Euler, describing the Königsberg bridge problem bridge
+problem in a letter to Carl Leonhard Gottlieb Ehler (April 3, 1736)</p>
+</div>
+<div class="section" id="Definition">
+<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
+<p>A graph is a set of {vertices, nodes, points} and a collection of
+{edges, lines, arcs} that each connect a pair of vertices.</p>
+</div>
+<div class="section" id="Attributes">
+<h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/sessions.html">Session Handling in Pyramid</a></li>
-<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/security.html">Handle Security in Pyramid</a></li>
+<li>nodes</li>
+<li>edges</li>
 </ul>
 </div>
-<div class="section" id="assignments">
-<h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Operations">
+<h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../../assignments/project_05_wireframe_begin.html"><em>Group Project: Begin Wireframes</em></a></li>
-<li><a class="reference internal" href="../../assignments/learning_journal_4.html"><em>Python Learning Journal: Step 4</em></a></li>
-<li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
-<li><a class="reference internal" href="../../assignments/blog_post_outline.html"><em>Technical Blog Post: Outline a Post</em></a></li>
+<li>add_node(node)</li>
+<li>add_edge(node1, node2)</li>
+<li>del_node(node)</li>
+<li>del_edge(node1, node2)</li>
+<li>has_node(node)</li>
+<li>has_edge(node1, node2)</li>
+<li>neigbhors(node)</li>
+<li>is_adjacent(node1, node2)</li>
 </ul>
 </div>
 </div>
@@ -205,24 +231,26 @@ div.nboutput  > :nth-child(2).stderr {
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Friday</a><ul>
-<li><a class="reference internal" href="#readings">Readings</a></li>
-<li><a class="reference internal" href="#assignments">Assignments</a></li>
+<li><a class="reference internal" href="#">Graphs</a><ul>
+<li><a class="reference internal" href="#Motivation">Motivation</a></li>
+<li><a class="reference internal" href="#Definition">Definition</a></li>
+<li><a class="reference internal" href="#Attributes">Attributes</a></li>
+<li><a class="reference internal" href="#Operations">Operations</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../../lectures/graph_example.html"
-                        title="previous chapter">Graph Sample</a></p>
+  <p class="topless"><a href="../schedule/week03/thu.html"
+                        title="previous chapter">Thursday</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../../lectures/boto.html"
-                        title="next chapter">Manage AWS Resources with Boto</a></p>
+  <p class="topless"><a href="graph_example.html"
+                        title="next chapter">Graph Sample</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -241,15 +269,16 @@ div.nboutput  > :nth-child(2).stderr {
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../lectures/boto.html" title="Manage AWS Resources with Boto"
+          <a href="graph_example.html" title="Graph Sample"
              >next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/graph_example.html" title="Graph Sample"
+          <a href="../schedule/week03/thu.html" title="Thursday"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week03/thu.html" >Thursday</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

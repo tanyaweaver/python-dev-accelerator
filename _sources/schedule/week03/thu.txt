@@ -25,6 +25,12 @@ Review
 Concepts
 ========
 
+.. toctree::
+   :maxdepth: 2
+
+   /lectures/graphs
+   /lectures/graph_example
+
 * Form handling in web applications
 * Testing views
 
