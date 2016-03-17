@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python Learning Journal: Step 3 &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Python Learning Journal: Security &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
     <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
-    <link rel="next" title="Python Learning Journal: Step 4" href="learning_journal_4.html" />
-    <link rel="prev" title="Python Learning Journal: Step 2" href="learning_journal_2.html" />
+    <link rel="next" title="Python Learning Journal: Deployment" href="learning_journal_6.html" />
+    <link rel="prev" title="Python Learning Journal: Step 4" href="learning_journal_4.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,10 +51,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="learning_journal_4.html" title="Python Learning Journal: Step 4"
+          <a href="learning_journal_6.html" title="Python Learning Journal: Deployment"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="learning_journal_2.html" title="Python Learning Journal: Step 2"
+          <a href="learning_journal_4.html" title="Python Learning Journal: Step 4"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
@@ -180,38 +180,37 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="python-learning-journal-step-3">
-<h1>Python Learning Journal: Step 3<a class="headerlink" href="#python-learning-journal-step-3" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-get-an-amazon-aws-account"></span><p>You&#8217;ve been writing your nightly journal entries in a group journal.
-It&#8217;s time you had one of your own.</p>
+<div class="section" id="python-learning-journal-security">
+<h1>Python Learning Journal: Security<a class="headerlink" href="#python-learning-journal-security" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-python-learning-journal-security"></span><p>This weeks learning journal assignments should be done on your own.
+You may consult with your classmates, but do the work in your own fork of the journal project.
+Each partner should submit a different pull request URL.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Begin by opening a new branch <code class="docutils literal"><span class="pre">step3</span></code> for the work in this assignment.</p>
-<p>With your partner, create and configure the following views for your learning journal:</p>
+<p>Begin by opening a new branch <code class="docutils literal"><span class="pre">security</span></code> for the work in this assignment.</p>
+<p>For this part of the assignment you will implement the security layer of your learning journal.
+Create an <code class="docutils literal"><span class="pre">ACL</span></code> that grants the <code class="docutils literal"><span class="pre">view</span></code> permission to any visitor and the <code class="docutils literal"><span class="pre">edit</span></code> and <code class="docutils literal"><span class="pre">create</span></code> permissions only to authenticated users.
+Configure an authentication system that will allow a single user to log in to the site if they provide a password.
+Do not store the password anywhere in plain text.</p>
+<p>Next, add two views that provide login/logout functionality</p>
 <ul class="simple">
-<li>The <code class="docutils literal"><span class="pre">add_entry</span></code> view will display an empty form for a new entry.
-When the form is submitted, the view will create a new entry and return the user to the detail view of that entry.</li>
-<li>The <code class="docutils literal"><span class="pre">edit_entry</span></code> view will display a form populated with the values from an existing entry.
-When the form is submitted, the view will update the existing entry with the newly submitted values.</li>
+<li>The <code class="docutils literal"><span class="pre">login</span></code> view will display a form with inputs for username and password
+When the form is submitted, the view will validate the provided credentials and if validation passes, authenticate the user.</li>
+<li>The <code class="docutils literal"><span class="pre">logout</span></code> view will remove all authentication data, returning the viewer to an anonymous state.</li>
 </ul>
-<p>Ensure that there is a link to your <code class="docutils literal"><span class="pre">add_entry</span></code> view visible on the front page of the site.
-Ensure that on each detail page there is a link leading to the <code class="docutils literal"><span class="pre">edit_entry</span></code> view for that entry.</p>
-<p>When adding or editing an entry ensure that you can use <em>markdown</em> to format your entry text.
-You should be able to format and colorize code examples using github-style fenced code blocks with three ticks:</p>
-<div class="highlight-python"><div class="highlight"><pre>```python
-def exp(x, y):
-    return x ** y
-```
-</pre></div>
-</div>
-<p>Make sure that you have both <em>unit</em> and <em>functional</em> tests that demonstrate the functionality of these views.</p>
+<p>Now that you have authentication and authorization, use it protect those parts of your application that are sensitive.
+Using the <code class="docutils literal"><span class="pre">create</span></code> and <code class="docutils literal"><span class="pre">edit</span></code> permissions, ensure that no buttons leading to the creating or editing of entries are visible to anonymous users.
+Also ensure that the views themselves are not accessible.</p>
+<p>Finally, ensure that both the <code class="docutils literal"><span class="pre">create</span></code> and <code class="docutils literal"><span class="pre">edit</span></code> forms for your journal are protected from CSRF attacks as described in class.</p>
+<p>Add tests or update your existing tests to cover this new functionality.
+Ensure that the access controls you have implemented work.
+Be sure that you cannot see or access the pages for adding or editing entries unless you have logged in.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When your work is done and all tests are passing, push your work to GitHub.
-Open a new pull request from the <code class="docutils literal"><span class="pre">step3</span></code> branch to your master branch.
-Copy the URL for that pull request.</p>
-<p>Submit a link to the pull request you created for the step3 branch.</p>
+<p>When your work is complete and all your tests are passing, push your work to your fork of the repository in GitHub.
+Open a pull request from the <code class="docutils literal"><span class="pre">security</span></code> branch to <code class="docutils literal"><span class="pre">master</span></code>.
+Submit the URL for that pull request.</p>
 <p>Use the comment feature in canvas to submit the following:</p>
 <ul class="simple">
 <li>At least one well-formed question about the work you did for this assignment</li>
@@ -229,7 +228,7 @@ Copy the URL for that pull request.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Python Learning Journal: Step 3</a><ul>
+<li><a class="reference internal" href="#">Python Learning Journal: Security</a><ul>
 <li><a class="reference internal" href="#tasks">Tasks</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>
@@ -237,11 +236,11 @@ Copy the URL for that pull request.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="learning_journal_2.html"
-                        title="previous chapter">Python Learning Journal: Step 2</a></p>
-  <h4>Next topic</h4>
   <p class="topless"><a href="learning_journal_4.html"
-                        title="next chapter">Python Learning Journal: Step 4</a></p>
+                        title="previous chapter">Python Learning Journal: Step 4</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="learning_journal_6.html"
+                        title="next chapter">Python Learning Journal: Deployment</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -266,10 +265,10 @@ Copy the URL for that pull request.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="learning_journal_4.html" title="Python Learning Journal: Step 4"
+          <a href="learning_journal_6.html" title="Python Learning Journal: Deployment"
              >next</a> |</li>
         <li class="right" >
-          <a href="learning_journal_2.html" title="Python Learning Journal: Step 2"
+          <a href="learning_journal_4.html" title="Python Learning Journal: Step 4"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 

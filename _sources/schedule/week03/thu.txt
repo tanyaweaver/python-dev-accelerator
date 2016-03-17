@@ -16,7 +16,8 @@ Objectives
 Readings
 ========
 
-* `Deploying Pyramid to Heroku <http://docs.pylonsproject.org/projects/pyramid-cookbook/en/latest/deployment/heroku.html>`_
+* `WTForms Crash Course <https://wtforms.readthedocs.org/en/latest/crash_course.html>`_
+* `Consider Jinja2 Macros for Form Rendering <http://jinja.pocoo.org/docs/dev/templates/#macros>`_
 
 Review
 ======
@@ -24,12 +25,11 @@ Review
 Concepts
 ========
 
-* Authentication and authorization in Pyramid
-* Sessions in Pyramid
-* Cross-Site Request Forgery (and how to avoid it)
-* The importance of password encryption (and how to accomplish it)
-* The 12-Factor application and ``os.environ``
-* Deploying Pyramid to Heroku
+* Form handling in web applications
+* Testing views
+
+    - Unit tests
+    - Functional tests
 
 Demo
 ====

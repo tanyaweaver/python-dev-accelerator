@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python Learning Journal: Step 3 &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Python Learning Journal: Step 4 &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
     <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
-    <link rel="next" title="Python Learning Journal: Step 4" href="learning_journal_4.html" />
-    <link rel="prev" title="Python Learning Journal: Step 2" href="learning_journal_2.html" />
+    <link rel="next" title="Python Learning Journal: Security" href="learning_journal_5.html" />
+    <link rel="prev" title="Python Learning Journal: Step 3" href="learning_journal_3.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,10 +51,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="learning_journal_4.html" title="Python Learning Journal: Step 4"
+          <a href="learning_journal_5.html" title="Python Learning Journal: Security"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="learning_journal_2.html" title="Python Learning Journal: Step 2"
+          <a href="learning_journal_3.html" title="Python Learning Journal: Step 3"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
@@ -180,44 +180,55 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="python-learning-journal-step-3">
-<h1>Python Learning Journal: Step 3<a class="headerlink" href="#python-learning-journal-step-3" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-get-an-amazon-aws-account"></span><p>You&#8217;ve been writing your nightly journal entries in a group journal.
+<div class="section" id="python-learning-journal-step-4">
+<h1>Python Learning Journal: Step 4<a class="headerlink" href="#python-learning-journal-step-4" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-python-learning-journal-step-4"></span><p>You&#8217;ve been writing your nightly journal entries in a group journal.
 It&#8217;s time you had one of your own.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Begin by opening a new branch <code class="docutils literal"><span class="pre">step3</span></code> for the work in this assignment.</p>
-<p>With your partner, create and configure the following views for your learning journal:</p>
-<ul class="simple">
-<li>The <code class="docutils literal"><span class="pre">add_entry</span></code> view will display an empty form for a new entry.
-When the form is submitted, the view will create a new entry and return the user to the detail view of that entry.</li>
-<li>The <code class="docutils literal"><span class="pre">edit_entry</span></code> view will display a form populated with the values from an existing entry.
-When the form is submitted, the view will update the existing entry with the newly submitted values.</li>
-</ul>
-<p>Ensure that there is a link to your <code class="docutils literal"><span class="pre">add_entry</span></code> view visible on the front page of the site.
-Ensure that on each detail page there is a link leading to the <code class="docutils literal"><span class="pre">edit_entry</span></code> view for that entry.</p>
-<p>When adding or editing an entry ensure that you can use <em>markdown</em> to format your entry text.
-You should be able to format and colorize code examples using github-style fenced code blocks with three ticks:</p>
-<div class="highlight-python"><div class="highlight"><pre>```python
-def exp(x, y):
-    return x ** y
-```
-</pre></div>
-</div>
-<p>Make sure that you have both <em>unit</em> and <em>functional</em> tests that demonstrate the functionality of these views.</p>
+<p>Clean up the work you&#8217;ve done so far for your learning journal.
+Ensure that your tests are working properly and that the entire app functions equally well in Python 2 and Python 3.
+Use <code class="docutils literal"><span class="pre">pytest-cov</span></code> to calculate the coverage of your project code.
+Strive to get at least 90% coverage.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When your work is done and all tests are passing, push your work to GitHub.
-Open a new pull request from the <code class="docutils literal"><span class="pre">step3</span></code> branch to your master branch.
-Copy the URL for that pull request.</p>
-<p>Submit a link to the pull request you created for the step3 branch.</p>
+<p>Finally, for your submission, a special pull request.</p>
+<p>On your development machine, check out the last commit you made to the learning-journal repository prior to starting work on step one of the learning journal tutorial.
+You can do so by providing the commit hash as the argument to <code class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ git checkout 1a39dc40
+</pre></div>
+</div>
+<p>Once you&#8217;ve made that checkout, you will see that you are in &#8220;detached HEAD&#8221; state.
+From here create a new branch called start:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ git checkout -b start
+</pre></div>
+</div>
+<p>Then, push this branch up to your repository in github:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ git push -u origin start
+</pre></div>
+</div>
+<p>Finally, make a pull request in github from your master branch to the new start branch.
+This will result in a pull request containing all the code you&#8217;ve written during the tutorial.
+<strong>Do not merge this pull request</strong>.</p>
+<p>To submit this assignment, submit the link to this special &#8220;reverse pull request&#8221;.</p>
 <p>Use the comment feature in canvas to submit the following:</p>
 <ul class="simple">
 <li>At least one well-formed question about the work you did for this assignment</li>
 <li>At least one comment on what went well</li>
 <li>At least one comment on what was particularly difficult or challenging</li>
 </ul>
+</div>
+<div class="section" id="after-submitting">
+<h2>After Submitting<a class="headerlink" href="#after-submitting" title="Permalink to this headline">¶</a></h2>
+<p>Once you have submitted this end-of-week learning journal assignment there is one more step to take.
+Your work on this assignment with your partner is finished.
+You will each proceed from here alone.</p>
+<p>First, fork the repository for the learning journal from the account where it lives into the other partner&#8217;s account.
+Once this is finished, each partner will have a separate copy of the journal (though they are still officially connected by github).
+Each of you should spend the rest of the day (and the weekend) updating the templates for your copy of the journal to use the HTML mockups <a class="reference internal" href="learning_journal_mockup.html"><em>you&#8217;ve been working on</em></a>.
+Take pride in your accomplishment.
+Make sure it looks nice and works well.</p>
 </div>
 </div>
 
@@ -229,19 +240,20 @@ Copy the URL for that pull request.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Python Learning Journal: Step 3</a><ul>
+<li><a class="reference internal" href="#">Python Learning Journal: Step 4</a><ul>
 <li><a class="reference internal" href="#tasks">Tasks</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+<li><a class="reference internal" href="#after-submitting">After Submitting</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="learning_journal_2.html"
-                        title="previous chapter">Python Learning Journal: Step 2</a></p>
+  <p class="topless"><a href="learning_journal_3.html"
+                        title="previous chapter">Python Learning Journal: Step 3</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="learning_journal_4.html"
-                        title="next chapter">Python Learning Journal: Step 4</a></p>
+  <p class="topless"><a href="learning_journal_5.html"
+                        title="next chapter">Python Learning Journal: Security</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -266,10 +278,10 @@ Copy the URL for that pull request.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="learning_journal_4.html" title="Python Learning Journal: Step 4"
+          <a href="learning_journal_5.html" title="Python Learning Journal: Security"
              >next</a> |</li>
         <li class="right" >
-          <a href="learning_journal_2.html" title="Python Learning Journal: Step 2"
+          <a href="learning_journal_3.html" title="Python Learning Journal: Step 3"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 

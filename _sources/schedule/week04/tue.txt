@@ -22,6 +22,9 @@ Review
 Concepts
 ========
 
+* The 12-Factor application and ``os.environ``
+* Deploying Pyramid to Heroku
+
 Demo
 ====
 

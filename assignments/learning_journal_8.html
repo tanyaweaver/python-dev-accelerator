@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python Learning Journal: Step 3 &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Python Learning Journal: Prior Entries &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
     <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
-    <link rel="next" title="Python Learning Journal: Step 4" href="learning_journal_4.html" />
-    <link rel="prev" title="Python Learning Journal: Step 2" href="learning_journal_2.html" />
+    <link rel="next" title="Learning Journal, Final Submission" href="learning_journal_final.html" />
+    <link rel="prev" title="Python Learning Journal: AJAX &amp; Twitter" href="learning_journal_7.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,10 +51,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="learning_journal_4.html" title="Python Learning Journal: Step 4"
+          <a href="learning_journal_final.html" title="Learning Journal, Final Submission"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="learning_journal_2.html" title="Python Learning Journal: Step 2"
+          <a href="learning_journal_7.html" title="Python Learning Journal: AJAX &amp; Twitter"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
@@ -180,44 +180,36 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="python-learning-journal-step-3">
-<h1>Python Learning Journal: Step 3<a class="headerlink" href="#python-learning-journal-step-3" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-get-an-amazon-aws-account"></span><p>You&#8217;ve been writing your nightly journal entries in a group journal.
-It&#8217;s time you had one of your own.</p>
+<div class="section" id="python-learning-journal-prior-entries">
+<h1>Python Learning Journal: Prior Entries<a class="headerlink" href="#python-learning-journal-prior-entries" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-python-learning-journal-prior-entries"></span><p>This weeks learning journal assignments should be done on your own.
+You may consult with your classmates, but do the work in your own fork of the journal project.
+Each partner should submit a different pull request URL.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Begin by opening a new branch <code class="docutils literal"><span class="pre">step3</span></code> for the work in this assignment.</p>
-<p>With your partner, create and configure the following views for your learning journal:</p>
-<ul class="simple">
-<li>The <code class="docutils literal"><span class="pre">add_entry</span></code> view will display an empty form for a new entry.
-When the form is submitted, the view will create a new entry and return the user to the detail view of that entry.</li>
-<li>The <code class="docutils literal"><span class="pre">edit_entry</span></code> view will display a form populated with the values from an existing entry.
-When the form is submitted, the view will update the existing entry with the newly submitted values.</li>
-</ul>
-<p>Ensure that there is a link to your <code class="docutils literal"><span class="pre">add_entry</span></code> view visible on the front page of the site.
-Ensure that on each detail page there is a link leading to the <code class="docutils literal"><span class="pre">edit_entry</span></code> view for that entry.</p>
-<p>When adding or editing an entry ensure that you can use <em>markdown</em> to format your entry text.
-You should be able to format and colorize code examples using github-style fenced code blocks with three ticks:</p>
-<div class="highlight-python"><div class="highlight"><pre>```python
-def exp(x, y):
-    return x ** y
-```
-</pre></div>
-</div>
-<p>Make sure that you have both <em>unit</em> and <em>functional</em> tests that demonstrate the functionality of these views.</p>
+<p>This week you&#8217;ve completed and deployed your own Python learning journal.
+You should now be writing your nightly journal entries in your own journal deployed publicly.
+However, you still have entries from the first part of class that are hidden in the shared class journal.</p>
+<p>Begin by creating a new branch <code class="docutils literal"><span class="pre">api-script</span></code> in your repository.
+Do your work for this assignment in the branch.</p>
+<p>As described in lecture, the shared class journal has an API that allows you to extract your journal entries as JSON.
+Write a script that will use the <a class="reference external" href="http://docs.python-requests.org/en/master/">requests</a>  library to retrieve this data.
+The script should then parse the JSON and insert each entry into your database.
+You must protect against inserting duplicate entries so that the script can be run safely multiple times.
+As final output, your script should print the number of entries inserted to the terminal.</p>
+<p>Factor the code you write to be testable.
+Write extensive tests to demonstrate that the script functions as expected.
+Ensure that you test for failure modes as well, and that your database is protected against corruption.</p>
+<p>Finally, add an entry point for your script so that it can be run from the command line.</p>
+<p>Once you&#8217;ve submitted your pull request and merged (see below), deploy these changes to Heroku.
+Run the script on Heroku to populate your live database with your entries from the shared class journal.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When your work is done and all tests are passing, push your work to GitHub.
-Open a new pull request from the <code class="docutils literal"><span class="pre">step3</span></code> branch to your master branch.
-Copy the URL for that pull request.</p>
-<p>Submit a link to the pull request you created for the step3 branch.</p>
-<p>Use the comment feature in canvas to submit the following:</p>
-<ul class="simple">
-<li>At least one well-formed question about the work you did for this assignment</li>
-<li>At least one comment on what went well</li>
-<li>At least one comment on what was particularly difficult or challenging</li>
-</ul>
+<p>When you have finished your work and all your tests are passing, push your changes to GitHub.
+Open a pull request to master and submit a link to that pull request.
+Afterwards, merge your changes to master so you can deploy to Heroku.</p>
+<p>Finally, after deploying take a screenshot showing the first entry you ever wrote in the shared learning journal as it appears now in your personal journal.</p>
 </div>
 </div>
 
@@ -229,7 +221,7 @@ Copy the URL for that pull request.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Python Learning Journal: Step 3</a><ul>
+<li><a class="reference internal" href="#">Python Learning Journal: Prior Entries</a><ul>
 <li><a class="reference internal" href="#tasks">Tasks</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>
@@ -237,11 +229,11 @@ Copy the URL for that pull request.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="learning_journal_2.html"
-                        title="previous chapter">Python Learning Journal: Step 2</a></p>
+  <p class="topless"><a href="learning_journal_7.html"
+                        title="previous chapter">Python Learning Journal: AJAX &amp; Twitter</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="learning_journal_4.html"
-                        title="next chapter">Python Learning Journal: Step 4</a></p>
+  <p class="topless"><a href="learning_journal_final.html"
+                        title="next chapter">Learning Journal, Final Submission</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -266,10 +258,10 @@ Copy the URL for that pull request.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="learning_journal_4.html" title="Python Learning Journal: Step 4"
+          <a href="learning_journal_final.html" title="Learning Journal, Final Submission"
              >next</a> |</li>
         <li class="right" >
-          <a href="learning_journal_2.html" title="Python Learning Journal: Step 2"
+          <a href="learning_journal_7.html" title="Python Learning Journal: AJAX &amp; Twitter"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 
