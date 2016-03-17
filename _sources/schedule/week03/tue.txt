@@ -36,6 +36,12 @@ Review
 Concepts
 ========
 
+.. toctree::
+   :maxdepth: 2
+
+   /lectures/heap
+   /lectures/max_heap_example
+
 * Getting Started with Pyramid
 
     - Installing Pyramid
