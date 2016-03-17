@@ -10,10 +10,18 @@ Friday
 
     This document contains no slides.
 
+Readings
+========
+
+These readings will support the work you begin on Monday
+
+* `Session Handling in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/sessions.html>`_
+* `Handle Security in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/security.html>`_
+
 Assignments
 ===========
 
 * :doc:`/assignments/project_05_wireframe_begin`
-* :doc:`/assignments/learning_journal_final`
+* :doc:`/assignments/learning_journal_4`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/blog_post_outline`
