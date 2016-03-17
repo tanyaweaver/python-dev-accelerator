@@ -26,6 +26,11 @@ Review
 Concepts
 ========
 
+.. toctree::
+   :maxdepth: 2
+
+   /lectures/priority_queue
+
 * Templates and template inheritance in Jinja2
 * View callables in Pyramid
 
