@@ -31,3 +31,7 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/learning_journal_6`
+* :doc:`/assignments/mashup_1_scraper`
+* :doc:`/assignments/project_07_stories_begin`
+* :doc:`/assignments/daily_lj_entry`
