@@ -227,11 +227,11 @@ Week 03
 .. include:: schedule/week03/index.rst
     :start-line: 12
 
-.. Week 04
-.. -------
+Week 04
+-------
 
-.. .. include:: schedule/week04/index.rst
-..     :start-line: 12
+.. include:: schedule/week04/index.rst
+    :start-line: 12
 
 .. Week 05
 .. -------
