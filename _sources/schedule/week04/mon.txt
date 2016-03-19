@@ -37,3 +37,10 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/graph_2_traversal`
+* :doc:`/assignments/learning_journal_5`
+* :doc:`/assignments/project_06_wireframe_end`
+* :doc:`/assignments/daily_lj_entry`
+
+* :doc:`/assignments/mashup_1_scraper` (Due Tuesday)
+* :doc:`/assignments/git_workflow` (Due Friday)

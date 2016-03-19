@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Implement Graph Traversals &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Graph: Find the Shortest Path &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="next" title="Graph: Implement Weighted Edges" href="graph_3_weighted.html" />
-    <link rel="prev" title="Implement a Graph in Python" href="graph_1.html" />
+    <link rel="next" title="Sign Up for a Hacker News Account" href="hacker_news_account.html" />
+    <link rel="prev" title="Graph: Implement Weighted Edges" href="graph_3_weighted.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -50,10 +50,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="graph_3_weighted.html" title="Graph: Implement Weighted Edges"
+          <a href="hacker_news_account.html" title="Sign Up for a Hacker News Account"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="graph_1.html" title="Implement a Graph in Python"
+          <a href="graph_3_weighted.html" title="Graph: Implement Weighted Edges"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
@@ -178,31 +178,26 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="implement-graph-traversals">
-<h1>Implement Graph Traversals<a class="headerlink" href="#implement-graph-traversals" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-implement-graph-traversals"></span><p>Read a bit about <a class="reference external" href="http://en.wikipedia.org/wiki/Graph_traversal">graph traversal</a>, <a class="reference external" href="http://en.wikipedia.org/wiki/Depth-first_search">depth-first search</a> and <a class="reference external" href="http://en.wikipedia.org/wiki/Breadth-first_search">breadth-first search</a>.</p>
-<div class="section" id="tasks">
+<div class="section" id="graph-find-the-shortest-path">
+<h1>Graph: Find the Shortest Path<a class="headerlink" href="#graph-find-the-shortest-path" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-graph-find-the-shortest-path"></span><div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>When you&#8217;ve got an idea of how these work, create a new branch in your data_structures repository.
-On that branch, add a pair of new methods to your graph implementation.</p>
-<ul class="simple">
-<li><strong>g.depth_first_traversal(start)</strong>: Perform a full depth-first traversal of the graph beginning at start.
-Return the full visited path when traversal is complete.</li>
-<li><strong>g.breadth_first_traversal(start)</strong>: Perform a full breadth-first traversal of the graph, beginning at start.
-Return the full visited path when traversal is complete.</li>
-</ul>
-<p>In addition, write some demonstration code in an <code class="docutils literal"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">'__main__':</span></code> block at the end of your file that shows how the two methods of traversal compare to each other when performed on the same graph.
-See if you can demonstrate the performance characteristics of the two methods over a variety of graph structures.</p>
-<p>If your graph is cyclic, each method should avoid getting trapped in loops.</p>
-<p>Write tests that prove that your methods work for both cyclic and non-cyclic graphs, etc.</p>
-<p>Update your README with information about your implementations, as well as any references or collaborations you used in completing the work.</p>
+<p>Read about the <a class="reference external" href="http://en.wikipedia.org/wiki/Shortest_path_problem">Shortest Path Problem</a> in graph traversal.
+On that page you&#8217;ll find a list of six algorithms for solving the problem.
+Your task is to implement two of these as methods on your weighted graph.</p>
+<p>You must implement Dijkstra&#8217;s algorithm, since this is one that is most commonly referenced in interviews.
+After that, the choice of the second algorithm is up to you.</p>
+<p>Write tests that demonstrate that your algorithms correctly solve the problem under a variety of circumstances.</p>
+<p>Do your work on a new branch in your data-structures repository.
+If you have not yet merged your work on weighted edges, you&#8217;ll need to branch off of that branch in order to get that version of your graph as a starting point.</p>
+<p>Update your README with a description of the algorithms you implement.
+Include a paragraph describing the factors that might lead you to choose one or the other.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When you are finished with your work and the tests are passing, create a Pull request from your new branch back to master.
-Copy the URL and submit it.
-You may then merge your branch back to master.</p>
-<p>As usual, add any, questions, concerns or reflections on this work using the comment feature in Canvas.</p>
+<p>When you are finished with your work and all your tests are passing, create a new pull request from your branch to master.
+Submit the URL from that pull request.
+When you&#8217;re done with that, you can merge the branch back, but do not delete the working branch until your assignment has been graded.</p>
 </div>
 </div>
 
@@ -214,7 +209,7 @@ You may then merge your branch back to master.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Implement Graph Traversals</a><ul>
+<li><a class="reference internal" href="#">Graph: Find the Shortest Path</a><ul>
 <li><a class="reference internal" href="#tasks">Tasks</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>
@@ -222,11 +217,11 @@ You may then merge your branch back to master.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="graph_1.html"
-                        title="previous chapter">Implement a Graph in Python</a></p>
-  <h4>Next topic</h4>
   <p class="topless"><a href="graph_3_weighted.html"
-                        title="next chapter">Graph: Implement Weighted Edges</a></p>
+                        title="previous chapter">Graph: Implement Weighted Edges</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="hacker_news_account.html"
+                        title="next chapter">Sign Up for a Hacker News Account</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -251,10 +246,10 @@ You may then merge your branch back to master.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="graph_3_weighted.html" title="Graph: Implement Weighted Edges"
+          <a href="hacker_news_account.html" title="Sign Up for a Hacker News Account"
              >next</a> |</li>
         <li class="right" >
-          <a href="graph_1.html" title="Implement a Graph in Python"
+          <a href="graph_3_weighted.html" title="Graph: Implement Weighted Edges"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>

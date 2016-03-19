@@ -13,13 +13,9 @@ Git Workflows
 When you begin working collaboratively with other developers, the workflow with
 which you handle your changes becomes important.
 
-For this assignment, you'll be sitting down with your data structures partner
-and creating a step-by-step Git workflow. The purpose of writing out a Git
-workflow is to keep yourself from making mindless mistakes, and also have a
-plan on keeping your git history and git branches neat and well-named. It may
-not seem essential with only 2 people working on a 2-file repository, but
-you'll want it badly when you're working with 5 people on a complex project
-during project week.
+For this assignment, you'll be sitting down with your project team and creating a step-by-step Git workflow.
+The purpose of writing out a Git workflow is to keep yourself from making mindless mistakes, and also have a plan on keeping your git history and git branches neat and well-named.
+It may not seem essential with only 2 people working on a 2-file repository, but you'll want it badly when you're working with 5 people on a complex project during project week.
 
 Tasks
 =====
@@ -31,7 +27,7 @@ each? What sorts of work might each facilitate or make more difficult?
 .. _this comparison of several git workflows: https://www.atlassian.com/git/tutorials/comparing-workflows/
 
 Once you have read up on several options, come up with a git workflow you will
-use with your partner. Document this workflow, and then use it.
+use with your team. Document this workflow, and then use it.
 
 What I'm expecting:
 

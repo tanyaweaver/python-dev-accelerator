@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Implement Graph Traversals &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Graph: Implement Weighted Edges &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="next" title="Graph: Implement Weighted Edges" href="graph_3_weighted.html" />
-    <link rel="prev" title="Implement a Graph in Python" href="graph_1.html" />
+    <link rel="next" title="Sign Up for a Hacker News Account" href="hacker_news_account.html" />
+    <link rel="prev" title="Implement Graph Traversals" href="graph_2_traversal.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -50,10 +50,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="graph_3_weighted.html" title="Graph: Implement Weighted Edges"
+          <a href="hacker_news_account.html" title="Sign Up for a Hacker News Account"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="graph_1.html" title="Implement a Graph in Python"
+          <a href="graph_2_traversal.html" title="Implement Graph Traversals"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
@@ -178,31 +178,41 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="implement-graph-traversals">
-<h1>Implement Graph Traversals<a class="headerlink" href="#implement-graph-traversals" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-implement-graph-traversals"></span><p>Read a bit about <a class="reference external" href="http://en.wikipedia.org/wiki/Graph_traversal">graph traversal</a>, <a class="reference external" href="http://en.wikipedia.org/wiki/Depth-first_search">depth-first search</a> and <a class="reference external" href="http://en.wikipedia.org/wiki/Breadth-first_search">breadth-first search</a>.</p>
+<div class="section" id="graph-implement-weighted-edges">
+<h1>Graph: Implement Weighted Edges<a class="headerlink" href="#graph-implement-weighted-edges" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-graph-implement-weighted-edges"></span><p>Previously, you implemented a graph in Python.
+And you&#8217;ve implemented depth-first and breadth-first traversal for that graph.
+Now you&#8217;ll be adding weighting to the edges of the graph so that you can make a value judgement about the shortest path between two nodes.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>When you&#8217;ve got an idea of how these work, create a new branch in your data_structures repository.
-On that branch, add a pair of new methods to your graph implementation.</p>
-<ul class="simple">
-<li><strong>g.depth_first_traversal(start)</strong>: Perform a full depth-first traversal of the graph beginning at start.
-Return the full visited path when traversal is complete.</li>
-<li><strong>g.breadth_first_traversal(start)</strong>: Perform a full breadth-first traversal of the graph, beginning at start.
-Return the full visited path when traversal is complete.</li>
-</ul>
-<p>In addition, write some demonstration code in an <code class="docutils literal"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">'__main__':</span></code> block at the end of your file that shows how the two methods of traversal compare to each other when performed on the same graph.
-See if you can demonstrate the performance characteristics of the two methods over a variety of graph structures.</p>
-<p>If your graph is cyclic, each method should avoid getting trapped in loops.</p>
-<p>Write tests that prove that your methods work for both cyclic and non-cyclic graphs, etc.</p>
-<p>Update your README with information about your implementations, as well as any references or collaborations you used in completing the work.</p>
+<p>For your assignment tonight, implement a graph that allows your edges to have a weight.
+You may decide how exactly to do this, but here&#8217;s a description of one possible path to take:</p>
+<div class="highlight-python"><div class="highlight"><pre>The input graph G is assumed to have the following representation: A vertex can
+be any object that can be used as an index into a dictionary.  G is a dictionary,
+indexed by vertices.  For any vertex v, G[v] is itself a dictionary, indexed by the
+neighbors of v.  For any edge v-&gt;w, G[v][w] is the length of the edge.  This is related
+to the representation in &lt;http://www.python.org/doc/essays/graphs.html&gt; where
+Guido van Rossum suggests representing graphs as dictionaries mapping vertices to
+lists of neighbors, however dictionaries of edges have many advantages over lists:
+they can store extra information (here, the lengths), they support fast existence tests,
+and they allow easy modification of the graph by edge insertion and removal.  Such
+modifications are not needed here but are important in other graph algorithms. Since
+dictionaries obey iterator protocol, a graph represented as described here could be
+handed without modification to an algorithm using Guido&#39;s representation.
+
+(from http://code.activestate.com/recipes/119466-dijkstras-algorithm-for-shortest-paths/ please, don&#39;t peek at this solution)
+</pre></div>
+</div>
+<p>Your new graph should still support all the methods of your earlier implementation.</p>
+<p>Create a new branch in your data-structures repository for this work.  Add tests that demonstrate that your edges are weighted.
+Update your README with a description of your implementation and any references or collaborations you used to finish the assignment.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When you are finished with your work and the tests are passing, create a Pull request from your new branch back to master.
-Copy the URL and submit it.
-You may then merge your branch back to master.</p>
-<p>As usual, add any, questions, concerns or reflections on this work using the comment feature in Canvas.</p>
+<p>When you are finished and all your tests are passing, create a new Pull Request in github from your working branch to master.
+Submit the URL for that pull request.</p>
+<p>When you have submitted the assignment, you may merge your pull request, but please do not delete the branch you created for working on the assignment until the assignment has been graded in Canvas.</p>
+<p>As usual, use the comments here in canvas to add any questions, comments or reflections on the work you did for this assignment.</p>
 </div>
 </div>
 
@@ -214,7 +224,7 @@ You may then merge your branch back to master.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Implement Graph Traversals</a><ul>
+<li><a class="reference internal" href="#">Graph: Implement Weighted Edges</a><ul>
 <li><a class="reference internal" href="#tasks">Tasks</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>
@@ -222,11 +232,11 @@ You may then merge your branch back to master.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="graph_1.html"
-                        title="previous chapter">Implement a Graph in Python</a></p>
+  <p class="topless"><a href="graph_2_traversal.html"
+                        title="previous chapter">Implement Graph Traversals</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="graph_3_weighted.html"
-                        title="next chapter">Graph: Implement Weighted Edges</a></p>
+  <p class="topless"><a href="hacker_news_account.html"
+                        title="next chapter">Sign Up for a Hacker News Account</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -251,10 +261,10 @@ You may then merge your branch back to master.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="graph_3_weighted.html" title="Graph: Implement Weighted Edges"
+          <a href="hacker_news_account.html" title="Sign Up for a Hacker News Account"
              >next</a> |</li>
         <li class="right" >
-          <a href="graph_1.html" title="Implement a Graph in Python"
+          <a href="graph_2_traversal.html" title="Implement Graph Traversals"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
