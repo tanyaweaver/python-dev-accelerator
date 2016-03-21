@@ -26,10 +26,17 @@ Review
 Concepts
 ========
 
+.. toctree::
+   :maxdepth: 2
+
+   /lectures/graph_traversal_bfs
+   /lectures/graph_traversal_dfs
+
 * Authentication and authorization in Pyramid
 * Sessions in Pyramid
 * Cross-Site Request Forgery (and how to avoid it)
 * The importance of password encryption (and how to accomplish it)
+
 
 Demo
 ====
