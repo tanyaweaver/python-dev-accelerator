@@ -14,4 +14,5 @@ Friday
 Assignments
 ===========
 
+* :doc:`/assignments/project_11_daily_standup`
 * :doc:`/assignments/daily_lj_entry`
