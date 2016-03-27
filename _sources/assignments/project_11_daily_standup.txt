@@ -40,3 +40,8 @@ Submitting Your Work
 
 There is no submission for this assignment.
 Members of the teaching team will give credit to all members present in the meetings.
+
+However, **you may have questions, concerns, comments or issues that you need us to hear**.
+If this is the case, you may come to us directly, or use the comment system in Canvas to write to us.
+Please comment on an assignment that is not yet graded to ensure we see your comments.
+
