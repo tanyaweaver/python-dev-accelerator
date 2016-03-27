@@ -15,4 +15,7 @@ Assignments
 ===========
 
 * :doc:`/assignments/project_11_daily_standup`
+* :doc:`/assignments/project_12_presentations`
 * :doc:`/assignments/daily_lj_entry`
+
+* :doc:`/assignments/project_13_retrospective` (Due Monday Morning)
