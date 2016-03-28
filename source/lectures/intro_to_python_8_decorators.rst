@@ -14,83 +14,526 @@ A Python Miscellany: Decorators
     We'll be exploring the idea and implementation of "decorators".
     We'll see how this programming pattern can help us to be more flexible in our Python work.
 
+Review of Functions
+===================
 
-Decorators
-==========
-
-**A Short Digression**
-
-.. rst-class:: left build
+.. rst-class:: left
 .. container::
 
-    Functions are things that generate values based on input (arguments).
+    **A Short Digression**
 
-    In Python, functions are first-class objects.
+    .. ifslides::
 
-    This means that you can bind symbols to them, pass them around, just like
-    other objects.
+        .. rst-class:: build
+        .. container::
 
-    Because of this fact, you can write functions that take functions as
-    arguments and/or return functions as values (we played with this a
-    bit with the lambda magic assignment):
+            Recall functions
 
-    .. code-block:: python
+            Values come in as parameters
 
-        def substitute(a_function):
-            def new_function(*args, **kwargs):
-                return u"I'm not that other function"
-            return new_function
+            Values are returned
 
-A Definition
-------------
+    .. ifnotslides::
 
-There are many things you can do with a simple pattern like this one.
+        We've discussed them at length elsewhere, and have been using them for some time.
+        But for a moment, cast your mind back to the basics of *functions*.
+        They allow us to encapsulate some functionality.
+        We can pass in values in the form of *parameters*.
+        And we can return values from them after their operation is complete.
 
-So many, that we give it a special name:
+    .. code-block:: ipython
 
-.. rst-class:: centered mlarge
+        In [1]: def multiply(x, y):
+           ...:     return x * y
+           ...:
+
+        In [2]: multiply(3, 4)
+        Out[2]: 12
+
+Scope
+-----
+
+.. ifnotslides::
+
+    Recall as well that functions have *scope*.
+    The names they bind inside themselves are separate from names bound outside.
+    We can see these *namespaces* in action using the `locals` and `globals` builtins:
+
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        Functions have *scope*
+
+        Different namespaces inside and outside
+
+        `locals` and `globals` expose these namespaces:
+
+.. code-block:: ipython
+
+    In [3]: x = "a value"
+    In [4]: y = "another value"
+    In [5]: def fun(x):
+       ...:     x = "an internal value"
+       ...:     print(locals())
+       ...:
+    In [6]: print(globals())
+    {'x': 'a value', 'y': 'another value'}
+    In [7]: fun(x)
+    {'x': 'an internal value'}
+
+.. nextslide::
+
+.. ifnotslides::
+
+    Still, just because there is a local namespace does not mean that we cannot access global values inside a function.
+    Python looks *first* in the local function namespace.
+    But if a name is not found there, it will move to the global namespace to find it:
+
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        Can still access *global* values
+
+        Names are looked up locally *first*
+
+        Then Python moves to the global namespace:
+
+.. code-block:: ipython
+
+    In [12]: global_val = "a global value"
+    In [13]: def fun():
+       ....:     print(global_val)
+       ....:
+    In [14]: fun()
+    a global value
+
+.. nextslide::
+
+.. ifnotslides::
+
+    However, it is the case that Python protects us from changing global values from inside a function.
+    If we try to rebind a global name *inside* a scope, then the name becomes local.
+    Note that this is different from *mutating* a global value (which is not prevented).
+
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        Can't rebind global names *inside* a function
+
+        Names become *local* when bound
+
+        This is different from *mutating* global values
+
+.. code-block:: ipython
+
+    In [15]: a_string = "I am outside"
+    In [16]: def fun():
+       ....:     a_string = "I am inside"
+       ....:     print(locals())
+       ....:
+    In [17]: fun()
+    {'a_string': 'I am inside'}
+    In [18]: print(a_string)
+    I am outside
+
+
+Variable Lifetime
+-----------------
+
+.. ifnotslides::
+
+    Remember also that scoping means that variables inside a function have a *lifetime*.
+    They exist when the function is executed.
+    But when it exits, they are gone.
+    They *only exist for the duration of the function call*:
+
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        Scope also means *lifespan*
+
+        Local names exist while functions execute
+
+        They are gone when functions return:
+
+.. code-block:: ipython
+
+    In [24]: def fun():
+       ....:     z = 5
+       ....:     print(z)
+       ....:
+    In [25]: fun()
+    5
+    In [26]: z
+    ...
+    NameError: name 'z' is not defined
+
+
+.. nextslide::
+
+.. ifnotslides::
+
+    And we also understand that parameters, when passed to our functions as arguments, become *locally bound names*.
+    They are bound inside the function scope to the value of the arguments passed:
+
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        Parameters can be named in functon defs
+
+        Values are passed as *arguments* to function calls
+
+        The values are bound to parameter names *locally*:
+
+.. code-block:: ipython
+
+    In [27]: def fun(x, y=0):
+       ....:     return x - y
+       ....:
+    In [28]: fun(3, 1)
+    Out[28]: 2
+    In [29]: fun(x=5, y=2)
+    Out[29]: 3
+    In [30]: fun(y=1, x=3)
+    Out[30]: 2
+    In [31]: fun(3)
+    Out[31]: 3
+
+.. nextslide::
+
+.. ifnotslides::
+
+    Python even allows function to be defined inside local scopes.
+    You can define a function inside another function.
+    And the name of the function is locally scoped just like any other name:
+
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        Functions can be defined in local scopes
+
+        The can be defined in other functions
+
+        Names are still locally scoped (as are values):
+
+.. code-block:: ipython
+
+    In [32]: def outer():
+       ....:     x = 5
+       ....:     def inner():
+       ....:         print(x)
+       ....:     inner()
+       ....:
+    In [33]: outer()
+    5
+    In [34]: x
+    NameError: name 'x' is not defined
+    In [35]: inner
+    NameError: name 'inner' is not defined
+
+
+First Class Objects
+===================
+
+.. ifnotslides::
+
+    We've talked a number of times about this.
+    What does it mean, though?
+    Well, first of all, it means that like any other value in Python, functions are subclasses of `object`:
+
+.. ifslides::
+
+    .. rst-class:: build left
+    .. container::
+
+        What does that mean?
+
+        Any value in python is an instance of a subclass of `object`
+
+        Functions are too:
+
+.. rst-class:: left
+.. code-block:: ipython
+
+    In [36]: issubclass((42).__class__, object)
+    Out[36]: True
+    In [37]: def fun():
+       ....:     pass
+       ....:
+    In [38]: issubclass(fun.__class__, object)
+    Out[38]: True
+
+Functions as Arguments
+----------------------
+
+.. ifnotslides::
+
+    Second, it means that we can pass functions in as arguments to other functions.
+    The function object is bound to the parameter name inside the function scope.
+    And we can use that passed function inside the function to do work:
+
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        We can pass functions as arguments
+
+        Function objects are bound to param names
+
+        Can be used via that name:
+
+.. code-block:: ipython
+
+    In [41]: def add(x, y):
+       ....:     return x + y
+       ....:
+    In [42]: def apply(func, a, b):
+       ....:     return func(a, b)
+       ....:
+    In [43]: apply(add, 3, 4)
+    Out[43]: 7
+
+Functions as Return Values
+--------------------------
+
+.. ifnotslides::
+
+    Finally, it means that we can return functions as the result of calling other functions.
+    A function object is bound locally to the name it takes.
+    We can reference that name and get the function object.
+    This means we can return the value by using the name of the function in the local scope:
+
+.. ifslides::
+
+    Inline function defs are bound to local names
+
+    Those names reference the function object
+
+    We can return that object as a value:
+
+.. code-block:: ipython
+
+    In [44]: def outer():
+       ....:     def inner():
+       ....:         print("this is the inner function")
+       ....:     return inner
+       ....:
+
+    In [45]: fun = outer()
+    In [46]: fun()
+    this is the inner function
+
+Closures
+--------
+
+.. ifnotslides::
+
+    This finally brings us to the idea of a *closure*.
+    Instead of defining it, let's look at a quick series of examples.
+
+.. ifslides::
+
+    A bit hard to define, so consider:
+
+.. code-block:: ipython
+
+    In [47]: def outer():
+       ....:     x = 5
+       ....:     def inner():
+       ....:         print(x)
+       ....:     return inner
+       ....:
+    In [48]: foo = outer()
+
+.. ifnotslides::
+
+    We understand now what foo is.
+    It is the ``inner`` function object that was defined inside ``outer``.
+    We also know the rules of Python scoping and variable lifetime.
+    The question is, will ``foo`` run, or raise an error?
+
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        ``foo`` is a function object
+
+        Think about *scope* and *variable lifetime*
+
+        Will ``foo`` run or raise an error?
+
+
+.. nextslide::
+
+.. code-block:: ipython
+
+    In [49]: foo()
+    5
+
+.. ifnotslides::
+
+    Okay, that works.
+    Python *remembers* the value that ``x`` was bound to when ``inner`` was defined.
+    This allows the function to execute properly, even though it happens outside the scope of ``outer``.
+    Let's take it one step farther, and make ``x`` a parameter of ``outer``:
+
+.. ifslides::
+
+    Python bakes the value of ``x`` into the definition of ``inner``
+
+    What if ``x`` is a parameter passed to ``outer``:
+
+.. code-block:: ipython
+
+    In [50]: def outer(x):
+       ....:     def inner():
+       ....:         print(x)
+       ....:     return inner
+       ....:
+    In [51]: foo1 = outer(1)
+    In [52]: foo2 = outer(2)
+    In [53]: foo1()
+    1
+    In [54]: foo2()
+    2
+
+.. nextslide::
+
+.. ifnotslides::
+
+    This pattern can be pretty powerful.
+    It allows you to create a sort of *factory* that can manufacture functions, each with its own private internal variables.
+    You can do alot with this idea alone.
+    But what if the value you pass to ``outer`` is a *function*?
+
+.. ifslides::
+
+    This is powerful
+
+    .. rst-class:: build
+    .. container::
+
+        Like a factory for custom functions
+
+        Each shares functionality, but also has private internal variables
+
+        You can take this a long way
+
+        But what if the value you pass is a *function*?
+
+Decorator Defined
+=================
+
+.. ifnotslides::
+
+    There are many things you can do with a simple pattern like this one.
+    So many, that it has been given a special name:
+
+.. ifslides::
+
+    .. rst-class:: left
+    .. container::
+
+        A useful pattern arises
+
+        Useful enough for a special name
+
+.. rst-class:: centered mlarge build
 
 **Decorator**
 
-.. rst-class:: build
-.. container::
+.. ifnotslides::
 
-    "A decorator is a function that takes a function as an argument and
-    returns a function as a return value."
+    ::
 
-    That's nice and all, but why is that useful?
+       "A decorator is a function that takes a function as an argument and returns a function as a return value."
+
+    That's nice and all, but why is it useful?
+
+.. ifslides::
+
+    .. rst-class:: build left
+    .. container::
+
+        "A function that takes a function as an argument and returns a function as a value"
+
+        Nice, but why useful?
 
 An Example
 ----------
 
-Imagine you are trying to debug a module with a number of functions like this
-one:
+.. ifnotslides::
+
+    Imagine you are trying to debug a module with a number of simple functions like this:
+
+.. ifslides::
+
+    debugging functions like this:
 
 .. code-block:: python
 
     def add(a, b):
         return a + b
 
+.. ifnotslides::
+
+    You want to see when each function is called.
+    You'd like to know what arguments were used and what the result was.
+    So you rewrite each function as follows:
+
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        When were functions called?
+
+        What were the arguments?
+
+        What was the result?
+
 .. rst-class:: build
-.. container::
+.. code-block:: python
 
-    You want to see when each function is called, with what arguments and with what
-    result. So you rewrite each function as follows:
-
-    .. code-block:: python
-
-        def add(a, b):
-            print(u"Function 'add' called with args: %r" % locals())
-            result = a + b
-            print(u"\tResult --> %r" % result)
-            return result
+    def add(a, b):
+        print(u"Function 'add' called with args: %r" % locals())
+        result = a + b
+        print(u"\tResult --> %r" % result)
+        return result
 
 .. nextslide::
 
-That's not particularly nice, especially if you have lots of functions in your
-module.
+.. ifnotslides::
 
-Now imagine we defined the following, more generic *decorator*:
+    That's not particularly nice, especially if you have lots of functions in your module.
+    You rewrite a lot of code.
+    And then the code is always logged, even if you don't want it.
+
+    Now imagine we defined the following, more generic *decorator*:
+
+.. ifslides::
+
+    Works, but not so nice
+
+    Lots of code needs rewriting
+
+    Not flexible, always on
+
+    How about a "decorator" version?
 
 .. code-block:: python
 
@@ -108,66 +551,86 @@ Now imagine we defined the following, more generic *decorator*:
 
 .. nextslide::
 
-We could then make logging versions of our module functions:
+.. ifnotslides::
 
-.. code-block:: python
+    This version *wraps* a call to the passed *func* relying on *closure* to bake in the reference.
+    It then returns the wrapped function *as a new function object*.
+    Since we can bind the result of calling this decorator to a new symbol, we can make logging versions of our module functions.
+    And when we call them, we'll see the logging in action:
 
-    logging_add = logged_func(add)
+.. ifslides::
 
-Then, where we want to see the results, we can use the logged version:
+    .. rst-class:: build
+    .. container::
+
+        Wraps the passed *func* relying on *closures*
+
+        Returns the wrapped function when called
+
+        Bind it to a new symbol and call it to see logging:
 
 .. code-block:: ipython
 
+    In [36]: logging_add = logged_func(add)
     In [37]: logging_add(3, 4)
     Function 'add' called
         with args: (3, 4)
          Result --> 7
     Out[37]: 7
 
-.. rst-class:: build
-.. container::
-
-    This is nice, but we have to call the new function wherever we originally
-    had the old one.
-
-    It'd be nicer if we could just call the old function and have it log.
-
 .. nextslide::
 
-Remembering that you can easily rebind symbols in Python using *assignment
-statements* leads you to this form:
+.. ifnotslides::
 
-.. code-block:: python
+    This is nice, but we have to call the new function wherever we originally had the old one.
+    We still need to re-write all our code to get the advantage of our logging.
+    It would be nicer if we could simply reference the same function name when calling it.
+    We remember that we can easily rebind symbols in Python using *assignment*.
+    So we can rebind our decorated function to the *same name*, and leave our calls unchanged:
 
-    def logged_func(func):
-        # implemented above
+.. ifslides::
 
-    def add(a, b):
-        return a + b
-    add = logged_func(add)
+    .. rst-class:: build
+    .. container::
 
-.. rst-class:: build
-.. container::
+        Must call new function in place of old
 
-    And now you can simply use the code you've already written and calls to
-    ``add`` will be logged:
+        Still have to rewrite code
 
-    .. code-block:: ipython
+        Can rebind *same name* to decorated function object instead
 
-        In [41]: add(3, 4)
-        Function 'add' called
-            with args: (3, 4)
-             Result --> 7
-        Out[41]: 7
+        Call sites remain unchanged
 
-Syntax
-------
+.. code-block:: ipython
 
-Rebinding the name of a function to the result of calling a decorator on that
-function is called **decoration**.
+    In [39]: def add(a, b):
+       ....:     return a + b
+       ....:
+    In [40]: add = logged_func(add)
+    In [41]: add(3, 4)
+    Function 'add' called
+        with args: (3, 4)
+         Result --> 7
+    Out[41]: 7
 
-Because this is so common, Python provides a special operator to perform it
-more *declaratively*: the ``@`` operator:
+Python Syntax
+-------------
+
+.. ifnotslides::
+
+    Rebinding the name of a function to the result of calling a decorator on that function is called **decoration**.
+    This operation is so common, Python provides a special operator to do it *declaratively*: the ``@`` operator:
+
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        Rebind function name to a decorated version of the function
+
+        This is called *decoration*
+
+        It's common enough to get its own declarative operator: ``@``:
 
 .. code-block:: python
 
@@ -181,34 +644,66 @@ more *declaratively*: the ``@`` operator:
     def add(a, b):
         return a + b
 
-.. rst-class:: build
-.. container::
+.. ifnotslides::
 
-    The declarative form (called a decorator expression) is far more common,
-    but both have the identical result, and can be used interchangeably.
+    The declarative form (called a decorator expression) is far more common.
+    However, both have the identical result, and can be used interchangeably.
 
 Callables
----------
+=========
 
-Our original definition of a *decorator* was nice and simple, but a tiny bit
-incomplete.
+.. ifnotslides::
 
-In reality, decorators can be used with anything that is *callable*.
+    Our original definition of a *decorator* was nice and simple, but a tiny bit incomplete.
+    In reality, decorators can be used with anything that is *callable*.
+    In python a *callable* is a function, a method of a class, or even a class that implements the ``__call__`` special method.
 
-In python a *callable* is a function, a method on a class, or even a class that
-implements the ``__call__`` special method.
+    So in fact the definition should be updated as follows:
 
-So in fact the definition should be updated as follows:
+    .. rst-class:: centered
 
-.. rst-class:: centered
+         "A decorator is a callable that takes a callable as an argument and returns a callable as a return value."
 
-     "A decorator is a callable that takes a callable as an argument and returns a callable as a return value.""
+.. ifslides::
 
-An Example
-----------
+    .. rst-class:: left
+    .. container::
 
-Consider a decorator that would save the results of calling an expensive
-function with given arguments:
+        Originally defined a *decorator* as a *function*
+
+        .. rst-class:: build
+        .. container::
+
+            Incomplete, is really a *callable*
+
+            .. rst-class:: build
+
+            * Function
+            * Method of a class
+            * Class with a ``__call__`` special method
+
+            Update our definition:
+
+            .. rst-class:: centered
+
+                 "A decorator is a callable that takes a callable as an argument and returns a callable as a return value."
+
+Decorator Class
+---------------
+
+.. ifnotslides::
+
+    One use of a *callable class* as a decorator takes advantage of encapsulation.
+    We can rely on an instance of the class keeping a "private" store of saved values.
+    This allows us to *memoize* the results of some expensive function:
+
+.. ifslides::
+
+    A *callable class* allows us to *encapsulate* results
+
+    Store values locally to a class instance
+
+    Return stored values when called:
 
 .. code-block:: python
 
@@ -222,11 +717,9 @@ function with given arguments:
             self.memoized = {}
 
         def __call__(self, *args):  # runs when memoize instance is called
-            try:
-                return self.memoized[args]
-            except KeyError:
-                self.memoized[args] = self.function(*args)
-                return self.memoized[args]
+            if args not in self.memoized:
+                self.memoized = self.function(*args)
+            return self.memoized[args]
 
 .. nextslide::
 
@@ -236,7 +729,7 @@ Let's try that out with a potentially expensive function:
 
     In [56]: @Memoize
        ....: def sum2x(n):
-       ....:     return sum(2 * i for i in xrange(n))
+       ....:     return sum(2 * i for i in range(n))
        ....:
 
     In [57]: sum2x(10000000)
@@ -245,14 +738,30 @@ Let's try that out with a potentially expensive function:
     In [58]: sum2x(10000000)
     Out[58]: 99999990000000
 
-It's nice to see that in action, but what if we want to know *exactly* how much
-difference it made?
-
 Nested Decorators
 -----------------
 
-You can stack decorator expressions.  The result is like calling each decorator
-in order, from bottom to top:
+.. ifnotslides::
+
+    It's nice to see that in action, but what if we want to know *exactly* how much difference it made?
+    What if we want to calculate the timing of running the function repeatedly?
+    How do we do that?
+
+    We can stack decorator expressions.
+    The result is like calling each decorator in order, from bottom to top:
+
+.. ifslides::
+
+    How much difference did that make, exactly?
+
+    .. rst-class:: build
+    .. container::
+
+        It would be nice to *time* our memoized function
+
+        We can stack decorators
+
+        They are executed in order from nearest to farthest from decorated function:
 
 .. code-block:: python
 
@@ -300,94 +809,42 @@ decorator:
     time expired: 4.05311584473e-06
     Out[73]: 99999990000000
 
-Examples from the Standard Library
-----------------------------------
+Wrap Up
+=======
 
-It's going to be a lot more common for you to use pre-defined decorators than
-for you to be writing your own.
+.. ifnotslides::
 
-Let's see a few that might help you with work you've been doing recently.
+    In this lecture, we've learned about decorators.
+    We reminded ourselves first about some basics of how functions work.
+    We reviewed the idea of *scope* and saw how it allows us to refer to values from inside nested scopes.
+    We reminded ourselves that functions are in fact first-class objects.
+    This helped us to see that we can pass functions into other functions as arguments, return them as values, and even define them inline in other functions.
+    We then noted that defining a function inline allowed us to create a *closure* that baked runtime values into our function definitions.
 
-For example, we saw that  ``staticmethod()`` can be implemented with a decorator
-expression:
+    Putting this all together allows us to understand how a **decorator** works.
+    We write a function that takes a function as an argument.
+    We define a new function *inline* inside that function, using *closure* to bake our passed function into it.
+    Then we return the newly defined function in place.
 
-.. code-block:: python
+    Because this approach is so useful, we learned that Python supports a *declarative* operator for it: ``@``.
+    And using that syntax we learned how to define both class-based and function based decorators that can memoize and time the operation of complex, expensive operations.
 
-    class C(object):
-        def add(a, b):
-            return a + b
-        add = staticmethod(add)
+.. ifslides::
 
-Can be implimented as:
+    .. rst-class:: left build
+    .. container::
+    
+        Functions take args and return values
 
-.. code-block:: python
+        Functions have *scope*
 
-    class C(object):
-        @staticmethod
-        def add(a, b):
-            return a + b
+        Functions are *first-class objects*
 
-.. nextslide::
+        Functions have *closure* so we can bake values into them at runtime
 
-And the ``classmethod()`` builtin can do the same thing:
+        *Decorators* that take a function, return a new function, the passed function is baked in.
 
-In imperative style...
+        Decorators can be *any callable*
 
-.. code-block:: python
+        Decorators can be stacked to combine them.
 
-    class C(object):
-        def from_iterable(cls, seq):
-            # method body
-        from_iterable = classmethod(from_iterable)
-
-and in declarative style:
-
-.. code-block:: python
-
-    class C(object):
-        @classmethod
-        def from_iterable(cls, seq):
-            # method body
-
-.. nextslide::
-
-Perhaps most commonly, you'll see the ``property()`` builtin used this way.
-
-Remember this from last week?
-
-.. code-block:: python
-
-    class C(object):
-        def __init__(self):
-            self._x = None
-        def getx(self):
-            return self._x
-        def setx(self, value):
-            self._x = value
-        def delx(self):
-            del self._x
-        x = property(getx, setx, delx,
-                     u"I'm the 'x' property.")
-
-.. nextslide:: The Decorator version
-
-.. code-block:: python
-
-    class C(object):
-        def __init__(self):
-            self._x = None
-        @property
-        def x(self):
-            return self._x
-        @x.setter
-        def x(self, value):
-            self._x = value
-        @x.deleter
-        def x(self):
-            del self._x
-
-Note that in this case, the decorator object returned by the property decorator
-itself implements additional decorators as attributes on the returned method
-object.
-
-Does this make more sense now?
