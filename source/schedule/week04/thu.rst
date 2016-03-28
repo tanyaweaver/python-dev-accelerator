@@ -22,6 +22,11 @@ Review
 Concepts
 ========
 
+.. toctree::
+    :maxdepth: 2
+
+    /lectures/intro_to_python_8_decorators
+
 Demo
 ====
 
