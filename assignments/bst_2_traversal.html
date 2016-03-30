@@ -6,38 +6,38 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Friday &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Binary Search Tree: Traversals &mdash; Python Dev Accelerator 2.0 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
+        URL_ROOT:    '../',
         VERSION:     '2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
-    <link rel="next" title="Manage AWS Resources with Boto" href="../../lectures/boto.html" />
-    <link rel="prev" title="Thursday" href="thu.html" />
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="next" title="Binary Search Tree: Deleting Nodes" href="bst_3_delete.html" />
+    <link rel="prev" title="Implement a Binary Search Tree in Python" href="bst_1.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
-<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
 
   </head>
   <body role="document">
 <div class="header">
   <div class="logo">
-    <a href="../../index.html">
-      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
       <p>Code Fellows</p>
     </a>
   </div>
@@ -47,15 +47,15 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../lectures/boto.html" title="Manage AWS Resources with Boto"
+          <a href="bst_3_delete.html" title="Binary Search Tree: Deleting Nodes"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="thu.html" title="Thursday"
+          <a href="bst_1.html" title="Implement a Binary Search Tree in Python"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -178,28 +178,32 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="friday">
-<h1>Friday<a class="headerlink" href="#friday" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-course-presentations"></span><div class="section" id="readings">
-<h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
-<p>These readings will support your work on the Data Model for our Django Imager website.</p>
+<div class="section" id="binary-search-tree-traversals">
+<h1>Binary Search Tree: Traversals<a class="headerlink" href="#binary-search-tree-traversals" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-binary-search-tree-traversals"></span><p>Trees can be traversed in four ways.
+There are three depth first traversals: in-order, pre-order and post-order
+There is one breadth first traversal.</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>In your data-structures repository, add methods that implement each of these four traversal patterns to the BST that you implemented previously:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/db/models/">Django Models API</a></li>
-<li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/db/managers/">Django Model Managers</a></li>
-<li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/signals/">Django&#8217;s Signal Framework</a>, <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/signals">Built-In Signals</a> and <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/signals/#listening-to-signals">Signal Handling</a> (You&#8217;ll also want to read up on using the new <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/applications/#configuring-applications">App Config system</a> to <a class="reference external" href="http://chriskief.com/2014/02/28/django-1-7-signals-appconfig/">register signals and signal handlers</a>)</li>
-<li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/testing/">Django Testing</a> (familiarize yourself both with <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/testing/overview/">writing and running tests</a> and with the <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/testing/tools/">tools Django provides</a> for testing.</li>
-<li>Using Dynamic Test Fixtures with <a class="reference external" href="http://factoryboy.readthedocs.org/">Factory Boy</a> (in particular pay attention to <a class="reference external" href="http://factoryboy.readthedocs.org/en/latest/orms.html#django">using Factory Boy with Django</a>)</li>
+<li><strong>in_order(self)</strong>: will return a generator that will return the values in the tree using in-order traversal, one at a time.</li>
+<li><strong>pre_order(self)</strong>: will return a generator that will return the values in the tree using pre-order traversal, one at a time.</li>
+<li><strong>post_order(self)</strong>: will return a generator that will return the values in the tree using post_order traversal, one at a time.</li>
+<li><strong>breadth_first(self)</strong>: will return a generator that will return the values in the tree using breadth-first traversal, one at a time.</li>
 </ul>
-<p>You should <strong>skim</strong> these before the beginning of the next week.</p>
+<p>Your work should include unit tests that fully demonstrate each of the four methods you&#8217;ve added.
+Make sure to cover expected and edge cases.</p>
+<p>Add documentation of your new methods to your README file.
+Include any sources or collaborations.</p>
+<p>Ensure that your tests are properly connected to Travis CI and that you have a travis badge displayed on your README.</p>
 </div>
-<div class="section" id="assignments">
-<h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><a class="reference internal" href="../../assignments/project_11_daily_standup.html"><em>Group Project: Daily Standup</em></a></li>
-<li><a class="reference internal" href="../../assignments/project_12_presentations.html"><em>Group Project: Final Presentation</em></a></li>
-<li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
-<li><a class="reference internal" href="../../assignments/project_13_retrospective.html"><em>Group Project: Personal Retrospective</em></a> (Due Monday Morning)</li>
-</ul>
+<div class="section" id="submission">
+<h2>Submission<a class="headerlink" href="#submission" title="Permalink to this headline">¶</a></h2>
+<p>Do your work on a branch.
+When you are finished and all your tests are passing, create a new pull request back to master from your branch and submit the URL for that pull request.
+When you&#8217;ve made your submission, you may merge the branch, but do not delete it until your assignment has been graded.</p>
+<p>As usual, use the comment function to submit questions, comments and reflections on the work you&#8217;ve done here.</p>
 </div>
 </div>
 
@@ -209,24 +213,24 @@ div.nboutput  > :nth-child(2).stderr {
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Friday</a><ul>
-<li><a class="reference internal" href="#readings">Readings</a></li>
-<li><a class="reference internal" href="#assignments">Assignments</a></li>
+<li><a class="reference internal" href="#">Binary Search Tree: Traversals</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submission">Submission</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="thu.html"
-                        title="previous chapter">Thursday</a></p>
+  <p class="topless"><a href="bst_1.html"
+                        title="previous chapter">Implement a Binary Search Tree in Python</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../../lectures/boto.html"
-                        title="next chapter">Manage AWS Resources with Boto</a></p>
+  <p class="topless"><a href="bst_3_delete.html"
+                        title="next chapter">Binary Search Tree: Deleting Nodes</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -245,15 +249,15 @@ div.nboutput  > :nth-child(2).stderr {
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../lectures/boto.html" title="Manage AWS Resources with Boto"
+          <a href="bst_3_delete.html" title="Binary Search Tree: Deleting Nodes"
              >next</a> |</li>
         <li class="right" >
-          <a href="thu.html" title="Thursday"
+          <a href="bst_1.html" title="Implement a Binary Search Tree in Python"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

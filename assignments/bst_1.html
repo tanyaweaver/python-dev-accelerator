@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Implement a Binary Search Tree in Python &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="next" title="Intro &amp; Chapter 1 of Clean Code" href="clean_code.html" />
+    <link rel="prev" title="Break This Function" href="break_these_funcs.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="clean_code.html" title="Intro &amp; Chapter 1 of Clean Code"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="break_these_funcs.html" title="Break This Function"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="implement-a-binary-search-tree-in-python">
+<h1>Implement a Binary Search Tree in Python<a class="headerlink" href="#implement-a-binary-search-tree-in-python" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-implement-a-binary-search-tree-in-python"></span><div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>Create a new branch for your data structures repository.
+Call it &#8220;bst&#8221;.
+You will use this branch to do your work for this assignment.</p>
+<p>Add a new file to your data-structures repository.
+Call it bst.py.</p>
+<p>In this file, implement a Binary Search Tree as a Python class (or classes).
+Your tree should have the following methods:</p>
+<ul class="simple">
+<li><strong>insert(self, val)</strong>: will insert the value val into the BST.
+If val is already present, it will be ignored.</li>
+<li><strong>contains(self, val)</strong>: will return <code class="docutils literal"><span class="pre">True</span></code> if val is in the BST, <code class="docutils literal"><span class="pre">False</span></code> if not.</li>
+<li><strong>size(self)</strong>: will return the integer size of the BST (equal to the total number of values stored in the tree).
+It will return 0 if the tree is empty.</li>
+<li><strong>depth(self)</strong>: will return an integer representing the total number of levels in the tree.
+If there is one value, the depth should be 1, if two values it will be 2, if three values it may be 2 or three, depending, etc.</li>
+<li><strong>balance(self)</strong>: will return an integer, positive or negative that represents how well balanced the tree is.
+Trees which are higher on the left than the right should return a positive value, trees which are higher on the right than the left should return a negative value.
+An ideally-balanced tree should return 0.</li>
+</ul>
+<p>In implementing your tree you may find it helpful to be able to visualize the structure.
+You can do so by adding a method that will return the structure of the tree <a class="reference external" href="https://en.wikipedia.org/wiki/DOT_(graph_description_language)">in DOT notation</a>.
+The return value of such a method could be written to a file which can then be processed by a tool like <a class="reference external" href="http://www.graphviz.org/">graphviz</a> into an image.
+Some sample code for such a method is included below.
+(If not immediately obvious, these methods are quite tied to implementation details of your tree. You will need to significantly update them in order to get them to work):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_dot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;return the tree with root &#39;self&#39; as a dot graph for visualization&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;digraph G{</span><span class="se">\n</span><span class="si">%s</span><span class="s2">}&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="p">(</span>
+        <span class="s2">&quot;</span><span class="se">\t</span><span class="si">%s</span><span class="s2">;</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_dot</span><span class="p">())</span>
+        <span class="p">)</span>
+    <span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">_get_dot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;recursively prepare a dot graph entry for this node.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="si">%s</span><span class="s2"> -&gt; </span><span class="si">%s</span><span class="s2">;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">_get_dot</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">i</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e9</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">null</span><span class="si">%s</span><span class="s2"> [shape=point];&quot;</span> <span class="o">%</span> <span class="n">r</span>
+        <span class="k">yield</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="si">%s</span><span class="s2"> -&gt; null</span><span class="si">%s</span><span class="s2">;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="si">%s</span><span class="s2"> -&gt; </span><span class="si">%s</span><span class="s2">;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">_get_dot</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">i</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e9</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">null</span><span class="si">%s</span><span class="s2"> [shape=point];&quot;</span> <span class="o">%</span> <span class="n">r</span>
+        <span class="k">yield</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="si">%s</span><span class="s2"> -&gt; null</span><span class="si">%s</span><span class="s2">;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Your BST implementation must include tests.
+The tests, as usual for our data structures, must run both in Python 2.7 and Python 3.5.</p>
+<p>Beyond unit testing for the methods you implement, include as an &#8220;if __name__ == &#8216;__main__&#8217; block that document the best-case and worst-case performance of searching the tree for a given value.</p>
+<p>Expand your README to include notes about the BST you&#8217;ve constructed. Include any sources or collaborations.</p>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>When you&#8217;ve completed your work and all your tests are passing, submit a pull request from the bst branch back to master.
+Copy the URL for that pull request and submit it using the URL input.
+When that is done, you may merge your branch back to master.
+However, do not delete your working branch until your assignment has been graded.</p>
+<p>As usual, use the comment function to submit questions, comments and reflections on the work you&#8217;ve done here.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Implement a Binary Search Tree in Python</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="break_these_funcs.html"
+                        title="previous chapter">Break This Function</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="clean_code.html"
+                        title="next chapter">Intro &amp; Chapter 1 of Clean Code</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="clean_code.html" title="Intro &amp; Chapter 1 of Clean Code"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="break_these_funcs.html" title="Break This Function"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

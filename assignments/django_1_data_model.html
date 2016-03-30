@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Walk Through the Django Tutorial &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="next" title="Implement a Doubly-Linked List in Python" href="doubly_linked_list.html" />
+    <link rel="prev" title="Walk Through the Django Tutorial" href="django_0_tutorial.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="doubly_linked_list.html" title="Implement a Doubly-Linked List in Python"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="django_0_tutorial.html" title="Walk Through the Django Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="walk-through-the-django-tutorial">
+<h1>Walk Through the Django Tutorial<a class="headerlink" href="#walk-through-the-django-tutorial" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-walk-through-the-django-tutorial"></span><p>In this series of assignments you will build a simple image management website using Django.</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>Create a new repository named django-imager in github.
+Set it up with a Python .gitignore file and a good license (MIT, most likely).</p>
+<p>On your machine, create a new virtualenv project to work on this new repository.
+Install Django 1.9 into the new virtualenv and clone your project.
+Set up a requirements.txt file and a basic README and commit these changes to master.
+Then make a branch called &#8216;models&#8217; to start your work.</p>
+<p>Once the branch is created, start a new Django project using django-admin.
+Call the project &#8220;imagersite&#8221;.
+Add the structure created by Django to your repository and commit the changes to your models branch.</p>
+<p>You&#8217;ll be creating the data model for a simple photo management application.</p>
+<div class="section" id="user-profile">
+<h3>User Profile<a class="headerlink" href="#user-profile" title="Permalink to this headline">¶</a></h3>
+<p>We will begin with users.
+Django has a full-featured user system, but we want a few more bits of data about our users.
+Users of our application will have a profile that captures information about each user not directly related to authentication.
+The Django way is to organize individual units of functionality in a website into &#8220;apps&#8221;.
+Our user profile is just such a unit.</p>
+<p>Create a new app by changing directories into the &#8220;imagersite&#8221; folder you created above.
+You should be in a folder with a file called &#8220;manage.py&#8221;.
+Build a new app using that management command file and call it &#8220;imager_profile&#8221;.
+The model for our user profile will be contained in this app.</p>
+<p>We will discuss in class the specifications for this model.
+Implement the specifications as described as an ImagerProfile model.
+In addition to what we discuss in class, your model must support the following API:</p>
+<ul class="simple">
+<li><strong>ImagerProfile.active</strong>: provides full query functionality limited to profiles for users who are active (allowed to log in)</li>
+<li><strong>profile.is_active</strong>: a property which returns a boolean value indicating whether the user associated with the given profile is active</li>
+</ul>
+<p>Ensure that each of your models has a visual representation that appropriately displays it when using the Django shell.
+Use Django&#8217;s provided systems to ensure that this representation is compatible both with Python 2 and Python 3.</p>
+<p>You must ensure that every standard Django user object created automatically gets an ImagerProfile.</p>
+<p>You must also ensure that if a user is deleted from the database, the ImagerProfile associated with that user is also deleted.</p>
+</div>
+<div class="section" id="image-management">
+<h3>Image Management<a class="headerlink" href="#image-management" title="Permalink to this headline">¶</a></h3>
+<p>The main functionality of our application will be oriented around uploading and organizing images.
+Our second Django app will encompass the models and views associated with this work.</p>
+<p>From the root of your project, where the &#8220;manage.py&#8221; file is located, create a second app called &#8220;imager_images&#8221;.</p>
+<p>You&#8217;ll need to create two models in this new app, the Photo and the Album.</p>
+<p>Photo represents an individual picture uploaded by a user.
+It will contain the image file itself, plus metadata about that file.
+Photos are owned by a single Imager user.
+Meta-data should include a title and a description, a date_uploaded, date_modified and date_published field.
+You should also have a &#8216;published&#8217; field which takes one of several possible values (&#8216;private&#8217;, &#8216;shared&#8217;, &#8216;public&#8217;)</p>
+<p>Album contains Photos and provide meta-data about the collection of photos they contain.
+Albums are owned by Users
+Any album can contain many Photos and any Photo may be in more than one Album.
+Meta-data should include a title and a description.
+Also a date created, date modified and date published as well as a published field containing the same options described for Photos.
+Users should be able to designate one contained photo as the &#8216;cover&#8217; for the album.
+The albums created by a user may contain only Photos created by that same user.</p>
+<p>Create migrations to support installing your new app.</p>
+<p>Create a default app configuration to handle configuring a few global settings for the app.</p>
+<p>Finally, you will implement tests that demonstrate the API you have implemented.
+Use Django&#8217;s built-in testing systems and the Test Case classes it provides.
+These tests should be unit or integration tests.
+Ensure that the tests demonstrate all aspects of the functionality, including access control.
+As demonstrated in class, use FactoryBoy to create any required objects your tests need to run properly.</p>
+</div>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>When you are done and all your tests are passing, open a pull request from your &#8216;models&#8217; branch to master in GitHub.
+Submit the URL to your pull request.
+Once you have submitted the URL, please merge your pull request back to master in preparation for the next stage of your development.</p>
+<p>Use the commenting feature in canvas to submit questions or comments about the work you&#8217;ve done.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Walk Through the Django Tutorial</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#user-profile">User Profile</a></li>
+<li><a class="reference internal" href="#image-management">Image Management</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="django_0_tutorial.html"
+                        title="previous chapter">Walk Through the Django Tutorial</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="doubly_linked_list.html"
+                        title="next chapter">Implement a Doubly-Linked List in Python</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="doubly_linked_list.html" title="Implement a Doubly-Linked List in Python"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="django_0_tutorial.html" title="Walk Through the Django Tutorial"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>
