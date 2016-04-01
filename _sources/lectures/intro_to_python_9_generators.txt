@@ -1,0 +1,343 @@
+*******************************************
+A Python Miscellany: Iterators & Generators
+*******************************************
+
+.. ifslides::
+
+    .. rst-class:: large center
+
+    In which we meet more cool creatures from the Python zoo
+
+.. ifnotslides::
+
+    In this lesson we will discuss a few more features of programming in Python.
+    We'll be exploring the idea and implementation of iterators and generators.
+    Understanding these topics will allow you to make your own classes and functions operate more Pythonically.
+
+
+Iterators
+=========
+
+.. rst-class:: left
+.. container::
+
+    .. ifnotslides::
+
+        Iterators are one of the main reasons Python code is so readable:
+
+    .. ifslides::
+
+        Iterators make Python readable:
+
+    .. code-block:: python
+
+        for x in just_about_anything:
+            do_stuff(x)
+
+    .. ifnotslides::
+
+        What's fun is that ``just_about_anything`` does not have to be a "sequence".
+        Rather, you can loop through anything that satisfies the :ref:`iterator protocol <python2:typeiter>` (:py:ref:`py3 <typeiter>`).
+
+    .. ifslides::
+
+        .. rst-class:: build
+        .. container::
+        
+            ``just_about_anything``: lists, tuples, dicts, strings
+
+            can also be *any object* that supports the "iterator protocol"
+
+
+The Iterator Protocol
+---------------------
+
+An iterator must have the following methods:
+
+.. code-block:: python
+
+    an_iterator.__iter__()
+
+.. ifnotslides::
+
+    The :meth:`__iter__ <python2:iterator.__iter__>` special method (:py:meth:`py3 <iterator.__iter__>`) returns the iterator object itself.
+    The return value might be ``self``, or it might be an object constructed that can be iterated over.
+    This is required to allow both containers and iterators to be used with the ``for`` and ``in`` statements.
+
+.. ifslides::
+
+    ``__iter__`` returns an iterator object (might be self, might not)
+
+.. code-block:: python
+
+    # python 2
+    an_iterator.next()
+
+    # python 3
+    an_iterator.__next__()
+
+.. ifnotslides::
+
+    The :meth:`next <python2:iterator.next>` method (in python 3 it is :py:meth:`__next__ <iterator.__next__>`) returns the next item from the container.
+    If there are no further items, this method must raise a ``StopIteration`` exception.
+
+.. ifslides::
+
+    ``next`` returns the next item in line.
+
+    It must raise ``StopIteration`` when done.
+
+.. ifnotslides::
+
+    This change in interface leads to some compatibility problems.
+    In order to write iterators that are compatible with both Python 2 and Python 3, use one of the `compatible idioms <http://python-future.org/compatible_idioms.html#custom-iterators>`_ from python-future.
+
+List as an Iterator:
+--------------------
+
+.. code-block:: ipython
+
+    In [10]: a_list = [1,2,3]
+
+    In [11]: list_iter = a_list.__iter__()
+
+    In [12]: list_iter.next()
+    Out[12]: 1
+
+    In [13]: list_iter.next()
+    Out[13]: 2
+
+    In [14]: list_iter.next()
+    Out[14]: 3
+
+    In [15]: list_iter.next()
+    --------------------------------------------------
+    StopIteration     Traceback (most recent call last)
+    <ipython-input-15-1a7db9b70878> in <module>()
+    ----> 1 list_iter.next()
+    StopIteration:
+
+Making an Iterator
+-------------------
+
+A simple version of ``xrange()`` (whoo hoo!)
+
+.. code-block:: python
+
+    class IterateMe_1(object):
+        def __init__(self, stop=5):
+            self.current = 0
+            self.stop = stop
+        def __iter__(self):
+            return self
+        def next(self):
+            if self.current < self.stop:
+                self.current += 1
+                return self.current
+            else:
+                raise StopIteration
+
+``iter()``
+-----------
+
+How doyou get the iterator object (the thing with the next() method) from an "iterable"?
+
+The ``iter()`` function:
+
+.. code-block:: ipython
+
+    In [20]: iter([2,3,4])
+    Out[20]: <listiterator at 0x101e01350>
+
+    In [21]: iter(u"a string")
+    Out[21]: <iterator at 0x101e01090>
+
+    In [22]: iter( (u'a', u'tuple') )
+    Out[22]: <tupleiterator at 0x101e01710>
+
+for an arbitrary object, ``iter()`` calls the ``__iter__`` method. But it knows about some object (``str``, for instance) that don't have a ``__iter__`` method.
+
+
+What does ``for`` do?
+----------------------
+
+Now that we know the iterator protocol, we can write something like a for loop:
+
+(``Examples/Session08/my_for.py``)
+
+.. code-block:: python
+
+    def my_for(an_iterable, func):
+        """
+        Emulation of a for loop.
+        func() will be called with each item in an_iterable
+        """
+        # equiv of "for i in l:"
+        iterator = iter(an_iterable)
+        while True:
+            try:
+                i = iterator.next()
+            except StopIteration:
+                break
+            func(i)
+
+
+Itertools
+---------
+
+``itertools``  is a collection of utilities that make it easy to
+build an iterator that iterates over sequences in various common ways
+
+http://docs.python.org/library/itertools.html
+
+NOTE:
+
+iterators are not *only* for ``for``
+
+They can be used with anything that expects an iterator:
+
+``sum``, ``tuple``, ``sorted``, and ``list``
+
+For example.
+
+LAB / Homework
+--------------
+
+In the ``Examples/Session08`` dir, you will find: ``iterator_1.py``
+
+* Extend (``iterator_1.py`` ) to be more like ``xrange()`` --
+  add three input parameters: ``iterator_2(start, stop, step=1)``
+
+* See what happens if you break out in the middle of the loop:
+
+.. code-block:: python
+
+    it = IterateMe_2(2, 20, 2)
+    for i in it:
+        if i > 10:  break
+        print(i)
+
+And then pick up again:
+
+.. code-block:: python
+
+    for i in it:
+        print(i)
+
+* Does ``xrange()``  behave the same?
+
+  - make yours match ``xrange()``
+
+Generators
+----------
+
+Generators give you the iterator immediately:
+
+* no access to the underlying data ... if it even exists
+
+
+Conceptually:
+  Iterators are about various ways to loop over data, generators generate
+  the data on the fly
+
+Practically:
+  You can use either either way (and a generator is one type of iterator)
+
+  Generators do some of the book-keeping for you.
+
+yield
+-----
+
+``yield``  is a way to make a quickie generator with a function:
+
+.. code-block:: python
+
+    def a_generator_function(params):
+        some_stuff
+        yield something
+
+Generator functions "yield" a value, rather than returning a value.
+
+State is preserved in between yields.
+
+
+.. nextslide::
+
+A function with ``yield``  in it is a "factory" for a generator
+
+Each time you call it, you get a new generator:
+
+.. code-block:: python
+
+    gen_a = a_generator()
+    gen_b = a_generator()
+
+Each instance keeps its own state.
+
+Really just a shorthand for an iterator class that does the book keeping for you.
+
+.. nextslide::
+
+An example: like ``xrange()``
+
+.. code-block:: python
+
+    def y_xrange(start, stop, step=1):
+        i = start
+        while i < stop:
+            yield i
+            i += step
+
+Real World Example from FloatCanvas:
+
+https://github.com/svn2github/wxPython/blob/master/3rdParty/FloatCanvas/floatcanvas/FloatCanvas.py#L100
+
+
+.. nextslide::
+
+Note:
+
+.. code-block:: ipython
+
+    In [164]: gen = y_xrange(2,6)
+    In [165]: type(gen)
+    Out[165]: generator
+    In [166]: dir(gen)
+    Out[166]:
+    ...
+     '__iter__',
+    ...
+     'next',
+
+
+So the generator **is** an iterator
+
+.. nextslide::
+
+A generator function can also be a method in a class
+
+
+More about iterators and generators:
+
+http://www.learningpython.com/2009/02/23/iterators-iterables-and-generators-oh-my/
+
+``Examples/Session08/yield_example.py``
+
+
+generator comprehension
+-----------------------
+
+yet another way to make a generator:
+
+.. code-block:: python
+
+    ￼>>> [x * 2 for x in [1, 2, 3]]
+    [2, 4, 6]
+    >>> (x * 2 for x in [1, 2, 3])
+    <generator object <genexpr> at 0x10911bf50>
+    >>> for n in (x * 2 for x in [1, 2, 3]):
+    ...   print(n)
+    ... 2 4 6
+
+
+More interesting if [1, 2, 3] is also a generator
