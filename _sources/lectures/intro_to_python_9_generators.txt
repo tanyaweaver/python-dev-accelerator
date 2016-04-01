@@ -43,7 +43,7 @@ Iterators
 
         .. rst-class:: build
         .. container::
-        
+
             ``just_about_anything``: lists, tuples, dicts, strings
 
             can also be *any object* that supports the "iterator protocol"
@@ -92,35 +92,84 @@ An iterator must have the following methods:
     This change in interface leads to some compatibility problems.
     In order to write iterators that are compatible with both Python 2 and Python 3, use one of the `compatible idioms <http://python-future.org/compatible_idioms.html#custom-iterators>`_ from python-future.
 
-List as an Iterator:
---------------------
+.. nextslide:: Iterable Iterators
+
+.. ifnotslides::
+
+    In Python, data types like lists, tuples, sets, an dicts are sometimes referred to as "iterables".
+    They too implement the iterator interface, and you can get at the "iterator" directly if you like:
+
+.. ifslides::
+
+    "Iterables": lists, tuples, sets, dicts
 
 .. code-block:: ipython
 
     In [10]: a_list = [1,2,3]
-
     In [11]: list_iter = a_list.__iter__()
-
-    In [12]: list_iter.next()
+    In [12]: next(list_iter)
     Out[12]: 1
-
-    In [13]: list_iter.next()
+    In [13]: next(list_iter)
     Out[13]: 2
-
-    In [14]: list_iter.next()
+    In [14]: next(list_iter)
     Out[14]: 3
-
-    In [15]: list_iter.next()
+    In [15]: next(list_iter)
     --------------------------------------------------
     StopIteration     Traceback (most recent call last)
     <ipython-input-15-1a7db9b70878> in <module>()
-    ----> 1 list_iter.next()
+    ----> 1 next(list_iter)
     StopIteration:
 
-Making an Iterator
--------------------
+.. nextslide:: ``iter()``
 
-A simple version of ``xrange()`` (whoo hoo!)
+.. ifnotslides::
+
+    It's not really polite (or proper) to access *special methods* of objects directly like that, though.
+    Instead, you should use the Python function that utilizes those methods.
+    In this case, that is the :func:`iter() <python2:iter>` function (:py:func:`py3 <iter>`).
+
+.. ifslides::
+
+    We shouldn't directly use special methods.
+
+    Use ``iter()`` instead.
+
+.. code-block:: ipython
+
+    In [20]: iter([2,3,4])
+    Out[20]: <listiterator at 0x101e01350>
+
+    In [21]: iter(u"a string")
+    Out[21]: <iterator at 0x101e01090>
+
+    In [22]: iter( (u'a', u'tuple') )
+    Out[22]: <tupleiterator at 0x101e01710>
+
+.. ifnotslides::
+
+    For arbitrary objects, ``iter()`` calls the ``__iter__`` special method.
+    But it can also handle objects (``str``, for instance) that don't have a ``__iter__`` method.
+
+.. ifslides::
+
+    It calls ``__iter__`` when present.
+
+    But can also handle some objects without that method (like ``str``)
+
+
+Making an Iterator
+------------------
+
+.. ifnotslides::
+
+    Understanding the iterator protocol allows us to build iterators of our own.
+    Let's try this out by building a simple iterator that will operate a bit like the Python 2 ``xrange``:
+
+.. ifslides::
+
+    We can make classes that are iterators
+
+    For example, something a bit like ``xrange``:
 
 .. code-block:: python
 
@@ -137,33 +186,15 @@ A simple version of ``xrange()`` (whoo hoo!)
             else:
                 raise StopIteration
 
-``iter()``
------------
+.. nextslide:: Fake For
 
-How doyou get the iterator object (the thing with the next() method) from an "iterable"?
+.. ifnotslides::
 
-The ``iter()`` function:
+    We can even use the protocol to build a function that emulates the Python ``for`` loop:
 
-.. code-block:: ipython
+.. ifslides::
 
-    In [20]: iter([2,3,4])
-    Out[20]: <listiterator at 0x101e01350>
-
-    In [21]: iter(u"a string")
-    Out[21]: <iterator at 0x101e01090>
-
-    In [22]: iter( (u'a', u'tuple') )
-    Out[22]: <tupleiterator at 0x101e01710>
-
-for an arbitrary object, ``iter()`` calls the ``__iter__`` method. But it knows about some object (``str``, for instance) that don't have a ``__iter__`` method.
-
-
-What does ``for`` do?
-----------------------
-
-Now that we know the iterator protocol, we can write something like a for loop:
-
-(``Examples/Session08/my_for.py``)
+    Emulate the Python ``for`` loop:
 
 .. code-block:: python
 
@@ -182,73 +213,51 @@ Now that we know the iterator protocol, we can write something like a for loop:
             func(i)
 
 
-Itertools
----------
+.. ifnotslides::
 
-``itertools``  is a collection of utilities that make it easy to
-build an iterator that iterates over sequences in various common ways
+    :mod:`itertools <python2:itertools>` (:py:mod:`py3 <itertools>`) is a collection of utilities that make it easy to build an iterator that iterates over sequences in various common ways.
+    The utilities it contains work with any object that supports the iterator protocol.
+    And the iterators they return can be used with any Python functions that expect iterators as arguments.
+    Things like ``sum``, ``tuple``, ``sorted``, and ``list``, for example.
 
-http://docs.python.org/library/itertools.html
-
-NOTE:
-
-iterators are not *only* for ``for``
-
-They can be used with anything that expects an iterator:
-
-``sum``, ``tuple``, ``sorted``, and ``list``
-
-For example.
-
-LAB / Homework
---------------
-
-In the ``Examples/Session08`` dir, you will find: ``iterator_1.py``
-
-* Extend (``iterator_1.py`` ) to be more like ``xrange()`` --
-  add three input parameters: ``iterator_2(start, stop, step=1)``
-
-* See what happens if you break out in the middle of the loop:
-
-.. code-block:: python
-
-    it = IterateMe_2(2, 20, 2)
-    for i in it:
-        if i > 10:  break
-        print(i)
-
-And then pick up again:
-
-.. code-block:: python
-
-    for i in it:
-        print(i)
-
-* Does ``xrange()``  behave the same?
-
-  - make yours match ``xrange()``
 
 Generators
-----------
+==========
 
-Generators give you the iterator immediately:
+.. rst-class:: left
+.. container::
 
-* no access to the underlying data ... if it even exists
+    .. ifnotslides::
 
+        A generator object is a bit like an iterator, except that it is itself the iterator.
+        Another difference is that with a generator you have no access to the data that is being returned, if it even exists.
 
-Conceptually:
-  Iterators are about various ways to loop over data, generators generate
-  the data on the fly
+        Conceptually, an iterator allows you to loop over data that exists.
+        Generators, on the other hand, *generate* their data on the fly.
+        Practically speaking, you can use them interchangeably, and generators are in fact a special case of iterators.
+        Generators just handle some of the internal book-keeping for you.
 
-Practically:
-  You can use either either way (and a generator is one type of iterator)
+    .. ifslides::
 
-  Generators do some of the book-keeping for you.
+        .. rst-class:: build
+        .. container::
 
-yield
------
+            Generators are like iterators
 
-``yield``  is a way to make a quickie generator with a function:
+            Except they are themselves the iterator object
+
+            Also, you have no access to the data they return until it is returned
+
+            Conceptually:
+              Iterators loop over data, generators generate the data on the fly
+
+            Practically:
+              You can use either (a generator *is* a special iterator)
+
+              Generators do some of the book-keeping for you.
+
+``yield``
+---------
 
 .. code-block:: python
 
@@ -256,29 +265,56 @@ yield
         some_stuff
         yield something
 
-Generator functions "yield" a value, rather than returning a value.
+.. ifnotslides::
 
-State is preserved in between yields.
+    The :keyword:`yield <python2:yield>` statement (:py:keyword:`py3 <yield>`) can be used to create generators.
+    Using the ``yield`` statement in a function causes the function to become a ``generator function``.
+    The function can then ``yield`` values instead of returning them.
+    And the state of the names and values inside the function is preserved between ``yield`` statements.
 
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        Using ``yield`` makes a ``generator function``
+
+        Generator functions "yield" a value, not return it
+
+        State is preserved in between yields.
 
 .. nextslide::
 
-A function with ``yield``  in it is a "factory" for a generator
+.. ifnotslides::
 
-Each time you call it, you get a new generator:
+    When you write a function with ``yield``  in it, it becomes a "factory" for a ``generator object``.
+    Calling the function returns a ``generator object``.
+    And every time you call it, a *new* and *independent* generator object is returned.
+    Each independent instance keeps track of its own internal state.
 
 .. code-block:: python
 
-    gen_a = a_generator()
-    gen_b = a_generator()
+    gen_a = a_generator_function()
+    gen_b = a_generator_function()
 
-Each instance keeps its own state.
+.. ifslides::
 
-Really just a shorthand for an iterator class that does the book keeping for you.
+    .. rst-class:: build
+    .. container::
 
-.. nextslide::
+        Generator functions are factories for generator objects
 
-An example: like ``xrange()``
+        Calling one creates a new generator
+
+        Each call is a new generator, independent of others
+
+        Each instance keeps its own state.
+
+.. nextslide:: Example
+
+.. ifnotslides::
+
+    One possible example of a simple generator function might be again to emulate the ``xrange`` object from Python 2:
 
 .. code-block:: python
 
@@ -288,50 +324,55 @@ An example: like ``xrange()``
             yield i
             i += step
 
-Real World Example from FloatCanvas:
+.. ifnotslides::
 
-https://github.com/svn2github/wxPython/blob/master/3rdParty/FloatCanvas/floatcanvas/FloatCanvas.py#L100
+    It is most common to write generator functions to return a series of values like this.
+    And as we have noted, generators are in fact just a special case of iterators.
+    But notice that we do not use ``StopIteration`` to signal when a generator function is complete.
+    In fact, calling ``return`` inside a generator function (or simply allowing an implicit return to happen *at the end*) causes ``StopIteration`` to be raised.
+    You don't need to do it explicitly.
 
+.. ifslides::
 
-.. nextslide::
+    Generators are Iterators
 
-Note:
+    But notice the lack of ``StopIteration``
 
-.. code-block:: ipython
-
-    In [164]: gen = y_xrange(2,6)
-    In [165]: type(gen)
-    Out[165]: generator
-    In [166]: dir(gen)
-    Out[166]:
-    ...
-     '__iter__',
-    ...
-     'next',
-
-
-So the generator **is** an iterator
+    A ``return`` (explicit or implicit) from a generator function does this automatically.
 
 .. nextslide::
 
-A generator function can also be a method in a class
+.. ifnotslides::
 
+    A final note on writing generator functions.
+    Any callable can be a generator if it uses ``yield`` instead of ``return``.
+    This means, of course, that methods on classes can also be generators.
+    And even classes themselves, if they have a ``__call__`` method that uses yield, can be generators.
 
-More about iterators and generators:
+.. ifslides::
 
-http://www.learningpython.com/2009/02/23/iterators-iterables-and-generators-oh-my/
+    .. rst-class:: centered
 
-``Examples/Session08/yield_example.py``
+    Generators can also be methods on classes.
 
+Generator Comprehensions
+------------------------
 
-generator comprehension
------------------------
+.. ifnotslides::
 
-yet another way to make a generator:
+    There is one last way to create a generator.
+    It turns out that if you use ``()`` instead of ``[]`` when writing a comprehension, the result is a generator.
+    It behaves exactly like the equivalent *list comprehension*, except that it only generates the values one at a time.
+    This can be especially powerful if the item the comprehension is iterating over is itself a generator.
+    The result can be extremely efficient processing of massive amounts of data.
+
+.. ifslides::
+
+    yet another way to make a generator:
 
 .. code-block:: python
 
-    ￼>>> [x * 2 for x in [1, 2, 3]]
+    >>> [x * 2 for x in [1, 2, 3]]
     [2, 4, 6]
     >>> (x * 2 for x in [1, 2, 3])
     <generator object <genexpr> at 0x10911bf50>
@@ -339,5 +380,45 @@ yet another way to make a generator:
     ...   print(n)
     ... 2 4 6
 
+.. ifslides::
 
-More interesting if [1, 2, 3] is also a generator
+    .. rst-class:: build
+    .. container::
+
+        Just like a list comprehension, except one-at-a-time
+
+        Especially powerful when iterating over other generators
+
+        Efficient handling of very large data sets
+
+Wrap Up
+=======
+
+.. ifnotslides::
+
+    In this lecture, we've learned a bit about two powerful concepts in Python.
+    Using the *iterator protocol*, we learned to create iterators.
+    We can thus create classes that can work natively with Python's looping structures and the ``itertools`` library.
+    Generators, as we learned, are objects that ``yield`` values one-at-a-time, preserving their internal state.
+    We learned that we can create them using ``yield`` inside functions or methods.
+    And we learned that there are also *generator comprehensions*.
+    That's enough to be going on.
+
+.. ifslides::
+
+    Iterators are objects that support the *iterator protocol*
+
+    .. rst-class:: build
+    .. container::
+
+        We can create custom classes that do the same
+
+        Those classes can work natively with itertools &c.
+
+        Generators ``yield`` values, and preserve state
+
+        Create them using ``yield`` statement.
+
+        Or with *generator comprehensions*.
+
+        Very efficient for memory.

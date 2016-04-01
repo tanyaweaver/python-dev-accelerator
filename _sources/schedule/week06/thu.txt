@@ -29,3 +29,4 @@ Assignments
 ===========
 
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/bst_3_delete` (Due Monday)
