@@ -1,0 +1,821 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Statistics 1: Descriptive Statistics &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="Monday" href="../schedule/week06/mon.html" />
+    <link rel="next" title="Automate Tests with Travis CI" href="jenkins.html" />
+    <link rel="prev" title="Monday" href="../schedule/week06/mon.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="jenkins.html" title="Automate Tests with Travis CI"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../schedule/week06/mon.html" title="Monday"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week06/mon.html" accesskey="U">Monday</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="Statistics-1:-Descriptive-Statistics">
+<h1>Statistics 1: Descriptive Statistics<a class="headerlink" href="#Statistics-1:-Descriptive-Statistics" title="Permalink to this headline">¶</a></h1>
+<p><strong>Date:</strong> April 4, 2016</p>
+<p><strong>Author:</strong> Nicholas Hunt-Walker</p>
+<p><strong>Class:</strong> Code Fellows Code 401: Python</p>
+<p><strong>Package/module refs:</strong> -
+<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html">pandas</a>
+for storing your data -
+<a class="reference external" href="http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.mean.html">numpy</a>
+for storing data and fast descriptive statistics, quantiles, and lots of
+modules dealing with random numbers -
+<a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/stats.html">scipy.stats</a>
+for the mode, and other things -
+<a class="reference external" href="http://matplotlib.org/api/pyplot_api.html">matplotlib.pyplot</a> for
+visualizing your data</p>
+<p>External Resources:</p>
+<ul class="simple">
+<li>Khan Academy</li>
+<li>Think Bayes</li>
+</ul>
+<p>Progression:</p>
+<ul class="simple">
+<li>Average/Mean (sample vs population)</li>
+<li>Median + difference from the mean</li>
+<li>Mode</li>
+<li>Standard Deviation &amp; variance (sample vs population &amp; N - 1)</li>
+<li>Standard error</li>
+<li>Quantiles</li>
+</ul>
+<div class="section" id="The-Problem">
+<h2>The Problem<a class="headerlink" href="#The-Problem" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Tons of data with a number of characteristics</li>
+<li>Want to talk intelligently about data without seeing every single
+entry</li>
+<li>Need to know about what&#8217;s most common, the ranges of distributions,
+etc.</li>
+</ul>
+</div>
+<div class="section" id="The-Solution-(to-start)">
+<h2>The Solution (to start)<a class="headerlink" href="#The-Solution-(to-start)" title="Permalink to this headline">¶</a></h2>
+<p><strong>DESCRIPTIVE STATISTICS!</strong></p>
+</div>
+<div class="section" id="Averages/Means---Getting-a-Feeling-for-the-Data">
+<h2>Averages/Means - Getting a Feeling for the Data<a class="headerlink" href="#Averages/Means---Getting-a-Feeling-for-the-Data" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="Averages/Means---Getting-a-Feeling-for-the-Data">
+<h2>Averages/Means - Getting a Feeling for the Data<a class="headerlink" href="#Averages/Means---Getting-a-Feeling-for-the-Data" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>For some <em>NUMERICAL</em> measurements, average/mean gives you a sense of
+the &#8220;middle&#8221; of your data. May not represent an actual data point,
+but moreso where the middle of that data set is.</li>
+<li>Consider the set of height measurements (in feet):</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="68%" />
+<col width="32%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Person</th>
+<th class="head">Height</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Dante Fierro</td>
+<td>5.9</td>
+</tr>
+<tr class="row-odd"><td>Sun Quan</td>
+<td>5.5</td>
+</tr>
+<tr class="row-even"><td>Spike Spiegel</td>
+<td>6.1</td>
+</tr>
+<tr class="row-odd"><td>Commander Shepard</td>
+<td>6.0</td>
+</tr>
+<tr class="row-even"><td>The Dragonborn</td>
+<td>7.2</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>The mean height is calculated as:</li>
+</ul>
+</div>
+<div class="section" id="Averages/Means---Do-It-With-Code!">
+<h2>Averages/Means - Do It With Code!<a class="headerlink" href="#Averages/Means---Do-It-With-Code!" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [64]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="c1"># the height data</span>
+<span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.9</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">7.2</span><span class="p">]</span>
+
+<span class="c1"># explicit sum</span>
+<span class="n">avg1</span> <span class="o">=</span> <span class="p">(</span><span class="mf">5.9</span> <span class="o">+</span> <span class="mf">5.5</span> <span class="o">+</span> <span class="mf">6.1</span> <span class="o">+</span> <span class="mf">6.0</span> <span class="o">+</span> <span class="mf">7.2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">5</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Explicit Average: (5.9 + 5.5 + 6.1 + 6.0 + 7.2) / 5 = {0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">avg1</span><span class="p">))</span>
+
+<span class="c1"># actually use some Python</span>
+<span class="n">avg2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Better Average: sum(heights) / len(heights) = {0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">avg2</span><span class="p">))</span>
+
+<span class="c1"># explicitly using the list and a loop</span>
+<span class="n">avg3</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">heights</span><span class="p">)):</span>
+    <span class="n">avg3</span> <span class="o">+=</span> <span class="n">heights</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+<span class="n">avg3</span> <span class="o">=</span> <span class="n">avg3</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Explicitly with the list {0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">avg3</span><span class="p">))</span>
+
+<span class="c1"># get more sophisticated with Numpy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">avg4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Numpy Average: np.mean(heights) = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">avg4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+Explicit Average: (5.9 + 5.5 + 6.1 + 6.0 + 7.2) / 5 = 6.14
+
+Better Average: sum(heights) / len(heights) = 6.14
+
+Explicitly with the list 6.14
+
+Numpy Average: np.mean(heights) = 6.14
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Just-stick-with-Numpy-for-your-means...">
+<h2>Just stick with Numpy for your means...<a class="headerlink" href="#Just-stick-with-Numpy-for-your-means..." title="Permalink to this headline">¶</a></h2>
+<p>Convention for using the <code class="docutils literal"><span class="pre">numpy</span></code> package is to import it as <code class="docutils literal"><span class="pre">np</span></code>.
+Since in your analysis you may use any number of numpy modules, and some
+of those modules have names that would overwrite python built-ins,</p>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [15]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">number_measurements</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span>
+                       <span class="mi">100000</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">,</span> <span class="mi">10000000</span><span class="p">,</span> <span class="mi">100000000</span><span class="p">]</span>
+<span class="n">numpy_time_taken</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">number_measurements</span><span class="p">)):</span>
+    <span class="n">dummy_measurements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">number_measurements</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">dummy_calc</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">dummy_measurements</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_measurements</span><span class="p">)</span>
+    <span class="n">basic_time_taken</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">nummy_calc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dummy_measurements</span><span class="p">)</span>
+    <span class="n">numpy_time_taken</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+
+<span class="k">del</span> <span class="n">dummy_measurements</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [35]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">number_measurements</span><span class="p">,</span> <span class="n">basic_time_taken</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Straight Python&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">number_measurements</span><span class="p">,</span> <span class="n">numpy_time_taken</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Glorious Numpy&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">1E1</span><span class="p">,</span> <span class="mf">1E8</span><span class="p">],</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">basic_time_taken</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span>
+    <span class="n">basic_time_taken</span><span class="p">)],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">1E1</span><span class="p">,</span> <span class="mf">1E8</span><span class="p">],</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">numpy_time_taken</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span>
+    <span class="n">numpy_time_taken</span><span class="p">)],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">basic_time_taken</span><span class="p">),</span> <span class="s2">&quot;Basic: </span><span class="si">%.2f</span><span class="s2"> seconds&quot;</span> <span class="o">%</span>
+         <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">basic_time_taken</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">numpy_time_taken</span><span class="p">),</span> <span class="s2">&quot;Numpy: </span><span class="si">%.2f</span><span class="s2"> seconds&quot;</span> <span class="o">%</span>
+         <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">numpy_time_taken</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;N measurements&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<img alt="../_images/lectures_stats_day1_9_0.png" src="../_images/lectures_stats_day1_9_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Averages/Means---Limitations">
+<h2>Averages/Means - Limitations<a class="headerlink" href="#Averages/Means---Limitations" title="Permalink to this headline">¶</a></h2>
+<p>Massive, often bogus assumption that your data is distributed like so
+around some value:</p>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [56]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="n">some_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
+<span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">some_data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The &quot;Normal&quot; Distribution&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">H</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Some Measurement&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency of Measurement&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<img alt="../_images/lectures_stats_day1_11_0.png" src="../_images/lectures_stats_day1_11_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Averages/Means---Limitations">
+<h2>Averages/Means - Limitations<a class="headerlink" href="#Averages/Means---Limitations" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Sample averages can be very sensitive to outliers and the size of
+data set</li>
+<li>Doesn&#8217;t accurately describe data with multiple peaks and otherwise
+non-standard distributions</li>
+<li>Recall our collections of height</li>
+</ul>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [57]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.9</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">7.2</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;No outliers average: </span><span class="si">%.2f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">heights</span><span class="p">))</span>
+
+<span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.9</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">7.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Data + baby average: </span><span class="si">%.2f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">heights</span><span class="p">))</span>
+
+<span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.9</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">7.2</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Data + sasquatch average: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">heights</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+No outliers average: 6.14
+
+Data + baby average: 5.28
+
+Data + sasquatch average: 6.78
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Median---The-Literal-Middle">
+<h2>Median - The Literal Middle<a class="headerlink" href="#Median---The-Literal-Middle" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="Median---The-Literal-Middle">
+<h2>Median - The Literal Middle<a class="headerlink" href="#Median---The-Literal-Middle" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Put data in order from small to large</li>
+<li>The median = the <strong>exact</strong> middle</li>
+<li>If even number of data points, median is average of middle two</li>
+<li>Also known as the 50th percentile (more later)</li>
+<li>Advantage: insensitive to outliers</li>
+</ul>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [63]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="n">some_values</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">ii</span><span class="p">]):</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">some_values</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The average: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The actual middle: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+The average: 3.70
+The actual middle: 3.00
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Standard-Deviation---The-Spread-of-the-Data">
+<h2>Standard Deviation - The Spread of the Data<a class="headerlink" href="#Standard-Deviation---The-Spread-of-the-Data" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="Standard-Deviation---The-Spread-of-the-Data">
+<h2>Standard Deviation - The Spread of the Data<a class="headerlink" href="#Standard-Deviation---The-Spread-of-the-Data" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Based on the average <span class="math">\mu</span> of the data.</p>
+</li>
+<li><p class="first">&#8220;On average, how far is each data point from the mean?&#8221;</p>
+</li>
+<li><p class="first">Two types to be aware of: <strong>population</strong> and <strong>sample</strong></p>
+<ul class="simple">
+<li><strong>population</strong> standard deviation: For when you have <em>every
+possible measurement</em> for some data set or you&#8217;re only interested
+in the sample you have and don&#8217;t wish to generalize, e.g. ALL the
+ages of adults in the United States</li>
+</ul>
+<ul class="simple">
+<li><strong>sample</strong> standard deviation: For when you only have a sampling
+of the total population. When in doubt, assume the sample standard
+deviation (the for sufficiently large numbers,
+<span class="math">N - 1 \approx N</span>), e.g. the ages of American males in the
+Pacific North West</li>
+</ul>
+<p>**note: <span class="math">\bar{x}</span> is the sample mean, which follows the same
+equation as population mean</p>
+</li>
+</ul>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [74]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5.9</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">7.2</span><span class="p">,</span> <span class="mf">5.1</span><span class="p">,</span> <span class="mf">5.3</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">5.8</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Sample average: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">heights</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Sample standard deviation: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">heights</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Improper standard deviation: </span><span class="si">%.2f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">heights</span><span class="p">))</span>
+
+<span class="n">large_num_heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span><span class="o">*</span><span class="mf">1.5</span> <span class="o">+</span> <span class="mf">5.0</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Sample average: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">large_num_heights</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Sample standard deviation: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">large_num_heights</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Less improper standard deviation: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">large_num_heights</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+Sample average: 5.89
+Sample standard deviation: 0.57
+Improper standard deviation: 0.54
+
+Sample average: 5.75
+Sample standard deviation: 0.43
+Less improper standard deviation: 0.43
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Standard-Deviation---The-Spread-of-the-Data">
+<h2>Standard Deviation - The Spread of the Data<a class="headerlink" href="#Standard-Deviation---The-Spread-of-the-Data" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [89]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="n">some_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
+<span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">some_data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The &quot;Normal&quot; Distribution with Mean &amp; St. Dev.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">H</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)],</span>
+         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">)],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">some_data</span><span class="p">),</span>
+                  <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">some_data</span><span class="p">)],</span>
+                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                 <span class="p">[</span><span class="mf">1.1</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">),</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">)],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Some Measurement&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency of Measurement&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<img alt="../_images/lectures_stats_day1_21_0.png" src="../_images/lectures_stats_day1_21_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Standard-Deviation---The-68-95-99-rule">
+<h2>Standard Deviation - The 68-95-99 rule<a class="headerlink" href="#Standard-Deviation---The-68-95-99-rule" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>1 standard deviation <strong>from the mean</strong>: 68% of data in distribution</li>
+<li>2 standard deviations: 95%</li>
+<li>3 standard deviations: 99.7%</li>
+<li>Applies solely to Normally-distributed data (more on that later)</li>
+</ul>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [88]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="n">some_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
+<span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">some_data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The &quot;Normal&quot; Distribution with Mean &amp; St. Devs.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">H</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">)],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">some_data</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">some_data</span><span class="p">)],</span>
+                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                 <span class="p">[</span><span class="mf">1.1</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">),</span> <span class="mf">1.1</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">)],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">some_data</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">some_data</span><span class="p">)],</span>
+                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                 <span class="p">[</span><span class="mf">1.1</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">),</span> <span class="mf">1.1</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">)],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">some_data</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">some_data</span><span class="p">)],</span>
+                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                 <span class="p">[</span><span class="mf">1.1</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">),</span> <span class="mf">1.1</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">)],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Some Measurement&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency of Measurement&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<img alt="../_images/lectures_stats_day1_23_0.png" src="../_images/lectures_stats_day1_23_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Mode---The-most-frequent-thing(s)">
+<h2>Mode - The most frequent thing(s)<a class="headerlink" href="#Mode---The-most-frequent-thing(s)" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="Mode---The-most-frequent-thing(s)">
+<h2>Mode - The most frequent thing(s)<a class="headerlink" href="#Mode---The-most-frequent-thing(s)" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Nothing fancy here; the mode is whatever number(s) pop up most often</li>
+</ul>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [100]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="kn">as</span> <span class="nn">sp</span>
+
+<span class="n">some_values</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]</span>
+<span class="n">counts1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+<span class="n">data1</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">counts1</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">counts1</span><span class="p">[</span><span class="n">ii</span><span class="p">]):</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">some_values</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The mode: </span><span class="si">%g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sp</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+The mode: 6
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Quantiles---Values-some-fraction-of-the-way-into-something">
+<h2>Quantiles - Values some fraction of the way into something<a class="headerlink" href="#Quantiles---Values-some-fraction-of-the-way-into-something" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="Quantiles">
+<h2>Quantiles<a class="headerlink" href="#Quantiles" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">If I&#8217;m some percentage through ordered data, what value do I get?</p>
+</li>
+<li><p class="first">50th percentile = median = <span class="math">q_{50}</span></p>
+</li>
+<li><p class="first">One quartile: <span class="math">q_{25}</span></p>
+</li>
+<li><p class="first">Interquartile width - the difference between <span class="math">q_{75}</span> and
+<span class="math">q_{25}</span>:</p>
+<div class="math">
+<p><span class="math">IQR = q_{75} - q_{25}</span></p>
+</div></li>
+</ul>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [104]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="n">some_values</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">]</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">ii</span><span class="p">]):</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">some_values</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The average: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The actual middle: </span><span class="si">%.2f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The standard deviation: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="n">q75</span><span class="p">,</span> <span class="n">q25</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="mi">75</span> <span class="p">,</span><span class="mi">25</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The interquartile width: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">q75</span> <span class="o">-</span> <span class="n">q25</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+The average: 3.70
+The actual middle: 3.00
+
+The standard deviation: 2.13
+The interquartile width: 4.00
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Descriptive-Statistic-Module-References">
+<h2>Descriptive Statistic Module References<a class="headerlink" href="#Descriptive-Statistic-Module-References" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.mean.html">numpy.mean</a></li>
+<li><a class="reference external" href="http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.std.html">numpy.std</a></li>
+<li><a class="reference external" href="http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.percentile.html">numpy.percentile</a></li>
+<li><a class="reference external" href="http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.median.html">numpy.median</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Statistics 1: Descriptive Statistics</a><ul>
+<li><a class="reference internal" href="#The-Problem">The Problem</a></li>
+<li><a class="reference internal" href="#The-Solution-(to-start)">The Solution (to start)</a></li>
+<li><a class="reference internal" href="#Averages/Means---Getting-a-Feeling-for-the-Data">Averages/Means - Getting a Feeling for the Data</a></li>
+<li><a class="reference internal" href="#Averages/Means---Getting-a-Feeling-for-the-Data">Averages/Means - Getting a Feeling for the Data</a></li>
+<li><a class="reference internal" href="#Averages/Means---Do-It-With-Code!">Averages/Means - Do It With Code!</a></li>
+<li><a class="reference internal" href="#Just-stick-with-Numpy-for-your-means...">Just stick with Numpy for your means...</a></li>
+<li><a class="reference internal" href="#Averages/Means---Limitations">Averages/Means - Limitations</a></li>
+<li><a class="reference internal" href="#Averages/Means---Limitations">Averages/Means - Limitations</a></li>
+<li><a class="reference internal" href="#Median---The-Literal-Middle">Median - The Literal Middle</a></li>
+<li><a class="reference internal" href="#Median---The-Literal-Middle">Median - The Literal Middle</a></li>
+<li><a class="reference internal" href="#Standard-Deviation---The-Spread-of-the-Data">Standard Deviation - The Spread of the Data</a></li>
+<li><a class="reference internal" href="#Standard-Deviation---The-Spread-of-the-Data">Standard Deviation - The Spread of the Data</a></li>
+<li><a class="reference internal" href="#Standard-Deviation---The-Spread-of-the-Data">Standard Deviation - The Spread of the Data</a></li>
+<li><a class="reference internal" href="#Standard-Deviation---The-68-95-99-rule">Standard Deviation - The 68-95-99 rule</a></li>
+<li><a class="reference internal" href="#Mode---The-most-frequent-thing(s)">Mode - The most frequent thing(s)</a></li>
+<li><a class="reference internal" href="#Mode---The-most-frequent-thing(s)">Mode - The most frequent thing(s)</a></li>
+<li><a class="reference internal" href="#Quantiles---Values-some-fraction-of-the-way-into-something">Quantiles - Values some fraction of the way into something</a></li>
+<li><a class="reference internal" href="#Quantiles">Quantiles</a></li>
+<li><a class="reference internal" href="#Descriptive-Statistic-Module-References">Descriptive Statistic Module References</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../schedule/week06/mon.html"
+                        title="previous chapter">Monday</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="jenkins.html"
+                        title="next chapter">Automate Tests with Travis CI</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="jenkins.html" title="Automate Tests with Travis CI"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../schedule/week06/mon.html" title="Monday"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week06/mon.html" >Monday</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>
