@@ -32,6 +32,8 @@ Concepts
 Demo
 ====
 
+* Connecting a GitHub Project to TravisCI
+
 Assignments
 ===========
 
