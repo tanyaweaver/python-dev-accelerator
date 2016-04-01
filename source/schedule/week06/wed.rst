@@ -22,10 +22,16 @@ Review
 Concepts
 ========
 
+.. toctree::
+    :maxdepth: 2
+
+    /lectures/stats_day3
+
 Demo
 ====
 
 Assignments
 ===========
+
 
 * :doc:`/assignments/daily_lj_entry`
