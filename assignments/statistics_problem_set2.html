@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Problem Set - Statistics 2 &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
+    <link rel="next" title="Problem Set - Statistics 3" href="statistics_problem_set3.html" />
+    <link rel="prev" title="Problem Set - Statistics 1" href="statistics_problem_set1.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="statistics_problem_set3.html" title="Problem Set - Statistics 3"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="statistics_problem_set1.html" title="Problem Set - Statistics 1"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="Problem-Set---Statistics-2">
+<h1>Problem Set - Statistics 2<a class="headerlink" href="#Problem-Set---Statistics-2" title="Permalink to this headline">¶</a></h1>
+<p>Data Ref: <a class="reference external" href="https://www.kaggle.com/c/titanic/data">https://www.kaggle.com/c/titanic/data</a></p>
+<div class="section" id="Tasks">
+<h2>Tasks<a class="headerlink" href="#Tasks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Find-the-probability-that...">
+<h3>Find the probability that...<a class="headerlink" href="#Find-the-probability-that..." title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>a passenger survived <em>(mandatory)</em></li>
+</ul>
+<p><strong>Choose two of...</strong> - a passenger was male - a passenger was female and
+had at least one sibling or spouse on board - a survivor was from
+Cherbourg</p>
+</div>
+<div class="section" id="Plot-the-distribution-of-passenger-ages.-Choose-visually-meaningful-bin-sizes-and-label-your-axes">
+<h3>Plot the distribution of passenger ages. Choose visually-meaningful bin sizes and label your axes<a class="headerlink" href="#Plot-the-distribution-of-passenger-ages.-Choose-visually-meaningful-bin-sizes-and-label-your-axes" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="Find-the-probability-that-(choose-one)...">
+<h3>Find the probability that (choose one)...<a class="headerlink" href="#Find-the-probability-that-(choose-one)..." title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>a passenger was less than 10 years old</li>
+<li>a passenger was between 25 and 40 years old</li>
+<li>a passenger was either younger than 20 years old or older than 50</li>
+</ul>
+</div>
+<div class="section" id="Knowing-nothing-else-about-the-passengers-aside-from-the-survival-rate-of-the-population-(the-first-question),-if-I-choose-100-passengers-at-random-from-the-passenger-list,-what's-the-probability-that-exactly-42-passengers-survive?">
+<h3>Knowing nothing else about the passengers aside from the survival rate of the population (the first question), if I choose 100 passengers at random from the passenger list, what&#8217;s the probability that exactly 42 passengers survive?<a class="headerlink" href="#Knowing-nothing-else-about-the-passengers-aside-from-the-survival-rate-of-the-population-(the-first-question),-if-I-choose-100-passengers-at-random-from-the-passenger-list,-what's-the-probability-that-exactly-42-passengers-survive?" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="What's-the-probability-that-at-least-42-of-those-100-passengers-survive?">
+<h3>What&#8217;s the probability that at least 42 of those 100 passengers survive?<a class="headerlink" href="#What's-the-probability-that-at-least-42-of-those-100-passengers-survive?" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="Is-there-a-statistically-significant-difference-between...">
+<h3>Is there a statistically significant difference between...<a class="headerlink" href="#Is-there-a-statistically-significant-difference-between..." title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>...the ages of male and female survivors?</li>
+<li>...the fares paid by passengers from Queenstown and the passengers
+from Cherbourg?</li>
+</ul>
+</div>
+<div class="section" id="If-so,-at-what-level?-If-not,-how-do-you-know?">
+<h3>If so, at what level? If not, how do you know?<a class="headerlink" href="#If-so,-at-what-level?-If-not,-how-do-you-know?" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="Accompany-your-p-values-with-histograms-showing-the-distributions-of-both-compared-populations">
+<h3>Accompany your p-values with histograms showing the distributions of both compared populations<a class="headerlink" href="#Accompany-your-p-values-with-histograms-showing-the-distributions-of-both-compared-populations" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="STRETCH-GOAL-Write-a-function-that-takes-N-random-samples-of-100-passengers,-and-returns-the-fraction-of-those-samples-where-at-least-42-passengers-survive.-Choose-a-random-seed-and-find-approximately-how-many-random-samples-you-need-to-take-before-your-fraction-matches-the-probability-you-calculated-(within-).">
+<h3><em>STRETCH GOAL</em> Write a function that takes N random samples of 100 passengers, and returns the fraction of those samples where at least 42 passengers survive. Choose a random seed and find approximately how many random samples you need to take before your fraction matches the probability you calculated (within <span class="math">\(\Delta p \approx 0.05\)</span>).<a class="headerlink" href="#STRETCH-GOAL-Write-a-function-that-takes-N-random-samples-of-100-passengers,-and-returns-the-fraction-of-those-samples-where-at-least-42-passengers-survive.-Choose-a-random-seed-and-find-approximately-how-many-random-samples-you-need-to-take-before-your-fraction-matches-the-probability-you-calculated-(within-)." title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="It-may-help-to-visualize-the-survival-fraction-vs-the-number-of-random-samples.-Answers-will-vary-based-on-the-seed.">
+<h3>It may help to visualize the survival fraction vs the number of random samples. Answers will vary based on the seed.<a class="headerlink" href="#It-may-help-to-visualize-the-survival-fraction-vs-the-number-of-random-samples.-Answers-will-vary-based-on-the-seed." title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="Submitting-Your-Work">
+<h2>Submitting Your Work<a class="headerlink" href="#Submitting-Your-Work" title="Permalink to this headline">¶</a></h2>
+<p>Report your answers in an iPython/Jupyter notebook with either print
+statements or markdown. If you write any functions, include a docstring
+describing what that function does. Note: You are not writing tests for
+any functions.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Problem Set - Statistics 2</a><ul>
+<li><a class="reference internal" href="#Tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#Find-the-probability-that...">Find the probability that...</a></li>
+<li><a class="reference internal" href="#Plot-the-distribution-of-passenger-ages.-Choose-visually-meaningful-bin-sizes-and-label-your-axes">Plot the distribution of passenger ages. Choose visually-meaningful bin sizes and label your axes</a></li>
+<li><a class="reference internal" href="#Find-the-probability-that-(choose-one)...">Find the probability that (choose one)...</a></li>
+<li><a class="reference internal" href="#Knowing-nothing-else-about-the-passengers-aside-from-the-survival-rate-of-the-population-(the-first-question),-if-I-choose-100-passengers-at-random-from-the-passenger-list,-what's-the-probability-that-exactly-42-passengers-survive?">Knowing nothing else about the passengers aside from the survival rate of the population (the first question), if I choose 100 passengers at random from the passenger list, what&#8217;s the probability that exactly 42 passengers survive?</a></li>
+<li><a class="reference internal" href="#What's-the-probability-that-at-least-42-of-those-100-passengers-survive?">What&#8217;s the probability that at least 42 of those 100 passengers survive?</a></li>
+<li><a class="reference internal" href="#Is-there-a-statistically-significant-difference-between...">Is there a statistically significant difference between...</a></li>
+<li><a class="reference internal" href="#If-so,-at-what-level?-If-not,-how-do-you-know?">If so, at what level? If not, how do you know?</a></li>
+<li><a class="reference internal" href="#Accompany-your-p-values-with-histograms-showing-the-distributions-of-both-compared-populations">Accompany your p-values with histograms showing the distributions of both compared populations</a></li>
+<li><a class="reference internal" href="#STRETCH-GOAL-Write-a-function-that-takes-N-random-samples-of-100-passengers,-and-returns-the-fraction-of-those-samples-where-at-least-42-passengers-survive.-Choose-a-random-seed-and-find-approximately-how-many-random-samples-you-need-to-take-before-your-fraction-matches-the-probability-you-calculated-(within-)."><em>STRETCH GOAL</em> Write a function that takes N random samples of 100 passengers, and returns the fraction of those samples where at least 42 passengers survive. Choose a random seed and find approximately how many random samples you need to take before your fraction matches the probability you calculated (within <span class="math">\(\Delta p \approx 0.05\)</span>).</a></li>
+<li><a class="reference internal" href="#It-may-help-to-visualize-the-survival-fraction-vs-the-number-of-random-samples.-Answers-will-vary-based-on-the-seed.">It may help to visualize the survival fraction vs the number of random samples. Answers will vary based on the seed.</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Submitting-Your-Work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="statistics_problem_set1.html"
+                        title="previous chapter">Problem Set - Statistics 1</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="statistics_problem_set3.html"
+                        title="next chapter">Problem Set - Statistics 3</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="statistics_problem_set3.html" title="Problem Set - Statistics 3"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="statistics_problem_set1.html" title="Problem Set - Statistics 1"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

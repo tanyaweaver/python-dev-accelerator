@@ -33,5 +33,5 @@ Demo
 Assignments
 ===========
 
-
+* :doc:`/assignments/statistics_problem_set3`
 * :doc:`/assignments/daily_lj_entry`

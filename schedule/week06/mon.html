@@ -23,8 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
-    <link rel="next" title="Statistics 1: Descriptive Statistics" href="../../lectures/stats_day1.html" />
+    <link rel="next" title="Overview" href="../../lectures/data_overview.html" />
     <link rel="prev" title="Friday" href="../week05/fri.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -50,7 +51,7 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../lectures/stats_day1.html" title="Statistics 1: Descriptive Statistics"
+          <a href="../../lectures/data_overview.html" title="Overview"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../week05/fri.html" title="Friday"
@@ -194,6 +195,11 @@ div.nboutput  > :nth-child(2).stderr {
 <li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/db/models/">Django Models API</a></li>
 <li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/db/managers/">Django Model Managers</a></li>
 <li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/signals/">Django&#8217;s Signal Framework</a>, <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/signals">Built-In Signals</a> and <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/signals/#listening-to-signals">Signal Handling</a> (You&#8217;ll also want to read up on using the new <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/applications/#configuring-applications">App Config system</a> to <a class="reference external" href="http://chriskief.com/2014/02/28/django-1-7-signals-appconfig/">register signals and signal handlers</a>)</li>
+</ul>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
 <li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/testing/">Django Testing</a> (familiarize yourself both with <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/testing/overview/">writing and running tests</a> and with the <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/testing/tools/">tools Django provides</a> for testing.</li>
 <li>Using Dynamic Test Fixtures with <a class="reference external" href="http://factoryboy.readthedocs.org/">Factory Boy</a> (in particular pay attention to <a class="reference external" href="http://factoryboy.readthedocs.org/en/latest/orms.html#django">using Factory Boy with Django</a>)</li>
 </ul>
@@ -205,25 +211,28 @@ div.nboutput  > :nth-child(2).stderr {
 <h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/data_overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/data_overview.html#Welcome">Welcome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/data_overview.html#Structure">Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/data_overview.html#Install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/data_overview.html#Experiment">Experiment</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lectures/stats_day1.html">Statistics 1: Descriptive Statistics</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#The-Problem">The Problem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#The-Solution-(to-start)">The Solution (to start)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Averages/Means---Getting-a-Feeling-for-the-Data">Averages/Means - Getting a Feeling for the Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Averages/Means---Getting-a-Feeling-for-the-Data">Averages/Means - Getting a Feeling for the Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Averages/Means---Do-It-With-Code!">Averages/Means - Do It With Code!</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Just-stick-with-Numpy-for-your-means...">Just stick with Numpy for your means...</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Always-visualize-your-data">Always visualize your data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Averages/Means---Limitations">Averages/Means - Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#np.histogram---a-valuable-tool">np.histogram - a valuable tool</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Averages/Means---Limitations">Averages/Means - Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Median---The-Literal-Middle">Median - The Literal Middle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Median---The-Literal-Middle">Median - The Literal Middle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Standard-Deviation---The-Spread-of-the-Data">Standard Deviation - The Spread of the Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Standard-Deviation---The-Spread-of-the-Data">Standard Deviation - The Spread of the Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Standard-Deviation---The-Spread-of-the-Data">Standard Deviation - The Spread of the Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Standard-Deviation---The-68-95-99-rule">Standard Deviation - The 68-95-99 rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Mode---The-most-frequent-thing(s)">Mode - The most frequent thing(s)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Mode---The-most-frequent-thing(s)">Mode - The most frequent thing(s)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Quantiles---Values-some-fraction-of-the-way-into-something">Quantiles - Values some fraction of the way into something</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Quantiles">Quantiles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day1.html#Descriptive-Statistic-Module-References">Descriptive Statistic Module References</a></li>
 </ul>
 </li>
@@ -245,6 +254,7 @@ div.nboutput  > :nth-child(2).stderr {
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><a class="reference internal" href="../../assignments/statistics_problem_set1.html"><em>Problem Set - Statistics 1</em></a></li>
 <li><a class="reference internal" href="../../assignments/bst_1.html"><em>Implement a Binary Search Tree in Python</em></a></li>
 <li><a class="reference internal" href="../../assignments/django_0_tutorial.html"><em>Walk Through the Django Tutorial</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
@@ -263,6 +273,7 @@ div.nboutput  > :nth-child(2).stderr {
 <li><a class="reference internal" href="#">Monday</a><ul>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
 <li><a class="reference internal" href="#readings">Readings</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
 <li><a class="reference internal" href="#review">Review</a></li>
 <li><a class="reference internal" href="#concepts">Concepts</a></li>
 <li><a class="reference internal" href="#demo">Demo</a></li>
@@ -275,8 +286,8 @@ div.nboutput  > :nth-child(2).stderr {
   <p class="topless"><a href="../week05/fri.html"
                         title="previous chapter">Friday</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../../lectures/stats_day1.html"
-                        title="next chapter">Statistics 1: Descriptive Statistics</a></p>
+  <p class="topless"><a href="../../lectures/data_overview.html"
+                        title="next chapter">Overview</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
@@ -301,7 +312,7 @@ div.nboutput  > :nth-child(2).stderr {
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../lectures/stats_day1.html" title="Statistics 1: Descriptive Statistics"
+          <a href="../../lectures/data_overview.html" title="Overview"
              >next</a> |</li>
         <li class="right" >
           <a href="../week05/fri.html" title="Friday"

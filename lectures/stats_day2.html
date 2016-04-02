@@ -23,10 +23,11 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="up" title="401 Python: Lecture Notes" href="index.html" />
-    <link rel="next" title="Statistics 3: More about Tests, Confidence Intervals, Goodness of Fit, and Model Validation" href="stats_day3.html" />
-    <link rel="prev" title="Statistics 1: Descriptive Statistics" href="stats_day1.html" />
+    <link rel="up" title="Tuesday" href="../schedule/week06/tue.html" />
+    <link rel="next" title="A Python Miscellany: Iterators &amp; Generators" href="intro_to_python_9_generators.html" />
+    <link rel="prev" title="Tuesday" href="../schedule/week06/tue.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,13 +52,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="stats_day3.html" title="Statistics 3: More about Tests, Confidence Intervals, Goodness of Fit, and Model Validation"
+          <a href="intro_to_python_9_generators.html" title="A Python Miscellany: Iterators &amp; Generators"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="stats_day1.html" title="Statistics 1: Descriptive Statistics"
+          <a href="../schedule/week06/tue.html" title="Tuesday"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Lecture Notes</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../schedule/week06/tue.html" accesskey="U">Tuesday</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -182,9 +183,6 @@ div.nboutput  > :nth-child(2).stderr {
 </style>
 <div class="section" id="Statistics-2:-Probability,-Distributions,-&amp;-Tests">
 <h1>Statistics 2: Probability, Distributions, &amp; Tests<a class="headerlink" href="#Statistics-2:-Probability,-Distributions,-&-Tests" title="Permalink to this headline">¶</a></h1>
-<p><strong>Date:</strong> April 5, 2016</p>
-<p><strong>Author:</strong> Nicholas Hunt-Walker</p>
-<p><strong>Class:</strong> Code Fellows Code 401: Python</p>
 <p><strong>Package/module refs:</strong> -
 <a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html">pandas</a>
 for storing your data -
@@ -198,30 +196,6 @@ for t-tests and distribution functions -
 visualizing your data - <a class="reference external" href="https://github.com/nhuntwalker/teaching/blob/master/plotting_in_python.ipynb">my tutorial on plotting
 data</a>.
 It&#8217;s focused on Astronomy but is universally (HA!) applicable</p>
-<ul class="simple">
-<li>Introduce basic frequentist probability and arithmetic stuff with it<ul>
-<li>Examples: prob of single event, multiple events with replacement,
-multiple events without replacement</li>
-</ul>
-</li>
-<li>Build up distributions by adding finer bins to prosper loan data</li>
-<li>Uniform distribution<ul>
-<li>Examples: dice rolls, drawing cards</li>
-</ul>
-</li>
-<li>Gaussian distribution<ul>
-<li>State central limit theorem without calling it the Central Limit
-Theorem</li>
-</ul>
-</li>
-<li>Binomial distribution<ul>
-<li>Example: coin flips</li>
-</ul>
-</li>
-<li>Poisson distribution</li>
-<li>t-Test</li>
-<li>p-values and levels of likelihood</li>
-</ul>
 <div class="section" id="Basic-Rules-of-Probability">
 <h2>Basic Rules of Probability<a class="headerlink" href="#Basic-Rules-of-Probability" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -229,9 +203,9 @@ Theorem</li>
 in that category.</li>
 <li>Probabilities denote <strong>the chance</strong> that something happens, <strong>not the
 guarantee</strong></li>
-<li><span class="math">0 \le p(x) \le 1</span> or <span class="math">0\% \le p(x) \le 100\%</span></li>
+<li><span class="math">\(0 \le p(x) \le 1\)</span> or <span class="math">\(0\% \le p(x) \le 100\%\)</span></li>
 <li>For any set of associated but separate events,
-<span class="math">\displaystyle\sum_i p(x_i) = 1</span></li>
+<span class="math">\(\displaystyle\sum_i p(x_i) = 1\)</span></li>
 <li>For related events A and B, the probablity that they happen together
 is</li>
 </ul>
@@ -262,7 +236,7 @@ In [1]:
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/prosperLoanData.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../downloads/prosperLoanData_truncated.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">StatedMonthlyIncome</span> <span class="o">&lt;</span> <span class="mf">2E4</span><span class="p">]</span>
 <span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">StatedMonthlyIncome</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
@@ -282,7 +256,7 @@ In [1]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_5_0.png" src="../_images/lectures_stats_day2_5_0.png" />
+<img alt="../_images/lectures_stats_day2_4_0.png" src="../_images/lectures_stats_day2_4_0.png" />
 </div>
 </div>
 <div class="nbinput container">
@@ -309,7 +283,7 @@ In [2]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_6_0.png" src="../_images/lectures_stats_day2_6_0.png" />
+<img alt="../_images/lectures_stats_day2_5_0.png" src="../_images/lectures_stats_day2_5_0.png" />
 </div>
 </div>
 <div class="nbinput container">
@@ -336,7 +310,7 @@ In [3]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_7_0.png" src="../_images/lectures_stats_day2_7_0.png" />
+<img alt="../_images/lectures_stats_day2_6_0.png" src="../_images/lectures_stats_day2_6_0.png" />
 </div>
 </div>
 <div class="nbinput container">
@@ -363,9 +337,25 @@ In [4]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_8_0.png" src="../_images/lectures_stats_day2_8_0.png" />
+<img alt="../_images/lectures_stats_day2_7_0.png" src="../_images/lectures_stats_day2_7_0.png" />
 </div>
 </div>
+<p>Note that here I use <code class="docutils literal"><span class="pre">ax</span></code> to access the plot space of the figure, so
+that I can place text wherever I want it. If I don&#8217;t use the
+<code class="docutils literal"><span class="pre">transform</span></code> parameter, then if I want to place text on a figure I have
+to specify the exact coordinates in the data space for where I want it
+to be. With transforming to the coordinate space of the figure, I can
+use the fact that coordinate space goes from 0 to 1 horizontally and
+vertically to place text easily.</p>
+<p>One issue is that if you use <code class="docutils literal"><span class="pre">ax</span></code>, you set axis labels using
+<code class="docutils literal"><span class="pre">ax.set_xlabel</span></code> and <code class="docutils literal"><span class="pre">ax.set_ylabel</span></code> instead of the normal methods
+with <code class="docutils literal"><span class="pre">plt.xlabel</span></code> and <code class="docutils literal"><span class="pre">plt.ylabel</span></code>. Similar for setting axis limits.</p>
+<p>Also note that with numpy arrays (and pandas DataFrames), you can
+perform arithmetic on the entire object at once. Also note that with
+numpy arrays specifically, you cannot alter the size of the array once
+it&#8217;s been created. Fixed-size arrays make it faster, but the
+immutability of size can be a little difficult. At least you can alter
+the values inside the array easily through indexing.</p>
 </div>
 <div class="section" id="Cumulative-Probability-Distribution">
 <h2>Cumulative Probability Distribution<a class="headerlink" href="#Cumulative-Probability-Distribution" title="Permalink to this headline">¶</a></h2>
@@ -382,16 +372,16 @@ In [5]:
 <span class="n">incomes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">]</span>
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># smooshes vertical subplots together</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span> <span class="c1"># 2 rows, 1 column, put this figure in the first cell</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">H</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">H</span><span class="p">)),</span> <span class="n">width</span><span class="o">=</span><span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">edges</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">incomes</span><span class="p">:</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">ii</span><span class="p">,</span> <span class="n">ii</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Probability of Income Range&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span> <span class="c1"># kills the numbers on the x-axis for this plot</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span> <span class="c1"># 2 rows, 1 column, put this figure in the first cell</span>
 <span class="n">probabilities</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">H</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">probabilities</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">incomes</span><span class="p">:</span>
@@ -403,7 +393,7 @@ In [5]:
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Cumulative Probability&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
-<span class="c1"># plt.savefig(&quot;figs/cumulative_distribution.png&quot;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../downloads/cumulative_distribution.png&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -414,6 +404,13 @@ In [5]:
 <div class="container">
 <img alt="../_images/lectures_stats_day2_10_0.png" src="../_images/lectures_stats_day2_10_0.png" />
 </div>
+</div>
+<p>Numpy arrays have several methods, one of which is <code class="docutils literal"><span class="pre">cumsum()</span></code>. This
+method performs a cumulative sum on your array from left to right.</p>
+<div class="highlight-python"><div class="highlight"><pre>arr = np.array([1, 1, 1, 1, 1, 1, 1, 1])
+arr.cumsum()
+&gt;&gt;&gt; array([1, 2, 3, 4, 5, 6, 7, 8])
+</pre></div>
 </div>
 <ul class="simple">
 <li>&#8220;If I choose a person from this data set at random, there&#8217;s a 58%
@@ -427,9 +424,9 @@ $15,000&#8221;</li>
 <div class="section" id="The-Gaussian/Normal-Distribution">
 <h2>The Gaussian/Normal Distribution<a class="headerlink" href="#The-Gaussian/Normal-Distribution" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Theoretical curve describing the probability of some value x, given
-the mean and standard deviation of the data</li>
-<li><span class="math">p(x|\sigma, \mu) = \displaystyle\frac{1}{\sqrt{2\pi\sigma^2}}\exp{\left[\frac{-(x - \mu)^2}{2\sigma^2}\right]}</span></li>
+<li>Theoretical curve describing the probability of getting some value x,
+given the mean and standard deviation of the data</li>
+<li><span class="math">\(p(x|\sigma, \mu) = \displaystyle\frac{1}{\sqrt{2\pi\sigma^2}}\exp{\left[\frac{-(x - \mu)^2}{2\sigma^2}\right]}\)</span></li>
 <li>The most commonly-used distribution</li>
 <li>Ref: <strong>Central Limit Theorem</strong></li>
 <li>The Gist: The mean of samples drawn from an almost arbitrary
@@ -451,10 +448,10 @@ In [6]:
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu = 0, \sigma = 0.5$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu = 0, \sigma = 1$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu = 0, \sigma = 2$&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;p(x)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$p(x)$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;figs/gaussian_distribution.png&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../downloads/gaussian_distribution.png&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -463,7 +460,7 @@ In [6]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_14_0.png" src="../_images/lectures_stats_day2_14_0.png" />
+<img alt="../_images/lectures_stats_day2_15_0.png" src="../_images/lectures_stats_day2_15_0.png" />
 </div>
 </div>
 </div>
@@ -474,16 +471,16 @@ In [6]:
 <li>Describes the distribution of a variable that can only take two</li>
 </ul>
 </div></blockquote>
-<p>values (0/1, False/True, Heads/Tails) - For N trials... - I know the
-probability b of getting one outcome per trial... - I can describe the
-probability of getting k successes of that outcome:</p>
+<p>values (0/1, False/True, Heads/Tails) - For <em>N</em> trials... - I know the
+probability <em>b</em> of getting one outcome per trial... - I can describe the
+probability of getting <em>k</em> successes of that outcome:</p>
 <div class="math">
-<p><span class="math">p(k|b,N) = \displaystyle\frac{N!}{k!(N-k)!}b^k(1 - b)^{N-k}</span></p>
-</div><ul class="simple">
-<li>The mean <span class="math">\bar{k} = b\,N</span></li>
-<li>The standard deviation <span class="math">\sigma_k = \sqrt{N \,b \,(1 - b)}</span></li>
-<li>NOTE: does not describe probability of getting consecutive successes
-or any particular combination of successes &amp; failures</li>
+\[p(k|b,N) = \displaystyle\frac{N!}{k!(N-k)!}b^k(1 - b)^{N-k}\]</div>
+<ul class="simple">
+<li>The mean <span class="math">\(\bar{k} = b\,N\)</span></li>
+<li>The standard deviation <span class="math">\(\sigma_k = \sqrt{N \,b \,(1 - b)}\)</span></li>
+<li><strong>NOTE: does not describe probability of getting consecutive
+successes or any particular combination of successes &amp; failures</strong></li>
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
@@ -505,10 +502,10 @@ In [7]:
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$b = 0.5, N = 100$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$b = 0.5, N = 50$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$b = 0.6, N = 100$&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;p(k | b, N)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$k$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$p(k | b, N)$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;figs/binomial_distribution.png&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../downloads/binomial_distribution.png&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -517,62 +514,7 @@ In [7]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_16_0.png" src="../_images/lectures_stats_day2_16_0.png" />
-</div>
-</div>
-</div>
-<div class="section" id="The-Poisson-Distribution">
-<h2>The Poisson Distribution<a class="headerlink" href="#The-Poisson-Distribution" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li>A special case of the Binomial distribution - Number of trials N is</li>
-</ul>
-</div></blockquote>
-<p>very large (approaching <span class="math">\infty</span>), but the probability of success
-is exceedingly small - The distribution of the number of successes is
-controlled <em>fully</em> by the mean - <span class="math">\mu = b\,N</span></p>
-<div class="math">
-<p><span class="math">p(k|\mu) = \displaystyle\frac{\mu^k\exp(-\mu)}{k!}</span></p>
-</div><ul class="simple">
-<li>All descriptive stats relate to the mean!<ul>
-<li><span class="math">\sigma = \sqrt{\mu}</span></li>
-<li><span class="math">q_{50} = \mu</span></li>
-<li>mode = <span class="math">\mu - 1</span></li>
-</ul>
-</li>
-<li>Useful for small number (&lt; 100) statistics</li>
-<li>When <span class="math">\mu</span> is large, it becomes like a Gaussian distribution</li>
-</ul>
-<div class="nbinput container">
-<div class="highlight-none"><div class="highlight"><pre>
-In [8]:
-</pre></div>
-</div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
-<span class="k">def</span> <span class="nf">poisson</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">mu</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">mu</span> <span class="o">**</span> <span class="n">k</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">factorial</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-<span class="n">y0</span> <span class="o">=</span> <span class="p">[</span><span class="n">poisson</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
-<span class="n">y1</span> <span class="o">=</span> <span class="p">[</span><span class="n">poisson</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
-<span class="n">y2</span> <span class="o">=</span> <span class="p">[</span><span class="n">poisson</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu = 5$&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu = 15$&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\mu = 30$&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;p(k | $\mu$)&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;figs/poisson_distribution.png&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast container">
-<div class="container">
-</div>
-<div class="container">
-<img alt="../_images/lectures_stats_day2_18_0.png" src="../_images/lectures_stats_day2_18_0.png" />
+<img alt="../_images/lectures_stats_day2_17_0.png" src="../_images/lectures_stats_day2_17_0.png" />
 </div>
 </div>
 </div>
@@ -581,13 +523,28 @@ In [8]:
 <ul class="simple">
 <li>Chance occurrence vs meaningful occurrence</li>
 <li>Sticking with the Gaussian distribution of random samples</li>
-<li>Either reject the Null Hypothesis <span class="math">H_0</span> or fail to reject it.</li>
-<li>Can never PROVE absolutely True or absolutely False</li>
+<li>Either reject the Null Hypothesis <span class="math">\(H_0\)</span> or fail to reject it.</li>
+<li><strong>Can never PROVE absolutely True or absolutely False</strong></li>
 <li>Hypothesis conclusions entirely dependent on the sample. Cannot be
 assumed to be universal.</li>
-<li>Significance levels (<span class="math">\alpha</span>) help decide whether to reject
-<span class="math">H_0</span><ul>
-<li>Typical <span class="math">\alpha</span>-levels: 0.05, 0.025, 0.01</li>
+<li>Significance levels (<span class="math">\(\alpha\)</span>) help decide whether to reject
+<span class="math">\(H_0\)</span><ul>
+<li>Typical <span class="math">\(\alpha\)</span>-levels: 0.05, 0.025, 0.01</li>
+</ul>
+</li>
+<li>Statistical tests produce two things:<ul>
+<li>a numerical statistic showing the distance between the means of
+two distributions (more later)</li>
+<li>a &#8220;p-value&#8221; showing the probability of getting this result <strong>given
+the null hypothesis</strong></li>
+</ul>
+</li>
+<li>If your p-value is less than some alpha-level, then it&#8217;s
+statistically significant to that level<ul>
+<li>ex: p = 0.035; my test rejects the null hypothesis at
+<span class="math">\(\alpha = 0.05\)</span> significance level, but not at the
+<span class="math">\(\alpha = 0.025\)</span> level.</li>
+<li>ex: p = 0.13; my tests fails to reject the null hypothesis</li>
 </ul>
 </li>
 </ul>
@@ -597,11 +554,18 @@ assumed to be universal.</li>
 <ul>
 <li><p class="first">&#8220;Students&#8221; was the pseudonym of the originator</p>
 </li>
-<li><p class="first">Computes a t-statistic based on the means and variances of samples</p>
+<li><p class="first">Computes a statistic (the &#8220;t&#8221; statistic) based on the means and
+variances of samples</p>
 <div class="math">
-<p><span class="math">t = \displaystyle\frac{\bar{x_1} - \bar{x_2}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}</span></p>
-</div></li>
-<li><p class="first">Use Cases:</p>
+\[t = \displaystyle\frac{\bar{x_1} - \bar{x_2}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}\]</div>
+</li>
+<li><p class="first"><strong>Defs:</strong></p>
+<ul class="simple">
+<li><span class="math">\(s_i\)</span>: standard deviation of sample <span class="math">\(i\)</span></li>
+<li><span class="math">\(n_i\)</span>: number of items in sample <span class="math">\(i\)</span></li>
+</ul>
+</li>
+<li><p class="first"><strong>Use Cases</strong></p>
 <ul class="simple">
 <li>test whether a subsample is significantly different from the
 population</li>
@@ -610,17 +574,19 @@ different</li>
 <li>test if two independent samples are significantly different</li>
 </ul>
 </li>
-<li><p class="first">Note: Data should be somewhat &#8220;normally&#8221; distributed (so visualize).
-Non-normal data for next time</p>
+<li><p class="first"><strong>Note: Data should be somewhat &#8220;normally&#8221; distributed (so
+visualize). Non-normal data needs a different test (next time</strong></p>
 </li>
 </ul>
 </div>
 <div class="section" id="t-Test-example:-Seattle-Weather-in-2010">
 <h2>t-Test example: Seattle Weather in 2010<a class="headerlink" href="#t-Test-example:-Seattle-Weather-in-2010" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Hypothesis: high-earning loan borrowers take out different levels of
-loans than low-earning loan borrowers</li>
-<li>Define terms:<ul>
+<li><strong>Hypothesis:</strong> The temperature during the Spring was significantly
+different than the temperature during the Fall</li>
+<li><strong>Null hypothesis:</strong> The temperature during the Spring wasn&#8217;t
+significantly different</li>
+<li><strong>Define terms:</strong><ul>
 <li>Spring: March through May</li>
 <li>Fall: September through November</li>
 </ul>
@@ -628,13 +594,13 @@ loans than low-earning loan borrowers</li>
 </ul>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [9]:
+In [8]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">os</span>
 
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;./data/seattle/&quot;</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;../downloads/seattle_weather/&quot;</span>
 <span class="n">weather_files</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">data_dir</span> <span class="o">+</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;MonthlyHistory&quot;</span><span class="p">)]</span>
 <span class="n">seattle_weather</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">weather_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -643,30 +609,54 @@ In [9]:
     <span class="n">indata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
     <span class="k">if</span> <span class="s2">&quot;PDT&quot;</span> <span class="ow">in</span> <span class="n">indata</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
         <span class="n">indata</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;PDT&#39;</span><span class="p">:</span> <span class="s1">&#39;PST&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
     <span class="n">seattle_weather</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">seattle_weather</span><span class="p">,</span> <span class="n">indata</span><span class="p">),</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<p><code class="docutils literal"><span class="pre">pandas.concat</span></code> takes two DataFrames and merges them into one
+DataFrame. If you don&#8217;t set <code class="docutils literal"><span class="pre">ignore_index=True</span></code> then it will preserve
+the index values that each individual DataFrame had before merging,
+which can become problematic when slicing the new merged frame</p>
+<p>Note that when concatenating DataFrames, any columns that exist in one
+and not in the other will get filled with null values. Above, I just
+change the name of the &#8220;PDT&#8221; column because not every data file has that
+column despite them all showing roughly the same data.</p>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [9]:
+</pre></div>
+</div>
+<div class="highlight-ipython2"><div class="highlight"><pre>
+<span class="n">seattle_weather</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle_weather</span><span class="o">.</span><span class="n">PST</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">seattle_weather</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle_weather</span><span class="o">.</span><span class="n">PST</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">seattle_weather</span><span class="p">[</span><span class="s2">&quot;day&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle_weather</span><span class="o">.</span><span class="n">PST</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<p>You can create new columns in a DataFrame much like how you can create
+new keys in a dictionary, by specifying the column name that you want.
+You can also get data from columns in two ways: calling that column up
+with the square bracket notation <code class="docutils literal"><span class="pre">DataFrame[&quot;column_name&quot;]</span></code> or with
+dot notation <code class="docutils literal"><span class="pre">DataFrame.column_name</span></code>. The main difference is that dot
+notation cannot handle column names with spaces.</p>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
 In [10]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
-<span class="n">seattle_weather</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle_weather</span><span class="o">.</span><span class="n">PST</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
-    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span>
-<span class="n">seattle_weather</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle_weather</span><span class="o">.</span><span class="n">PST</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
-    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]))</span>
-<span class="n">seattle_weather</span><span class="p">[</span><span class="s2">&quot;day&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle_weather</span><span class="o">.</span><span class="n">PST</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
-    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]))</span>
-
-<span class="n">spring_2010</span> <span class="o">=</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">2010</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
-    <span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">)</span>
-<span class="n">fall_2010</span> <span class="o">=</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">2010</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
-    <span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">)</span>
+<span class="n">spring_2010</span> <span class="o">=</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">2010</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">fall_2010</span> <span class="o">=</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">2010</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<p>You can select indices of data matching specific criteria. The above
+lines produce two pandas Series objects (effectively a one-column
+DataFrame) holding boolean values of <code class="docutils literal"><span class="pre">True</span></code> when a row matches your
+criteria, and <code class="docutils literal"><span class="pre">False</span></code> when it doesn&#8217;t. You can do the same with numpy
+arrays (where the same selection will produce numpy arrays filled with
+booleans)</p>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
 In [11]:
@@ -674,10 +664,10 @@ In [11]:
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">seattle_weather</span><span class="p">[</span><span class="n">spring_2010</span><span class="p">][</span><span class="s2">&quot;Mean TemperatureF&quot;</span><span class="p">],</span>
-         <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Spring 2010&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">seattle_weather</span><span class="p">[</span><span class="n">fall_2010</span><span class="p">][</span><span class="s2">&quot;Mean TemperatureF&quot;</span><span class="p">],</span>
-         <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Fall 2010&quot;</span><span class="p">)</span>
+<span class="n">opacity</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">mean_temp</span> <span class="o">=</span> <span class="s2">&quot;Mean TemperatureF&quot;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">seattle_weather</span><span class="p">[</span><span class="n">spring_2010</span><span class="p">][</span><span class="n">mean_temp</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Spring 2010&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">seattle_weather</span><span class="p">[</span><span class="n">fall_2010</span><span class="p">][</span><span class="n">mean_temp</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Fall 2010&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean Temperature (F)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;N days&quot;</span><span class="p">)</span>
@@ -689,9 +679,15 @@ In [11]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_24_0.png" src="../_images/lectures_stats_day2_24_0.png" />
+<img alt="../_images/lectures_stats_day2_27_0.png" src="../_images/lectures_stats_day2_27_0.png" />
 </div>
 </div>
+<p>The <code class="docutils literal"><span class="pre">alpha</span></code> parameter controls the opacity of whatever you&#8217;re
+plotting, whether they are bars, points, lines, circles, whatever.
+Opacity goes from 0 to 1. Works best when you you have heavily
+overlapping data. In the event of overlapping data, plot the larger data
+set first (in the background) so that it doesn&#8217;t drown out the smaller
+set.</p>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
 In [12]:
@@ -700,9 +696,9 @@ In [12]:
 <div class="highlight-ipython2"><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">ttest_ind</span>
 
-<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">ttest_ind</span><span class="p">(</span><span class="n">seattle_weather</span><span class="p">[</span><span class="n">spring_2010</span><span class="p">][</span><span class="s2">&quot;Mean TemperatureF&quot;</span><span class="p">],</span>
-                            <span class="n">seattle_weather</span><span class="p">[</span><span class="n">fall_2010</span><span class="p">][</span><span class="s2">&quot;Mean TemperatureF&quot;</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="n">t_stat</span><span class="p">,</span> <span class="n">p_value</span><span class="p">)</span>
+<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">ttest_ind</span><span class="p">(</span><span class="n">seattle_weather</span><span class="p">[</span><span class="n">spring_2010</span><span class="p">][</span><span class="n">mean_temp</span><span class="p">],</span>
+                            <span class="n">seattle_weather</span><span class="p">[</span><span class="n">fall_2010</span><span class="p">][</span><span class="n">mean_temp</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Results:</span><span class="se">\n\t</span><span class="s2">t-statistic: </span><span class="si">%.5f</span><span class="se">\n\t</span><span class="s2">p-value: </span><span class="si">%.5f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t_stat</span><span class="p">,</span> <span class="n">p_value</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -711,11 +707,14 @@ In [12]:
 </div>
 <div class="container">
 <div class="highlight"><pre>
-(-2.0906279608666107, 0.037958111636218525)
+Results:
+        t-statistic: -2.09063
+        p-value: 0.03796
 </pre></div></div>
 </div>
-<p>Spring and Fall 2010 are different at the p &lt; 0.05 significance level,
-but not at the p &lt; 0.025</p>
+<p>I can reject the null hypothesis at the p &lt; 0.05 significance level.
+<strong>At that level, the mean temperature in Spring and Fall 2010 was
+significantly different.</strong></p>
 <div class="section" id="t-tests-in-SciPy.stats">
 <h3>t-tests in SciPy.stats<a class="headerlink" href="#t-tests-in-SciPy.stats" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -746,7 +745,6 @@ population</li>
 <li><a class="reference internal" href="#Cumulative-Probability-Distribution">Cumulative Probability Distribution</a></li>
 <li><a class="reference internal" href="#The-Gaussian/Normal-Distribution">The Gaussian/Normal Distribution</a></li>
 <li><a class="reference internal" href="#The-Binomial-Distribution">The Binomial Distribution</a></li>
-<li><a class="reference internal" href="#The-Poisson-Distribution">The Poisson Distribution</a></li>
 <li><a class="reference internal" href="#Hypothesis-Testing-and-Measurement-Significance">Hypothesis Testing and Measurement Significance</a></li>
 <li><a class="reference internal" href="#Students'-t-Test">Students&#8217; t-Test</a></li>
 <li><a class="reference internal" href="#t-Test-example:-Seattle-Weather-in-2010">t-Test example: Seattle Weather in 2010</a><ul>
@@ -758,11 +756,11 @@ population</li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="stats_day1.html"
-                        title="previous chapter">Statistics 1: Descriptive Statistics</a></p>
+  <p class="topless"><a href="../schedule/week06/tue.html"
+                        title="previous chapter">Tuesday</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="stats_day3.html"
-                        title="next chapter">Statistics 3: More about Tests, Confidence Intervals, Goodness of Fit, and Model Validation</a></p>
+  <p class="topless"><a href="intro_to_python_9_generators.html"
+                        title="next chapter">A Python Miscellany: Iterators &amp; Generators</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -787,13 +785,13 @@ population</li>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="stats_day3.html" title="Statistics 3: More about Tests, Confidence Intervals, Goodness of Fit, and Model Validation"
+          <a href="intro_to_python_9_generators.html" title="A Python Miscellany: Iterators &amp; Generators"
              >next</a> |</li>
         <li class="right" >
-          <a href="stats_day1.html" title="Statistics 1: Descriptive Statistics"
+          <a href="../schedule/week06/tue.html" title="Tuesday"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Lecture Notes</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../schedule/week06/tue.html" >Tuesday</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

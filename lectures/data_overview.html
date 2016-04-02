@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overview &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="next" title="&lt;no title&gt;" href="django_models.html" />
+    <link rel="prev" title="Getting Data In" href="cgi_wsgi.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="django_models.html" title="&lt;no title&gt;"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cgi_wsgi.html" title="Getting Data In"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="Overview">
+<h1>Overview<a class="headerlink" href="#Overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Welcome">
+<h2>Welcome<a class="headerlink" href="#Welcome" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Kaggle: <a class="reference external" href="https://www.kaggle.com/c/titanic">https://www.kaggle.com/c/titanic</a></li>
+<li>Pods</li>
+<li>Create your team</li>
+<li>Setup Your team repo and associate</li>
+</ul>
+</div>
+<div class="section" id="Structure">
+<h2>Structure<a class="headerlink" href="#Structure" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Data-Analysis">
+<h3>Data Analysis<a class="headerlink" href="#Data-Analysis" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="Data-Structure">
+<h3>Data Structure<a class="headerlink" href="#Data-Structure" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Trees</li>
+</ul>
+</div>
+<div class="section" id="Algorithms">
+<h3>Algorithms<a class="headerlink" href="#Algorithms" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>KNN / K-Means (Vector Quantization)</li>
+<li>Decision Tress</li>
+<li>Linear/Logistic Regression</li>
+<li>Multivariate Regression</li>
+</ul>
+</div>
+<div class="section" id="Tools">
+<h3>Tools<a class="headerlink" href="#Tools" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>numpy, scipy</li>
+<li>scikit-learn</li>
+<li>jupyter notebook</li>
+<li>matplotlib, seaborn</li>
+<li>pandas</li>
+<li>pytest-ipynb</li>
+<li>sql</li>
+</ul>
+</div>
+<div class="section" id="Lab">
+<h3>Lab<a class="headerlink" href="#Lab" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>pods (recitation)</li>
+<li>pairs (alternate daily)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="Install">
+<h2>Install<a class="headerlink" href="#Install" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://www.continuum.io/downloads">Download</a> for your OS</li>
+<li>bash [AndaconadaFile].sh</li>
+<li>cd /path/to/anaconda/bin; source conda root;cd</li>
+<li><code class="docutils literal"><span class="pre">python</span> <span class="pre">conda</span> <span class="pre">list</span> <span class="pre">-e</span> <span class="pre">&gt;</span> <span class="pre">[MY_SPEC_FILE].txt</span></code></li>
+<li>remove lines contain conda and anaconda from [MY_SPEC_FILE].txt
+<code class="docutils literal"><span class="pre">python</span> <span class="pre">conda</span> <span class="pre">create</span> <span class="pre">--name</span> <span class="pre">[ENV_NAME]</span> <span class="pre">--file</span> <span class="pre">[MY_SPEC_FILE].txt</span></code></li>
+</ul>
+</div>
+<div class="section" id="Experiment">
+<h2>Experiment<a class="headerlink" href="#Experiment" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="1.-Hypothesis-|-Aim-|-Objectives">
+<h3>1. Hypothesis | Aim | Objectives<a class="headerlink" href="#1.-Hypothesis-|-Aim-|-Objectives" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="*-Predict-survival-of-Titanic-passangers.">
+<h4>* Predict survival of Titanic passangers.<a class="headerlink" href="#*-Predict-survival-of-Titanic-passangers." title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="*-Which-features-most-accurately-predict-the-outcome?">
+<h4>* Which features most accurately predict the outcome?<a class="headerlink" href="#*-Which-features-most-accurately-predict-the-outcome?" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="*-Which-machine-learning-algorithms-are-most-accurate?">
+<h4>* Which machine learning algorithms are most accurate?<a class="headerlink" href="#*-Which-machine-learning-algorithms-are-most-accurate?" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="2.-Data-Analysis">
+<h3>2. Data Analysis<a class="headerlink" href="#2.-Data-Analysis" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="cleaning">
+<h4>cleaning<a class="headerlink" href="#cleaning" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>nulls/unknowns</li>
+<li>aggregate fields</li>
+<li>noise</li>
+</ul>
+</div>
+<div class="section" id="Pre-processing">
+<h4>Pre-processing<a class="headerlink" href="#Pre-processing" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Formatting, Sampling</li>
+</ul>
+</div>
+<div class="section" id="codebook">
+<h4>codebook<a class="headerlink" href="#codebook" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Princeton Codebook:
+(<a class="reference external" href="http://dss.princeton.edu/online_help/analysis/codebook.htm">http://dss.princeton.edu/online_help/analysis/codebook.htm</a>)</li>
+<li>CDC:
+<a class="reference external" href="http://www.cdc.gov/hiv/pdf/library_software_answr_codebook.pdf">http://www.cdc.gov/hiv/pdf/library_software_answr_codebook.pdf</a></li>
+<li>McGill Medicine:
+<a class="reference external" href="http://www.medicine.mcgill.ca/epidemiology/joseph/pbelisle/CodebookCookbook.html">http://www.medicine.mcgill.ca/epidemiology/joseph/pbelisle/CodebookCookbook.html</a></li>
+<li><strong>Kaggle Titanic: https://www.kaggle.com/c/titanic/data</strong></li>
+</ul>
+</div>
+<div class="section" id="statistics-&amp;-shape">
+<h4>statistics &amp; shape<a class="headerlink" href="#statistics-&-shape" title="Permalink to this headline">¶</a></h4>
+<p>Nick</p>
+</div>
+</div>
+<div class="section" id="3.-Selection-of-Features">
+<h3>3. Selection of Features<a class="headerlink" href="#3.-Selection-of-Features" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="input-X">
+<h4>input X<a class="headerlink" href="#input-X" title="Permalink to this headline">¶</a></h4>
+<p>{independent(causality)|predictor(correlated)|explanatory(statistically
+dependent)|Feature}</p>
+<ul class="simple">
+<li>Class, Sex, Age, Siblings, ParCh, SibSp, Embarked, Cabin</li>
+</ul>
+</div>
+<div class="section" id="output-Y">
+<h4>output Y<a class="headerlink" href="#output-Y" title="Permalink to this headline">¶</a></h4>
+<p>{dependent|predicted|response|Outcome}</p>
+<ul class="simple">
+<li>Survived</li>
+</ul>
+</div>
+<div class="section" id="factors-and-indicators">
+<h4>factors and indicators<a class="headerlink" href="#factors-and-indicators" title="Permalink to this headline">¶</a></h4>
+<p>{catagorical feature} and {dummy variables}</p>
+<ul class="simple">
+<li>Class, Sex, Cabin, Embarked</li>
+</ul>
+</div>
+</div>
+<div class="section" id="4.-Experiment-Heueristics-(Design)">
+<h3>4. Experiment Heueristics (Design)<a class="headerlink" href="#4.-Experiment-Heueristics-(Design)" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="Evaluation">
+<h4><strong>Evaluation</strong><a class="headerlink" href="#Evaluation" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Titanic: <a class="reference external" href="https://www.kaggle.com/c/titanic/details/evaluation">https://www.kaggle.com/c/titanic/details/evaluation</a></li>
+<li>ROC:
+<a class="reference external" href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">https://en.wikipedia.org/wiki/Receiver_operating_characteristic</a></li>
+<li>RMSE: <a class="reference external" href="https://www.kaggle.com/wiki/RootMeanSquaredError">https://www.kaggle.com/wiki/RootMeanSquaredError</a>)</li>
+<li>Log Loss:
+<a class="reference external" href="https://www.kaggle.com/c/bnp-paribas-cardif-claims-management/details/evaluation">https://www.kaggle.com/c/bnp-paribas-cardif-claims-management/details/evaluation</a></li>
+<li>Mean F Score: <a class="reference external" href="https://www.kaggle.com/wiki/MeanFScore">https://www.kaggle.com/wiki/MeanFScore</a></li>
+</ul>
+</div>
+<div class="section" id="Representation">
+<h4><strong>Representation</strong><a class="headerlink" href="#Representation" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Data: 60% Train, 10% Validation, 30% Test</li>
+<li>Algorithms</li>
+</ul>
+</div>
+<div class="section" id="Optimization">
+<h4><strong>Optimization</strong><a class="headerlink" href="#Optimization" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>off-the-rack</li>
+<li>consignment</li>
+<li>thrift-store</li>
+</ul>
+</div>
+</div>
+<div class="section" id="5.-Experiment">
+<h3>5. Experiment<a class="headerlink" href="#5.-Experiment" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="">
+<h4><span class="math">\(Learning = Representation + Optimization\)</span><a class="headerlink" href="#" title="Permalink to this headline">¶</a></h4>
+<p>~Pedro Domingos
+<a class="reference external" href="https://homes.cs.washington.edu/~pedrod/papers/cacm12.pdf">https://homes.cs.washington.edu/~pedrod/papers/cacm12.pdf</a></p>
+</div>
+</div>
+<div class="section" id="6.-Conclusions">
+<h3>6. Conclusions<a class="headerlink" href="#6.-Conclusions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>A well measured experiment...</li>
+</ul>
+</div>
+<div class="section" id="7.-Recommendation">
+<h3>7. Recommendation<a class="headerlink" href="#7.-Recommendation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Success comes from failures too...</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Overview</a><ul>
+<li><a class="reference internal" href="#Welcome">Welcome</a></li>
+<li><a class="reference internal" href="#Structure">Structure</a><ul>
+<li><a class="reference internal" href="#Data-Analysis">Data Analysis</a></li>
+<li><a class="reference internal" href="#Data-Structure">Data Structure</a></li>
+<li><a class="reference internal" href="#Algorithms">Algorithms</a></li>
+<li><a class="reference internal" href="#Tools">Tools</a></li>
+<li><a class="reference internal" href="#Lab">Lab</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Install">Install</a></li>
+<li><a class="reference internal" href="#Experiment">Experiment</a><ul>
+<li><a class="reference internal" href="#1.-Hypothesis-|-Aim-|-Objectives">1. Hypothesis | Aim | Objectives</a><ul>
+<li><a class="reference internal" href="#*-Predict-survival-of-Titanic-passangers.">* Predict survival of Titanic passangers.</a></li>
+<li><a class="reference internal" href="#*-Which-features-most-accurately-predict-the-outcome?">* Which features most accurately predict the outcome?</a></li>
+<li><a class="reference internal" href="#*-Which-machine-learning-algorithms-are-most-accurate?">* Which machine learning algorithms are most accurate?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#2.-Data-Analysis">2. Data Analysis</a><ul>
+<li><a class="reference internal" href="#cleaning">cleaning</a></li>
+<li><a class="reference internal" href="#Pre-processing">Pre-processing</a></li>
+<li><a class="reference internal" href="#codebook">codebook</a></li>
+<li><a class="reference internal" href="#statistics-&amp;-shape">statistics &amp; shape</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#3.-Selection-of-Features">3. Selection of Features</a><ul>
+<li><a class="reference internal" href="#input-X">input X</a></li>
+<li><a class="reference internal" href="#output-Y">output Y</a></li>
+<li><a class="reference internal" href="#factors-and-indicators">factors and indicators</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#4.-Experiment-Heueristics-(Design)">4. Experiment Heueristics (Design)</a><ul>
+<li><a class="reference internal" href="#Evaluation"><strong>Evaluation</strong></a></li>
+<li><a class="reference internal" href="#Representation"><strong>Representation</strong></a></li>
+<li><a class="reference internal" href="#Optimization"><strong>Optimization</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#5.-Experiment">5. Experiment</a><ul>
+<li><a class="reference internal" href="#"><span class="math">\(Learning = Representation + Optimization\)</span></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#6.-Conclusions">6. Conclusions</a></li>
+<li><a class="reference internal" href="#7.-Recommendation">7. Recommendation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cgi_wsgi.html"
+                        title="previous chapter">Getting Data In</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="django_models.html"
+                        title="next chapter">&lt;no title&gt;</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="django_models.html" title="&lt;no title&gt;"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cgi_wsgi.html" title="Getting Data In"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

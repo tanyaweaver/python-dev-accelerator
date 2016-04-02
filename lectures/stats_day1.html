@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
     <link rel="up" title="Monday" href="../schedule/week06/mon.html" />
     <link rel="next" title="Automate Tests with Travis CI" href="jenkins.html" />
@@ -182,9 +183,6 @@ div.nboutput  > :nth-child(2).stderr {
 </style>
 <div class="section" id="Statistics-1:-Descriptive-Statistics">
 <h1>Statistics 1: Descriptive Statistics<a class="headerlink" href="#Statistics-1:-Descriptive-Statistics" title="Permalink to this headline">¶</a></h1>
-<p><strong>Date:</strong> April 4, 2016</p>
-<p><strong>Author:</strong> Nicholas Hunt-Walker</p>
-<p><strong>Class:</strong> Code Fellows Code 401: Python</p>
 <p><strong>Package/module refs:</strong> -
 <a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html">pandas</a>
 for storing your data -
@@ -222,9 +220,6 @@ etc.</li>
 <div class="section" id="The-Solution-(to-start)">
 <h2>The Solution (to start)<a class="headerlink" href="#The-Solution-(to-start)" title="Permalink to this headline">¶</a></h2>
 <p><strong>DESCRIPTIVE STATISTICS!</strong></p>
-</div>
-<div class="section" id="Averages/Means---Getting-a-Feeling-for-the-Data">
-<h2>Averages/Means - Getting a Feeling for the Data<a class="headerlink" href="#Averages/Means---Getting-a-Feeling-for-the-Data" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="Averages/Means---Getting-a-Feeling-for-the-Data">
 <h2>Averages/Means - Getting a Feeling for the Data<a class="headerlink" href="#Averages/Means---Getting-a-Feeling-for-the-Data" title="Permalink to this headline">¶</a></h2>
@@ -270,7 +265,7 @@ but moreso where the middle of that data set is.</li>
 <h2>Averages/Means - Do It With Code!<a class="headerlink" href="#Averages/Means---Do-It-With-Code!" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [64]:
+In [1]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
@@ -319,10 +314,12 @@ Numpy Average: np.mean(heights) = 6.14
 <h2>Just stick with Numpy for your means...<a class="headerlink" href="#Just-stick-with-Numpy-for-your-means..." title="Permalink to this headline">¶</a></h2>
 <p>Convention for using the <code class="docutils literal"><span class="pre">numpy</span></code> package is to import it as <code class="docutils literal"><span class="pre">np</span></code>.
 Since in your analysis you may use any number of numpy modules, and some
-of those modules have names that would overwrite python built-ins,</p>
+of those modules have names that would overwrite python built-ins (e.g.
+<code class="docutils literal"><span class="pre">sum</span></code> vs <code class="docutils literal"><span class="pre">np.sum</span></code>), just import <code class="docutils literal"><span class="pre">numpy</span></code> as <code class="docutils literal"><span class="pre">np</span></code> instead of
+pulling over all the things.</p>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [15]:
+In [2]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
@@ -332,6 +329,7 @@ In [15]:
 
 <span class="n">number_measurements</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span>
                        <span class="mi">100000</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">,</span> <span class="mi">10000000</span><span class="p">,</span> <span class="mi">100000000</span><span class="p">]</span>
+<span class="n">basic_time_taken</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">numpy_time_taken</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">number_measurements</span><span class="p">)):</span>
@@ -350,7 +348,7 @@ In [15]:
 </div>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [35]:
+In [3]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
@@ -387,20 +385,43 @@ In [35]:
 </div>
 </div>
 </div>
+<div class="section" id="Always-visualize-your-data">
+<h2>Always visualize your data<a class="headerlink" href="#Always-visualize-your-data" title="Permalink to this headline">¶</a></h2>
+<p>The above example is just the visualization of a time test, but the
+principle follows that whenever you have data that you want to know the
+behavior of, visualize it. <a class="reference external" href="https://github.com/nhuntwalker/teaching/blob/master/plotting_in_python.ipynb">Here is a basic
+tutorial</a>
+on plotting data with <code class="docutils literal"><span class="pre">matplotlib</span></code>. It does scatter plots instead of
+the line plots above, but the principle is the same.</p>
+<ul class="simple">
+<li><strong>plt.figure:</strong> sets up your figure space, and lets you control how
+big your figure is</li>
+<li><strong>plt.title:</strong> puts a title on your figure</li>
+<li><strong>plt.plot:</strong> plots a line (but can also plot points; use &#8220;scatter&#8221;
+for that)</li>
+<li><strong>plt.text:</strong> allows you to place text on your graph, provided
+coordinates and text</li>
+<li><strong>plt.xscale/plt.yscale:</strong> switches between a linear scale (1, 2, 3,
+4, 5) and a logarithmic scale (1, 10, 100, 1000)</li>
+<li><strong>plt.xlim/plt.ylim:</strong> sets the limits on the x or y axis.</li>
+<li><strong>plt.legend:</strong> lets you produce a legend for your data if you
+provide labels</li>
+</ul>
+</div>
 <div class="section" id="Averages/Means---Limitations">
 <h2>Averages/Means - Limitations<a class="headerlink" href="#Averages/Means---Limitations" title="Permalink to this headline">¶</a></h2>
-<p>Massive, often bogus assumption that your data is distributed like so
+<p>Massive, often bogus assumption that your data is distributed &#8220;normally&#8221;
 around some value:</p>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [56]:
+In [4]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
 <span class="n">some_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
 <span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">some_data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The &quot;Normal&quot; Distribution&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">H</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
@@ -413,22 +434,33 @@ In [56]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day1_11_0.png" src="../_images/lectures_stats_day1_11_0.png" />
+<img alt="../_images/lectures_stats_day1_12_0.png" src="../_images/lectures_stats_day1_12_0.png" />
 </div>
 </div>
+</div>
+<div class="section" id="np.histogram---a-valuable-tool">
+<h2>np.histogram - a valuable tool<a class="headerlink" href="#np.histogram---a-valuable-tool" title="Permalink to this headline">¶</a></h2>
+<p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Histogram">histogram</a> shows the
+counts of some range of values for values in a data set.
+<code class="docutils literal"><span class="pre">np.histogram</span></code> takes a list, or array-like object and the number or
+set of bins for your data as arguments. It returns histogrammed data (a
+numpy array of frequency counts), as well as the edges of each of the
+bins in that histogram. If there are N bins in your histogram, the edges
+will be of length N + 1.</p>
 </div>
 <div class="section" id="Averages/Means---Limitations">
 <h2>Averages/Means - Limitations<a class="headerlink" href="#Averages/Means---Limitations" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Sample averages can be very sensitive to outliers and the size of
-data set</li>
+<li>Sample averages can be very sensitive to outliers (values
+significantly outside the norm)</li>
+<li>Also sensitive to the size of data set</li>
 <li>Doesn&#8217;t accurately describe data with multiple peaks and otherwise
 non-standard distributions</li>
 <li>Recall our collections of height</li>
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [57]:
+In [5]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
@@ -458,11 +490,8 @@ Data + sasquatch average: 6.78
 </div>
 <div class="section" id="Median---The-Literal-Middle">
 <h2>Median - The Literal Middle<a class="headerlink" href="#Median---The-Literal-Middle" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="Median---The-Literal-Middle">
-<h2>Median - The Literal Middle<a class="headerlink" href="#Median---The-Literal-Middle" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Put data in order from small to large</li>
+<li>Sort data from small to large</li>
 <li>The median = the <strong>exact</strong> middle</li>
 <li>If even number of data points, median is average of middle two</li>
 <li>Also known as the 50th percentile (more later)</li>
@@ -470,7 +499,7 @@ Data + sasquatch average: 6.78
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [63]:
+In [6]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
@@ -499,11 +528,8 @@ The actual middle: 3.00
 </div>
 <div class="section" id="Standard-Deviation---The-Spread-of-the-Data">
 <h2>Standard Deviation - The Spread of the Data<a class="headerlink" href="#Standard-Deviation---The-Spread-of-the-Data" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="Standard-Deviation---The-Spread-of-the-Data">
-<h2>Standard Deviation - The Spread of the Data<a class="headerlink" href="#Standard-Deviation---The-Spread-of-the-Data" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><p class="first">Based on the average <span class="math">\mu</span> of the data.</p>
+<li><p class="first">Based on the average (<span class="math">\(\mu\)</span>) of the data.</p>
 </li>
 <li><p class="first">&#8220;On average, how far is each data point from the mean?&#8221;</p>
 </li>
@@ -518,16 +544,16 @@ ages of adults in the United States</li>
 <li><strong>sample</strong> standard deviation: For when you only have a sampling
 of the total population. When in doubt, assume the sample standard
 deviation (the for sufficiently large numbers,
-<span class="math">N - 1 \approx N</span>), e.g. the ages of American males in the
+<span class="math">\(N - 1 \approx N\)</span>), e.g. the ages of American males in the
 Pacific North West</li>
 </ul>
-<p>**note: <span class="math">\bar{x}</span> is the sample mean, which follows the same
+<p>**note: <span class="math">\(\bar{x}\)</span> is the sample mean, which follows the same
 equation as population mean</p>
 </li>
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [74]:
+In [7]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
@@ -557,19 +583,16 @@ Sample standard deviation: 0.43
 Less improper standard deviation: 0.43
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Standard-Deviation---The-Spread-of-the-Data">
-<h2>Standard Deviation - The Spread of the Data<a class="headerlink" href="#Standard-Deviation---The-Spread-of-the-Data" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [89]:
+In [8]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
 <span class="n">some_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
 <span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">some_data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The &quot;Normal&quot; Distribution with Mean &amp; St. Dev.&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">H</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)],</span>
@@ -591,9 +614,14 @@ In [89]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day1_21_0.png" src="../_images/lectures_stats_day1_21_0.png" />
+<img alt="../_images/lectures_stats_day1_22_0.png" src="../_images/lectures_stats_day1_22_0.png" />
 </div>
 </div>
+<p><strong>plt.fill_between:</strong> lets you fill in some space on a plot. You
+provide the range of x values, as well as the vertical sections you wish
+to fill between (in this case y=0 up to y=around 40000). For every x
+value you provide (in this case, two), you provide y values for the
+lower limit and the upper limit.</p>
 </div>
 <div class="section" id="Standard-Deviation---The-68-95-99-rule">
 <h2>Standard Deviation - The 68-95-99 rule<a class="headerlink" href="#Standard-Deviation---The-68-95-99-rule" title="Permalink to this headline">¶</a></h2>
@@ -605,14 +633,14 @@ In [89]:
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [88]:
+In [9]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
 <span class="n">some_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
 <span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">some_data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The &quot;Normal&quot; Distribution with Mean &amp; St. Devs.&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">H</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">some_data</span><span class="p">)],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">H</span><span class="p">)],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
@@ -636,12 +664,9 @@ In [88]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day1_23_0.png" src="../_images/lectures_stats_day1_23_0.png" />
+<img alt="../_images/lectures_stats_day1_25_0.png" src="../_images/lectures_stats_day1_25_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="Mode---The-most-frequent-thing(s)">
-<h2>Mode - The most frequent thing(s)<a class="headerlink" href="#Mode---The-most-frequent-thing(s)" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="Mode---The-most-frequent-thing(s)">
 <h2>Mode - The most frequent thing(s)<a class="headerlink" href="#Mode---The-most-frequent-thing(s)" title="Permalink to this headline">¶</a></h2>
@@ -650,7 +675,7 @@ In [88]:
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [100]:
+In [10]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
@@ -676,28 +701,30 @@ In [100]:
 The mode: 6
 </pre></div></div>
 </div>
+<p><a class="reference external" href="http://docs.scipy.org/doc/scipy-0.16.0/reference/stats.html">scipy&#8217;s
+stats</a>
+module contains tons of things for statistics, including functions for
+reproducing some of the distributions we&#8217;ll see later</p>
 </div>
 <div class="section" id="Quantiles---Values-some-fraction-of-the-way-into-something">
 <h2>Quantiles - Values some fraction of the way into something<a class="headerlink" href="#Quantiles---Values-some-fraction-of-the-way-into-something" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="Quantiles">
-<h2>Quantiles<a class="headerlink" href="#Quantiles" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p class="first">If I&#8217;m some percentage through ordered data, what value do I get?</p>
 </li>
-<li><p class="first">50th percentile = median = <span class="math">q_{50}</span></p>
+<li><p class="first">50th percentile = median = <span class="math">\(q_{50}\)</span></p>
 </li>
-<li><p class="first">One quartile: <span class="math">q_{25}</span></p>
+<li><p class="first">One quartile: <span class="math">\(q_{25}\)</span></p>
 </li>
-<li><p class="first">Interquartile width - the difference between <span class="math">q_{75}</span> and
-<span class="math">q_{25}</span>:</p>
+<li><p class="first">Interquartile range (IQR) - the difference between <span class="math">\(q_{75}\)</span> and
+<span class="math">\(q_{25}\)</span>. <span class="math">\(IQR\)</span> gives you a sense of the spread of the
+data when the data isn&#8217;t normally distributed</p>
 <div class="math">
-<p><span class="math">IQR = q_{75} - q_{25}</span></p>
-</div></li>
+\[IQR = q_{75} - q_{25}\]</div>
+</li>
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [104]:
+In [11]:
 </pre></div>
 </div>
 <div class="highlight-ipython2"><div class="highlight"><pre>
@@ -713,7 +740,7 @@ In [104]:
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The actual middle: </span><span class="si">%.2f</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The standard deviation: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-<span class="n">q75</span><span class="p">,</span> <span class="n">q25</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="mi">75</span> <span class="p">,</span><span class="mi">25</span><span class="p">])</span>
+<span class="n">q75</span><span class="p">,</span> <span class="n">q25</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="mi">75</span><span class="p">,</span> <span class="mi">25</span><span class="p">])</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The interquartile width: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">q75</span> <span class="o">-</span> <span class="n">q25</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -754,21 +781,17 @@ The interquartile width: 4.00
 <li><a class="reference internal" href="#The-Problem">The Problem</a></li>
 <li><a class="reference internal" href="#The-Solution-(to-start)">The Solution (to start)</a></li>
 <li><a class="reference internal" href="#Averages/Means---Getting-a-Feeling-for-the-Data">Averages/Means - Getting a Feeling for the Data</a></li>
-<li><a class="reference internal" href="#Averages/Means---Getting-a-Feeling-for-the-Data">Averages/Means - Getting a Feeling for the Data</a></li>
 <li><a class="reference internal" href="#Averages/Means---Do-It-With-Code!">Averages/Means - Do It With Code!</a></li>
 <li><a class="reference internal" href="#Just-stick-with-Numpy-for-your-means...">Just stick with Numpy for your means...</a></li>
+<li><a class="reference internal" href="#Always-visualize-your-data">Always visualize your data</a></li>
 <li><a class="reference internal" href="#Averages/Means---Limitations">Averages/Means - Limitations</a></li>
+<li><a class="reference internal" href="#np.histogram---a-valuable-tool">np.histogram - a valuable tool</a></li>
 <li><a class="reference internal" href="#Averages/Means---Limitations">Averages/Means - Limitations</a></li>
 <li><a class="reference internal" href="#Median---The-Literal-Middle">Median - The Literal Middle</a></li>
-<li><a class="reference internal" href="#Median---The-Literal-Middle">Median - The Literal Middle</a></li>
-<li><a class="reference internal" href="#Standard-Deviation---The-Spread-of-the-Data">Standard Deviation - The Spread of the Data</a></li>
-<li><a class="reference internal" href="#Standard-Deviation---The-Spread-of-the-Data">Standard Deviation - The Spread of the Data</a></li>
 <li><a class="reference internal" href="#Standard-Deviation---The-Spread-of-the-Data">Standard Deviation - The Spread of the Data</a></li>
 <li><a class="reference internal" href="#Standard-Deviation---The-68-95-99-rule">Standard Deviation - The 68-95-99 rule</a></li>
 <li><a class="reference internal" href="#Mode---The-most-frequent-thing(s)">Mode - The most frequent thing(s)</a></li>
-<li><a class="reference internal" href="#Mode---The-most-frequent-thing(s)">Mode - The most frequent thing(s)</a></li>
 <li><a class="reference internal" href="#Quantiles---Values-some-fraction-of-the-way-into-something">Quantiles - Values some fraction of the way into something</a></li>
-<li><a class="reference internal" href="#Quantiles">Quantiles</a></li>
 <li><a class="reference internal" href="#Descriptive-Statistic-Module-References">Descriptive Statistic Module References</a></li>
 </ul>
 </li>

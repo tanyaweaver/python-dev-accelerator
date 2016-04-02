@@ -34,6 +34,7 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/statistics_problem_set2`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/bst_2_traversal` (Due Wednesday)
 * :doc:`/assignments/django_1_data_model` (Due Friday)

@@ -1,0 +1,150 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Problem Set - Statistics 1\n",
+    "Data Ref: https://www.kaggle.com/c/titanic/data"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Tasks"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Describe the data.\n",
+    "\n",
+    "- **How big?**\n",
+    "- **What are the columns and what do they mean?**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### What's the average age of...\n",
+    "\n",
+    "- any Titanic passenger\n",
+    "- a survivor\n",
+    "- a non-surviving first-class passenger\n",
+    "- Male survivors older than 30 from anywhere but Queenstown "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### For the groups you chose, how far (in years) are the average ages from the median ages?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### What's the most common...\n",
+    "\n",
+    "- passenger class\n",
+    "- port of Embarkation\n",
+    "- number of siblings or spouses aboard for survivors"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Within what range of standard deviations from the mean (0-1, 1-2, 2-3) is the median ticket price? Is it above or below the mean?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### How much more expensive was the 90th percentile ticket than the 5th percentile ticket? Are they the same class?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### The highest average ticket price was paid by passengers from which port? Null ports don't count"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Which port has passengers from the most similar passenger class?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### What fraction of surviving 1st-class males paid lower than the overall median ticket price?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### How much older/younger was the average surviving passenger with family members than the average non-surviving passenger without them?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Display the relationship (i.e. make a plot) between survival rate and the quantile of the ticket price for 20 integer quantiles. Make sure you label your axes."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### <span style=\"color: red;\">***STRETCH GOAL***</span> For each of the following characteristics, find the median in the data.\n",
+    "- age\n",
+    "- ticket price\n",
+    "- \\# siblings/spouses\n",
+    "- \\# parents/children\n",
+    "\n",
+    "### If you were to use these medians to draw numerical boundaries separating survivors from non-survivors, which of these characteristics would be the best choice and why?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Submitting Your Work\n",
+    "Report your answers in an iPython/Jupyter notebook with either print statements or markdown. If you write any functions, include a docstring describing what that function does. Note: You are not writing tests for any functions. If you come to any conclusions via math (and you will), make sure your code matches what you say."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.5.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}
