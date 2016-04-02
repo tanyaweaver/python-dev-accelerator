@@ -32,6 +32,7 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
+    /lectures/data_overview
     /lectures/stats_day1
     /lectures/jenkins
 
