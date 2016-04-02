@@ -13,4 +13,6 @@ Friday
 Assignments
 ===========
 
+* :doc:`/assignments/django_1_data_model`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/bst_3_delete` (Due Monday)
