@@ -13,15 +13,20 @@ Monday
 Objectives
 ==========
 
-* Learn how to interact with the Django ORM
-* Learn how to write model unit tests for Django
+* Learn how to connect a GitHub project to TravisCI to enable testing and coverage reporting on push.
+* Learn about the Binary Search Tree and how it is structured.
+
 
 Readings
 ========
 
+**Please read and follow** the :doc:`installation instructions for conda at the top of this page </lectures/data_overview>`
+
+And the following will help you with your work on the Imager data model this week.
+
 .. include:: /readings/django_readings.rst
     :start-line: 17
-    :end-line: 32
+    :end-line: 29
 
 Review
 ======

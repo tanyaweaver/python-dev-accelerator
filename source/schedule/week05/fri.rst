@@ -14,11 +14,15 @@ Friday
 Readings
 ========
 
+**Please read and follow** the :doc:`installation instructions for conda at the top of this page </lectures/data_overview>`
+
+
+In addition, you should **skim** these before the beginning of the next week:
+
 .. include:: /readings/django_readings.rst
     :start-line: 17
     :end-line: 29
 
-You should **skim** these before the beginning of the next week.
 
 Assignments
 ===========
