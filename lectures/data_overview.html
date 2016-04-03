@@ -25,8 +25,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="next" title="&lt;no title&gt;" href="django_models.html" />
-    <link rel="prev" title="Getting Data In" href="cgi_wsgi.html" />
+    <link rel="up" title="Monday" href="../schedule/week06/mon.html" />
+    <link rel="next" title="Statistics 1: Descriptive Statistics" href="stats_day1.html" />
+    <link rel="prev" title="Monday" href="../schedule/week06/mon.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,12 +52,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="django_models.html" title="&lt;no title&gt;"
+          <a href="stats_day1.html" title="Statistics 1: Descriptive Statistics"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="cgi_wsgi.html" title="Getting Data In"
+          <a href="../schedule/week06/mon.html" title="Monday"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week06/mon.html" accesskey="U">Monday</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -181,6 +183,37 @@ div.nboutput  > :nth-child(2).stderr {
 </style>
 <div class="section" id="Overview">
 <h1>Overview<a class="headerlink" href="#Overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Install">
+<h2>Install<a class="headerlink" href="#Install" title="Permalink to this headline">¶</a></h2>
+<p>Condas is virtualenv for data science.</p>
+<p>It will install all the packages necessary for our foray into machine
+learning &amp; stats and build our environments.</p>
+<p><em>In order to help us prevent network slow downs during lectures on
+Mondday, it would be great if you could install your root environment.</em></p>
+<p>Here is a work-flow (from a data scientist):
+<a class="reference external" href="http://stiglerdiet.com/blog/2015/Nov/24/my-python-environment-workflow-with-conda/">http://stiglerdiet.com/blog/2015/Nov/24/my-python-environment-workflow-with-conda/</a></p>
+<p>Here is the documentation for conda: <a class="reference external" href="http://conda.pydata.org/docs/">http://conda.pydata.org/docs/</a></p>
+<p>Here is the cheatsheet:
+<a class="reference external" href="http://conda.pydata.org/docs/_downloads/conda-cheatsheet.pdf">http://conda.pydata.org/docs/_downloads/conda-cheatsheet.pdf</a></p>
+<ul>
+<li><p class="first">Download <a class="reference external" href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a> for your OS</p>
+</li>
+<li><p class="first">bash [AndaconadaFile].sh</p>
+</li>
+<li><p class="first">cd /path/to/anaconda/bin; source activate root;cd</p>
+</li>
+<li><div class="first highlight-python"><div class="highlight"><pre>conda list -e &gt; [MY_SPEC_FILE].txt
+</pre></div>
+</div>
+</li>
+<li><p class="first">remove lines contain conda and anaconda from [MY_SPEC_FILE].txt</p>
+</li>
+<li><div class="first highlight-python"><div class="highlight"><pre>conda create --name [ENV_NAME] --file [MY_SPEC_FILE].txt
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 <div class="section" id="Welcome">
 <h2>Welcome<a class="headerlink" href="#Welcome" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -230,30 +263,15 @@ div.nboutput  > :nth-child(2).stderr {
 </ul>
 </div>
 </div>
-<div class="section" id="Install">
-<h2>Install<a class="headerlink" href="#Install" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://www.continuum.io/downloads">Download</a> for your OS</li>
-<li>bash [AndaconadaFile].sh</li>
-<li>cd /path/to/anaconda/bin; source conda root;cd</li>
-<li><code class="docutils literal"><span class="pre">python</span> <span class="pre">conda</span> <span class="pre">list</span> <span class="pre">-e</span> <span class="pre">&gt;</span> <span class="pre">[MY_SPEC_FILE].txt</span></code></li>
-<li>remove lines contain conda and anaconda from [MY_SPEC_FILE].txt
-<code class="docutils literal"><span class="pre">python</span> <span class="pre">conda</span> <span class="pre">create</span> <span class="pre">--name</span> <span class="pre">[ENV_NAME]</span> <span class="pre">--file</span> <span class="pre">[MY_SPEC_FILE].txt</span></code></li>
-</ul>
-</div>
 <div class="section" id="Experiment">
 <h2>Experiment<a class="headerlink" href="#Experiment" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="1.-Hypothesis-|-Aim-|-Objectives">
 <h3>1. Hypothesis | Aim | Objectives<a class="headerlink" href="#1.-Hypothesis-|-Aim-|-Objectives" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="*-Predict-survival-of-Titanic-passangers.">
-<h4>* Predict survival of Titanic passangers.<a class="headerlink" href="#*-Predict-survival-of-Titanic-passangers." title="Permalink to this headline">¶</a></h4>
-</div>
-<div class="section" id="*-Which-features-most-accurately-predict-the-outcome?">
-<h4>* Which features most accurately predict the outcome?<a class="headerlink" href="#*-Which-features-most-accurately-predict-the-outcome?" title="Permalink to this headline">¶</a></h4>
-</div>
-<div class="section" id="*-Which-machine-learning-algorithms-are-most-accurate?">
-<h4>* Which machine learning algorithms are most accurate?<a class="headerlink" href="#*-Which-machine-learning-algorithms-are-most-accurate?" title="Permalink to this headline">¶</a></h4>
-</div>
+<ul class="simple">
+<li>Predict survival of Titanic passangers.</li>
+<li>Which features most accurately predict the outcome?</li>
+<li>Which machine learning algorithms are most accurate?</li>
+</ul>
 </div>
 <div class="section" id="2.-Data-Analysis">
 <h3>2. Data Analysis<a class="headerlink" href="#2.-Data-Analysis" title="Permalink to this headline">¶</a></h3>
@@ -375,6 +393,7 @@ dependent)|Feature}</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Overview</a><ul>
+<li><a class="reference internal" href="#Install">Install</a></li>
 <li><a class="reference internal" href="#Welcome">Welcome</a></li>
 <li><a class="reference internal" href="#Structure">Structure</a><ul>
 <li><a class="reference internal" href="#Data-Analysis">Data Analysis</a></li>
@@ -384,14 +403,8 @@ dependent)|Feature}</p>
 <li><a class="reference internal" href="#Lab">Lab</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#Install">Install</a></li>
 <li><a class="reference internal" href="#Experiment">Experiment</a><ul>
-<li><a class="reference internal" href="#1.-Hypothesis-|-Aim-|-Objectives">1. Hypothesis | Aim | Objectives</a><ul>
-<li><a class="reference internal" href="#*-Predict-survival-of-Titanic-passangers.">* Predict survival of Titanic passangers.</a></li>
-<li><a class="reference internal" href="#*-Which-features-most-accurately-predict-the-outcome?">* Which features most accurately predict the outcome?</a></li>
-<li><a class="reference internal" href="#*-Which-machine-learning-algorithms-are-most-accurate?">* Which machine learning algorithms are most accurate?</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#1.-Hypothesis-|-Aim-|-Objectives">1. Hypothesis | Aim | Objectives</a></li>
 <li><a class="reference internal" href="#2.-Data-Analysis">2. Data Analysis</a><ul>
 <li><a class="reference internal" href="#cleaning">cleaning</a></li>
 <li><a class="reference internal" href="#Pre-processing">Pre-processing</a></li>
@@ -424,11 +437,11 @@ dependent)|Feature}</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="cgi_wsgi.html"
-                        title="previous chapter">Getting Data In</a></p>
+  <p class="topless"><a href="../schedule/week06/mon.html"
+                        title="previous chapter">Monday</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="django_models.html"
-                        title="next chapter">&lt;no title&gt;</a></p>
+  <p class="topless"><a href="stats_day1.html"
+                        title="next chapter">Statistics 1: Descriptive Statistics</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -453,12 +466,13 @@ dependent)|Feature}</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="django_models.html" title="&lt;no title&gt;"
+          <a href="stats_day1.html" title="Statistics 1: Descriptive Statistics"
              >next</a> |</li>
         <li class="right" >
-          <a href="cgi_wsgi.html" title="Getting Data In"
+          <a href="../schedule/week06/mon.html" title="Monday"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week06/mon.html" >Monday</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

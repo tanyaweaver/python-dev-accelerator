@@ -191,9 +191,13 @@ div.nboutput  > :nth-child(2).stderr {
 <ul class="simple">
 <li>a passenger survived <em>(mandatory)</em></li>
 </ul>
-<p><strong>Choose two of...</strong> - a passenger was male - a passenger was female and
-had at least one sibling or spouse on board - a survivor was from
-Cherbourg</p>
+<p><strong>Choose two of...</strong></p>
+<ul class="simple">
+<li>a passenger was male</li>
+<li>a passenger was female and had at least one sibling or spouse on
+board</li>
+<li>a survivor was from Cherbourg</li>
+</ul>
 </div>
 <div class="section" id="Plot-the-distribution-of-passenger-ages.-Choose-visually-meaningful-bin-sizes-and-label-your-axes">
 <h3>Plot the distribution of passenger ages. Choose visually-meaningful bin sizes and label your axes<a class="headerlink" href="#Plot-the-distribution-of-passenger-ages.-Choose-visually-meaningful-bin-sizes-and-label-your-axes" title="Permalink to this headline">¶</a></h3>
@@ -226,8 +230,8 @@ from Cherbourg?</li>
 <div class="section" id="Accompany-your-p-values-with-histograms-showing-the-distributions-of-both-compared-populations">
 <h3>Accompany your p-values with histograms showing the distributions of both compared populations<a class="headerlink" href="#Accompany-your-p-values-with-histograms-showing-the-distributions-of-both-compared-populations" title="Permalink to this headline">¶</a></h3>
 </div>
-<div class="section" id="STRETCH-GOAL-Write-a-function-that-takes-N-random-samples-of-100-passengers,-and-returns-the-fraction-of-those-samples-where-at-least-42-passengers-survive.-Choose-a-random-seed-and-find-approximately-how-many-random-samples-you-need-to-take-before-your-fraction-matches-the-probability-you-calculated-(within-).">
-<h3><em>STRETCH GOAL</em> Write a function that takes N random samples of 100 passengers, and returns the fraction of those samples where at least 42 passengers survive. Choose a random seed and find approximately how many random samples you need to take before your fraction matches the probability you calculated (within <span class="math">\(\Delta p \approx 0.05\)</span>).<a class="headerlink" href="#STRETCH-GOAL-Write-a-function-that-takes-N-random-samples-of-100-passengers,-and-returns-the-fraction-of-those-samples-where-at-least-42-passengers-survive.-Choose-a-random-seed-and-find-approximately-how-many-random-samples-you-need-to-take-before-your-fraction-matches-the-probability-you-calculated-(within-)." title="Permalink to this headline">¶</a></h3>
+<div class="section" id="*STRETCH-GOAL*-Write-a-function-that-takes-N-random-samples-of-100-passengers,-and-returns-the-fraction-of-those-samples-where-at-least-42-passengers-survive.-Choose-a-random-seed-and-find-approximately-how-many-random-samples-you-need-to-take-before-your-fraction-matches-the-probability-you-calculated-(within-).">
+<h3><strong>*STRETCH GOAL*</strong> Write a function that takes N random samples of 100 passengers, and returns the fraction of those samples where at least 42 passengers survive. Choose a random seed and find approximately how many random samples you need to take before your fraction matches the probability you calculated (within <span class="math">\(\Delta p \approx 0.05\)</span>).<a class="headerlink" href="#*STRETCH-GOAL*-Write-a-function-that-takes-N-random-samples-of-100-passengers,-and-returns-the-fraction-of-those-samples-where-at-least-42-passengers-survive.-Choose-a-random-seed-and-find-approximately-how-many-random-samples-you-need-to-take-before-your-fraction-matches-the-probability-you-calculated-(within-)." title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="It-may-help-to-visualize-the-survival-fraction-vs-the-number-of-random-samples.-Answers-will-vary-based-on-the-seed.">
 <h3>It may help to visualize the survival fraction vs the number of random samples. Answers will vary based on the seed.<a class="headerlink" href="#It-may-help-to-visualize-the-survival-fraction-vs-the-number-of-random-samples.-Answers-will-vary-based-on-the-seed." title="Permalink to this headline">¶</a></h3>
@@ -238,7 +242,13 @@ from Cherbourg?</li>
 <p>Report your answers in an iPython/Jupyter notebook with either print
 statements or markdown. If you write any functions, include a docstring
 describing what that function does. Note: You are not writing tests for
-any functions.</p>
+any functions. If you come to any conclusions via math (and you will),
+make sure your code matches what you say.</p>
+<p>When your work is complete, push your work to github and issue a Pull
+Request to your master branch. Submit the URL for your pull request.
+After this is complete, you may merge your work to master.</p>
+<p>As usual, use the comments function in canvas to submit questions,
+comments and reflections on this work.</p>
 </div>
 </div>
 
@@ -260,7 +270,7 @@ any functions.</p>
 <li><a class="reference internal" href="#Is-there-a-statistically-significant-difference-between...">Is there a statistically significant difference between...</a></li>
 <li><a class="reference internal" href="#If-so,-at-what-level?-If-not,-how-do-you-know?">If so, at what level? If not, how do you know?</a></li>
 <li><a class="reference internal" href="#Accompany-your-p-values-with-histograms-showing-the-distributions-of-both-compared-populations">Accompany your p-values with histograms showing the distributions of both compared populations</a></li>
-<li><a class="reference internal" href="#STRETCH-GOAL-Write-a-function-that-takes-N-random-samples-of-100-passengers,-and-returns-the-fraction-of-those-samples-where-at-least-42-passengers-survive.-Choose-a-random-seed-and-find-approximately-how-many-random-samples-you-need-to-take-before-your-fraction-matches-the-probability-you-calculated-(within-)."><em>STRETCH GOAL</em> Write a function that takes N random samples of 100 passengers, and returns the fraction of those samples where at least 42 passengers survive. Choose a random seed and find approximately how many random samples you need to take before your fraction matches the probability you calculated (within <span class="math">\(\Delta p \approx 0.05\)</span>).</a></li>
+<li><a class="reference internal" href="#*STRETCH-GOAL*-Write-a-function-that-takes-N-random-samples-of-100-passengers,-and-returns-the-fraction-of-those-samples-where-at-least-42-passengers-survive.-Choose-a-random-seed-and-find-approximately-how-many-random-samples-you-need-to-take-before-your-fraction-matches-the-probability-you-calculated-(within-)."><strong>*STRETCH GOAL*</strong> Write a function that takes N random samples of 100 passengers, and returns the fraction of those samples where at least 42 passengers survive. Choose a random seed and find approximately how many random samples you need to take before your fraction matches the probability you calculated (within <span class="math">\(\Delta p \approx 0.05\)</span>).</a></li>
 <li><a class="reference internal" href="#It-may-help-to-visualize-the-survival-fraction-vs-the-number-of-random-samples.-Answers-will-vary-based-on-the-seed.">It may help to visualize the survival fraction vs the number of random samples. Answers will vary based on the seed.</a></li>
 </ul>
 </li>

@@ -230,7 +230,7 @@ black)</li>
 In [1]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
@@ -264,7 +264,7 @@ In [1]:
 In [2]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">StatedMonthlyIncome</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -291,7 +291,7 @@ In [2]:
 In [3]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">StatedMonthlyIncome</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -318,7 +318,7 @@ In [3]:
 In [4]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">StatedMonthlyIncome</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -367,7 +367,7 @@ the values inside the array easily through indexing.</p>
 In [5]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="n">H</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">StatedMonthlyIncome</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2E4</span><span class="p">,</span> <span class="mi">81</span><span class="p">))</span>
 <span class="n">incomes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">]</span>
 
@@ -438,7 +438,7 @@ distribution will approx. follow a Gaussian</li>
 In [6]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="k">del</span> <span class="n">data</span>
 
 <span class="k">def</span> <span class="nf">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
@@ -487,7 +487,7 @@ successes or any particular combination of successes &amp; failures</strong></li
 In [7]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
 
 
@@ -597,7 +597,7 @@ significantly different</li>
 In [8]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">os</span>
 
 <span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;../downloads/seattle_weather/&quot;</span>
@@ -627,7 +627,7 @@ column despite them all showing roughly the same data.</p>
 In [9]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="n">seattle_weather</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle_weather</span><span class="o">.</span><span class="n">PST</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span>
 <span class="n">seattle_weather</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle_weather</span><span class="o">.</span><span class="n">PST</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]))</span>
 <span class="n">seattle_weather</span><span class="p">[</span><span class="s2">&quot;day&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle_weather</span><span class="o">.</span><span class="n">PST</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]))</span>
@@ -645,7 +645,7 @@ notation cannot handle column names with spaces.</p>
 In [10]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="n">spring_2010</span> <span class="o">=</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">2010</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">)</span>
 <span class="n">fall_2010</span> <span class="o">=</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">2010</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">seattle_weather</span><span class="o">.</span><span class="n">month</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">)</span>
 </pre></div>
@@ -662,7 +662,7 @@ booleans)</p>
 In [11]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">opacity</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="n">mean_temp</span> <span class="o">=</span> <span class="s2">&quot;Mean TemperatureF&quot;</span>
@@ -693,7 +693,7 @@ set.</p>
 In [12]:
 </pre></div>
 </div>
-<div class="highlight-ipython2"><div class="highlight"><pre>
+<div class="highlight-ipython3"><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">ttest_ind</span>
 
 <span class="n">t_stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">ttest_ind</span><span class="p">(</span><span class="n">seattle_weather</span><span class="p">[</span><span class="n">spring_2010</span><span class="p">][</span><span class="n">mean_temp</span><span class="p">],</span>
