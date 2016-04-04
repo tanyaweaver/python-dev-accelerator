@@ -27,6 +27,8 @@ Concepts
 
     /lectures/stats_day4
 
+You can also download the :download:`data for the baseball databank </downloads/baseballdatabank-master.tgz>`
+
 Demo
 ====
 
