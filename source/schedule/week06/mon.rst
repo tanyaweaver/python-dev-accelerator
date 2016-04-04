@@ -42,6 +42,9 @@ Concepts
     /lectures/jenkins
     /lectures/binary_search_tree
 
+K-Nearest-Neighbor `lecture notes <https://github.com/sternshus/datafellows>`_.
+(Click on the "binder" link to open an Jupyter Notebook in the cloud, or download the repository and run it locally in your Conda env)
+
 Demo
 ====
 
