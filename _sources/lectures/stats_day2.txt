@@ -458,17 +458,13 @@
     "- For any set of associated but separate events, $\\displaystyle\\sum_i p(x_i) = 1$\n",
     "- For related events A and B, the probablity that they happen together is\n",
     "\n",
-    "\\begin{align}\n",
-    "p(A \\cap B) = p(A) \\cdot p(B)\n",
-    "\\end{align}\n",
+    "$p(A \\cap B) = p(A) \\cdot p(B)$\n",
     "\n",
     "- The probability that either one of them happens is \n",
     "\n",
-    "\\begin{align}\n",
-    "p(A \\cup B) = p(A) + p(B) - p(A \\cap B)\n",
-    "\\end{align}\n",
+    "$p(A \\cup B) = p(A) + p(B) - p(A \\cap B)$\n",
     "\n",
-    "<img src=\"../downloads/sum_of_probs.png\"/>"
+    "<img src=\"../downloads/sum_of_probs.png\" alt=\"some_text\" />"
    ]
   },
   {
