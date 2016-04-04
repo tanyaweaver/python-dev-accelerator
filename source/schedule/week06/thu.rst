@@ -22,6 +22,11 @@ Review
 Concepts
 ========
 
+.. toctree::
+    :maxdepth: 2
+
+    /lectures/stats_day4
+
 Demo
 ====
 
