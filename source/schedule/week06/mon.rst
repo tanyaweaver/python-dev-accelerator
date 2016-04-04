@@ -40,6 +40,7 @@ Concepts
     /lectures/data_overview
     /lectures/stats_day1
     /lectures/jenkins
+    /lectures/binary_search_tree
 
 Demo
 ====
