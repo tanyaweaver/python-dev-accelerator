@@ -54,6 +54,6 @@ Assignments
 ===========
 
 * :doc:`/assignments/statistics_problem_set1`
-* :doc:`/assignments/bst_1`
+* :doc:`/assignments/recitation_assignment`
 * :doc:`/assignments/django_0_tutorial`
 * :doc:`/assignments/daily_lj_entry`
