@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Walk Through the Django Tutorial &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Django Imager: Data Views &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="next" title="Django Imager: Create a Data Model" href="django_1_data_model.html" />
-    <link rel="prev" title="Implement a Deque in Python" href="deque.html" />
+    <link rel="next" title="Django Imager: Data Editing" href="django_4_data_editing.html" />
+    <link rel="prev" title="Django Imager: Registration, Login and Home" href="django_2_registration.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,10 +51,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="django_1_data_model.html" title="Django Imager: Create a Data Model"
+          <a href="django_4_data_editing.html" title="Django Imager: Data Editing"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="deque.html" title="Implement a Deque in Python"
+          <a href="django_2_registration.html" title="Django Imager: Registration, Login and Home"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
@@ -179,21 +179,65 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="walk-through-the-django-tutorial">
-<h1>Walk Through the Django Tutorial<a class="headerlink" href="#walk-through-the-django-tutorial" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-walk-through-the-django-tutorial"></span><p>The Django project website has a <a class="reference external" href="https://docs.djangoproject.com/en/1.9/intro/tutorial01/">fantastic tutorial</a>.
-It walks you through the process of creating your first basic Django app.
-You&#8217;ve all worked through the tutorial at one point or another, but after the first half of this class you will likely gain a bit more from it than you did before.</p>
+<div class="section" id="django-imager-data-views">
+<h1>Django Imager: Data Views<a class="headerlink" href="#django-imager-data-views" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-django-imager-data-views"></span><p>In this series of assignments you will build a simple image management website using Django.
+In this second step you will implement the user-specific views for the application.
+You will create a profile page, where a user can see their own profile information.
+You will add a library page, where a user can see all the albums they&#8217;ve created and the photos they&#8217;ve uploaded.
+And you will set up views for individual photos and albums.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Review the tutorial.
-Simply read through it without doing any of the steps unless you feel compelled to do so.
-Think about the ways in which the work outlined by the tutorial relates to the work you have done in Pyramid over the last weeks.</p>
+<p>Do your work for this assignment on a branch called <code class="docutils literal"><span class="pre">front-end-2</span></code>.
+Be sure that the branch contains your work for the registration and login assignment.</p>
+<div class="section" id="profile-page">
+<h3>Profile Page<a class="headerlink" href="#profile-page" title="Permalink to this headline">¶</a></h3>
+<p>This page should provide quickly readable, clear information to the user about their own profile.
+Also show the user some helpful information about their own usage of the application.
+Give them a count of how many images they have uploaded and how many albums they&#8217;ve created.</p>
+<p>This page should also provide easy navigation links to the library page (or perhaps that should be a globally available navigation link).</p>
+<p>Once this page exists, you should reconfigure your system so that this page is where a user lands when they log in to your site.
+You should also make the displayed name in the top right corner of the site a link that leads back to this page.</p>
+<p>The url for this page should be <code class="docutils literal"><span class="pre">/profile/</span></code></p>
+</div>
+<div class="section" id="library-page">
+<h3>Library Page<a class="headerlink" href="#library-page" title="Permalink to this headline">¶</a></h3>
+<p>This page should provide a quick, thumbnail view for all the albums a user has created and all the photos they&#8217;ve uploaded.
+For albums, display a thumbnail of the &#8216;cover&#8217; image selected for the album.
+If no cover image has been selected, display a default image (from site static resources).
+For all items the title should be displayed.
+You should save space by displaying small images (thumbnails) in a grid format.</p>
+<p>To best accomplish this task, you&#8217;ll install another Django add-on application, <a class="reference external" href="http://sorl-thumbnail.readthedocs.org/en/latest/">sorl-thumbnail</a>. (You can also try out <a class="reference external" href="http://easy-thumbnails.readthedocs.org/en/latest/index.html">easy-thumbnail</a>, but I haven&#8217;t used that one myself)
+The add-on will allow you to easily designate dimensions for thumbnails and will handle creating appropriately sized copies of uploaded images for you.
+You <strong>may use the database cache store</strong> when configuring this application.
+Redis or memcached are much faster, but a lot more work to get going locally.</p>
+<p>For an extra challenge (not required) find and install a javascript add-on that will allow you to click on any image and view a full-sized version in a &#8220;lightbox&#8221; overlay.
+(I&#8217;ve used and enjoyed <code class="docutils literal"><span class="pre">fancybox</span></code>)</p>
+<p>The URL for this page should be <code class="docutils literal"><span class="pre">/images/library/</span></code></p>
+</div>
+<div class="section" id="album-and-photo-views">
+<h3>Album and Photo Views<a class="headerlink" href="#album-and-photo-views" title="Permalink to this headline">¶</a></h3>
+<p>Provide simple views for photos and albums.
+The Photo view should display an appropriately sized rendering of the photo, perhaps with a lightbox feature to show the full-sized image.
+It should also display any metadata available about the photo.
+The album view should display all the photos in the album in a grid format (you might re-use the layout you created for the library view above).
+Each photo in the album should be displayed.
+If you get frisky, you might look into jquery-based gallery plugins like <code class="docutils literal"><span class="pre">galleria</span></code> to see if you can render the entire album as a gallery.</p>
+<p>The URLs for these views should be <code class="docutils literal"><span class="pre">/images/album/&lt;album_id&gt;/</span></code> and <code class="docutils literal"><span class="pre">/images/photos/&lt;photo_id&gt;/</span></code>.</p>
+</div>
+<div class="section" id="tests">
+<h3>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h3>
+<p>You must write tests for your views.
+Be especially thorough in testing access-related functionality.
+Ensure that no user may view information that he or she should not be allowed to see.</p>
+<p>If you wish to test the javascript functionality of your lightbox add-on, you will need to work with a browser testing framework like splinter.</p>
 </div>
 <div class="section" id="submitting-your-work">
-<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>Use the text input for this submission to add any questions, comments or reflections on the material you read.
-We will discuss these questions and comments in class over the next week.</p>
+<h3>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h3>
+<p>When you are done working, and your tests are passing, create a Pull Request from the &#8220;front-end-2&#8221; branch to master.
+Submit the URL for that pull request.
+When you have done so, you may merge the pull request back to master in preparation for stage 3 of your work.</p>
+</div>
 </div>
 </div>
 
@@ -205,19 +249,25 @@ We will discuss these questions and comments in class over the next week.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Walk Through the Django Tutorial</a><ul>
-<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#">Django Imager: Data Views</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#profile-page">Profile Page</a></li>
+<li><a class="reference internal" href="#library-page">Library Page</a></li>
+<li><a class="reference internal" href="#album-and-photo-views">Album and Photo Views</a></li>
+<li><a class="reference internal" href="#tests">Tests</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="deque.html"
-                        title="previous chapter">Implement a Deque in Python</a></p>
+  <p class="topless"><a href="django_2_registration.html"
+                        title="previous chapter">Django Imager: Registration, Login and Home</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="django_1_data_model.html"
-                        title="next chapter">Django Imager: Create a Data Model</a></p>
+  <p class="topless"><a href="django_4_data_editing.html"
+                        title="next chapter">Django Imager: Data Editing</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -242,10 +292,10 @@ We will discuss these questions and comments in class over the next week.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="django_1_data_model.html" title="Django Imager: Create a Data Model"
+          <a href="django_4_data_editing.html" title="Django Imager: Data Editing"
              >next</a> |</li>
         <li class="right" >
-          <a href="deque.html" title="Implement a Deque in Python"
+          <a href="django_2_registration.html" title="Django Imager: Registration, Login and Home"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>

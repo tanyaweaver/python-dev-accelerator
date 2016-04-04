@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Walk Through the Django Tutorial &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Django Imager: Data Editing &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="next" title="Django Imager: Create a Data Model" href="django_1_data_model.html" />
-    <link rel="prev" title="Implement a Deque in Python" href="deque.html" />
+    <link rel="next" title="Implement a Doubly-Linked List in Python" href="doubly_linked_list.html" />
+    <link rel="prev" title="Django Imager: Data Editing" href="django_4_data_editing.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,10 +51,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="django_1_data_model.html" title="Django Imager: Create a Data Model"
+          <a href="doubly_linked_list.html" title="Implement a Doubly-Linked List in Python"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="deque.html" title="Implement a Deque in Python"
+          <a href="django_4_data_editing.html" title="Django Imager: Data Editing"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
@@ -179,21 +179,31 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="walk-through-the-django-tutorial">
-<h1>Walk Through the Django Tutorial<a class="headerlink" href="#walk-through-the-django-tutorial" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-walk-through-the-django-tutorial"></span><p>The Django project website has a <a class="reference external" href="https://docs.djangoproject.com/en/1.9/intro/tutorial01/">fantastic tutorial</a>.
-It walks you through the process of creating your first basic Django app.
-You&#8217;ve all worked through the tutorial at one point or another, but after the first half of this class you will likely gain a bit more from it than you did before.</p>
+<div class="section" id="django-imager-data-editing">
+<h1>Django Imager: Data Editing<a class="headerlink" href="#django-imager-data-editing" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-django-imager-data-editing"></span><p>In this series of assignments you will build a simple image management website using Django.
+Throughout the week, you&#8217;ve built parts of the front-end for this app.
+In this part, you&#8217;ll create and submit a <em>reverse pull request</em> containing all of your work for the week.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Review the tutorial.
-Simply read through it without doing any of the steps unless you feel compelled to do so.
-Think about the ways in which the work outlined by the tutorial relates to the work you have done in Pyramid over the last weeks.</p>
+<p>Make sure that all the requirements of the three previous assignments are completed.
+Double-check your work to be sure that your tests are running, and passing in Python 2 and Python 3.
+Polish up your HTML, CSS and JavaScript (if any) to make sure the site looks as attractive and useable as possible.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>Use the text input for this submission to add any questions, comments or reflections on the material you read.
-We will discuss these questions and comments in class over the next week.</p>
+<p>Once you have completed all the work to set up the front-end for the Imager app.
+Please submit a final pull request that contains all the work you&#8217;ve done this week.
+The way to do that is as follows:</p>
+<p>Find the last commit you made before you started working on the front end this week.
+Locate the hash for that commit.
+Checkout that hash with <code class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">&lt;hash&gt;</span></code>.
+This will put you in a &#8220;detached head&#8221; state.
+Checkout a new branch from here: <code class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">front-end-review</span></code>.
+Push your new branch up to github.
+Make a pull request from the master (which contains all the work you&#8217;ve done this week) to this new branch (which contains none of it).
+Submit the URL for that pull request.</p>
+<p>DO NOT MERGE THAT PULL REQUEST.</p>
 </div>
 </div>
 
@@ -205,7 +215,7 @@ We will discuss these questions and comments in class over the next week.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Walk Through the Django Tutorial</a><ul>
+<li><a class="reference internal" href="#">Django Imager: Data Editing</a><ul>
 <li><a class="reference internal" href="#tasks">Tasks</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>
@@ -213,11 +223,11 @@ We will discuss these questions and comments in class over the next week.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="deque.html"
-                        title="previous chapter">Implement a Deque in Python</a></p>
+  <p class="topless"><a href="django_4_data_editing.html"
+                        title="previous chapter">Django Imager: Data Editing</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="django_1_data_model.html"
-                        title="next chapter">Django Imager: Create a Data Model</a></p>
+  <p class="topless"><a href="doubly_linked_list.html"
+                        title="next chapter">Implement a Doubly-Linked List in Python</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -242,10 +252,10 @@ We will discuss these questions and comments in class over the next week.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="django_1_data_model.html" title="Django Imager: Create a Data Model"
+          <a href="doubly_linked_list.html" title="Implement a Doubly-Linked List in Python"
              >next</a> |</li>
         <li class="right" >
-          <a href="deque.html" title="Implement a Deque in Python"
+          <a href="django_4_data_editing.html" title="Django Imager: Data Editing"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>

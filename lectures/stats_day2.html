@@ -420,16 +420,16 @@ In [4]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
-<span class="n">incomplete_data</span><span class="o">.</span><span class="n">Country</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;USA&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">incomplete_data</span><span class="o">.</span><span class="n">Country</span><span class="p">)</span>
+<span class="n">incomplete_data</span><span class="o">.</span><span class="n">Country</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;USA&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast container">
-<div class="container">
+<div class="highlight-none"><div class="highlight"><pre>
+Out[4]:
+</pre></div>
 </div>
-<div class="container">
-<div class="highlight"><pre>
+<div class="highlight-none"><div class="highlight"><pre>
 0        USA
 1        USA
 2        USA
@@ -442,7 +442,8 @@ In [4]:
 9     Russia
 10    Brasil
 Name: Country, dtype: object
-</pre></div></div>
+</pre></div>
+</div>
 </div>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
@@ -450,8 +451,7 @@ In [5]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
-<span class="n">incomplete_data</span><span class="p">[</span><span class="s2">&quot;Number of Cats&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="o">-</span><span class="mi">99</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">incomplete_data</span><span class="p">[</span><span class="s2">&quot;Number of Cats&quot;</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">incomplete_data</span><span class="p">[</span><span class="s2">&quot;Number of Cats&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="o">-</span><span class="mi">99</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -474,12 +474,370 @@ In [5]:
 Name: Number of Cats, dtype: float64
 </pre></div></div>
 </div>
+<p>If your data is ordered, you can use the &#8220;method&#8221; parameter to fill NaNs
+with the last seen value with <code class="docutils literal"><span class="pre">method=ffill</span></code> or with the next valid
+data point <code class="docutils literal"><span class="pre">method=bfill</span></code></p>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [6]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">incomplete_data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;ffill&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+Out[6]:
+</pre></div>
+</div>
+<div class="container">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Hometown</th>
+      <th>Country</th>
+      <th>Desired Income</th>
+      <th>Favorite Food</th>
+      <th>Number of Cats</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>James</td>
+      <td>22</td>
+      <td>New York</td>
+      <td>NaN</td>
+      <td>75000.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bob</td>
+      <td>25</td>
+      <td>Seattle</td>
+      <td>USA</td>
+      <td>0.0</td>
+      <td>pad thai</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Annette</td>
+      <td>28</td>
+      <td>San Francisco</td>
+      <td>USA</td>
+      <td>0.0</td>
+      <td>spaghetti</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Florence</td>
+      <td>23</td>
+      <td>Beijing</td>
+      <td>China</td>
+      <td>60000.0</td>
+      <td>xiaolong bao</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Martha</td>
+      <td>30</td>
+      <td>Kansas City</td>
+      <td>China</td>
+      <td>60000.0</td>
+      <td>corn</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Desean</td>
+      <td>27</td>
+      <td>Newark</td>
+      <td>USA</td>
+      <td>85000.0</td>
+      <td>corn</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Jamal</td>
+      <td>28</td>
+      <td>New York</td>
+      <td>USA</td>
+      <td>65000.0</td>
+      <td>pizza</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Kaede</td>
+      <td>31</td>
+      <td>Kyoto</td>
+      <td>Japan</td>
+      <td>65000.0</td>
+      <td>sushi</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Milton</td>
+      <td>23</td>
+      <td>Austin</td>
+      <td>Japan</td>
+      <td>78000.0</td>
+      <td>bbq</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Ivana</td>
+      <td>29</td>
+      <td>Moscow</td>
+      <td>Russia</td>
+      <td>78000.0</td>
+      <td>borscht</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Jorge</td>
+      <td>35</td>
+      <td>Rio de Janeiro</td>
+      <td>Brasil</td>
+      <td>90000.0</td>
+      <td>farofa</td>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [7]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">incomplete_data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;bfill&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+Out[7]:
+</pre></div>
+</div>
+<div class="container">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Hometown</th>
+      <th>Country</th>
+      <th>Desired Income</th>
+      <th>Favorite Food</th>
+      <th>Number of Cats</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>James</td>
+      <td>22</td>
+      <td>New York</td>
+      <td>USA</td>
+      <td>75000.0</td>
+      <td>pad thai</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bob</td>
+      <td>25</td>
+      <td>Seattle</td>
+      <td>USA</td>
+      <td>0.0</td>
+      <td>pad thai</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Annette</td>
+      <td>28</td>
+      <td>San Francisco</td>
+      <td>USA</td>
+      <td>60000.0</td>
+      <td>spaghetti</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Florence</td>
+      <td>23</td>
+      <td>Beijing</td>
+      <td>China</td>
+      <td>60000.0</td>
+      <td>xiaolong bao</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Martha</td>
+      <td>30</td>
+      <td>Kansas City</td>
+      <td>USA</td>
+      <td>85000.0</td>
+      <td>corn</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Desean</td>
+      <td>27</td>
+      <td>Newark</td>
+      <td>USA</td>
+      <td>85000.0</td>
+      <td>pizza</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Jamal</td>
+      <td>28</td>
+      <td>New York</td>
+      <td>Japan</td>
+      <td>65000.0</td>
+      <td>pizza</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Kaede</td>
+      <td>31</td>
+      <td>Kyoto</td>
+      <td>Japan</td>
+      <td>65000.0</td>
+      <td>sushi</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Milton</td>
+      <td>23</td>
+      <td>Austin</td>
+      <td>Russia</td>
+      <td>78000.0</td>
+      <td>bbq</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Ivana</td>
+      <td>29</td>
+      <td>Moscow</td>
+      <td>Russia</td>
+      <td>90000.0</td>
+      <td>borscht</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Jorge</td>
+      <td>35</td>
+      <td>Rio de Janeiro</td>
+      <td>Brasil</td>
+      <td>90000.0</td>
+      <td>farofa</td>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>You can choose to fill with the mean or median, however take note that
+strings can&#8217;t be averaged or median-ed. So be aware of what columns
+you&#8217;re fiddling with.</p>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [8]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">incomplete_data</span><span class="p">[</span><span class="s2">&quot;Age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">incomplete_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()[</span><span class="s2">&quot;Age&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+Out[8]:
+</pre></div>
+</div>
+<div class="highlight-none"><div class="highlight"><pre>
+0     22
+1     25
+2     28
+3     23
+4     30
+5     27
+6     28
+7     31
+8     23
+9     29
+10    35
+Name: Age, dtype: int64
+</pre></div>
+</div>
+</div>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [9]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">incomplete_data</span><span class="p">[</span><span class="s2">&quot;Desired Income&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">incomplete_data</span><span class="o">.</span><span class="n">median</span><span class="p">()[</span><span class="s2">&quot;Desired Income&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+Out[9]:
+</pre></div>
+</div>
+<div class="highlight-none"><div class="highlight"><pre>
+0     75000.0
+1         0.0
+2     70000.0
+3     60000.0
+4     70000.0
+5     85000.0
+6     65000.0
+7     65000.0
+8     78000.0
+9     70000.0
+10    90000.0
+Name: Desired Income, dtype: float64
+</pre></div>
+</div>
+</div>
 <p>Other times it would make more sense to just leave NaNs as they are.
 Aggregate operations like means and sums will just ignore them. Though
 be aware that they will screw up iterative processes with strings.</p>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [6]:
+In [10]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -503,7 +861,7 @@ In [6]:
 <div class="highlight"><pre>
 <span class="ansired">---------------------------------------------------------------------------</span>
 <span class="ansired">AttributeError</span>                            Traceback (most recent call last)
-<span class="ansigreen">&lt;ipython-input-6-89f3d5c32e54&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">&lt;ipython-input-10-89f3d5c32e54&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
 <span class="ansigreen">      1</span> print<span class="ansiblue">(</span>incomplete_data<span class="ansiblue">[</span><span class="ansiblue">&quot;Desired Income&quot;</span><span class="ansiblue">]</span><span class="ansiblue">.</span>mean<span class="ansiblue">(</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
 <span class="ansigreen">----&gt; 2</span><span class="ansired"> </span>incomplete_data<span class="ansiblue">[</span><span class="ansiblue">&quot;Favorite Food&quot;</span><span class="ansiblue">]</span><span class="ansiblue">.</span>map<span class="ansiblue">(</span><span class="ansigreen">lambda</span> x<span class="ansiblue">:</span> x<span class="ansiblue">.</span>split<span class="ansiblue">(</span><span class="ansiblue">&quot; &quot;</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
 
@@ -516,7 +874,7 @@ In [6]:
 
 <span class="ansigreen">pandas/src/inference.pyx</span> in <span class="ansicyan">pandas.lib.map_infer (pandas/lib.c:63043)</span><span class="ansiblue">()</span>
 
-<span class="ansigreen">&lt;ipython-input-6-89f3d5c32e54&gt;</span> in <span class="ansicyan">&lt;lambda&gt;</span><span class="ansiblue">(x)</span>
+<span class="ansigreen">&lt;ipython-input-10-89f3d5c32e54&gt;</span> in <span class="ansicyan">&lt;lambda&gt;</span><span class="ansiblue">(x)</span>
 <span class="ansigreen">      1</span> print<span class="ansiblue">(</span>incomplete_data<span class="ansiblue">[</span><span class="ansiblue">&quot;Desired Income&quot;</span><span class="ansiblue">]</span><span class="ansiblue">.</span>mean<span class="ansiblue">(</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
 <span class="ansigreen">----&gt; 2</span><span class="ansired"> </span>incomplete_data<span class="ansiblue">[</span><span class="ansiblue">&quot;Favorite Food&quot;</span><span class="ansiblue">]</span><span class="ansiblue">.</span>map<span class="ansiblue">(</span><span class="ansigreen">lambda</span> x<span class="ansiblue">:</span> x<span class="ansiblue">.</span>split<span class="ansiblue">(</span><span class="ansiblue">&quot; &quot;</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
 
@@ -529,7 +887,7 @@ same as a numpy nan (although oddly-enough will be recognized as a
 nan-like value), and vice versa.</p>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [7]:
+In [11]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -589,7 +947,7 @@ black)</li>
 <h2>Probability Distributions<a class="headerlink" href="#Probability-Distributions" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [8]:
+In [12]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -616,12 +974,12 @@ In [8]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_18_0.png" src="../_images/lectures_stats_day2_18_0.png" />
+<img alt="../_images/lectures_stats_day2_24_0.png" src="../_images/lectures_stats_day2_24_0.png" />
 </div>
 </div>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [9]:
+In [13]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -643,12 +1001,12 @@ In [9]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_19_0.png" src="../_images/lectures_stats_day2_19_0.png" />
+<img alt="../_images/lectures_stats_day2_25_0.png" src="../_images/lectures_stats_day2_25_0.png" />
 </div>
 </div>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [10]:
+In [14]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -670,12 +1028,12 @@ In [10]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_20_0.png" src="../_images/lectures_stats_day2_20_0.png" />
+<img alt="../_images/lectures_stats_day2_26_0.png" src="../_images/lectures_stats_day2_26_0.png" />
 </div>
 </div>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [11]:
+In [15]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -697,7 +1055,7 @@ In [11]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_21_0.png" src="../_images/lectures_stats_day2_21_0.png" />
+<img alt="../_images/lectures_stats_day2_27_0.png" src="../_images/lectures_stats_day2_27_0.png" />
 </div>
 </div>
 <p>Note that here I use <code class="docutils literal"><span class="pre">ax</span></code> to access the plot space of the figure, so
@@ -724,7 +1082,7 @@ the values inside the array easily through indexing.</p>
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [12]:
+In [16]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -762,7 +1120,7 @@ In [12]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_24_0.png" src="../_images/lectures_stats_day2_24_0.png" />
+<img alt="../_images/lectures_stats_day2_30_0.png" src="../_images/lectures_stats_day2_30_0.png" />
 </div>
 </div>
 <p>Numpy arrays have several methods, one of which is <code class="docutils literal"><span class="pre">cumsum()</span></code>. This
@@ -795,7 +1153,7 @@ distribution will approx. follow a Gaussian</li>
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [13]:
+In [17]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -820,7 +1178,7 @@ In [13]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_29_0.png" src="../_images/lectures_stats_day2_29_0.png" />
+<img alt="../_images/lectures_stats_day2_35_0.png" src="../_images/lectures_stats_day2_35_0.png" />
 </div>
 </div>
 </div>
@@ -844,7 +1202,7 @@ successes or any particular combination of successes &amp; failures</strong></li
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [14]:
+In [18]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -874,7 +1232,7 @@ In [14]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_31_0.png" src="../_images/lectures_stats_day2_31_0.png" />
+<img alt="../_images/lectures_stats_day2_37_0.png" src="../_images/lectures_stats_day2_37_0.png" />
 </div>
 </div>
 </div>
@@ -954,7 +1312,7 @@ significantly different</li>
 </ul>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [15]:
+In [19]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -984,7 +1342,7 @@ change the name of the &#8220;PDT&#8221; column because not every data file has 
 column despite them all showing roughly the same data.</p>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [16]:
+In [20]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -1002,7 +1360,7 @@ dot notation <code class="docutils literal"><span class="pre">DataFrame.column_n
 notation cannot handle column names with spaces.</p>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [17]:
+In [21]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -1019,7 +1377,7 @@ arrays (where the same selection will produce numpy arrays filled with
 booleans)</p>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [18]:
+In [22]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -1039,7 +1397,7 @@ In [18]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_41_0.png" src="../_images/lectures_stats_day2_41_0.png" />
+<img alt="../_images/lectures_stats_day2_47_0.png" src="../_images/lectures_stats_day2_47_0.png" />
 </div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">alpha</span></code> parameter controls the opacity of whatever you&#8217;re
@@ -1050,7 +1408,7 @@ set first (in the background) so that it doesn&#8217;t drown out the smaller
 set.</p>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [19]:
+In [23]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Walk Through the Django Tutorial &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Django Imager: Data Editing &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="next" title="Django Imager: Create a Data Model" href="django_1_data_model.html" />
-    <link rel="prev" title="Implement a Deque in Python" href="deque.html" />
+    <link rel="next" title="Django Imager: Data Editing" href="django_5_complete_frontend.html" />
+    <link rel="prev" title="Django Imager: Data Views" href="django_3_data_views.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,10 +51,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="django_1_data_model.html" title="Django Imager: Create a Data Model"
+          <a href="django_5_complete_frontend.html" title="Django Imager: Data Editing"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="deque.html" title="Implement a Deque in Python"
+          <a href="django_3_data_views.html" title="Django Imager: Data Views"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
@@ -179,21 +179,48 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="walk-through-the-django-tutorial">
-<h1>Walk Through the Django Tutorial<a class="headerlink" href="#walk-through-the-django-tutorial" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-walk-through-the-django-tutorial"></span><p>The Django project website has a <a class="reference external" href="https://docs.djangoproject.com/en/1.9/intro/tutorial01/">fantastic tutorial</a>.
-It walks you through the process of creating your first basic Django app.
-You&#8217;ve all worked through the tutorial at one point or another, but after the first half of this class you will likely gain a bit more from it than you did before.</p>
+<div class="section" id="django-imager-data-editing">
+<h1>Django Imager: Data Editing<a class="headerlink" href="#django-imager-data-editing" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-django-imager-data-editing"></span><p>In this series of assignments you will build a simple image management website using Django.
+In this third step, you will provide users with a way to add and edit resources from the front-end of the application.
+That way, you need not grant them access to the Django admin.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Review the tutorial.
-Simply read through it without doing any of the steps unless you feel compelled to do so.
-Think about the ways in which the work outlined by the tutorial relates to the work you have done in Pyramid over the last weeks.</p>
+<p>Do your work for this assignment on a branch called <code class="docutils literal"><span class="pre">front-end-3</span></code>.
+Be sure that the branch contains your work for the previous two parts of this work.</p>
+<div class="section" id="creating">
+<h3>Creating<a class="headerlink" href="#creating" title="Permalink to this headline">¶</a></h3>
+<p>To begin with, create views that allow creating albums and photos.
+From the library page you created previously, add a prominent button that allows a user to reach each of these pages.
+The page should show a form with the needed fields to create a new album or image.
+The album form need not offer the ability to upload photos.
+When the form is submitted, the user should be returned to the library page where they can see the newly created object.</p>
+<p>The URLs for these pages should be <code class="docutils literal"><span class="pre">/images/albums/add/</span></code> and <code class="docutils literal"><span class="pre">/images/photos/add/</span></code>.</p>
+</div>
+<div class="section" id="editing">
+<h3>Editing<a class="headerlink" href="#editing" title="Permalink to this headline">¶</a></h3>
+<p>Next, create views that allow updating existing albums and photos.
+On the library page, add an &#8216;edit&#8217; button to each album and photo that will load this view when clicked.
+The view that loads should show a form with the fields of the object to be edited.
+The album form should offer the user the ability to choose photos from their library to add to the album.
+When the form is submitted, the user should be returned to the library page.</p>
+<p>The URLs for these pages should be <code class="docutils literal"><span class="pre">/images/albums/&lt;album_id&gt;/edit/</span></code> and <code class="docutils literal"><span class="pre">/images/photos/&lt;photo_id&gt;/edit/</span></code>.</p>
+<p>Finally, create a view that allows a user to edit their Profile.
+This view should provide access not only to the data on the user&#8217;s ImagerProfile, but also to fields like &#8220;email&#8221; or &#8220;first_name&#8221; and &#8220;last_name&#8221; that are defined on the User object instead.
+When the form is submitted, the user should be returned to their profile page where they can see the updated information.</p>
+<p>The URL for this page should be <code class="docutils literal"><span class="pre">/profile/edit/</span></code></p>
+</div>
+<div class="section" id="tests">
+<h3>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h3>
+<p>You must implement tests to ensure your views are functioning properly.
+In particular ensure that no user may edit resources that do not belong to him or her.</p>
 </div>
 <div class="section" id="submitting-your-work">
-<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>Use the text input for this submission to add any questions, comments or reflections on the material you read.
-We will discuss these questions and comments in class over the next week.</p>
+<h3>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h3>
+<p>When you are done working and all your tests are passing, create a Pull Request from the &#8220;front-end&#8221; branch to &#8220;master&#8221;.
+Submit the URL for that pull request.
+When you are done, you can merge the pull request in preparation for the next stage of your work.</p>
+</div>
 </div>
 </div>
 
@@ -205,19 +232,24 @@ We will discuss these questions and comments in class over the next week.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Walk Through the Django Tutorial</a><ul>
-<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#">Django Imager: Data Editing</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#creating">Creating</a></li>
+<li><a class="reference internal" href="#editing">Editing</a></li>
+<li><a class="reference internal" href="#tests">Tests</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="deque.html"
-                        title="previous chapter">Implement a Deque in Python</a></p>
+  <p class="topless"><a href="django_3_data_views.html"
+                        title="previous chapter">Django Imager: Data Views</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="django_1_data_model.html"
-                        title="next chapter">Django Imager: Create a Data Model</a></p>
+  <p class="topless"><a href="django_5_complete_frontend.html"
+                        title="next chapter">Django Imager: Data Editing</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -242,10 +274,10 @@ We will discuss these questions and comments in class over the next week.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="django_1_data_model.html" title="Django Imager: Create a Data Model"
+          <a href="django_5_complete_frontend.html" title="Django Imager: Data Editing"
              >next</a> |</li>
         <li class="right" >
-          <a href="deque.html" title="Implement a Deque in Python"
+          <a href="django_3_data_views.html" title="Django Imager: Data Views"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
