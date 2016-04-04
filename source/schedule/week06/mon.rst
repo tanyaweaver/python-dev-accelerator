@@ -22,11 +22,15 @@ Readings
 
 **Please read and follow** the :doc:`installation instructions for conda at the top of this page </lectures/data_overview>`
 
+Questions about Pandas?  Read :doc:`Nick's quick Pandas tutorial </readings/pandas_introduction>`
+
 And the following will help you with your work on the Imager data model this week.
 
 .. include:: /readings/django_readings.rst
     :start-line: 17
     :end-line: 29
+
+
 
 Review
 ======
