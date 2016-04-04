@@ -1,0 +1,629 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Statistics 4: Multivariate Models and Choosing the Best Model &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="401 Python: Lecture Notes" href="index.html" />
+    <link rel="next" title="Did you get the memo?" href="the_fibonacci_memo.html" />
+    <link rel="prev" title="Deploying a Simple WSGI Application on AWS" href="simple_wsgi_deployment.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="the_fibonacci_memo.html" title="Did you get the memo?"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="simple_wsgi_deployment.html" title="Deploying a Simple WSGI Application on AWS"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Lecture Notes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="Statistics-4:-Multivariate-Models-and-Choosing-the-Best-Model">
+<h1>Statistics 4: Multivariate Models and Choosing the Best Model<a class="headerlink" href="#Statistics-4:-Multivariate-Models-and-Choosing-the-Best-Model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Multivariate-Models">
+<h2>Multivariate Models<a class="headerlink" href="#Multivariate-Models" title="Permalink to this headline">¶</a></h2>
+<p>Most real-world phenomena are not the result of one single cause.
+Consider the price of a home. It&#8217;s not just the number of bedrooms that
+affect the price, but also the number of bathrooms, the square footage,
+the age, etc...</p>
+<p>Or, consider the case of predicting a baseball pitcher&#8217;s career
+earnings.</p>
+<p>Data source: <a class="reference external" href="http://www.seanlahman.com/baseball-archive/statistics/">Sean Lahman&#8217;s Baseball
+Database</a></p>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [1]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">baseball_dir</span> <span class="o">=</span> <span class="s2">&quot;../downloads/baseballdatabank-master/core/&quot;</span>
+<span class="n">salaries</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">baseball_dir</span> <span class="o">+</span> <span class="s2">&quot;Salaries.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+<span class="n">pitching</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">baseball_dir</span> <span class="o">+</span> <span class="s2">&quot;Pitching.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+<span class="n">rename_these</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="s2">&quot;games&quot;</span><span class="p">,</span> <span class="s2">&quot;W&quot;</span><span class="p">:</span> <span class="s2">&quot;wins&quot;</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="s2">&quot;losses&quot;</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">:</span> <span class="s2">&quot;hits&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;WP&quot;</span><span class="p">:</span> <span class="s2">&quot;wild_pitches&quot;</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span> <span class="s2">&quot;runs_allowed&quot;</span><span class="p">,</span> <span class="s2">&quot;SO&quot;</span><span class="p">:</span> <span class="s2">&quot;strikeouts&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;SHO&quot;</span><span class="p">:</span> <span class="s2">&quot;shutouts&quot;</span><span class="p">,</span> <span class="s2">&quot;SV&quot;</span><span class="p">:</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="s2">&quot;IPouts&quot;</span><span class="p">:</span> <span class="s2">&quot;outs_pitched&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;BB&quot;</span><span class="p">:</span> <span class="s2">&quot;walks&quot;</span><span class="p">,</span> <span class="s2">&quot;BFP&quot;</span><span class="p">:</span> <span class="s2">&quot;batters_faced&quot;</span><span class="p">}</span>
+<span class="n">pitching</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="n">rename_these</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [2]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">total_salaries</span> <span class="o">=</span> <span class="n">salaries</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;playerID&quot;</span><span class="p">])[</span><span class="s2">&quot;salary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">total_pitching</span> <span class="o">=</span> <span class="n">pitching</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;playerID&quot;</span><span class="p">])[[</span><span class="s2">&quot;games&quot;</span><span class="p">,</span> <span class="s2">&quot;wins&quot;</span><span class="p">,</span> <span class="s2">&quot;losses&quot;</span><span class="p">,</span>
+                                                 <span class="s2">&quot;hits&quot;</span><span class="p">,</span> <span class="s2">&quot;wild_pitches&quot;</span><span class="p">,</span>
+                                                 <span class="s2">&quot;runs_allowed&quot;</span><span class="p">,</span>
+                                                 <span class="s2">&quot;strikeouts&quot;</span><span class="p">,</span> <span class="s2">&quot;outs_pitched&quot;</span><span class="p">,</span>
+                                                 <span class="s2">&quot;shutouts&quot;</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span>
+                                                <span class="s2">&quot;walks&quot;</span><span class="p">,</span> <span class="s2">&quot;batters_faced&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">all_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">total_pitching</span><span class="p">,</span> <span class="n">total_salaries</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">all_stats</span> <span class="o">=</span> <span class="n">all_stats</span><span class="p">[(</span><span class="n">all_stats</span><span class="o">.</span><span class="n">games</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">all_stats</span><span class="o">.</span><span class="n">salary</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [3]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">all_stats</span><span class="o">.</span><span class="n">strikeouts</span><span class="p">,</span> <span class="n">all_stats</span><span class="o">.</span><span class="n">salary</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span>
+            <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Strikeouts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Salary ($)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2750</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<img alt="../_images/lectures_stats_day4_4_0.png" src="../_images/lectures_stats_day4_4_0.png" />
+</div>
+</div>
+<p>Clearly, while salary is a fairly well-predicted by the number of career
+strikeouts, there&#8217;s more to a pitcher&#8217;s salary than that. Even so, let&#8217;s
+start with a univariate linear regression model.</p>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [4]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">linear_model</span><span class="p">,</span> <span class="n">cross_validation</span>
+
+<span class="n">kfolds</span> <span class="o">=</span> <span class="n">cross_validation</span><span class="o">.</span><span class="n">KFold</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_stats</span><span class="p">),</span> <span class="n">n_folds</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">regressor</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">Xvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_stats</span><span class="o">.</span><span class="n">strikeouts</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">yvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_stats</span><span class="o">.</span><span class="n">salary</span><span class="p">)</span>
+
+<span class="n">slopes</span><span class="p">,</span> <span class="n">intercepts</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">kfolds</span><span class="p">:</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">Xvals</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">Xvals</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+    <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">yvals</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">yvals</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+    <span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">slopes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">regressor</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+    <span class="n">intercepts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">regressor</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+
+<span class="n">slope</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">slopes</span><span class="p">)</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">intercepts</span><span class="p">)</span>
+
+<span class="n">regressor</span><span class="o">.</span><span class="n">coef_</span> <span class="o">=</span> <span class="n">slope</span>
+<span class="n">regressor</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">intercept</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [5]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">all_stats</span><span class="o">.</span><span class="n">strikeouts</span><span class="p">,</span> <span class="n">all_stats</span><span class="o">.</span><span class="n">salary</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span>
+            <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Xvals</span><span class="p">,</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xvals</span><span class="p">),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span>
+            <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Strikeouts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Salary ($)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2750</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<img alt="../_images/lectures_stats_day4_7_0.png" src="../_images/lectures_stats_day4_7_0.png" />
+</div>
+</div>
+<p>We can tell by eye that this data isn&#8217;t well-fit by this model. Let&#8217;s
+quantify this with the &#8220;score&#8221; of the linear model</p>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [6]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Score: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">Xvals</span><span class="p">,</span> <span class="n">yvals</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+Score: 0.4633007599952645
+</pre></div></div>
+</div>
+<p>This score captures the <strong>coefficient of determination</strong>, which tells us
+effectively how much of the variability of the data is captured by this
+model and ranges between 0 and 1. A score closer to zero indicates a
+model that largely fails to capture the data. Be suspicious of any score
+that&#8217;s too close to 0 or too close to 1.</p>
+<p>Let&#8217;s try to make this better by adding in more characteristics to our
+model, making our model multivariate. Note that a &#8220;linear&#8221; model does
+NOT mean that you only use one value to determine one other value, as in
+<span class="math">\(y=mx+b\)</span>. It means that the independent variables <span class="math">\(x_i\)</span>
+determining your <span class="math">\(y\)</span> value are added to each other in a linear
+way, e.g.</p>
+<div class="math">
+\[y = ax_1 + bx_2 + cx_3 +...\]</div>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [7]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">N_folds</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">kfolds</span> <span class="o">=</span> <span class="n">cross_validation</span><span class="o">.</span><span class="n">KFold</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_stats</span><span class="p">),</span> <span class="n">n_folds</span><span class="o">=</span><span class="n">N_folds</span><span class="p">)</span>
+
+<span class="n">regressor</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">valid_data</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;strikeouts&quot;</span><span class="p">,</span> <span class="s2">&quot;runs_allowed&quot;</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="s2">&quot;hits&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;shutouts&quot;</span><span class="p">,</span> <span class="s2">&quot;wins&quot;</span><span class="p">,</span> <span class="s2">&quot;losses&quot;</span><span class="p">,</span> <span class="s2">&quot;outs_pitched&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;walks&quot;</span><span class="p">,</span> <span class="s2">&quot;batters_faced&quot;</span><span class="p">]</span>
+<span class="n">Xvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_stats</span><span class="p">[</span><span class="n">valid_data</span><span class="p">])</span>
+<span class="n">yvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_stats</span><span class="o">.</span><span class="n">salary</span><span class="p">)</span>
+
+<span class="n">coeffs</span><span class="p">,</span> <span class="n">intercepts</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">kfolds</span><span class="p">:</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">Xvals</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">Xvals</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+    <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">yvals</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">yvals</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+    <span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">coeffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">regressor</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+    <span class="n">intercepts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">regressor</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+
+<span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#averages each column</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">intercepts</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">regressor</span><span class="o">.</span><span class="n">coef_</span> <span class="o">=</span> <span class="n">coeffs</span>
+<span class="n">regressor</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">intercept</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [8]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Score: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">Xvals</span><span class="p">,</span> <span class="n">yvals</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+Score: 0.6557068867328253
+</pre></div></div>
+</div>
+<p>A notably better result. Still not perfect, but we&#8217;re getting about 20%
+more of the variability of the data. Let&#8217;s plot our actual data and our
+model data side by side.</p>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [9]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">all_stats</span><span class="o">.</span><span class="n">strikeouts</span><span class="p">,</span> <span class="n">all_stats</span><span class="o">.</span><span class="n">salary</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span>
+            <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Strikeouts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Salary ($)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2750</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Xvals</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xvals</span><span class="p">),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span>
+            <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Strikeouts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1E4</span><span class="p">,</span> <span class="mf">1E9</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2750</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<img alt="../_images/lectures_stats_day4_15_0.png" src="../_images/lectures_stats_day4_15_0.png" />
+</div>
+</div>
+<div class="section" id="Take-Care-with-Multivariate-Models">
+<h3>Take Care with Multivariate Models<a class="headerlink" href="#Take-Care-with-Multivariate-Models" title="Permalink to this headline">¶</a></h3>
+<p>One thing to be aware of is that a multivariate linear model assumes
+that each added variable is independent of the others. As such, you want
+to beware of <strong>multicollinearity</strong>, where two or more characteristics
+are themselves correlated with each other (e.g. &#8220;strikeouts&#8221; and
+&#8220;outs_pitched&#8221;). To ensure that highly-correlated variables are not
+included together, one should add new variables carefully and gradually.
+For more, see this set of pages on <a class="reference external" href="https://onlinecourses.science.psu.edu/stat501/node/343">multicollinearity and other
+regression
+pitfalls</a>.</p>
+</div>
+</div>
+<div class="section" id="Choosing-the-Best-Model">
+<h2>Choosing the Best Model<a class="headerlink" href="#Choosing-the-Best-Model" title="Permalink to this headline">¶</a></h2>
+<p>When we select a model we can assume that the data is normally
+distributed (so, Gaussian) around some central trend that the model
+describes. We can evaluate that model by looking at the probability that
+the data we&#8217;ve measured would&#8217;ve been generated by the model that we&#8217;re
+assuming. For a single data point <span class="math">\(y_i\)</span>, the probability that the
+point would&#8217;ve been generated from <span class="math">\(x_i\)</span> and the model
+<span class="math">\(\mu_i\)</span> is</p>
+<p>Remembering day 2, the probability of multiple events all happening at
+the same time is the product of their individual probabilities. When we
+multiply the probability of generating each and every point <span class="math">\(y_i\)</span>
+given the model and the data, we get the <strong>likelihood</strong> and express that
+like so:</p>
+<p>If we can choose model parameters that maximize this likelihood, we can
+(in a sense) have the best model. One issue though is that because we&#8217;re
+multiplying decimals, any result (especially for large data sets) will
+yield and exceedingly-small number. We can circumvent that by taking the
+logarithm of the likelihood, i.e. the <strong>log-likelihood</strong>.</p>
+<p><strong>Aside:</strong> The logarithm function effectively eliminates an exponential,
+returning whatever was within that exponential. If
+<span class="math">\(y = \exp{(x + 2)}\)</span>, then <span class="math">\(\ln(y) = x + 2\)</span>. One side effect
+is that if two numbers were being multiplied together, then the
+logarithm turns that product into a sum, e.g.</p>
+<p>So as a consequence, if
+<span class="math">\(y = e^{x_1} \cdot e^{x_2} \cdot e^{x_3} \cdot ... \cdot \,e^{x_N}\)</span>,
+then</p>
+<p>The log-likelihood can be expressed as...</p>
+<p>No matter what model we adopt, that first term is going to be the same.
+We can call that a constant <span class="math">\(C\)</span> and proceed to ignore it. The
+second term looks like the <span class="math">\(\chi^2\)</span> statistic we saw yesterday,
+which for all intents and purposes it is. We end up wanting to maximize</p>
+<p>...but this is only the first part.</p>
+<div class="section" id="More-Variables-≠-Better-Model">
+<h3>More Variables ≠ Better Model<a class="headerlink" href="#More-Variables-≠-Better-Model" title="Permalink to this headline">¶</a></h3>
+<p>You can imagine that with more and more variables added to your model,
+you&#8217;d get progressively closer to <span class="math">\(R\approx1\)</span>. However, as you try
+to add more characteristics to your model you risk a number of things,
+least of which is overfitting your data. Of course, you cross-validate
+to try to ensure that you don&#8217;t but that&#8217;s not perfect and at the end of
+the day you&#8217;re still bound to the data you have.</p>
+<p>In practice, you want to go with <a class="reference external" href="https://simple.wikipedia.org/wiki/Occam%27s_razor">Occam&#8217;s
+Razor</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s2">&quot;More things should not be used than are necessary.&quot;</span>
+</pre></div>
+</div>
+<p>To help you stick to that, use the <strong>Aikake Information Criterion
+(AIC):</strong></p>
+<div class="math">
+\[AIC \equiv -2\ln\left(L\right) + 2\,k + \displaystyle\frac{2\,k\,(k+1)}{N - k - 1}\]</div>
+<p><span class="math">\(N\)</span> is the number of data points, <span class="math">\(k\)</span> is the number of model
+parameters, <span class="math">\(\ln(L)\)</span> is the log-likelihood, and <strong>you want to
+minimize this, as the model with the smallest AIC is then the best
+model.</strong> Notice how the more parameters you add, the higher the AIC
+gets. So even if you get a better fit to the data (log-likelihood), if
+you just keep adding parameters, you&#8217;re not actually getting the best
+model.</p>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [10]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="k">def</span> <span class="nf">AIC</span><span class="p">(</span><span class="n">likelihood</span><span class="p">,</span> <span class="n">num_points</span><span class="p">,</span> <span class="n">num_params</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">likelihood</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">num_params</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">num_params</span><span class="o">*</span><span class="p">(</span><span class="n">num_params</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">num_points</span> <span class="o">-</span> <span class="n">num_params</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [11]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">likelihood1</span> <span class="o">=</span> <span class="mf">0.6</span>
+<span class="n">likelihood2</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">n_points</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">k_params1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">k_params2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k_params1</span><span class="p">,</span> <span class="n">AIC</span><span class="p">(</span><span class="n">likelihood1</span><span class="p">,</span> <span class="n">n_points</span><span class="p">,</span> <span class="n">k_params1</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$L = 0.6$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k_params2</span><span class="p">,</span> <span class="n">AIC</span><span class="p">(</span><span class="n">likelihood2</span><span class="p">,</span> <span class="n">n_points</span><span class="p">,</span> <span class="n">k_params2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$L = 0.3$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$k$ parameters&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;AIC&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<img alt="../_images/lectures_stats_day4_24_0.png" src="../_images/lectures_stats_day4_24_0.png" />
+</div>
+</div>
+<p>Here, a hypothetical model with a higher likelihood but more parameters
+is <strong>worse</strong> than a model with a lower likelihood but less parameters.
+When you make your models, use AIC to keep your parameters in check.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Statistics 4: Multivariate Models and Choosing the Best Model</a><ul>
+<li><a class="reference internal" href="#Multivariate-Models">Multivariate Models</a><ul>
+<li><a class="reference internal" href="#Take-Care-with-Multivariate-Models">Take Care with Multivariate Models</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Choosing-the-Best-Model">Choosing the Best Model</a><ul>
+<li><a class="reference internal" href="#More-Variables-≠-Better-Model">More Variables ≠ Better Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="simple_wsgi_deployment.html"
+                        title="previous chapter">Deploying a Simple WSGI Application on AWS</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="the_fibonacci_memo.html"
+                        title="next chapter">Did you get the memo?</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="the_fibonacci_memo.html" title="Did you get the memo?"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="simple_wsgi_deployment.html" title="Deploying a Simple WSGI Application on AWS"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Lecture Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

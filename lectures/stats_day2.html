@@ -183,19 +183,379 @@ div.nboutput  > :nth-child(2).stderr {
 </style>
 <div class="section" id="Statistics-2:-Probability,-Distributions,-&amp;-Tests">
 <h1>Statistics 2: Probability, Distributions, &amp; Tests<a class="headerlink" href="#Statistics-2:-Probability,-Distributions,-&-Tests" title="Permalink to this headline">¶</a></h1>
-<p><strong>Package/module refs:</strong> -
-<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html">pandas</a>
-for storing your data -
-<a class="reference external" href="http://docs.scipy.org/doc/numpy-1.10.0/reference/arrays.html">numpy</a>
-also for storing data (as arrays), and other awesome things -
-<a class="reference external" href="https://docs.python.org/2/library/math.html">math.factorial</a> for
-factorials -
-<a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/stats.html">scipy.stats</a>
-for t-tests and distribution functions -
-<a class="reference external" href="http://matplotlib.org/api/pyplot_api.html">matplotlib.pyplot</a> for
-visualizing your data - <a class="reference external" href="https://github.com/nhuntwalker/teaching/blob/master/plotting_in_python.ipynb">my tutorial on plotting
+<p><strong>Package/module refs:</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html">pandas</a>
+for storing your data</li>
+<li><a class="reference external" href="http://docs.scipy.org/doc/numpy-1.10.0/reference/arrays.html">numpy</a>
+also for storing data (as arrays), and other awesome things</li>
+<li><a class="reference external" href="https://docs.python.org/2/library/math.html">math.factorial</a> for
+factorials</li>
+<li><a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/stats.html">scipy.stats</a>
+for t-tests and distribution functions</li>
+<li><a class="reference external" href="http://matplotlib.org/api/pyplot_api.html">matplotlib.pyplot</a> for
+visualizing your data</li>
+<li><a class="reference external" href="https://github.com/nhuntwalker/teaching/blob/master/plotting_in_python.ipynb">my tutorial on plotting
 data</a>.
-It&#8217;s focused on Astronomy but is universally (HA!) applicable</p>
+It&#8217;s focused on Astronomy but is universally (HA!) applicable</li>
+</ul>
+<div class="section" id="Handling-Null-Data">
+<h2>Handling Null Data<a class="headerlink" href="#Handling-Null-Data" title="Permalink to this headline">¶</a></h2>
+<p>No dataset is perfect. Most data that you work with, especially
+human-compiled data, will be somewhat incomplete. Missing values. When
+incomplete data is loaded with
+<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.read_csv.html">pandas.read_csv</a>,
+<a class="reference external" href="http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.loadtxt.html">numpy.loadtxt</a>,
+or
+<a class="reference external" href="http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.genfromtxt.html">numpy.genfromtxt</a>,
+those missing pieces will be filled by a default <code class="docutils literal"><span class="pre">NaN</span></code> (not a number)
+value.</p>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [1]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">incomplete_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../downloads/nmhw_sample_data.csv&quot;</span><span class="p">)</span>
+<span class="n">incomplete_data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+Out[1]:
+</pre></div>
+</div>
+<div class="container">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Hometown</th>
+      <th>Country</th>
+      <th>Desired Income</th>
+      <th>Favorite Food</th>
+      <th>Number of Cats</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>James</td>
+      <td>22</td>
+      <td>New York</td>
+      <td>NaN</td>
+      <td>75000.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bob</td>
+      <td>25</td>
+      <td>Seattle</td>
+      <td>USA</td>
+      <td>0.0</td>
+      <td>pad thai</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Annette</td>
+      <td>28</td>
+      <td>San Francisco</td>
+      <td>USA</td>
+      <td>NaN</td>
+      <td>spaghetti</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Florence</td>
+      <td>23</td>
+      <td>Beijing</td>
+      <td>China</td>
+      <td>60000.0</td>
+      <td>xiaolong bao</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Martha</td>
+      <td>30</td>
+      <td>Kansas City</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>corn</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Desean</td>
+      <td>27</td>
+      <td>Newark</td>
+      <td>USA</td>
+      <td>85000.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Jamal</td>
+      <td>28</td>
+      <td>New York</td>
+      <td>NaN</td>
+      <td>65000.0</td>
+      <td>pizza</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Kaede</td>
+      <td>31</td>
+      <td>Kyoto</td>
+      <td>Japan</td>
+      <td>65000.0</td>
+      <td>sushi</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Milton</td>
+      <td>23</td>
+      <td>Austin</td>
+      <td>NaN</td>
+      <td>78000.0</td>
+      <td>bbq</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Ivana</td>
+      <td>29</td>
+      <td>Moscow</td>
+      <td>Russia</td>
+      <td>NaN</td>
+      <td>borscht</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Jorge</td>
+      <td>35</td>
+      <td>Rio de Janeiro</td>
+      <td>Brasil</td>
+      <td>90000.0</td>
+      <td>farofa</td>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Always keep in mind that a &#8220;NaN&#8221; value <strong>*only*</strong> signifies a non-entry.
+Often, it&#8217;s tempting to just replace NaN values with zeros, or
+<code class="docutils literal"><span class="pre">False</span></code>, but to universally assume that you can or even should do that
+doesn&#8217;t do justice to what a NaN is. To be sure, NaN values <strong>*are
+numerical*</strong> but neither represent any actual number nor evaluate as
+False, None, or infinity.</p>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [2]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">this_val</span> <span class="o">=</span> <span class="n">incomplete_data</span><span class="o">.</span><span class="n">Country</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">this_val</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">this_val</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="n">this_val</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">this_val</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">this_val</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">this_val</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="n">this_val</span> <span class="o">==</span> <span class="bp">False</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">this_val</span> <span class="o">==</span> <span class="bp">None</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">this_val</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;This still prints something because it still represents a thing.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+nan
+&lt;class &apos;float&apos;&gt;
+False
+False
+This still prints something because it still represents a thing.
+</pre></div></div>
+</div>
+<p>There are many ways to handle NaN values and many entries (or
+lackthereof) that should be recognized as such. Pandas allows you to
+recognize a variety of values as null upon entry with the <code class="docutils literal"><span class="pre">na_values</span></code>
+parameter of <code class="docutils literal"><span class="pre">pandas.read_csv</span></code></p>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [3]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">incomplete_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../downloads/nmhw_sample_data.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;NULL&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>Once assigned to a variable, NaN values can be dealt with on a
+column-by-column basis or throughout the entire DataFrame with the
+<code class="docutils literal"><span class="pre">fillna</span></code> method. A NaN might be set to some default value, as you may
+be able to assume a meaningful value for a non-entry. You may also
+decide that a different column&#8217;s NaN may need to be evaluated in order
+to get it out of the way in filtering or some other data process later
+on.</p>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [4]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">incomplete_data</span><span class="o">.</span><span class="n">Country</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;USA&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">incomplete_data</span><span class="o">.</span><span class="n">Country</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+0        USA
+1        USA
+2        USA
+3      China
+4        USA
+5        USA
+6        USA
+7      Japan
+8        USA
+9     Russia
+10    Brasil
+Name: Country, dtype: object
+</pre></div></div>
+</div>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [5]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">incomplete_data</span><span class="p">[</span><span class="s2">&quot;Number of Cats&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="o">-</span><span class="mi">99</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">incomplete_data</span><span class="p">[</span><span class="s2">&quot;Number of Cats&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+0      0.0
+1      2.0
+2      1.0
+3      4.0
+4      3.0
+5    -99.0
+6      3.0
+7      4.0
+8    -99.0
+9      1.0
+10     2.0
+Name: Number of Cats, dtype: float64
+</pre></div></div>
+</div>
+<p>Other times it would make more sense to just leave NaNs as they are.
+Aggregate operations like means and sums will just ignore them. Though
+be aware that they will screw up iterative processes with strings.</p>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [6]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="k">print</span><span class="p">(</span><span class="n">incomplete_data</span><span class="p">[</span><span class="s2">&quot;Desired Income&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="n">incomplete_data</span><span class="p">[</span><span class="s2">&quot;Favorite Food&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+64750.0
+</pre></div></div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+<span class="ansired">---------------------------------------------------------------------------</span>
+<span class="ansired">AttributeError</span>                            Traceback (most recent call last)
+<span class="ansigreen">&lt;ipython-input-6-89f3d5c32e54&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">      1</span> print<span class="ansiblue">(</span>incomplete_data<span class="ansiblue">[</span><span class="ansiblue">&quot;Desired Income&quot;</span><span class="ansiblue">]</span><span class="ansiblue">.</span>mean<span class="ansiblue">(</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">----&gt; 2</span><span class="ansired"> </span>incomplete_data<span class="ansiblue">[</span><span class="ansiblue">&quot;Favorite Food&quot;</span><span class="ansiblue">]</span><span class="ansiblue">.</span>map<span class="ansiblue">(</span><span class="ansigreen">lambda</span> x<span class="ansiblue">:</span> x<span class="ansiblue">.</span>split<span class="ansiblue">(</span><span class="ansiblue">&quot; &quot;</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
+
+<span class="ansigreen">/Users/Nick/anaconda/envs/python-dev-accelerator/lib/python3.5/site-packages/pandas/core/series.py</span> in <span class="ansicyan">map</span><span class="ansiblue">(self, arg, na_action)</span>
+<span class="ansigreen">   2119</span>                                      index=self.index).__finalize__(self)
+<span class="ansigreen">   2120</span>         <span class="ansigreen">else</span><span class="ansiblue">:</span><span class="ansiblue"></span>
+<span class="ansigreen">-&gt; 2121</span><span class="ansired">             </span>mapped <span class="ansiblue">=</span> map_f<span class="ansiblue">(</span>values<span class="ansiblue">,</span> arg<span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">   2122</span>             return self._constructor(mapped,
+<span class="ansigreen">   2123</span>                                      index=self.index).__finalize__(self)
+
+<span class="ansigreen">pandas/src/inference.pyx</span> in <span class="ansicyan">pandas.lib.map_infer (pandas/lib.c:63043)</span><span class="ansiblue">()</span>
+
+<span class="ansigreen">&lt;ipython-input-6-89f3d5c32e54&gt;</span> in <span class="ansicyan">&lt;lambda&gt;</span><span class="ansiblue">(x)</span>
+<span class="ansigreen">      1</span> print<span class="ansiblue">(</span>incomplete_data<span class="ansiblue">[</span><span class="ansiblue">&quot;Desired Income&quot;</span><span class="ansiblue">]</span><span class="ansiblue">.</span>mean<span class="ansiblue">(</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">----&gt; 2</span><span class="ansired"> </span>incomplete_data<span class="ansiblue">[</span><span class="ansiblue">&quot;Favorite Food&quot;</span><span class="ansiblue">]</span><span class="ansiblue">.</span>map<span class="ansiblue">(</span><span class="ansigreen">lambda</span> x<span class="ansiblue">:</span> x<span class="ansiblue">.</span>split<span class="ansiblue">(</span><span class="ansiblue">&quot; &quot;</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
+
+<span class="ansired">AttributeError</span>: &apos;float&apos; object has no attribute &apos;split&apos;
+</pre></div></div>
+</div>
+<p>It&#8217;s worth noting that while NaN values essentially mean the same no
+matter what, not all NaNs are created equal. A pandas nan is not the
+same as a numpy nan (although oddly-enough will be recognized as a
+nan-like value), and vice versa.</p>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [7]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="k">print</span><span class="p">(</span><span class="n">this_val</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">this_val</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+False
+True
+True
+&lt;class &apos;float&apos;&gt;
+</pre></div></div>
+</div>
+<p>At the end of the day, no matter what you decide to do with NaNs make
+sure that you know your data and have an idea of what you want to do
+with it. All choices will follow from the nature of your data set and
+what your analysis entails.</p>
+</div>
 <div class="section" id="Basic-Rules-of-Probability">
 <h2>Basic Rules of Probability<a class="headerlink" href="#Basic-Rules-of-Probability" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -227,12 +587,10 @@ black)</li>
 <h2>Probability Distributions<a class="headerlink" href="#Probability-Distributions" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [1]:
+In [8]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
@@ -256,12 +614,12 @@ In [1]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_4_0.png" src="../_images/lectures_stats_day2_4_0.png" />
+<img alt="../_images/lectures_stats_day2_18_0.png" src="../_images/lectures_stats_day2_18_0.png" />
 </div>
 </div>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [2]:
+In [9]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -283,12 +641,12 @@ In [2]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_5_0.png" src="../_images/lectures_stats_day2_5_0.png" />
+<img alt="../_images/lectures_stats_day2_19_0.png" src="../_images/lectures_stats_day2_19_0.png" />
 </div>
 </div>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [3]:
+In [10]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -310,12 +668,12 @@ In [3]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_6_0.png" src="../_images/lectures_stats_day2_6_0.png" />
+<img alt="../_images/lectures_stats_day2_20_0.png" src="../_images/lectures_stats_day2_20_0.png" />
 </div>
 </div>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [4]:
+In [11]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -337,7 +695,7 @@ In [4]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_7_0.png" src="../_images/lectures_stats_day2_7_0.png" />
+<img alt="../_images/lectures_stats_day2_21_0.png" src="../_images/lectures_stats_day2_21_0.png" />
 </div>
 </div>
 <p>Note that here I use <code class="docutils literal"><span class="pre">ax</span></code> to access the plot space of the figure, so
@@ -364,7 +722,7 @@ the values inside the array easily through indexing.</p>
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [5]:
+In [12]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -402,7 +760,7 @@ In [5]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_10_0.png" src="../_images/lectures_stats_day2_10_0.png" />
+<img alt="../_images/lectures_stats_day2_24_0.png" src="../_images/lectures_stats_day2_24_0.png" />
 </div>
 </div>
 <p>Numpy arrays have several methods, one of which is <code class="docutils literal"><span class="pre">cumsum()</span></code>. This
@@ -435,7 +793,7 @@ distribution will approx. follow a Gaussian</li>
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [6]:
+In [13]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -460,7 +818,7 @@ In [6]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_15_0.png" src="../_images/lectures_stats_day2_15_0.png" />
+<img alt="../_images/lectures_stats_day2_29_0.png" src="../_images/lectures_stats_day2_29_0.png" />
 </div>
 </div>
 </div>
@@ -484,7 +842,7 @@ successes or any particular combination of successes &amp; failures</strong></li
 </ul>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [7]:
+In [14]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -514,7 +872,7 @@ In [7]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_17_0.png" src="../_images/lectures_stats_day2_17_0.png" />
+<img alt="../_images/lectures_stats_day2_31_0.png" src="../_images/lectures_stats_day2_31_0.png" />
 </div>
 </div>
 </div>
@@ -594,7 +952,7 @@ significantly different</li>
 </ul>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [8]:
+In [15]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -624,7 +982,7 @@ change the name of the &#8220;PDT&#8221; column because not every data file has 
 column despite them all showing roughly the same data.</p>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [9]:
+In [16]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -642,7 +1000,7 @@ dot notation <code class="docutils literal"><span class="pre">DataFrame.column_n
 notation cannot handle column names with spaces.</p>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [10]:
+In [17]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -659,7 +1017,7 @@ arrays (where the same selection will produce numpy arrays filled with
 booleans)</p>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [11]:
+In [18]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -679,7 +1037,7 @@ In [11]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_27_0.png" src="../_images/lectures_stats_day2_27_0.png" />
+<img alt="../_images/lectures_stats_day2_41_0.png" src="../_images/lectures_stats_day2_41_0.png" />
 </div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">alpha</span></code> parameter controls the opacity of whatever you&#8217;re
@@ -690,7 +1048,7 @@ set first (in the background) so that it doesn&#8217;t drown out the smaller
 set.</p>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [12]:
+In [19]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -718,13 +1076,16 @@ significantly different.</strong></p>
 <div class="section" id="t-tests-in-SciPy.stats">
 <h3>t-tests in SciPy.stats<a class="headerlink" href="#t-tests-in-SciPy.stats" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference external" href="http://docs.scipy.org/doc/scipy-0.16.0/reference/generated/scipy.stats.ttest_ind.html#scipy.stats.ttest_ind">ttest_ind</a>performs a t-test on two sample distributions and returns the
+<li><strong>`ttest_ind &lt;http://docs.scipy.org/doc/scipy-0.16.0/reference/generated/scipy.stats.ttest_ind.html#scipy.stats.ttest_ind&gt;`__:</strong>
+performs a t-test on two sample distributions and returns the
 t-statistic (useful later) and the p-value; useful for two
 independent samples from the same population (or very similar but
 different populations)</li>
-<li><a class="reference external" href="http://docs.scipy.org/doc/scipy-0.16.0/reference/generated/scipy.stats.ttest_1samp.html#scipy.stats.ttest_1samp">ttest_1samp</a>useful for one sample distribution in comparison to the mean of a
+<li><strong>`ttest_1samp &lt;http://docs.scipy.org/doc/scipy-0.16.0/reference/generated/scipy.stats.ttest_1samp.html#scipy.stats.ttest_1samp&gt;`__:</strong>
+useful for one sample distribution in comparison to the mean of a
 population</li>
-<li><a class="reference external" href="http://docs.scipy.org/doc/scipy-0.16.0/reference/generated/scipy.stats.ttest_rel.html#scipy.stats.ttest_rel">ttest_rel</a>useful for two related samples</li>
+<li><strong>`ttest_rel &lt;http://docs.scipy.org/doc/scipy-0.16.0/reference/generated/scipy.stats.ttest_rel.html#scipy.stats.ttest_rel&gt;`__:</strong>
+useful for two related samples</li>
 </ul>
 </div>
 </div>
@@ -739,6 +1100,7 @@ population</li>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Statistics 2: Probability, Distributions, &amp; Tests</a><ul>
+<li><a class="reference internal" href="#Handling-Null-Data">Handling Null Data</a></li>
 <li><a class="reference internal" href="#Basic-Rules-of-Probability">Basic Rules of Probability</a></li>
 <li><a class="reference internal" href="#Examples:">Examples:</a></li>
 <li><a class="reference internal" href="#Probability-Distributions">Probability Distributions</a></li>

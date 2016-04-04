@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Problem Set - Statistics 4 &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
+    <link rel="next" title="Kata Fourteen: Tom Swift Under Milk Wood" href="trigrams.html" />
+    <link rel="prev" title="Problem Set - Statistics 3" href="statistics_problem_set3.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="trigrams.html" title="Kata Fourteen: Tom Swift Under Milk Wood"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="statistics_problem_set3.html" title="Problem Set - Statistics 3"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="Problem-Set---Statistics-4">
+<h1>Problem Set - Statistics 4<a class="headerlink" href="#Problem-Set---Statistics-4" title="Permalink to this headline">¶</a></h1>
+<p>Data Ref: <a class="reference external" href="http://www.seanlahman.com/baseball-archive/statistics/">http://www.seanlahman.com/baseball-archive/statistics/</a> - get
+the comma-delimited version for 2014</p>
+<p><strong>Note: Data is also available in the class downloads</strong></p>
+<div class="section" id="Tasks">
+<h2>Tasks<a class="headerlink" href="#Tasks" title="Permalink to this headline">¶</a></h2>
+<p>This assignment is more of an open-ended data analysis project, using
+the baseball data explored in <a class="reference external" href="../lectures/stats_day4.html">Statistics
+4</a>. Use linear regression and the
+concepts explored in the previous statistics lectures to explore
+meaningful relationships in the data with ideas of your own design. As
+an example, the stats 4 lecture tries to predict pitchers&#8217; salaries
+using their player stats. Other examples are...</p>
+<ul class="simple">
+<li>Predicting player salaries in general using stats contained in
+ancillary files</li>
+<li>Predicting team win-loss records with player stats</li>
+</ul>
+<p>or any other question you come up with that you feel is worth exploring.
+<strong>Whatever question you go with, make sure it&#8217;s clearly stated at the
+top of your notebook.</strong></p>
+<p>For any model that you create,</p>
+<ul class="simple">
+<li>Describe the characteristics you chose and why you chose them</li>
+<li>Make sure that your fit attains an <span class="math">\(R^2\)</span> score ≥ 0.65. Try to
+get your score as high as you can manage, but that is the lower
+threshold.</li>
+<li>Include at least one 2D visualization of the data you&#8217;re trying to
+predict, alongside the result of your prediction. While your model
+may use many variables in its prediction, you only need to plot the
+predicted values vs one variable.</li>
+</ul>
+<p>Note that <em>IF YOU WANT</em> you can include polynomial terms by putting
+exponents on your input data like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_1_squared&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_1&quot;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_2_cubed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_2&quot;</span><span class="p">]</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_3_sqrt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_3&quot;</span><span class="p">])</span>
+
+<span class="n">Xvals</span> <span class="o">=</span> <span class="n">baseball_data</span><span class="p">[[</span><span class="s2">&quot;param_1&quot;</span><span class="p">,</span> <span class="s2">&quot;param_1_squared&quot;</span><span class="p">,</span> <span class="s2">&quot;param_2&quot;</span><span class="p">,</span> <span class="s2">&quot;param_2_cubed&quot;</span><span class="p">,</span> <span class="s2">&quot;param_3&quot;</span><span class="p">,</span> <span class="s2">&quot;param_3_sqrt&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="section" id="*STRETCH-GOAL*-Comment-on-the-appropriateness-of-a-linear-model-to-the-data-and-question-at-hand.-What-do-you-think-would-be-more-appropriate?-Why?">
+<h3><strong>*STRETCH GOAL*</strong> Comment on the appropriateness of a linear model to the data and question at hand. What do you think would be more appropriate? Why?<a class="headerlink" href="#*STRETCH-GOAL*-Comment-on-the-appropriateness-of-a-linear-model-to-the-data-and-question-at-hand.-What-do-you-think-would-be-more-appropriate?-Why?" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="Submitting-Your-Work">
+<h2>Submitting Your Work<a class="headerlink" href="#Submitting-Your-Work" title="Permalink to this headline">¶</a></h2>
+<p>Report your answers in an iPython/Jupyter notebook with either print
+statements or markdown. If you write any functions, include a docstring
+describing what that function does. Note: You are not writing tests for
+any functions. If you come to any conclusions via math (and you will),
+make sure your code matches what you say.</p>
+<p>When your work is complete, push your work to github and issue a Pull
+Request to your master branch. Submit the URL for your pull request.
+After this is complete, you may merge your work to master.</p>
+<p>As usual, use the comments function in canvas to submit questions,
+comments and reflections on this work.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Problem Set - Statistics 4</a><ul>
+<li><a class="reference internal" href="#Tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#*STRETCH-GOAL*-Comment-on-the-appropriateness-of-a-linear-model-to-the-data-and-question-at-hand.-What-do-you-think-would-be-more-appropriate?-Why?"><strong>*STRETCH GOAL*</strong> Comment on the appropriateness of a linear model to the data and question at hand. What do you think would be more appropriate? Why?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Submitting-Your-Work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="statistics_problem_set3.html"
+                        title="previous chapter">Problem Set - Statistics 3</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="trigrams.html"
+                        title="next chapter">Kata Fourteen: Tom Swift Under Milk Wood</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="trigrams.html" title="Kata Fourteen: Tom Swift Under Milk Wood"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="statistics_problem_set3.html" title="Problem Set - Statistics 3"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

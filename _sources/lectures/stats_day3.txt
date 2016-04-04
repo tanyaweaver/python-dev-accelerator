@@ -8,7 +8,15 @@
     }
    },
    "source": [
-    "# Statistics 3: More about Tests, Confidence Intervals, Goodness of Fit, and Model Validation"
+    "# Statistics 3: More about Tests, Confidence Intervals, Goodness of Fit, and Model Validation\n",
+    "\n",
+    "**Package/module refs:** \n",
+    "\n",
+    "- [pandas](http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html) for storing your data\n",
+    "- [numpy](http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.mean.html) for fast descriptive statistics\n",
+    "- [scipy.stats](http://docs.scipy.org/doc/scipy/reference/stats.html) for probability distribution functions and data tests\n",
+    "- [sklearn.cv](http://scikit-learn.org/stable/modules/classes.html#module-sklearn.cross_validation) for cross-validation modules\n",
+    "- [matplotlib.pyplot](http://matplotlib.org/api/pyplot_api.html) for visualizing your data"
    ]
   },
   {
@@ -707,6 +715,22 @@
     "plt.xlabel(\"Mean Temperature in Seattle Septembers\")\n",
     "plt.ylabel(\"N days\")\n",
     "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "### Cross-Validation Module References\n",
+    "\n",
+    "- **[train_test_split](scikit-learn.org/stable/modules/generated/sklearn.cross_validation.train_test_split.html)**\n",
+    "- **[ShuffleSplit](scikit-learn.org/stable/modules/generated/sklearn.cross_validation.ShuffleSplit.html)**\n",
+    "- **[KFold](scikit-learn.org/stable/modules/generated/sklearn.cross_validation.KFold.html)**\n",
+    "- **[StratifiedKFold](scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedKFold.html)**"
    ]
   }
  ],

@@ -11,6 +11,7 @@
     "# Statistics 1: Descriptive Statistics\n",
     "\n",
     "**Package/module refs:** \n",
+    "\n",
     "- [pandas](http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html) for storing your data\n",
     "- [numpy](http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.mean.html) for storing data and fast descriptive statistics, quantiles, and lots of modules dealing with random numbers\n",
     "- [scipy.stats](http://docs.scipy.org/doc/scipy/reference/stats.html) for the mode, and other things\n",
@@ -745,11 +746,12 @@
    "cell_type": "markdown",
    "metadata": {
     "slideshow": {
-     "slide_type": "slide"
+     "slide_type": "subslide"
     }
    },
    "source": [
-    "## Descriptive Statistic Module References\n",
+    "### Descriptive Statistic Module References\n",
+    "\n",
     "- <b>[numpy.mean](http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.mean.html)</b>\n",
     "- <b>[numpy.std](http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.std.html)</b>\n",
     "- <b>[numpy.percentile](http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.percentile.html)</b>\n",
