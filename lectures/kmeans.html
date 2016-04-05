@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>K-Means Experiment &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="401 Python: Lecture Notes" href="index.html" />
+    <link rel="next" title="Behavior Driven Development with Lettuce" href="lettuce.html" />
+    <link rel="prev" title="Extracting Data from the Web, II" href="json_apis.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="lettuce.html" title="Behavior Driven Development with Lettuce"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="json_apis.html" title="Extracting Data from the Web, II"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Lecture Notes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="K-Means-Experiment">
+<h1>K-Means Experiment<a class="headerlink" href="#K-Means-Experiment" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Objectives">
+<h2>Objectives<a class="headerlink" href="#Objectives" title="Permalink to this headline">¶</a></h2>
+<p>Predict survival of Titanic passangers.</p>
+<p>Which features most accurately predict the outcome?</p>
+</div>
+<div class="section" id="Data-Analysis">
+<h2>Data Analysis<a class="headerlink" href="#Data-Analysis" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [31]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="n">MY_TITANIC_TRAIN</span> <span class="o">=</span> <span class="s1">&#39;/media/removable/data/train_titanic.csv&#39;</span>
+<span class="n">MY_TITANIC_TEST</span> <span class="o">=</span> <span class="s1">&#39;/media/removable/data/test_titanic.csv&#39;</span>
+<span class="n">titanic_dataframe</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">MY_TITANIC_TRAIN</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li>fix missing values</li>
+</ul>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [32]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">titanic_dataframe</span> <span class="o">=</span> <span class="n">titanic_dataframe</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li>statistics &amp; shape</li>
+</ul>
+</div>
+<div class="section" id="Selection-of-Features">
+<h2>Selection of Features<a class="headerlink" href="#Selection-of-Features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Must have a mean &#8211;&gt; Remove categorical data</li>
+</ul>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [33]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">titanic_dataframe</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Ticket&#39;</span><span class="p">,</span> <span class="s1">&#39;Cabin&#39;</span><span class="p">,</span> <span class="s1">&#39;Embarked&#39;</span><span class="p">,</span> <span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c1">#print(&#39;length: {0} &#39;.format(len(titanic_dataframe)))</span>
+<span class="c1">#print(titanic_dataframe.head(5))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+length: 183
+    PassengerId  Survived  Pclass  Age  SibSp  Parch     Fare
+1             2         1       1   38      1      0  71.2833
+3             4         1       1   35      1      0  53.1000
+6             7         0       1   54      0      0  51.8625
+10           11         1       3    4      1      1  16.7000
+11           12         1       1   58      0      0  26.5500
+</pre></div></div>
+</div>
+<ul class="simple">
+<li>discrete vs. continuous</li>
+</ul>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [34]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="k">print</span><span class="p">(</span><span class="mf">2.2</span> <span class="o">*</span> <span class="mf">3.0</span> <span class="o">==</span> <span class="mf">6.6</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="mf">3.3</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">==</span> <span class="mf">6.6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+False
+True
+</pre></div></div>
+</div>
+<p>Oh look &#8211;floats bite.</p>
+</div>
+<div class="section" id="Experiment-Heueristics-(Design)">
+<h2>Experiment Heueristics (Design)<a class="headerlink" href="#Experiment-Heueristics-(Design)" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Evaluation">
+<h3>Evaluation<a class="headerlink" href="#Evaluation" title="Permalink to this headline">¶</a></h3>
+<p>Confusion Matrix: <a class="reference external" href="https://en.wikipedia.org/wiki/Confusion_matrix">https://en.wikipedia.org/wiki/Confusion_matrix</a></p>
+<p>Confusion Matrix Clarification:
+<a class="reference external" href="http://www.dataschool.io/simple-guide-to-confusion-matrix-terminology/">http://www.dataschool.io/simple-guide-to-confusion-matrix-terminology/</a></p>
+<p>Mean F Score: <a class="reference external" href="https://www.kaggle.com/wiki/MeanFScore">https://www.kaggle.com/wiki/MeanFScore</a></p>
+<ul class="simple">
+<li><span class="math">\(F_1 = 2 * \frac{precision * recall}{ precision + recall}\)</span></li>
+<li><span class="math">\(precision = \frac{tp}{tp+fp}\)</span></li>
+<li><span class="math">\(recall = \frac{tp}{tp+fn}\)</span></li>
+</ul>
+</div>
+<div class="section" id="Representation">
+<h3>Representation<a class="headerlink" href="#Representation" title="Permalink to this headline">¶</a></h3>
+<p>K-means</p>
+<p>Distance = Euclidean (yes I mispelled this in KNN.ipynb)</p>
+<p>Data: 60% Train, 10% Validation, 30% Test</p>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [35]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">titanic_dataframe</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Optimization">
+<h3>Optimization<a class="headerlink" href="#Optimization" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>vary numerical features used</li>
+<li>vary K</li>
+<li>vary initialization</li>
+</ul>
+</div>
+</div>
+<div class="section" id="Experiment">
+<h2>Experiment<a class="headerlink" href="#Experiment" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [36]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<div class="highlight"><pre>
+[0 0 1 1 0 1 0 0 1 0 0 1 1 1 0 1 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 1 0 1 1 1
+ 0 0 0 1 0 1 1 1 0 0 0 0 1 1 1 1 0 1 1 0 1 1 0 0 1 1 1 1 1 1 0 0 0 1 1 0 0
+ 1 0 0 1 1 0 0 0 1 1 1 0 0 1 1 1 1 0 0 1 0 0 1 1 1 1 0 0 0 1 0 0 0 0 0 0 1
+ 1 1 0 0 0 1 0 1 1 0 1 0 1 1 1 0 0 0 1 0 0 0 0 1 0 0 1 1 1 0 1 0 1]
+</pre></div></div>
+</div>
+<ul class="simple">
+<li>Prepare and upload to Kaggle</li>
+</ul>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [38]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="c1">#1. open test.csv &amp; clean</span>
+<span class="c1">#2. predict on test data</span>
+<span class="c1">#3. convert predictions to datframe</span>
+<span class="sd">&#39;&#39;&#39;df_result = pandas.DataFrame(results[:,0:2], columns=[&#39;PassengerId&#39;, &#39;Survived&#39;])&#39;&#39;&#39;</span>
+<span class="c1">#4. dump csv</span>
+<span class="sd">&#39;&#39;&#39;df_result.to_csv(&#39;titanic.csv&#39;, index=False) &#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+Out[38]:
+</pre></div>
+</div>
+<div class="highlight-none"><div class="highlight"><pre>
+&quot;df_result.to_csv(&#39;titanic.csv&#39;, index=False) &quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Conclusions">
+<h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="Recommendation">
+<h2>Recommendation<a class="headerlink" href="#Recommendation" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">K-Means Experiment</a><ul>
+<li><a class="reference internal" href="#Objectives">Objectives</a></li>
+<li><a class="reference internal" href="#Data-Analysis">Data Analysis</a></li>
+<li><a class="reference internal" href="#Selection-of-Features">Selection of Features</a></li>
+<li><a class="reference internal" href="#Experiment-Heueristics-(Design)">Experiment Heueristics (Design)</a><ul>
+<li><a class="reference internal" href="#Evaluation">Evaluation</a></li>
+<li><a class="reference internal" href="#Representation">Representation</a></li>
+<li><a class="reference internal" href="#Optimization">Optimization</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Experiment">Experiment</a></li>
+<li><a class="reference internal" href="#Conclusions">Conclusions</a></li>
+<li><a class="reference internal" href="#Recommendation">Recommendation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="json_apis.html"
+                        title="previous chapter">Extracting Data from the Web, II</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lettuce.html"
+                        title="next chapter">Behavior Driven Development with Lettuce</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="lettuce.html" title="Behavior Driven Development with Lettuce"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="json_apis.html" title="Extracting Data from the Web, II"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Lecture Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

@@ -25,6 +25,7 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
+    /lectures/kmeans
     /lectures/stats_day2
     /lectures/django_models
 
