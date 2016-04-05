@@ -26,6 +26,7 @@ Concepts
     :maxdepth: 2
 
     /lectures/stats_day3
+    /lectures/intro_to_python_9_generators
 
 Demo
 ====
