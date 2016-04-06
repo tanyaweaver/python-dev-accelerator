@@ -22,7 +22,7 @@
     "### Find the probability that...\n",
     "- a passenger survived *(mandatory)*\n",
     "\n",
-    "**Choose two of...**\n",
+    "**Choose two of the following and find the probability that...**\n",
     "\n",
     "- a passenger was male\n",
     "- a passenger was female and had at least one sibling or spouse on board\n",

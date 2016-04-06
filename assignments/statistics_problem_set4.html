@@ -188,43 +188,31 @@ the comma-delimited version for 2014</p>
 <p><strong>Note: Data is also available in the class downloads</strong></p>
 <div class="section" id="Tasks">
 <h2>Tasks<a class="headerlink" href="#Tasks" title="Permalink to this headline">¶</a></h2>
-<p>This assignment is more of an open-ended data analysis project, using
-the baseball data explored in <a class="reference external" href="../lectures/stats_day4.html">Statistics
-4</a>. Use linear regression and the
-concepts explored in the previous statistics lectures to explore
-meaningful relationships in the data with ideas of your own design. As
-an example, the stats 4 lecture tries to predict pitchers&#8217; salaries
-using their player stats. Other examples are...</p>
+<div class="section" id="Univariate">
+<h3>Univariate<a class="headerlink" href="#Univariate" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Predicting player salaries in general using stats contained in
-ancillary files</li>
-<li>Predicting team win-loss records with player stats</li>
+<li>With the baseball data linked above (some of it was explored in
+<a class="reference external" href="../lectures/stats_day4.html">Statistics 4</a>), create a univariate
+Linear Regression model predicting player salary using some player
+stat.</li>
+<li>You will need to join a second table to the &#8220;Salaries.csv&#8221; table.</li>
+<li>Cross-validate your model, and produce 68, 95, and 99.7% confidence
+intervals for your &#8220;slope&#8221;.</li>
+<li>Report the <span class="math">\(R^2\)</span> score for your univariate model.</li>
+<li>Make a scatter plot of your data, with your model predictions
+overlaid in red.</li>
 </ul>
-<p>or any other question you come up with that you feel is worth exploring.
-<strong>Whatever question you go with, make sure it&#8217;s clearly stated at the
-top of your notebook.</strong></p>
-<p>For any model that you create,</p>
-<ul class="simple">
-<li>Describe the characteristics you chose and why you chose them</li>
-<li>Make sure that your fit attains an <span class="math">\(R^2\)</span> score ≥ 0.65. Try to
-get your score as high as you can manage, but that is the lower
-threshold.</li>
-<li>Include at least one 2D visualization of the data you&#8217;re trying to
-predict, alongside the result of your prediction. While your model
-may use many variables in its prediction, you only need to plot the
-predicted values vs one variable.</li>
-</ul>
-<p>Note that <em>IF YOU WANT</em> you can include polynomial terms by putting
-exponents on your input data like so:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_1_squared&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_1&quot;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
-<span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_2_cubed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_2&quot;</span><span class="p">]</span><span class="o">**</span><span class="mi">3</span>
-<span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_3_sqrt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">baseball_data</span><span class="p">[</span><span class="s2">&quot;param_3&quot;</span><span class="p">])</span>
-
-<span class="n">Xvals</span> <span class="o">=</span> <span class="n">baseball_data</span><span class="p">[[</span><span class="s2">&quot;param_1&quot;</span><span class="p">,</span> <span class="s2">&quot;param_1_squared&quot;</span><span class="p">,</span> <span class="s2">&quot;param_2&quot;</span><span class="p">,</span> <span class="s2">&quot;param_2_cubed&quot;</span><span class="p">,</span> <span class="s2">&quot;param_3&quot;</span><span class="p">,</span> <span class="s2">&quot;param_3_sqrt&quot;</span><span class="p">]]</span>
-</pre></div>
 </div>
-<div class="section" id="*STRETCH-GOAL*-Comment-on-the-appropriateness-of-a-linear-model-to-the-data-and-question-at-hand.-What-do-you-think-would-be-more-appropriate?-Why?">
-<h3><strong>*STRETCH GOAL*</strong> Comment on the appropriateness of a linear model to the data and question at hand. What do you think would be more appropriate? Why?<a class="headerlink" href="#*STRETCH-GOAL*-Comment-on-the-appropriateness-of-a-linear-model-to-the-data-and-question-at-hand.-What-do-you-think-would-be-more-appropriate?-Why?" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="Multivariate">
+<h3>Multivariate<a class="headerlink" href="#Multivariate" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Using <strong>no more than 4</strong> characteristics, create a multivariate
+Linear Regression model predicting player salary.</li>
+<li>Report the <span class="math">\(R^2\)</span> score for your multivariate model. Aim for
+<span class="math">\(R^2 &gt; 0.5\)</span>.</li>
+<li>Make a scatter plot of your data side-by-side with a scatter plot of
+your model predictions.</li>
+</ul>
 </div>
 </div>
 <div class="section" id="Submitting-Your-Work">
@@ -252,7 +240,8 @@ comments and reflections on this work.</p>
   <ul>
 <li><a class="reference internal" href="#">Problem Set - Statistics 4</a><ul>
 <li><a class="reference internal" href="#Tasks">Tasks</a><ul>
-<li><a class="reference internal" href="#*STRETCH-GOAL*-Comment-on-the-appropriateness-of-a-linear-model-to-the-data-and-question-at-hand.-What-do-you-think-would-be-more-appropriate?-Why?"><strong>*STRETCH GOAL*</strong> Comment on the appropriateness of a linear model to the data and question at hand. What do you think would be more appropriate? Why?</a></li>
+<li><a class="reference internal" href="#Univariate">Univariate</a></li>
+<li><a class="reference internal" href="#Multivariate">Multivariate</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#Submitting-Your-Work">Submitting Your Work</a></li>

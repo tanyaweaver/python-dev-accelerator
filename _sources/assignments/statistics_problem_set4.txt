@@ -23,40 +23,19 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "This assignment is more of an open-ended data analysis project, using the baseball data explored in [Statistics 4](../lectures/stats_day4.html). Use linear regression and the concepts explored in the previous statistics lectures to explore meaningful relationships in the data with ideas of your own design. As an example, the stats 4 lecture tries to predict pitchers' salaries using their player stats. Other examples are...\n",
+    "### Univariate\n",
     "\n",
-    "- Predicting player salaries in general using stats contained in ancillary files\n",
-    "- Predicting team win-loss records with player stats\n",
+    "- With the baseball data linked above (some of it was explored in [Statistics 4](../lectures/stats_day4.html)), create a univariate Linear Regression model predicting player salary using some player stat. \n",
+    "- You will need to join a second table to the \"Salaries.csv\" table.\n",
+    "- Cross-validate your model, and produce 68, 95, and 99.7% confidence intervals for your \"slope\".\n",
+    "- Report the $R^2$ score for your univariate model.\n",
+    "- Make a scatter plot of your data, with your model predictions overlaid in red.\n",
     "\n",
-    "or any other question you come up with that you feel is worth exploring. **Whatever question you go with, make sure it's clearly stated at the top of your notebook.**"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "For any model that you create, \n",
+    "### Multivariate\n",
     "\n",
-    "- Describe the characteristics you chose and why you chose them\n",
-    "- Make sure that your fit attains an $R^2$ score ≥ 0.65. Try to get your score as high as you can manage, but that is the lower threshold.\n",
-    "- Include at least one 2D visualization of the data you're trying to predict, alongside the result of your prediction. While your model may use many variables in its prediction, you only need to plot the predicted values vs one variable.\n",
-    "\n",
-    "Note that *IF YOU WANT* you can include polynomial terms by putting exponents on your input data like so:\n",
-    "\n",
-    "```\n",
-    "baseball_data[\"param_1_squared\"] = baseball_data[\"param_1\"]**2\n",
-    "baseball_data[\"param_2_cubed\"] = baseball_data[\"param_2\"]**3\n",
-    "baseball_data[\"param_3_sqrt\"] = np.sqrt(baseball_data[\"param_3\"])\n",
-    "\n",
-    "Xvals = baseball_data[[\"param_1\", \"param_1_squared\", \"param_2\", \"param_2_cubed\", \"param_3\", \"param_3_sqrt\"]]\n",
-    "```"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "### ***STRETCH GOAL*** Comment on the appropriateness of a linear model to the data and question at hand. What do you think would be more appropriate? Why?"
+    "- Using **no more than 4** characteristics, create a multivariate Linear Regression model predicting player salary.\n",
+    "- Report the $R^2$ score for your multivariate model. Aim for $R^2 > 0.5$.\n",
+    "- Make a scatter plot of your data side-by-side with a scatter plot of your model predictions."
    ]
   },
   {

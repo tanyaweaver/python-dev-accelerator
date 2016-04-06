@@ -1178,20 +1178,20 @@ In [17]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_35_0.png" src="../_images/lectures_stats_day2_35_0.png" />
+<img alt="../_images/lectures_stats_day2_34_0.png" src="../_images/lectures_stats_day2_34_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="The-Binomial-Distribution">
 <h2>The Binomial Distribution<a class="headerlink" href="#The-Binomial-Distribution" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li>Describes the distribution of a variable that can only take two</li>
+<ul class="simple">
+<li>Describes the distribution of a variable that can only take two
+values (0/1, False/True, Heads/Tails)</li>
+<li>For <em>N</em> trials...</li>
+<li>I know the probability <em>b</em> of getting one outcome per trial...</li>
+<li>I can describe the probability of getting <em>k</em> successes of that
+outcome:</li>
 </ul>
-</div></blockquote>
-<p>values (0/1, False/True, Heads/Tails) - For <em>N</em> trials... - I know the
-probability <em>b</em> of getting one outcome per trial... - I can describe the
-probability of getting <em>k</em> successes of that outcome:</p>
 <div class="math">
 \[p(k|b,N) = \displaystyle\frac{N!}{k!(N-k)!}b^k(1 - b)^{N-k}\]</div>
 <ul class="simple">
@@ -1209,13 +1209,13 @@ In [18]:
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
 
 
-<span class="k">def</span> <span class="nf">binomial</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">binomial</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="n">N</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">k</span><span class="p">))</span> <span class="o">*</span> <span class="n">b</span> <span class="o">**</span> <span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">k</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">y0</span> <span class="o">=</span> <span class="p">[</span><span class="n">binomial</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
-<span class="n">y1</span> <span class="o">=</span> <span class="p">[</span><span class="n">binomial</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)]</span>
-<span class="n">y2</span> <span class="o">=</span> <span class="p">[</span><span class="n">binomial</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="p">[</span><span class="n">binomial</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="p">[</span><span class="n">binomial</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)]</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="p">[</span><span class="n">binomial</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$b = 0.5, N = 100$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$b = 0.5, N = 50$&quot;</span><span class="p">)</span>
@@ -1232,7 +1232,51 @@ In [18]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_37_0.png" src="../_images/lectures_stats_day2_37_0.png" />
+<img alt="../_images/lectures_stats_day2_36_0.png" src="../_images/lectures_stats_day2_36_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Example:-the-probability-of--Code-Fellows-students-getting-a-job-after-6-months">
+<h2>Example: the probability of <span class="math">\(\ge k\)</span> Code Fellows students getting a job after 6 months<a class="headerlink" href="#Example:-the-probability-of--Code-Fellows-students-getting-a-job-after-6-months" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [19]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">binom</span>
+
+<span class="n">n_students</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">26</span><span class="p">)</span>
+<span class="n">total_students</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">prob_of_success</span> <span class="o">=</span> <span class="mf">0.9</span>
+<span class="n">individual_probability</span> <span class="o">=</span> <span class="p">[</span><span class="n">binom</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">total_students</span><span class="p">,</span> <span class="n">prob_of_success</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">n_students</span><span class="p">]</span>
+<span class="n">cumulative_probability</span> <span class="o">=</span> <span class="p">[</span><span class="n">binom</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">total_students</span><span class="p">,</span> <span class="n">prob_of_success</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">n_students</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_students</span><span class="p">,</span> <span class="n">individual_probability</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Probability of exactly N students&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_students</span><span class="p">,</span> <span class="n">cumulative_probability</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;N Students&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Probability of at most N students&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="container">
+</div>
+<div class="container">
+<img alt="../_images/lectures_stats_day2_38_0.png" src="../_images/lectures_stats_day2_38_0.png" />
 </div>
 </div>
 </div>
@@ -1312,7 +1356,7 @@ significantly different</li>
 </ul>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [19]:
+In [20]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -1342,7 +1386,7 @@ change the name of the &#8220;PDT&#8221; column because not every data file has 
 column despite them all showing roughly the same data.</p>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [20]:
+In [21]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -1360,7 +1404,7 @@ dot notation <code class="docutils literal"><span class="pre">DataFrame.column_n
 notation cannot handle column names with spaces.</p>
 <div class="nbinput nblast container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [21]:
+In [22]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -1377,7 +1421,7 @@ arrays (where the same selection will produce numpy arrays filled with
 booleans)</p>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [22]:
+In [23]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -1397,7 +1441,7 @@ In [22]:
 <div class="container">
 </div>
 <div class="container">
-<img alt="../_images/lectures_stats_day2_47_0.png" src="../_images/lectures_stats_day2_47_0.png" />
+<img alt="../_images/lectures_stats_day2_48_0.png" src="../_images/lectures_stats_day2_48_0.png" />
 </div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">alpha</span></code> parameter controls the opacity of whatever you&#8217;re
@@ -1408,7 +1452,7 @@ set first (in the background) so that it doesn&#8217;t drown out the smaller
 set.</p>
 <div class="nbinput container">
 <div class="highlight-none"><div class="highlight"><pre>
-In [23]:
+In [24]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -1467,6 +1511,7 @@ useful for two related samples</li>
 <li><a class="reference internal" href="#Cumulative-Probability-Distribution">Cumulative Probability Distribution</a></li>
 <li><a class="reference internal" href="#The-Gaussian/Normal-Distribution">The Gaussian/Normal Distribution</a></li>
 <li><a class="reference internal" href="#The-Binomial-Distribution">The Binomial Distribution</a></li>
+<li><a class="reference internal" href="#Example:-the-probability-of--Code-Fellows-students-getting-a-job-after-6-months">Example: the probability of <span class="math">\(\ge k\)</span> Code Fellows students getting a job after 6 months</a></li>
 <li><a class="reference internal" href="#Hypothesis-Testing-and-Measurement-Significance">Hypothesis Testing and Measurement Significance</a></li>
 <li><a class="reference internal" href="#Students'-t-Test">Students&#8217; t-Test</a></li>
 <li><a class="reference internal" href="#t-Test-example:-Seattle-Weather-in-2010">t-Test example: Seattle Weather in 2010</a><ul>

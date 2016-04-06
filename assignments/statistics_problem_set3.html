@@ -186,43 +186,24 @@ div.nboutput  > :nth-child(2).stderr {
 <p>Data Ref: <a class="reference external" href="https://www.kaggle.com/c/titanic/data">https://www.kaggle.com/c/titanic/data</a></p>
 <div class="section" id="Tasks">
 <h2>Tasks<a class="headerlink" href="#Tasks" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="Did-survivors-pay-more-for-their-tickets-than-those-that-didn't?-If-so,-to-what-signifance-level?">
-<h3>Did survivors pay more for their tickets than those that didn&#8217;t? If so, to what signifance level?<a class="headerlink" href="#Did-survivors-pay-more-for-their-tickets-than-those-that-didn't?-If-so,-to-what-signifance-level?" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="Did-a-given-first-class-passenger-have-less-family-members-on-board-than-a-given-third-class-passenger?-If-so,-to-what-significance-level?">
-<h3>Did a given first-class passenger have less family members on board than a given third-class passenger? If so, to what significance level?<a class="headerlink" href="#Did-a-given-first-class-passenger-have-less-family-members-on-board-than-a-given-third-class-passenger?-If-so,-to-what-significance-level?" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="Let's-assume-there-is-a-relationship-between-the-age-of-a-passenger-from-Cherbourg-and-the-fare-that-they-paid.">
-<h3>Let&#8217;s assume there is a relationship between the age of a passenger from Cherbourg and the fare that they paid.<a class="headerlink" href="#Let's-assume-there-is-a-relationship-between-the-age-of-a-passenger-from-Cherbourg-and-the-fare-that-they-paid." title="Permalink to this headline">¶</a></h3>
-<p>Let&#8217;s say that that relationship is:</p>
-<div class="math">
-\[\text{fare} = \frac{1}{2}\text{age}\]</div>
-<p>With the uncertainty in the fare as</p>
-<div class="math">
-\[\sigma = \sqrt{\text{age}}\]</div>
-<p>Is this a good model for the data? Note: degrees of freedom = 2</p>
-<div class="section" id="The-above-is-a-linear-model.-It-takes-the-general-form:">
-<h4>The above is a linear model. It takes the general form:<a class="headerlink" href="#The-above-is-a-linear-model.-It-takes-the-general-form:" title="Permalink to this headline">¶</a></h4>
-<div class="math">
-\[y = mx + b\]</div>
-<p>For this equation: - y is &#8220;fare&#8221; - m (slope) is <span class="math">\(1/2\)</span> - x is &#8220;age&#8221;
-- b (intercept) is 0</p>
-</div>
-</div>
-<div class="section" id="Write-a-function-that-tests-a-grid-of-slopes-and-intercepts,-returning-the-best-combination-of-slope-and-intercept-for-a-linear-model.">
-<h3>Write a function that tests a grid of slopes and intercepts, returning the best combination of slope and intercept for a linear model.<a class="headerlink" href="#Write-a-function-that-tests-a-grid-of-slopes-and-intercepts,-returning-the-best-combination-of-slope-and-intercept-for-a-linear-model." title="Permalink to this headline">¶</a></h3>
+<div class="section" id="Choose-one-of-these-two">
+<h3>Choose one of these two<a class="headerlink" href="#Choose-one-of-these-two" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Assume that the uncertainty in the data is still
-<span class="math">\(\sigma = \sqrt{\text{age}}\)</span>.</li>
-<li>Use this function to create a better model for the data than the
-first one.</li>
+<li>Did survivors pay more for their tickets than those that didn&#8217;t? If
+so, to what signifance level?</li>
+<li>Did a given first-class passenger have less family members on board
+than a given third-class passenger? If so, to what significance
+level?</li>
 </ul>
 </div>
-<div class="section" id="Visualize-your-model-against-the-data,-along-with-the-bad-model.-Are-either-of-these-appropriate-models?-Why-or-why-not?">
-<h3>Visualize your model against the data, along with the bad model. Are either of these appropriate models? Why or why not?<a class="headerlink" href="#Visualize-your-model-against-the-data,-along-with-the-bad-model.-Are-either-of-these-appropriate-models?-Why-or-why-not?" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="*STRETCH-GOAL:*-Use-cross-validation-to-estimate-the-the-68,-95,-and-99.7%-confidence-intervals-on-the-slope.">
-<h3><strong>*STRETCH GOAL:*</strong> Use cross validation to estimate the the 68, 95, and 99.7% confidence intervals on the slope.<a class="headerlink" href="#*STRETCH-GOAL:*-Use-cross-validation-to-estimate-the-the-68,-95,-and-99.7%-confidence-intervals-on-the-slope." title="Permalink to this headline">¶</a></h3>
+<div class="section" id="Here-is-a-basic-linear-model-for-the-relationship-between-Age-and-Fare:">
+<h3>Here is a basic linear model for the relationship between Age and Fare:<a class="headerlink" href="#Here-is-a-basic-linear-model-for-the-relationship-between-Age-and-Fare:" title="Permalink to this headline">¶</a></h3>
+<div class="math">
+\[\text{Fare } = C_0\cdot\text{ Age}\]</div>
+<p>Find the a value for <span class="math">\(C_0\)</span> that <em>best</em> fits the data and
+illustrates the relationship between Age and Fare. <strong>Note that while
+this still may not be a good fit to the data, it&#8217;ll be the best fit for
+*THIS* model</strong></p>
 </div>
 </div>
 <div class="section" id="Submitting-Your-Work">
@@ -250,15 +231,8 @@ comments and reflections on this work.</p>
   <ul>
 <li><a class="reference internal" href="#">Problem Set - Statistics 3</a><ul>
 <li><a class="reference internal" href="#Tasks">Tasks</a><ul>
-<li><a class="reference internal" href="#Did-survivors-pay-more-for-their-tickets-than-those-that-didn't?-If-so,-to-what-signifance-level?">Did survivors pay more for their tickets than those that didn&#8217;t? If so, to what signifance level?</a></li>
-<li><a class="reference internal" href="#Did-a-given-first-class-passenger-have-less-family-members-on-board-than-a-given-third-class-passenger?-If-so,-to-what-significance-level?">Did a given first-class passenger have less family members on board than a given third-class passenger? If so, to what significance level?</a></li>
-<li><a class="reference internal" href="#Let's-assume-there-is-a-relationship-between-the-age-of-a-passenger-from-Cherbourg-and-the-fare-that-they-paid.">Let&#8217;s assume there is a relationship between the age of a passenger from Cherbourg and the fare that they paid.</a><ul>
-<li><a class="reference internal" href="#The-above-is-a-linear-model.-It-takes-the-general-form:">The above is a linear model. It takes the general form:</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#Write-a-function-that-tests-a-grid-of-slopes-and-intercepts,-returning-the-best-combination-of-slope-and-intercept-for-a-linear-model.">Write a function that tests a grid of slopes and intercepts, returning the best combination of slope and intercept for a linear model.</a></li>
-<li><a class="reference internal" href="#Visualize-your-model-against-the-data,-along-with-the-bad-model.-Are-either-of-these-appropriate-models?-Why-or-why-not?">Visualize your model against the data, along with the bad model. Are either of these appropriate models? Why or why not?</a></li>
-<li><a class="reference internal" href="#*STRETCH-GOAL:*-Use-cross-validation-to-estimate-the-the-68,-95,-and-99.7%-confidence-intervals-on-the-slope."><strong>*STRETCH GOAL:*</strong> Use cross validation to estimate the the 68, 95, and 99.7% confidence intervals on the slope.</a></li>
+<li><a class="reference internal" href="#Choose-one-of-these-two">Choose one of these two</a></li>
+<li><a class="reference internal" href="#Here-is-a-basic-linear-model-for-the-relationship-between-Age-and-Fare:">Here is a basic linear model for the relationship between Age and Fare:</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#Submitting-Your-Work">Submitting Your Work</a></li>
