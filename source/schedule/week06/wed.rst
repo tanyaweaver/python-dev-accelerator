@@ -27,6 +27,7 @@ Concepts
 
     /lectures/stats_day3
     /lectures/intro_to_python_9_generators
+    /lectures/django_testing
 
 Demo
 ====
