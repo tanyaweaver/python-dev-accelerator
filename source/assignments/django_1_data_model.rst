@@ -1,11 +1,11 @@
 .. slideconf::
     :autoslides: False
 
-********************************
-Walk Through the Django Tutorial
-********************************
+**********************************
+Django Imager: Create a Data Model
+**********************************
 
-.. slide:: Walk Through the Django Tutorial
+.. slide:: Django Imager: Create a Data Model
     :level: 1
 
     This document contains no slides.
