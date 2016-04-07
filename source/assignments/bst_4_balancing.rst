@@ -15,7 +15,6 @@ But there is no way to ensure that it is in fact balanced (other than by seeding
 And as it turns out, balance is important in a binary search tree.
 The better your balance, the more ideal your performance for finding values within the tree.
 
-
 Tasks
 =====
 
@@ -32,8 +31,8 @@ I have found `AVL <http://en.wikipedia.org/wiki/AVL_tree>`_ and `Red-Black <http
 
 You might find information like this `description of AVL tree rotations in psuedocode <https://en.wikipedia.org/wiki/Tree_rotation>`_ helpful.
 
-Submitting
-==========
+Submitting Your Work
+====================
 
 As usual, do your work on a branch.
 When you are finished (and all tests are passing) create a new Pull Request containing only the work on balancing.
