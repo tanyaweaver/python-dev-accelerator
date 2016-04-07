@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Decision Trees &amp; Random Forests Experiment &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="next" title="401 Python: Lecture Notes" href="index.html" />
+    <link rel="prev" title="Getting Data In" href="cgi_wsgi.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="401 Python: Lecture Notes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cgi_wsgi.html" title="Getting Data In"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="Decision-Trees-&amp;-Random-Forests-Experiment">
+<h1>Decision Trees &amp; Random Forests Experiment<a class="headerlink" href="#Decision-Trees-&-Random-Forests-Experiment" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Objectives">
+<h2>Objectives<a class="headerlink" href="#Objectives" title="Permalink to this headline">¶</a></h2>
+<p>Predict survival of Titanic passangers.</p>
+</div>
+<div class="section" id="Data-Analysis">
+<h2>Data Analysis<a class="headerlink" href="#Data-Analysis" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="Selection-of-Features">
+<h2>Selection of Features<a class="headerlink" href="#Selection-of-Features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Must be discrete &#8211;&gt; discretize continuous variables</li>
+</ul>
+<div class="nbinput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [3]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="n">temperatures</span> <span class="o">=</span>  <span class="p">[</span><span class="o">-</span><span class="mf">40.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">15.13</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">,</span> <span class="mf">32.0</span><span class="p">,</span> <span class="mf">66.0</span><span class="p">,</span> <span class="mf">98.6</span><span class="p">,</span> <span class="mf">212.0</span><span class="p">]</span>
+<span class="n">temps_discrete</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;frozen&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">40.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">15.13</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">],</span> <span class="s1">&#39;cold&#39;</span><span class="p">:[</span><span class="mf">15.0</span><span class="p">,</span> <span class="mf">32.0</span><span class="p">],</span> <span class="s1">&#39;nice&#39;</span><span class="p">:[</span><span class="mf">66.0</span><span class="p">,</span> <span class="mf">98.6</span><span class="p">],</span> <span class="s1">&#39;hot&#39;</span><span class="p">:[</span><span class="mf">212.0</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Experiment-Heueristics-(Design)">
+<h2>Experiment Heueristics (Design)<a class="headerlink" href="#Experiment-Heueristics-(Design)" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Evaluation">
+<h3>Evaluation<a class="headerlink" href="#Evaluation" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="Representation">
+<h3>Representation<a class="headerlink" href="#Representation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="Decision-Tree-(ID3)">
+<h4>Decision Tree (ID3)<a class="headerlink" href="#Decision-Tree-(ID3)" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Entropy:</li>
+</ul>
+<p>H(p) = -p * log2(p) if p &lt;&gt; 0 else: 0</p>
+<ul class="simple">
+<li>Information Gain:</li>
+</ul>
+<p>gain(S, F) = H(S) - sum([len(S[f]/len(S) * H(s[f] for f in F])</p>
+<div class="line-block">
+<div class="line">Weather can be rainy or sunny.</div>
+<div class="line">S is a sampling of days which I wear a hoodie.</div>
+<div class="line">S = [9+, 5-]</div>
+<div class="line">S[rainy] = [6+, 2-]</div>
+<div class="line">S[sunny] = [3+, 3-]</div>
+</div>
+<p><span class="math">\(Gain(S, hoodie) = (H(9/14) + H(5/14)) - 8/14(-6/8* log2(6/8) + log2(2/8) * -2/8) - 6/14*1 = 0.048\)</span></p>
+<p>What about temperature cold[6+, 1-], hot[3+, 4-]?</p>
+<p>gain(S, temperature) = .151</p>
+<p>Which is closer to the root of the problem?</p>
+</div>
+<div class="section" id="Bagging">
+<h4>Bagging<a class="headerlink" href="#Bagging" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">Uniformly random sampling with replacement.</div>
+<div class="line"><a class="reference external" href="https://en.wikipedia.org/wiki/Bootstrap_aggregating">https://en.wikipedia.org/wiki/Bootstrap_aggregating</a></div>
+</div>
+</div>
+<div class="section" id="Tuning">
+<h4>Tuning<a class="headerlink" href="#Tuning" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="Experiment">
+<h3>Experiment<a class="headerlink" href="#Experiment" title="Permalink to this headline">¶</a></h3>
+<p>forest = RandomForestClassifier(n_estimators=100) forest = forest.fit(
+train_data[0::,1::], train_data[0::,0] ) output =
+forest.predict(test_data).astype(int)</p>
+<div class="nbinput container">
+<div class="highlight-none"><div class="highlight"><pre>
+In [6]:
+</pre></div>
+</div>
+<div class="highlight-ipython3"><div class="highlight"><pre>
+<span class="c1">#1. open test.csv &amp; clean</span>
+<span class="c1">#2. predict on test data</span>
+<span class="c1">#3. convert predictions to datframe</span>
+<span class="sd">&#39;&#39;&#39;df_result = pandas.DataFrame(results[:,0:2], columns=[&#39;PassengerId&#39;, &#39;Survived&#39;])&#39;&#39;&#39;</span>
+<span class="c1">#4. dump csv</span>
+<span class="sd">&#39;&#39;&#39;df_result.to_csv(&#39;titanic.csv&#39;, index=False) &#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast container">
+<div class="highlight-none"><div class="highlight"><pre>
+Out[6]:
+</pre></div>
+</div>
+<div class="highlight-none"><div class="highlight"><pre>
+&quot;df_result.to_csv(&#39;titanic.csv&#39;, index=False) &quot;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Conclusions">
+<h2>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="Recommendation">
+<h2>Recommendation<a class="headerlink" href="#Recommendation" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Decision Trees &amp; Random Forests Experiment</a><ul>
+<li><a class="reference internal" href="#Objectives">Objectives</a></li>
+<li><a class="reference internal" href="#Data-Analysis">Data Analysis</a></li>
+<li><a class="reference internal" href="#Selection-of-Features">Selection of Features</a></li>
+<li><a class="reference internal" href="#Experiment-Heueristics-(Design)">Experiment Heueristics (Design)</a><ul>
+<li><a class="reference internal" href="#Evaluation">Evaluation</a></li>
+<li><a class="reference internal" href="#Representation">Representation</a><ul>
+<li><a class="reference internal" href="#Decision-Tree-(ID3)">Decision Tree (ID3)</a></li>
+<li><a class="reference internal" href="#Bagging">Bagging</a></li>
+<li><a class="reference internal" href="#Tuning">Tuning</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Experiment">Experiment</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Conclusions">Conclusions</a></li>
+<li><a class="reference internal" href="#Recommendation">Recommendation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cgi_wsgi.html"
+                        title="previous chapter">Getting Data In</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="next chapter">401 Python: Lecture Notes</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="401 Python: Lecture Notes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cgi_wsgi.html" title="Getting Data In"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>
