@@ -63,8 +63,9 @@ To support creating and editing objects in Django, you'll need to learn about Dj
 
 * Make sure you understand `form and field validation <https://docs.djangoproject.com/en/1.9/ref/forms/validation/>`_ so you can ensure proper data is submitted
 
-* Particularly complex forms, or forms which require javascript or special css, will need to utilize `form assets <https://docs.djangoproject.com/en/1.9/topics/forms/media/>`
+* Particularly complex forms, or forms which require javascript or special css, will need to utilize `form assets <https://docs.djangoproject.com/en/1.9/topics/forms/media/>`_
 
-* You'll want to keep a reference open for the `Forms API <https://docs.djangoproject.com/en/1.9/ref/forms/api/>`
+* You'll want to keep a reference open for the `Forms API <https://docs.djangoproject.com/en/1.9/ref/forms/api/>`_
 
 * Keep in mind that the custom form field you imagine may already have been created and check `the Forms category <https://www.djangopackages.com/grids/g/forms/>`_ on http://www.djangopackages.com
+* 

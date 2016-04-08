@@ -10,7 +10,7 @@ Week Six
 
     This document contains no slides.
 
-The theme for the week is undecided.
+The theme for the week is statistics.
 
 .. toctree::
    :maxdepth: 1

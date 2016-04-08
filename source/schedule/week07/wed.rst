@@ -16,6 +16,13 @@ Objectives
 Readings
 ========
 
+Django Forms
+------------
+
+.. include:: /readings/django_readings.rst
+    :start-line: 57
+    :end-line: 70
+
 Review
 ======
 

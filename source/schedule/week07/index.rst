@@ -10,7 +10,7 @@ Week Seven
 
     This document contains no slides.
 
-The theme for the week is undecided.
+The theme for the week is Django Views.
 
 .. toctree::
    :maxdepth: 1
