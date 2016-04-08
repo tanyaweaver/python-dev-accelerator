@@ -35,4 +35,6 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/django_2_registration`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/bst_4_balancing` (Due Wednesday)
