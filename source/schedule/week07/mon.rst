@@ -29,8 +29,15 @@ Review
 Concepts
 ========
 
+.. toctree::
+    :maxdepth: 2
+
+    /lectures/django_relationships
+
 Demo
 ====
+
+Managing relationships in the Django ORM
 
 Assignments
 ===========
