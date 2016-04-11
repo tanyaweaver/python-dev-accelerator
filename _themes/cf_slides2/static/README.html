@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuring the slides &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../../../index.html">
+      <img class="logo" src="../../../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<style>
+@import "http://fonts.googleapis.com/css?family=Open Sans:regular,semibold,italic,italicsemibold|Inconsolata&amp;v2";
+body {
+  font-family: "Open Sans";
+  margin: 6em 2em 2em 2em;
+}
+body:before {
+  content: '';
+  position: fixed;
+  top: 2%;
+  right: 3%;
+  height: 100px;
+  width: 100px;
+  background: url(http://www.html5rocks.com/static/images/identity/HTML5_Badge_128.png) no-repeat 50% 50%;
+  background-size: contain;
+  z-index: 10;
+  opacity: 0.1;
+}
+h1, h2, h3, h4 {
+  font-weight: 600;
+}
+h1 {
+  position: fixed;
+  background: -webkit-linear-gradient(top, white 65%, rgba(255,255,255,0));
+  background: -moz-linear-gradient(top, white 65%, rgba(255,255,255,0));
+  background: -ms-linear-gradient(top, white 65%, rgba(255,255,255,0));
+  background: -o-linear-gradient(top, white 65%, rgba(255,255,255,0));
+  width: 100%;
+  height: 80px;
+  padding: 10px 10px 10px 1em;
+  left: 0;
+  top: 0;
+  margin: 0;
+}
+h1 img {
+  height: 30px;
+  vertical-align: middle;
+  margin-bottom: 8px;
+}
+a { color: navy; }
+pre {
+  background: #eee;
+  margin-left: 2em;
+  padding: 5px;
+  border-left: 3px solid #ccc;
+}
+</style><h1><img src="images/io2012_logo.png"> HTML5 Slide Template</h1><div class="section" id="configuring-the-slides">
+<span id="configuring-the-slides"></span><h1>Configuring the slides<a class="headerlink" href="#configuring-the-slides" title="Permalink to this headline">¶</a></h1>
+<p>Much of the deck is customized by changing the settings in <a class="reference external" href="slide_config.js"><code class="docutils literal"><span class="pre">slide_config.js</span></code></a>.
+Some of the customizations include the title, Analytics tracking ID, speaker
+information (name, social urls, blog), web fonts to load, themes, and other
+general behavior.</p>
+<div class="section" id="customizing-the-io12-hash">
+<span id="customizing-the-io12-hash"></span><h2>Customizing the <code class="docutils literal"><span class="pre">#io12</span></code> hash<a class="headerlink" href="#customizing-the-io12-hash" title="Permalink to this headline">¶</a></h2>
+<p>The bottom of the slides include <code class="docutils literal"><span class="pre">#io12</span></code> by default. If you&#8217;d like to change
+this, please update the variable <code class="docutils literal"><span class="pre">$social-tags:</span> <span class="pre">'#io12';</span></code> in
+<a class="reference external" href="theme/scss/default.scss"><code class="docutils literal"><span class="pre">/theme/scss/default.scss</span></code></a>.</p>
+<p>See the next section on &#8220;Editing CSS&#8221; before you go editing things.</p>
+</div>
+</div>
+<div class="section" id="editing-css">
+<span id="editing-css"></span><h1>Editing CSS<a class="headerlink" href="#editing-css" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://compass-style.org/install/">Compass</a> is a CSS preprocessor used to compile
+SCSS/SASS into CSS. We chose SCSS for the new slide deck for maintainability,
+easier browser compatibility, and because...it&#8217;s the future!</p>
+<p>That said, if not comfortable working with SCSS or don&#8217;t want to learn something
+new, not a problem. The generated .css files can already be found in
+(see <a class="reference external" href="theme/css"><code class="docutils literal"><span class="pre">/theme/css</span></code></a>). You can just edit those and bypass SCSS altogether.
+However, our recommendation is to use Compass. It&#8217;s super easy to install and use.</p>
+<div class="section" id="installing-compass-and-making-changes">
+<span id="installing-compass-and-making-changes"></span><h2>Installing Compass and making changes<a class="headerlink" href="#installing-compass-and-making-changes" title="Permalink to this headline">¶</a></h2>
+<p>First, install compass:</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo gem update --system
+sudo gem install compass
+</pre></div>
+</div>
+<p>Next, you&#8217;ll want to watch for changes to the exiting .scss files in <a class="reference external" href="theme/scss"><code class="docutils literal"><span class="pre">/theme/scss</span></code></a>
+and any new one you add:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd io-2012-slides
+$ compass watch
+</pre></div>
+</div>
+<p>This command automatically recompiles the .scss file when you make a change.
+Its corresponding .css file is output to <a class="reference external" href="theme/css"><code class="docutils literal"><span class="pre">/theme/css</span></code></a>. Slick.</p>
+<p>By default, <a class="reference external" href="config.rb"><code class="docutils literal"><span class="pre">config.rb</span></code></a> in the main project folder outputs minified
+.css. It&#8217;s a best practice after all! However, if you want unminified files,
+run watch with the style output flag:</p>
+<div class="highlight-python"><div class="highlight"><pre>compass watch -s expanded
+</pre></div>
+</div>
+<p><em>Note:</em> You should not need to edit <a class="reference external" href="theme/scss/_base.scss"><code class="docutils literal"><span class="pre">_base.scss</span></code></a>.</p>
+</div>
+</div>
+<div class="section" id="running-the-slides">
+<span id="running-the-slides"></span><h1>Running the slides<a class="headerlink" href="#running-the-slides" title="Permalink to this headline">¶</a></h1>
+<p>The slides can be run locally from <code class="docutils literal"><span class="pre">file://</span></code> making development easy :)</p>
+<div class="section" id="running-from-a-web-server">
+<span id="running-from-a-web-server"></span><h2>Running from a web server<a class="headerlink" href="#running-from-a-web-server" title="Permalink to this headline">¶</a></h2>
+<p>If at some point you should need a web server, use <a class="reference external" href="serve.sh"><code class="docutils literal"><span class="pre">serve.sh</span></code></a>. It will
+launch a simple one and point your default browser to <a class="reference external" href="http://localhost:8000/template.html"><code class="docutils literal"><span class="pre">http://localhost:8000/template.html</span></code></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd io-2012-slides
+$ ./serve.sh
+</pre></div>
+</div>
+<p>You can also specify a custom port:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./serve.sh 8080
+</pre></div>
+</div>
+</div>
+<div class="section" id="presenter-mode">
+<span id="presenter-mode"></span><h2>Presenter mode<a class="headerlink" href="#presenter-mode" title="Permalink to this headline">¶</a></h2>
+<p>The slides contain a presenter mode feature (beta) to view + control the slides
+from a popup window.</p>
+<p>To enable presenter mode, add <code class="docutils literal"><span class="pre">presentme=true</span></code> to the URL: <a class="reference external" href="http://localhost:8000/template.html?presentme=true">http://localhost:8000/template.html?presentme=true</a></p>
+<p>To disable presenter mode, hit <a class="reference external" href="http://localhost:8000/template.html?presentme=false">http://localhost:8000/template.html?presentme=false</a></p>
+<p>Presenter mode is sticky, so refreshing the page will persist your settings.</p>
+<hr class="docutils" />
+<p>That&#8217;s all she wrote!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Configuring the slides</a><ul>
+<li><a class="reference internal" href="#customizing-the-io12-hash">Customizing the <code class="docutils literal"><span class="pre">#io12</span></code> hash</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#editing-css">Editing CSS</a><ul>
+<li><a class="reference internal" href="#installing-compass-and-making-changes">Installing Compass and making changes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-the-slides">Running the slides</a><ul>
+<li><a class="reference internal" href="#running-from-a-web-server">Running from a web server</a></li>
+<li><a class="reference internal" href="#presenter-mode">Presenter mode</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>
