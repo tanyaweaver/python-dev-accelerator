@@ -69,7 +69,7 @@ _.../lib/python2.7/site-packages/django/views/generic/base.py_
 
 So we find that `ContextMixin, TemplateResponseMixin, View` all inherit from `object` here, and that's the root of our tree. This is multiple inheritance.
 
-![alt text](img/DetailView.png "DetailView Tree")
+![alt text](../_static/DetailView.png "DetailView Tree")
 
 So let's go back to our `View` class, and imagine that we have made a `GET` request to `/photos/1`. We would expect this to show us a photo, with an id of 1. (`GET http://oursite.com/photos/1 HTTP/1.1`)
 
@@ -160,7 +160,7 @@ def dispatch(self, request, *args, **kwargs):
 
  We know the first stop on our trip will be the `View` class, and it is there that we will call `dispatch()`.
 
-![alt text](img/DetailView_view.png "View stop")
+![alt text](../_static/DetailView_view.png "View stop")
 
 (Student reads through dispatch at this point)
 
@@ -177,7 +177,7 @@ In our case here, what is our HTTP method? GET. What's the next call that will h
 
 Stop number 2 in our trip is the `get()` method of class `BaseDetailView`:
 
-![alt text](img/DetailView_base_detail.png "BaseDetailView stop")
+![alt text](../_static/DetailView_base_detail.png "BaseDetailView stop")
 
 _django/views/generic/detail.py_
 
@@ -202,7 +202,7 @@ Mostly we just call a bunch of other methods and then return the context.
 
 Let's search for `get_object()` now and see what it does. It's found in the `SingleObjectMixin` class, so that's the next stop on our journey.
 
-![alt text](img/DetailView_singleobject.png "SingleObjectMixin stop")
+![alt text](../_static/DetailView_singleobject.png "SingleObjectMixin stop")
 
 _django/views/generic/detail.py_
 
@@ -413,7 +413,7 @@ So there are are a couple of other classes in our inheritance path that came fro
 
 We call the `render_to_response` method and pass the `context`. So let's look at `render_to_response`
 
-![alt text](img/DetailView_trm.png "DetailView TemplateResponseMixin")
+![alt text](../_static/DetailView_trm.png "DetailView TemplateResponseMixin")
 
 _django/views/generic/base.py_
 
