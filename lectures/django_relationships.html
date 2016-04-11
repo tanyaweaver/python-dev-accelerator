@@ -1,0 +1,704 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Django Relationships &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="Monday" href="../schedule/week07/mon.html" />
+    <link rel="next" title="Tuesday" href="../schedule/week07/tue.html" />
+    <link rel="prev" title="Monday" href="../schedule/week07/mon.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../schedule/week07/tue.html" title="Tuesday"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../schedule/week07/mon.html" title="Monday"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week07/mon.html" accesskey="U">Monday</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="django-relationships">
+<span id="django-relationships"></span><h1>Django Relationships<a class="headerlink" href="#django-relationships" title="Permalink to this headline">¶</a></h1>
+<p>In this lecture we&#8217;ll learn a bit about the Django database ORM, how we interact with it, and how it allows us to deal with relationships between objects.</p>
+<hr class="docutils" />
+<div class="section" id="users">
+<span id="users"></span><h2>Users<a class="headerlink" href="#users" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ll start Django today using the <code class="docutils literal"><span class="pre">shell</span></code> management command:</p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">shell</span></code></p>
+<p>What this means we can import any of the apps we have set up as being installed in our project.</p>
+<p><em>settings.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># Application definition</span>
+
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.gis&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;imager_profile&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This means in our Django shell we can import our profile model and the Django <code class="docutils literal"><span class="pre">User</span></code> model to play with them:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">imager_profile.models</span> <span class="kn">import</span> <span class="n">ImagerProfile</span>
+<span class="gp">In [2]: </span><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+</pre></div>
+</div>
+<p>How do we query to see if we have any users in our DB?
+Remember, Django prefers to use the model Class object as the source for database interactions.
+Any model we create (or that is provided for us by Django) will have an <code class="docutils literal"><span class="pre">objects</span></code> attribute.
+That attribute is provided for us for free by Django.
+The value of the attribute is an instance of the <code class="docutils literal"><span class="pre">ModelManager</span></code> class from <code class="docutils literal"><span class="pre">django.db.models</span></code>.</p>
+<p>So to get all of the <code class="docutils literal"><span class="pre">User</span></code> instances stored in our database we start with the <code class="docutils literal"><span class="pre">User</span></code> class object.
+We use the model manager <code class="docutils literal"><span class="pre">objects</span></code> and call the query api method <code class="docutils literal"><span class="pre">all()</span></code> on that: <code class="docutils literal"><span class="pre">User.objects.all()</span></code>.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [3]: </span><span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="gh">Out[3]: </span><span class="go">[]</span>
+</pre></div>
+</div>
+<p>We don&#8217;t have any users.
+Let&#8217;s make one:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="n">bob</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s1">&#39;bob@example.com&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+
+<span class="gp">In [5]: </span><span class="n">bob</span>
+<span class="gh">Out[5]: </span><span class="go">&lt;User: bob&gt;</span>
+
+<span class="gp">In [6]: </span><span class="n">bob</span><span class="o">.</span><span class="n">username</span>
+<span class="gh">Out[6]: </span><span class="go">&#39;bob&#39;</span>
+
+<span class="gp">In [7]: </span><span class="n">bob</span><span class="o">.</span><span class="n">password</span>
+<span class="gh">Out[7]: </span><span class="go">&#39;secret&#39;</span>
+</pre></div>
+</div>
+<p>What&#8217;s wrong with this?
+Our password is stored in cleartext.
+When you set a password directly on Django&#8217;s user object, it will store it in cleartext.
+Instead you should use <code class="docutils literal"><span class="pre">.set_password()</span></code>:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [8]: </span><span class="n">bob</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+
+<span class="gp">In [9]: </span><span class="n">bob</span><span class="o">.</span><span class="n">password</span>
+<span class="gh">Out[9]: </span><span class="go">u&#39;pbkdf2_sha256$20000$kVSkzjpfrnQa$TUudARpt5n+DRUO8c+rNKNm+Br2VwYoQL5QvgiD6qkA=&#39;</span>
+</pre></div>
+</div>
+<p>Now we have a hashed password.
+This is still a terrible password, but at least it&#8217;s not stored in cleartext.
+This will be important when you run tests, because Django&#8217;s authentication systems will be looking for a hashed password.</p>
+<p>Bob still doesn&#8217;t have an id, because we never saved bob:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [10]: </span><span class="n">bob</span><span class="o">.</span><span class="n">id</span>
+
+<span class="gp">In [11]: </span><span class="n">bob</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="gp">In [12]: </span><span class="n">bob</span><span class="o">.</span><span class="n">id</span>
+<span class="gh">Out[12]: </span><span class="go">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="relating-users-to-profiles">
+<span id="relating-users-to-profiles"></span><h2>Relating Users to Profiles<a class="headerlink" href="#relating-users-to-profiles" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s check our <code class="docutils literal"><span class="pre">ImagerProfile</span></code> objects:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [13]: </span><span class="n">ImagerProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="gh">Out[13]: </span><span class="go">[&lt;ImagerProfile: bob&gt;]</span>
+</pre></div>
+</div>
+<p>Bob has an <code class="docutils literal"><span class="pre">ImagerProfile</span></code> already.
+We talked before about how to hook up a connection that saves an ImagerProfile for a user automatically if it doesn&#8217;t already exist.</p>
+<p>If we want to get the user bob&#8217;s profile we can do this:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [14]: </span><span class="n">ImagerProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">bob</span><span class="p">)</span>
+<span class="gh">Out[14]: </span><span class="go">&lt;ImagerProfile: bob&gt;</span>
+</pre></div>
+</div>
+<p>Notice we&#8217;re not passing an id here.
+What is <code class="docutils literal"><span class="pre">bob</span></code>?
+It&#8217;s a <code class="docutils literal"><span class="pre">User</span></code> object.
+We are asking our <code class="docutils literal"><span class="pre">ImagerProfile</span></code> to give us the profile object who&#8217;s user is this <code class="docutils literal"><span class="pre">user</span></code> object.</p>
+<p>Look at our <code class="docutils literal"><span class="pre">ImagerProfile</span></code> definition:</p>
+<p><em>/imagersite/imager_profile/models.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">ImagerProfile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span>
+        <span class="n">User</span><span class="p">,</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;profile&quot;</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+<span class="o">...</span>
+
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ImagerProfile</span></code> has a <code class="docutils literal"><span class="pre">user</span></code> attribute that is a <code class="docutils literal"><span class="pre">OneToOneField</span></code> that goes to <code class="docutils literal"><span class="pre">User</span></code> objects.
+That means we can use <code class="docutils literal"><span class="pre">User</span></code> objects directly as query values, and we can get back the profile we want.
+When working with an ORM, you should try always to think in terms of Python objects.
+Allow the ORM to handle figuring out how to get from the object to the ID that is actually stored in the database.
+That is its job.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [15]: </span><span class="n">bobs_profile</span> <span class="o">=</span> <span class="n">_</span>
+
+<span class="gp">In [16]: </span><span class="n">bobs_profile</span>
+<span class="gh">Out[16]: </span><span class="go">&lt;ImagerProfile: bob&gt;</span>
+
+<span class="gp">In [17]: </span><span class="n">bobs_profile</span><span class="o">.</span><span class="n">user</span> <span class="o">==</span> <span class="n">bob</span>
+<span class="gh">Out[17]: </span><span class="go">True</span>
+
+<span class="gp">In [18]: </span><span class="n">bobs_profile</span><span class="o">.</span><span class="n">user</span>
+<span class="gh">Out[18]: </span><span class="go">&lt;User: bob&gt;</span>
+
+<span class="gp">In [19]: </span><span class="n">bob</span>
+<span class="gh">Out[19]: </span><span class="go">&lt;User: bob&gt;</span>
+</pre></div>
+</div>
+<p>These are all equivalent.</p>
+</div>
+<div class="section" id="relationships-and-back-references">
+<span id="relationships-and-back-references"></span><h2>Relationships and Back References<a class="headerlink" href="#relationships-and-back-references" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s look at our model again. Remember our relationships in SQLAlchemy?
+There was an argument we could use in a <code class="docutils literal"><span class="pre">Relationship</span></code> called <code class="docutils literal"><span class="pre">back_populates</span></code>.
+If we specified this value, then SQLAlchemy would add an attribute to the object at the other end of the relationship by that name.
+That attribute would reference the object from this end.</p>
+<p>Django has the same thing.
+If you look above to our <code class="docutils literal"><span class="pre">ImagerProfile</span></code> definition, you will see <code class="docutils literal"><span class="pre">related_name=&quot;profile&quot;</span></code>.
+When we use <code class="docutils literal"><span class="pre">related_name</span></code>, that means the <code class="docutils literal"><span class="pre">User</span></code> model at the opposite end of that relationship will have an attribute added to it that points back to this object.
+That means we should be able to ask bob for his <code class="docutils literal"><span class="pre">profile</span></code>, and get back an <code class="docutils literal"><span class="pre">ImagerProfile</span></code> object that corresponds to this user.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [20]: </span><span class="n">bob</span><span class="o">.</span><span class="n">profile</span>
+<span class="gh">Out[20]: </span><span class="go">&lt;ImagerProfile: bob&gt;</span>
+</pre></div>
+</div>
+<p>This is the Django way.
+All of our relationship fields will have this same kind of built in connection.</p>
+<p>Let&#8217;s say you don&#8217;t want this to exist.
+Let&#8217;s remove it from our <code class="docutils literal"><span class="pre">ImagerProfile</span></code>:</p>
+<p><em>/imagersite/imager_profile/models.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">ImagerProfile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span>
+        <span class="n">User</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Now, restart our Django shell:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">imager_profile.models</span> <span class="kn">import</span> <span class="n">ImagerProfile</span>
+
+<span class="gp">In [2]: </span><span class="n">profiles</span> <span class="o">=</span> <span class="n">ImagerProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="gp">In [3]: </span><span class="n">profiles</span>
+<span class="gh">Out[3]: </span><span class="go">[&lt;ImagerProfile: bob&gt;]</span>
+
+<span class="gp">In [4]: </span><span class="n">bobs_profile</span> <span class="o">=</span> <span class="n">profiles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="gp">In [5]: </span><span class="n">bobs_profile</span>
+<span class="gh">Out[5]: </span><span class="go">&lt;ImagerProfile: bob&gt;</span>
+</pre></div>
+</div>
+<p>Bob&#8217;s profile has a user attribute:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [6]: </span><span class="n">bob</span> <span class="o">=</span> <span class="n">bobs_profile</span><span class="o">.</span><span class="n">user</span>
+
+<span class="gp">In [7]: </span><span class="n">bob</span>
+<span class="gh">Out[7]: </span><span class="go">&lt;User: bob&gt;</span>
+</pre></div>
+</div>
+<p>Before we had a <code class="docutils literal"><span class="pre">related_name</span></code> attribute. Now?</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [8]: </span><span class="n">bob</span><span class="o">.</span><span class="n">profile</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-8-ea648d991c5e&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">bob</span><span class="o">.</span><span class="n">profile</span>
+
+<span class="ne">AttributeError</span>: &#39;User&#39; object has no attribute &#39;profile&#39;
+</pre></div>
+</div>
+<p>We didn&#8217;t change anything in the database.
+That <code class="docutils literal"><span class="pre">profile</span></code> attribute we saw on <code class="docutils literal"><span class="pre">bob</span></code> before was created in python at runtime.
+All of these reverse relationships are done by Django in the ORM.</p>
+<p>Although we&#8217;ve not told our application that we want a <code class="docutils literal"><span class="pre">related_name</span></code>, it still makes one for us by default:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [9]: </span><span class="nb">dir</span><span class="p">(</span><span class="n">bob</span><span class="p">)</span>
+
+<span class="go">...</span>
+<span class="go"> &#39;has_perm&#39;,</span>
+<span class="go"> &#39;has_perms&#39;,</span>
+<span class="go"> &#39;has_usable_password&#39;,</span>
+<span class="go"> &#39;id&#39;,</span>
+<span class="go"> &#39;imagerprofile&#39;,</span>
+<span class="go"> &#39;is_active&#39;,</span>
+<span class="go"> &#39;is_anonymous&#39;,</span>
+<span class="go"> &#39;is_authenticated&#39;,</span>
+<span class="go"> &#39;is_staff&#39;,</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>Notice the <code class="docutils literal"><span class="pre">imagerprofile</span></code> attribute.
+Django defaults to taking the name of the model, making it lowercase, and using it as the <code class="docutils literal"><span class="pre">related_name</span></code>.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [10]: </span><span class="n">bob</span><span class="o">.</span><span class="n">imagerprofile</span>
+<span class="gh">Out[10]: </span><span class="go">&lt;ImagerProfile: bob&gt;</span>
+</pre></div>
+</div>
+<p>Magic! What if we <em>really</em> don&#8217;t want that?</p>
+<p><em>/imagersite/imager_profile/models.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">ImagerProfile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span>
+        <span class="n">User</span><span class="p">,</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>You can set the <code class="docutils literal"><span class="pre">related_name</span></code> attribute to <code class="docutils literal"><span class="pre">&quot;+&quot;</span></code>. Let&#8217;s check if that worked:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">imager_profile.models</span> <span class="kn">import</span> <span class="n">ImagerProfile</span>
+<span class="gp">In [2]: </span><span class="n">profiles</span> <span class="o">=</span> <span class="n">ImagerProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="gp">In [3]: </span><span class="n">bobs_profile</span> <span class="o">=</span> <span class="n">profiles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="gp">In [4]: </span><span class="n">bobs_profile</span>
+<span class="gh">Out[4]: </span><span class="go">&lt;ImagerProfile: bob&gt;</span>
+
+<span class="gp">In [5]: </span><span class="n">bob</span> <span class="o">=</span> <span class="n">bobs_profile</span><span class="o">.</span><span class="n">user</span>
+
+<span class="gp">In [6]: </span><span class="nb">dir</span><span class="p">(</span><span class="n">bob</span><span class="p">)</span>
+<span class="gh">Out[6]:</span>
+<span class="go">...</span>
+<span class="go"> &#39;has_perm&#39;,</span>
+<span class="go"> &#39;has_perms&#39;,</span>
+<span class="go"> &#39;has_usable_password&#39;,</span>
+<span class="go"> &#39;id&#39;,</span>
+<span class="go"> &#39;is_active&#39;,</span>
+<span class="go"> &#39;is_anonymous&#39;,</span>
+<span class="go"> &#39;is_authenticated&#39;,</span>
+<span class="go"> &#39;is_staff&#39;,</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>There&#8217;s no <code class="docutils literal"><span class="pre">imagerprofile</span></code> attribute now.
+Why is the symbol for suppressing the <code class="docutils literal"><span class="pre">related_name</span></code> <code class="docutils literal"><span class="pre">&quot;+&quot;</span></code>?
+That&#8217;s what the folks who build Django chose.</p>
+<p>The <code class="docutils literal"><span class="pre">OneToOneField</span></code> field is a useful, but slightly strange relationship.
+It knows ahead of time that there will only ever be one object on either end.
+On the other hand, it&#8217;s possible for us to create a situation where we don&#8217;t have that other object:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [7]: </span><span class="n">sallys_profile</span> <span class="o">=</span> <span class="n">ImagerProfile</span><span class="p">()</span>
+
+<span class="gp">In [8]: </span><span class="n">sallys_profile</span><span class="o">.</span><span class="n">user</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">RelatedObjectDoesNotExist</span><span class="g g-Whitespace">                 </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-8-cdfd1c2ae232&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">sallys_profile</span><span class="o">.</span><span class="n">user</span>
+
+<span class="nn">/Users/Joel/.virtualenvs/cris_transcribe/lib/python2.7/site-packages/django/db/models/fields/related.pyc</span> in <span class="ni">__get__</span><span class="nt">(self, instance, instance_type)</span>
+<span class="g g-Whitespace">    </span><span class="mi">614</span>         <span class="k">if</span> <span class="n">rel_obj</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">null</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">615</span>             <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">RelatedObjectDoesNotExist</span><span class="p">(</span>
+<span class="ne">--&gt; </span><span class="mi">616</span>                 <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has no </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">617</span>             <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">618</span>         <span class="k">else</span><span class="p">:</span>
+
+<span class="ne">RelatedObjectDoesNotExist</span>: ImagerProfile has no user.
+</pre></div>
+</div>
+<p>We get this <code class="docutils literal"><span class="pre">RelatedObjectDoesNotExist</span></code> error.
+You can&#8217;t actually import this exception from anywhere.
+It doesn&#8217;t exist in code.
+It&#8217;s a dynamically created subclass of another exception type.
+Django builds it and uses it to flag a particular kine of failure.</p>
+<p>Although you can&#8217;t import (and thus can&#8217;t catch) that specific exception type, there is a way to deal with it.
+The <code class="docutils literal"><span class="pre">User</span></code> class (and in fact any Django Model subclass) has an attribute called <code class="docutils literal"><span class="pre">DoesNotExist</span></code>:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [10]: </span><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="gp">In [11]: </span><span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span>
+<span class="gh">Out[11]: </span><span class="go">django.contrib.auth.models.DoesNotExist</span>
+</pre></div>
+</div>
+<p>As it turns out, that exception class is a parent class of this <code class="docutils literal"><span class="pre">RelatedObjectDoesNotExist</span></code> thing that gets raised.
+We can catch that exception:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [12]: </span><span class="k">try</span><span class="p">:</span>
+<span class="go">  ....:     sallys_profile.user</span>
+<span class="go">  ....: except User.DoesNotExist:</span>
+<span class="go">  ....:     print &quot;phooey, no user&quot;</span>
+<span class="go">  ....:</span>
+<span class="go">phooey, no user</span>
+</pre></div>
+</div>
+<p>We can catch that exception.</p>
+</div>
+<div class="section" id="relationships-and-managers">
+<span id="relationships-and-managers"></span><h2>Relationships and Managers<a class="headerlink" href="#relationships-and-managers" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">user</span></code> attribute we have for our Django model is a <code class="docutils literal"><span class="pre">OneToOneField</span></code>.
+I say it&#8217;s a bit odd when it comes to relationship fields because it points directly at the other model.
+When you ask for that attribute, you either get that other instance, or you get this <code class="docutils literal"><span class="pre">DoesNotExist</span></code> error.
+For all the other relationships, the field attribute on our model is actually a special type of model manager, a <em>relationship</em> manager.</p>
+<p>If, for example, we wanted to add a new <code class="docutils literal"><span class="pre">friends</span></code> attribute to our <code class="docutils literal"><span class="pre">ImagerProfile</span></code> (and return our <code class="docutils literal"><span class="pre">related_name</span></code> to the previous state):</p>
+<p><em>/imagersite/imager_profile/models.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">ImagerProfile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span>
+        <span class="n">User</span><span class="p">,</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;profile&quot;</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+<span class="o">...</span>
+    <span class="n">friends</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;friends&quot;</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>We&#8217;ve added a new field to our model. We need to <code class="docutils literal"><span class="pre">makemigrations</span></code> and <code class="docutils literal"><span class="pre">migrate</span></code> these changes to our DB:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python manage.py makemigrations imager_profile
+Migrations for &#39;imager_profile&#39;:
+  0003_auto_20160116_0051.py:
+    - Add field friends to imagerprofile
+    - Alter field user on imagerprofile
+
+$ python manage.py migrate
+Operations to perform:
+  Synchronize unmigrated apps: staticfiles, gis, messages
+  Apply all migrations: imager_images, sessions, admin, imager_profile, auth, contenttypes
+Synchronizing apps without migrations:
+  Creating tables...
+    Running deferred SQL...
+  Installing custom SQL...
+Running migrations:
+  Rendering model states... DONE
+  Applying imager_profile.0003_auto_20160116_0051... OK
+</pre></div>
+</div>
+<p>Back in our shell, let&#8217;s create a few more users:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [2]: </span><span class="k">for</span> <span class="n">username</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;sally&#39;</span><span class="p">,</span> <span class="s1">&#39;tom&#39;</span><span class="p">,</span> <span class="s1">&#39;harry&#39;</span><span class="p">,</span> <span class="s1">&#39;jane&#39;</span><span class="p">]:</span>
+<span class="go">    user = User(username=username, email=&#39;{}@example.com&#39;.format(username))</span>
+<span class="go">    user.set_password(username)</span>
+<span class="go">    user.save()</span>
+<span class="gp">   ...:</span>
+
+<span class="gp">In [5]: </span><span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="gh">Out[5]: </span><span class="go">[&lt;User: bob&gt;, &lt;User: sally&gt;, &lt;User: tom&gt;, &lt;User: harry&gt;, &lt;User: jane&gt;]</span>
+
+<span class="gp">In [17]: </span><span class="n">profiles</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">profile</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()]</span>
+
+<span class="gp">In [18]: </span><span class="n">profiles</span>
+<span class="gh">Out[18]:</span>
+<span class="go">[&lt;ImagerProfile: bob&gt;,</span>
+<span class="go"> &lt;ImagerProfile: sally&gt;,</span>
+<span class="go"> &lt;ImagerProfile: tom&gt;,</span>
+<span class="go"> &lt;ImagerProfile: harry&gt;,</span>
+<span class="go"> &lt;ImagerProfile: jane&gt;]</span>
+</pre></div>
+</div>
+<p>Now we have a list of profiles that have friends:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [19]: </span><span class="n">bobs_profile</span> <span class="o">=</span> <span class="n">profiles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="gp">In [20]: </span><span class="n">bobs_profile</span>
+<span class="gh">Out[20]: </span><span class="go">&lt;ImagerProfile: bob&gt;</span>
+
+<span class="gp">In [21]: </span><span class="n">bobs_profile</span><span class="o">.</span><span class="n">friends</span>
+<span class="gh">Out[21]: </span><span class="go">&lt;django.db.models.fields.related_descriptors.create_forward_many_to_many_manager.&lt;locals&gt;.ManyRelatedManager at 0x1027a0908&gt;</span>
+</pre></div>
+</div>
+<p>What is the object returned here? It&#8217;s a <code class="docutils literal"><span class="pre">ManyRelatedManager</span></code> instance.
+Where does this thing come from?
+We can use the <em>method resolution order</em> of its class to find out:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [21]: </span><span class="n">bobs_profile</span><span class="o">.</span><span class="n">friends</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__mro__</span>
+<span class="gh">Out[21]:</span>
+<span class="go">(django.db.models.fields.related_descriptors.create_forward_many_to_many_manager.&lt;locals&gt;.ManyRelatedManager,</span>
+<span class="go"> django.contrib.auth.models.UserManager,</span>
+<span class="go"> django.contrib.auth.base_user.BaseUserManager,</span>
+<span class="go"> django.db.models.manager.Manager,</span>
+<span class="go"> django.db.models.manager.BaseManagerFromQuerySet,</span>
+<span class="go"> django.db.models.manager.BaseManager,</span>
+<span class="go"> object)</span>
+</pre></div>
+</div>
+<p>Interesting.
+It actually inherits from the <code class="docutils literal"><span class="pre">UserManager</span></code>.
+We&#8217;ve seen one of those before, haven&#8217;t we?</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [22]: </span><span class="n">User</span><span class="o">.</span><span class="n">objects</span>
+<span class="gh">Out[22]: </span><span class="go">&lt;django.contrib.auth.models.UserManager at 0x105f63650&gt;</span>
+</pre></div>
+</div>
+<p>This is a <code class="docutils literal"><span class="pre">UserManager</span></code>. So our manager object has the same methods that our <code class="docutils literal"><span class="pre">UserManager</span></code> has. For example, <code class="docutils literal"><span class="pre">.all()</span></code></p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [23]: </span><span class="n">bobs_profile</span><span class="o">.</span><span class="n">friends</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="gh">Out[23]: </span><span class="go">[]</span>
+</pre></div>
+</div>
+<p>Let&#8217;s take a slice of our users:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [24]: </span><span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="gp">In [25]: </span><span class="n">users</span>
+<span class="gh">Out[25]: </span><span class="go">[&lt;User: bob&gt;, &lt;User: sally&gt;, &lt;User: tom&gt;, &lt;User: harry&gt;, &lt;User: jane&gt;]</span>
+
+<span class="gp">In [27]: </span><span class="n">users</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="gh">Out[27]: </span><span class="go">[&lt;User: tom&gt;, &lt;User: harry&gt;, &lt;User: jane&gt;]</span>
+</pre></div>
+</div>
+<p>And add that slice as friends of bob:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [28]: </span><span class="n">bobs_profile</span><span class="o">.</span><span class="n">friends</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="o">*</span><span class="n">users</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+
+<span class="gp">In [29]: </span><span class="n">bobs_profile</span><span class="o">.</span><span class="n">friends</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="gh">Out[29]: </span><span class="go">[&lt;User: tom&gt;, &lt;User: harry&gt;, &lt;User: jane&gt;]</span>
+</pre></div>
+</div>
+<p>Notice one thing. Let&#8217;s restart our Django shell:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="gp">In [2]: </span><span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="gp">In [3]: </span><span class="n">users</span>
+<span class="gh">Out[3]: </span><span class="go">[&lt;User: bob&gt;, &lt;User: sally&gt;, &lt;User: tom&gt;, &lt;User: harry&gt;, &lt;User: jane&gt;]</span>
+
+<span class="gp">In [4]: </span><span class="n">bob</span> <span class="o">=</span> <span class="n">users</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="gp">In [5]: </span><span class="n">bobs_profile</span> <span class="o">=</span> <span class="n">bob</span><span class="o">.</span><span class="n">profile</span>
+
+<span class="gp">In [6]: </span><span class="n">bobs_profile</span>
+<span class="gh">Out[6]: </span><span class="go">&lt;ImagerProfile: bob&gt;</span>
+
+<span class="gp">In [7]: </span><span class="n">bobs_profile</span><span class="o">.</span><span class="n">friends</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>What will this <code class="docutils literal"><span class="pre">bobs_profile</span></code> friends list contain now?</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="n">Out</span><span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">User</span><span class="p">:</span> <span class="n">tom</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">User</span><span class="p">:</span> <span class="n">harry</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">User</span><span class="p">:</span> <span class="n">jane</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>There&#8217;s an implication here.
+Saving happens automatically.
+What this means is that the <code class="docutils literal"><span class="pre">save()</span></code> method is not called.
+Any customizations you might make to the <code class="docutils literal"><span class="pre">save()</span></code> method of these models will be skipped entirely.
+Signal handlers that are wired to listen for <code class="docutils literal"><span class="pre">save()</span></code> signals don&#8217;t happen.
+You need to be aware of this.</p>
+</div>
+<div class="section" id="summary">
+<span id="summary"></span><h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>We have relationship fields.
+The majority of relationship fields work in a way that the attribute on the object that represents that relationship field is actually a model manager.
+That manager will hand you back things related to the object you are using.
+It&#8217;s like a pre-filtered selection of objects from the other end of the relationship.
+It will only ever speak to objects that happen to be related to the object you are looking at now.</p>
+<p>The one exception is our <code class="docutils literal"><span class="pre">OneToOneField</span></code>.
+It operates by handing back the one object, or raising a particular kind of error (<code class="docutils literal"><span class="pre">DoesNotExist</span></code>).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Django Relationships</a><ul>
+<li><a class="reference internal" href="#users">Users</a></li>
+<li><a class="reference internal" href="#relating-users-to-profiles">Relating Users to Profiles</a></li>
+<li><a class="reference internal" href="#relationships-and-back-references">Relationships and Back References</a></li>
+<li><a class="reference internal" href="#relationships-and-managers">Relationships and Managers</a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../schedule/week07/mon.html"
+                        title="previous chapter">Monday</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../schedule/week07/tue.html"
+                        title="next chapter">Tuesday</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../schedule/week07/tue.html" title="Tuesday"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../schedule/week07/mon.html" title="Monday"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week07/mon.html" >Monday</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

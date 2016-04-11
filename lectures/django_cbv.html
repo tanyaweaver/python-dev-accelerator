@@ -1,0 +1,743 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sea_d35_day27_django_CBV &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="Wednesday" href="../schedule/week07/wed.html" />
+    <link rel="next" title="Thursday" href="../schedule/week07/thu.html" />
+    <link rel="prev" title="Wednesday" href="../schedule/week07/wed.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../schedule/week07/thu.html" title="Thursday"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../schedule/week07/wed.html" title="Wednesday"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week07/wed.html" accesskey="U">Wednesday</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="sea-d35-day27-django-cbv">
+<span id="sea-d35-day27-django-cbv"></span><h1>sea_d35_day27_django_CBV<a class="headerlink" href="#sea-d35-day27-django-cbv" title="Permalink to this headline">¶</a></h1>
+<p>Day 27: Django Class-Based Views. A deep dive into the inheritance structure of the Detail View and a walk through a single GET request.</p>
+<hr class="docutils" />
+<p>Class-Based views (CBV) use class inheritance. They also use the &#8220;mixin&#8221; pattern.</p>
+<ul class="simple">
+<li>You create classes with related functionality</li>
+<li>You can include that class as a parent of another classes</li>
+</ul>
+<p>Activate a virtual environment, and navigate to:</p>
+<p>/&lt;your_$WORKON_HOME_directory&gt;/lib/python2.7/site-packages/</p>
+<p>You can see in there some of the installed packages required to make Django work.</p>
+<p>Now use your editor to open the <code class="docutils literal"><span class="pre">django</span></code> directory in the <code class="docutils literal"><span class="pre">site-packages</span></code> directory.</p>
+<p>We&#8217;re going to pick one of our generic views and inspect it. We&#8217;ll start with the <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/class-based-views/generic-display/#detailview"><code class="docutils literal"><span class="pre">DetailView</span></code></a></p>
+<p>It&#8217;s worth our time to learn how this class is put together and to understand the Method Flowchart so that we can spelunk down through these methods and see what we want to use, and what we want to override.</p>
+<p>Open up in your editor <em>django/views/generic/</em>. When we open a view such as the <code class="docutils literal"><span class="pre">detail</span></code> view, we use <code class="docutils literal"><span class="pre">from</span> <span class="pre">django.views.generic</span> <span class="pre">import</span> <span class="pre">DetailView</span></code>. What does that mean in terms of the structure of this package? Where will we look for the <code class="docutils literal"><span class="pre">DetailView</span></code>? The generic folder has a file in it called <code class="docutils literal"><span class="pre">__init__.py</span></code>. This file creates an API for Django&#8217;s generic package. It imports into its own namespace a whole bunch of modules that are inside here.</p>
+<p>It uses a trope called the special <code class="docutils literal"><span class="pre">__all__</span></code> attribute. This attribute says, if you would like to import from <code class="docutils literal"><span class="pre">django.views.generic</span></code>, here are all of the symbols available to you:</p>
+<p><em>.../lib/python2.7/site-packages/django/views/generic/<strong>init</strong>.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;View&#39;</span><span class="p">,</span> <span class="s1">&#39;TemplateView&#39;</span><span class="p">,</span> <span class="s1">&#39;RedirectView&#39;</span><span class="p">,</span> <span class="s1">&#39;ArchiveIndexView&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;YearArchiveView&#39;</span><span class="p">,</span> <span class="s1">&#39;MonthArchiveView&#39;</span><span class="p">,</span> <span class="s1">&#39;WeekArchiveView&#39;</span><span class="p">,</span> <span class="s1">&#39;DayArchiveView&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;TodayArchiveView&#39;</span><span class="p">,</span> <span class="s1">&#39;DateDetailView&#39;</span><span class="p">,</span> <span class="s1">&#39;DetailView&#39;</span><span class="p">,</span> <span class="s1">&#39;FormView&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;CreateView&#39;</span><span class="p">,</span> <span class="s1">&#39;UpdateView&#39;</span><span class="p">,</span> <span class="s1">&#39;DeleteView&#39;</span><span class="p">,</span> <span class="s1">&#39;ListView&#39;</span><span class="p">,</span> <span class="s1">&#39;GenericViewError&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>If you want to learn where something is defined, you can come here to <code class="docutils literal"><span class="pre">__init__.py</span></code> and look for the import statement:</p>
+<p><code class="docutils literal"><span class="pre">from</span> <span class="pre">django.views.generic.detail</span> <span class="pre">import</span> <span class="pre">DetailView</span></code></p>
+<p>Let&#8217;s open <code class="docutils literal"><span class="pre">detail.py</span></code> now. Find the <code class="docutils literal"><span class="pre">DetailView</span></code> class definition:</p>
+<p><em>.../lib/python2.7/site-packages/django/views/generic/detail.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DetailView</span><span class="p">(</span><span class="n">SingleObjectTemplateResponseMixin</span><span class="p">,</span> <span class="n">BaseDetailView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Render a &quot;detail&quot; view of an object.</span>
+
+<span class="sd">    By default this is a model instance looked up from `self.queryset`, but the</span>
+<span class="sd">    view will support display of *any* object by overriding `self.get_object()`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>We see here that <code class="docutils literal"><span class="pre">DetailView</span></code> doesn&#8217;t define anything. It inherits from <code class="docutils literal"><span class="pre">SingleObjectTemplateResponseMixin</span></code> and <code class="docutils literal"><span class="pre">BaseDetailView</span></code>. Scrolling up (or text search) we can inspect <code class="docutils literal"><span class="pre">SingleObjectTemplateResponseMixin</span></code>. It inherits from <code class="docutils literal"><span class="pre">TemplateResponseMixin</span></code>.</p>
+<p>(A map of these objects is started on the whiteboard at this point.)
+(Unintelligable funny joke is told. Laughter ensues.)</p>
+<p>Now we&#8217;ll look at <code class="docutils literal"><span class="pre">BaseDetailView</span></code>, and it inherits from a couple of things: <code class="docutils literal"><span class="pre">SingleObjectMixin</span></code>, <code class="docutils literal"><span class="pre">View</span></code>. <code class="docutils literal"><span class="pre">SingleObjectMixin</span></code> inherits from <code class="docutils literal"><span class="pre">ContextMixin</span></code>. <code class="docutils literal"><span class="pre">ContextMixin</span></code> comes from this import: <code class="docutils literal"><span class="pre">from</span> <span class="pre">django.views.generic.base</span> <span class="pre">import</span> <span class="pre">ContextMixin,</span> <span class="pre">TemplateResponseMixin,</span> <span class="pre">View</span></code></p>
+<p>We need to go deeper. Open <code class="docutils literal"><span class="pre">base.py</span></code> from the <code class="docutils literal"><span class="pre">generic</span></code> folder.</p>
+<p><em>.../lib/python2.7/site-packages/django/views/generic/base.py</em></p>
+<p>So we find that <code class="docutils literal"><span class="pre">ContextMixin,</span> <span class="pre">TemplateResponseMixin,</span> <span class="pre">View</span></code> all inherit from <code class="docutils literal"><span class="pre">object</span></code> here, and that&#8217;s the root of our tree. This is multiple inheritance.</p>
+<p><img alt="alt text" src="../_images/DetailView.png" /></p>
+<p>So let&#8217;s go back to our <code class="docutils literal"><span class="pre">View</span></code> class, and imagine that we have made a <code class="docutils literal"><span class="pre">GET</span></code> request to <code class="docutils literal"><span class="pre">/photos/1</span></code>. We would expect this to show us a photo, with an id of 1. (<code class="docutils literal"><span class="pre">GET</span> <span class="pre">http://oursite.com/photos/1</span> <span class="pre">HTTP/1.1</span></code>)</p>
+<p>Let&#8217;s inspect <code class="docutils literal"><span class="pre">View</span></code>:</p>
+<p><em>.../lib/python2.7/site-packages/django/views/generic/base.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="k">class</span> <span class="nc">View</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Intentionally simple parent class for all views. Only implements</span>
+<span class="sd">    dispatch-by-method and simple sanity checking.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">http_method_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="s1">&#39;put&#39;</span><span class="p">,</span> <span class="s1">&#39;patch&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="s1">&#39;head&#39;</span><span class="p">,</span> <span class="s1">&#39;options&#39;</span><span class="p">,</span> <span class="s1">&#39;trace&#39;</span><span class="p">]</span>
+
+<span class="o">...</span>
+    <span class="nd">@classonlymethod</span>
+    <span class="k">def</span> <span class="nf">as_view</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">initkwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Main entry point for a request-response process.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">initkwargs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">http_method_names</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;You tried to pass in the </span><span class="si">%s</span><span class="s2"> method name as a &quot;</span>
+                                <span class="s2">&quot;keyword argument to </span><span class="si">%s</span><span class="s2">(). Don&#39;t do that.&quot;</span>
+                                <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">() received an invalid keyword </span><span class="si">%r</span><span class="s2">. as_view &quot;</span>
+                                <span class="s2">&quot;only accepts arguments that are already &quot;</span>
+                                <span class="s2">&quot;attributes of the class.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>We now walk through the code (a student from the class does this. Some of it is unintelligable).</p>
+<ul class="simple">
+<li>We define a <code class="docutils literal"><span class="pre">&#64;classonlymethod</span></code>. This means it is probably only available on the class and not on an instance. We wonder if it&#8217;s a Django specific construct? Yes, it seems so.</li>
+<li>It iterates over an object called <code class="docutils literal"><span class="pre">initkwargs</span></code>. For each key in the <code class="docutils literal"><span class="pre">initkwargs</span></code>, it validates whether the key is in the <code class="docutils literal"><span class="pre">cls.http_method_names</span></code>. If it is, Django raises a <code class="docutils literal"><span class="pre">TypeError</span></code> with a helpful message. If not, it validates whether the key is an attribute of the class. If it is not, a <code class="docutils literal"><span class="pre">TypeError</span></code> is raised with a helpful message.</li>
+</ul>
+<p>Think about our last class where we passed arguments to <code class="docutils literal"><span class="pre">as_view()</span></code> something like <code class="docutils literal"><span class="pre">template_name=&quot;home.html&quot;</span></code>. If the keyword passed to this class is available, it will accept it, if not it will reject it with a message. In other words, any attribute of this class can be overridden in the call to <code class="docutils literal"><span class="pre">as_view()</span></code>.</p>
+<p>Next we have a <code class="docutils literal"><span class="pre">view</span></code> method. It accepts <code class="docutils literal"><span class="pre">request,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></code>. It binds <code class="docutils literal"><span class="pre">self</span></code> to the class attributes <code class="docutils literal"><span class="pre">**initkwargs</span></code>. If <code class="docutils literal"><span class="pre">self</span></code> <code class="docutils literal"><span class="pre">hasattr('get')</span></code> and does not <code class="docutils literal"><span class="pre">hasattr('head')</span></code>, we will bind <code class="docutils literal"><span class="pre">self.head</span> <span class="pre">=</span> <span class="pre">self.get</span></code>.</p>
+<ul class="simple">
+<li>Normally what <code class="docutils literal"><span class="pre">head</span></code> is suppose do to is return headers of the response without returning a response.
+The important part is next:</li>
+<li>It binds <code class="docutils literal"><span class="pre">self.request</span> <span class="pre">=</span> <span class="pre">request</span></code></li>
+<li>It binds <code class="docutils literal"><span class="pre">self.args</span> <span class="pre">=</span> <span class="pre">args</span></code></li>
+<li>It binds <code class="docutils literal"><span class="pre">self.kwargs</span> <span class="pre">=</span> <span class="pre">kwargs</span></code></li>
+</ul>
+<p>What kind of a function is this?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">view</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>(Class ponders. No one really knows)</p>
+<p>It&#8217;s a function based view - much like what we built yesterday. A function based view is a function that takes a request as the first argument, and may or may not have positional or keyword arguments that are passed to it as a result of the URL pattern that it matches. This is the most generic possible call signature to represent any possible view. It will accept any positional arguments and any keyword arguments, and it will accept <code class="docutils literal"><span class="pre">request</span></code> as the first positional argument. This is what is returned by the <code class="docutils literal"><span class="pre">as_view()</span></code> method, which means we are creating, as a result of calling <code class="docutils literal"><span class="pre">as_view()</span></code> a function that has <code class="docutils literal"><span class="pre">self</span></code> baked into it, that will end up being called when that particular URL is matched. What we&#8217;re doing is creating a function that wraps around an instance of our class, and then executes <code class="docutils literal"><span class="pre">dispatch()</span></code> on that instance.</p>
+<p>Remember what Django does:</p>
+<ul class="simple">
+<li>It takes a URLs</li>
+<li>It looks at the URL and tries to match it to one of the patterns in our <code class="docutils literal"><span class="pre">urlpatterns</span></code>.</li>
+<li>When it does, it then extracts from the URL the positional and keyword arguments that are part of the URL.</li>
+<li>It takes the request, the positional and keyword arguments<ul>
+<li>It passes those off to a call of the function that it has been bound to in your URLconf.</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">def</span> <span class="pre">view(request,</span> <span class="pre">*args,</span> <span class="pre">**kwargs):</span></code> is that function for a class based view.</li>
+</ul>
+<p>What this means is that the first method that every single class-based view that inherits from <code class="docutils literal"><span class="pre">View</span></code> will see the <code class="docutils literal"><span class="pre">dispatch()</span></code> method.</p>
+<p>Let&#8217;s look at <code class="docutils literal"><span class="pre">dispatch()</span></code> now, and see what it does.</p>
+<div class="section" id="dispatch">
+<span id="dispatch"></span><h2>(21:23) <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/class-based-views/base/#django.views.generic.base.View.dispatch"><code class="docutils literal"><span class="pre">dispatch()</span></code></a><a class="headerlink" href="#dispatch" title="Permalink to this headline">¶</a></h2>
+<p><em>.../lib/python2.7/site-packages/django/views/generic/base.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">View</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c1"># Try to dispatch to the right method; if a method doesn&#39;t exist,</span>
+    <span class="c1"># defer to the error handler. Also defer to the error handler if the</span>
+    <span class="c1"># request method isn&#39;t on the approved list.</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_method_names</span><span class="p">:</span>
+        <span class="n">handler</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_method_not_allowed</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">handler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_method_not_allowed</span>
+    <span class="k">return</span> <span class="n">handler</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We know the first stop on our trip will be the <code class="docutils literal"><span class="pre">View</span></code> class, and it is there that we will call <code class="docutils literal"><span class="pre">dispatch()</span></code>.</p>
+<p><img alt="alt text" src="../_images/DetailView_view.png" /></p>
+<p>(Student reads through dispatch at this point)</p>
+<ul class="simple">
+<li>Conditional check to see if the <code class="docutils literal"><span class="pre">request.method</span></code> is in the <code class="docutils literal"><span class="pre">http_method_names</span></code>.<ul>
+<li>If it&#8217;s not, it sets <code class="docutils literal"><span class="pre">handler</span> <span class="pre">=</span> <span class="pre">self.http_method_not_allowed</span></code> and then calls that method.<ul>
+<li>It does some logging.</li>
+</ul>
+</li>
+<li>If it is, we set handler to either the method that matches the request, or <code class="docutils literal"><span class="pre">http_method_not_allowed</span></code> if that particular method is not allowed.</li>
+</ul>
+</li>
+</ul>
+<p>In our case here, what is our HTTP method? GET. What&#8217;s the next call that will happen here then? We&#8217;ll call the <code class="docutils literal"><span class="pre">self.get()</span></code> method of our <code class="docutils literal"><span class="pre">DetailView</span></code> class. Is there a <code class="docutils literal"><span class="pre">get()</span></code> method on or <code class="docutils literal"><span class="pre">View</span></code> class? It doesn&#8217;t look like it. It could come from any of our classes that <code class="docutils literal"><span class="pre">DetailView</span></code> inherits from!</p>
+<p>(Student finds it in <code class="docutils literal"><span class="pre">BaseDetailView</span></code>)</p>
+<p>(27:27)</p>
+<p>Stop number 2 in our trip is the <code class="docutils literal"><span class="pre">get()</span></code> method of class <code class="docutils literal"><span class="pre">BaseDetailView</span></code>:</p>
+<p><img alt="alt text" src="../_images/DetailView_base_detail.png" /></p>
+<p><em>django/views/generic/detail.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BaseDetailView</span><span class="p">(</span><span class="n">SingleObjectMixin</span><span class="p">,</span> <span class="n">View</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A base view for displaying a single object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">()</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="nb">object</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_to_response</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let&#8217;s walk through this.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">get()</span></code> accepts the <code class="docutils literal"><span class="pre">request,</span> <span class="pre">*args,</span> <span class="pre">**kwargs</span></code>.</li>
+<li>It binds <code class="docutils literal"><span class="pre">self.object</span></code> to <code class="docutils literal"><span class="pre">self.get_object()</span></code></li>
+<li>It binds <code class="docutils literal"><span class="pre">context</span></code> to <code class="docutils literal"><span class="pre">self.get_context_data(object=self.object)</span></code></li>
+<li>It returns <code class="docutils literal"><span class="pre">self.render_to_response(context)</span></code></li>
+</ul>
+<p>Mostly we just call a bunch of other methods and then return the context.</p>
+<p>Let&#8217;s search for <code class="docutils literal"><span class="pre">get_object()</span></code> now and see what it does. It&#8217;s found in the <code class="docutils literal"><span class="pre">SingleObjectMixin</span></code> class, so that&#8217;s the next stop on our journey.</p>
+<p><img alt="alt text" src="../_images/DetailView_singleobject.png" /></p>
+<p><em>django/views/generic/detail.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SingleObjectMixin</span><span class="p">(</span><span class="n">ContextMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides the ability to retrieve a single object for further manipulation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">slug_field</span> <span class="o">=</span> <span class="s1">&#39;slug&#39;</span>
+    <span class="n">context_object_name</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">slug_url_kwarg</span> <span class="o">=</span> <span class="s1">&#39;slug&#39;</span>
+    <span class="n">pk_url_kwarg</span> <span class="o">=</span> <span class="s1">&#39;pk&#39;</span>
+    <span class="n">query_pk_and_slug</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the object the view is displaying.</span>
+
+<span class="sd">        By default this requires `self.queryset` and a `pk` or `slug` argument</span>
+<span class="sd">        in the URLconf, but subclasses can override this to return any object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Use a custom queryset if provided; this is required for subclasses</span>
+        <span class="c1"># like DateDetailView</span>
+        <span class="k">if</span> <span class="n">queryset</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">queryset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">()</span>
+
+        <span class="c1"># Next, try looking up by primary key.</span>
+        <span class="n">pk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pk_url_kwarg</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">slug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slug_url_kwarg</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">queryset</span> <span class="o">=</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+
+        <span class="c1"># Next, try looking up by slug.</span>
+        <span class="k">if</span> <span class="n">slug</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">pk</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_pk_and_slug</span><span class="p">):</span>
+            <span class="n">slug_field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_slug_field</span><span class="p">()</span>
+            <span class="n">queryset</span> <span class="o">=</span> <span class="n">queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">slug_field</span><span class="p">:</span> <span class="n">slug</span><span class="p">})</span>
+
+        <span class="c1"># If none of those are defined, it&#39;s an error.</span>
+        <span class="k">if</span> <span class="n">pk</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">slug</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Generic detail view </span><span class="si">%s</span><span class="s2"> must be called with &quot;</span>
+                                 <span class="s2">&quot;either an object pk or a slug.&quot;</span>
+                                 <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Get the single item from the filtered queryset</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">queryset</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">queryset</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Http404</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;No </span><span class="si">%(verbose_name)s</span><span class="s2"> found matching the query&quot;</span><span class="p">)</span> <span class="o">%</span>
+                          <span class="p">{</span><span class="s1">&#39;verbose_name&#39;</span><span class="p">:</span> <span class="n">queryset</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">verbose_name</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">obj</span>
+</pre></div>
+</div>
+<p>What does it do? What are the attributes that are available here on this class?</p>
+<ul class="simple">
+<li>There&#8217;s a <code class="docutils literal"><span class="pre">model</span></code> attribute. We can probably guess what it does.</li>
+<li>There&#8217;s a <code class="docutils literal"><span class="pre">queryset</span></code> attribute. We can probably guess what it does. If we passed in <code class="docutils literal"><span class="pre">model.objects</span></code> that would be a <code class="docutils literal"><span class="pre">queryset</span></code>.</li>
+<li>There&#8217;s a <code class="docutils literal"><span class="pre">slug</span></code> field</li>
+<li>There&#8217;s a <code class="docutils literal"><span class="pre">context_object_name</span></code> field</li>
+<li>a <code class="docutils literal"><span class="pre">slug_url_kwarg</span></code></li>
+<li>a <code class="docutils literal"><span class="pre">pk_url_kwarg</span></code></li>
+<li>a <code class="docutils literal"><span class="pre">query_pk_and_slug</span></code></li>
+</ul>
+<p>What do these attributes mean? What can we do with them? Remember our <code class="docutils literal"><span class="pre">as_view()</span></code> method? Anything that is an attribute of the <code class="docutils literal"><span class="pre">View</span></code> class can be passed in as a keyword argument to the <code class="docutils literal"><span class="pre">as_view()</span></code> call. All of these attributes are customization points to our <code class="docutils literal"><span class="pre">DetailView</span></code>.</p>
+<p>Cris is not sure what some of these attributes are, so we&#8217;re going to explore them soon.</p>
+<p>(30:57) <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/class-based-views/mixins-single-object/#django.views.generic.detail.SingleObjectMixin.get_object"><code class="docutils literal"><span class="pre">get_object</span></code></a></p>
+<p>What does <code class="docutils literal"><span class="pre">get_object()</span></code> do? (Student reads through code):</p>
+<ul class="simple">
+<li>If we don&#8217;t have a <code class="docutils literal"><span class="pre">queryset</span></code>, then we set <code class="docutils literal"><span class="pre">queryset</span></code> to the value of <code class="docutils literal"><span class="pre">self.get_queryset()</span></code><ul>
+<li>Let&#8217;s hold of for a minute exploring this</li>
+</ul>
+</li>
+<li>We set our <code class="docutils literal"><span class="pre">pk</span></code> (primary key) to what is in <code class="docutils literal"><span class="pre">self.kwargs</span></code><ul>
+<li>We got this from our <code class="docutils literal"><span class="pre">dispatch()</span></code> method where we set up our <code class="docutils literal"><span class="pre">view</span></code> function, and on that we built an instance of <code class="docutils literal"><span class="pre">self</span></code> and we set <code class="docutils literal"><span class="pre">self.request,</span> <span class="pre">self.args,</span> <span class="pre">self.kwargs</span></code> to be the arguments and keyword arguments that were passed into that view function. So this is whatever kwargs came in from our URL.</li>
+<li>So we set <code class="docutils literal"><span class="pre">pk</span></code> to the <code class="docutils literal"><span class="pre">pk_url_kwarg</span></code> value, or <code class="docutils literal"><span class="pre">None</span></code></li>
+</ul>
+</li>
+<li>We do the same for <code class="docutils literal"><span class="pre">slug</span></code></li>
+</ul>
+<p>So our <code class="docutils literal"><span class="pre">slug_url_kwarg</span></code> and <code class="docutils literal"><span class="pre">pk_url_kwarg</span></code> are being used as a key for a dictionary lookup in the kwargs that got passed to us as part of our <code class="docutils literal"><span class="pre">View</span></code> call.</p>
+<p>What does this mean? (33:15 Cris moves over to the whiteboard - somewhat unintelligible here and we can&#8217;t see what he is writing.)</p>
+<p>(35:00 - we&#8217;re back)
+... If we do this in our URL, then magically when our <code class="docutils literal"><span class="pre">view()</span></code> method gets called, that <code class="docutils literal"><span class="pre">pk</span></code> keyword argument will be present in <code class="docutils literal"><span class="pre">self.kwargs</span></code>. This means when we try to get <code class="docutils literal"><span class="pre">pk</span></code> from <code class="docutils literal"><span class="pre">self.kwargs</span></code>, we will get the value present there which in our case will be 1. So our <code class="docutils literal"><span class="pre">pk</span></code> will not be <code class="docutils literal"><span class="pre">None</span></code>. What do we do with it if it&#8217;s not <code class="docutils literal"><span class="pre">None</span></code>? We take the <code class="docutils literal"><span class="pre">queryset</span></code> that we have built by calling <code class="docutils literal"><span class="pre">self.get_queryset</span></code>, and we filter that <code class="docutils literal"><span class="pre">queryset</span></code> to show us only those objects that have our <code class="docutils literal"><span class="pre">pk</span></code>.</p>
+<p>If this works, then great, otherwise we can try and do the same thing with the <code class="docutils literal"><span class="pre">slug</span></code>, where we&#8217;re filtering on the <code class="docutils literal"><span class="pre">slug</span></code>.</p>
+<p>Otherwise we raise an <code class="docutils literal"><span class="pre">AttributeError</span></code> that states that we need either a <code class="docutils literal"><span class="pre">pk</span></code> or <code class="docutils literal"><span class="pre">slug</span></code>.</p>
+<p>What happens here?:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Get the single item from the filtered queryset</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">queryset</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="k">except</span> <span class="n">queryset</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">Http404</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;No </span><span class="si">%(verbose_name)s</span><span class="s2"> found matching the query&quot;</span><span class="p">)</span> <span class="o">%</span>
+                  <span class="p">{</span><span class="s1">&#39;verbose_name&#39;</span><span class="p">:</span> <span class="n">queryset</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">verbose_name</span><span class="p">})</span>
+<span class="k">return</span> <span class="n">obj</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>We try the <code class="docutils literal"><span class="pre">.get()</span></code> method on our <code class="docutils literal"><span class="pre">queryset</span></code></li>
+<li>If that results in an exception of <code class="docutils literal"><span class="pre">queryset.model.DoesNotExist</span></code> then we raise a 404 error.</li>
+<li>Otherwise we return whatever <code class="docutils literal"><span class="pre">obj</span></code> is.</li>
+</ul>
+<p>So let&#8217;s look at this in the context of a site that wants to show photos. Maybe you want to sort out into photos that are published ones that are not. This <code class="docutils literal"><span class="pre">get_queryset()</span></code> method could allow you to provide a view here that only returns published photos.</p>
+<p>Let&#8217;s look now for <code class="docutils literal"><span class="pre">get_queryset()</span></code>. It&#8217;s right below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the `QuerySet` that will be used to look up the object.</span>
+
+<span class="sd">    Note that this method is called by the default implementation of</span>
+<span class="sd">    `get_object` and may not be called if `get_object` is overridden.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_default_manager</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">%(cls)s</span><span class="s2"> is missing a QuerySet. Define &quot;</span>
+                <span class="s2">&quot;</span><span class="si">%(cls)s</span><span class="s2">.model, </span><span class="si">%(cls)s</span><span class="s2">.queryset, or override &quot;</span>
+                <span class="s2">&quot;</span><span class="si">%(cls)s</span><span class="s2">.get_queryset().&quot;</span> <span class="o">%</span> <span class="p">{</span>
+                    <span class="s1">&#39;cls&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>If there is not a <code class="docutils literal"><span class="pre">queryset</span></code>, then go to the model and get the <code class="docutils literal"><span class="pre">_default_manager</span></code> and call the <code class="docutils literal"><span class="pre">all()</span></code> method on it.</li>
+<li>Otherwise if you don&#8217;t have a model or <code class="docutils literal"><span class="pre">queryset</span></code> then an <code class="docutils literal"><span class="pre">ImproperlyConfigured</span></code> error is thrown that says &#8220;we have no idea what you are looking for&#8221;.</li>
+</ul>
+<p>Remember <code class="docutils literal"><span class="pre">model</span></code> and <code class="docutils literal"><span class="pre">queryset</span></code> are available to you as arguments. So you can specify the model, and then override the <code class="docutils literal"><span class="pre">get_queryset()</span></code> method to call <code class="docutils literal"><span class="pre">super().get_queryset()</span></code> that would hand you back all objects, then you can filter that <code class="docutils literal"><span class="pre">queryset</span></code> on only those that are published. Inside that set of published photos, we could look for the one that has the given primary key, and give that back or raise 404. Now we&#8217;re getting a sense of the path we take to get through a call.</p>
+<p>(38:50)</p>
+<p>Going back to our <code class="docutils literal"><span class="pre">BaseDetailView</span></code>, the next thing it does is call <code class="docutils literal"><span class="pre">get_context_data()</span></code>:</p>
+<p><em>django/views/generic/detail.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="k">class</span> <span class="nc">SingleObjectMixin</span><span class="p">(</span><span class="n">ContextMixin</span><span class="p">):</span>
+<span class="o">...</span>
+    <span class="k">def</span> <span class="nf">get_context_object_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the name to use for the object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">context_object_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context_object_name</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Insert the single object into the context dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="s1">&#39;object&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
+            <span class="n">context_object_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_context_object_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">context_object_name</span><span class="p">:</span>
+                <span class="n">context</span><span class="p">[</span><span class="n">context_object_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">SingleObjectMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">context</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>(Student goes over code)</p>
+<ul class="simple">
+<li>First we set our context to an empty dictionary.</li>
+<li>If <code class="docutils literal"><span class="pre">self.object</span></code> exists<ul>
+<li>Set <code class="docutils literal"><span class="pre">context['object']</span> <span class="pre">=</span> <span class="pre">self.object</span></code></li>
+<li>Set <code class="docutils literal"><span class="pre">context_object_name</span></code> to the return of <code class="docutils literal"><span class="pre">get_context_object_name(self.object)</span></code><ul>
+<li>If we have a <code class="docutils literal"><span class="pre">context_object_name</span></code>, return it</li>
+<li>Else if our object is an instance of a <code class="docutils literal"><span class="pre">Model</span></code>, return the name of the model.</li>
+<li>Else return <code class="docutils literal"><span class="pre">None</span></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Given no customization to any of our attributes, which happen to include <code class="docutils literal"><span class="pre">context_object_name</span></code>, what keys in our context dictionary will point at the object that we are looking for? We have <code class="docutils literal"><span class="pre">get_context_data()</span></code>. It&#8217;s already set up one name for it. It&#8217;s not setting up a second name to look at. If we want to refer to our object in a template, how do we refer to it. In this case <code class="docutils literal"><span class="pre">get_context_object_name</span></code> will get the name of the Model (like Photo). If we wanted to call it <code class="docutils literal"><span class="pre">Fred</span></code>, then when we call <code class="docutils literal"><span class="pre">as_view()</span></code> in our URLconf, we could pass the <code class="docutils literal"><span class="pre">context_object_name</span></code> keyword argument, and point it at <code class="docutils literal"><span class="pre">Fred</span></code>. Then <code class="docutils literal"><span class="pre">Fred</span></code> would be available to us in our template.</p>
+<p>So, we&#8217;ve gotten the <code class="docutils literal"><span class="pre">context_object_name</span></code>, and now we are doing what? <code class="docutils literal"><span class="pre">context.update(kwargs)</span></code> to add our <code class="docutils literal"><span class="pre">kwargs</span></code> to the <code class="docutils literal"><span class="pre">context</span></code>. Lastly we call <code class="docutils literal"><span class="pre">super</span></code> for the <code class="docutils literal"><span class="pre">.get_context_data(**context)</span></code>.</p>
+<p><em>django/views/generic/base.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ContextMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A default context mixin that passes the keyword arguments received by</span>
+<span class="sd">    get_context_data as the template context.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;view&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;view&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="n">kwargs</span>
+</pre></div>
+</div>
+<p>So all this does is take the kwargs and says: if we don&#8217;t have the <code class="docutils literal"><span class="pre">view</span></code> object itself in our kwargs, then go ahead and add it and return the kwargs. This ensures that the actual view itself is included as part of the context that gets passed to our template. What that means is that in the context of your template you can refer to your view class that is powering that template.</p>
+<p>(44:52)</p>
+<p>So there are are a couple of other classes in our inheritance path that came from various places in this hierarchy. You can see that it can become complicated. Let&#8217;s go back to our <code class="docutils literal"><span class="pre">BaseDetailView</span></code> and look <code class="docutils literal"><span class="pre">get()</span></code> method again. What&#8217;s the last thing that happens after we&#8217;ve gotten our context data?</p>
+<p><code class="docutils literal"><span class="pre">return</span> <span class="pre">self.render_to_response(context)</span></code></p>
+<p>We call the <code class="docutils literal"><span class="pre">render_to_response</span></code> method and pass the <code class="docutils literal"><span class="pre">context</span></code>. So let&#8217;s look at <code class="docutils literal"><span class="pre">render_to_response</span></code></p>
+<p><img alt="alt text" src="../_images/DetailView_trm.png" /></p>
+<p><em>django/views/generic/base.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="k">class</span> <span class="nc">TemplateResponseMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A mixin that can be used to render a template.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">template_engine</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">response_class</span> <span class="o">=</span> <span class="n">TemplateResponse</span>
+    <span class="n">content_type</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">render_to_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="o">**</span><span class="n">response_kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a response, using the `response_class` for this</span>
+<span class="sd">        view, with a template rendered with the given context.</span>
+
+<span class="sd">        If any keyword arguments are provided, they will be</span>
+<span class="sd">        passed to the constructor of the response class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response_kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;content_type&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">response_class</span><span class="p">(</span>
+            <span class="n">request</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">,</span>
+            <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_template_names</span><span class="p">(),</span>
+            <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
+            <span class="n">using</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">template_engine</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">response_kwargs</span>
+        <span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>So our <code class="docutils literal"><span class="pre">render_to_response()</span></code> method gets called with a context and optionally some keyword arguments. Does our current call pass any keyword arguments besides context? No. What does this method do?</p>
+<p>(Student goes over code)</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">response_kwargs</span></code> are set to <code class="docutils literal"><span class="pre">{&quot;content_type&quot;:</span> <span class="pre">self.content_type}</span></code></li>
+<li>We return the value of <code class="docutils literal"><span class="pre">self.response_class()</span></code><ul>
+<li>Passing in <code class="docutils literal"><span class="pre">request</span></code></li>
+<li><code class="docutils literal"><span class="pre">template</span></code></li>
+<li><code class="docutils literal"><span class="pre">context</span></code></li>
+<li><code class="docutils literal"><span class="pre">using</span></code> (which template engine)</li>
+<li>any <code class="docutils literal"><span class="pre">**response_kwargs</span></code></li>
+</ul>
+</li>
+</ul>
+<p><code class="docutils literal"><span class="pre">get_template_names()</span></code> returns a list of templates to be used for the request.</p>
+<p>Does <code class="docutils literal"><span class="pre">SingleObjectTemplateResponseMixin</span></code> have a <code class="docutils literal"><span class="pre">get_template_names()</span></code> method too? Yes it does.</p>
+<p>(Student goes over this)</p>
+<p><em>django/views/generic/detail.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SingleObjectTemplateResponseMixin</span><span class="p">(</span><span class="n">TemplateResponseMixin</span><span class="p">):</span>
+    <span class="n">template_name_field</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">template_name_suffix</span> <span class="o">=</span> <span class="s1">&#39;_detail&#39;</span>
+
+    <span class="k">def</span> <span class="nf">get_template_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of template names to be used for the request. May not be</span>
+<span class="sd">        called if render_to_response is overridden. Returns the following list:</span>
+
+<span class="sd">        * the value of ``template_name`` on the view (if provided)</span>
+<span class="sd">        * the contents of the ``template_name_field`` field on the</span>
+<span class="sd">          object instance that the view is operating upon (if available)</span>
+<span class="sd">        * ``&lt;app_label&gt;/&lt;model_name&gt;&lt;template_name_suffix&gt;.html``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">SingleObjectTemplateResponseMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_template_names</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">ImproperlyConfigured</span><span class="p">:</span>
+            <span class="c1"># If template_name isn&#39;t specified, it&#39;s not a problem --</span>
+            <span class="c1"># we just start with an empty list.</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="c1"># If self.template_name_field is set, grab the value of the field</span>
+            <span class="c1"># of that name from the object; this is the most specific template</span>
+            <span class="c1"># name, if given.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_name_field</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_name_field</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+                    <span class="n">names</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+            <span class="c1"># The least-specific option is the default &lt;app&gt;/&lt;model&gt;_detail.html;</span>
+            <span class="c1"># only use this if the object in question is a model.</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+                <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s%s</span><span class="s2">.html&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">app_label</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">template_name_suffix</span>
+                <span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+                <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s%s</span><span class="s2">.html&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">app_label</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">template_name_suffix</span>
+                <span class="p">))</span>
+
+            <span class="c1"># If we still haven&#39;t managed to find any template names, we should</span>
+            <span class="c1"># re-raise the ImproperlyConfigured to alert the user.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">names</span><span class="p">:</span>
+                <span class="k">raise</span>
+
+        <span class="k">return</span> <span class="n">names</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>First we try setting <code class="docutils literal"><span class="pre">names</span></code> to the <code class="docutils literal"><span class="pre">super</span></code> of <code class="docutils literal"><span class="pre">get_template_names()</span></code><ul>
+<li>This looks back up to the previous <code class="docutils literal"><span class="pre">get_template_names()</span></code> method we were just looking at.</li>
+</ul>
+</li>
+<li>If that doesn&#8217;t work, we&#8217;ll raise an <code class="docutils literal"><span class="pre">ImproperlyConfigured</span></code> error.<ul>
+<li>We then set names to an empty list</li>
+<li>We check to see if this instance has an <code class="docutils literal"><span class="pre">object</span></code> attribute, and a <code class="docutils literal"><span class="pre">template_name_field</span></code>.<ul>
+<li>If it has both of those<ul>
+<li>We set <code class="docutils literal"><span class="pre">name</span></code> to be the attribute on <code class="docutils literal"><span class="pre">self.object</span></code> that matches the <code class="docutils literal"><span class="pre">template_name_field</span></code> - it sets <code class="docutils literal"><span class="pre">None</span></code> if it can&#8217;t find it</li>
+<li>If <code class="docutils literal"><span class="pre">name</span></code> is set, it&#8217;s inserted into the front of <code class="docutils literal"><span class="pre">names</span></code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>If <code class="docutils literal"><span class="pre">self.object</span></code> is an instance of <code class="docutils literal"><span class="pre">models.Model</span></code><ul>
+<li>We append to the <code class="docutils literal"><span class="pre">names</span></code> list:<ul>
+<li><code class="docutils literal"><span class="pre">self.object._meta.app_label</span></code></li>
+<li><code class="docutils literal"><span class="pre">self.object._meta.model_name</span></code></li>
+<li><code class="docutils literal"><span class="pre">self.template_name_suffix</span></code> - which defaults to <code class="docutils literal"><span class="pre">_detail</span></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Return the <code class="docutils literal"><span class="pre">names</span></code></li>
+</ul>
+<p>We&#8217;re providing a list of possible template names that we&#8217;re looking for. We can override that template name by providing a <code class="docutils literal"><span class="pre">template_name</span></code> in the call to <code class="docutils literal"><span class="pre">as_view()</span></code>. We can provide another version of that template name by setting up the <code class="docutils literal"><span class="pre">template_name</span></code> field and then storing in maybe the database the name of the template that we want to use for this particular object.</p>
+<p>(53:27)</p>
+<p>So that takes us back to <code class="docutils literal"><span class="pre">BaseDetailView</span></code> where we were calling <code class="docutils literal"><span class="pre">render_to_response()</span></code> which was coming from our <code class="docutils literal"><span class="pre">TemplateResponseMixin</span></code>. What&#8217;s the implication of <code class="docutils literal"><span class="pre">content_type</span> <span class="pre">=</span> <span class="pre">None</span></code>? It could be HTML, text, json... You could override the <code class="docutils literal"><span class="pre">content_type</span></code> value, and maybe override the template.</p>
+<p>This is pretty much the simplest of the CBVs in Django. The other ones get worse from here.</p>
+<p>(55:19)</p>
+<p>A few notes from Cris:</p>
+<p>Django is notorious..</p>
+<p>Zope went down this road about 10 years ago. They made all these classes and mixins and eventually when you ran <code class="docutils literal"><span class="pre">dir()</span></code> on a view you&#8217;d end up like 800 items in it. Django is doing the same thing. It&#8217;s becoming a mess.</p>
+<p>But if you&#8217;re going to use Django you need to understand how these CBVs work. Diving in and following the code is the best way to understand these views.</p>
+<p>For the assignment you will really only be interested in the <code class="docutils literal"><span class="pre">DetailView</span></code> and the <code class="docutils literal"><span class="pre">ListView</span></code>. You will only one to look at a single photo, or a list of them etc.</p>
+<p>This is all pretty confusing and annoying having to wade through all of these Class inheritance hierarchies, but if you understand them you can really harness the power of them.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">sea_d35_day27_django_CBV</a><ul>
+<li><a class="reference internal" href="#dispatch">(21:23) <code class="docutils literal"><span class="pre">dispatch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../schedule/week07/wed.html"
+                        title="previous chapter">Wednesday</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../schedule/week07/thu.html"
+                        title="next chapter">Thursday</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../schedule/week07/thu.html" title="Thursday"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../schedule/week07/wed.html" title="Wednesday"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week07/wed.html" >Wednesday</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sea_d35_day28_django_forms &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="Thursday" href="../schedule/week07/thu.html" />
+    <link rel="next" title="Friday" href="../schedule/week07/fri.html" />
+    <link rel="prev" title="Thursday" href="../schedule/week07/thu.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../schedule/week07/fri.html" title="Friday"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../schedule/week07/thu.html" title="Thursday"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week07/thu.html" accesskey="U">Thursday</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="sea-d35-day28-django-forms">
+<span id="sea-d35-day28-django-forms"></span><h1>sea_d35_day28_django_forms<a class="headerlink" href="#sea-d35-day28-django-forms" title="Permalink to this headline">¶</a></h1>
+<p>Day 28: Form Handling in Django, and the Form-handling CBVs</p>
+<hr class="docutils" />
+<p>We will need to work with the form system in Django if you want to add or update photos in our app.</p>
+<p><a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/forms/">Django&#8217;s form system</a> has a couple of layers to it.</p>
+<p>(Cris is on whiteboard here)</p>
+<p>We&#8217;ll make an analogy. &#8220;Models are to Database as Forms are to request/response cycle.&#8221; The job of a model in Django is to translate data between python and the database. The job of a form in Django is to translate data back and forth between python and the request/reponse cycle. A form takes in information that comes from the request and translates it into pythonic values. Remember, every time you get information coming in on the request, that information is coming in to you as a bytestring. When you pass a primary key back and forth across a URL, that comes into you as a bytestring. You want to turn that into an integer so you can interact with the database. The Django form is going to make that happen for you.</p>
+<p>This can start to get weird because Models have fields, and Forms have fields. They look similar, but they are very different from each other. The model field holds the responsibility of translating a particular python value into some sort of database query. Also it takes the return value and turns it back into a python value. The form does the same thing except it does it with data from the request and response. It turns one item of information into a pythonic value.</p>
+<p>Forms serialize and deserialize. They do it with a structure called a widget. The widget renders out visible elements (or hidden) that renders that data into a HTML page.</p>
+<p>Let&#8217;s say we have something that&#8217;s a <code class="docutils literal"><span class="pre">forms.text</span></code> field. It will have a widget that has a text input. When you call the widget&#8217;s <code class="docutils literal"><span class="pre">render</span></code> method, it will give you inputtype = text and value = field contents. This is the overall structure of how form libraries everywhere work.</p>
+<p>(Back to computer)</p>
+<p>(6:08)</p>
+<p>So how do forms in Django work? A form is just a collection of fields.</p>
+<p>Let&#8217;s start up our Django shell:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="k">class</span> <span class="nc">foo</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">()</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">()</span>
+   <span class="o">...</span><span class="p">:</span>     
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="n">foo</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="n">__main__</span><span class="o">.</span><span class="n">foo</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="nb">type</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="n">django</span><span class="o">.</span><span class="n">forms</span><span class="o">.</span><span class="n">forms</span><span class="o">.</span><span class="n">DeclarativeFieldsMetaclass</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">11</span><span class="p">]:</span>  <span class="n">foo_form</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">12</span><span class="p">]:</span> <span class="n">foo_form</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">12</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">foo</span> <span class="n">bound</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="n">Unknown</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">()</span><span class="o">&gt;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">13</span><span class="p">]:</span> <span class="nb">type</span><span class="p">(</span><span class="n">foo_form</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">13</span><span class="p">]:</span> <span class="n">__main__</span><span class="o">.</span><span class="n">foo</span>
+
+</pre></div>
+</div>
+<p>There are a few things to think about here. Our form can be in one of two states: either bound or unbound. The difference is that a bound form knows about data. It has some information that has been passed into it. An unbound form doesn&#8217;t have any data in it.</p>
+<p>(We go back to the Django shell, but the <code class="docutils literal"><span class="pre">foo_form</span></code> isn&#8217;t really working. We grab a working snippet from the Django docs:)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">16</span><span class="p">]:</span> <span class="o">%</span><span class="n">paste</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="k">class</span> <span class="nc">NameForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">your_name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Your name&#39;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1">## -- End pasted text --</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">17</span><span class="p">]:</span> <span class="n">form1</span> <span class="o">=</span> <span class="n">NameForm</span><span class="p">()</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="n">form1</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">NameForm</span> <span class="n">bound</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="n">Unknown</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">(</span><span class="n">your_name</span><span class="p">)</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Now we have a working form called <code class="docutils literal"><span class="pre">form1</span></code>. It tells us that it&#8217;s unbound. It doesn&#8217;t know if it&#8217;s valid, and it has some fields. If we just call <code class="docutils literal"><span class="pre">str()</span></code> on our <code class="docutils literal"><span class="pre">form1</span></code>, it will render out into HTML:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">19</span><span class="p">]:</span> <span class="nb">str</span><span class="p">(</span><span class="n">form1</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">19</span><span class="p">]:</span> <span class="s1">&#39;&lt;tr&gt;&lt;th&gt;&lt;label for=&quot;id_your_name&quot;&gt;Your name:&lt;/label&gt;&lt;/th&gt;&lt;td&gt;&lt;input id=&quot;id_your_name&quot; maxlength=&quot;100&quot; name=&quot;your_name&quot; type=&quot;text&quot; /&gt;&lt;/td&gt;&lt;/tr&gt;&#39;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">form1.as_p()</span></code> method will render our form with <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> tags:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">21</span><span class="p">]:</span> <span class="n">form1</span><span class="o">.</span><span class="n">as_p</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">21</span><span class="p">]:</span> <span class="s1">u&#39;&lt;p&gt;&lt;label for=&quot;id_your_name&quot;&gt;Your name:&lt;/label&gt; &lt;input id=&quot;id_your_name&quot; maxlength=&quot;100&quot; name=&quot;your_name&quot; type=&quot;text&quot; /&gt;&lt;/p&gt;&#39;</span>
+</pre></div>
+</div>
+<p>There is also an <code class="docutils literal"><span class="pre">as_table()</span></code> method. This is the default and the same as our <code class="docutils literal"><span class="pre">str()</span></code> rendering.</p>
+<p>Notice that the <code class="docutils literal"><span class="pre">&lt;form&gt;</span></code> tag is missing. Nor is there a <code class="docutils literal"><span class="pre">&lt;submit&gt;</span></code> button. That&#8217;s up to you.</p>
+<p>It gives us an <code class="docutils literal"><span class="pre">id=&quot;id_your_name&quot;</span></code> attribute. It&#8217;s constructed by default as the name of the field with <code class="docutils literal"><span class="pre">id_</span></code> prepended to it. Notice there is no value on the input either.</p>
+<div class="section" id="bound-form">
+<span id="bound-form"></span><h2>(14:45) Bound Form<a class="headerlink" href="#bound-form" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s make another form. We&#8217;ll pass in some data as a dictionary, and then the form will be bound.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">22</span><span class="p">]:</span> <span class="n">form2</span> <span class="o">=</span> <span class="n">NameForm</span><span class="p">({</span><span class="s1">&#39;your_name&#39;</span><span class="p">:</span> <span class="s1">u&#39;Cris Ewing&#39;</span><span class="p">})</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">23</span><span class="p">]:</span> <span class="n">form2</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">23</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">NameForm</span> <span class="n">bound</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="n">Unknown</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">(</span><span class="n">your_name</span><span class="p">)</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Now we can use that information to fill out the form with the data that exists. Notice the <code class="docutils literal"><span class="pre">value=&quot;Cris</span> <span class="pre">Ewing&quot;</span></code> attribute:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">24</span><span class="p">]:</span> <span class="n">form2</span><span class="o">.</span><span class="n">as_p</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">24</span><span class="p">]:</span> <span class="s1">u&#39;&lt;p&gt;&lt;label for=&quot;id_your_name&quot;&gt;Your name:&lt;/label&gt; &lt;input id=&quot;id_your_name&quot; maxlength=&quot;100&quot; name=&quot;your_name&quot; type=&quot;text&quot; value=&quot;Cris Ewing&quot; /&gt;&lt;/p&gt;&#39;</span>
+</pre></div>
+</div>
+<p>We can also render forms as a list with <code class="docutils literal"><span class="pre">as_ul()</span></code>.</p>
+<p>Forms are also iterators. These objects come out in the order that you specify the attributes. If you want to change the ordering of a form, change it in the Django form definition.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">25</span><span class="p">]:</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">form2</span><span class="p">:</span>
+   <span class="o">....</span><span class="p">:</span>     <span class="k">print</span> <span class="n">field</span>
+   <span class="o">....</span><span class="p">:</span>     
+<span class="o">&lt;</span><span class="nb">input</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;id_your_name&quot;</span> <span class="n">maxlength</span><span class="o">=</span><span class="s2">&quot;100&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;your_name&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Cris Ewing&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>If you aren&#8217;t happy with the way Django is rendering <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> forms or whatever, you can address the field properties directly and lay them out how you like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">31</span><span class="p">]:</span> <span class="n">field</span><span class="o">.</span><span class="n">id_for_label</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">31</span><span class="p">]:</span> <span class="s1">u&#39;id_your_name&#39;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">32</span><span class="p">]:</span> <span class="n">field</span><span class="o">.</span><span class="n">label</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">32</span><span class="p">]:</span> <span class="s1">&#39;Your name&#39;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">33</span><span class="p">]:</span> <span class="n">field</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">33</span><span class="p">]:</span> <span class="s1">u&#39;Cris Ewing&#39;</span>
+</pre></div>
+</div>
+<p>It&#8217;s probably best to let Django render out the fields for you.</p>
+<p>(21:21)</p>
+<p>The <code class="docutils literal"><span class="pre">valid</span></code> value of a form is also important. When a form is bound, you can do validation checks on it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">35</span><span class="p">]:</span>  <span class="n">form2</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">35</span><span class="p">]:</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p>This allows us access to <code class="docutils literal"><span class="pre">cleaned_data</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">36</span><span class="p">]:</span> <span class="n">form2</span><span class="o">.</span><span class="n">cleaned_data</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">36</span><span class="p">]:</span> <span class="p">{</span><span class="s1">&#39;your_name&#39;</span><span class="p">:</span> <span class="s1">u&#39;Cris Ewing&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">cleaned_data</span></code> is a dictionary of key, value pairs that correspond to the field names and the values those fields contain. It is <strong>super important</strong>. Because: <code class="docutils literal"><span class="pre">form2</span></code> also has a <code class="docutils literal"><span class="pre">data</span></code> attribute:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">37</span><span class="p">]:</span> <span class="n">form2</span><span class="o">.</span><span class="n">data</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">37</span><span class="p">]:</span> <span class="p">{</span><span class="s1">&#39;your_name&#39;</span><span class="p">:</span> <span class="s1">u&#39;Cris Ewing&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>It looks the same in this case, but the difference is that the <code class="docutils literal"><span class="pre">cleaned_data</span></code> has gone through validation. What this means is that you can be sure that if someone is trying to be inject malicious data, Django has already sterilized it and it is safe for python to use. Whenever you&#8217;re reading data from a form, always validate the data first, and then use the <code class="docutils literal"><span class="pre">cleaned_data</span></code> attribute of your form to get access to the information.</p>
+<p>Let&#8217;s build one that might not be validated.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">38</span><span class="p">]:</span> <span class="n">form3</span> <span class="o">=</span> <span class="n">NameForm</span><span class="p">({</span><span class="s1">&#39;your_name&#39;</span><span class="p">:</span> <span class="s1">u&#39;My name is reallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreallyreally loooooooong&#39;</span><span class="p">})</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">39</span><span class="p">]:</span> <span class="n">form3</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">39</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">NameForm</span> <span class="n">bound</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="n">Unknown</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">(</span><span class="n">your_name</span><span class="p">)</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Notice it is bound, but we don&#8217;t know yet if it is valid. When we check the validity:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">40</span><span class="p">]:</span> <span class="n">form3</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">40</span><span class="p">]:</span> <span class="bp">False</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">41</span><span class="p">]:</span> <span class="n">form3</span><span class="o">.</span><span class="n">cleaned_data</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">41</span><span class="p">]:</span> <span class="p">{}</span>
+</pre></div>
+</div>
+<p>This particular form will have an <code class="docutils literal"><span class="pre">errors</span></code> attribute now:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">42</span><span class="p">]:</span> <span class="n">form3</span><span class="o">.</span><span class="n">errors</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">42</span><span class="p">]:</span> <span class="p">{</span><span class="s1">&#39;your_name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">u&#39;Ensure this value has at most 100 characters (it has 167).&#39;</span><span class="p">]}</span>
+</pre></div>
+</div>
+<p>You can use this to send error messages back to your forms.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">45</span><span class="p">]:</span> <span class="k">if</span> <span class="n">foo</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">form3</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;There&#39;s a mistake here: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">form3</span><span class="o">.</span><span class="n">errors</span><span class="p">[</span><span class="s1">&#39;your_name&#39;</span><span class="p">]))</span>
+   <span class="o">....</span><span class="p">:</span>     
+<span class="n">There</span><span class="s1">&#39;s a mistake here: &lt;ul class=&quot;errorlist&quot;&gt;&lt;li&gt;Ensure this value has at most 100 characters (it has 167).&lt;/li&gt;&lt;/ul&gt;</span>
+</pre></div>
+</div>
+<p>Django makes some nice default error messages for us with HTML markup too. There is ample API documentation for forms like how to substitute css classes and things like that.</p>
+</div>
+<div class="section" id="modelform">
+<span id="modelform"></span><h2>(27:44) <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/forms/modelforms/#django.forms.ModelForm"><code class="docutils literal"><span class="pre">ModelForm</span></code></a><a class="headerlink" href="#modelform" title="Permalink to this headline">¶</a></h2>
+<p>There&#8217;s something else you should know about forms, and that is that this way of building forms is not the only way. Your system is filled up with models. One things you would like to do is present forms that allow you to create and edit those models. Django provides you with a construct called a <code class="docutils literal"><span class="pre">ModelForm</span></code>.</p>
+<p>What a <code class="docutils literal"><span class="pre">ModelForm</span></code> does is it looks at your model, and it looks at the fields on the model, and it creates a form that has all the equivalent form fields that are on your model.</p>
+<ul class="simple">
+<li>Create a class that subclasses <code class="docutils literal"><span class="pre">ModelForm</span></code>.</li>
+<li>Provide a <code class="docutils literal"><span class="pre">class</span> <span class="pre">Meta</span></code><ul>
+<li>This informs the form object about some options that you can set for it.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mi">46</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">imager_images.models</span> <span class="kn">import</span> <span class="n">Photo</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">47</span><span class="p">]:</span> <span class="n">Photo</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">47</span><span class="p">]:</span> <span class="n">imager_images</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Photo</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">48</span><span class="p">]:</span> <span class="k">class</span> <span class="nc">PhotoForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+  <span class="o">....</span><span class="p">:</span>     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+  <span class="o">....</span><span class="p">:</span>         <span class="n">model</span> <span class="o">=</span> <span class="n">Photo</span>
+  <span class="o">....</span><span class="p">:</span>         <span class="n">exclude</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="o">....</span><span class="p">:</span>         
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">49</span><span class="p">]:</span> <span class="n">PhotoForm</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">49</span><span class="p">]:</span> <span class="n">__main__</span><span class="o">.</span><span class="n">PhotoForm</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">50</span><span class="p">]:</span> <span class="n">pf1</span> <span class="o">=</span> <span class="n">PhotoForm</span><span class="p">()</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">51</span><span class="p">]:</span> <span class="n">pf1</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">51</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">PhotoForm</span> <span class="n">bound</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="n">Unknown</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">(</span><span class="n">user</span><span class="p">;</span><span class="n">image</span><span class="p">;</span><span class="n">title</span><span class="p">;</span><span class="n">description</span><span class="p">;</span><span class="n">date_published</span><span class="p">;</span><span class="n">published</span><span class="p">;</span><span class="n">location</span><span class="p">)</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This looks similar. Our fields include all of the fields on the Photo model automatically now.</p>
+<p>Let&#8217;s look at a photo object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">53</span><span class="p">]:</span> <span class="n">Photo</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">53</span><span class="p">]:</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Photo</span><span class="p">:</span> <span class="n">PuPPy</span><span class="o">&gt;</span><span class="p">]</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">54</span><span class="p">]:</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">55</span><span class="p">]:</span> <span class="n">p1</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">55</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">Photo</span><span class="p">:</span> <span class="n">PuPPy</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>When we create a PhotoForm, if we want to bind it to an instance, we can use the instance keyword argument to instantiate our new PhotoForm:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">56</span><span class="p">]:</span> <span class="n">lovely_form</span> <span class="o">=</span> <span class="n">PhotoForm</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="n">p1</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">57</span><span class="p">]:</span> <span class="n">lovely_form</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">57</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">PhotoForm</span> <span class="n">bound</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="n">Unknown</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">(</span><span class="n">user</span><span class="p">;</span><span class="n">image</span><span class="p">;</span><span class="n">title</span><span class="p">;</span><span class="n">description</span><span class="p">;</span><span class="n">date_published</span><span class="p">;</span><span class="n">published</span><span class="p">;</span><span class="n">location</span><span class="p">)</span><span class="o">&gt;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">58</span><span class="p">]:</span> <span class="n">lovely_form</span><span class="o">.</span><span class="n">as_p</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">58</span><span class="p">]:</span> <span class="s1">u&#39;&lt;p&gt;&lt;label for=&quot;id_user&quot;&gt;User:&lt;/label&gt; &lt;select id=&quot;id_user&quot; name=&quot;user&quot;&gt;</span><span class="se">\n</span><span class="s1">&lt;option value=&quot;&quot;&gt;---------&lt;/option&gt;</span><span class="se">\n</span><span class="s1">&lt;option value=&quot;2&quot; selected=&quot;selected&quot;&gt;joel&lt;/option&gt;</span><span class="se">\n</span><span class="s1">&lt;/select&gt;&lt;/p&gt;</span><span class="se">\n</span><span class="s1">&lt;p&gt;&lt;label for=&quot;id_image&quot;&gt;Image:&lt;/label&gt; Currently: &lt;a href=&quot;/media/photo_files/2016-01-20/puppy_tshirt_1.jpg&quot;&gt;photo_files/2016-01-20/puppy_tshirt_1.jpg&lt;/a&gt; &lt;br /&gt;Change: &lt;input id=&quot;id_image&quot; name=&quot;image&quot; type=&quot;file&quot; /&gt;&lt;/p&gt;</span><span class="se">\n</span><span class="s1">&lt;p&gt;&lt;label for=&quot;id_title&quot;&gt;Title:&lt;/label&gt; &lt;input id=&quot;id_title&quot; maxlength=&quot;256&quot; name=&quot;title&quot; type=&quot;text&quot; value=&quot;PuPPy&quot; /&gt;&lt;/p&gt;</span><span class="se">\n</span><span class="s1">&lt;p&gt;&lt;label for=&quot;id_description&quot;&gt;Description:&lt;/label&gt; &lt;textarea cols=&quot;40&quot; id=&quot;id_description&quot; name=&quot;description&quot; rows=&quot;10&quot;&gt;</span><span class="se">\r\n</span><span class="s1">PuPPy logo&lt;/textarea&gt;&lt;/p&gt;</span>
+<span class="o">...</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<p>Django gives us all sorts of options here that allows us to manipulate our model.</p>
+<p>Notice the <code class="docutils literal"><span class="pre">lovely_form</span></code> is not bound:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">60</span><span class="p">]:</span> <span class="n">lovely_form</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">60</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">PhotoForm</span> <span class="n">bound</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">(</span><span class="n">user</span><span class="p">;</span><span class="n">image</span><span class="p">;</span><span class="n">title</span><span class="p">;</span><span class="n">description</span><span class="p">;</span><span class="n">date_published</span><span class="p">;</span><span class="n">published</span><span class="p">;</span><span class="n">location</span><span class="p">)</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Why do we suppose that is? Because we haven&#8217;t passed in any data. Just giving it an instance doesn&#8217;t bind it to anything. If we make a change, the form will become bound, and the <code class="docutils literal"><span class="pre">selected</span></code> attribute will now be <code class="docutils literal"><span class="pre">'bob'</span></code> (our user 3 in this case):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">73</span><span class="p">]:</span> <span class="n">changed_form</span> <span class="o">=</span> <span class="n">PhotoForm</span><span class="p">({</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span> <span class="n">instance</span><span class="o">=</span><span class="n">p1</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">74</span><span class="p">]:</span> <span class="n">changed_form</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">74</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">PhotoForm</span> <span class="n">bound</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="n">Unknown</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">(</span><span class="n">user</span><span class="p">;</span><span class="n">image</span><span class="p">;</span><span class="n">title</span><span class="p">;</span><span class="n">description</span><span class="p">;</span><span class="n">date_published</span><span class="p">;</span><span class="n">published</span><span class="p">;</span><span class="n">location</span><span class="p">)</span><span class="o">&gt;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">75</span><span class="p">]:</span> <span class="nb">str</span><span class="p">(</span><span class="n">changed_form</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">75</span><span class="p">]:</span> <span class="s1">&#39;&lt;tr&gt;&lt;th&gt;&lt;label for=&quot;id_user&quot;&gt;User:&lt;/label&gt;&lt;/th&gt;&lt;td&gt;&lt;select id=&quot;id_user&quot; name=&quot;user&quot;&gt;</span><span class="se">\n</span><span class="s1">&lt;option value=&quot;&quot;&gt;---------&lt;/option&gt;</span><span class="se">\n</span><span class="s1">&lt;option value=&quot;2&quot;&gt;joel&lt;/option&gt;</span><span class="se">\n</span><span class="s1">&lt;option value=&quot;3&quot; selected=&quot;selected&quot;&gt;bob&lt;/option&gt;</span><span class="se">\n</span><span class="s1">&lt;/select&gt;&lt;/td&gt;&lt;/tr&gt;</span><span class="se">\n</span><span class="s1">&lt;tr&gt;&lt;th&gt;&lt;label for=&quot;id_image&quot;&gt;Image:&lt;/label&gt;&lt;/th&gt;......</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">&lt;option</span> <span class="pre">value=&quot;3&quot;</span> <span class="pre">selected=&quot;selected&quot;&gt;bob&lt;/option&gt;</span></code></p>
+<p>What this means is the data you send in that the form is bound to, will override and take precedence over the data that&#8217;s attached to the object that represents the base instance of that form.</p>
+<p>Is the form valid?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">78</span><span class="p">]:</span> <span class="n">changed_form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">78</span><span class="p">]:</span> <span class="bp">False</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">79</span><span class="p">]:</span> <span class="n">changed_form</span><span class="o">.</span><span class="n">errors</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">79</span><span class="p">]:</span>
+<span class="p">{</span><span class="s1">&#39;published&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">u&#39;This field is required.&#39;</span><span class="p">],</span>
+ <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">u&#39;This field is required.&#39;</span><span class="p">]}</span>
+</pre></div>
+</div>
+<p>So let&#8217;s fix our errors:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">88</span><span class="p">]:</span> <span class="n">changed_form</span> <span class="o">=</span> <span class="n">PhotoForm</span><span class="p">({</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;PuPPy Logo&#39;</span><span class="p">,</span> <span class="s1">&#39;published&#39;</span><span class="p">:</span> <span class="s1">&#39;public&#39;</span><span class="p">},</span> <span class="n">instance</span><span class="o">=</span><span class="n">p1</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">89</span><span class="p">]:</span> <span class="n">changed_form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">89</span><span class="p">]:</span> <span class="bp">True</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">90</span><span class="p">]:</span> <span class="n">p1</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">90</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">Photo</span><span class="p">:</span> <span class="n">PuPPy</span> <span class="n">Logo</span><span class="o">&gt;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">91</span><span class="p">]:</span> <span class="n">p1</span><span class="o">.</span><span class="n">user</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">91</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">User</span><span class="p">:</span> <span class="n">bob</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Our user instance has already been updated by the fact that we bound some data to a form. Once we save the form, it will be updated in the database too.</p>
+<p>(41:14)</p>
+<p>We saw how we passed in an instance of a form and some data. Where does the data come from? In Django you have a <code class="docutils literal"><span class="pre">request</span></code> object inside any view you create.</p>
+<p>(Cris is at whiteboard here)</p>
+<p><code class="docutils literal"><span class="pre">request</span></code> will have 2 attributes on it. These attributes will contain any form data that got sent to you from the browser. <code class="docutils literal"><span class="pre">request.post</span></code>, <code class="docutils literal"><span class="pre">request.get</span></code>. Using forms you&#8217;ll probably want to use <code class="docutils literal"><span class="pre">post</span></code>.</p>
+<p>Most of this process will be similar to what you have done already on edit views and create views. <code class="docutils literal"><span class="pre">request.post</span></code> is a dictionary, and you can pass it in as part of the data that comes to you.</p>
+<p>You are going to want to upload images. This might be a bit odd. Those images will be coming to you not in <code class="docutils literal"><span class="pre">request.post</span></code> or <code class="docutils literal"><span class="pre">get</span></code>. The come in a completely different place called <code class="docutils literal"><span class="pre">request.files</span></code>. There&#8217;s one more trick to this. In order to get image data, you have to do something to your <code class="docutils literal"><span class="pre">&lt;form&gt;</span></code> tag. There&#8217;s another attribute to forms called the <a class="reference external" href="https://www.w3.org/TR/html401/interact/forms.html#adef-enctype"><code class="docutils literal"><span class="pre">enctype</span></code></a>. In order to upload images, you need to set <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/http/file-uploads/#basic-file-uploads"><code class="docutils literal"><span class="pre">enctype=&quot;multipart/form-data&quot;</span></code></a></p>
+<p>(Back to the computer)</p>
+<p>On the other end, you need to make sure you bind your form not only to the first dictionary, but also to the second:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">92</span><span class="p">]:</span> <span class="n">changed_form</span> <span class="o">=</span> <span class="n">PhotoForm</span><span class="p">({</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;PuPPy Logo&#39;</span><span class="p">,</span> <span class="s1">&#39;published&#39;</span><span class="p">:</span> <span class="s1">&#39;public&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">file</span> <span class="n">upload</span> <span class="nb">object</span><span class="o">&gt;</span><span class="p">},</span> <span class="n">instance</span><span class="o">=</span><span class="n">p1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Django is responsible for dealing with all of this. All you need to is pass in <code class="docutils literal"><span class="pre">request.post,</span> <span class="pre">request.files,</span> <span class="pre">instance=original_instance</span></code> If you&#8217;re creating a new instance, just don&#8217;t pass in an instance and Django will build a new one for you when you call <code class="docutils literal"><span class="pre">form.save()</span></code></p>
+</div>
+<div class="section" id="authenticating-users">
+<span id="authenticating-users"></span><h2>(48:23) <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/auth/default/#authenticating-users">Authenticating Users</a><a class="headerlink" href="#authenticating-users" title="Permalink to this headline">¶</a></h2>
+<p>One last thing. Think about authentication. How will you deal with testing your users and whether or not they will have access to things. You&#8217;ve already seen one decorator you can use in a view, or put in your urlconf, and that&#8217;s <code class="docutils literal"><span class="pre">login_required</span></code>. If you&#8217;re using class-based views, you must put the decorator in the urlconf.</p>
+<p>Beyond the idea of <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/auth/default/#django.contrib.auth.decorators.login_required"><code class="docutils literal"><span class="pre">login_required</span></code></a>, there are other ones you can use as well:</p>
+<p><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/auth/default/#the-permission-required-decorator"><code class="docutils literal"><span class="pre">permission_required</span></code></a>. Django has some default permissions. Every new model you make has permissions associated with it: <code class="docutils literal"><span class="pre">create</span></code>, <code class="docutils literal"><span class="pre">edit</span></code>, and <code class="docutils literal"><span class="pre">delete</span></code>. The user has a <code class="docutils literal"><span class="pre">has_perm</span></code> attribute.</p>
+<p>This decorator allows you at the view level, you can say they must have a particular permission. So you could say inactive users don&#8217;t have permission to change files. Be aware the permissions are table level permissions. You would also need to make sure the user is the owner of the object in question.</p>
+<p>Both <code class="docutils literal"><span class="pre">login_required</span></code> and <code class="docutils literal"><span class="pre">permission_required</span></code> are special instances of a more generalized decorator that&#8217;s available called <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/auth/default/#django.contrib.auth.decorators.user_passes_test"><code class="docutils literal"><span class="pre">user_passes_test</span></code></a>. That takes a function, the function takes the user object, and returns either <code class="docutils literal"><span class="pre">True</span></code> or <code class="docutils literal"><span class="pre">False</span></code>. When this decorator is applied to a view, if the logged in user does not pass that test, they are sent off to the login page.</p>
+<p>So Django gives us with specific instances of the <code class="docutils literal"><span class="pre">user_passes_test</span></code>, but you can come up with your own if you need to.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">sea_d35_day28_django_forms</a><ul>
+<li><a class="reference internal" href="#bound-form">(14:45) Bound Form</a></li>
+<li><a class="reference internal" href="#modelform">(27:44) <code class="docutils literal"><span class="pre">ModelForm</span></code></a></li>
+<li><a class="reference internal" href="#authenticating-users">(48:23) Authenticating Users</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../schedule/week07/thu.html"
+                        title="previous chapter">Thursday</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../schedule/week07/fri.html"
+                        title="next chapter">Friday</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../schedule/week07/fri.html" title="Friday"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../schedule/week07/thu.html" title="Thursday"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week07/thu.html" >Thursday</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

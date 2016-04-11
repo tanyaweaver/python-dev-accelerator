@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
+    <link rel="next" title="sea_d35_day28_django_forms" href="../../lectures/django_forms.html" />
+    <link rel="prev" title="sea_d35_day27_django_CBV" href="../../lectures/django_cbv.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -48,6 +50,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../lectures/django_forms.html" title="sea_d35_day28_django_forms"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../../lectures/django_cbv.html" title="sea_d35_day27_django_CBV"
+             accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -175,22 +183,52 @@ div.nboutput  > :nth-child(2).stderr {
 <h1>Thursday<a class="headerlink" href="#thursday" title="Permalink to this headline">¶</a></h1>
 <span class="admonition-course-presentations"></span><div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+<p>Be comfortable working with Django forms and form handling</p>
 </div>
 <div class="section" id="readings">
 <h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="django-forms">
+<h3>Django Forms<a class="headerlink" href="#django-forms" title="Permalink to this headline">¶</a></h3>
+<p>To support creating and editing objects in Django, you&#8217;ll need to learn about Django Forms.  Here are some readings to keep in mind as you progress:</p>
+<ul class="simple">
+<li>Start by learning how to <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/forms/">work with forms</a> in general</li>
+<li>Follow that up with reading about <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/forms/modelforms/">ModelForms</a> and what they provide</li>
+<li>Make sure you understand <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/forms/validation/">form and field validation</a> so you can ensure proper data is submitted</li>
+<li>Particularly complex forms, or forms which require javascript or special css, will need to utilize <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/forms/media/">form assets</a></li>
+<li>You&#8217;ll want to keep a reference open for the <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/forms/api/">Forms API</a></li>
+<li>Keep in mind that the custom form field you imagine may already have been created and check <a class="reference external" href="https://www.djangopackages.com/grids/g/forms/">the Forms category</a> on <a class="reference external" href="http://www.djangopackages.com">http://www.djangopackages.com</a></li>
+</ul>
+</div>
 </div>
 <div class="section" id="review">
 <h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<p>Django CBVs (the library, photo, and album views)</p>
 </div>
 <div class="section" id="concepts">
 <h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/django_forms.html">sea_d35_day28_django_forms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_forms.html#bound-form">(14:45) Bound Form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_forms.html#modelform">(27:44) <code class="docutils literal"><span class="pre">ModelForm</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_forms.html#authenticating-users">(48:23) Authenticating Users</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul class="simple">
+<li>The Hash Table</li>
+</ul>
 </div>
 <div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
+<p>Using <cite>django-configurations</cite> to achieve 12-factor nirvana</p>
 </div>
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><a class="reference internal" href="../../assignments/hash_table.html"><em>Implement a Hash Table in Python</em></a></li>
+<li><a class="reference internal" href="../../assignments/django_4_data_editing.html"><em>Django Imager: Data Editing</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
 </ul>
 </div>
@@ -206,7 +244,10 @@ div.nboutput  > :nth-child(2).stderr {
   <ul>
 <li><a class="reference internal" href="#">Thursday</a><ul>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
-<li><a class="reference internal" href="#readings">Readings</a></li>
+<li><a class="reference internal" href="#readings">Readings</a><ul>
+<li><a class="reference internal" href="#django-forms">Django Forms</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#review">Review</a></li>
 <li><a class="reference internal" href="#concepts">Concepts</a></li>
 <li><a class="reference internal" href="#demo">Demo</a></li>
@@ -215,6 +256,12 @@ div.nboutput  > :nth-child(2).stderr {
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../../lectures/django_cbv.html"
+                        title="previous chapter">sea_d35_day27_django_CBV</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../lectures/django_forms.html"
+                        title="next chapter">sea_d35_day28_django_forms</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
@@ -238,6 +285,12 @@ div.nboutput  > :nth-child(2).stderr {
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../../lectures/django_forms.html" title="sea_d35_day28_django_forms"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../../lectures/django_cbv.html" title="sea_d35_day27_django_CBV"
+             >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>

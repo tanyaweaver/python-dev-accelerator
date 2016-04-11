@@ -1,0 +1,597 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Files in Django &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="next" title="Django URLs, Views and Templates" href="django_views.html" />
+    <link rel="prev" title="Decision Trees &amp; Random Forests Experiment" href="decision_trees_forest.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="django_views.html" title="Django URLs, Views and Templates"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="decision_trees_forest.html" title="Decision Trees &amp; Random Forests Experiment"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="files-in-django">
+<span id="files-in-django"></span><h1>Files in Django<a class="headerlink" href="#files-in-django" title="Permalink to this headline">¶</a></h1>
+<p>In this lecture we will go over dealing with files and the filesystem when working with Django.
+Our site works with binary data in the form of files.
+These files represent photos that our users upload to our system.
+We&#8217;ll go over how to set up our models and filesystem to make all of this work.</p>
+<hr class="docutils" />
+<div class="section" id="a-new-application">
+<span id="a-new-application"></span><h2>A New Application<a class="headerlink" href="#a-new-application" title="Permalink to this headline">¶</a></h2>
+<p>Django encourages developers to build individual units of functionality for a site in individual <em>apps</em>.
+Imagine for a moment a website that caters to comic book fans.
+It might have a system for listing given comic book titles, different runs within each title, and then individual issues.
+This system would be an &#8220;app&#8221;.
+Perhaps the site might also have a forum section, where users can open and participate in discussions about their favorite comic books.
+This forum would likely be a separate app.
+The app is used in this site to discuss comic books.
+But if it is well written, there would be nothing that prevent it from being used in a different website to discuss other topics.</p>
+<p>We already have one app in our Imager site.
+It manages user profiles for us.
+But there is no reason that app should also contain the models and views needed to manage photos and albums.</p>
+<p>We need to start a new app that will represent the image management portion of our website.
+Move into your imager site directory (with the <code class="docutils literal"><span class="pre">manage.py</span></code>). Start a new app:</p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">startapp</span> <span class="pre">imager_images</span></code></p>
+<p>We can begin by starting to build our model:</p>
+<p><em>/.../imagersite/imager_images</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Photo</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="nb">file</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span>
+</pre></div>
+</div>
+<p>First we&#8217;ll start with a <code class="docutils literal"><span class="pre">file</span></code> field: <code class="docutils literal"><span class="pre">file</span> <span class="pre">=</span> <span class="pre">models.ImageField</span></code>.
+Django has 2 types of fields when dealing with binary files, the <code class="docutils literal"><span class="pre">ImageField</span></code> and the <code class="docutils literal"><span class="pre">FileField</span></code>.
+Images are just files that have special properties like <code class="docutils literal"><span class="pre">height</span></code> and <code class="docutils literal"><span class="pre">width</span></code>.
+Django comes with this functionality built in with <code class="docutils literal"><span class="pre">ImageField</span></code>.</p>
+<p>When we construct these models, there are a few options we really want to think about.
+The first of these is <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/models/fields/#django.db.models.FileField.upload_to"><code class="docutils literal"><span class="pre">upload_to</span></code></a>.</p>
+</div>
+<div class="section" id="files-and-media">
+<span id="files-and-media"></span><h2>Files and Media<a class="headerlink" href="#files-and-media" title="Permalink to this headline">¶</a></h2>
+<p>Here is our <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/models/fields/#filefield"><code class="docutils literal"><span class="pre">FileField</span></code></a> constructor:</p>
+<p><code class="docutils literal"><span class="pre">class</span> <span class="pre">FileField(upload_to=None,</span> <span class="pre">max_length=100,</span> <span class="pre">**options)</span></code></p>
+<ul class="simple">
+<li>It takes <code class="docutils literal"><span class="pre">upload_to=None</span></code> as a default.</li>
+<li>It takes <code class="docutils literal"><span class="pre">max_length=100</span></code> as a default.</li>
+<li>It takes <code class="docutils literal"><span class="pre">**options</span></code> (more on these later).</li>
+</ul>
+<p><code class="docutils literal"><span class="pre">upload_to</span></code> represents a filesystem path where we will store these images.
+Django keeps track for you of a place called <code class="docutils literal"><span class="pre">MEDIA_ROOT</span></code>.
+We need to add this to <code class="docutils literal"><span class="pre">settings.py</span></code>.
+It&#8217;s not a normal default setting because not all sites require the ability to upload files.</p>
+<p>If we look in our <code class="docutils literal"><span class="pre">settings.py</span></code> file, you&#8217;ll see a setting called <code class="docutils literal"><span class="pre">BASE_DIR</span> <span class="pre">=</span> <span class="pre">os.path.dirname(os.path.dirname(os.path.abspath(__file__)))</span></code>.
+This is a bit confusing, but here is what it does.
+It calls <code class="docutils literal"><span class="pre">os.path.abspath(__file__)</span></code> on <code class="docutils literal"><span class="pre">settings.py</span></code>.
+This gives us the absolute path to our <code class="docutils literal"><span class="pre">settings.py</span></code> file as a starting point.
+Calling <code class="docutils literal"><span class="pre">os.path.dirname()</span></code> on that path hands us back everything in the path <em>except</em> the last path segment.
+In this case, that strips the filename and leaves us with the path to the directory containing the <code class="docutils literal"><span class="pre">settings.py</span></code> file, our configuration root.
+Calling <code class="docutils literal"><span class="pre">dirname()</span></code> again on that value again strips the last path segement.
+That gives us the path to the directory that contains our configuration root, the project root:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ tree .
+.
+├── imager_images
+│   ├── __init__.py
+│   ├── admin.py
+...
+├── imager
+│   ├── __init__.py
+│   ├── __init__.pyc
+│   ├── settings.py
+...
+└── manage.py
+</pre></div>
+</div>
+<p>So in our current directory structure, we would be setting <code class="docutils literal"><span class="pre">BASE_DIR</span></code> to the directory one level above our <code class="docutils literal"><span class="pre">settings.py</span></code>.
+This is the directory in which <code class="docutils literal"><span class="pre">manage.py</span></code> is located.</p>
+<p>The way that <code class="docutils literal"><span class="pre">startproject</span></code> works, it always gives you this structure.
+You can rename the top-level site directory if you want to, but do not change the name of the directory with your <code class="docutils literal"><span class="pre">settings.py</span></code> file.
+The reason for this is because in your <code class="docutils literal"><span class="pre">manage.py</span></code> file, it refers to your <code class="docutils literal"><span class="pre">imager.settings</span></code>.
+You would need to start renaming things in other places as well, or your site will stop working properly.</p>
+</div>
+<div class="section" id="media-root">
+<span id="media-root"></span><h2>MEDIA_ROOT<a class="headerlink" href="#media-root" title="Permalink to this headline">¶</a></h2>
+<p>So if we want to construct a path name, what will we use?
+The <code class="docutils literal"><span class="pre">os</span></code> module from the Python standard library provides us with <code class="docutils literal"><span class="pre">os.path.join()</span></code>.
+What does <code class="docutils literal"><span class="pre">.join()</span></code> take? Path segments that get joined together.
+So we can set up our <code class="docutils literal"><span class="pre">MEDIA_ROOT</span></code> like so:</p>
+<p><em>/.../imagersite/imagersite/settings.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="c1"># Media file handling</span>
+<span class="n">MEDIA_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">&#39;media&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now our <code class="docutils literal"><span class="pre">MEDIA_ROOT</span></code> is set to be a folder called <code class="docutils literal"><span class="pre">media</span></code> that&#8217;s in our project directory.
+We will need to create that folder.
+You wouldn&#8217;t want to add a bunch of testing images or things your users upload as versioned items in your github repo.
+But simply adding the <code class="docutils literal"><span class="pre">media</span></code> directory to <code class="docutils literal"><span class="pre">.gitignore</span></code> in this way will make it so that git doesn&#8217;t track the <code class="docutils literal"><span class="pre">media</span></code> directory at all.
+And since Django itself will not create that directory on our behalf, this opens up a quandry.
+We want this folder as a part of our project structure, but we don&#8217;t want anything inside it.</p>
+<p>The best way to accomplish this is to go into the <code class="docutils literal"><span class="pre">media</span></code> directory and add a file called <code class="docutils literal"><span class="pre">.gitkeep</span></code>.
+This file could really be called anything, <code class="docutils literal"><span class="pre">.gitkeep</span></code> is just a convention.
+The point is that there is now a file inside that directory, which means git can track it.
+Now we&#8217;ll see the <code class="docutils literal"><span class="pre">media</span> <span class="pre">directory</span></code> in our git status of untracked files.
+If we commit this file, then the <code class="docutils literal"><span class="pre">media</span></code> directory will now be added to our directory structure.</p>
+<p>To prevent anything else that is created there from being committed, we can add <code class="docutils literal"><span class="pre">media/*</span></code> to our <code class="docutils literal"><span class="pre">.gitignore</span></code>.
+Alternatively, we can add two lines, <code class="docutils literal"><span class="pre">media</span></code> and <code class="docutils literal"><span class="pre">!media/.gitkeep</span></code>, which ignores the directory, but exempts the <code class="docutils literal"><span class="pre">.gitkeep</span></code> file from that rule.</p>
+<p><em>.gitignore</em></p>
+<div class="highlight-python"><div class="highlight"><pre>...
+media
+!media/.gitkeep
+</pre></div>
+</div>
+<div class="section" id="gotchas">
+<span id="gotchas"></span><h3>Gotchas<a class="headerlink" href="#gotchas" title="Permalink to this headline">¶</a></h3>
+<p>Getting back to <code class="docutils literal"><span class="pre">MEDIA_ROOT</span></code>.
+Whenever you upload a file to Django, that&#8217;s where Django will put the actual files that were uploaded.
+When you set something up like the <code class="docutils literal"><span class="pre">Photo</span></code> class like we&#8217;re making, this <code class="docutils literal"><span class="pre">upload_to</span></code> argument will be appended to the <code class="docutils literal"><span class="pre">MEDIA_ROOT</span></code> directory.
+The resulting path will be the location where the data from the uploaded file will be written to disk.</p>
+<p>Be careful not to add &#8220;/&#8221; before the name you provide as the value for <code class="docutils literal"><span class="pre">upload_to</span></code>.
+Django will throw an error here that might not make a lot of sense at first glance.
+It will complain about a security violation.
+The reason is that like us, Django uses <code class="docutils literal"><span class="pre">os.path.join()</span></code> to build the complete path.
+What happens when you join two paths that start with <code class="docutils literal"><span class="pre">/</span></code> using that function?</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">In [2]: </span><span class="n">path1</span> <span class="o">=</span> <span class="s2">&quot;/absolute/path/one&quot;</span>
+<span class="gp">In [3]: </span><span class="n">path2</span> <span class="o">=</span> <span class="s2">&quot;/another/path&quot;</span>
+<span class="gp">In [4]: </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path1</span><span class="p">,</span> <span class="n">path2</span><span class="p">)</span>
+<span class="gh">Out[4]: </span><span class="go">&#39;/another/path&#39;</span>
+</pre></div>
+</div>
+<p>The end result is that you end up with only the second path, treated as an absolute path.
+Django tries to spot this.
+If the final result for the path where you want to store files is not located <em>inside</em> the value of <code class="docutils literal"><span class="pre">MEDIA_ROOT</span></code> it will throw an error.
+It will assume that someone is trying to pass bad user data to break out of system containment on your server.</p>
+<p>So the end result of our file field declaration for a <code class="docutils literal"><span class="pre">Photo</span></code> model should look something like this.</p>
+<p><em>/.../d35-imager/imagersite/imager_images</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Photo</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="nb">file</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;photo_files&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we&#8217;re set up to upload files, and Django will take care of the file management of them for us.</p>
+</div>
+<div class="section" id="options-for-upload-to">
+<span id="options-for-upload-to"></span><h3>Options for <code class="docutils literal"><span class="pre">upload_to</span></code><a class="headerlink" href="#options-for-upload-to" title="Permalink to this headline">¶</a></h3>
+<p>You can also pass strings into the <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/models/fields/#django.db.models.FileField.upload_to"><code class="docutils literal"><span class="pre">upload_to</span></code></a> field that are for formatting in date-time style.</p>
+<p><code class="docutils literal"><span class="pre">file</span> <span class="pre">=</span> <span class="pre">models.ImageField(upload_to='photo_files/%Y-%m-%d')</span></code></p>
+<p>If you are planning on working with a large number of files, this is actually a great idea.
+File systems have a limited number of nodes they can open, so this is one way to limit the number of files in one directory.</p>
+<p>The final option for <code class="docutils literal"><span class="pre">upload_to</span></code> is to pass a Python callable.
+The callable will be executed when the file is uploaded.
+It will receive the instance of the model where the file field is defined as the first argument.
+The second argument will be the filename of the uploaded file.
+This callable should be used to assemble a relative pathname for the file to be written to.
+This example shows how to write each <code class="docutils literal"><span class="pre">Photo</span></code> into a directory named for its own user.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">user_directory_path</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="c1"># file will be uploaded to MEDIA_ROOT/user_&lt;id&gt;/&lt;filename&gt;</span>
+    <span class="k">return</span> <span class="s1">&#39;user_{0}/{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="media-urls">
+<span id="media-urls"></span><h2>Media URLs<a class="headerlink" href="#media-urls" title="Permalink to this headline">¶</a></h2>
+<p>Now we&#8217;ve created this <code class="docutils literal"><span class="pre">ImageField</span></code>, and our users&#8217; Photos will be uploaded to known locations.
+In order for them to be viewed, we need to be able to construct a url that points to the file.</p>
+<p>Django provides automatically a <code class="docutils literal"><span class="pre">STATIC_URL</span></code> setting in the <code class="docutils literal"><span class="pre">settings.py</span></code> file.
+In the default skeleton we&#8217;ve been given, what is that value?
+This becomes an initial path value used to construct URLs for static resources like javascript and css.
+By default, during development, Django will look in <code class="docutils literal"><span class="pre">static</span></code> directories in any installed apps for these resources.
+We can also create a <code class="docutils literal"><span class="pre">STATIC_ROOT</span> <span class="pre">=</span> <span class="pre">os.path.join(BASE_DIR,</span> <span class="pre">'static')</span></code> that points to a single home for static resources.
+Then the <code class="docutils literal"><span class="pre">collectstatic</span></code> management command will copy all the static resources of all our installed apps into that location.</p>
+<p>Media resources (files uploaded by users, but not part of the site itself) work in a similar fashion.
+We can set a <code class="docutils literal"><span class="pre">MEDIA_URL</span></code> value in <code class="docutils literal"><span class="pre">settings.py</span></code> to allow Django to build the right URLs for us.
+But there&#8217;s a bit of a problem that will stand in our way.
+Django uses a urlconf to map URIs to a particular view.</p>
+<p>For example, we can include all the URLs for views that correspond to our <code class="docutils literal"><span class="pre">imager_profile</span></code> app:</p>
+<p><em>/.../imagersite/imagersite/urls.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^admin/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">)),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^profile/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s1">&#39;imager_profile.urls&#39;</span><span class="p">)),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>This will buckle all of the urls in our <code class="docutils literal"><span class="pre">imager_profile</span></code> so that they start with <code class="docutils literal"><span class="pre">profile/</span></code> in the URL.
+Other apps may be buckled in at other path segments.
+This should not be overly surprising to us.</p>
+<p>The problem we are trying to solve is that we want to get to our MEDIA resources.
+In Django the <code class="docutils literal"><span class="pre">FileField</span></code> itself is responsible for generating the URL at which that file can be viewed.
+In point of fact, it isn&#8217;t the field itself, but rather a thing called a &#8220;storage&#8221; which is responsible for determining where that file data is written.
+But for the time being we can think of it as the field.</p>
+<p>This is best illustrated by example.
+Let&#8217;s start by registering our new, simple <code class="docutils literal"><span class="pre">Photo</span></code> model for Django&#8217;s admin.</p>
+<p><em>/.../imagersite/imager_images/admin.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Photo</span>
+
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Photo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now our admin system is aware of our <code class="docutils literal"><span class="pre">Photo</span></code> model.
+Add our <code class="docutils literal"><span class="pre">imager_images</span></code> app to our <code class="docutils literal"><span class="pre">settings.py</span></code> so that Django itself knows about the models:</p>
+<p><em>/.../imagersite/imagersite/settings.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.gis&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;imager_profile&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;imager_images&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>And now make migrations to register the changes to our database:</p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">makemigrations</span> <span class="pre">imager_images</span></code></p>
+<div class="section" id="exploring-the-file-api">
+<span id="exploring-the-file-api"></span><h3>Exploring the File API<a class="headerlink" href="#exploring-the-file-api" title="Permalink to this headline">¶</a></h3>
+<p>At this point we get an error that <code class="docutils literal"><span class="pre">Pillow</span></code> is not installed.
+<code class="docutils literal"><span class="pre">Pillow</span></code> is a python package that Django uses to work with images.
+When you get this error you will need to install <code class="docutils literal"><span class="pre">Pillow</span></code> with <code class="docutils literal"><span class="pre">pip</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">migrate</span></code></p>
+<p>Now we need to create a superuser if one has not yet been created:</p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">createsuperuser</span></code></p>
+<p>Now we have a superuser.
+We have a model.
+Our model has been hooked up to the admin so that you can interact with it in Django&#8217;s admin interface.</p>
+<p>We can look at this by starting the Django testing server:</p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver</span></code></p>
+<p>And point our browser to <code class="docutils literal"><span class="pre">http://localhost:8000/admin/</span></code></p>
+<p><img alt="alt text" src="../_images/admin_login.png" /></p>
+<p>Now we should see our Photo model available to us under the admin interface:</p>
+<p><img alt="alt text" src="../_images/site_administration.png" /></p>
+<p>Now we can click on our Photos admin and work with individual photos.
+There&#8217;s nothing there now, but we can add one through this interface (click the <code class="docutils literal"><span class="pre">add</span> <span class="pre">photo</span></code> button and add a photo).</p>
+<p>Once we have a photo added, we can interact with it on the filesystem.
+Quit the development server and start up the Django shell:</p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">shell</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">imager_images.models</span> <span class="kn">import</span> <span class="n">Photo</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">Photo</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">imager_images</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Photo</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">photos</span> <span class="o">=</span> <span class="n">Photo</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">photos</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Photo</span><span class="p">:</span> <span class="n">Photo</span> <span class="nb">object</span><span class="o">&gt;</span><span class="p">]</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">photos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="n">p1</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">Photo</span><span class="p">:</span> <span class="n">Photo</span> <span class="nb">object</span><span class="o">&gt;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="n">p1</span><span class="o">.</span><span class="n">file</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">ImageFieldFile</span><span class="p">:</span> <span class="n">photo_files</span><span class="o">/</span><span class="n">puppy_tshirt_1_srEjTtI</span><span class="o">.</span><span class="n">jpg</span><span class="o">&gt;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="nb">dir</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">8</span><span class="p">]:</span>
+<span class="p">[</span><span class="s1">&#39;DEFAULT_CHUNK_SIZE&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__bool__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__class__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__delattr__&#39;</span><span class="p">,</span>
+ <span class="o">...</span>
+ <span class="s1">&#39;write&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;writelines&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;xreadlines&#39;</span><span class="p">]</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="n">p1</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">name</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="s1">u&#39;photo_files/puppy_tshirt_1_srEjTtI.jpg&#39;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="n">p1</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">url</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="s1">&#39;/media/photo_files/puppy_tshirt_1_srEjTtI.jpg&#39;</span>
+
+</pre></div>
+</div>
+<p>What this means is that when we&#8217;re working in our views, we can grab a photo object.
+We can pass that photo object off the the template.
+And in our template we can create an image tag with something like <code class="docutils literal"><span class="pre">src={{</span> <span class="pre">photo.file.url</span> <span class="pre">}}</span></code>.
+The photo file will automatically generate the URL to our photo for us.</p>
+</div>
+<div class="section" id="the-static-view">
+<span id="the-static-view"></span><h3>The Static View<a class="headerlink" href="#the-static-view" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s consider our root URL config.
+This is the place you add global URLs.
+The app URLs can be imported here.
+There&#8217;s one sneaky thing Django does that you might not be aware of.
+Django looks at the <code class="docutils literal"><span class="pre">DEBUG</span></code> setting.
+When it&#8217;s set to true, Django creates a url that points to static files.
+It will look into each installed app and serve static files from the app if it finds them.
+As soon as you set <code class="docutils literal"><span class="pre">DEBUG</span> <span class="pre">=</span> <span class="pre">False</span></code>, all of our CSS and other static files have broken links:</p>
+<p><img alt="alt text" src="../_images/broken_css.png" /></p>
+<p>Our secret URL for static files is gone.
+Django&#8217;s intention is that you will use your web server to serve the static files.</p>
+<p>Media works the same way.</p>
+<p>Let&#8217;s first change our <code class="docutils literal"><span class="pre">DEBUG=True</span></code> back. Can we navigate to our media file?</p>
+<p><img alt="alt text" src="../_images/img_404.png" /></p>
+<p>We need to look under Django&#8217;s docs to see how to deal with <a class="reference external" href="https://docs.djangoproject.com/en/1.9/howto/static-files/#serving-files-uploaded-by-a-user-during-development">serving files uploaded by a user during development</a>.
+Those docs suggest to add this to <code class="docutils literal"><span class="pre">urls.py</span></code>:</p>
+<p><em>/.../imagersite/imagersite/urls.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">include</span><span class="p">,</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django.conf.urls.static</span> <span class="kn">import</span> <span class="n">static</span>
+<span class="o">...</span>
+<span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+    <span class="n">urlpatterns</span> <span class="o">+=</span> <span class="n">static</span><span class="p">(</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_URL</span><span class="p">,</span> <span class="n">document_root</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>This urlconf is identical to the one that Django itself adds for static files.
+We just have to do this one manually because Django does not assume we will want or need media files.</p>
+<p>Now, your media files should be found.</p>
+</div>
+</div>
+<div class="section" id="storages">
+<span id="storages"></span><h2>Storages<a class="headerlink" href="#storages" title="Permalink to this headline">¶</a></h2>
+<p>One thing that is invisible to us that we pointed out earlier.
+Our <code class="docutils literal"><span class="pre">file</span> <span class="pre">=</span> <span class="pre">models.ImageField()</span></code> contains a file object.
+That file object has an attribute called <code class="docutils literal"><span class="pre">storage</span></code>.
+The default storage is an instance of the filesystem storage class from <code class="docutils literal"><span class="pre">django.core.files.storage</span></code>.
+But one of the available arguments to file fields is the storage class you wish to use.
+You can use other storages that allow you to automatically place your files into CDNs, an AWS S3 bucket, or any number of other scenarios.</p>
+<p>There is a package called <a class="reference external" href="https://django-storages.readthedocs.org/en/latest/"><code class="docutils literal"><span class="pre">django</span> <span class="pre">storages</span></code></a> that implements quite a number of these useful storages.
+This allows you to place your files on CDNs if you want, and this can vastly speed up your static files loading around the world.</p>
+</div>
+<div class="section" id="testing-tricks">
+<span id="testing-tricks"></span><h2>Testing Tricks<a class="headerlink" href="#testing-tricks" title="Permalink to this headline">¶</a></h2>
+<p>One last word, testing file uploads is tricky.
+Take a look at the <a class="reference external" href="http://factoryboy.readthedocs.org/en/latest/orms.html#factory.django.ImageField">Factory Boy image field</a> to make this easier.
+Be aware that values like <code class="docutils literal"><span class="pre">upload_to</span></code> and <code class="docutils literal"><span class="pre">MEDIA_ROOT</span></code> values don&#8217;t automatically change while you are testing.</p>
+<p>But remember that the settings you have are writable.
+You can alter them at test time.
+You may want to mess around with settings so that your test files go to <code class="docutils literal"><span class="pre">/tmp</span></code> or something like that.
+See the documentation on <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/testing/tools/#overriding-settings">overriding settings</a> for ideas on how to do this.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Files in Django</a><ul>
+<li><a class="reference internal" href="#a-new-application">A New Application</a></li>
+<li><a class="reference internal" href="#files-and-media">Files and Media</a></li>
+<li><a class="reference internal" href="#media-root">MEDIA_ROOT</a><ul>
+<li><a class="reference internal" href="#gotchas">Gotchas</a></li>
+<li><a class="reference internal" href="#options-for-upload-to">Options for <code class="docutils literal"><span class="pre">upload_to</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#media-urls">Media URLs</a><ul>
+<li><a class="reference internal" href="#exploring-the-file-api">Exploring the File API</a></li>
+<li><a class="reference internal" href="#the-static-view">The Static View</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#storages">Storages</a></li>
+<li><a class="reference internal" href="#testing-tricks">Testing Tricks</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="decision_trees_forest.html"
+                        title="previous chapter">Decision Trees &amp; Random Forests Experiment</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="django_views.html"
+                        title="next chapter">Django URLs, Views and Templates</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="django_views.html" title="Django URLs, Views and Templates"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="decision_trees_forest.html" title="Decision Trees &amp; Random Forests Experiment"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

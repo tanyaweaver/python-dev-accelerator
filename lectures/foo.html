@@ -1,0 +1,845 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Django Testing &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="next" title="401 Python: Lecture Notes" href="index.html" />
+    <link rel="prev" title="Django URLs, Views and Templates" href="django_views.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="401 Python: Lecture Notes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="django_views.html" title="Django URLs, Views and Templates"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="django-testing">
+<h1>Django Testing<a class="headerlink" href="#django-testing" title="Permalink to this headline">¶</a></h1>
+<p>Testing in Django, including a bit on using Factory Boy to manage test
+data</p>
+<hr class="docutils" />
+<p>By this point we should be moving forward on our models for our imager
+app. That means we should be testing these models - and that means we
+need to look at Django&#8217;s testing framework.</p>
+<p>Up until this point, we&#8217;ve been using <code class="docutils literal"><span class="pre">py.test</span></code>. It is possible to use
+<code class="docutils literal"><span class="pre">py.test</span></code> with Django, but if we want to use Django&#8217;s testing methods,
+we need to be familiar with <code class="docutils literal"><span class="pre">unittest</span></code>. The biggest difference between
+<code class="docutils literal"><span class="pre">py.test</span></code> and <code class="docutils literal"><span class="pre">unittest</span></code> is that <code class="docutils literal"><span class="pre">unittest</span></code> is predicated on the
+idea of a <code class="docutils literal"><span class="pre">TestCase</span></code> class.</p>
+<div class="section" id="django-and-unittest">
+<h2>Django and UnitTest<a class="headerlink" href="#django-and-unittest" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s talk for a moment about how <code class="docutils literal"><span class="pre">unittest</span></code> operates. Unittest uses
+the <code class="docutils literal"><span class="pre">TestCase</span></code> class, and you subclass from the base <code class="docutils literal"><span class="pre">TestCase</span></code>
+class. When using Django, this comes from the Django testing module.
+When you generate an app, it builds a test file. It imports <code class="docutils literal"><span class="pre">TestCase</span></code>
+there:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+</pre></div>
+</div>
+<p>This is Django&#8217;s version of <code class="docutils literal"><span class="pre">TestCase</span></code>, so it has some special
+attributes. The basic idea is that you create some class that inherits
+from Django&#8217;s <code class="docutils literal"><span class="pre">TestCase</span></code>:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_foo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Every method you write on that class that begins with <code class="docutils literal"><span class="pre">test</span></code> will be
+run by Django&#8217;s test runner. TestCases can only take self, and whatever
+code is inside will be executed as a test.</p>
+<div class="section" id="setup-teardown">
+<h3>setUp / teardown<a class="headerlink" href="#setup-teardown" title="Permalink to this headline">¶</a></h3>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">test_foo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>These two <code class="docutils literal"><span class="pre">setUp</span></code> and <code class="docutils literal"><span class="pre">tearDown</span></code> methods are similar to <code class="docutils literal"><span class="pre">py.test</span></code>
+fixtures. They allow you to create a universe for your tests to run in.
+<code class="docutils literal"><span class="pre">setUp</span></code> and <code class="docutils literal"><span class="pre">tearDown</span></code> are test level fixtures. The code inside is
+executed for every single test. There are also case level fixtures
+called <code class="docutils literal"><span class="pre">SetUpClass</span></code> and <code class="docutils literal"><span class="pre">TearDownClass</span></code>. These don&#8217;t generally get
+used.</p>
+<p>Let&#8217;s set up a breakpoint to inspect this:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+
+<span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="s1">&#39;boo&#39;</span>
+
+    <span class="k">def</span> <span class="nf">test_foo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can run our tests like so:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python manage.py test
+Creating test database for alias &#39;default&#39;...
+&gt; .../d35-imager/imagersite/imager_profile/tests.py(11)test_foo()
+-&gt; self.assertTrue(False)
+(Pdb) self
+&lt;imager_profile.tests.ProfileTestCase testMethod=test_foo&gt;
+</pre></div>
+</div>
+<p>Now at our breakpoint, we can inspect what <code class="docutils literal"><span class="pre">self</span></code> is. Currently that
+returns <code class="docutils literal"><span class="pre">&lt;imager_profile.tests.ProfileTestCase</span> <span class="pre">testMethod=test_foo&gt;</span></code>
+which an instance of the ProfileTestCase.</p>
+<p>We can see our attributes from <code class="docutils literal"><span class="pre">setUp</span></code> are available:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>(Pdb) self.username
+&#39;boo&#39;
+</pre></div>
+</div>
+<p>We can make assertions:</p>
+<div class="highlight-python"><div class="highlight"><pre>(Pdb) self.assertTrue(self.username == &#39;boo&#39;)
+(Pdb)
+</pre></div>
+</div>
+<p>Any time an assertion does not raise an error, we know our test passed.
+There are methods available that are useful to us:</p>
+<div class="highlight-python"><div class="highlight"><pre>(Pdb) assertions = [name for name in dir(self) if name.lower().startswith(&#39;assert&#39;)]
+(Pdb) assertions
+[&#39;assertAlmostEqual&#39;, &#39;assertAlmostEquals&#39;, &#39;assertContains&#39;, &#39;assertDictContainsSubset&#39;, &#39;assertDictEqual&#39;, &#39;assertEqual&#39;, &#39;assertEquals&#39;, &#39;assertFalse&#39;, &#39;assertFieldOutput&#39;, &#39;assertFormError&#39;, &#39;assertFormsetError&#39;, &#39;assertGreater&#39;, &#39;assertGreaterEqual&#39;, &#39;assertHTMLEqual&#39;, &#39;assertHTMLNotEqual&#39;, &#39;assertIn&#39;, &#39;assertInHTML&#39;, &#39;assertIs&#39;, &#39;assertIsInstance&#39;, &#39;assertIsNone&#39;, &#39;assertIsNot&#39;, &#39;assertIsNotNone&#39;, &#39;assertItemsEqual&#39;, &#39;assertJSONEqual&#39;, &#39;assertJSONNotEqual&#39;, &#39;assertLess&#39;, &#39;assertLessEqual&#39;, &#39;assertListEqual&#39;, &#39;assertMultiLineEqual&#39;, &#39;assertNotAlmostEqual&#39;, &#39;assertNotAlmostEquals&#39;, &#39;assertNotContains&#39;, &#39;assertNotEqual&#39;, &#39;assertNotEquals&#39;, &#39;assertNotIn&#39;, &#39;assertNotIsInstance&#39;, &#39;assertNotRegexpMatches&#39;, &#39;assertNumQueries&#39;, &#39;assertQuerysetEqual&#39;, &#39;assertRaises&#39;, &#39;assertRaisesMessage&#39;, &#39;assertRaisesRegexp&#39;, &#39;assertRedirects&#39;, &#39;assertRegexpMatches&#39;, &#39;assertSequenceEqual&#39;, &#39;assertSetEqual&#39;, &#39;assertTemplateNotUsed&#39;, &#39;assertTemplateUsed&#39;, &#39;assertTrue&#39;, &#39;assertTupleEqual&#39;, &#39;assertXMLEqual&#39;, &#39;assertXMLNotEqual&#39;, &#39;assert_&#39;]
+</pre></div>
+</div>
+<p>So as you can see there are many assertions available. Some of the ones
+that are Django specific: - <code class="docutils literal"><span class="pre">assertTemplateUsed</span></code>,
+<code class="docutils literal"><span class="pre">assertTemplateNotUsed</span></code> - You can check that proper Django templates
+are being used or not used. - <code class="docutils literal"><span class="pre">assertInHTML</span></code></p>
+</div>
+<div class="section" id="self-client">
+<h3>self.client<a class="headerlink" href="#self-client" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>(Pdb) self.client
+&lt;django.test.client.Client object at 0x104d03dd0&gt;
+</pre></div>
+</div>
+<p>When we created a py.test to create a browser, we used a <code class="docutils literal"><span class="pre">webtest</span></code>
+object. Django has <code class="docutils literal"><span class="pre">.client</span></code>. It&#8217;s similar to calling a browser.</p>
+<p>We can continue the test and see that it fails:</p>
+<div class="highlight-python"><div class="highlight"><pre>(Pdb) c
+F
+======================================================================
+FAIL: test_foo (imager_profile.tests.ProfileTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;/Users/Joel/Documents/cris_transcribe_job/cris_pythonda_transcribe/sea_d35_day23_django_testing/d35-imager/imagersite/imager_profile/tests.py&quot;, line 11, in test_foo
+    self.assertTrue(False)
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 272.382s
+
+FAILED (failures=1)
+Destroying test database for alias &#39;default&#39;...
+</pre></div>
+</div>
+<p>Django gives us some information about the failed test.
+<code class="docutils literal"><span class="pre">AssertionError:</span> <span class="pre">False</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">true</span></code></p>
+</div>
+<div class="section" id="factory-boy">
+<h3><a class="reference external" href="https://factoryboy.readthedocs.org/en/latest/index.html">Factory Boy</a><a class="headerlink" href="#factory-boy" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s write some tests that cover the functionality of our models.</p>
+<ul class="simple">
+<li>We want to be able to use our model objects in our test.</li>
+<li>You can use <code class="docutils literal"><span class="pre">initial_data</span></code> fixtures (that can be stored in JSON
+format) on your tests.</li>
+<li>Fixtures can have problems:<ul>
+<li>Create a model</li>
+<li>Dump it out into JSON Fixtures</li>
+<li>You might make, for example, users - maybe one named Bob</li>
+<li>Later you may make a rule that usernames need to be 5 characters
+minimum.</li>
+<li>Now your fixture is out of date</li>
+</ul>
+</li>
+</ul>
+<p>Now you have a maintenance burden to make sure your data fixtures stay
+up to date. There are tools to help us with this.</p>
+<p>Enter <a class="reference external" href="https://factoryboy.readthedocs.org/en/latest/">Factory Boy</a>.
+It&#8217;s similar to ruby&#8217;s Factory Girl. The idea is to provide us with
+<em>factories</em> that will generate test objects that meet our expectations.
+We can assert that they work at that point.</p>
+<p>The basic idea is that we can write a test with Factory Boy where we set
+up an order that is part of our tests, then we run the test. Let&#8217;s
+install Factory Boy. <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">factory_boy</span></code></p>
+<p>Now we can set up a class that inherits from factory and informs the
+factory what model we are going to use. We update our tests:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">import</span> <span class="nn">factory</span>
+
+<span class="kn">from</span> <span class="nn">imager_profile.models</span> <span class="kn">import</span> <span class="n">ImagerProfile</span>
+
+
+<span class="k">class</span> <span class="nc">UserFactory</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">django</span><span class="o">.</span><span class="n">DjangoModelFactory</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+</pre></div>
+</div>
+<p>Now we have Factory Boy generate a user for us in our test setup:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">UserFactory</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Let&#8217;s look at this now:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python manage.py test
+Creating test database for alias &#39;default&#39;...
+&gt; /Users/Joel/Documents/cris_transcribe_job/cris_pythonda_transcribe/sea_d35_day23_django_testing/d35-imager/imagersite/imager_profile/tests.py(19)test_foo()
+-&gt; self.assertTrue(False)
+(Pdb) self.user
+&lt;User: &gt;
+</pre></div>
+</div>
+<p>Our <code class="docutils literal"><span class="pre">self.user</span></code> is actually a <code class="docutils literal"><span class="pre">User</span></code>. What are the values of its
+attributes?:</p>
+<div class="highlight-python"><div class="highlight"><pre>(Pdb) self.user.username
+u&#39;&#39;
+(Pdb) self.user.email
+u&#39;&#39;
+(Pdb) self.user.password
+u&#39;&#39;
+</pre></div>
+</div>
+<p>Well, we haven&#8217;t actually set that up yet. For now they are empty
+strings.</p>
+</div>
+<div class="section" id="factory-values">
+<h3>Factory Values<a class="headerlink" href="#factory-values" title="Permalink to this headline">¶</a></h3>
+<p>We can create a user and that user exists, but we might want to add more
+to it:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">UserFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s1">&#39;bob@example.com&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Now when we run our tests and inspect our user at the breakpoint:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python manage.py test
+Creating test database for alias &#39;default&#39;...
+&gt; /.../imagersite/imager_profile/tests.py(20)test_foo()
+-&gt; self.assertTrue(False)
+(Pdb) self.user
+&lt;User: bob&gt;
+(Pdb) self.user.username
+&#39;bob&#39;
+(Pdb) self.user.email
+&#39;bob@example.com&#39;
+</pre></div>
+</div>
+<p>We don&#8217;t actually need to set up our user this way. We can use the
+factory to generate users for us. Let&#8217;s say we want to create a username
+and email when we actually setup our user. We can create attributes of
+our factory that correspond to the values that we want. Let&#8217;s say all of
+our users should be named &#8216;bob&#8217;. We update our <code class="docutils literal"><span class="pre">tests.py</span></code>:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">import</span> <span class="nn">factory</span>
+
+<span class="kn">from</span> <span class="nn">imager_profile.models</span> <span class="kn">import</span> <span class="n">ImagerProfile</span>
+
+
+<span class="k">class</span> <span class="nc">UserFactory</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">django</span><span class="o">.</span><span class="n">DjangoModelFactory</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+
+    <span class="n">username</span> <span class="o">=</span> <span class="s1">&#39;bob&#39;</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="s1">&#39;bob@example.com&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">UserFactory</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">test_foo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now when we run our tests and hit our breakpoint, our user has
+attributes that are provided by Factory Boy:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python manage.py test
+Creating test database for alias &#39;default&#39;...
+&gt; /.../imager_profile/tests.py(26)test_foo()
+-&gt; self.assertTrue(False)
+(Pdb) self.user
+&lt;User: bob&gt;
+(Pdb) self.user.username
+u&#39;bob&#39;
+(Pdb) self.user.email
+u&#39;bob@example.com&#39;
+(Pdb)
+</pre></div>
+</div>
+<p>But if you want to override a factory, that&#8217;s possible too:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">UserFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;sally&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>(Pdb) self.user
+&lt;User: sally&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="lazy-attributes">
+<h3><a class="reference external" href="https://factoryboy.readthedocs.org/en/latest/#lazy-attributes">Lazy Attributes</a><a class="headerlink" href="#lazy-attributes" title="Permalink to this headline">¶</a></h3>
+<p>We don&#8217;t necessarily need to set static values for our tests. We can use
+&#8220;Lazy Attributes&#8221;. These can take functions as a way of generating
+something. We may want to set something up so that our email is created
+from the username.</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="k">class</span> <span class="nc">UserFactory</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">django</span><span class="o">.</span><span class="n">DjangoModelFactory</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+
+    <span class="n">username</span> <span class="o">=</span> <span class="s1">&#39;bob&#39;</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">LazyAttribute</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;{}@example.com&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">username</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">UserFactory</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="o">....</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>(Pdb) self.user
+&lt;User: bob&gt;
+(Pdb) self.user.email
+u&#39;bob@example.com&#39;
+</pre></div>
+</div>
+<p>And if we redo our override:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">UserFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;sally&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>(Pdb) self.user
+&lt;User: sally&gt;
+(Pdb) self.user.email
+u&#39;sally@example.com&#39;
+</pre></div>
+</div>
+<p>So it&#8217;s possible to use functions to generate the values you want. We
+could say perhaps we have a validation rule that usernames are at least
+5 characters. Keep in mind that the <code class="docutils literal"><span class="pre">factory.LazyAttribute</span></code> receives
+one and only one argument which is the instance that&#8217;s about to be built
+along with the static attributes that belong to it already in place.</p>
+</div>
+<div class="section" id="sequences">
+<h3><a class="reference external" href="https://factoryboy.readthedocs.org/en/latest/#sequences">Sequences</a><a class="headerlink" href="#sequences" title="Permalink to this headline">¶</a></h3>
+<p>We can also set up sequences.
+<code class="docutils literal"><span class="pre">email</span> <span class="pre">=</span> <span class="pre">factory.Sequence(lambda</span> <span class="pre">n:</span> <span class="pre">'person{0}&#64;example.com'.format(n))</span></code>.
+This inserts a number that increments:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="k">class</span> <span class="nc">UserFactory</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">django</span><span class="o">.</span><span class="n">DjangoModelFactory</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+
+    <span class="n">username</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="s2">&quot;user{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="s2">&quot;user{}@example.com&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">UserFactory</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>(Pdb) self.users
+[&lt;User: user0&gt;, &lt;User: user1&gt;, &lt;User: user2&gt;, &lt;User: user3&gt;, &lt;User: user4&gt;]
+(Pdb) [u.email for u in self.users]
+[u&#39;user0@example.com&#39;, u&#39;user1@example.com&#39;, u&#39;user2@example.com&#39;, u&#39;user3@example.com&#39;, u&#39;user4@example.com&#39;]
+</pre></div>
+</div>
+<p>We can automatically create this data and then make assertions. For
+example, we want to make sure a profile gets created when we make a
+user...:</p>
+<p>(Question in class happens here: <code class="docutils literal"><span class="pre">.create()</span></code> - does the
+<code class="docutils literal"><span class="pre">UserFactory</span></code> class, whatever it inherits from, have a create method?
+A: Yes.) Explanation below:</p>
+<p><a class="reference external" href="https://factoryboy.readthedocs.org/en/latest/#using-factories">Using
+Factories</a>
+shows us our various build strategies. - <code class="docutils literal"><span class="pre">.build()</span></code> - an instance
+that&#8217;s not saved - <code class="docutils literal"><span class="pre">.create()</span></code> - an instance that is saved -
+<code class="docutils literal"><span class="pre">.stub()</span></code> - makes a user, but it&#8217;s not connected to the database.
+What&#8217;s nice about this is you can use it for unit testing things, where
+you don&#8217;t actually depend on the database. Like maybe the <code class="docutils literal"><span class="pre">__str__</span></code>
+method of your user, you can test it without writing the user to the
+database. This can be faster, so it makes testing faster, which is
+always good.</p>
+<p>It&#8217;s worth knowing that one of the most important differences between
+MySQL and PostgreSQL is that the layer of SQL queries that we call the
+data definition layer (things like CREATE or MODIFY table, DROP table,
+etc.), in Postgres, those kinds of queries can be executed inside a
+transaction, whereas in MySQL they cannot. In other words in MySQL when
+you do a query, it happens, it&#8217;s committed, and it&#8217;s done. In Postgres
+you can run the queries and then do a rollback. One of the deepest
+implications with this when you&#8217;re working with a system like Django is
+that Django will not actually destroy your database inside a test.
+Instead it will run the table generation schemes inside a transaction so
+that it can roll them back at the end. It means you get a speed gain
+when you run tests with PostgreSQL vs MySQL. This can have an impact on
+your development cycle.</p>
+</div>
+<div class="section" id="testing-signaled-profile">
+<h3>Testing Signaled Profile<a class="headerlink" href="#testing-signaled-profile" title="Permalink to this headline">¶</a></h3>
+<p>Ok, back to demonstrating a test. First thing is we&#8217;ll take out the code
+that actually executes the handlers that sets up the event listeners
+that create a profile when you create a user:</p>
+<p><em>/imagersite/imager_profile/app.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.apps</span> <span class="kn">import</span> <span class="n">AppConfig</span>
+
+
+<span class="k">class</span> <span class="nc">ImagerProfileAppConfig</span><span class="p">(</span><span class="n">AppConfig</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;imager_profile&quot;</span>
+    <span class="n">verbose_name</span> <span class="o">=</span> <span class="s2">&quot;Imager User Profile&quot;</span>
+
+    <span class="c1"># def ready(self):</span>
+    <span class="c1">#     &quot;&quot;&quot;code to run when the app is ready&quot;&quot;&quot;</span>
+    <span class="c1">#     from imager_profile import handlers</span>
+</pre></div>
+</div>
+<p>Now we&#8217;ll write a new test:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">test_profile_is_created_when_user_is_saved</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">ImagerProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>First we want to build a user without saving it. Let&#8217;s make sure there
+is no <code class="docutils literal"><span class="pre">ImagerProfile</span></code>. When the test starts to run, we assert there
+are no <code class="docutils literal"><span class="pre">ImagerProfile</span></code> objects. This test passes.</p>
+<p>Now let&#8217;s create ourself a user. We&#8217;ll assert that a <code class="docutils literal"><span class="pre">ImagerProfile</span></code>
+is created at the same time. This test should fail because we
+disconnected the event listeners earlier:</p>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="k">class</span> <span class="nc">ProfileTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">UserFactory</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">test_profile_is_created_when_user_is_saved</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">ImagerProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">ImagerProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python manage.py test
+Creating test database for alias &#39;default&#39;...
+F
+======================================================================
+FAIL: test_profile_is_created_when_user_is_saved (imager_profile.tests.ProfileTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;/.../d35-imager/imagersite/imager_profile/tests.py&quot;, line 27, in test_profile_is_created_when_user_is_saved
+    self.assertTrue(ImagerProfile.objects.count() == 1)
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=1)
+Destroying test database for alias &#39;default&#39;...
+</pre></div>
+</div>
+<p>Now we can reconnect our event listeners by uncommenting out that code
+in <em>app.py</em>, and our test should pass. We&#8217;ve used a factory to
+demonstrate a reality about how our system is working.</p>
+<p>When you test Django, there&#8217;s a rule of thumb. Don&#8217;t bother testing
+things that are Django&#8217;s responsibility. You don&#8217;t need to test that
+when you create a user that it&#8217;s an instance of the <code class="docutils literal"><span class="pre">User</span></code> class,
+because Django should take care of that for you. You do want to test
+things that you&#8217;ve built that leverage Django&#8217;s systems. In this case,
+we&#8217;re leveraging Django&#8217;s signal system to create a secondary object
+when an existing object is created. We make a user and save it, the end
+result should be that a profile exists. That we want to test, because
+that&#8217;s functionality added to the system.</p>
+<p>We also want to make sure that the <code class="docutils literal"><span class="pre">ImagerProfile</span></code> is hooked up to the
+<code class="docutils literal"><span class="pre">User</span></code> in the ways that we expect it. - When we look at our user, it&#8217;s
+name should be dependent on the name of the user itself.</p>
+<p>In our models, we have this <code class="docutils literal"><span class="pre">__str__()</span></code> method that returns the user&#8217;s
+full name or username if that doesn&#8217;t exist.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">username</span>
+</pre></div>
+</div>
+<p>We&#8217;ll write a test that demonstrates that our profile&#8217;s <code class="docutils literal"><span class="pre">__str__()</span></code>
+representation is the same as the representation that we get when we
+look at the user. First we&#8217;ll comment out our <code class="docutils literal"><span class="pre">__str__()</span></code> method and
+have it return an empty string so we can see our test fail first.</p>
+<p><em>/imagersite/imager_profile/models.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre>@python_2_unicode_compatible
+class ImagerProfile(models.Model):
+...
+    def __str__(self):
+        return &#39;&#39;
+        # return self.user.get_full_name() or self.user.username
+...
+</pre></div>
+</div>
+<p><em>/imagersite/imager_profile/tests.py</em></p>
+<div class="code python highlight-python"><div class="highlight"><pre>class ProfileTestCase(TestCase):
+...
+    def test_profile_str_is_user_username(self):
+        self.user.save()
+        profile = ImagerProfile.objects.get(user=self.user)
+        self.assertEqual(str(profile), self.user.username)
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python manage.py test
+Creating test database for alias &#39;default&#39;...
+.F
+======================================================================
+FAIL: test_profile_str_is_user_username (imager_profile.tests.ProfileTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;/.../d35-imager/imagersite/imager_profile/tests.py&quot;, line 32, in test_profile_str_is_user_username
+    self.assertEqual(str(profile), self.user.username)
+AssertionError: &#39;&#39; != u&#39;user1&#39;
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.021s
+
+FAILED (failures=1)
+Destroying test database for alias &#39;default&#39;...
+</pre></div>
+</div>
+<p>Here we have a factory that sets up a user for us. We&#8217;ll <code class="docutils literal"><span class="pre">save()</span></code> the
+user first. We&#8217;ll create a <code class="docutils literal"><span class="pre">profile</span></code> object who&#8217;s <code class="docutils literal"><span class="pre">User</span></code> object is
+the user we just created and saved. Then we want to assert that the
+<code class="docutils literal"><span class="pre">str</span></code> of our profile is equal to our <code class="docutils literal"><span class="pre">user.username</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">AssertionError:</span> <span class="pre">''</span> <span class="pre">!=</span> <span class="pre">u'user1'</span></code></p>
+<p>Let&#8217;s go ahead and return to our model and un-comment the code that
+provides this functionality. Now our test should pass.</p>
+<p>We could write another test that uses the <code class="docutils literal"><span class="pre">get_full_name()</span></code> method on
+the user if we wanted our users to have first and last names as well. We
+could do things like assert whether a user is active or inactive to test
+our <code class="docutils literal"><span class="pre">is_active()</span></code> method. We can begin to make assertions about the
+functionality as part of the API that is our universe in our app.</p>
+<p>Factory Boy is going to let you control setting up the instances for
+your classes in a compelling way. There is good documentation about it.
+When it comes to using Factory Boy with ORMs, there is a lot of
+information about using Django itself directly. You&#8217;ll want to pay
+attention to that.
+<a class="reference external" href="https://factoryboy.readthedocs.org/en/latest/orms.html#django">https://factoryboy.readthedocs.org/en/latest/orms.html#django</a></p>
+<p>They have Django model factories already set up for you. It also appears
+there is another package you can install called
+<code class="docutils literal"><span class="pre">`fake-factory</span></code> &lt;<a class="reference external" href="https://factoryboy.readthedocs.org/en/latest/index.html">https://factoryboy.readthedocs.org/en/latest/index.html</a>?#realistic-random-values&gt;`__
+that will generate random data that should fit into a field:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">RandomUserFactory</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">django</span><span class="o">.</span><span class="n">DjangoModelFactory</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">User</span>
+
+    <span class="n">first_name</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">Faker</span><span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">)</span>
+    <span class="n">last_name</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">Faker</span><span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">UserFactory</span><span class="p">()</span>
+<span class="go">&lt;User: Lucy Murray&gt;</span>
+</pre></div>
+</div>
+<p>(Question from class: So <code class="docutils literal"><span class="pre">first_name</span></code> and <code class="docutils literal"><span class="pre">last_name</span></code> are actual
+attributes of the user?)</p>
+<p>Right, those are the field names for the user. How does it work? No
+idea! It&#8217;s a wrapper around the package
+<code class="docutils literal"><span class="pre">`fake-factory</span></code> &lt;<a class="reference external" href="https://pypi.python.org/pypi/fake-factory">https://pypi.python.org/pypi/fake-factory</a>&gt;`__. You
+can take a look at that package for more information.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Django Testing</a><ul>
+<li><a class="reference internal" href="#django-and-unittest">Django and UnitTest</a><ul>
+<li><a class="reference internal" href="#setup-teardown">setUp / teardown</a></li>
+<li><a class="reference internal" href="#self-client">self.client</a></li>
+<li><a class="reference internal" href="#factory-boy">Factory Boy</a></li>
+<li><a class="reference internal" href="#factory-values">Factory Values</a></li>
+<li><a class="reference internal" href="#lazy-attributes">Lazy Attributes</a></li>
+<li><a class="reference internal" href="#sequences">Sequences</a></li>
+<li><a class="reference internal" href="#testing-signaled-profile">Testing Signaled Profile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="django_views.html"
+                        title="previous chapter">Django URLs, Views and Templates</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="next chapter">401 Python: Lecture Notes</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="401 Python: Lecture Notes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="django_views.html" title="Django URLs, Views and Templates"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

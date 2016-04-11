@@ -1,11 +1,11 @@
 .. slideconf::
     :autoslides: False
 
-***************************
-Django Imager: Data Editing
-***************************
+*********************************
+Django Imager: Complete Front-End
+*********************************
 
-.. slide:: Django Imager: Data Editing
+.. slide:: Django Imager: Complete Front-End
     :level: 1
 
     This document contains no slides.
