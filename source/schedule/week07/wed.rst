@@ -16,21 +16,24 @@ Objectives
 Readings
 ========
 
-Django Forms
-------------
-
-.. include:: /readings/django_readings.rst
-    :start-line: 57
-    :end-line: 70
-
 Review
 ======
+
+* Django Views: Login, Registration and Home Page
+* Self-Balancing Binary Search Trees
 
 Concepts
 ========
 
+.. toctree::
+    :maxdepth: 2
+
+    /lectures/django_cbv
+
 Demo
 ====
+
+Setting up EC2 and RDS to communicate with each-other
 
 Assignments
 ===========

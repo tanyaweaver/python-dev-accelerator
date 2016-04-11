@@ -26,6 +26,9 @@ Django Views
 Review
 ======
 
+* Node Deletion in the Binary Search Tree
+* Django Models (the ``ImagerProfile``)
+
 Concepts
 ========
 
@@ -33,6 +36,7 @@ Concepts
     :maxdepth: 2
 
     /lectures/django_relationships
+    /lectures/django_files
 
 Demo
 ====

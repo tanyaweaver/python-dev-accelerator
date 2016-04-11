@@ -19,11 +19,20 @@ Readings
 Review
 ======
 
+* Django Models (the Photo and Album)
+
 Concepts
 ========
 
+.. toctree::
+    :maxdepth: 2
+
+    /lectures/django_views
+
 Demo
 ====
+
+Deploying a basic WSGI app to AWS
 
 Assignments
 ===========
