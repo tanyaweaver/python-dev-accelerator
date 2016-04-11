@@ -37,6 +37,7 @@ Deploying a basic WSGI app to AWS
 Assignments
 ===========
 
-* :doc:`/assignments/django_3_data_views`
+* :doc:`/assignments/django_2_registration`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/aws_0_deploy_wsgi_app` (Due Wednesday)
 * :doc:`/assignments/bst_4_balancing` (Due Wednesday)
