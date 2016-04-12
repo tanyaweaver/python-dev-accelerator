@@ -229,12 +229,11 @@ Photos are owned by a single Imager user.
 Meta-data should include a title and a description, a date_uploaded, date_modified and date_published field.
 You should also have a &#8216;published&#8217; field which takes one of several possible values (&#8216;private&#8217;, &#8216;shared&#8217;, &#8216;public&#8217;)</p>
 <p>Album contains Photos and provide meta-data about the collection of photos they contain.
-Albums are owned by Users
+Any one album must be owned by a single User.
 Any album can contain many Photos and any Photo may be in more than one Album.
 Meta-data should include a title and a description.
 Also a date created, date modified and date published as well as a published field containing the same options described for Photos.
-Users should be able to designate one contained photo as the &#8216;cover&#8217; for the album.
-The albums created by a user may contain only Photos created by that same user.</p>
+Users should be able to designate one contained photo as the &#8216;cover&#8217; for the album.</p>
 <p>Create migrations to support installing your new app.</p>
 <p>Create a default app configuration to handle configuring a few global settings for the app.</p>
 <p>Finally, you will implement tests that demonstrate the API you have implemented.

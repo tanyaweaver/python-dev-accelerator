@@ -21,7 +21,8 @@ Please sign up for an account.
 To allow you a bit more freedom in your learning on AWS we've arranged with Amazon for each of you to receive AWS credits to use.
 In order to receive this credit you'll need to sign up for your account.
 Please use the same email address I see on your profile here in canvas.
-When you submit this assignment, I will send this address to Brook, who will send it to AWS for them to process your credits.
+
+There will be further instructions forthcoming for how to receive your credits.
 
 **Please do pester us if your credits do not appear after a week or two**.
 
@@ -60,4 +61,4 @@ To submit, tell me you're done.
 
 .. warning:: If you use an email address other than the one on your profile here in Canvas,
              or if you are already signed up for AWS under a different email address
-             please submit that email address so that we can process your credits
+             please submit that email address.
