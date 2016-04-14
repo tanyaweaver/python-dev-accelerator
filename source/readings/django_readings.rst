@@ -27,3 +27,45 @@ These readings will support your work on the Data Model for our Django Imager we
 * `Django Testing <https://docs.djangoproject.com/en/1.9/topics/testing/>`_ (familiarize yourself both with `writing and running tests <https://docs.djangoproject.com/en/1.9/topics/testing/overview/>`_ and with the `tools Django provides <https://docs.djangoproject.com/en/1.9/topics/testing/tools/>`_ for testing.
 
 * Using Dynamic Test Fixtures with `Factory Boy <http://factoryboy.readthedocs.org/>`_ (in particular pay attention to `using Factory Boy with Django <http://factoryboy.readthedocs.org/en/latest/orms.html#django>`_)
+
+
+Django Views
+============
+
+For your tasks this week, you'll need to create a number of views in Django.
+Please refer to the following readings for help in answering your quesitons:
+
+* `Writing Views in Django <https://docs.djangoproject.com/en/1.9/topics/http/views/>`_
+
+* An overview of `Django's Class-Based Views <https://docs.djangoproject.com/en/1.9/topics/class-based-views/>`_
+
+* Full `API Documentation <https://docs.djangoproject.com/en/1.9/ref/class-based-views/>`_ for Class-Based Views
+
+You may also wish to refer to the following materials for help in writing templates in Django:
+
+* `An overview <https://docs.djangoproject.com/en/1.9/ref/templates/language/>`_ of the Django Template Language
+
+* Django `Templates Configuration <https://docs.djangoproject.com/en/1.9/topics/templates/>`_ (including configuration of template lookup and engine selection)
+
+* The `built-in template tags and filters <https://docs.djangoproject.com/en/1.9/ref/templates/builtins/>`_ in Django
+
+* Creating your own `custom template tags and filters <https://docs.djangoproject.com/en/1.9/howto/custom-template-tags/>`_
+
+
+Django Forms
+============
+
+To support creating and editing objects in Django, you'll need to learn about Django Forms.  Here are some readings to keep in mind as you progress:
+
+* Start by learning how to `work with forms <https://docs.djangoproject.com/en/1.9/topics/forms/>`_ in general
+
+* Follow that up with reading about `ModelForms <https://docs.djangoproject.com/en/1.9/topics/forms/modelforms/>`_ and what they provide
+
+* Make sure you understand `form and field validation <https://docs.djangoproject.com/en/1.9/ref/forms/validation/>`_ so you can ensure proper data is submitted
+
+* Particularly complex forms, or forms which require javascript or special css, will need to utilize `form assets <https://docs.djangoproject.com/en/1.9/topics/forms/media/>`_
+
+* You'll want to keep a reference open for the `Forms API <https://docs.djangoproject.com/en/1.9/ref/forms/api/>`_
+
+* Keep in mind that the custom form field you imagine may already have been created and check `the Forms category <https://www.djangopackages.com/grids/g/forms/>`_ on http://www.djangopackages.com
+* 

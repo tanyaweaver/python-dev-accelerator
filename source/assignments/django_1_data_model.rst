@@ -74,12 +74,11 @@ Meta-data should include a title and a description, a date_uploaded, date_modifi
 You should also have a 'published' field which takes one of several possible values ('private', 'shared', 'public')
 
 Album contains Photos and provide meta-data about the collection of photos they contain.
-Albums are owned by Users
+Any one album must be owned by a single User.
 Any album can contain many Photos and any Photo may be in more than one Album.
 Meta-data should include a title and a description.
 Also a date created, date modified and date published as well as a published field containing the same options described for Photos.
 Users should be able to designate one contained photo as the 'cover' for the album.
-The albums created by a user may contain only Photos created by that same user.
 
 Create migrations to support installing your new app.
 
