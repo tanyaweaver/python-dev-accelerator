@@ -44,6 +44,8 @@ extensions = [
 ]
 
 from recommonmark.parser import CommonMarkParser
+from recommonmark.transform import AutoStructify
+
 
 source_parsers = {
     '.md': CommonMarkParser,
@@ -394,3 +396,10 @@ intersphinx_mapping = {
     'pyramid': ('http://docs.pylonsproject.org/projects/pyramid/en/latest', None),
     'ipython': ('http://ipython.readthedocs.org/en/stable', None),
 }
+
+
+def setup(app):
+    app.add_config_value('recommonmark_config', {
+            'auto_toc_tree_section': 'Contents',
+            }, True)
+    app.add_transform(AutoStructify)
