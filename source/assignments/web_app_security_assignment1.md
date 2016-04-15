@@ -4,7 +4,7 @@ In this series of assignments you will practice identifying various types of vul
 
 ## Tasks
 
-- Clone the django.nV repository linked above and create a virtualenv for the project
+- Fork the django.nV repository linked above, clone ***YOUR*** fork and create a virtualenv for the project
 - Create a github branch for this assignment called `repairman-1`
 - Create a markdown file documenting your vulnerability tests called `vulnerability-report.md`.
 - Address the following vulnerabilities. **DO NOT JUST REGURGITATE THE GIVEN SOLUTION**:
