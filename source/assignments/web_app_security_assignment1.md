@@ -6,7 +6,7 @@ In this series of assignments you will practice identifying various types of vul
 
 - Fork the django.nV repository linked above, clone ***YOUR*** fork and create a virtualenv for the project
 - Create a github branch for this assignment called `repairman-1`
-- Create a markdown file documenting your vulnerability tests called `vulnerability-report.md`. See [sample-vulnerability-report.md](../downloads/sample-vulnerability-report.md) for your formatting template.
+- Create a markdown file documenting your vulnerability tests called `vulnerability-report.md`.
 - Address the following vulnerabilities. **DO NOT JUST REGURGITATE THE GIVEN SOLUTION**:
 	- A1 - Injection
 	- A2 - Broken Auth
@@ -17,6 +17,10 @@ In this series of assignments you will practice identifying various types of vul
 	- How you found and exploited the vulnerability, including the code/method you used
 	- What you were able to do with the vulnerability (i.e. what was exposed?)
 	- The code that fixes the vulnerability
+
+```eval_rst
+.. note:: For your vulnerability report, please see :doc:`this sample-vulnerability-report <sample-vulnerability-report>`. Use the format shown in that document.
+```
 
 ## Submitting Your Work
 
