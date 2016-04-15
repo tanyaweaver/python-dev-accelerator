@@ -6,25 +6,42 @@ Security refers to more than just protecting your app from the outside. Remember
 
 The [2015 WhiteHat Website Security Statistics Report](https://info.whitehatsec.com/Website-Stats-Report-2015.html) noted the following:
 
-| Industry | Always Vulnerable* | Rarely Vulnerable** |
-| -------- | ----------------- | ----------------- |
-| Public Administration | 64% | 14% |
-| Transportation / Warehousing | 55% | 16% |
-| Accommodations / Food Services | 55% | 18% |
-| Other Services | 53% | 18% |
-| Manufacturing | 51% | 26% |
-| Health Care / Social Assistance | 50% | 18% |
-| Utilities | 36% | 34% |
-| Finance / Insurance | 35% | 25% |
-| Information | 35% | 28% |
-| Professional / Scientific / Technical Services | 30% | 20% |
-| Retail Trade | 29% | 20% |
-| Arts / Entertainment/Recreation | 27% | 39% |
-| Education Services | 27% | 40% |
+```eval_rst
++------------------------------------------------+--------------------+---------------------+
+| Industry                                       | Always Vulnerable* | Rarely Vulnerable** |
++================================================+====================+=====================+
+| Public Administration                          | 64%                | 14%                 |
++------------------------------------------------+--------------------+---------------------+
+| Transportation / Warehousing                   | 55%                | 16%                 |
++------------------------------------------------+--------------------+---------------------+
+| Accommodations / Food Services                 | 55%                | 18%                 |
++------------------------------------------------+--------------------+---------------------+
+| Other Services                                 | 53%                | 18%                 |
++------------------------------------------------+--------------------+---------------------+
+| Manufacturing                                  | 51%                | 26%                 |
++------------------------------------------------+--------------------+---------------------+
+| Health Care / Social Assistance                | 50%                | 18%                 |
++------------------------------------------------+--------------------+---------------------+
+| Utilities                                      | 36%                | 34%                 |
++------------------------------------------------+--------------------+---------------------+
+| Finance / Insurance                            | 35%                | 25%                 |
++------------------------------------------------+--------------------+---------------------+
+| Information                                    | 35%                | 28%                 |
++------------------------------------------------+--------------------+---------------------+
+| Professional / Scientific / Technical Services | 30%                | 20%                 |
++------------------------------------------------+--------------------+---------------------+
+| Retail Trade                                   | 29%                | 20%                 |
++------------------------------------------------+--------------------+---------------------+
+| Arts / Entertainment/Recreation                | 27%                | 39%                 |
++------------------------------------------------+--------------------+---------------------+
+| Education Services                             | 27%                | 40%                 |
++------------------------------------------------+--------------------+---------------------+
+```
 
 \* Always vulnerable means a site is vulnerable on every single day of the year
 
 \** Rarely vulnerable means a site is vulnerable less than 30 days of the year
+
 
 ## Top Web App Vulnerabilities
 
