@@ -10,7 +10,7 @@ Week Eight
 
     This document contains no slides.
 
-The theme for the week is undecided.
+The theme for the week is Django Security and Deployment.
 
 .. toctree::
    :maxdepth: 1
