@@ -34,5 +34,6 @@ Assignments
 ===========
 
 * :doc:`/assignments/web_app_security_assignment2`
+* :doc:`/assignments/django_6_drf_tutorial_a`
 * :doc:`/assignments/project_06_wireframe_end`
 * :doc:`/assignments/daily_lj_entry`
