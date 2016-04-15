@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Build a Simple WSGI App &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Break the Site/Fix Your Site &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
     <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
-    <link rel="next" title="Producing and Consuming XML-RPC in Python" href="xmlrpc.html" />
-    <link rel="prev" title="Break the Site/Fix Your Site" href="web_app_security_assignment2.html" />
+    <link rel="next" title="Build a Simple WSGI App" href="wsgi_app.html" />
+    <link rel="prev" title="Break the Site/Fix the Site" href="web_app_security_assignment1.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -52,10 +52,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="xmlrpc.html" title="Producing and Consuming XML-RPC in Python"
+          <a href="wsgi_app.html" title="Build a Simple WSGI App"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="web_app_security_assignment2.html" title="Break the Site/Fix Your Site"
+          <a href="web_app_security_assignment1.html" title="Break the Site/Fix the Site"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
@@ -181,18 +181,50 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="build-a-simple-wsgi-app">
-<h1>Build a Simple WSGI App<a class="headerlink" href="#build-a-simple-wsgi-app" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-build-a-simple-wsgi-app"></span><p>You&#8217;ve learned a bit about the WSGI specification.
-Now it&#8217;s time to make a simple application.</p>
+<div class="section" id="break-the-site-fix-your-site">
+<span id="break-the-site-fix-your-site"></span><h1>Break the Site/Fix Your Site<a class="headerlink" href="#break-the-site-fix-your-site" title="Permalink to this headline">¶</a></h1>
+<p>This is a continuation of the last Break the Site/Fix the Site assignment. The website is again from <a class="reference external" href="https://github.com/nVisium/django.nV">https://github.com/nVisium/django.nV</a>. This assignment will go through the next four of the top ten. This assignment will also have you trying to attack one of your partner&#8217;s projects and expose a vulnerability if one exists.</p>
 <div class="section" id="tasks">
-<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Work through <a class="reference internal" href="tutorials/wsgi_book_app.html"><em>the tutorial</em></a> to build your first truly dynamic WSGI application.</p>
+<span id="tasks"></span><h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-primary-work">
+<span id="the-primary-work"></span><h3>The Primary Work<a class="headerlink" href="#the-primary-work" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Create a github branch for this assignment called <code class="docutils literal"><span class="pre">repairman-2</span></code></li>
+<li>Add your vulnerability tests to your existing <code class="docutils literal"><span class="pre">vulnerability-report.md</span></code>.</li>
+<li>Address the following vulnerabilities. <strong>DO NOT JUST REGURGITATE THE GIVEN SOLUTION</strong>:<ul>
+<li>A5 - Misconfig</li>
+<li>A6 - Exposure</li>
+<li>A7 - Access</li>
+<li>A8 - CSRF</li>
+</ul>
+</li>
+<li>For each of the above vulnerabilities report:<ul>
+<li>How you found and exploited the vulnerability, including the code/method you used</li>
+<li>What you were able to do with the vulnerability (i.e. what was exposed?)</li>
+<li>The code that fixes the vulnerability</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For your vulnerability report, please see <a class="reference internal" href="sample-vulnerability-report.html"><em>this sample-vulnerability-report</em></a>. Use the format shown in that document.</p>
+</div>
+</div>
+<div class="section" id="infuriate-your-partner">
+<span id="infuriate-your-partner"></span><h3>Infuriate Your Partner<a class="headerlink" href="#infuriate-your-partner" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Clone one of your partner&#8217;s working sites prior to week 6. Can be from this class, or any other working project.</li>
+<li>Create a branch for your clone called <code class="docutils literal"><span class="pre">housecall-[projectname]</span></code></li>
+<li>Test for at least one vulnerability.</li>
+<li>Report on this test in another <code class="docutils literal"><span class="pre">vulnerability-report.md</span></code> for this project. Same method as before.</li>
+<li><strong>If no vulnerabilities are found</strong>, write about what you <em>tried</em> to test for and how you <em>tried</em> to test for it.</li>
+</ul>
+</div>
 </div>
 <div class="section" id="submitting-your-work">
-<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>To submit your assignment, upload your bookapp.py file and screenshots showing the list page and a detail page.</p>
-<p>As usual, use the comment feature to submit questions, comments or reflections on the work you did for this assignment.</p>
+<span id="submitting-your-work"></span><h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>When you&#8217;ve addressed the vulnerabilities and filled out your reports, push your code sets to github. You should be pushing the vulnerability reports for each project, as well as the <em>fixed</em> code. Open a pull request from your <code class="docutils literal"><span class="pre">repairman-2</span></code> branch to the <code class="docutils literal"><span class="pre">master</span></code> branch. Copy the URL of that pull request and submit it in Canvas.</p>
+<p>For the test on your partner&#8217;s project, open a pull request from your <code class="docutils literal"><span class="pre">housecall-[projectname]</span></code> branch to your clone&#8217;s <code class="docutils literal"><span class="pre">master</span></code> branch. Copy the URL of that pull request into the Comments box of the same Canvas submission.</p>
 </div>
 </div>
 
@@ -204,19 +236,23 @@ Now it&#8217;s time to make a simple application.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Build a Simple WSGI App</a><ul>
-<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#">Break the Site/Fix Your Site</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#the-primary-work">The Primary Work</a></li>
+<li><a class="reference internal" href="#infuriate-your-partner">Infuriate Your Partner</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="web_app_security_assignment2.html"
-                        title="previous chapter">Break the Site/Fix Your Site</a></p>
+  <p class="topless"><a href="web_app_security_assignment1.html"
+                        title="previous chapter">Break the Site/Fix the Site</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="xmlrpc.html"
-                        title="next chapter">Producing and Consuming XML-RPC in Python</a></p>
+  <p class="topless"><a href="wsgi_app.html"
+                        title="next chapter">Build a Simple WSGI App</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -241,10 +277,10 @@ Now it&#8217;s time to make a simple application.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="xmlrpc.html" title="Producing and Consuming XML-RPC in Python"
+          <a href="wsgi_app.html" title="Build a Simple WSGI App"
              >next</a> |</li>
         <li class="right" >
-          <a href="web_app_security_assignment2.html" title="Break the Site/Fix Your Site"
+          <a href="web_app_security_assignment1.html" title="Break the Site/Fix the Site"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 

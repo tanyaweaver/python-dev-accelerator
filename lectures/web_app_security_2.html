@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Web App Security: More Vulnerabilities and Best Practices &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="401 Python: Lecture Notes" href="index.html" />
+    <link rel="next" title="Which Python?" href="which_python.html" />
+    <link rel="prev" title="Web Application Security" href="web_app_security1.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="which_python.html" title="Which Python?"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="web_app_security1.html" title="Web Application Security"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Lecture Notes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="web-app-security-more-vulnerabilities-and-best-practices">
+<span id="web-app-security-more-vulnerabilities-and-best-practices"></span><h1>Web App Security: More Vulnerabilities and Best Practices<a class="headerlink" href="#web-app-security-more-vulnerabilities-and-best-practices" title="Permalink to this headline">¶</a></h1>
+<p>The next 4 out of the top 10</p>
+<div class="section" id="top-web-app-vulnerabilities">
+<span id="top-web-app-vulnerabilities"></span><h2>Top Web App Vulnerabilities<a class="headerlink" href="#top-web-app-vulnerabilities" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="security-misconfiguration">
+<span id="security-misconfiguration"></span><h3>5. Security Misconfiguration<a class="headerlink" href="#security-misconfiguration" title="Permalink to this headline">¶</a></h3>
+<p>Is pretty much exactly as it sounds. Not necessarily the fault of the developer (i.e. YOU), but still of paramount importance. Occurs when holes are left in the security framework by sys admins, database admins, or divs.</p>
+<p>These can occur at <em>any</em> level of the application stack: the platform level, the web server, the app server, the database, framework, or custom code. Typically these misconfigurations are found through unauthorized access to default accounts, unused webpages, unpatched flaws, unprotected files, directories, and more.</p>
+</div>
+<div class="section" id="sensitive-data-exposure">
+<span id="sensitive-data-exposure"></span><h3>6. Sensitive Data Exposure<a class="headerlink" href="#sensitive-data-exposure" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://kemptechnologies.com/blog/owasp-top-ten-series-sensitive-data-exposure/">http://kemptechnologies.com/blog/owasp-top-ten-series-sensitive-data-exposure/</a></p>
+<p>&#8220;Sensitive data&#8221; typically refers to confidential records, password, payment info, personal info, or user account info. Basically <strong>any data you wouldn&#8217;t want displayed to anyone aside from intended users</strong>. Usually exposed when data is in transit and not properly encrypted, or unencrypted backups are accessed.</p>
+</div>
+<div class="section" id="missing-function-level-access-control">
+<span id="missing-function-level-access-control"></span><h3>7. Missing Function Level Access Control<a class="headerlink" href="#missing-function-level-access-control" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://www.tutorialspoint.com/security_testing/missing_function_level_access_control.htm">http://www.tutorialspoint.com/security_testing/missing_function_level_access_control.htm</a></p>
+<p>A user with limited (or no) access may try to directly access site functions against a server without permissions control. An attacker may try to force direct access to site functions against a server without proper permissions control.</p>
+<p>Ex: Directly accessing <code class="docutils literal"><span class="pre">http://www.website.com/some_app/admin</span></code> instead of logging in. Admin functions should be wrapped in authorization checks, and only accessible (with everything within it being similarly protected) through a login wall.</p>
+</div>
+<div class="section" id="cross-site-request-forgery-csrf">
+<span id="cross-site-request-forgery-csrf"></span><h3>8. Cross-site Request Forgery (CSRF)<a class="headerlink" href="#cross-site-request-forgery-csrf" title="Permalink to this headline">¶</a></h3>
+<p>The attacker (Jerkface) forces an authenticated user (User A) to send a forged HTTP request, including User A&#8217;s session cookie, to a vulnerable web app. This allows Jerkface to force User A&#8217;s browser to generate requests such that the vulnerable app perceives them as legitimate requests from User A.</p>
+<p>User A may have no knowledge of their part in this scheme. They may click on something that they think is legitimate, like an image, that actually sends a request instead.</p>
+</div>
+</div>
+<div class="section" id="basic-vulnerability-protection">
+<span id="basic-vulnerability-protection"></span><h2>Basic Vulnerability Protection<a class="headerlink" href="#basic-vulnerability-protection" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Use environment variables instead of hardcoding sensitive information</li>
+<li>Require authorization for certain features/pages</li>
+<li>Back up often (app needs will vary wildly) and keep backups physically secure</li>
+<li>Close unused ports and turn off unused services</li>
+<li>Require irregular passwords</li>
+<li>Don&#8217;t run your app as the system admin</li>
+<li>Keep files for your web app in a folder below the application root</li>
+<li>Do not allow users the option of specifying a path for any file access</li>
+<li>Never use unfiltered user input for public-facing applications. Consider how much cleaning needs to be done for some given input</li>
+<li>Never store unfiltered unfiltered input in the database</li>
+<li>Do not assume that HTTP request headers are safe</li>
+<li>Use informative but non-specific, custom error messages</li>
+<li>Make sure that when you&#8217;re live, turn off whatever DEBUG mode your app has</li>
+<li>When error-handling, make sure that any caught resources are released upon failure.</li>
+<li>Set size limits on file uploads</li>
+</ul>
+</div>
+<div class="section" id="best-practices">
+<span id="best-practices"></span><h2>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="know-your-app">
+<span id="know-your-app"></span><h3>Know your app<a class="headerlink" href="#know-your-app" title="Permalink to this headline">¶</a></h3>
+<p>Taking an inventory of your applications is the most important step. You’d be surprised by how many rogue applications are out there. Know what they do and why you have them. If they take user input, be especially aware. If they&#8217;re third-party apps, be thorough with the docs and dip into the source code. Ensure that the benefit of using the app doesn&#8217;t come at the cost of a security hole (intentional or otherwise).</p>
+</div>
+<div class="section" id="prioritize-your-apps">
+<span id="prioritize-your-apps"></span><h3>Prioritize your apps<a class="headerlink" href="#prioritize-your-apps" title="Permalink to this headline">¶</a></h3>
+<p>Categorize your apps as critical (external-facing with customer info), serious (external or internal containing sensitive info), or normal (less exposure). You should have plans to test them all, but a) categorization allows for smaller projects for you, and b) getting to the most sensitive first protects you where you need it most in a timely manner.</p>
+</div>
+<div class="section" id="prioritize-the-vulnerabilities">
+<span id="prioritize-the-vulnerabilities"></span><h3>Prioritize the vulnerabilities<a class="headerlink" href="#prioritize-the-vulnerabilities" title="Permalink to this headline">¶</a></h3>
+<p>Yes, the apps should be ranked. The vulnerabilities you test for should also be ranked. They all take different resources and require different practices. Some are more costly in time/effort than others, some are more devastating than others, and some are more common/edge-casey than others.</p>
+</div>
+<div class="section" id="build-awareness-internally">
+<span id="build-awareness-internally"></span><h3>Build awareness internally<a class="headerlink" href="#build-awareness-internally" title="Permalink to this headline">¶</a></h3>
+<p>Educate your team, both the technical staff and the non-technical users/contributors in your company. A chain is only as strong as its weakest link, and non-savvy users are the weakest of links. They may not understand certain security practices (or even have context for them), and may actively try to circumvent security in favor of convenience. As annoying as they are, limited sessions, login pages, and &#8220;CAPTCHA&#8221;s exist for a reason.</p>
+</div>
+<div class="section" id="create-a-plan">
+<span id="create-a-plan"></span><h3>Create a plan<a class="headerlink" href="#create-a-plan" title="Permalink to this headline">¶</a></h3>
+<p>Create an Application Security Blueprint, consisting of your goals, which apps you want to secure and with what priority you want to secure them, how you&#8217;re going to test them, who&#8217;s involved, and (where applicable) how much it would cost. In addition to giving your team a framework for carrying out proper security measures, this sort of plan makes it easier to justify costs when the purse isn&#8217;t yours to spend. Of course, keep this plan secure.</p>
+</div>
+<div class="section" id="interim-protection">
+<span id="interim-protection"></span><h3>Interim protection<a class="headerlink" href="#interim-protection" title="Permalink to this headline">¶</a></h3>
+<p>No one has the illusion that you have infinite time to ferret out every last vulnerability that your app may or may not contain under ever potential attack scenario. You can get by with targeting specific vulnerabilities and removing some unnecessary (or low-priority) functionality while you develop your master security suite.</p>
+</div>
+<div class="section" id="don-t-forget-code-in-production">
+<span id="don-t-forget-code-in-production"></span><h3>Don&#8217;t forget code in production<a class="headerlink" href="#don-t-forget-code-in-production" title="Permalink to this headline">¶</a></h3>
+<p>Code in production is just as, if not more important, as code in development. It&#8217;s <em>currently</em> customer-facing, and so is already in danger of ruining their lives or ruining yours. You need to secure that and you need to test it, just as much as if not more than code you&#8217;re prepping for deployment.</p>
+</div>
+<div class="section" id="keep-vigilance">
+<span id="keep-vigilance"></span><h3>Keep vigilance<a class="headerlink" href="#keep-vigilance" title="Permalink to this headline">¶</a></h3>
+<p>Web app security isn&#8217;t a box to be checked off, but a habit to be developed. Make it a practice, and make testing regular. Adhere to your plan, and update as your needs and capabilities change.</p>
+</div>
+<div class="section" id="celebrate-every-victory">
+<span id="celebrate-every-victory"></span><h3>Celebrate every victory<a class="headerlink" href="#celebrate-every-victory" title="Permalink to this headline">¶</a></h3>
+<p>Any war fought will drain you if all you see is the battle. When you achieve part of your security plan, celebrate! Take breaks between hunts for bugs and appreciate the improvements you&#8217;ve made. Every time you close one of those security holes, you&#8217;ve now made your product that much more valuable to your clients (or to yourself).</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Web App Security: More Vulnerabilities and Best Practices</a><ul>
+<li><a class="reference internal" href="#top-web-app-vulnerabilities">Top Web App Vulnerabilities</a><ul>
+<li><a class="reference internal" href="#security-misconfiguration">5. Security Misconfiguration</a></li>
+<li><a class="reference internal" href="#sensitive-data-exposure">6. Sensitive Data Exposure</a></li>
+<li><a class="reference internal" href="#missing-function-level-access-control">7. Missing Function Level Access Control</a></li>
+<li><a class="reference internal" href="#cross-site-request-forgery-csrf">8. Cross-site Request Forgery (CSRF)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#basic-vulnerability-protection">Basic Vulnerability Protection</a></li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li><a class="reference internal" href="#know-your-app">Know your app</a></li>
+<li><a class="reference internal" href="#prioritize-your-apps">Prioritize your apps</a></li>
+<li><a class="reference internal" href="#prioritize-the-vulnerabilities">Prioritize the vulnerabilities</a></li>
+<li><a class="reference internal" href="#build-awareness-internally">Build awareness internally</a></li>
+<li><a class="reference internal" href="#create-a-plan">Create a plan</a></li>
+<li><a class="reference internal" href="#interim-protection">Interim protection</a></li>
+<li><a class="reference internal" href="#don-t-forget-code-in-production">Don&#8217;t forget code in production</a></li>
+<li><a class="reference internal" href="#keep-vigilance">Keep vigilance</a></li>
+<li><a class="reference internal" href="#celebrate-every-victory">Celebrate every victory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="web_app_security1.html"
+                        title="previous chapter">Web Application Security</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="which_python.html"
+                        title="next chapter">Which Python?</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="which_python.html" title="Which Python?"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="web_app_security1.html" title="Web Application Security"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Lecture Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

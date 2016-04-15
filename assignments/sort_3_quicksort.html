@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Build a Simple WSGI App &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Implement Quick Sort &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
     <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
-    <link rel="next" title="Producing and Consuming XML-RPC in Python" href="xmlrpc.html" />
-    <link rel="prev" title="Break the Site/Fix Your Site" href="web_app_security_assignment2.html" />
+    <link rel="next" title="Implement Radix Sort" href="sort_4_radix.html" />
+    <link rel="prev" title="Implement Merge Sort" href="sort_2_mergesort.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -52,10 +52,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="xmlrpc.html" title="Producing and Consuming XML-RPC in Python"
+          <a href="sort_4_radix.html" title="Implement Radix Sort"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="web_app_security_assignment2.html" title="Break the Site/Fix Your Site"
+          <a href="sort_2_mergesort.html" title="Implement Merge Sort"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
@@ -181,18 +181,40 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="build-a-simple-wsgi-app">
-<h1>Build a Simple WSGI App<a class="headerlink" href="#build-a-simple-wsgi-app" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-build-a-simple-wsgi-app"></span><p>You&#8217;ve learned a bit about the WSGI specification.
-Now it&#8217;s time to make a simple application.</p>
+<div class="section" id="implement-quick-sort">
+<h1>Implement Quick Sort<a class="headerlink" href="#implement-quick-sort" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-implement-quick-sort"></span><p>In this assignment series we will explore a number of sorting algorithms.
+Your goal is to understand both the implementation of the algorithm, and the circumstances under which it is a good choice.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Work through <a class="reference internal" href="tutorials/wsgi_book_app.html"><em>the tutorial</em></a> to build your first truly dynamic WSGI application.</p>
+<p>Read about the <a class="reference external" href="http://en.wikipedia.org/wiki/Quicksort">Quick Sort Algorithm</a>.</p>
+<p>Then create a new branch and implement the algorithm in a new file in your data-structures repository.</p>
+<p>Include tests that demonstrate that your sort works correctly.</p>
+<p>Include an &#8220;if __name__ == &#8216;__main__&#8217;:&#8221; block at the end of your module that demonstrates the performance characteristics of this sort.
+Cover a variety of lengths of input in both the best and worst-case scenarios.
+Executing your module should print informative output about the performance of your sort to the terminal:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ python bogosort.py
+
+The bogosort randomly shuffles the items in a list <span class="k">until</span> the list is sorted.
+It performs best <span class="k">for</span> very short lists
+
+Input: <span class="o">[</span>2, 1<span class="o">]</span>
+    number of runs: 500
+    average time: 2.0e-4 seconds
+
+Input: <span class="o">[</span>randint<span class="o">(</span>0, 1000000<span class="o">)</span> <span class="k">for</span> i in range<span class="o">(</span>10000<span class="o">)]</span>
+    number of runs: 500
+    average time: 2345.6 seconds
+</pre></div>
+</div>
+<p>Add information about your implementation to your README.md file, including any sources and collaborations used in creating it.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>To submit your assignment, upload your bookapp.py file and screenshots showing the list page and a detail page.</p>
-<p>As usual, use the comment feature to submit questions, comments or reflections on the work you did for this assignment.</p>
+<p>When your work is complete and your tests are passing, create a pull request from your working branch back to master.
+Submit the URL of your pull request.
+When you&#8217;ve done this, you may merge your pull request, but do not delete your branch until your work has been graded.</p>
+<p>Use the comment feature to add any questions, comments or reflections on your work.</p>
 </div>
 </div>
 
@@ -204,7 +226,7 @@ Now it&#8217;s time to make a simple application.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Build a Simple WSGI App</a><ul>
+<li><a class="reference internal" href="#">Implement Quick Sort</a><ul>
 <li><a class="reference internal" href="#tasks">Tasks</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>
@@ -212,11 +234,11 @@ Now it&#8217;s time to make a simple application.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="web_app_security_assignment2.html"
-                        title="previous chapter">Break the Site/Fix Your Site</a></p>
+  <p class="topless"><a href="sort_2_mergesort.html"
+                        title="previous chapter">Implement Merge Sort</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="xmlrpc.html"
-                        title="next chapter">Producing and Consuming XML-RPC in Python</a></p>
+  <p class="topless"><a href="sort_4_radix.html"
+                        title="next chapter">Implement Radix Sort</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -241,10 +263,10 @@ Now it&#8217;s time to make a simple application.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="xmlrpc.html" title="Producing and Consuming XML-RPC in Python"
+          <a href="sort_4_radix.html" title="Implement Radix Sort"
              >next</a> |</li>
         <li class="right" >
-          <a href="web_app_security_assignment2.html" title="Break the Site/Fix Your Site"
+          <a href="sort_2_mergesort.html" title="Implement Merge Sort"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 
