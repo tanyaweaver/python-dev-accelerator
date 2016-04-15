@@ -34,6 +34,6 @@ Assignments
 ===========
 
 * :doc:`/assignments/sort_4_radix`
-* :doc:`/assignments/proj_4_readme`
+* :doc:`/assignments/project_04_readme`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/web_app_security_assignment1` (Due Monday)

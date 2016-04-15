@@ -34,5 +34,5 @@ Assignments
 
 * :doc:`/assignments/sort_3_quicksort`
 * :doc:`/assignments/aws_1_deploy_imager`
-* :doc:`/assignments/proj_03_repo`
+* :doc:`/assignments/project_03_repo`
 * :doc:`/assignments/daily_lj_entry`

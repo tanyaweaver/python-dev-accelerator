@@ -13,4 +13,5 @@ Friday
 Assignments
 ===========
 
+* :doc:`/assignments/project_10_iteration_planning`
 * :doc:`/assignments/daily_lj_entry`

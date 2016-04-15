@@ -19,5 +19,5 @@ Concepts
 Assignments
 ===========
 
-* :doc:`/assignments/proj_5_wireframe_begin`
+* :doc:`/assignments/project_05_wireframe_begin`
 * :doc:`/assignments/daily_lj_entry`
