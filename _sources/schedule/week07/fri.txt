@@ -10,8 +10,9 @@ Friday
 
     This document contains no slides.
 
+Get-A-Job Curriculum, Day 1
+
 Assignments
 ===========
 
-* :doc:`/assignments/django_5_complete_frontend`
 * :doc:`/assignments/daily_lj_entry`

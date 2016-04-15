@@ -251,11 +251,11 @@ Week 07
 .. include:: schedule/week07/index.rst
     :start-line: 12
 
-.. Week 08
-.. -------
+Week 08
+-------
 
-.. .. include:: schedule/week08/index.rst
-..     :start-line: 12
+.. include:: schedule/week08/index.rst
+    :start-line: 12
 
 .. Week 09
 .. -------

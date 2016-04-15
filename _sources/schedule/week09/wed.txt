@@ -28,4 +28,5 @@ Demo
 Assignments
 ===========
 
+* :doc:`/assignments/project_08_stories_continue`
 * :doc:`/assignments/daily_lj_entry`

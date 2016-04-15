@@ -6,39 +6,39 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Thursday &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Django: Django REST Framework Tutorial, Parts 4-6 &mdash; Python Dev Accelerator 2.0 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
+        URL_ROOT:    '../',
         VERSION:     '2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
-    <link rel="next" title="Web Application Security" href="../../lectures/web_app_security1.html" />
-    <link rel="prev" title="Wednesday" href="wed.html" />
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="next" title="Implement a Doubly-Linked List in Python" href="doubly_linked_list.html" />
+    <link rel="prev" title="Django: Django REST Framework Tutorial, Parts 1-3" href="django_6_drf_tutorial_a.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
-<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
 
   </head>
   <body role="document">
 <div class="header">
   <div class="logo">
-    <a href="../../index.html">
-      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
       <p>Code Fellows</p>
     </a>
   </div>
@@ -48,15 +48,15 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../lectures/web_app_security1.html" title="Web Application Security"
+          <a href="doubly_linked_list.html" title="Implement a Doubly-Linked List in Python"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="wed.html" title="Wednesday"
+          <a href="django_6_drf_tutorial_a.html" title="Django: Django REST Framework Tutorial, Parts 1-3"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -179,40 +179,31 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="thursday">
-<h1>Thursday<a class="headerlink" href="#thursday" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-course-presentations"></span><div class="section" id="objectives">
-<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="readings">
-<h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="review">
-<h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="concepts">
-<h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../lectures/web_app_security1.html">Web Application Security</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/web_app_security1.html#top-web-app-vulnerabilities">Top Web App Vulnerabilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/web_app_security1.html#resources">Resources</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="demo">
-<h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="assignments">
-<h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="django-django-rest-framework-tutorial-parts-4-6">
+<h1>Django: Django REST Framework Tutorial, Parts 4-6<a class="headerlink" href="#django-django-rest-framework-tutorial-parts-4-6" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-django-django-rest-framework-tutorial-parts-4-6"></span><p>Django Rest Framework provides a full-featured framework for creating RESTful APIs based on the Django models you create.
+These APIs can then be used to power applications written for mobile devices, Javascript apps in Angular or other MVC frameworks, or even &#8220;normal&#8221; web apps, replacing the more traditional &#8220;view&#8221;-based approach to CRUD operations.</p>
+<p>To familiarize yourself with the concept, you&#8217;ll walk through <a class="reference external" href="http://www.django-rest-framework.org/#tutorial">this tutorial</a> provided as part of the framework documentation.</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>For this second assignment, please complete the last three sections of the tutorial:</p>
 <ul class="simple">
-<li><a class="reference internal" href="../../assignments/sort_4_radix.html"><em>Implement Radix Sort</em></a></li>
-<li><a class="reference internal" href="../../assignments/project_04_readme.html"><em>Group Project: Add a README</em></a></li>
-<li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
-<li><a class="reference internal" href="../../assignments/web_app_security_assignment1.html"><em>Break the Site/Fix the Site</em></a> (Due Monday)</li>
+<li><a class="reference external" href="http://www.django-rest-framework.org/tutorial/4-authentication-and-permissions/">Authentication and Permissions</a></li>
+<li><a class="reference external" href="http://www.django-rest-framework.org/tutorial/5-relationships-and-hyperlinked-apis/">Relationships and Hyperlinked APIs</a></li>
+<li><a class="reference external" href="http://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/">Viewsets and Routers</a></li>
 </ul>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>For your submission, please paste screenshots of both the JSON and HTML output of a variety of endpoints from your new api.</p>
+<p>Use the comment feature in Canvas to submit comments, questions and concerns</p>
+</div>
+<div class="section" id="further-considerations">
+<h2>Further Considerations<a class="headerlink" href="#further-considerations" title="Permalink to this headline">¶</a></h2>
+<p>How might using a technology like this change your approach to the UI implementation of the Imager app?
+What aspects of the actions provided by Imager would be most easily replaced with API calls?
+Which would be more difficult to replace?
+How might your approach to the UI for Imager change based on using an API like this?</p>
 </div>
 </div>
 
@@ -222,28 +213,25 @@ div.nboutput  > :nth-child(2).stderr {
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Thursday</a><ul>
-<li><a class="reference internal" href="#objectives">Objectives</a></li>
-<li><a class="reference internal" href="#readings">Readings</a></li>
-<li><a class="reference internal" href="#review">Review</a></li>
-<li><a class="reference internal" href="#concepts">Concepts</a></li>
-<li><a class="reference internal" href="#demo">Demo</a></li>
-<li><a class="reference internal" href="#assignments">Assignments</a></li>
+<li><a class="reference internal" href="#">Django: Django REST Framework Tutorial, Parts 4-6</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+<li><a class="reference internal" href="#further-considerations">Further Considerations</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="wed.html"
-                        title="previous chapter">Wednesday</a></p>
+  <p class="topless"><a href="django_6_drf_tutorial_a.html"
+                        title="previous chapter">Django: Django REST Framework Tutorial, Parts 1-3</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../../lectures/web_app_security1.html"
-                        title="next chapter">Web Application Security</a></p>
+  <p class="topless"><a href="doubly_linked_list.html"
+                        title="next chapter">Implement a Doubly-Linked List in Python</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -262,15 +250,15 @@ div.nboutput  > :nth-child(2).stderr {
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../lectures/web_app_security1.html" title="Web Application Security"
+          <a href="doubly_linked_list.html" title="Implement a Doubly-Linked List in Python"
              >next</a> |</li>
         <li class="right" >
-          <a href="wed.html" title="Wednesday"
+          <a href="django_6_drf_tutorial_a.html" title="Django: Django REST Framework Tutorial, Parts 1-3"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
