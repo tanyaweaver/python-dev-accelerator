@@ -16,14 +16,14 @@ Repeat the deployment of your Django Imager website using the Ansible Configurat
 Tasks
 =====
 
-Begin by forking my sample Ansible repository into your own github account.
+Begin by forking my `sample Ansible repository <https://github.com/cewing/codefellows-ansible-example>`_ into your own github account.
 Then clone the repository to your local machine, and make the required extensions and adjustments to deploy your own imager project.
 You'll need to pip install both Ansible and Boto into your system Python in order for this to work properly.
 Unfortunately, Ansible just does not play nicely with Virtualenv.
 
-Along the way, you'll need to use the ansible-galaxy command to install the jdauphant.nginx role from the Ansible Galaxy roles collection.
+Along the way, you'll need to use the ansible-galaxy command to install the `jdauphant.nginx role <https://galaxy.ansible.com/list#/roles/466>`_ from the `Ansible Galaxy roles collection <https://galaxy.ansible.com/>`_.
 
-You will want to spend a fair amount of time looking over the Ansible documentation, which is pretty well organized.
+You will want to spend a fair amount of time looking over the `Ansible documentation <http://docs.ansible.com/>`_, which is pretty well organized.
 
 Remember, the basic form of the command to run an ansible playbook is:
 
