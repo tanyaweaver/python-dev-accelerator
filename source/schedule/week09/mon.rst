@@ -10,14 +10,14 @@ Monday
 
     This document contains no slides.
 
-Objectives
-==========
+.. Objectives
+.. ==========
 
-Readings
-========
+.. Readings
+.. ========
 
-Review
-======
+.. Review
+.. ======
 
 Concepts
 ========

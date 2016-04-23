@@ -10,20 +10,20 @@ Thursday
 
     This document contains no slides.
 
-Objectives
-==========
+.. Objectives
+.. ==========
 
-Readings
-========
+.. Readings
+.. ========
 
-Review
-======
+.. Review
+.. ======
 
-Concepts
-========
+.. Concepts
+.. ========
 
-Demo
-====
+.. Demo
+.. ====
 
 Assignments
 ===========

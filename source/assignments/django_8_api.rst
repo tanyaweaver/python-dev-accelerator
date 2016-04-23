@@ -1,11 +1,11 @@
 .. slideconf::
     :autoslides: False
 
-*************************************************
-Django: Django REST Framework Tutorial, Parts 4-6
-*************************************************
+***************************************
+Django: Implement a REST API for Imager
+***************************************
 
-.. slide:: Django: Django REST Framework Tutorial, Parts 4-6
+.. slide:: Django: Implement a REST API for Imager
     :level: 1
 
     This document contains no slides.
