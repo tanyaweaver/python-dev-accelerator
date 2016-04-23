@@ -10,7 +10,7 @@ Week Nine
 
     This document contains no slides.
 
-The theme for the week is undecided.
+The theme for the week is automation.
 
 .. toctree::
    :maxdepth: 1
