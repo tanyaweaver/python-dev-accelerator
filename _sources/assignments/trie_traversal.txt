@@ -1,0 +1,54 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Trie: Traversals\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Tasks\n",
+    "In your data-structures repository, add methods that implement a depth first traversal to the trie data structure.\n",
+    "\n",
+    "Your work should include unit tests that fully demonstrate the method you’ve added. Make sure to cover expected and edge cases.\n",
+    "\n",
+    "Add documentation of your new methods to your README file. Include any sources or collaborations."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Submission\n",
+    "Do your work on a branch. When you are finished and all your tests are passing, create a new pull request back to master from your branch and submit the URL for that pull request. When you’ve made your submission, you may merge the branch, but do not delete it until your assignment has been graded.\n",
+    "\n",
+    "As usual, use the comment function to submit questions, comments and reflections on the work you’ve done here."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.5.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Implement a Doubly-Linked List in Python &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Trie: Traversals &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="next" title="Managing AWS: Use Boto to Create And Destroy Instances" href="fabric_1_boto.html" />
-    <link rel="prev" title="Django: Django REST Framework Tutorial, Parts 4-6" href="django_7_drf_tutorial_b.html" />
+    <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
+    <link rel="next" title="Kata Fourteen: Tom Swift Under Milk Wood" href="trigrams.html" />
+    <link rel="prev" title="Implement a Trie in Python" href="trie_implementation.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,12 +52,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="fabric_1_boto.html" title="Managing AWS: Use Boto to Create And Destroy Instances"
+          <a href="trigrams.html" title="Kata Fourteen: Tom Swift Under Milk Wood"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="django_7_drf_tutorial_b.html" title="Django: Django REST Framework Tutorial, Parts 4-6"
+          <a href="trie_implementation.html" title="Implement a Trie in Python"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -179,39 +181,26 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="implement-a-doubly-linked-list-in-python">
-<h1>Implement a Doubly-Linked List in Python<a class="headerlink" href="#implement-a-doubly-linked-list-in-python" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-implement-a-doubly-linked-list-in-python"></span><p>Read a bit about the <a class="reference external" href="http://en.wikipedia.org/wiki/Doubly_linked_list">Doubly-Linked List</a></p>
-<div class="section" id="tasks">
-<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Make a new branch of your data structures repository.  Call it <code class="docutils literal"><span class="pre">dll</span></code> On that
-branch implement a doubly-linked list.  Your implementation should have the
-following methods:</p>
-<ul class="simple">
-<li><strong>insert(val)</strong> will insert the value &#8216;val&#8217; at the head of the list</li>
-<li><strong>append(val)</strong> will append the value &#8216;val&#8217; at the tail of the list</li>
-<li><strong>pop()</strong> will pop the first value off the head of the list and return it.</li>
-<li><strong>shift()</strong> will remove the last value from the tail of the list and return
-it.</li>
-<li><strong>remove(val)</strong> will remove the first instance of &#8216;val&#8217; found in the list,
-starting from the head. If &#8216;val&#8217; is not present, it will raise an appropriate
-Python exception.</li>
-</ul>
-<p>Be sure to write tests to cover your new data structure.  For each feature of
-your list, write the test that demonstrates it first, then implement the
-feature.</p>
-<p>Update the README to include this new structure.  In particular, add a
-paragraph explaining different use-cases where the singly or doubly-linked list
-might be more appropriate.</p>
+<div class="section" id="Trie:-Traversals">
+<h1>Trie: Traversals<a class="headerlink" href="#Trie:-Traversals" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Tasks">
+<h2>Tasks<a class="headerlink" href="#Tasks" title="Permalink to this headline">¶</a></h2>
+<p>In your data-structures repository, add methods that implement a depth
+first traversal to the trie data structure.</p>
+<p>Your work should include unit tests that fully demonstrate the method
+you’ve added. Make sure to cover expected and edge cases.</p>
+<p>Add documentation of your new methods to your README file. Include any
+sources or collaborations.</p>
 </div>
-<div class="section" id="submitting-your-work">
-<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When you are done working and all your tests are passing, create a pull request
-from the dll branch to master. Copy the URL of the pull request and submit that
-using the URL input.  After this is done, you may merge your branch back to
-master.</p>
-<p>As usual, use the comment feature to submit questions, comments and reflections
-on the work you did for this assignment.</p>
+<div class="section" id="Submission">
+<h2>Submission<a class="headerlink" href="#Submission" title="Permalink to this headline">¶</a></h2>
+<p>Do your work on a branch. When you are finished and all your tests are
+passing, create a new pull request back to master from your branch and
+submit the URL for that pull request. When you’ve made your submission,
+you may merge the branch, but do not delete it until your assignment has
+been graded.</p>
+<p>As usual, use the comment function to submit questions, comments and
+reflections on the work you’ve done here.</p>
 </div>
 </div>
 
@@ -223,19 +212,19 @@ on the work you did for this assignment.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Implement a Doubly-Linked List in Python</a><ul>
-<li><a class="reference internal" href="#tasks">Tasks</a></li>
-<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+<li><a class="reference internal" href="#">Trie: Traversals</a><ul>
+<li><a class="reference internal" href="#Tasks">Tasks</a></li>
+<li><a class="reference internal" href="#Submission">Submission</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="django_7_drf_tutorial_b.html"
-                        title="previous chapter">Django: Django REST Framework Tutorial, Parts 4-6</a></p>
+  <p class="topless"><a href="trie_implementation.html"
+                        title="previous chapter">Implement a Trie in Python</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="fabric_1_boto.html"
-                        title="next chapter">Managing AWS: Use Boto to Create And Destroy Instances</a></p>
+  <p class="topless"><a href="trigrams.html"
+                        title="next chapter">Kata Fourteen: Tom Swift Under Milk Wood</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -260,12 +249,13 @@ on the work you did for this assignment.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="fabric_1_boto.html" title="Managing AWS: Use Boto to Create And Destroy Instances"
+          <a href="trigrams.html" title="Kata Fourteen: Tom Swift Under Milk Wood"
              >next</a> |</li>
         <li class="right" >
-          <a href="django_7_drf_tutorial_b.html" title="Django: Django REST Framework Tutorial, Parts 4-6"
+          <a href="trie_implementation.html" title="Implement a Trie in Python"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

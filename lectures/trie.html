@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Problem Set - Statistics 4 &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Trie &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,9 +25,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
-    <link rel="next" title="Trie: AutoComplete" href="trie_autocomplete.html" />
-    <link rel="prev" title="Problem Set - Statistics 3" href="statistics_problem_set3.html" />
+    <link rel="up" title="401 Python: Lecture Notes" href="index.html" />
+    <link rel="next" title="Web App Security: More Vulnerabilities and Best Practices" href="web_app_security_2.html" />
+    <link rel="prev" title="Breaking the Unicodex:" href="the_unicodex.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -52,13 +52,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="trie_autocomplete.html" title="Trie: AutoComplete"
+          <a href="web_app_security_2.html" title="Web App Security: More Vulnerabilities and Best Practices"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="statistics_problem_set3.html" title="Problem Set - Statistics 3"
+          <a href="the_unicodex.html" title="Breaking the Unicodex:"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Lecture Notes</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -181,52 +181,143 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="Problem-Set---Statistics-4">
-<h1>Problem Set - Statistics 4<a class="headerlink" href="#Problem-Set---Statistics-4" title="Permalink to this headline">¶</a></h1>
-<p>Data Ref: <a class="reference external" href="http://www.seanlahman.com/baseball-archive/statistics/">http://www.seanlahman.com/baseball-archive/statistics/</a> - get
-the comma-delimited version for 2014</p>
-<p><strong>Note: Data is also available in the class downloads</strong></p>
-<div class="section" id="Tasks">
-<h2>Tasks<a class="headerlink" href="#Tasks" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="Univariate">
-<h3>Univariate<a class="headerlink" href="#Univariate" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="Trie">
+<h1>Trie<a class="headerlink" href="#Trie" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python"><div class="highlight"><pre>          *
+         / \
+      i /   \ t
+       /     \
+     *        *
+    /|        |\
+ n / | t    e | \ o
+  /  $        |  $
+ *            *
+ |       ____/|\____
+t|     a/     |d    \n
+ $     $      $      $
+o|
+ $
+</pre></div>
+</div>
 <ul class="simple">
-<li>With the baseball data linked above (some of it was explored in
-<a class="reference external" href="../lectures/stats_day4.html">Statistics 4</a>), create a univariate
-Linear Regression model predicting player salary using some player
-stat.</li>
-<li>You will need to join a second table to the &#8220;Salaries.csv&#8221; table.</li>
-<li>Cross-validate your model, and produce 68, 95, and 99.7% confidence
-intervals for your &#8220;slope&#8221;.</li>
-<li>Report the <span class="math">\(R^2\)</span> score for your univariate model.</li>
-<li>Make a scatter plot of your data, with your model predictions
-overlaid in red.</li>
+<li>adapted from an NYU course</li>
+</ul>
+<p>In the illustration, each node is marked by a *. The $ marks where a
+word ends at a specific node.</p>
+<p>In this trie, the word &#8216;int&#8217; and &#8216;into&#8217; are captured. The word &#8216;in&#8217; is
+not.</p>
+<div class="section" id="Motivation">
+<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Store data effciently without collisions (hash)</li>
+<li>Sorted ordering of the entries by key (related to the Radix search)</li>
+<li>Autocomplete</li>
+<li>Matching Algorithms (Spell Check &amp; Hyphenation)</li>
+<li>minus (Speed dependent on storage - RAM faster than hash, HD perhaps
+slower)</li>
+<li>minus (storing in RAM will eventually crush your system)</li>
+<li>Computational Linguists dig this data structure.</li>
 </ul>
 </div>
-<div class="section" id="Multivariate">
-<h3>Multivariate<a class="headerlink" href="#Multivariate" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Using <strong>no more than 4</strong> characteristics, create a multivariate
-Linear Regression model predicting player salary.</li>
-<li>Report the <span class="math">\(R^2\)</span> score for your multivariate model. Aim for
-<span class="math">\(R^2 &gt; 0.5\)</span>.</li>
-<li>Make a scatter plot of your data side-by-side with a scatter plot of
-your model predictions.</li>
+<div class="section" id="Definition">
+<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
+<p>A trie (from information reTRIEval) is a tree data structure that is
+used to store an associative array where position defines the key where
+the value is associated. All the descendents of a node have a common
+prefix.</p>
+<p>An associative array has a key and a value.</p>
+<p>Wikipedia <a class="reference external" href="https://en.wikipedia.org/wiki/Trie">https://en.wikipedia.org/wiki/Trie</a></p>
+</div>
+<div class="section" id="Attributes">
+<h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first rubric" id="key">Key</p>
+</li>
 </ul>
+<p>At each level a tree can have (in US English) 27 characters.</p>
+<p>What non-letter character might I have chosen to keep &amp; why?</p>
+<ul>
+<li><p class="first rubric" id="value">Value</p>
+</li>
+</ul>
+<p>We will not be storing any values for this class.</p>
+<p>In the past, I have stored weights or counts as values.</p>
+<ul>
+<li><p class="first rubric" id="end-of-word-token">End Of Word Token</p>
+</li>
+</ul>
+<p>You will need to choose an end of word token.</p>
+<p>After C&#8217;s example, I chose 0 for my implementation.</p>
+<p>$ indicates the end of a line in RegEx. Perhaps the lecturer chose it
+for that reason.</p>
 </div>
+<div class="section" id="Operations">
+<h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first rubric" id="insert">Insert</p>
+</li>
+</ul>
+<p>For each character in the token, we add a node (if it does not already
+exist) and navigate to the next level of the trie.</p>
+<div class="highlight-python"><div class="highlight"><pre>.     &lt;- level 0 (root)
+|
+a     &lt;- level 1
+|
+m     &lt;- level 2
+|
+y     &lt;- level 3
+|
+\0    &lt;- level 4
+</pre></div>
 </div>
-<div class="section" id="Submitting-Your-Work">
-<h2>Submitting Your Work<a class="headerlink" href="#Submitting-Your-Work" title="Permalink to this headline">¶</a></h2>
-<p>Report your answers in an iPython/Jupyter notebook with either print
-statements or markdown. If you write any functions, include a docstring
-describing what that function does. Note: You are not writing tests for
-any functions. If you come to any conclusions via math (and you will),
-make sure your code matches what you say.</p>
-<p>When your work is complete, push your work to github and issue a Pull
-Request to your master branch. Submit the URL for your pull request.
-After this is complete, you may merge your work to master.</p>
-<p>As usual, use the comments function in canvas to submit questions,
-comments and reflections on this work.</p>
+<div class="highlight-python"><div class="highlight"><pre>    .        &lt;- level 0 (root)
+    |
+    a        &lt;- level 1
+  /   \
+ m     n     &lt;- level 2
+ |     |
+ y     n     &lt;- level 3
+ |     |
+\0      \0   &lt;- level 4
+</pre></div>
+</div>
+<ul>
+<li><p class="first rubric" id="traversesearch">Traverse/Search</p>
+</li>
+</ul>
+<p>We will only utilize a depth first search.</p>
+<ol class="arabic simple">
+<li>Search current level for first character in key</li>
+<li>If none: return false</li>
+<li>If the matched character is <a href="#id1"><span class="problematic" id="id2">:raw-latex:`\0`</span></a>: return true</li>
+<li>Move to subtrie that matched this character</li>
+<li>Advance to next character in key</li>
+<li>Go to step 1</li>
+</ol>
+<ul>
+<li><p class="first rubric" id="autocomplete">AutoComplete</p>
+</li>
+</ul>
+<p>Starting with the first letter character, print a list of the top four
+words.</p>
+<p>With each successive character, print out the next top four words.</p>
+<p>Google implements this algorithm by the top querys (weighting your
+queries heavier than the world&#8217;s).</p>
+<div class="line-block">
+<div class="line">For instance:</div>
+<div class="line">* K &#8211;&gt; [&#8216;kittens&#8217;, &#8216;kits&#8217;, &#8216;kilt&#8217;, &#8216;kaboodle&#8217;] * KI &#8211;&gt; [&#8216;kittens&#8217;,
+&#8216;kits&#8217;, &#8216;kilt&#8217;] * KIL &#8211;&gt; [&#8216;kilt&#8217;] * KILT &#8211;&gt; [&#8216;kilt&#8217;] * KILTE &#8211;&gt;
+[ ] * KILTER &#8211;&gt; [ ]</div>
+</div>
+<ul>
+<li><p class="first rubric" id="delete">Delete</p>
+</li>
+</ul>
+<p>Most simply remove the root of the sub-tree with the unneeded path.</p>
+<p>There are more complex methods to clean up your nodes.</p>
+<p>We will not implement delete for this class.</p>
+<p>For comp. ling, I was reading in corpora, so didn&#8217;t really have a need
+for delete.</p>
 </div>
 </div>
 
@@ -238,23 +329,21 @@ comments and reflections on this work.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Problem Set - Statistics 4</a><ul>
-<li><a class="reference internal" href="#Tasks">Tasks</a><ul>
-<li><a class="reference internal" href="#Univariate">Univariate</a></li>
-<li><a class="reference internal" href="#Multivariate">Multivariate</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#Submitting-Your-Work">Submitting Your Work</a></li>
+<li><a class="reference internal" href="#">Trie</a><ul>
+<li><a class="reference internal" href="#Motivation">Motivation</a></li>
+<li><a class="reference internal" href="#Definition">Definition</a></li>
+<li><a class="reference internal" href="#Attributes">Attributes</a></li>
+<li><a class="reference internal" href="#Operations">Operations</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="statistics_problem_set3.html"
-                        title="previous chapter">Problem Set - Statistics 3</a></p>
+  <p class="topless"><a href="the_unicodex.html"
+                        title="previous chapter">Breaking the Unicodex:</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="trie_autocomplete.html"
-                        title="next chapter">Trie: AutoComplete</a></p>
+  <p class="topless"><a href="web_app_security_2.html"
+                        title="next chapter">Web App Security: More Vulnerabilities and Best Practices</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -279,13 +368,13 @@ comments and reflections on this work.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="trie_autocomplete.html" title="Trie: AutoComplete"
+          <a href="web_app_security_2.html" title="Web App Security: More Vulnerabilities and Best Practices"
              >next</a> |</li>
         <li class="right" >
-          <a href="statistics_problem_set3.html" title="Problem Set - Statistics 3"
+          <a href="the_unicodex.html" title="Breaking the Unicodex:"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Lecture Notes</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

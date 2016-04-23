@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Implement a Doubly-Linked List in Python &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Automate Deploying Imager with Ansible &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="next" title="Managing AWS: Use Boto to Create And Destroy Instances" href="fabric_1_boto.html" />
-    <link rel="prev" title="Django: Django REST Framework Tutorial, Parts 4-6" href="django_7_drf_tutorial_b.html" />
+    <link rel="next" title="Get an Amazon AWS Account" href="aws_account.html" />
+    <link rel="prev" title="Deploy the Imager app to AWS" href="aws_1_deploy_imager.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -51,10 +51,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="fabric_1_boto.html" title="Managing AWS: Use Boto to Create And Destroy Instances"
+          <a href="aws_account.html" title="Get an Amazon AWS Account"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="django_7_drf_tutorial_b.html" title="Django: Django REST Framework Tutorial, Parts 4-6"
+          <a href="aws_1_deploy_imager.html" title="Deploy the Imager app to AWS"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
@@ -179,39 +179,33 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="implement-a-doubly-linked-list-in-python">
-<h1>Implement a Doubly-Linked List in Python<a class="headerlink" href="#implement-a-doubly-linked-list-in-python" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-implement-a-doubly-linked-list-in-python"></span><p>Read a bit about the <a class="reference external" href="http://en.wikipedia.org/wiki/Doubly_linked_list">Doubly-Linked List</a></p>
+<div class="section" id="automate-deploying-imager-with-ansible">
+<h1>Automate Deploying Imager with Ansible<a class="headerlink" href="#automate-deploying-imager-with-ansible" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-automate-deploying-imager-with-ansible"></span><p>Repeat the deployment of your Django Imager website using the Ansible Configuration Management System.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Make a new branch of your data structures repository.  Call it <code class="docutils literal"><span class="pre">dll</span></code> On that
-branch implement a doubly-linked list.  Your implementation should have the
-following methods:</p>
-<ul class="simple">
-<li><strong>insert(val)</strong> will insert the value &#8216;val&#8217; at the head of the list</li>
-<li><strong>append(val)</strong> will append the value &#8216;val&#8217; at the tail of the list</li>
-<li><strong>pop()</strong> will pop the first value off the head of the list and return it.</li>
-<li><strong>shift()</strong> will remove the last value from the tail of the list and return
-it.</li>
-<li><strong>remove(val)</strong> will remove the first instance of &#8216;val&#8217; found in the list,
-starting from the head. If &#8216;val&#8217; is not present, it will raise an appropriate
-Python exception.</li>
-</ul>
-<p>Be sure to write tests to cover your new data structure.  For each feature of
-your list, write the test that demonstrates it first, then implement the
-feature.</p>
-<p>Update the README to include this new structure.  In particular, add a
-paragraph explaining different use-cases where the singly or doubly-linked list
-might be more appropriate.</p>
+<p>Begin by forking my <a class="reference external" href="https://github.com/cewing/codefellows-ansible-example">sample Ansible repository</a> into your own github account.
+Then clone the repository to your local machine, and make the required extensions and adjustments to deploy your own imager project.
+You&#8217;ll need to pip install both Ansible and Boto into your system Python in order for this to work properly.
+Unfortunately, Ansible just does not play nicely with Virtualenv.</p>
+<p>Along the way, you&#8217;ll need to use the ansible-galaxy command to install the <a class="reference external" href="https://galaxy.ansible.com/list#/roles/466">jdauphant.nginx role</a> from the <a class="reference external" href="https://galaxy.ansible.com/">Ansible Galaxy roles collection</a>.</p>
+<p>You will want to spend a fair amount of time looking over the <a class="reference external" href="http://docs.ansible.com/">Ansible documentation</a>, which is pretty well organized.</p>
+<p>Remember, the basic form of the command to run an ansible playbook is:</p>
+<p>$ cd &lt;ansible_repo&gt;
+$ ansible-playbook -i plugins/inventory/ &lt;name_of_playbook&gt;.yml</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When you are done working and all your tests are passing, create a pull request
-from the dll branch to master. Copy the URL of the pull request and submit that
-using the URL input.  After this is done, you may merge your branch back to
-master.</p>
-<p>As usual, use the comment feature to submit questions, comments and reflections
-on the work you did for this assignment.</p>
+<p>Please use the text box in Canvas to submit the following items:</p>
+<ul class="simple">
+<li>A URL pointing to your running Django Instance on AWS</li>
+<li>The URL of your Ansible Repository in GitHub</li>
+<li>A Screenshot of the final screen of your terminal session where the ansible playbook was run.
+This should show the steps run, which were OK, which were changed, etc.
+(You should be able to embed this screenshot in the text entry box using the little broccoli button in the editor bar.)</li>
+</ul>
+<p>Part of our evaluation of this submission will be our ability to sign up for the service, add and edit photos and albums, and use the API to get to our photos.
+Please ensure that all of this works on AWS.</p>
 </div>
 </div>
 
@@ -223,7 +217,7 @@ on the work you did for this assignment.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Implement a Doubly-Linked List in Python</a><ul>
+<li><a class="reference internal" href="#">Automate Deploying Imager with Ansible</a><ul>
 <li><a class="reference internal" href="#tasks">Tasks</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>
@@ -231,11 +225,11 @@ on the work you did for this assignment.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="django_7_drf_tutorial_b.html"
-                        title="previous chapter">Django: Django REST Framework Tutorial, Parts 4-6</a></p>
+  <p class="topless"><a href="aws_1_deploy_imager.html"
+                        title="previous chapter">Deploy the Imager app to AWS</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="fabric_1_boto.html"
-                        title="next chapter">Managing AWS: Use Boto to Create And Destroy Instances</a></p>
+  <p class="topless"><a href="aws_account.html"
+                        title="next chapter">Get an Amazon AWS Account</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -260,10 +254,10 @@ on the work you did for this assignment.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="fabric_1_boto.html" title="Managing AWS: Use Boto to Create And Destroy Instances"
+          <a href="aws_account.html" title="Get an Amazon AWS Account"
              >next</a> |</li>
         <li class="right" >
-          <a href="django_7_drf_tutorial_b.html" title="Django: Django REST Framework Tutorial, Parts 4-6"
+          <a href="aws_1_deploy_imager.html" title="Deploy the Imager app to AWS"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>

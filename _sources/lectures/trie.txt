@@ -1,0 +1,313 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Trie"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "                      *  \n",
+    "                     / \\\n",
+    "                  i /   \\ t\n",
+    "                   /     \\\n",
+    "                 *        *\n",
+    "                /|        |\\ \n",
+    "             n / | t    e | \\ o\n",
+    "              /  $        |  $\n",
+    "             *            *   \n",
+    "             |       ____/|\\____\n",
+    "            t|     a/     |d    \\n\n",
+    "             $     $      $      $\n",
+    "            o|\n",
+    "             $\n",
+    "             \n",
+    "* adapted from an NYU course"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In the illustration, each node is marked by a \\*.  The $ marks where a word ends at a specific node.\n",
+    "\n",
+    "In this trie, the word 'int' and 'into' are captured. The word 'in' is not."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Motivation"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* Store data effciently without collisions (hash)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* Sorted ordering of the entries by key (related to the Radix search)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* Autocomplete"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* Matching Algorithms (Spell Check & Hyphenation)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* minus (Speed dependent on storage - RAM faster than hash, HD perhaps slower)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* minus (storing in RAM will eventually crush your system)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* Computational Linguists dig this data structure."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Definition"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "A trie (from information reTRIEval) is a tree data structure that is used to store an associative array where position defines the key where the value is associated.  All the descendents of a node have a common prefix.\n",
+    "\n",
+    "An associative array has a key and a value.\n",
+    "\n",
+    "Wikipedia\n",
+    "https://en.wikipedia.org/wiki/Trie"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Attributes"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* ### Key"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "At each level a tree can have (in US English) 27 characters.  \n",
+    "\n",
+    "What non-letter character might I have chosen to keep & why?  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* ### Value"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We will not be storing any values for this class.  \n",
+    "\n",
+    "In the past, I have stored weights or counts as values."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* ### End Of Word Token"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "You will need to choose an end of word token.  \n",
+    "\n",
+    "After C's example, I chose 0 for my implementation.\n",
+    "\n",
+    "$ indicates the end of a line in RegEx.  Perhaps the lecturer chose it for that reason."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Operations"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* ### Insert"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For each character in the token, we add a node (if it does not already exist) and navigate to the next level of the trie."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "      .     <- level 0 (root)  \n",
+    "      |  \n",
+    "      a     <- level 1  \n",
+    "      |  \n",
+    "      m     <- level 2  \n",
+    "      |\n",
+    "      y     <- level 3  \n",
+    "      |   \n",
+    "      \\0    <- level 4  \n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "        .        <- level 0 (root)   \n",
+    "        |   \n",
+    "        a        <- level 1   \n",
+    "      /   \\  \n",
+    "     m     n     <- level 2   \n",
+    "     |     |  \n",
+    "     y     n     <- level 3  \n",
+    "     |     |  \n",
+    "    \\0      \\0   <- level 4"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* ### Traverse/Search"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We will only utilize a depth first search.  \n",
+    "\n",
+    "1. Search current level for first character in key  \n",
+    "2. If none:  return false  \n",
+    "3. If the matched character is \\0:  return true  \n",
+    "4. Move to subtrie that matched this character\n",
+    "5. Advance to next character in key\n",
+    "6. Go to step 1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* ### AutoComplete"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Starting with the first letter character, print a list of the top four words.  \n",
+    "\n",
+    "With each successive character, print out the next top four words.\n",
+    "\n",
+    "Google implements this algorithm by the top querys (weighting your queries heavier than the world's).\n",
+    "\n",
+    "For instance:  \n",
+    "* K --> ['kittens', 'kits', 'kilt', 'kaboodle']\n",
+    "* KI --> ['kittens', 'kits', 'kilt']\n",
+    "* KIL --> ['kilt']\n",
+    "* KILT --> ['kilt']\n",
+    "* KILTE --> [ ]\n",
+    "* KILTER --> [ ]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "* ### Delete"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Most simply remove the root of the sub-tree with the unneeded path.  \n",
+    "\n",
+    "There are more complex methods to clean up your nodes.  \n",
+    "\n",
+    "We will not implement delete for this class.\n",
+    "\n",
+    "For comp. ling, I was reading in corpora, so didn't really have a need for delete."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.5.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}
