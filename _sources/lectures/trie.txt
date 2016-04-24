@@ -2,40 +2,56 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
    "source": [
     "# Trie"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
    "source": [
-    "                      *  \n",
-    "                     / \\\n",
-    "                  i /   \\ t\n",
-    "                   /     \\\n",
-    "                 *        *\n",
-    "                /|        |\\ \n",
-    "             n / | t    e | \\ o\n",
-    "              /  $        |  $\n",
-    "             *            *   \n",
-    "             |       ____/|\\____\n",
-    "            t|     a/     |d    \\n\n",
-    "             $     $      $      $\n",
-    "            o|\n",
-    "             $\n",
+    "                       *  \n",
+    "                     /   \\\n",
+    "                   /      \\\n",
+    "                 i         t\n",
+    "                /|         | \\ \n",
+    "               /           |  \\ \n",
+    "              /  |         |   o\n",
+    "             n   t         e     \\\n",
+    "             |   |    ____/|\\____  $ \n",
+    "             |   |   /     |     \\\n",
+    "             t   $  a      d      n\n",
+    "            / \\     |      |      |\n",
+    "           o   $    $      $      $\n",
+    "           |\n",
+    "           $\n",
     "             \n",
-    "* adapted from an NYU course"
+    "* adapted from an NYU course: http://cs.nyu.edu/~kshitij/courses/ds12/index_files/notes-trie.txt"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
    "source": [
-    "In the illustration, each node is marked by a \\*.  The $ marks where a word ends at a specific node.\n",
+    "In the illustration, each node is marked by a character.  The $ marks where a word ends at a specific node.\n",
     "\n",
-    "In this trie, the word 'int' and 'into' are captured. The word 'in' is not."
+    "In this trie, the word 'int' and 'into' are captured. The word 'in' is not.\n",
+    " \n",
+    " \n",
+    "Der weg ist das Ziel: \"Life is the journey, not the destination. ~Ralph Waldo Emerson"
    ]
   },
   {
@@ -56,7 +72,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "* Sorted ordering of the entries by key (related to the Radix search)"
+    "* Sorted ordering of the entries by key (related to the Radix search): https://en.wikipedia.org/wiki/Radix_tree"
    ]
   },
   {
@@ -105,12 +121,45 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "A trie (from information reTRIEval) is a tree data structure that is used to store an associative array where position defines the key where the value is associated.  All the descendents of a node have a common prefix.\n",
+    "A trie (from information reTRIEval) is a tree data structure that is used to store an associative array where we care about the path to the leaf, rather than any individual content of a node.  \n",
+    "\n",
+    "All the descendents of a particular node have a common prefix.  This prefix is the path that lead to the particular node.\n",
     "\n",
     "An associative array has a key and a value.\n",
     "\n",
     "Wikipedia\n",
     "https://en.wikipedia.org/wiki/Trie"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The way to read (or think) of the tree is as follows. For each node\n",
+    "(denoted by * or $) in the tree we can potentially have 26 children\n",
+    "(unlike a binary tree, in which we have at most two children) -- one\n",
+    "corresponding to each letter (which is written next to the \"line\" in\n",
+    "the figure). The string represented by a node is obtained by following\n",
+    "the path from root to that node and writing down the characters along\n",
+    "the path.\n",
+    "\n",
+    "\n",
+    "                      *\n",
+    "                     / \\\n",
+    "                  i /   \\ t\n",
+    "                   /     \\\n",
+    "                 *        *\n",
+    "                /|        |\\ \n",
+    "             n / | t    e | \\ o\n",
+    "              /  $        |  $\n",
+    "             *            *   \n",
+    "             |       ____/|\\____\n",
+    "            t|     a/     |d    \\n\n",
+    "             $     $      $      $\n",
+    "            o|\n",
+    "             $\n",
+    "\n",
+    "http://cs.nyu.edu/~kshitij/courses/ds12/index_files/notes-trie.txt\n"
    ]
   },
   {
@@ -131,9 +180,11 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "At each level a tree can have (in US English) 27 characters.  \n",
+    "At each level a trie can have (in US English) 27 characters.  \n",
     "\n",
-    "What non-letter character might I have chosen to keep & why?  "
+    "What non-letter character might I have chosen to keep & why?  \n",
+    "\n",
+    "In fact there's one more character that we need to account for....(just a sec)."
    ]
   },
   {
@@ -167,7 +218,9 @@
     "\n",
     "After C's example, I chose 0 for my implementation.\n",
     "\n",
-    "$ indicates the end of a line in RegEx.  Perhaps the lecturer chose it for that reason."
+    "$ indicates the end of a line in RegEx.  Perhaps the lecturer chose it for that reason.\n",
+    "\n",
+    "This is character 28."
    ]
   },
   {
@@ -208,7 +261,11 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
    "source": [
     "        .        <- level 0 (root)   \n",
     "        |   \n",
@@ -244,14 +301,33 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "* Get all words"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
    "source": [
     "* ### AutoComplete"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
    "source": [
     "Starting with the first letter character, print a list of the top four words.  \n",
     "\n",
@@ -270,14 +346,22 @@
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
    "source": [
     "* ### Delete"
    ]
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
    "source": [
     "Most simply remove the root of the sub-tree with the unneeded path.  \n",
     "\n",
@@ -290,6 +374,7 @@
   }
  ],
  "metadata": {
+  "celltoolbar": "Slideshow",
   "kernelspec": {
    "display_name": "Python 3",
    "language": "python",

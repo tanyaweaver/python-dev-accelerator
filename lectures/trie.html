@@ -25,9 +25,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
-    <link rel="up" title="401 Python: Lecture Notes" href="index.html" />
-    <link rel="next" title="Web App Security: More Vulnerabilities and Best Practices" href="web_app_security_2.html" />
-    <link rel="prev" title="Breaking the Unicodex:" href="the_unicodex.html" />
+    <link rel="up" title="Tuesday" href="../schedule/week09/tue.html" />
+    <link rel="next" title="Wednesday" href="../schedule/week09/wed.html" />
+    <link rel="prev" title="Tuesday" href="../schedule/week09/tue.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -52,13 +52,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="web_app_security_2.html" title="Web App Security: More Vulnerabilities and Best Practices"
+          <a href="../schedule/week09/wed.html" title="Wednesday"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="the_unicodex.html" title="Breaking the Unicodex:"
+          <a href="../schedule/week09/tue.html" title="Tuesday"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Lecture Notes</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../schedule/week09/tue.html" accesskey="U">Tuesday</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -183,6 +183,63 @@ div.nboutput  > :nth-child(2).stderr {
 </style>
 <div class="section" id="Trie">
 <h1>Trie<a class="headerlink" href="#Trie" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python"><div class="highlight"><pre>            *
+          /   \
+        /      \
+      i         t
+     /|         | \
+    /           |  \
+   /  |         |   o
+  n   t         e     \
+  |   |    ____/|\____  $
+  |   |   /     |     \
+  t   $  a      d      n
+ / \     |      |      |
+o   $    $      $      $
+|
+$
+</pre></div>
+</div>
+<ul class="simple">
+<li>adapted from an NYU course:
+<a class="reference external" href="http://cs.nyu.edu/~kshitij/courses/ds12/index_files/notes-trie.txt">http://cs.nyu.edu/~kshitij/courses/ds12/index_files/notes-trie.txt</a></li>
+</ul>
+<p>In the illustration, each node is marked by a character. The $ marks
+where a word ends at a specific node.</p>
+<p>In this trie, the word &#8216;int&#8217; and &#8216;into&#8217; are captured. The word &#8216;in&#8217; is
+not.</p>
+<p>Der weg ist das Ziel: &#8220;Life is the journey, not the destination. ~Ralph
+Waldo Emerson</p>
+<div class="section" id="Motivation">
+<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Store data effciently without collisions (hash)</li>
+<li>Sorted ordering of the entries by key (related to the Radix search):
+<a class="reference external" href="https://en.wikipedia.org/wiki/Radix_tree">https://en.wikipedia.org/wiki/Radix_tree</a></li>
+<li>Autocomplete</li>
+<li>Matching Algorithms (Spell Check &amp; Hyphenation)</li>
+<li>minus (Speed dependent on storage - RAM faster than hash, HD perhaps
+slower)</li>
+<li>minus (storing in RAM will eventually crush your system)</li>
+<li>Computational Linguists dig this data structure.</li>
+</ul>
+</div>
+<div class="section" id="Definition">
+<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
+<p>A trie (from information reTRIEval) is a tree data structure that is
+used to store an associative array where we care about the path to the
+leaf, rather than any individual content of a node.</p>
+<p>All the descendents of a particular node have a common prefix. This
+prefix is the path that lead to the particular node.</p>
+<p>An associative array has a key and a value.</p>
+<p>Wikipedia <a class="reference external" href="https://en.wikipedia.org/wiki/Trie">https://en.wikipedia.org/wiki/Trie</a></p>
+<p>The way to read (or think) of the tree is as follows. For each node
+(denoted by * or $) in the tree we can potentially have 26 children
+(unlike a binary tree, in which we have at most two children) &#8211; one
+corresponding to each letter (which is written next to the &#8220;line&#8221; in the
+figure). The string represented by a node is obtained by following the
+path from root to that node and writing down the characters along the
+path.</p>
 <div class="highlight-python"><div class="highlight"><pre>          *
          / \
       i /   \ t
@@ -199,34 +256,7 @@ o|
  $
 </pre></div>
 </div>
-<ul class="simple">
-<li>adapted from an NYU course</li>
-</ul>
-<p>In the illustration, each node is marked by a *. The $ marks where a
-word ends at a specific node.</p>
-<p>In this trie, the word &#8216;int&#8217; and &#8216;into&#8217; are captured. The word &#8216;in&#8217; is
-not.</p>
-<div class="section" id="Motivation">
-<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Store data effciently without collisions (hash)</li>
-<li>Sorted ordering of the entries by key (related to the Radix search)</li>
-<li>Autocomplete</li>
-<li>Matching Algorithms (Spell Check &amp; Hyphenation)</li>
-<li>minus (Speed dependent on storage - RAM faster than hash, HD perhaps
-slower)</li>
-<li>minus (storing in RAM will eventually crush your system)</li>
-<li>Computational Linguists dig this data structure.</li>
-</ul>
-</div>
-<div class="section" id="Definition">
-<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
-<p>A trie (from information reTRIEval) is a tree data structure that is
-used to store an associative array where position defines the key where
-the value is associated. All the descendents of a node have a common
-prefix.</p>
-<p>An associative array has a key and a value.</p>
-<p>Wikipedia <a class="reference external" href="https://en.wikipedia.org/wiki/Trie">https://en.wikipedia.org/wiki/Trie</a></p>
+<p><a class="reference external" href="http://cs.nyu.edu/~kshitij/courses/ds12/index_files/notes-trie.txt">http://cs.nyu.edu/~kshitij/courses/ds12/index_files/notes-trie.txt</a></p>
 </div>
 <div class="section" id="Attributes">
 <h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
@@ -234,8 +264,10 @@ prefix.</p>
 <li><p class="first rubric" id="key">Key</p>
 </li>
 </ul>
-<p>At each level a tree can have (in US English) 27 characters.</p>
+<p>At each level a trie can have (in US English) 27 characters.</p>
 <p>What non-letter character might I have chosen to keep &amp; why?</p>
+<p>In fact there&#8217;s one more character that we need to account for....(just
+a sec).</p>
 <ul>
 <li><p class="first rubric" id="value">Value</p>
 </li>
@@ -250,6 +282,7 @@ prefix.</p>
 <p>After C&#8217;s example, I chose 0 for my implementation.</p>
 <p>$ indicates the end of a line in RegEx. Perhaps the lecturer chose it
 for that reason.</p>
+<p>This is character 28.</p>
 </div>
 <div class="section" id="Operations">
 <h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
@@ -295,6 +328,8 @@ y     &lt;- level 3
 <li>Go to step 1</li>
 </ol>
 <ul>
+<li><p class="first">Get all words</p>
+</li>
 <li><p class="first rubric" id="autocomplete">AutoComplete</p>
 </li>
 </ul>
@@ -339,11 +374,11 @@ for delete.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="the_unicodex.html"
-                        title="previous chapter">Breaking the Unicodex:</a></p>
+  <p class="topless"><a href="../schedule/week09/tue.html"
+                        title="previous chapter">Tuesday</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="web_app_security_2.html"
-                        title="next chapter">Web App Security: More Vulnerabilities and Best Practices</a></p>
+  <p class="topless"><a href="../schedule/week09/wed.html"
+                        title="next chapter">Wednesday</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -368,13 +403,13 @@ for delete.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="web_app_security_2.html" title="Web App Security: More Vulnerabilities and Best Practices"
+          <a href="../schedule/week09/wed.html" title="Wednesday"
              >next</a> |</li>
         <li class="right" >
-          <a href="the_unicodex.html" title="Breaking the Unicodex:"
+          <a href="../schedule/week09/tue.html" title="Tuesday"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Lecture Notes</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../schedule/week09/tue.html" >Tuesday</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
