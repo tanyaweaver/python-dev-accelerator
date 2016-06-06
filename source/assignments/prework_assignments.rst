@@ -41,7 +41,7 @@ Spend the time between now and the start of class sharpening your HTML/CSS/JS sk
 Refresh HTML/CSS/JS
 -------------------
 
-If you are a complete beginner, then may I suggest an account with either `Treehouse <http://teamtreehouse.com/>`_ or `CodeAcademy's <http://codeacademy.com/>`_. Once you are signed up, either site has a number of quality tutorials that cover HTML, CSS, and Javascript. Pick some, and work through them. Then pick the next in line and keep going. Spend at least an hour a day working on this.
+If you are a complete beginner, then may I suggest an account with either `Treehouse <http://teamtreehouse.com/>`_ or `CodeAcademy <http://codeacademy.com/>`_. Once you are signed up, either site has a number of quality tutorials that cover HTML, CSS, and Javascript. Pick some, and work through them. Then pick the next in line and keep going. Spend at least an hour a day working on this.
 
 Another great resource for all of the above is `FreeCodeCamp <http://www.freecodecamp.com>`_. Once you sign up for an account there, you should be able to work your way all the way through the Advanced Algorithm Scripting section of work. It does take time though, so pace yourself over several days/weeks.
 
