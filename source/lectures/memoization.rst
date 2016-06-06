@@ -168,4 +168,4 @@ With memoization, you calculate your result once and only once, then *remember* 
 
 Our original function took 2.7 ms to execute. The memoized version of essentially the same function took 0.7 microseconds (0.0007 ms). This is more than 3500-times faster than the original version!
 
-
+There is a faster algorithm. Look up `Knuth <https://en.wikipedia.org/wiki/Donald_Knuth>`_ and other ways to do this in Python. `Warning: do not directly copy and paste code from the internet <https://technobeans.wordpress.com/2012/04/16/5-ways-of-fibonacci-in-python/>`_.
