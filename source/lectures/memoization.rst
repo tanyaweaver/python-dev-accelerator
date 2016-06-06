@@ -23,6 +23,7 @@
 
     .. rst-class:: build
     .. code-block:: ipython
+
         In [1]: def fib(n):
                 """Return nth number of Fibonacci Sequence."""
                 if n == 1:
@@ -39,6 +40,7 @@
 
     .. rst-class:: build
     .. code-block:: ipython
+
         In [2]: timeit.timeit("fib(20)", setup="from __main__ import fib", number=1000)
         Out[2]: 2.675891876220703 # milliseconds
 
@@ -54,6 +56,7 @@
     :level: 3
     .. rst-class:: build      
     .. code-block:: ipython
+
         In [3]: def fibonacci(n):
                     """Return nth number of Fibonacci sequence."""
                     if n <= 0:
@@ -77,6 +80,7 @@
     .. rst-class:: build
 
     .. code-block:: ipython
+
         In [4]: memo = {}
         In [5]: def fib_memoized(n):
                     """Return the nth number of Fibonacci Sequence"""
@@ -106,6 +110,7 @@ Timing a Recursive Function
 Recursive functions are a consistent pain to deal with that you will encounter throughout your programming career. The deeper you have to go into your recursive stack, the more hairy that function can get (and the slower it can get). Consider the Fibonacci sequence, written with recursion in mind.
 
 .. code-block:: ipython
+
     In [1]: def fib(n):
                 """Return nth number of Fibonacci Sequence."""
                 if n == 1:
@@ -118,6 +123,7 @@ Recursive functions are a consistent pain to deal with that you will encounter t
 When timed we see that it takes about 2.7 milliseconds to run
 
 .. code-block:: ipython
+
     In [2]: timeit.timeit("fib(20)", setup="from __main__ import fib", number=1000)
     Out[2]: 2.675891876220703 # milliseconds
 
@@ -129,6 +135,7 @@ Refactor and Go Faster
 Can it go faster? What if we only calculated once? What built-in data structure can we use?
 
 .. code-block:: ipython
+
     In [3]: def fibonacci(n):
                 """Return nth number of Fibonacci sequence."""
                 if n <= 0:
@@ -150,6 +157,7 @@ There is another way to speed up code execution and value-calculation in recursi
 With memoization, you calculate your result once and only once, then *remember* the result for calculations up-to and including that final one. This makes lookup very fast. Observe
 
 .. code-block:: ipython
+
     In [4]: memo = {}
     In [5]: def fib_memoized(n):
                 """Return the nth number of Fibonacci Sequence"""
