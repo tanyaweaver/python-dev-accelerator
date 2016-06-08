@@ -25,39 +25,39 @@ Babbage’s design was revolutionary in that the computer could store and then r
 Storing and Fetching Data
 =========================
 
-- The Analytical Engine only used fixed point arithmetic (column width of 50).
-- Data Structures improve the storing and/or fetching of GOBS.
-- Data Structures organize GOBs
+* The Analytical Engine only used fixed point arithmetic (column width of 50).
+* Data Structures improve the storing and/or fetching of GOBS.
+* Data Structures organize GOBs
 
 Types of Data Structures
 ========================
 
 GOBs are organized into data structures. These are then grouped into data types:
 
-- Primitive
-- Composite
-- Abstract Data Types (ADT)
+* Primitive
+* Composite
+* Abstract Data Types (ADT)
 
 Primitive Data Types
 --------------------
 
 Primitive data types are basically built-in types like integers and booleans. 
 
-+------+--------+----------------+
-| Type | Values | Python Implementation |
-+=========+===============+================+
-| Boolean | True or False | ``bool`` |
-+------+--------+----------------+
-| Character | `grapheme <https://en.wikipedia.org/wiki/Grapheme>`_ or unicode point | ``s[n]`` or ``ord(s[n])`` |
-+------+--------+----------------+
-| Floating Point | single-precision real numbers (±1.18 x 10\ :sup:`-38`\ to ±3.4 x 10\ :sup:`38`\) | n/a |
-+------+--------+----------------+
-| Double-precision Floating Point | wider float (±2.23 x 10\ :sup:`-308`\ to ±1.80 x 10\ :sup:`308`\) | ``float`` |
-+------+--------+----------------+
-| Integer | fixed-precision values (ex: ...-3, -2, -1, 0, 1, 2, 3...) | ``int`` |
-+------+--------+----------------+
-| NoneType | empty variable without meaningful value | ``None`` |
-+------+--------+----------------+
++---------------------------------+----------------------------------------------------------------------------------+---------------------------+
+| Type                            | Values                                                                           | Python Implementation     |
++=================================+==================================================================================+===========================+
+| Boolean                         | True or False                                                                    | ``bool``                  |
++---------------------------------+----------------------------------------------------------------------------------+---------------------------+
+| Character                       | `grapheme <https://en.wikipedia.org/wiki/Grapheme>`_ or unicode point            | ``s[n]`` or ``ord(s[n])`` |
++---------------------------------+----------------------------------------------------------------------------------+---------------------------+
+| Floating Point                  | single-precision real numbers (±1.18 x 10\ :sup:`-38`\ to ±3.4 x 10\ :sup:`38`\) | n/a                       |
++---------------------------------+----------------------------------------------------------------------------------+---------------------------+
+| Double-precision Floating Point | wider float (±2.23 x 10\ :sup:`-308`\ to ±1.80 x 10\ :sup:`308`\)                | ``float``                 |
++---------------------------------+----------------------------------------------------------------------------------+---------------------------+
+| Integer                         | fixed-precision values (ex: ...-3, -2, -1, 0, 1, 2, 3...)                        | ``int``                   |
++---------------------------------+----------------------------------------------------------------------------------+---------------------------+
+| NoneType                        | empty variable without meaningful value                                          | ``None``                  |
++---------------------------------+----------------------------------------------------------------------------------+---------------------------+
 
 Composite Data Types
 --------------------
@@ -83,44 +83,44 @@ Note: Since the data values and operations are defined with mathematical precisi
 
 Abstract data types follow some mathmatical model of a data structure. A developer implements the data structure, and a user expects certain behaviors from the implementation characteristic of the data type. Here are a few:
 
-- List (singly- and doubly-linked)
-- Stack
-- Queue
-- Deque (Double-ended queue)
-- Priority queue
-- Associative array
-- Multimap
-- Multiset
-- Set
-- Tree
-- Graph
+* List (singly- and doubly-linked)
+* Stack
+* Queue
+* Deque (Double-ended queue)
+* Priority queue
+* Associative array
+* Multimap
+* Multiset
+* Set
+* Tree
+* Graph
 
 For this class
 ~~~~~~~~~~~~~~
 
 We will *consume* primitive and composite data types.
 
-- These are encapsulated quite nicely by Python.
-- We care about what they do and what they allow us to do
+* These are encapsulated quite nicely by Python.
+* We care about what they do and what they allow us to do
 
 We will *implement* abstract data types
 
-- We care about performance
-- We look at their attributes and operations.
+* We care about performance
+* We look at their attributes and operations.
 
 Common Attributes of Abstract Data Types
 ========================================
 
-- index, key
-- node
-- edge
-- length, size
-- value, cargo, information
-- next
-- previous
-- leaf
-- head, root
-- tail
+* index, key
+* node
+* edge
+* length, size
+* value, cargo, information
+* next
+* previous
+* leaf
+* head, root
+* tail
 
 Common Operations of Abstract Data Types
 ========================================
