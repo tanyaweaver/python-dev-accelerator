@@ -12,7 +12,7 @@
 .. slide:: Timing a Recursive Function
     :level: 2
 
-    .. rst-class:: left
+    .. rst-class:: build
 
     - Recursive functions consistent throughout programming career
     - Deeper into recursive stack = more pain; slower function 
