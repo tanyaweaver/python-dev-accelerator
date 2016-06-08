@@ -64,15 +64,15 @@ Composite Data Types
 
 Data types composed of two or more other data types. Here are *some*:
 
-+------+--------+----------------+
-| Type | Values | Python Implementation |
-+=========+===============+================+
-| Array | Mutable object containing other values | ``list`` or ``[]`` |
-+------+--------+----------------+
-| Record | Immutable object containing other values | ``tuple`` or ``()`` |
-+------+--------+----------------+
-| Union | Contains values that can be multiple types | ``dict`` or ``{}`` |
-+------+--------+----------------+
++--------+--------------------------------------------+-----------------------+
+| Type   | Values                                     | Python Implementation |
++========+============================================+=======================+
+| Array  | Mutable object containing other values     | ``list`` or ``[]``    |
++--------+--------------------------------------------+-----------------------+
+| Record | Immutable object containing other values   | ``tuple`` or ``()``   |
++--------+--------------------------------------------+-----------------------+
+| Union  | Contains values that can be multiple types | ``dict`` or ``{}``    |
++--------+--------------------------------------------+-----------------------+
 
 Abstract Data Types
 -------------------
@@ -125,20 +125,20 @@ Common Attributes of Abstract Data Types
 Common Operations of Abstract Data Types
 ========================================
 
-+-----------+------------+---------------+
-| Operation | Definition | Also Known As... |
-+-----------+------------+---------------+
-| ``search(S, k)`` | Given a structure ``S`` and a key ``k``, returns the value that ``S`` points to at position ``k`` | traverse, walk, find |
-+-----------+------------+---------------+
-| ``insert(S, x[, k])`` | A modifying operation for mutable types. Adds the element assigned to ``x`` to the structure ``S``. We usually assume that any attributes in element ``x`` needed by the structure implementation have already been initialized.  Sometimes takes an optional argument ``k`` specifying exactly where in the structure to insert ``x``| push, append |
-+-----------+------------+---------------+
-| ``delete(S, x)`` | A modifying operation for mutable types. Removes the element assigned to ``x`` from the structure ``S``. | remove, pop |
-+-----------+------------+---------------+
-| ``minimum(S)`` | A query on an ordered structure that returns the element of ``S`` with the smallest value. | min |
-+-----------+------------+---------------+
-| ``maximum(S)`` | Similar to above, returns the element of ``S`` with the largest value. | max |
-+-----------+------------+---------------+
-| ``successor(S, x)`` | A query on an ordered structure ``S`` that returns the next value after element ``x`` if one exists. | next, child |
-+-----------+------------+---------------+
-| ``predecessor(S, x)`` | Similar to above, returning the value before element ``x`` if one exists | previous, prior, parent |
-+-----------+------------+---------------+
++------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------+
+| Operation              | Definition                                                                                                                                                                                                                                                                                                                             | Also Known As...        |
++========================+========================================================================================================================================================================================================================================================================================================================================+=========================+
+| ``search(S, k)``       | Given a structure ``S`` and a key ``k``, returns the value that ``S`` points to at position ``k``                                                                                                                                                                                                                                      | traverse, walk, find    |
++------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------+
+| ``insert(S, x[, k])``  | A modifying operation for mutable types. Adds the element assigned to ``x`` to the structure ``S``. We usually assume that any attributes in element ``x`` needed by the structure implementation have already been initialized.  Sometimes takes an optional argument ``k`` specifying exactly where in the structure to insert ``x`` | push, append            |
++------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------+
+| ``delete(S, x)``       | A modifying operation for mutable types. Removes the element assigned to ``x`` from the structure ``S``.                                                                                                                                                                                                                               | remove, pop             |
++------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------+
+| ``minimum(S)``         | A query on an ordered structure that returns the element of ``S`` with the smallest value.                                                                                                                                                                                                                                             | min                     |
++------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------+
+| ``maximum(S)``         | Similar to above, returns the element of ``S`` with the largest value.                                                                                                                                                                                                                                                                 | max                     |
++------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------+
+| ``successor(S, x)``    | A query on an ordered structure ``S`` that returns the next value after element ``x`` if one exists.                                                                                                                                                                                                                                   | next, child             |
++------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------+
+| ``predecessor(S, x)``  | Similar to above, returning the value before element ``x`` if one exists                                                                                                                                                                                                                                                               | previous, prior, parent |
++------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------+
