@@ -110,6 +110,7 @@ get(``A, i``)
 
 size(``A``)
 -----------
+foo
 
 .. code-bock:: ipython
 
