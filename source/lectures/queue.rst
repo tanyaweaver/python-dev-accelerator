@@ -4,44 +4,34 @@
 .. slide:: Queue 
     :level: 1
 
-    A *Queue* is a data structure where elements are inserted into and removed from the head of the container.
+    .. rst-class:: left
 
-    .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Data_Queue.svg/391px-Data_Queue.svg.png
+    If you're British, you basically already know what it is. For everyone else, a *Queue* is a data structure where elements are inserted into the head and removed from the tail of the container (or vice versa).
+
+    .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Data_Queue.svg/405px-Data_Queue.svg.png
         :width: 400px
-        :alt: An example of a data Queue. Source: https://en.wikibooks.org/wiki/Data_Structures/Queues_and_Queues
-
-
-.. slide:: Definition 
-    :level: 2
-
-    .. rst-class:: build
-
-    * Sequential 
-    * Limited access
-    * Last-In First-Out (LIFO) access
-    * Linear
-    * **When might I actually use this?**
-        - `Towers of Hanoi puzzle <https://larc.unt.edu/ian/TowersOfHanoi/4-256.gif>`_
-        - Rearranging railroad cars
-        - Sorting...anything
-     
+        :alt: An example of a data Queue. Source: https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
 
 .. slide:: Motivation 
     :level: 2
 
     .. rst-class:: build
 
-    * top
-    * is_empty
-    * size
-     
+    * Sequential 
+    * Limited access
+    * First-In First-Out (FIFO) access
+    * **When might I actually use this?**
+        - Building a task manager
+        - Modeling traffic patterns
+        - Printing a document (or several documents) in proper order
+       
 
 .. slide:: Attributes 
     :level: 2
 
     .. rst-class:: build
 
-    * top
+    * head
     * is_empty
     * size
 
@@ -51,8 +41,9 @@
 
     .. rst-class:: build
 
-    * push(item)
-    * pop()
+    * enqueue()
+    * dequeue()
+    * clear()
 
 
 
@@ -65,22 +56,20 @@ Definition
 
 A *Queue* is a data structure where elements are inserted into and removed from the head of the container.
 
-.. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Data_Queue.svg/391px-Data_Queue.svg.png
+.. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Data_Queue.svg/405px-Data_Queue.svg.png
     :width: 400px
-    :alt: An example of a data Queue. Source: https://en.wikibooks.org/wiki/Data_Structures/Queues_and_Queues
-
+    :alt: An example of a data Queue. Source: https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
 
 Motivation
 ==========
 
-* Sequential 
-* Limited access
-* Last-In First-Out (LIFO) access
-* Linear
-* **When might I actually use this?**
-    - `Towers of Hanoi puzzle <https://larc.unt.edu/ian/TowersOfHanoi/4-256.gif>`_
-    - Rearranging railroad cars
-    - Sorting...anything
+    * Sequential 
+    * Limited access
+    * First-In First-Out (FIFO) access
+    * **When might I actually use this?**
+        - Building a task manager
+        - Modeling traffic patterns
+        - Printing a document (or several documents) in proper order
   
 
 Attributes
@@ -94,5 +83,6 @@ Attributes
 Operations
 ==========
 
-* push(item)
-* pop()
+* enqueue()
+* dequeue()
+* clear()

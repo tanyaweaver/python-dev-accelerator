@@ -4,6 +4,8 @@
 .. slide:: Stack 
     :level: 1
 
+    .. rst-class:: left
+
     A *Stack* is a data structure where elements are inserted into and removed from the head of the container.
 
     .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Data_stack.svg/391px-Data_stack.svg.png
@@ -11,7 +13,7 @@
         :alt: An example of a data stack. Source: https://en.wikibooks.org/wiki/Data_Structures/Stacks_and_Queues
 
 
-.. slide:: Definition 
+.. slide:: Motivation 
     :level: 2
 
     .. rst-class:: build
@@ -24,16 +26,6 @@
         - `Towers of Hanoi puzzle <https://larc.unt.edu/ian/TowersOfHanoi/4-256.gif>`_
         - Rearranging railroad cars
         - Sorting...anything
-     
-
-.. slide:: Motivation 
-    :level: 2
-
-    .. rst-class:: build
-
-    * top
-    * is_empty
-    * size
      
 
 .. slide:: Attributes 
