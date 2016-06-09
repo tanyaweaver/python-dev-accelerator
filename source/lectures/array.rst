@@ -287,7 +287,7 @@ get(``A, i``)
 size(``A``)
 -----------
 
-.. code-bock:: ipython
+.. code-block:: ipython
 
     In [6]: len(my_array)
     Out[6]: 10
