@@ -9,17 +9,6 @@
     A basic Abstract Data Type in action
 
 
-.. slide:: Motivation
-    :level: 2
-
-    .. rst-class:: build
-
-    * Take advantage of contiguous memory to organize fixed-width groups of bits (data) in a list.
-    * In the most basic version, it cannot be changed (immutable). A number of memory slots are allocated and filled with data
-    * Arrays are used to represent matrices, vectors (tuples in Python).
-    * Random access to data
-
-
 .. slide:: Base Definition and Operations
     :level: 2
 
@@ -32,6 +21,17 @@
     * ``get(A, i)``: get the value of the ``i``th element of array ``A``
     * ``size(A)``: return the size/length of the array
     * ``remove(A, i)``: removes a value from the array, maintaining array size
+
+
+.. slide:: Motivation
+    :level: 2
+
+    .. rst-class:: build
+
+    * Take advantage of contiguous memory to organize fixed-width groups of bits (data) in a list.
+    * In the most basic version, it cannot be changed (immutable). A number of memory slots are allocated and filled with data
+    * Arrays are used to represent matrices, vectors (tuples in Python).
+    * Random access to data
 
 
 .. slide:: Attributes

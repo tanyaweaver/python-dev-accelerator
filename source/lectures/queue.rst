@@ -1,14 +1,14 @@
 .. slideconf:: 
     :autoslides: False
 
-.. slide:: Stack 
+.. slide:: Queue 
     :level: 1
 
-    A *Stack* is a data structure where elements are inserted into and removed from the head of the container.
+    A *Queue* is a data structure where elements are inserted into and removed from the head of the container.
 
-    .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Data_stack.svg/391px-Data_stack.svg.png
+    .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Data_Queue.svg/391px-Data_Queue.svg.png
         :width: 400px
-        :alt: An example of a data stack. Source: https://en.wikibooks.org/wiki/Data_Structures/Stacks_and_Queues
+        :alt: An example of a data Queue. Source: https://en.wikibooks.org/wiki/Data_Structures/Queues_and_Queues
 
 
 .. slide:: Definition 
@@ -57,17 +57,17 @@
 
 
 =====
-Stack
+Queue
 =====
 
 Definition
 ==========
 
-A *Stack* is a data structure where elements are inserted into and removed from the head of the container.
+A *Queue* is a data structure where elements are inserted into and removed from the head of the container.
 
-.. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Data_stack.svg/391px-Data_stack.svg.png
+.. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Data_Queue.svg/391px-Data_Queue.svg.png
     :width: 400px
-    :alt: An example of a data stack. Source: https://en.wikibooks.org/wiki/Data_Structures/Stacks_and_Queues
+    :alt: An example of a data Queue. Source: https://en.wikibooks.org/wiki/Data_Structures/Queues_and_Queues
 
 
 Motivation
