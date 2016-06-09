@@ -113,7 +113,8 @@ size(``A``)
 
 .. code-bock:: ipython
 
-    In [6]: len(my_array)
+    In [6]: my_array.get(5)
+    .. In [6]: len(my_array)
     .. Out[6]: 10
 
 
