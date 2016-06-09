@@ -110,12 +110,11 @@ get(``A, i``)
 
 size(``A``)
 -----------
-foo
 
 .. code-bock:: ipython
 
     In [6]: len(my_array)
-    Out[6]: 10
+    .. Out[6]: 10
 
 
 remove(``A, i``)
