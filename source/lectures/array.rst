@@ -113,9 +113,8 @@ size(``A``)
 
 .. code-bock:: ipython
 
-    In [5]: some_code
-    .. In [6]: len(my_array)
-    .. Out[6]: 10
+    In [6]: len(my_array)
+    Out[6]: 10
 
 
 remove(``A, i``)
