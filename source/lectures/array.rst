@@ -102,7 +102,7 @@ set(``A, i, v``)
 get(``A, i``)
 -------------
 
-.. code-block:: python
+.. code-block:: ipython
 
     In [5]: my_array.get(5)
     Out[5]: 'kidney beans'
@@ -111,7 +111,7 @@ get(``A, i``)
 size(``A``)
 -----------
 
-.. code-bock:: python
+.. code-bock:: ipython
 
     In [6]: len(my_array)
     Out[6]: 10
@@ -120,7 +120,7 @@ size(``A``)
 remove(``A, i``)
 ----------------
 
-.. code-block:: python
+.. code-block:: ipython
 
     In [7]: my_array.remove(5)
 
