@@ -87,6 +87,7 @@ Create a new empty array of length ``N``.
     In [2]: my_array
     Out[2]: [None, None, None, None, None, None, None, None, None, None]
 
+
 set(``A, i, v``)
 ----------------
 
@@ -97,6 +98,7 @@ set(``A, i, v``)
     In [4]: my_array
     Out[4]: [None, None, None, None, None, 'kidney beans', None, None, None, None]
 
+
 get(``A, i``)
 -------------
 
@@ -105,6 +107,7 @@ get(``A, i``)
     In [5]: my_array.get(5)
     Out[5]: 'kidney beans'
 
+
 size(``A``)
 -----------
 
@@ -112,6 +115,7 @@ size(``A``)
 
     In [6]: len(my_array)
     Out[6]: 10
+
 
 remove(``A, i``)
 ----------------
