@@ -25,20 +25,24 @@ Guidelines
 18. Your school should be able to fire teachers. When a teacher is fired, their students should be distributed to the remaining teachers at that grade level (either randomly or not). If all other teachers in that grade level fill up on students, the remaining students get expelled. Appropriate messages should be raised for these.
 19. When run from the command line, your script should create a new school and fill it with teachers and students. Fill with at least 61 students.
 20. When run from the command line, your script should produce a report of the school including:
+
     - The school name
     - The total number of students in the school
     - The total number of teachers in the school
     - The average student GPA throughout the school
+    
 21. After [20] happens, your script should prompt the user to either: 
+
     - produce a grade report broken down by grade level (so GPA per grade level)
     - produce a grade report for an individual grade level broken down by teacher (e.g. average GPA per teacher in grade 9)
     - exit the script
+    
 22. After [21] happens, your script should re-prompt for the above choices.
 23. When run from the command line, if the option to exit is chosen, your script should ask if you're sure you want to quit. If you decide to quit, your script should exit. If not, your script should take you back to the menu in [21]
 24. When run from the command line, if the parameter "roll_call" is provided, your script should list all the students, separated by grade level. Once done, your script should quit. **This behavior should ONLY happen if "roll_call" is provided.**
 25. Appropriately document your code.
   
-  
+
 Submitting Your Work
 ====================
 
