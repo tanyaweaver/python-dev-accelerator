@@ -2,12 +2,12 @@
 
 ## HTML/CSS Proficiency
 
-In [layouts](./layouts) you will find three PDFs for a site. Use your skills in HTML and CSS to build this site, with appropriate links between pages. Read thoroughly through the guidelines below.
+In [layouts](./layouts) you will find three PDFs for a site. Use your skills in HTML and CSS to build this site, with appropriate links between pages. Read thoroughly through the guidelines below. You may use the internet for help, however **any code that is not yours should be noted in your README**.
 
 ### Fonts and Colors
 
 #### Fonts
-- **Menu**: Droid Sans, Bold
+- **Menu**: Droid Sans, Bold (Note: this is not one of the default fonts)
 - **Body**: Helvetica, Light
 - **Button Text**: Helvetica, Bold
 
