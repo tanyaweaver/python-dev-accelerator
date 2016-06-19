@@ -44,3 +44,5 @@ In [layouts](./layouts) you will find three PDFs for a site. Use your skills in 
 - In the README of that repository, you'll include the link to the site that you've built
 
 ## Python Proficiency
+
+The guidelines for this task can be found here: [Build a Python Module](./python_pretest.rst)
