@@ -2,7 +2,7 @@
 
 ## HTML/CSS Proficiency
 
-In [layouts](./layouts) you will find three PDFs for a site. Use your skills in HTML and CSS to build this site, with appropriate links between pages. Read thoroughly through the guidelines below. You may use the internet for help, however **any code that is not yours should be noted in your README**.
+In [layouts](./layouts) you will find PDFs for three pages of a site. Use your skills in HTML and CSS to build this site, with appropriate links between pages. Read thoroughly through the guidelines below. You may use the internet for help, however **any code that is not yours should be noted in your README**.
 
 ### Fonts and Colors
 
@@ -30,7 +30,7 @@ In [layouts](./layouts) you will find three PDFs for a site. Use your skills in 
 ### Guidelines
 
 - **YOU DO NOT NEED TO USE ANY JAVASCRIPT FOR THIS PROJECT.** It is not at all required. If you decide to use it, use it wisely.
-- You can replace the cat images with whatever you want, as long as it's tasteful. Use good judgement. Placeholder images are fine. The current images came from [placekitty](http://www.placekitten.com)
+- You can replace the cat images with whatever you want, as long as it's tasteful. Use good judgement. Placeholder images are fine. The current images came from [placekitten.com](http://www.placekitten.com)
 - You can replace the page text with whatever you want, however keep the subject matter throughout the site self-consistent, and again keep it tasteful.
 - Any links that would lead to external pages (e.g. social media sites) should just remain as either dead links (so, link to "#") or simply to the homepages of those sites (e.g. Facebook icon links to facebook.com). **There should be no other external links.**
 - You don't have to use the same exact social media icons used here, but they should be the same brands
