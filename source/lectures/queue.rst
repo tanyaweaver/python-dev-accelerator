@@ -6,7 +6,7 @@
 
     .. rst-class:: left
 
-    If you're British, you basically already know what it is. For everyone else, a *Queue* is a data structure where elements are inserted into the head and removed from the tail of the container (or vice versa).
+    If you're British, you basically already know what it is. A *Queue* is a data structure where elements are inserted at the tail and removed from the head of the container.
 
     .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Data_Queue.svg/405px-Data_Queue.svg.png
         :width: 400px
@@ -54,7 +54,7 @@ Queue
 Definition
 ==========
 
-A *Queue* is a data structure where elements are inserted into and removed from the head of the container.
+Unlike a **Stack**, a *Queue* is a data structure that inserts elements at the tail (enqueue) and accesses/removes elements at the head (dequeue).
 
 .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Data_Queue.svg/405px-Data_Queue.svg.png
     :width: 400px
@@ -63,19 +63,19 @@ A *Queue* is a data structure where elements are inserted into and removed from 
 Motivation
 ==========
 
-    * Sequential 
-    * Limited access
-    * First-In First-Out (FIFO) access
-    * **When might I actually use this?**
-        - Building a task manager
-        - Modeling traffic patterns
-        - Printing a document (or several documents) in proper order
+* Sequential 
+* Limited access
+* First-In First-Out (FIFO) access
+* **When might I actually use this?**
+    - Building a task manager
+    - Modeling traffic patterns
+    - Printing a document (or several documents) in proper order
   
 
 Attributes
 ==========
 
-* top
+* head
 * is_empty
 * size
  
