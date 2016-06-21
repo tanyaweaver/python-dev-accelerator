@@ -2,7 +2,7 @@
 
 ## HTML/CSS Proficiency
 
-In [layouts](./layouts) you will find PDFs for three pages of a site. Use your skills in HTML and CSS to build this site, with appropriate links between pages. Read thoroughly through the guidelines below. You may use the internet for help, however **any code that is not yours should be noted in your README**.
+In [layouts](./layouts) you will find PDFs for three pages of a site. Use your skills in HTML and CSS to build this site, with appropriate links between pages. Read thoroughly through the guidelines below. You may use the internet for help, however **any code that is not yours should be noted in your README**. Use this project as an opportunity to display your knowledge and abilities with Git by employing best practices in version control. Commit frequently with meaningful commit messages.
 
 ### Fonts and Colors
 
@@ -39,9 +39,9 @@ In [layouts](./layouts) you will find PDFs for three pages of a site. Use your s
 
 ### Submitting Your Work
 
-- You will deploy your site to [Heroku](https://www.heroku.com/)
+- You will deploy your site to [Heroku](https://www.heroku.com/). This may require learning an additional toolset for deployment. The documentation is well written, and should provide enough guidance for you to learn and deploy without any prior knowledge of the tool.
 - You will create a public GitHub repository for your work and submit the link to that repository
-- In the README of that repository, you'll include the link to the site that you've built
+- In the README of that repository, you'll include the link to the site that you've built. Use your README as an opportunity to document your submission, utilizing markdown for basic formatting.
 
 ## Python Proficiency
 
