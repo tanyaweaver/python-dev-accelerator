@@ -46,5 +46,6 @@ Guidelines
 Submitting Your Work
 ====================
 
-TBD
+* You will create a public GitHub repository for your work and email in the link to that repository.
+* In the README of that repository, you'll include a description of the module that you built and links to any code that you may have used. In that description, you'll include explanations of any functions/objects/methods you write. Also include instructions as to how your code should be run from the command line.
 
