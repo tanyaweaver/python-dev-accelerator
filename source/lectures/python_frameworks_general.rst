@@ -8,6 +8,8 @@ Source: `Python Web Frameworks <https://wiki.python.org/moin/WebFrameworks>`_
 Frameworks We Teach
 ===================
 
+We will be installing and using the following two web frameworks because without them, we'd have to do a lot of stuff ourselves that we may not want to do (or may not be able to do well). Frameworks give you a set of tools to deal with incoming requests, export responses to those requests, interact with a database, create programmable templates for creating web front-ends, etc.
+
 `Pyramid <https://trypyramid.com/>`_
 ------------------------------------
 
