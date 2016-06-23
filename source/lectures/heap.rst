@@ -10,8 +10,8 @@
 
     * Shape property: The tree is mostly complete with only the deepest level left unfilled. This level is filled with new nodes from left to right.
     * Heap property: The heap property has two modes dictating relationships between parent and child nodes
-        - **Max Heap:** Each node is greater than or equal to its child nodes (see the image below)
-        - **Min Heap:** Each node is less than or equal to its child nodes
+        - **Max Heap:** Each node is greater than or equal to its child nodes
+        - **Min Heap:** Each node is less than or equal to its child nodes (see the image below)
           
     **Insertion:** When inserting a new node into a Binary Heap, put it at the first open space. Once inserted, shift it into the proper position by comparing it to its parent node. Repeat as necessary.
 
@@ -67,10 +67,10 @@ Definition
 
 A *Binary Heap* is the first tree-type data structure you'll encounter. You create this structure by feeding in an array (Python ``list``). It is a binary tree with two main properties:
 
-- Shape property: The tree is mostly complete with only the deepest level left unfilled. This level is filled with new nodes from left to right.
-- Heap property: The heap property has two modes dictating relationships between parent and child nodes
-    - **Max Heap:** Each node is greater than or equal to its child nodes (see the image below)
-    - **Min Heap:** Each node is less than or equal to its child nodes
+* Shape property: The tree is mostly complete with only the deepest level left unfilled. This level is filled with new nodes from left to right.
+* Heap property: The heap property has two modes dictating relationships between parent and child nodes
+    - **Max Heap:** Each node is greater than or equal to its child nodes
+    - **Min Heap:** Each node is less than or equal to its child nodes (see the image below)
       
 **Insertion:** When inserting a new node into a Binary Heap, put it at the first open space. Once inserted, shift it into the proper position by comparing it to its parent node. Repeat as necessary.
 
