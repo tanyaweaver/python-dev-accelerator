@@ -474,18 +474,166 @@ The ``query`` method of the session object returns a ``Query`` object. Arguments
     1
     <class 'int'>
 
+Notice that when you try to print stuff from the queries, iPython prints out the actual SQL the ORM uses to interact with the DB. We can see the query on its own by looking at the string representation of the query.
+
+.. code-block:: ipython 
+
+    In [13]: str(query1)
+    Out[13]: 'SELECT models.id AS models_id, models.name AS models_name, models.value AS models_value \nFROM models'
+
+    In [14]: str(query2)
+    Out[14]: 'SELECT models.name AS models_name, models.id AS models_id, models.value AS models_value \nFROM models'
+
+You can use this to check that the query the ORM is constructing looks like you expect. It can be very helpful in testing and debugging.
+
+The methods of the ``Query`` object roughly fall into two categories:
+
+1. Methods that return a new ``Query`` object
+2. Methods that return *scalar* values or *model instances*
+   
+Let's start by looking quickly at a few methods from the second category. 
+
+Methods Returning Values & Instances
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A good example of this category of methods is ``get``, which returns one model instance only. It takes a primary key as an argument:
+
+.. code-block:: ipython 
+
+    In [15]: session.query(MyModel).get(1)
+    Out[15]: <testapp.models.mymodel.MyModel at 0x105546080>
+
+    In [16]: session.query(MyModel).get(10)
+    In [17]:
+
+If no item with that primary key is present, then the method returns ``None``. Another example is one we've already seen. ``query.all()`` returns a list of all rows returned by the database.
+
+.. code-block:: ipython 
     
-.. .. ===========================================
-.. .. ===========================================
+    In [17]: query1.all()
+    Out[17]: [<testapp.models.mymodel.MyModel at 0x105546080>]
+
+    In [18]: type(query1.all())
+    Out[18]: list
+
+``query.count()`` returns the number of rows that would have been returned by the query:
+
+.. code-block:: ipython 
+
+    In [19]: query1.count()
+    Out[19]: 1
+
+Before getting into the other category (i.e. returning a new ``Query`` object), let's learn how to create new objects. We can create new instances of our *model* just like normal Python objects:
+
+.. code-block:: ipython 
+
+    In [20]: new_model = MyModel(name="fred", value=3)
+    In [21]: new_model
+    Out[21]: <testapp.models.mymodel.MyModel at 0x1053f8710>
+
+In this state, the instance is *ephemeral*; our ``session`` knows nothing about it:
+
+.. code-block:: ipython 
+
+    In [22]: session.new
+    Out[22]: IdentitySet([])
+
+For the database to know about our new object, we must add it to the session with the ``session.add()``
+
+.. code-block:: ipython 
+
+    In [23]: session.add(new_model)
+    In [24]: session.new
+    Out[24]: IdentitySet([<testapp.models.mymodel.MyModel object at 0x1053f8710>])
+
+We can even bulk-add new objects with ``session.add_all()``:
+
+.. code-block:: ipython 
+
+    In [25]: new = []
+    In [26]: for name, val in [('bob', 34), ('tom', 13)]:
+       ....:     new.append(MyModel(name=name, value=val))
+       ....:
+
+    In [27]: session.add_all(new)
+    In [28]: session.new
+    Out[28]: Out[37]: IdentitySet([<testapp.models.mymodel.MyModel object at 0x1055e3048>, <testapp.models.mymodel.MyModel object at 0x1053f8710>, <testapp.models.mymodel.MyModel object at 0x1055cb390>])
+
+Up until now, the changes you've made are not permanent. They're recognized by your session, but they haven't been saved into the database. In order for these new objects to be saved to the database, the session must be ``committed``:
+
+.. code-block:: ipython 
+
+    In [29]: other_session = Session()
+    In [30]: other_session.query(MyModel).count()
+    Out[30]: 1
+    In [31]: session.commit()
+    In [32]: other_session.query(MyModel).count()
+    Out[32]: 4
+
+When you are using a ``scoped_session`` in Pyramid, this action is automatically handled for you. The session that is bound to a particular HTTP request is committed when a response is sent back.
+
+You can edit objects that are already part of a session, or that are fetched by a query. Simply change the values of a persisted attribute, the session will know it's been updated:
+
+.. code-block:: ipython 
+
+    In [33]: new_model
+    Out[33]: <testapp.models.mymodel.MyModel at 0x1053f8710>
+    In [34]: new_model.name
+    Out[34]: 'fred'
+    In [35]: new_model.name = 'larry'
+    In [36]: session.dirty 
+    Out[36]: IdentitySet([<testapp.models.mymodel.MyModel object at 0x1053f8710>])
+
+Commit the session to persist the changes:
+
+.. code-block:: ipython 
+
+    In [37]: session.commit()
+    In [38]: [model.name for model in other_session.query(MyModel)]
+    Out[38]: ['one', 'larry', 'bob', 'tom']
 
 
-.. The vast majority of the changes we'll be making will take place in the project directory within ``testapp`` which is also called  ``testapp``. Within this one you'll find directories for "models", "views", and "templates" among other things.
+Methods Returning Query Objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Returning to query methods, a good example of the second type is the ``filter`` method. This method allows you to reduce the number of results, based on criteria:
 
+.. code-block:: ipython 
 
+    In [39]: [(o.name, o.value) for o in session.query(MyModel).filter(MyModel.value < 20)]
+    Out[39]: [('one', 1), ('larry', 3), ('tom', 13)]
 
+Another typical method in this category is ``order_by``:
 
+.. code-block:: ipython 
 
+    In [40]: [o.value for o in session.query(MyModel).order_by(MyModel.value)]
+    Out[40]: [1, 3, 13, 34]
 
+    In [41]: [o.name for o in session.query(MyModel).order_by(MyModel.name)]
+    Out[41]: ['bob', 'larry', 'one', 'tom']
 
+Since methods in this category return Query objects, they can be safely ``chained`` to build more complex queries:
+
+.. code-block:: ipython 
+
+    In [42]: query1 = Session.query(MyModel).filter(MyModel.value < 20)
+    In [43]: query1 = query1.order_by(MyModel.name)
+    In [44]: [(o.name, o.value) for o in query1]
+    Out[44]: [('larry', 3), ('one', 1), ('tom', 13)]
+
+Note that you can do this inline as well (``Session.query(MyModel).filter(MyModel.value < 20).order_by(MyModel.name)``). Also note that when using chained queries like this, no query is actually sent to the database until you require a result.
+
+Cleaning Up After Ourselves
+---------------------------
+
+When you are experimenting with a new system, you often create data that is messy or incomplete. It's good to remember that none of the information we've persisted to our database is vital to us.
+
+For homework this week we'll be making new models, and the data we have in our current database will only get in the way. Until you have real production data it is always safe simply to delete the database and start over:
+
+.. code-block::
+
+    (pyramid_test) bash-3.2$ rm testapp.sqlite
+
+You can always re-create it by executing ``setup_db``. Note that it'll create a fresh new database.
 
