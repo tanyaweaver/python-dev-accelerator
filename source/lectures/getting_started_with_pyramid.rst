@@ -2,12 +2,12 @@
 Getting Started With Pyramid
 ============================
 
-Make a directory to work in, I'll call it ``pyramid_test``, and make a new virtual environment in that directory. Then navigate to that directory and activate the virtual environment. Then pip install the most recent versions of ``pip`` and ``setuptools``
+Make a directory to work in, I'll call it ``pyramid_lj``, and make a new virtual environment in that directory. Then navigate to that directory and activate the virtual environment. Then pip install the most recent versions of ``pip`` and ``setuptools``
 
 .. code-block::
 
-    (pyramid_test) bash-3.2$ pip install -U pip setuptools
-    (pyramid_test) bash-3.2$ pip install ipython
+    (pyramid_lj) bash-3.2$ pip install -U pip setuptools
+    (pyramid_lj) bash-3.2$ pip install ipython
 
 Installation
 ============
@@ -16,7 +16,7 @@ In order to begin working with Pyramid, we have to install it.
 
 .. code-block::
     
-    (pyramid_test) bash-3.2$ pip install pyramid
+    (pyramid_lj) bash-3.2$ pip install pyramid
 
 The version that should be pulled down is the latest version, 1.7. Note the other packages that get installed along with it, as it has dependencies. For example, WebOb handles HTTP responses, and Pyramid's response object inherits from this. Many other frameworks also use this package.
 
@@ -24,7 +24,7 @@ Along with its dependencies, Pyramid installs for you a bunch of new shell comma
 
 .. code-block::
 
-    (pyramid_test) bash-3.2$ ls bin
+    (pyramid_lj) bash-3.2$ ls bin
     activate         easy_install-3.5 ipython3         pip3             pserve           python
     activate.csh     iptest           pcreate          pip3.5           pshell           python3
     activate.fish    iptest3          pdistreport      prequest         ptweens
@@ -34,7 +34,7 @@ Along with its dependencies, Pyramid installs for you a bunch of new shell comma
 Writing a "Hello World" App
 ===========================
 
-Pretty much straight from `trypyramid.com <http://www.trypyramid.com>`_. First, make a directory for your "hello world" app called ``hello_world``. Within that directory create a file named ``app.py`` and type the following:
+A lot of this is pretty much straight from `trypyramid.com <http://www.trypyramid.com>`_. First, make a directory for your "hello world" app called ``hello_world``. Within that directory create a file named ``app.py`` and type the following:
 
 .. code-block:: python
 
@@ -58,7 +58,7 @@ Save that file and run the following from the command line:
 
 .. code-block::
 
-    (pyramid_test) bash-3.2$ python app.py
+    (pyramid_lj) bash-3.2$ python app.py
 
 Notice how the shell returns nothing. That means that the server you've set up through Pyramid is up and listening for requests.
 
@@ -73,9 +73,9 @@ Using the ``pcreate`` Command to Create a Scaffold
 
 .. code-block::
 
-    (pyramid_test) bash-3.2$ pcreate -s alchemy testapp
+    (pyramid_lj) bash-3.2$ pcreate -s alchemy learning_journal
 
-This scaffold will use SQLAlchemy to connect to a database (hence "alchemy" in the command). Running this command will create a bunch of files and end with "Sorry for the convenience." **if you see this line, your scaffold was created just fine**. The entire scaffold will be encapsulated in the ``testapp`` directory that was just created. Navigate to it and initialize a git repository.
+This scaffold will use SQLAlchemy to connect to a database (hence "alchemy" in the command). Running this command will create a bunch of files and end with "Sorry for the convenience." **if you see this line, your scaffold was created just fine**. The entire scaffold will be encapsulated in the ``learning_journal`` directory that was just created. Navigate to it and initialize a git repository.
 
 If you use git status you'll see all of the new files that were just created in this directory. Add this entire directory to your repository with ``git add .``. We want to make sure we don't track .pyc files or the .DS_Store file in this directory, so create a ``.gitignore`` file and add lines to ignore those files. Then add your ``.gitignore`` to the repository.
 
@@ -110,15 +110,15 @@ Inspecting ``setup.py`` reveals that this app requires Pyramid, ``Jinja2`` (a te
         'tox', # you have to add this one in
     ]
     ...
-    setup(name='testapp',
+    setup(name='learning_journal',
         version='0.0',
         ... # package metadata
         install_requires=requires,
         entry_points="""\ # Entry points are ways that we can run our code once it has been installed
         [paste.app_factory]
-        main = testapp:main 
+        main = learning_journal:main 
         [console_scripts]
-        initialize_testapp_db = testapp.scripts.initializedb:main
+        initialize_learning_journal_db = learning_journal.scripts.initializedb:main
         """
     )
 
@@ -126,18 +126,18 @@ Don't forget to fill in the appropriate information about ``author``, ``author_e
 
 .. code-block::
 
-    (pyramid_test) bash-3.2$ pip install -e .
+    (pyramid_lj) bash-3.2$ pip install -e .
 
 One of the things produced after pip installing is a ``*.egg-info`` file. Let's modify our ``.gitignore`` to exclude those.
 
 Pyramid is Python
 =================
 
-Navigate to the ``testapp`` directory in your project root and inspect it.
+Navigate to the ``learning_journal`` directory in your project root and inspect it.
 
 .. code-block::
 
-    (pyramid_test) bash-3.2$ ls
+    (pyramid_lj) bash-3.2$ ls
     __init__.py models      scripts     templates   views
     routes.py   static      tests.py 
 
@@ -169,7 +169,7 @@ Configuration is passed into an application after being read from the specified 
 .. code-block:: python
 
     {'pyramid.default_locale_name': 'en', 
-    'sqlalchemy.url': 'sqlite:////Users/Nick/Documents/codefellows/courses/code401_python/pyramid_test2/testapp/testapp.sqlite', 
+    'sqlalchemy.url': 'sqlite:////Users/Nick/Documents/codefellows/courses/code401_python/pyramid_lj2/learning_journal/learning_journal.sqlite', 
     'pyramid.reload_templates': 'true',
     ...}
 
@@ -208,7 +208,7 @@ The ``models`` Directory
 The files in the models directory are few:
 
 .. code-block::
-    (pyramid_test) bash-3.2$ ls models
+    (pyramid_lj) bash-3.2$ ls models
     __init__.py     meta.py     mymodel.py
 
 * ``meta.py``: determines the naming conventions that will go into your database via SQLAlchemy
@@ -290,19 +290,19 @@ We have a *model* which allows us to persist Python objects to an SQL database, 
 
 .. code-block:: python 
 
-    setup(name='testapp',
+    setup(name='learning_journal',
         ...
         entry_points="""\
         [paste.app_factory]
-        main = testapp:main
+        main = learning_journal:main
         [console_scripts]
-        initialize_testapp_db = testapp.scripts.initializedb:main
+        initialize_learning_journal_db = learning_journal.scripts.initializedb:main
         """,
 The ``console_script`` set up an entry point will help us. If we look at the code in ``initializedb.py`` we find the following:
 
 .. code-block:: python
 
-    # testapp/scripts/initializedb.py
+    # learning_journal/scripts/initializedb.py
     #...
     import transaction
     #...
@@ -329,24 +329,24 @@ The ``console_script`` set up an entry point will help us. If we look at the cod
 
 By connecting this function as one of the ``console_scripts``, our Python package makes this function available to us as a command when we install it. When we execute the script at the command line, this is the function that gets run.
 
-For expedience, let's modify setup.py to change ``initialize_testapp_db`` to ``setup.db``:
+For expedience, let's modify setup.py to change ``initialize_learning_journal_db`` to ``setup.db``:
 
 .. code-block:: python 
 
-    setup(name='testapp',
+    setup(name='learning_journal',
         ...
         entry_points="""\
         [paste.app_factory]
-        main = testapp:main
+        main = learning_journal:main
         [console_scripts]
-        setup_db = testapp.scripts.initializedb:main
+        setup_db = learning_journal.scripts.initializedb:main
         """,
 
 Then reinstall your package, again in development mode. Let's try out this new command. We'll need to provide a configuration file name, so let's use ``development.ini`` since we're in development:
 
 .. code-block::
 
-    (pyramid_test) bash-3.2$ setup_db development.ini 
+    (pyramid_lj) bash-3.2$ setup_db development.ini 
     2016-06-24 14:29:23,042 INFO  [sqlalchemy.engine.base.Engine:1192][MainThread] SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
     ...
     2016-06-24 14:29:23,046 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] 
@@ -363,9 +363,9 @@ The ``[loggers]`` configuration in our ``.ini`` file sends a stream of INFO-leve
 
 .. code-block::
 
-    (pyramid_test) bash-3.2$ ls
+    (pyramid_lj) bash-3.2$ ls
     ...
-    testapp.sqlite
+    learning_journal.sqlite
     ...
 
 We've now created a sqlite database. Joy! Note that you don't want this sqlite database (or any) publicly available, so add ``*.sqlite`` to your gitignore. Then add, commit, and push.
@@ -410,7 +410,7 @@ The ``pshell`` command lets us connect iPython to our application code. Let's fi
 
 The ``environment`` created by ``pshell`` provides us with a few useful tools:
 
-- ``app`` is our new ``testapp`` application.
+- ``app`` is our new ``learning_journal`` application.
 - ``registry`` provides us with access to settings and other useful information.
 - ``request`` is an artificial HTTP request we can use if we need to pretend we are listening to clients
   
@@ -418,7 +418,7 @@ Let's use this environment to build a database session and interact with our dat
 
 .. code-block:: ipython 
 
-    In [1]: from testapp.models import get_engine, MyModel
+    In [1]: from learning_journal.models import get_engine, MyModel
     In [2]: engine = get_engine(registry.settings) # default prefixes are 'sqlalchemy.'
     In [3]: from sqlalchemy.orm import sessionmaker
     In [4]: Session = sessionmaker(bind=engine)
@@ -428,7 +428,7 @@ Let's use this environment to build a database session and interact with our dat
     2016-06-27 19:53:57,390 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] SELECT models.id AS models_id, models.name AS models_name, models.value AS models_value 
     FROM models
     2016-06-27 19:53:57,390 INFO  [sqlalchemy.engine.base.Engine:1100][MainThread] ()
-    Out[6]: [<testapp.models.mymodel.MyModel at 0x105546080>]    
+    Out[6]: [<learning_journal.models.mymodel.MyModel at 0x105546080>]    
 
 We've stolen a lot of this from the ``initializedb.py`` script. Any interaction with the database requires a ``session``. This object *represents* the connection to the database. All database queries are phrased as methods of the session.
 
@@ -450,8 +450,8 @@ The ``query`` method of the session object returns a ``Query`` object. Arguments
     2016-06-27 20:01:55,950 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] SELECT models.id AS models_id, models.name AS models_name, models.value AS models_value 
     FROM models
     2016-06-27 20:01:55,951 INFO  [sqlalchemy.engine.base.Engine:1100][MainThread] ()
-    <testapp.models.mymodel.MyModel object at 0x105546080>
-    <class 'testapp.models.mymodel.MyModel'>
+    <learning_journal.models.mymodel.MyModel object at 0x105546080>
+    <class 'learning_journal.models.mymodel.MyModel'>
 
 .. code-block:: ipython 
 
@@ -501,7 +501,7 @@ A good example of this category of methods is ``get``, which returns one model i
 .. code-block:: ipython 
 
     In [15]: session.query(MyModel).get(1)
-    Out[15]: <testapp.models.mymodel.MyModel at 0x105546080>
+    Out[15]: <learning_journal.models.mymodel.MyModel at 0x105546080>
 
     In [16]: session.query(MyModel).get(10)
     In [17]:
@@ -511,7 +511,7 @@ If no item with that primary key is present, then the method returns ``None``. A
 .. code-block:: ipython 
     
     In [17]: query1.all()
-    Out[17]: [<testapp.models.mymodel.MyModel at 0x105546080>]
+    Out[17]: [<learning_journal.models.mymodel.MyModel at 0x105546080>]
 
     In [18]: type(query1.all())
     Out[18]: list
@@ -529,7 +529,7 @@ Before getting into the other category (i.e. returning a new ``Query`` object), 
 
     In [20]: new_model = MyModel(name="fred", value=3)
     In [21]: new_model
-    Out[21]: <testapp.models.mymodel.MyModel at 0x1053f8710>
+    Out[21]: <learning_journal.models.mymodel.MyModel at 0x1053f8710>
 
 In this state, the instance is *ephemeral*; our ``session`` knows nothing about it:
 
@@ -544,7 +544,7 @@ For the database to know about our new object, we must add it to the session wit
 
     In [23]: session.add(new_model)
     In [24]: session.new
-    Out[24]: IdentitySet([<testapp.models.mymodel.MyModel object at 0x1053f8710>])
+    Out[24]: IdentitySet([<learning_journal.models.mymodel.MyModel object at 0x1053f8710>])
 
 We can even bulk-add new objects with ``session.add_all()``:
 
@@ -557,7 +557,7 @@ We can even bulk-add new objects with ``session.add_all()``:
 
     In [27]: session.add_all(new)
     In [28]: session.new
-    Out[28]: Out[37]: IdentitySet([<testapp.models.mymodel.MyModel object at 0x1055e3048>, <testapp.models.mymodel.MyModel object at 0x1053f8710>, <testapp.models.mymodel.MyModel object at 0x1055cb390>])
+    Out[28]: Out[37]: IdentitySet([<learning_journal.models.mymodel.MyModel object at 0x1055e3048>, <learning_journal.models.mymodel.MyModel object at 0x1053f8710>, <learning_journal.models.mymodel.MyModel object at 0x1055cb390>])
 
 Up until now, the changes you've made are not permanent. They're recognized by your session, but they haven't been saved into the database. In order for these new objects to be saved to the database, the session must be ``committed``:
 
@@ -577,12 +577,12 @@ You can edit objects that are already part of a session, or that are fetched by 
 .. code-block:: ipython 
 
     In [33]: new_model
-    Out[33]: <testapp.models.mymodel.MyModel at 0x1053f8710>
+    Out[33]: <learning_journal.models.mymodel.MyModel at 0x1053f8710>
     In [34]: new_model.name
     Out[34]: 'fred'
     In [35]: new_model.name = 'larry'
     In [36]: session.dirty 
-    Out[36]: IdentitySet([<testapp.models.mymodel.MyModel object at 0x1053f8710>])
+    Out[36]: IdentitySet([<learning_journal.models.mymodel.MyModel object at 0x1053f8710>])
 
 Commit the session to persist the changes:
 
@@ -633,7 +633,7 @@ For homework this week we'll be making new models, and the data we have in our c
 
 .. code-block::
 
-    (pyramid_test) bash-3.2$ rm testapp.sqlite
+    (pyramid_lj) bash-3.2$ rm learning_journal.sqlite
 
 You can always re-create it by executing ``setup_db``. Note that it'll create a fresh new database.
 
