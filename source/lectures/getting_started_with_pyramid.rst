@@ -374,7 +374,7 @@ Now that we have our database hooked up to our models, let's finally see what th
 
 .. code-block::
 
-    (pyramid-test) bash-3.2$ pserve development.ini --reload
+    (pyramid_lj) bash-3.2$ pserve development.ini --reload
 
 Open up the browser at http://localhost:6543/ and investigate. There's like nothing here! Some debug stuff we'll get to later, but hey it's a simple one-pager that just let's you know that you've managed to hook this site to your localhost and can visit the result. It's just a scaffold so it's empty inside. Let's fill it with some data.
 
@@ -385,13 +385,13 @@ We can investigate and manipulate our models from the interpreter pretty easily.
 
 .. code-block::
 
-    (pyramid-test) bash-3.2$ pip install ipython pyramid_ipython
+    (pyramid_lj) bash-3.2$ pip install ipython pyramid_ipython
 
 The ``pshell`` command lets us connect iPython to our application code. Let's fire up ``pshell`` and explore for a moment to see what we have at our disposal.
 
 .. code-block::
 
-    (pyramid-test) bash-3.2$ pshell development.ini
+    (pyramid_lj) bash-3.2$ pshell development.ini
     Python 3.5.1 (v3.5.1:37a07cee5969, Dec  5 2015, 21:12:44) 
     Type "copyright", "credits" or "license" for more information.
 
