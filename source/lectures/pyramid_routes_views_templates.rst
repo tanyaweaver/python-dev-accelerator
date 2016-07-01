@@ -197,14 +197,13 @@ Now that we've got temporary views that work, we can fix them to get the informa
     # ...
 
     from ..models import (
-        MyModel,
         Entry, # <- Add this import. It should be the new model you made last night
     )
 
     # and update this view function
     @view_config(route_name='home', renderer='string')
     def index_page(request):
-        entries = Entry.all()
+        entries = request.dbsession.query(Entry).all()
         return {'entries': entries}
 
 Next, we want to write the view for a single entry. We'll need to use the ``id`` value of our route captured in ``request.matchdict``. Remember that ``matchdict`` is an attribute of the ``request`` object. We'll get the ``id`` from there, and use it to query for the correct entry.
@@ -220,7 +219,7 @@ Next, we want to write the view for a single entry. We'll need to use the ``id``
     @view_config(route_name='detail', renderer='string')
     def view(request):
         this_id = request.matchdict.get('id', -1)
-        entry = Entry.by_id(this_id)
+        entry = request.dbsession.query(Entry).get(this_id)
         if not entry:
             return HTTPNotFound()
 
@@ -419,14 +418,324 @@ Basic `Python-like expressions <http://jinja.pocoo.org/docs/dev/templates/#expre
 Our Templates
 -------------
 
+There's more that Jinja2 templates can do, but it will be easier to introduce you to that in the context of a working template. So let's make some.
 
+We have a Pyramid ``view`` that returns a single entry. Let's create a template to show it. In ``learning_journal/templates/`` create a new file ``detail.jinja2``:
 
+.. code-block:: python
 
+    <article>
+        <h1>{{ entry.title }}</h1>
+        <hr/>
+        <p>{{ entry.body }}</p>
+        <hr/>
+        <p>Created <strong title="{{ entry.created }}">{{entry.created}}</strong></p>
+    </article>
 
+Then wire it up to the detail view in ``learning_journal/views/default.py``:
 
+    # views.py
+    @view_config(route_name='detail', renderer='../templates/detail.jinja2')
+    def view(request):
+        #...
 
+Now we should be able to see some rendered HTML for our journal entry details. Start up your server:
 
+.. code-block::
 
+    (pyramid_lj) bash-3.2$ pserve development.ini 
+    Starting server in PID 53587.
+    serving on http://127.0.0.1:6543
+
+Then try viewing an individual journal entry: `http://localhost:6543/journal/1`_
+
+Let's now create a template such that our index shows a list of journal entries. In ``learning_journal/templates/`` create a new file ``list.jinja2``:
+
+.. code-block:: python
+
+    {% if entries %}
+    <h2>Journal Entries</h2>
+    <ul>
+      {% for entry in entries %}
+        <li>
+        <a href="{{ request.route_url('detail', id=entry.id) }}">{{ entry.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>This journal is empty</p>
+    {% endif %}
+
+It's worth taking a look at a few specifics of this template.
+
+.. code-block:: python
+
+    {% for entry in entries %}
+    ...
+    {% endfor %}
+
+Jinja2 templates are rendered with a *context*. A Pyramid *view* returns a dictionary, which is passed to the renderer as part of that *context*. This means we can access values we return from our *view* in the *renderer* using the names we assigned to them.
+
+Let's look at another aspect of the same template.
+
+.. code-block:: python
+
+    <a href="{{ request.route_url('detail', id=entry.id) }}">{{ entry.title }}</a>
+
+The *request* object is also placed in the context by Pyramid. ``request`` has a method ``route_url`` that will create a URL for a named route. This allows you to include URLs in your template without needing to know exactly what they will be. This process is called *reversing*, since it's a bit like a reverse phone book lookup.
+
+Finally, you'll need to connect this new renderer to your listing view:
+
+.. code-block:: python
+
+    @view_config(route_name='home', renderer='../templates/list.jinja2')
+    def index_page(request):
+        #...
+
+We can now see our list page too. Let's try starting the server:
+
+.. code-block::
+
+    (pyramid_lj) bash-3.2$ pserve development.ini 
+    Starting server in PID 53587.
+    serving on http://127.0.0.1:6543
+
+Then try viewing the home page of your journal at http://localhost:6543/. Click on the link to an entry, and it should route you to that entry.
+
+These views are reasonable, if quite plain. It'd be nice to put them into something that looks more like a website.
+
+Jinja2 allows you to combine templates using something called `template inheritance <http://jinja.pocoo.org/docs/dev/templates/#template-inheritance>`_. You can create a basic page structure, and then *inherit* that structure in other templates.
+
+Let's make a template for the basic outer structure of our pages. The following code will serve as our page template, and will go into a file called ``layout.jinja2``. Save that file to your templates directory. Here's the code:
+
+.. code-block:: python
+
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <title>Python Learning Journal</title>
+        <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+      </head>
+      <body>
+        <header>
+          <nav><ul><li><a href="{{ request.route_url('home') }}">Home</a></li></ul></nav>
+        </header>
+        <main>
+          <h1>My Python Journal</h1>
+          <section id="content">{% block body %}{% endblock %}</section>
+        </main>
+        <footer><p>Created in the Code Fellows 401 Python Program</p></footer>
+      </body>
+    </html>
+
+The important part here is the ``{% block body %}...{% endblock %}`` expression. This is a template **block** and it is a kind of placeholder. Other templates can inherit from this one, and fill that block with additional HTML.
+
+Let's update our detail and list templates:
+
+.. code-block:: python
+
+    {% extends "layout.jinja2" %}
+    {% block body %}
+    <!-- everything else that was already here goes here -->
+    {% endblock %}
+
+Start the server so we can see the result.
+
+.. code-block::
+
+    (pyramid_lj) bash-3.2$ pserve development.ini 
+    Starting server in PID 53587.
+    serving on http://127.0.0.1:6543
+
+Start at the home page, click on an entry, and it should still work. Now, you've shared page structure that is in both.
+
+Static Assets
+-------------
+
+Although we have a shared structure, it isn't particularly nice to look at. Aspects of how a website looks are controlled by CSS (*Cascading Style Sheets*). Stylesheets are one of what we generally speak of as *static assets*.
+
+Other static assets include *images* that are part of the site's design (logos, button images, etc) and *JavaScript* files that add client-side dynamic behavior.
+
+Serving static assets in Pyramid requires adding a *static view* to configuration. Luckily, it's a simple addition for us to get and serve these assets.
+
+.. code-block:: python
+
+    # in learning_journal/__init__.py
+    # ...
+    def main(global_config, **settings):
+        """ This function returns a Pyramid WSGI application.
+        """
+        config = Configurator(settings=settings)
+        config.include('pyramid_jinja2')
+        config.include('.models')
+        config.include('.routes')
+        # add this next line
+        config.add_static_view(name='static', path='learning_journal:static')
+        config.scan()
+        return config.make_wsgi_app()
+
+* The first argument to ``add_static_view`` is a name that will need to appear in the path of URLs requesting assets.
+* The second argument is a *path* that is relative to the package being configured. Assets referenced by the *name* in a URL will be searched for in the location defined by the *path*.
+* Additional keyword arguments control other aspects of how the view works.
+
+Once you have a static view configured, you can use assets in that location in templates. The *request* object in Pyramid provides a ``static_path`` method that will render an appropriate asset path for us.
+
+Add the following to our ``layout.jinja2`` template:
+
+.. code-block:: python
+
+    <head>
+      <!-- ... -->
+      <link href="{{ request.static_path('learning_journal:static/style.css') }}" rel="stylesheet">
+    </head>
+
+The **one required argument** to ``request.static_path`` is a *path* to an asset. Note that because any package *might* define a static view, we have to specify which package we want to look in. That's why we have ``learning_journal:static/style.css`` in our call.
+
+Create a very basic style for your learning journal and add it to ``learning_journal/static``. Then, restart your web server and see what a difference a little style makes.
+
+Getting Interactive
+===================
+
+We have a site that allows us to view a list of journal entries. We can also view details of a single entry. However, as yet, we don't really have any *interaction* in our site yet. *We can't create new entries.* Let's add that functionality next.
+
+User Input
+----------
+
+In HTML websites, the traditional way of getting input from users is via `HTML forms <https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms>`_. Forms use *input elements* to allow users to enter data, pick from drop-down lists, or choose items via checkbox or radio button. 
+
+It is possible to create plain HTML forms in templates and use them with Pyramid. It's a lot easier, however, to work with a *form library* to create forms, render them in templates, and interact with data sent by a client.
+
+We'll be using a form library called `WTForms <http://wtforms.readthedocs.org/en/latest/>`_ in our project. The first step to working with this library is to install it. Start by including the library as a *dependency* of our package by adding it to the *requires* list in ``setup.py``:
+
+.. code-block:: python
+
+    requires = [
+        #...
+        'wtforms', # <- add this to the list
+    ]
+
+Then, in the root directory for this project, re-install our package to download and install the new dependency.
+
+.. code-block::
+
+    (pyramid_lj) bash-3.2$ pip install -e .
+
+Using WTForms
+-------------
+
+We'll want a form to allow a user to create a new Journal Entry.
+
+Add a new file called ``forms.py`` to our learning_journal package in ``learning_journal/models``:
+
+.. code-block:: python
+
+    from wtforms import Form, StringField, TextAreaField, validators
+
+    strip_filter = lambda x: x.strip() if x else None
+
+    class EntryCreateForm(Form):
+        title = StringField(
+            'Entry title',
+            [validators.Length(min=1, max=255)],
+            filters=[strip_filter]
+        )
+        body = TextAreaField(
+            'Entry body',
+            [validators.Length(min=1)],
+            filters=[strip_filter]
+        )
+
+Just like we imported our ``Entry`` model into ``learning_journal/models/__init__.py``, we have to give our app access to our ``EntryCreateForm`` form model. So add the following line to ``__init__.py``, right under where you import your ``Entry`` model.
+
+.. code-block:: python
+    
+    # in learning_journal/models/__init__.py
+    # ...
+    from .entries import Entry
+    from .forms import EntryCreateForm
+    # ...
+
+Next, we need to add a new view that users this form to create a new entry. Add this to ``learning_journal/views/default.py``:
+
+.. code-block:: python
+
+    # add these imports
+    from pyramid.httpexceptions import HTTPFound
+    from ..models import (
+        Entry, 
+        EntryCreateForm,
+    )
+
+    import transaction # <-- allows us to commit our changes to the database
+    # ...
+
+    # and update this view function
+    def create(request):
+        entry = Entry()
+        form = EntryCreateForm(request.POST)
+        if request.method == "POST" and form.validate():
+            entry = Entry(title=form.title.data, body=form.body.data)
+            request.dbsession.add(entry)
+            transaction.commit()
+            return HTTPFound(location=request.route_url('home'))
+
+        return {'form': form, 'action': request.matchdict.get('action')}
+
+We already have a route that connects here. Let's test it. Start your server and try connecting to the ``action`` route at http://localhost:6543/journal/create. You should see something like this:
+
+.. code-block:: python
+    
+    {'form': <learning_journal.models.forms.EntryCreateForm object at 0x104ded2e8>, 'action': 'create'}
+
+Finally, we need to create a template that will render our form. Add a new template called ``edit.jinja2`` in ``learning_journal/templates/``
+
+.. code-block:: python
+
+    {% extends "templates/layout.jinja2" %}
+    {% block body %}
+    <form action="" method="POST">
+    {% for field in form %}
+      {% if field.errors %}
+        <ul>
+        {% for error in field.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        <p>{{ field.label }}: {{ field }}</p>
+    {% endfor %}
+        <p><input type="submit" name="submit" value="Submit" /></p>
+    </form>
+    {% endblock %}
+
+You need to update the ``view_config`` for the ``create`` view to use this new renderer. Update the configuration in ``learning_journal/views/default.py``
+
+.. code-block:: python
+
+    # ...
+    @view_config(route_name='action', match_param='action=create', renderer='../templates/edit.jinja2')
+    def create(request):
+        # ...
+
+Now restart your server and look at the results, at http://localhost:6543/journal/create
+
+Great! Now you can add new entries to your journal. But in order to do so, you have to hand-enter the URL. You should add a new link in the UI somewhere that helps you get there more easily. Add the following to ``list.jinja2``:
+
+.. code-block:: python
+
+    {% extends "layout.jinja2" %}
+    {% block body %}
+    {% if entries %}
+    ...
+    {% else %}
+    ...
+    {% endif %}
+    <!-- Add This Link -->
+    <p><a href="{{ request.route_url('action', action='create') }}">New Entry</a></p>
+    {% endblock %}
+
+That way, you can get to your post-creation view from the front page!
 
 
 

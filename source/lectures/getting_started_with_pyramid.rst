@@ -169,7 +169,7 @@ Configuration is passed into an application after being read from the specified 
 .. code-block:: python
 
     {'pyramid.default_locale_name': 'en', 
-    'sqlalchemy.url': 'sqlite:////Users/Nick/Documents/codefellows/courses/code401_python/pyramid_lj2/learning_journal/learning_journal.sqlite', 
+    'sqlalchemy.url': 'postgres://Nick@localhost:5432/learning_journal', 
     'pyramid.reload_templates': 'true',
     ...}
 
@@ -250,9 +250,9 @@ There are a number of alternatives for persistence:
 * Interchange Files (CSV, XML, ini)
 * Object Stores (ZODB, Durus)
 * NoSQL Databases (MongoDB, CouchDB)
-* SQL Databases (sqlite, MySQL, PostgresSQL, Oracle, SQLServer, etc.)
+* SQL Databases (sqlite, MySQL, PostGreSQL, Oracle, SQLServer, etc.)
   
-Any of these might be useful for certain types of applications. On the web the two most used are NoSQL and SQL. For viewing/interacting with individual objects, a NoSQL storage solution might be the best way to go. In systems with objects that are related to each other, SQL-based Relational Databases are the better choice. We'll work with the latter, particularly sqlite to start.
+Any of these might be useful for certain types of applications. On the web the two most used are NoSQL and SQL. For viewing/interacting with individual objects, a NoSQL storage solution might be the best way to go. In systems with objects that are related to each other, SQL-based Relational Databases are the better choice. We'll work with the latter, particularly ``PostGresSQL`` to start.
 
 Python provides a specification for interacting directly with databases: `dbapi2 <https://www.python.org/dev/peps/pep-0249/>`_. And there are multiple Python packages that implement this specification for various databases:
 
@@ -286,10 +286,39 @@ Each instance of ``Column`` requires *at least* a specific `data type <http://do
 Creating the Database
 ---------------------
 
-We have a *model* which allows us to persist Python objects to an SQL database, but our database needs to actually exist so that we can store the data. We can do that with little trouble by using what ``pcreate`` provided upon the construction of our scaffold. If we inspect ``setup.py`` we find the following.
+We have a *model* which allows us to persist Python objects to an SQL database, but our database needs to actually exist so that we can store the data. We can do that with little trouble by modifying what ``pcreate`` provided upon the construction of our scaffold. First, open up ``setup.py`` and add ``psycopg2`` as one of the required packages.
 
 .. code-block:: python 
+    
+    # ...
+    requires = [
+        # ...
+        psycopg2, # <-- add this now
+    ]
 
+``pip install -e .`` to make this new required package stick. This will allow us to access PostGreSQL and use it as our database moving forward. 
+
+We of course have to create the database that we want to use before we can use it. Fortunately, when we installed ``psycopg2`` we got a nice shell command that makes this easy.
+
+.. code-block:: 
+
+    (pyramid_lj) bash-3.2$ createdb testapp
+
+We must also alter our ``development.ini`` file, changing the ``sqlalchemy.url`` parameter to point to our spankin'-new ``learning_journal`` database.
+
+.. code-block::
+
+    # in development.ini
+    # ...
+    # sqlalchemy.url = sqlite:///%(here)s/testapp.sqlite # <-- comment this line out
+    sqlalchemy.url = postgres://<Your Username Here>@localhost:5432/learning_journal
+    # ...
+
+Now we need to initialize our database. Our scaffold gave us a way to do that right in ``setup.py``
+
+.. code-block:: python
+
+    # ...
     setup(name='learning_journal',
         ...
         entry_points="""\
@@ -298,7 +327,8 @@ We have a *model* which allows us to persist Python objects to an SQL database, 
         [console_scripts]
         initialize_learning_journal_db = learning_journal.scripts.initializedb:main
         """,
-The ``console_script`` set up an entry point will help us. If we look at the code in ``initializedb.py`` we find the following:
+
+We see that ``setup.py`` sets up an entry point in ``console_script`` and provides us with the ``initialize_learning_journal_db`` console script. If we look at the code in ``initializedb.py`` we find the following:
 
 .. code-block:: python
 
@@ -329,6 +359,8 @@ The ``console_script`` set up an entry point will help us. If we look at the cod
 
 By connecting this function as one of the ``console_scripts``, our Python package makes this function available to us as a command when we install it. When we execute the script at the command line, this is the function that gets run.
 
+When we run the ``initialize_learning_journal_db`` command, it'll run this ``main`` function and by default create a new ``MyModel`` instance and insert it into the database. 
+
 For expedience, let's modify setup.py to change ``initialize_learning_journal_db`` to ``setup.db``:
 
 .. code-block:: python 
@@ -347,7 +379,7 @@ Then reinstall your package, again in development mode. Let's try out this new c
 .. code-block::
 
     (pyramid_lj) bash-3.2$ setup_db development.ini 
-    2016-06-24 14:29:23,042 INFO  [sqlalchemy.engine.base.Engine:1192][MainThread] SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
+    2016-06-30 17:05:47,050 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] select version()
     ...
     2016-06-24 14:29:23,046 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] 
     CREATE TABLE models (
@@ -359,16 +391,7 @@ Then reinstall your package, again in development mode. Let's try out this new c
     ...
     2016-06-24 14:29:23,067 INFO  [sqlalchemy.engine.base.Engine:686][MainThread] COMMIT
 
-The ``[loggers]`` configuration in our ``.ini`` file sends a stream of INFO-level logging to sys.stdout as the console script runs. So what was the actual outcome of running that script?
-
-.. code-block::
-
-    (pyramid_lj) bash-3.2$ ls
-    ...
-    learning_journal.sqlite
-    ...
-
-We've now created a sqlite database. Joy! Note that you don't want this sqlite database (or any) publicly available, so add ``*.sqlite`` to your gitignore. Then add, commit, and push.
+The ``[loggers]`` configuration in our ``.ini`` file sends a stream of INFO-level logging to sys.stdout as the console script runs. We've now created a table in our postgres database! Joy! We've made a lot of changes to this point, so it's time to add, commit, and push.
 
 Now that we have our database hooked up to our models, let's finally see what this scaffold has provided us. To do this, we have to let Pyramid start up a local server for us using the ``pserve`` command, with settings set by whatever configuration ``.ini`` file we provide.
 
@@ -624,16 +647,4 @@ Since methods in this category return Query objects, they can be safely ``chaine
 
 Note that you can do this inline as well (``Session.query(MyModel).filter(MyModel.value < 20).order_by(MyModel.name)``). Also note that when using chained queries like this, no query is actually sent to the database until you require a result.
 
-Cleaning Up After Ourselves
----------------------------
-
-When you are experimenting with a new system, you often create data that is messy or incomplete. It's good to remember that none of the information we've persisted to our database is vital to us.
-
-For homework this week we'll be making new models, and the data we have in our current database will only get in the way. Until you have real production data it is always safe simply to delete the database and start over:
-
-.. code-block::
-
-    (pyramid_lj) bash-3.2$ rm learning_journal.sqlite
-
-You can always re-create it by executing ``setup_db``. Note that it'll create a fresh new database.
 
