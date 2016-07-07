@@ -492,12 +492,119 @@ Add the following to your ``layout.jinja2`` template:
     </head>
     # everything else
 
-The **one required argument** to ``request.static_path`` is a *path* to an asset. Note that because any package *might* define a static view, we have to specify which package we want to look in. That's why we have ``learning_journal:static/style.css`` in our call.
+The **one required argument** to ``request.static_path`` is a *path* to an asset. Note that because any package *might* define a static view with the directory name ``static``, we have to specify which package we want to look in. That's why we have ``learning_journal:static/style.css`` in our call.
 
 Create a very basic style for your learning journal and add it to ``learning_journal/static``. Then, restart your web server and see what a difference a little style makes.
 
-Front-End Testing
-=================
+Testing Your Pyramid App
+========================
+
+Thus far we have written tons of code for handling HTTP routing and filling templates with data, but we haven't yet written any tests of our own to make sure that things work the way that we need them to work. We can fortunately do this with a combination of Pyramid's own ``testing`` module, as well as the ``unittest`` package from ``pytest``. When it comes to testing your Pyramid app, you need to not only do unit tests for individual pieces of functionality. You need to test for how things perform when in practice. For example, if your app sends an email, you need to check that the email is actually sent.
+
+Setting Up a Test for a View
+----------------------------
+
+Our scaffold provided for us a ``tests.py`` file. Let's inspect it.
+
+.. code-block:: python
+
+    # tests.py
+    import unittest
+
+    from pyramid import testing
+
+
+    class ViewTests(unittest.TestCase):
+        def setUp(self):
+            self.config = testing.setUp()
+
+        def tearDown(self):
+            testing.tearDown()
+
+        def test_my_view(self):
+            from .views import my_view
+            request = testing.DummyRequest()
+            info = my_view(request)
+            self.assertEqual(info['project'], 'learning_journal')
+
+
+    class FunctionalTests(unittest.TestCase):
+        def setUp(self):
+            from learning_journal import main
+            app = main({})
+            from webtest import TestApp
+            self.testapp = TestApp(app)
+
+        def test_root(self):
+            res = self.testapp.get('/', status=200)
+            self.assertTrue(b'Pyramid' in res.body)
+
+We use the ``unittest`` package provided by ``pytest``, which was specified in our ``setup.py`` file in the ``tests_require`` list.
+
+``unittest`` comes with a ``TestCase`` object that we can inherit from and modify. When we inherit from ``TestCase``, we get access to a ton of ``asserts``, such as the ``assertEqual`` and ``assertTrue`` seen here, as well as functionality for setting up a testing environment (``setUp``) and tearing it down (``tearDown``). This is not Pyramid-specific, but available whenever we import ``unittest``. 
+
+As part of the setup, we have pyramid's own ``testing`` object, which allows us to set up the configuration we need to run our app and have access to the ``request`` and ``response`` objects that we need to test our views. Recall that our views can only run when taking a ``request`` object as an argument. So, we provide a ``request`` with ``testing.DummyRequest``.
+
+Let's comment out ``FunctionalTests`` bit for now (I'm removing it entirely) and for the moment just focus on ``ViewTests``. Let's also replace ``my_view`` with ``detail_view``. Finally, recall that our ``detail_view`` returns a dictionary, with the "title", "creation_date", and "body" of a sample learning journal entry. Let's make our test reflect that, checking that "title" is an attribute of our ``detail_view``'s return statement. For now, we'll be working with this:
+
+.. code-block:: python
+
+    # tests.py
+    import unittest
+
+    from pyramid import testing
+
+
+    class ViewTests(unittest.TestCase):
+        def setUp(self):
+            self.config = testing.setUp()
+
+        def tearDown(self):
+            testing.tearDown()
+
+        def test_detail_view(self):
+            from .views import detail_view
+            request = testing.DummyRequest()
+            info = detail_view(request)
+            self.assertIn("title", info.keys())
+ 
+
+Running Pyramid Tests
+---------------------
+
+To run this test we have to first install all the things we need for testing. We defined those in our ``setup.py`` so just navigate to the project root and install like so:
+
+.. code-block:: 
+
+    (pyramid_lj) bash-3.2$ pip install -e ".[testing]"
+
+In between the quotes we have ``.[testing]`` because we want to install everything in the current directory (the ``.``), but we want the extra packages that we specified for testing. If you have other extra packages you want for some other reason, you install them in this fashion.
+
+Now that all is installed, run our test!
+
+.. code-block:: 
+
+    py.test learning_journal/tests.py -q
+
+We've designed this one test to pass, so we should get a statement saying it passes. Spectacular. But we want to test across versions of Python, so we need to incorporate ``tox``. Recall that when we first set up our app via the scaffold, we added ``tox`` into ``tests_require``. When we pip-installed ``testing`` above, tox was installed along with everything else. Now we just have to construct our ``tox.ini`` configuration file so that we can run tox. Let's add a little bit more to our tox file than we usually do. We don't want to just run our tests across versions, we ultimately want to make sure that our app is well-tested across everything we've written. We want to add coverage. So, our tox file should look like the following:
+
+.. code-block::
+
+    [tox]
+    envlist = py27, py35
+
+    [testenv]
+    commands = py.test --cov=learning_journal learning_journal/tests.py -q
+    deps =
+        pytest
+        pytest-cov
+        webtest
+
+Now we run tox as we always have and ensure that our test passes across Python 2.7 and 3.5.
+
+
+Functional Tests
+----------------
 
 
 
@@ -505,7 +612,7 @@ Front-End Testing
 TO DO
 ===================
 
-Test the Front End
+* Get HTML from functional tests and looking at content
 
 Recap
 =====
