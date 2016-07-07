@@ -600,20 +600,190 @@ We've designed this one test to pass, so we should get a statement saying it pas
         pytest-cov
         webtest
 
-Now we run tox as we always have and ensure that our test passes across Python 2.7 and 3.5.
+Now we run tox as we always have and ensure that our test passes across Python 2.7 and 3.5. On top of that, we get a report of the coverage of our tests in the console. 
 
+.. code-block::
 
-Functional Tests
-----------------
+    ---------- coverage: platform darwin, python 3.5.1-final-0 -----------
+    Name                           Stmts   Miss  Cover
+    --------------------------------------------------
+    learning_journal/__init__.py       7      5    29%
+    learning_journal/routes.py         6      6     0%
+    learning_journal/views.py         10      3    70%
+    --------------------------------------------------
+    TOTAL                             23     14    39%
 
+    1 passed in 1.48 seconds
 
+This seems trivial now because in this particular moment we're just testing that the view is returning the data that we put into it in the first place. That's OK, even trivial tests are still evidence that your code works. Tomorrow when we talk about data models and hook those up to our views, testing our views will involve several more bits.
 
-===================
-TO DO
-===================
+Enter Functional Tests
+----------------------
 
-* Get HTML from functional tests and looking at content
+As the name implies, functional tests verify that various components of our app function together as they should. We'll use functional tests to "look" at our front-end and make sure that what's being displayed is what we expect. To set up our functional tests we again inherit from the ``unittest.TestCase`` object. We then set up a "working" version of our app and use HTTP methods on our routes. As an example (expanded from what was provided by the scaffold):
+
+.. code-block:: python
+
+    class FunctionalTests(unittest.TestCase):
+        def setUp(self):
+            from learning_journal import main
+            app = main({})
+            from webtest import TestApp
+            self.testapp = TestApp(app)
+
+        def test_layout_root(self):
+            """Tests that our layout template is present in the rendered root"""
+            response = self.testapp.get('/', status=200)
+            self.assertTrue(b'Created in the Code Fellows 401 Python Program' in response.body)
+
+        def test_root_contents(self):
+            """Tests that the contents of the root page contains <article>"""
+            response = self.testapp.get('/', status=200)
+            self.assertTrue(b'<article>' in response.body)
+
+Here, we set up a new WSGI app instance by providing our ``main`` function, which is already taking our base global configuration, with an empty dict for settings. ``webtest.TestApp`` wraps that app to provide some additional functionality, such as the ability to send ``GET`` requests to a given route. ``WebTest`` is a great app for testing functionality with respect to real HTTP requests, but it can do so much more (even check for cookies!). `Read the documentation <http://webtest.pythonpaste.org/en/latest/api.html#webtest.app.TestApp>`_ for more details about how ``WebTest`` can help you write robust tests for your web app.
+
+This is great and all, however it seems somewhat silly to test for HTML elements and content using byte strings. It would be great if a package existed that specialized in collecting and picking apart the DOM.
+
+The BeautifulSoup Interlude
+---------------------------
+
+`Beautiful Soup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ is a Python package for reading and working with HTML as if you were traversing the DOM. Luckily for us, Pyramid installed BeautifulSoup for us when it was itself installed. ``pip freeze`` for evidence of this (and other packages you may not know you had access to). Let's fire up ``pshell`` and use it a little.
+
+.. code-block:: ipython
+
+    In [1]: from bs4 import BeautifulSoup
+
+``bs4`` is the package name, and BeautifulSoup is an object that we use to wrap HTML so that we can parse it apart. Let's give it some of the HTML that we wrote for our mockups before we knew about the joys of templates.
+
+.. code-block:: ipython
+
+    In [2]: some_html = open("learning_journal/templates/sample.html").read()
+    In [3]: print(some_html)
+    <html>
+        <head>
+            <link rel="stylesheet" href="static/style.css" type="text/css" />
+        </head>
+        <body>
+            <h1>This is styled HTML</h1>
+            <ul>
+                <li>One</li>
+                <li>Two</li>
+                <li>Three</li>
+            </ul>
+        </body>
+    </html>
+
+In order to actually interact with the HTML à la DOM traversal, we must first wrap our HTML in a ``BeautifulSoup`` instance.
+
+.. code-block:: ipython
+
+    In [4]: soup = BeautifulSoup(some_html, 'html.parser')
+
+If we don't specify the parser, ``BeautifulSoup`` uses the best-available parser, and will tell you so with a nice verbose warning.
+
+.. code-block:: ipython
+
+    In [5]: tmp_soup = BeautifulSoup(some_html)
+    /Users/Nick/Documents/codefellows/courses/code401_python/pyramid_lj/lib/python3.5/site-packages/bs4/__init__.py:166: UserWarning: No parser was explicitly specified, so I'm using the best available HTML parser for this system ("html.parser"). This usually isn't a problem, but if you run this code on another system, or in a different virtual environment, it may use a different parser and behave differently.
+
+    To get rid of this warning, change this:
+
+     BeautifulSoup([your markup])
+
+    to this:
+
+     BeautifulSoup([your markup], "html.parser")
+
+      markup_type=markup_type))
+
+So, be sure to specify your parser. Note, there are other parsers that you can install. Check the docs for more info.
+
+We've now made our ``soup`` object and it comes packed with some useful methods and attributes. One of these is ``soup.findAll('html_element')``. When given the appropriate HTML element, like say ``'li'``, it'll find every instance of that object and return it to you in a ``list``-like object.
+
+.. code-block:: ipython
+
+    In [6]: soup.findAll("li")
+    Out[6]: [<li>One</li>, <li>Two</li>, <li>Three</li>]
+
+    In [7]: type(soup.findAll("li"))
+    Out[7]: bs4.element.ResultSet
+
+    In [8]: these_results = soup.findAll("li")
+    In [9]: len(these_results)
+    Out[9]: 3
+
+You can also inspect individual DOM elements. For example, I may want to check what's actually contained within the text of my ``<h1>`` tag. It's simple with ``BeautifulSoup``.
+
+.. code-block:: ipython
+
+    In [10]: h1 = soup.find("h1")
+    In [11]: h1.get_text()
+    Out[11]: 'This is styled HTML'
+
+You don't just have to inspect the body of the document either. You can look at anything that was a part of that HTML document. For example, I may want to look into the ``link`` tag at the top. With ``BeautifulSoup`` I can look at the individual attributes that comprise it.
+
+.. code-block:: ipython
+
+    In [12]: style = soup.find("link")
+    In [13]: print(style)
+    <link href="static/style.css" rel="stylesheet" type="text/css"/>
+
+    In [14]: style.attrs
+    Out[14]: {'href': 'static/style.css', 'rel': ['stylesheet'], 'type': 'text/css'}
+
+Of course this is only a cursory look, but ``BeautifulSoup`` goes deep and wide, and is entirely worth dipping into. Even though we've only scratched the surface of ``BeautifulSoup``, we can use what we've seen thus far to more thoroughly test our fledgling app.
+
+Return of the Functional Test
+-----------------------------
+
+Recall our functional test, specifically the one that renders the home page.
+
+.. code-block:: python
+
+    def test_root_contents(self):
+        """Tests that the contents of the root page contains <article>"""
+        response = self.testapp.get('/', status=200)
+        self.assertTrue(b'<article>' in response.body)
+
+This page is supposed to put up an ``<article>`` tag for every given journal entry. That being the case, we should make sure that there are as many tags on the page as journal entries. ``BeautifulSoup`` makes that possible.
+
+.. code-block:: python
+
+    def test_root_contents(self):
+        """Tests that the contents of the root page contains as many <article> tags as journal entries"""
+        from .views import ENTRIES
+        from bs4 import BeautifulSoup as Soup
+
+        response = self.testapp.get('/', status=200)
+        soup = Soup(response.body, 'html.parser')
+        self.assertEqual(len(ENTRIES), len(soup.findAll("article")))
+
+That's our new functional test for the home page. Notice that instead of simply testing for the existence of any article tag, it tests specifically that the number on the page matches the number of journal entries. This is the type of test you want, and you can keep the general form of this one the same when we incorporate data models (with some minor tweaks). Now, run ``tox`` and look at that sweet, sweet coverage:
+
+.. code-block::
+
+    ---------- coverage: platform darwin, python 3.5.1-final-0 -----------
+    Name                                             Stmts   Miss  Cover
+    --------------------------------------------------------------------
+    learning_journal_basic/__init__.py                   7      0   100%
+    learning_journal_basic/routes.py                     6      0   100%
+    learning_journal_basic/views.py                     10      2    80%
+    --------------------------------------------------------------------
+    TOTAL                                               23      2    91%
+
+    3 passed in 1.71 seconds
+
+Woo!
+
 
 Recap
 =====
 
+Today's work involved a lot of refactoring, switching to Jinja2 templates, and finally dipping our feet into testing. Specifically, we used Pyramid's built-in ``view_config`` decorator to wire our views to the appropriate renderers, removing the need to manually include views and connect routes to those views. 
+
+We then of course made the appropriate renderers using Jinja2 templates. Within those templates, we used placeholders with Jinja2 syntax to wire the data we wanted into the appropriate places without having to manually include them. We also saw how we could even make our front-end DRY by using template inheritance, creating a master ``layout.jinja2`` template that wrapped each page as needed.
+
+Finally, we saw how to write unit tests for individual views, providing our view callable with a dummy HTTP request and inspecting the data that resulted from that view being called. In this process, we saw how we could use Pyramid's own ``testing`` module to set up a dummy app and send requests without having to access the browser. We then stepped into functional tests, seeing how we could validate our front-end after the data has been passed and the page has been rendered. Lastly, we saw how we could use ``BeautifulSoup`` to make our front-end tests more robust, piecing apart the rendered HTML itself and ensuring that the contents of our page match our expectations at a functional level.
+
+Tonight you will use these to update your learning journal app with sensible DRY templates and connections between views and routes using the declarative style of ``view_config``. You will then write comprehensive tests for your individual views as well as your front end. Tomorrow, we'll stop messing about with hard-coded data and learn how we can use Pyramid models and SQL persistence for a more robust web app.

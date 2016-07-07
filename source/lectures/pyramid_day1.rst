@@ -7,7 +7,7 @@ Create a directory to work in. We'll be using this directory as the jumping-off 
 .. code-block::
 
     (pyramid_lj) bash-3.2$ pip install -U pip setuptools
-    (pyramid_lj) bash-3.2$ pip install ipython
+    (pyramid_lj) bash-3.2$ pip install ipython pyramid_ipython
 
 Installation
 ============
