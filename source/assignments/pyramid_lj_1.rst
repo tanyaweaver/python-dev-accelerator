@@ -25,13 +25,14 @@ Using what you learned today, both in class and in your readings, accomplish the
     - ``/``
     - ``/journal/{id:\d+}``
     - ``/journal/new-entry``
-    - ``/journal/edit-entry``
+    - ``/journal/{id:\d+}/edit-entry``
 * Your ``list`` view will serve up your home page mockup, with today's journal entry being the top on. The title for each entry on the list must be a link.
 * Your ``detail`` view will serve up today's journal entry.
 * Your ``create`` view will serve up the mockup for creating a new entry (should be a form page).
 * Your ``update`` view will serve up the mockup for editing entries.
-* Ensure that each page has a "Home" button visible that returns the viewer to the home page.
-* Ensure that the home page has a "New Entry" button that allows the user to create new entries.
+* Ensure that each page has a "Home" button visible that returns the viewer to the home page, and a "New Entry" button that allows the user to create new entries.
+
+You are working with a partner to complete this application.
 
 When all of the above work is completed, deploy your site to Heroku. Make sure to include the URL to your Heroku deployment in your ``README.md`` file. Also make sure that your ``README.md`` documents the routes and views used and that any function you write is appropriately documented.
 

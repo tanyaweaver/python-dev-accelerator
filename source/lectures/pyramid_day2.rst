@@ -499,7 +499,7 @@ Create a very basic style for your learning journal and add it to ``learning_jou
 Testing Your Pyramid App
 ========================
 
-Thus far we have written tons of code for handling HTTP routing and filling templates with data, but we haven't yet written any tests of our own to make sure that things work the way that we need them to work. We can fortunately do this with a combination of Pyramid's own ``testing`` module, as well as the ``unittest`` package from ``pytest``. When it comes to testing your Pyramid app, you need to not only do unit tests for individual pieces of functionality. You need to test for how things perform when in practice. For example, if your app sends an email, you need to check that the email is actually sent.
+Thus far we have written tons of code for handling HTTP routing and filling templates with data, but we haven't yet written any tests of our own to make sure that things work the way that we need them to work. We can fortunately do this with a combination of Pyramid's own ``testing`` module (`Documentation <http://docs.pylonsproject.org/projects/pyramid/en/latest/api/testing.html#module-pyramid.testing>`_), as well as the ``unittest`` package from ``pytest`` (`Documentation <https://docs.python.org/3/library/unittest.html#module-unittest>`_). When it comes to testing your Pyramid app, you need to not only do unit tests for individual pieces of functionality. You need to test for how things perform when in practice. For example, if your app sends an email, you need to check that the email is actually sent.
 
 Setting Up a Test for a View
 ----------------------------
@@ -620,7 +620,7 @@ This seems trivial now because in this particular moment we're just testing that
 Enter Functional Tests
 ----------------------
 
-As the name implies, functional tests verify that various components of our app function together as they should. We'll use functional tests to "look" at our front-end and make sure that what's being displayed is what we expect. To set up our functional tests we again inherit from the ``unittest.TestCase`` object. We then set up a "working" version of our app and use HTTP methods on our routes. As an example (expanded from what was provided by the scaffold):
+As the name implies, `functional tests <http://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/functional_testing.html>`_ verify that various components of our app function together as they should. We'll use functional tests to "look" at our front-end and make sure that what's being displayed is what we expect. To set up our functional tests we again inherit from the ``unittest.TestCase`` object. We then set up a "working" version of our app and use HTTP methods on our routes. As an example (expanded from what was provided by the scaffold):
 
 .. code-block:: python
 
