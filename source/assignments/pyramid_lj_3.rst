@@ -1,6 +1,8 @@
 ===============================
-Python Learning Journal: Step 2
+Python Learning Journal: Step 3
 ===============================
+
+.. This is currently just a direct copy of day 2's assignment.
 
 Thus far the basic structure and style of your learning journals has been planned out. Now we want to take a bit more advantage of Pyramid to make for a more dynamic site.
 
@@ -16,7 +18,7 @@ Using what you learned today, both in class and in your readings, accomplish the
 * Wire your views to your app using ``view_config``, choosing the appropriate ``route_name`` and ``renderer`` for each view.
 * The home page should contain a list of entries, starting with the most recent. For each listed entry there should be an obvious link (e.g. clickable title, a "more" button, etc.) from the home page to the detail view showing the content of that specific entry.
 * The ``detail`` view for each entry should contain a link to a form to edit that entry.
-* Disable submissions on the ``create`` and ``update`` views.
+* When submitted, the ``create`` and ``update`` views for each entry should return the form data to the same page.
 
 Your views should be *thoroughly* tested. Write both *unit* tests of the view functions themselves, and *functional* tests that show the configured system works properly.
 
@@ -29,7 +31,7 @@ Submitting Your work
 
 When your work is done and your site is deployed, push all of your work to your GitHub repo. Open a new pull request from the ``step2`` branch to ``master``. Submit the URL of that pull request to Canvas.
 
-Finally, merge your pull request to prepare for the work in `Python Learning Journal: Step 3 <pyramid_lj_3.html>`_
+Finally, merge your pull request to prepare for the work in `Python Learning Journal: Step 2 <pyramid_lj_3.html>`_
 
 Use the comment feature in canvas to submit the following:
 

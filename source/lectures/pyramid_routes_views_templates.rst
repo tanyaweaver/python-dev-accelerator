@@ -27,7 +27,7 @@ If you recall from the HTTP server that we built last week, internet software is
 
 An HTTP request arrives at a server through the magic of a **URL**
 
-.. code-block::
+.. code-block:: bash
     
     http://www.codefellows.org/courses/code-401/advanced-software-development-in-python
 
@@ -174,7 +174,7 @@ Let's add a few of our own. Comment out the default ``my_view`` function along w
 
 Let's verify that our view configuration has worked. Make sure your ``virtualenv`` is properly activated and start the web server with ``pserve``:
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pserve development.ini
     Starting server in PID 46797.
@@ -227,7 +227,7 @@ Next, we want to write the view for a single entry. We'll need to use the ``id``
 
 We can now verify that these views work correctly. Start the web server back up.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pserve development.ini
     Starting server in PID 46797.
@@ -283,7 +283,7 @@ Jinja2 Template Basics
 
 We'll start with the absolute basics. Fire up an iPython interpreter in your virtual environment.
 
-.. code-block::
+.. code-block:: bash
     
     (pyramid_lj) bash-3.2$ ipython 
     ...
@@ -441,7 +441,7 @@ Then wire it up to the detail view in ``learning_journal/views/default.py``:
 
 Now we should be able to see some rendered HTML for our journal entry details. Start up your server:
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pserve development.ini 
     Starting server in PID 53587.
@@ -494,7 +494,7 @@ Finally, you'll need to connect this new renderer to your listing view:
 
 We can now see our list page too. Let's try starting the server:
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pserve development.ini 
     Starting server in PID 53587.
@@ -542,7 +542,7 @@ Let's update our detail and list templates:
 
 Start the server so we can see the result.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pserve development.ini 
     Starting server in PID 53587.
@@ -617,7 +617,7 @@ We'll be using a form library called `WTForms <http://wtforms.readthedocs.org/en
 
 Then, in the root directory for this project, re-install our package to download and install the new dependency.
 
-.. code-block::
+.. code-block:: bash-3
 
     (pyramid_lj) bash-3.2$ pip install -e .
 

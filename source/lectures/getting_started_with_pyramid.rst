@@ -4,7 +4,7 @@ Getting Started With Pyramid
 
 Make a directory to work in, I'll call it ``pyramid_lj``, and make a new virtual environment in that directory. Then navigate to that directory and activate the virtual environment. Then pip install the most recent versions of ``pip`` and ``setuptools``
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pip install -U pip setuptools
     (pyramid_lj) bash-3.2$ pip install ipython
@@ -14,7 +14,7 @@ Installation
 
 In order to begin working with Pyramid, we have to install it.
 
-.. code-block::
+.. code-block:: bash
     
     (pyramid_lj) bash-3.2$ pip install pyramid
 
@@ -22,7 +22,7 @@ The version that should be pulled down is the latest version, 1.7. Note the othe
 
 Along with its dependencies, Pyramid installs for you a bunch of new shell commands (``pcreate``, ``pshell``, ``prequest``, etc), and you can see them all in the ``bin`` directory of your virtual environment.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ ls bin
     activate         easy_install-3.5 ipython3         pip3             pserve           python
@@ -56,7 +56,7 @@ A lot of this is pretty much straight from `trypyramid.com <http://www.trypyrami
 
 Save that file and run the following from the command line:
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ python app.py
 
@@ -71,7 +71,7 @@ Using the ``pcreate`` Command to Create a Scaffold
 
 ``pcreate`` allows us to create a scaffold for a web app that includes the basic functionality and best practices of a Pyramid app. Before using this command, back out by one directory and create a new directory called ``scaffold``. Then, invoke ``pcreate`` like so:
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pcreate -s alchemy learning_journal
 
@@ -81,13 +81,17 @@ If you use git status you'll see all of the new files that were just created in 
 
 This project root directory will contain a bunch of files that are metadata for our application
 
-* ``CHANGES.txt`` tracks what changes we've made to our app over time
-* ``MANIFEST.ini`` controls what files are actually present when we package our stuff together and upload it
-* ``README.txt`` is our README file. We can change that to markdown without consequence.
-* ``development.ini`` discussed later 
-* ``production.ini`` discussed later
-* ``setup.cfg`` is the configuration for our setup, while...
-* ``setup.py`` lets our directory become an installable python package
+.. code-block:: bash
+
+    (pyramid_lj) bash-3.2$ tree .
+
+    ├── CHANGES.txt - tracks what changes we've made to our app over time
+    ├── MANIFEST.in - controls what files are actually present when we package our stuff together and upload it
+    ├── README.txt - is our README file. We can change that to markdown without consequence.
+    ├── development.ini - discussed later
+    ├── production.ini - discussed later
+    ├── pytest.ini - is the configuration for our setup, while...
+    ├── setup.py - lets our directory become an installable python package
 
 Inspecting ``setup.py`` reveals that this app requires Pyramid, ``Jinja2`` (a templating engine), and a few other packages to work. It also comes packed ready to install some packages for tests. Let's modify it so that it runs with ``tox`` as part of its test suite:
 
@@ -124,7 +128,7 @@ Inspecting ``setup.py`` reveals that this app requires Pyramid, ``Jinja2`` (a te
 
 Don't forget to fill in the appropriate information about ``author``, ``author_email``, etc. Now, let's install it in editing mode so that the changes we make to this project will be implemented in the installed version.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pip install -e .
 
@@ -135,7 +139,7 @@ Pyramid is Python
 
 Navigate to the ``learning_journal`` directory in your project root and inspect it.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ ls
     __init__.py models      scripts     templates   views
@@ -207,7 +211,8 @@ The ``models`` Directory
 
 The files in the models directory are few:
 
-.. code-block::
+.. code-block:: bash
+
     (pyramid_lj) bash-3.2$ ls models
     __init__.py     meta.py     mymodel.py
 
@@ -300,13 +305,13 @@ We have a *model* which allows us to persist Python objects to an SQL database, 
 
 We of course have to create the database that we want to use before we can use it. Fortunately, when we installed ``psycopg2`` we got a nice shell command that makes this easy.
 
-.. code-block:: 
+.. code-block::  bash
 
     (pyramid_lj) bash-3.2$ createdb testapp
 
 We must also alter our ``development.ini`` file, changing the ``sqlalchemy.url`` parameter to point to our spankin'-new ``learning_journal`` database.
 
-.. code-block::
+.. code-block:: bash
 
     # in development.ini
     # ...
@@ -376,7 +381,7 @@ For expedience, let's modify setup.py to change ``initialize_learning_journal_db
 
 Then reinstall your package, again in development mode. Let's try out this new command. We'll need to provide a configuration file name, so let's use ``development.ini`` since we're in development:
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ setup_db development.ini 
     2016-06-30 17:05:47,050 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] select version()
@@ -395,7 +400,7 @@ The ``[loggers]`` configuration in our ``.ini`` file sends a stream of INFO-leve
 
 Now that we have our database hooked up to our models, let's finally see what this scaffold has provided us. To do this, we have to let Pyramid start up a local server for us using the ``pserve`` command, with settings set by whatever configuration ``.ini`` file we provide.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pserve development.ini --reload
 
@@ -406,13 +411,13 @@ Interacting with SQLAlchemy Models and the ORM
 
 We can investigate and manipulate our models from the interpreter pretty easily. Let's first make a nicer interpreter available for our project. Pyramid has its own iPython and its own way of connecting iPython to the application code you are writing. First, install iPython and Pyramid's iPython extension.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pip install ipython pyramid_ipython
 
 The ``pshell`` command lets us connect iPython to our application code. Let's fire up ``pshell`` and explore for a moment to see what we have at our disposal.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pshell development.ini
     Python 3.5.1 (v3.5.1:37a07cee5969, Dec  5 2015, 21:12:44) 

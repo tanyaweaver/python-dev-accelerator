@@ -100,7 +100,7 @@ Jinja2 Template Basics
 
 We'll start with the absolute basics. Fire up an iPython interpreter in your virtual environment and import the ``Template`` class from the ``jinja2`` package:
 
-.. code-block::
+.. code-block:: bash
     
     (pyramid_lj) bash-3.2$ ipython 
     ...
@@ -231,7 +231,7 @@ Templates Applied
 
 There's more that Jinja2 templates can do, but it will be easier to introduce you to that in the context of a working template. So let's make some.
 
-We have a Pyramid ``view`` that'll return the content of a single entry. Let's create a template to show it. In ``learning_journal/templates/`` create a new file ``detail.jinja2``:
+We have a Pyramid ``view`` that'll return the content of a single entry. Let's create a template to show it. In ``learning_journal_basic/templates/`` create a new file ``detail.jinja2``:
 
 .. code-block:: html
 
@@ -251,7 +251,9 @@ We have a Pyramid ``view`` that'll return the content of a single entry. Let's c
 
 We're going to hold on replacing names with keywords. First, let's just serve up this HTML. Notice that the file type is ``.jinja2``, not ``.html``. 
 
-Wire up our new detail template to the detail view in ``learning_journal/views.py``:
+Wire up our new detail template to the detail view in ``learning_journal_basic/views.py``:
+
+.. code-block:: python
 
     # views.py
     @view_config(route_name='detail', renderer='templates/detail.jinja2')
@@ -260,7 +262,7 @@ Wire up our new detail template to the detail view in ``learning_journal/views.p
 
 Now we should be able to see some rendered HTML for our journal entry details. Start up your server:
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pserve development.ini 
     Starting server in PID 53587.
@@ -320,7 +322,7 @@ The *request* object is also placed in the context by Pyramid *by default*. ``re
         </body>
     </html>
 
-Let's now create a template such that our index shows a list of journal entries, showing only the title and the date of creation. In ``learning_journal/templates/`` create a new file ``list.jinja2``:
+Let's now create a template such that our index shows a list of journal entries, showing only the title and the date of creation. In ``learning_journal_basic/templates/`` create a new file ``list.jinja2``:
 
 .. code-block:: python
 
@@ -383,7 +385,7 @@ Finally, you'll need to connect this new renderer to your listing view. Since we
 
 We can now see our list page in all its glory. Let's try starting the server:
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pserve development.ini 
     Starting server in PID 53587.
@@ -444,7 +446,7 @@ Let's update our ``detail`` and ``list`` templates:
 
 Start the server so we can see the result.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pserve development.ini 
     Starting server in PID 53587.
@@ -463,7 +465,7 @@ Serving static assets in Pyramid requires adding a *static view* to configuratio
 
 .. code-block:: python
 
-    # in learning_journal/__init__.py
+    # in learning_journal_basic/__init__.py
     # ...
     def main(global_config, **settings):
         """ This function returns a Pyramid WSGI application.
@@ -472,7 +474,7 @@ Serving static assets in Pyramid requires adding a *static view* to configuratio
         config.include('pyramid_jinja2')
         config.include('.routes')
         # add this next line
-        config.add_static_view(name='static', path='learning_journal:static')
+        config.add_static_view(name='static', path='learning_journal_basic:static')
         config.scan()
         return config.make_wsgi_app()
 
@@ -488,13 +490,13 @@ Add the following to your ``layout.jinja2`` template:
 
     <head>
       # stuff that was here before
-      <link href="{{ request.static_path('learning_journal:static/style.css') }}" rel="stylesheet">
+      <link href="{{ request.static_path('learning_journal_basic:static/style.css') }}" rel="stylesheet">
     </head>
     # everything else
 
-The **one required argument** to ``request.static_path`` is a *path* to an asset. Note that because any package *might* define a static view with the directory name ``static``, we have to specify which package we want to look in. That's why we have ``learning_journal:static/style.css`` in our call.
+The **one required argument** to ``request.static_path`` is a *path* to an asset. Note that because any package *might* define a static view with the directory name ``static``, we have to specify which package we want to look in. That's why we have ``learning_journal_basic:static/style.css`` in our call.
 
-Create a very basic style for your learning journal and add it to ``learning_journal/static``. Then, restart your web server and see what a difference a little style makes.
+Create a very basic style for your learning journal and add it to ``learning_journal_basic/static``. Then, restart your web server and see what a difference a little style makes.
 
 Testing Your Pyramid App
 ========================
@@ -525,12 +527,12 @@ Our scaffold provided for us a ``tests.py`` file. Let's inspect it.
             from .views import my_view
             request = testing.DummyRequest()
             info = my_view(request)
-            self.assertEqual(info['project'], 'learning_journal')
+            self.assertEqual(info['project'], 'learning_journal_basic')
 
 
     class FunctionalTests(unittest.TestCase):
         def setUp(self):
-            from learning_journal import main
+            from learning_journal_basic import main
             app = main({})
             from webtest import TestApp
             self.testapp = TestApp(app)
@@ -574,7 +576,7 @@ Running Pyramid Tests
 
 To run this test we have to first install all the things we need for testing. We defined those in our ``setup.py`` so just navigate to the project root and install like so:
 
-.. code-block:: 
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pip install -e ".[testing]"
 
@@ -582,19 +584,19 @@ In between the quotes we have ``.[testing]`` because we want to install everythi
 
 Now that all is installed, run our test!
 
-.. code-block:: 
+.. code-block:: bash
 
-    py.test learning_journal/tests.py -q
+    py.test learning_journal_basic/tests.py -q
 
 We've designed this one test to pass, so we should get a statement saying it passes. Spectacular. But we want to test across versions of Python, so we need to incorporate ``tox``. Recall that when we first set up our app via the scaffold, we added ``tox`` into ``tests_require``. When we pip-installed ``testing`` above, tox was installed along with everything else. Now we just have to construct our ``tox.ini`` configuration file so that we can run tox. Let's add a little bit more to our tox file than we usually do. We don't want to just run our tests across versions, we ultimately want to make sure that our app is well-tested across everything we've written. We want to add coverage. So, our tox file should look like the following:
 
-.. code-block::
+.. code-block:: bash
 
     [tox]
     envlist = py27, py35
 
     [testenv]
-    commands = py.test --cov=learning_journal learning_journal/tests.py -q
+    commands = py.test --cov=learning_journal_basic learning_journal_basic/tests.py -q
     deps =
         pytest
         pytest-cov
@@ -602,14 +604,14 @@ We've designed this one test to pass, so we should get a statement saying it pas
 
 Now we run tox as we always have and ensure that our test passes across Python 2.7 and 3.5. On top of that, we get a report of the coverage of our tests in the console. 
 
-.. code-block::
+.. code-block:: bash
 
     ---------- coverage: platform darwin, python 3.5.1-final-0 -----------
     Name                           Stmts   Miss  Cover
     --------------------------------------------------
-    learning_journal/__init__.py       7      5    29%
-    learning_journal/routes.py         6      6     0%
-    learning_journal/views.py         10      3    70%
+    learning_journal_basic/__init__.py       7      5    29%
+    learning_journal_basic/routes.py         6      6     0%
+    learning_journal_basic/views.py         10      3    70%
     --------------------------------------------------
     TOTAL                             23     14    39%
 
@@ -626,7 +628,7 @@ As the name implies, `functional tests <http://docs.pylonsproject.org/projects/p
 
     class FunctionalTests(unittest.TestCase):
         def setUp(self):
-            from learning_journal import main
+            from learning_journal_basic import main
             app = main({})
             from webtest import TestApp
             self.testapp = TestApp(app)
@@ -658,7 +660,7 @@ The BeautifulSoup Interlude
 
 .. code-block:: ipython
 
-    In [2]: some_html = open("learning_journal/templates/sample.html").read()
+    In [2]: some_html = open("learning_journal_basic/templates/sample.html").read()
     In [3]: print(some_html)
     <html>
         <head>
@@ -761,14 +763,14 @@ This page is supposed to put up an ``<article>`` tag for every given journal ent
 
 That's our new functional test for the home page. Notice that instead of simply testing for the existence of any article tag, it tests specifically that the number on the page matches the number of journal entries. This is the type of test you want, and you can keep the general form of this one the same when we incorporate data models (with some minor tweaks). Now, run ``tox`` and look at that sweet, sweet coverage:
 
-.. code-block::
+.. code-block:: bash
 
     ---------- coverage: platform darwin, python 3.5.1-final-0 -----------
     Name                                             Stmts   Miss  Cover
     --------------------------------------------------------------------
-    learning_journal_basic/__init__.py                   7      0   100%
-    learning_journal_basic/routes.py                     6      0   100%
-    learning_journal_basic/views.py                     10      2    80%
+    learning_journal_basic_basic/__init__.py                   7      0   100%
+    learning_journal_basic_basic/routes.py                     6      0   100%
+    learning_journal_basic_basic/views.py                     10      2    80%
     --------------------------------------------------------------------
     TOTAL                                               23      2    91%
 

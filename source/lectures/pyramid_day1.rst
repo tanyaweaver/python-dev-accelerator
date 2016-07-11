@@ -4,7 +4,7 @@ Getting Started With Pyramid
 
 Create a directory to work in. We'll be using this directory as the jumping-off point for deploying our learning journals, so call it something sensible like ``pyramid_lj``. Navigate to that directory and create (and activate) a new virtual environment. Then pip install the most recent versions of ``pip``, ``setuptools``, and ``ipython``.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pip install -U pip setuptools
     (pyramid_lj) bash-3.2$ pip install ipython pyramid_ipython
@@ -14,7 +14,7 @@ Installation
 
 In order to begin working with Pyramid, we have to install it.
 
-.. code-block::
+.. code-block:: bash
     
     (pyramid_lj) bash-3.2$ pip install pyramid
 
@@ -22,7 +22,7 @@ The version that should be pulled down is the latest version, 1.7. Note the othe
 
 Along with its dependencies, Pyramid installs for you a bunch of new shell commands (``pcreate``, ``pshell``, ``prequest``, etc), and you can see them all in the ``bin`` directory of your virtual environment.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ ls bin
     activate         easy_install-3.5 ipython3         pip3             pserve           python
@@ -57,7 +57,7 @@ As is tradition, when using a new bit of technology we test that it works by hav
 
 Save that file and run the following from the command line:
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ python app.py
 
@@ -72,7 +72,7 @@ Using the ``pcreate`` Command to Create a Scaffold
 
 ``pcreate`` allows us to create a "scaffold" for a web app that includes the basic functionality and best practices of a Pyramid app. Before using this command, back out by one directory and invoke ``pcreate`` like so:
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pcreate -s starter learning_journal_basic
 
@@ -123,7 +123,7 @@ Inspecting ``setup.py`` reveals that this app requires Pyramid, ``Chameleon`` (a
 
 Don't forget to fill in the appropriate information about ``author``, ``author_email``, etc. Now, let's install it in editing mode so that the changes we make to this project will be implemented in the installed version.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pip install -e .
 
@@ -134,7 +134,7 @@ Pyramid is Python
 
 Navigate to the ``learning_journal_basic`` directory in your project root and inspect it.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ ls
     __init__.py static      templates   tests.py    views.py
@@ -228,7 +228,7 @@ If you recall from the HTTP server that we built last week, internet software is
 
 An HTTP request arrives at a server through the magic of a **URL**
 
-.. code-block::
+.. code-block:: bash
     
     http://www.codefellows.org/courses/code-401/advanced-software-development-in-python
 
@@ -367,7 +367,7 @@ Now that we're all wired together, let's navigate back to our project route and 
 
 What happens if instead we try to include the text contained within another file? Let's set ourselves up for it by creating a file in the same directory called ``sample.txt``.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ echo "This is text in an external file." > sample.txt
 
@@ -388,7 +388,7 @@ Now modify the view that we've made to read this file into Python, and return th
 
 We don't just have to work with plain text. Let's make a new file that contains HTML instead.
 
-.. code-block::
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ echo "<h1>This is text in an external file.</h1>" > sample.html
 
