@@ -246,7 +246,7 @@ It will belong to the ``models`` table in our database, and every entry into tha
 Data Persistence
 ~~~~~~~~~~~~~~~~
 
-It's all well and good to have a set of Python classes that represent your system. But what happens when you want to *save* information? What happens to an instance of a Python class when you quit the interpreter? What about when your script stops running? The code in a website runs when an HTTP request comes in from a client. it stops running when an HTTP response goes back out to the client. So what happens to the data in your system in-between these moments? **The data must be persisted**.
+It's all well and good to have a set of Python classes that represent your system. But what happens when you want to *save* information? What happens to an instance of a Python class when you quit the interpreter? What about when your script stops running? The code in a website runs when an HTTP request comes in from a client. It stops running when an HTTP response goes back out to the client. So what happens to the data in your system in-between these moments? **The data must be persisted**.
 
 There are a number of alternatives for persistence:
 

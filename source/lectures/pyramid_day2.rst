@@ -381,7 +381,7 @@ Finally, you'll need to connect this new renderer to your listing view. Since we
 
     #...
 
-``ENTRIES`` here is a rare global variable because you're going to want to use this for your ``detail`` view tonight. When we discuss models tomorrow, we'll dispose of this entirely.
+``ENTRIES`` here is a rare global variable. You're going to want to use this for your ``detail`` view tonight. When we discuss models tomorrow, we'll dispose of this entirely.
 
 We can now see our list page in all its glory. Let's try starting the server:
 

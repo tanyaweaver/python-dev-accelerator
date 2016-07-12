@@ -82,14 +82,18 @@ If you use git status you'll see all of the new files that were just created in 
 
 This project root directory will contain a bunch of files that contain metadata and operational instructions for our application:
 
-* ``CHANGES.txt`` tracks what changes we've made to our app over time
-* ``MANIFEST.in`` controls what files are actually present when we package our stuff together and upload it
-* ``README.txt`` is our ``README`` file. We can add a markdown file of the same name without consequence and use that as the ``README.md`` for our eventual GitHub repos
-* ``setup.py`` lets our directory become an installable python package
-* ``development.ini`` discussed later 
-* ``production.ini`` discussed later
-* ``pytest.ini`` directs ``pytest`` as to which files to test (presuming any file ending in "``.py``")
-* ``.coveragerc`` determines which directories get targeted for reports of coverage
+.. code-block:: bash
+
+    (pyramid_lj) bash-3.2$ tree .
+
+    ├── CHANGES.txt - tracks what changes we've made to our app over time
+    ├── MANIFEST.in - controls what files are actually present when we package our stuff together and upload it
+    ├── README.txt - is our README file. We can change that to markdown without consequence.
+    ├── development.ini - discussed later
+    ├── production.ini - discussed later
+    ├── pytest.ini - directs ``pytest`` as to which files to test (presuming any file ending in "``.py``")
+    ├── setup.py - lets our directory become an installable python package
+    ├── .coveragerc - determines which directories get targeted for reports of coverage
 
 Inspecting ``setup.py`` reveals that this app requires Pyramid, ``Chameleon`` (a templating engine), and a few other packages to work. It also comes packed ready to install some packages for tests. Let's modify it so that it runs with ``tox`` as part of its test suite, and that it uses the ``Jinja2`` templating engine (which we'll get to another time):
 
