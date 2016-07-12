@@ -782,10 +782,18 @@ Woo!
 Recap
 =====
 
-Today's work involved a lot of refactoring, switching to Jinja2 templates, and finally dipping our feet into testing. Specifically, we used Pyramid's built-in ``view_config`` decorator to wire our views to the appropriate renderers, removing the need to manually include views and connect routes to those views. 
+Today's work involved a lot of refactoring, switching to Jinja2 templates, and finally dipping our feet into testing. 
+Specifically, we used Pyramid's built-in ``view_config`` decorator to wire our views to the appropriate renderers, removing the need to manually include views and connect routes to those views. 
 
-We then of course made the appropriate renderers using Jinja2 templates. Within those templates, we used placeholders with Jinja2 syntax to wire the data we wanted into the appropriate places without having to manually include them. We also saw how we could even make our front-end DRY by using template inheritance, creating a master ``layout.jinja2`` template that wrapped each page as needed.
+We then of course made the appropriate renderers using Jinja2 templates. 
+Within those templates, we used placeholders with Jinja2 syntax to wire the data we wanted into the appropriate places without having to manually include them. 
+We also saw how we could even make our front-end DRY by using template inheritance, creating a master ``layout.jinja2`` template that wrapped each page as needed.
 
-Finally, we saw how to write unit tests for individual views, providing our view callable with a dummy HTTP request and inspecting the data that resulted from that view being called. In this process, we saw how we could use Pyramid's own ``testing`` module to set up a dummy app and send requests without having to access the browser. We then stepped into functional tests, seeing how we could validate our front-end after the data has been passed and the page has been rendered. Lastly, we saw how we could use ``BeautifulSoup`` to make our front-end tests more robust, piecing apart the rendered HTML itself and ensuring that the contents of our page match our expectations at a functional level.
+Finally, we saw how to write unit tests for individual views, providing our view callable with a dummy HTTP request and inspecting the data that resulted from that view being called. 
+In this process, we saw how we could use Pyramid's own ``testing`` module to set up a dummy app and send requests without having to access the browser. 
+We then stepped into functional tests, seeing how we could validate our front-end after the data has been passed and the page has been rendered. 
+Lastly, we saw how we could use ``BeautifulSoup`` to make our front-end tests more robust, piecing apart the rendered HTML itself and ensuring that the contents of our page match our expectations at a functional level.
 
-Tonight you will use these to update your learning journal app with sensible DRY templates and connections between views and routes using the declarative style of ``view_config``. You will then write comprehensive tests for your individual views as well as your front end. Tomorrow, we'll stop messing about with hard-coded data and learn how we can use Pyramid models and SQL persistence for a more robust web app.
+Tonight you will use these to update your learning journal app with sensible DRY templates and connections between views and routes using the declarative style of ``view_config``. 
+You will then write comprehensive tests for your individual views as well as your front end. 
+Tomorrow, we'll stop messing about with hard-coded data and learn how we can use Pyramid models and SQL persistence for a more robust web app.
