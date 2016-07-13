@@ -62,3 +62,7 @@ docs/_build/
 *.sublime-*
 pip-selfcheck.json
 .ipynb_checkpoints
+
+# Pretest images and build files
+source/401test-in/layouts/*.ai
+source/401test-in/layouts/*.jpeg
