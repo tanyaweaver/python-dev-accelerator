@@ -51,14 +51,12 @@ source_parsers = {
     '.md': CommonMarkParser,
 }
 
-source_suffix = ['.rst', '.md']
-
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # The suffix of source filenames.
-# source_suffix = '.rst'
+source_suffix = ['.rst', '.md']
 
 # The encoding of source files.
 #source_encoding = 'utf-8-sig'
@@ -91,7 +89,7 @@ release = '2.0'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['**/.ipynb_checkpoints']
+exclude_patterns = ['**/.ipynb_checkpoints', '_themes/**/*.md']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
