@@ -15,7 +15,7 @@
     .. rst-class:: build
 
     - Recursive functions consistent throughout programming career
-    - Deeper into recursive stack = more pain; slower function 
+    - Deeper into recursive stack = more pain; slower function
     - Consider recursive Fibonacci Sequence
 
 .. slide:: The Recursive Fibonacci Sequence
@@ -46,6 +46,7 @@
 
 .. slide:: Refactor and Go Faster
     :level: 2
+
     .. rst-class:: build
 
     - How can we go faster?
@@ -54,7 +55,8 @@
 
 .. slide:: Refactored Fibonacci Sequence
     :level: 3
-    .. rst-class:: build      
+
+    .. rst-class:: build
     .. code-block:: ipython
 
         In [3]: def fibonacci(n):
@@ -70,13 +72,15 @@
 
 .. slide:: Even Faster with Memoization
     :level: 2
+
     .. rst-class:: build
 
-    - Speed up by calculating once 
+    - Speed up by calculating once
     - Store results in structure external to function
-      
+
 .. slide:: Memoized Fibonacci
     :level: 3
+
     .. rst-class:: build
 
     .. code-block:: ipython
@@ -127,7 +131,7 @@ When timed we see that it takes about 2.7 milliseconds to run
     In [2]: timeit.timeit("fib(20)", setup="from __main__ import fib", number=1000)
     Out[2]: 2.675891876220703 # milliseconds
 
-This may seem like a short time, but for computers it's actually quite a bit. This becomes especially clear if you try to excute the same recursive function several thousand, hundred thousand, or million times. Milliseconds add up into seconds, minutes, hours, and sometimes days. 
+This may seem like a short time, but for computers it's actually quite a bit. This becomes especially clear if you try to excute the same recursive function several thousand, hundred thousand, or million times. Milliseconds add up into seconds, minutes, hours, and sometimes days.
 
 Refactor and Go Faster
 ======================
