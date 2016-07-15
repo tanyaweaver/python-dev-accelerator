@@ -50,7 +50,7 @@ You must also include a CSS stylesheet in your repository that contains the styl
 The HTML mockup pages should use this stylesheet via a "link" tag in the HTML head section.
 
 
-You may use pre-existing CSS framework, like Bootstrap or Zurb Foundation, if you like.
+You may use a pre-existing CSS framework, like Bootstrap or Zurb Foundation, if you like.
 
 Submitting Your Work
 ====================

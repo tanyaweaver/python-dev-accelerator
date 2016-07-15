@@ -16,9 +16,14 @@ Objectives
 Readings
 ========
 
-These readings will support the work you do on Thursday
+.. These readings will support the work you do on Thursday
 
-* `WTForms Crash Course <https://wtforms.readthedocs.org/en/latest/crash_course.html>`_
+.. * `WTForms Crash Course <https://wtforms.readthedocs.org/en/latest/crash_course.html>`_
+* `The SQLAlchemy ORM Tutorial <http://docs.sqlalchemy.org/en/rel_1_0/orm/tutorial.html>`_
+  (Read up to and including the `section on querying <http://docs.sqlalchemy.org/en/rel_1_0/orm/tutorial.html#querying>`_)
+* `Command-Line Pyramid: The Interactive Shell <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/commandline.html#the-interactive-shell>`_
+* `Models in Python <http://docs.pylonsproject.org/projects/pyramid_cookbook/en/latest/pylons/models.html>`_
+
 
 Review
 ======
@@ -30,9 +35,10 @@ Concepts
    :maxdepth: 2
 
    /lectures/priority_queue
+   /lectures/pyramid_day3
 
-* Templates and template inheritance in Jinja2
-* View callables in Pyramid
+.. * Templates and template inheritance in Jinja2
+.. * View callables in Pyramid
 
 Demo
 ====
@@ -40,10 +46,10 @@ Demo
 Assignments
 ===========
 
-
-* :doc:`/assignments/learning_journal_2`
 * :doc:`/assignments/priority_queue`
+* :doc:`/assignments/pyramid_lj_3`
 * :doc:`/assignments/project_03_repo`
 * :doc:`/assignments/daily_lj_entry`
-* :doc:`/assignments/learning_journal_mockup` (due Thursday)
 * :doc:`/assignments/blog_post_outline` (due Friday)
+.. * :doc:`/assignments/learning_journal_2`
+.. * :doc:`/assignments/learning_journal_mockup` (due Thursday)
