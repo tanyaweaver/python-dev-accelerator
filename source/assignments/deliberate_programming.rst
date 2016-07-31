@@ -1,9 +1,9 @@
 .. slideconf::
     :autoslides: False
 
-**************************************
+***********************************************************
 Read Upgrade your Technical Skills With Deliberate Practice
-**************************************
+***********************************************************
 
 .. slide:: Read Upgrade your Technical Skills With Deliberate Practice
     :level: 1
