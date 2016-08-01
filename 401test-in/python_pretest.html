@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Test-in For Code 401: Python &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="test-in-for-code-401-python">
+<h1>Test-in For Code 401: Python<a class="headerlink" href="#test-in-for-code-401-python" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="guidelines">
+<h2>Guidelines<a class="headerlink" href="#guidelines" title="Permalink to this headline">¶</a></h2>
+<p><strong>Create a Python module</strong> that creates a K-12 school with students and teachers at every grade level. You should be able to run this module from the command line, with that functionality outlined below. Make sure to appropriately document your code.</p>
+<div class="section" id="data-representation">
+<h3>Data Representation<a class="headerlink" href="#data-representation" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Your school should have a name, and can have many students and many teachers.</li>
+<li>Students should have names, GPAs (out of 100), grade level (K - 12), and a teacher name.</li>
+<li>Teachers should have names and grade levels, and should be able to have multiple students.</li>
+<li>A teacher should have no more than 10 students.</li>
+<li>If there are no teachers, there should be no students.</li>
+</ol>
+</div>
+<div class="section" id="functionality">
+<h3>Functionality<a class="headerlink" href="#functionality" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>You should be able to retrieve the GPA averaged over all students in the school, as well as the average GPA broken down by grade level.</li>
+<li>You should be able to retrieve the total number of students in the school, with the option to get a count of the whole student body OR a count of the student body broken down by grade level.</li>
+<li>If there are no students in the school, numbers <strong>[1]</strong> and <strong>[2]</strong> should say so with an appropriate message.</li>
+<li>You should be able to retrieve the total number of teachers in the school, with the option to get a count of the number of teachers by grade level.</li>
+<li>You should be able to retrieve the average GPA of all students broken down by teacher.</li>
+<li>You should be able to retrieve the average GPA for a specific grade level, broken down by teacher.</li>
+<li>If there are no teachers in your school, numbers <strong>[4]</strong>, <strong>[5]</strong>, and <strong>[6]</strong> should say so with an appropriate message.</li>
+<li>Your school should be able to enroll new students. A newly-enrolled student should be able to either be assigned to a specific teacher or have one randomly assigned to them. Once assigned to a teacher, their grade level should be automatically assigned. They should also get a random GPA.</li>
+<li>If the assigned teacher in the above process already has 10 students, then that student should be randomly assigned to a different teacher at the same grade level. If all teachers at that level are full, then that student shouldn&#8217;t be allowed to enroll in the school. Your script should indicate either case with appropriate messages.</li>
+<li>Your school should be able to hire new teachers. When a new teacher is hired, they should have an empty classroom, and be assigned to a random grade level if no grade level is specified.</li>
+</ol>
+</div>
+<div class="section" id="command-line-and-command-line-ui">
+<h3>Command Line and Command Line UI<a class="headerlink" href="#command-line-and-command-line-ui" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">When run from the command line, your script should create a new school and fill it with teachers and students. Fill with at least 81 students.</p>
+</li>
+<li><p class="first">When run from the command line, your script should produce a report of the school including:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The school name</li>
+<li>The total number of students in the school</li>
+<li>The total number of teachers in the school</li>
+<li>The average student GPA throughout the school</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">After <strong>[2]</strong> happens, your script should prompt the user to either:</p>
+<blockquote>
+<div><ul class="simple">
+<li>produce a grade report broken down by grade level (so GPA per grade level)</li>
+<li>produce a grade report for an individual grade level broken down by teacher (e.g. average GPA per teacher in grade 9)</li>
+<li>exit the script</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">When run from the command line, if the option to exit is chosen, your script should ask if you&#8217;re sure you want to quit. If you decide to quit, your script should exit. If not, your script should take you back to the menu in <strong>[3]</strong></p>
+</li>
+<li><p class="first">When run from the command line, if the parameter &#8220;roll_call&#8221; is provided, your script should list all the students, separated by grade level. Once done, your script should quit. <strong>This behavior should ONLY occur if &#8220;roll_call&#8221; is provided.</strong></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>You will create a public GitHub repository for your work and email in the link to that repository.</li>
+<li>In the README of that repository, you&#8217;ll include a description of the module that you built and links to any code that you may have used. In that description, you&#8217;ll include explanations of any functions/objects/methods you write. Also include instructions as to how your code should be run from the command line.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Test-in For Code 401: Python</a><ul>
+<li><a class="reference internal" href="#guidelines">Guidelines</a><ul>
+<li><a class="reference internal" href="#data-representation">Data Representation</a></li>
+<li><a class="reference internal" href="#functionality">Functionality</a></li>
+<li><a class="reference internal" href="#command-line-and-command-line-ui">Command Line and Command Line UI</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

@@ -1,314 +1,305 @@
-{
- "cells": [
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "slide"
-    }
-   },
-   "source": [
-    "# Array"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "slide"
-    }
-   },
-   "source": [
-    "## Motivation"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "fragment"
-    }
-   },
-   "source": [
-    "* Take advantage of continguous memory to organize fixed width GOBs in a list. "
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "fragment"
-    }
-   },
-   "source": [
-    "* In the most basic version created it cannot be changed (immutable).  "
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "fragment"
-    }
-   },
-   "source": [
-    "* Arrays are used to represent matrices, vectors (tuples)."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "fragment"
-    }
-   },
-   "source": [
-    "* Random Access "
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "fragment"
-    }
-   },
-   "source": [
-    "* In Python arrays are represented as tuples.\n"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "slide"
-    }
-   },
-   "source": [
-    "## Definition"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "fragment"
-    }
-   },
-   "source": [
-    "Ignoring size an array may be seen as an abstract data type with the operations new(), set(i, v, A), and get(i, A), where i is a numeric index, v is a value, and A is an array"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "slide"
-    }
-   },
-   "source": [
-    "## Attributes"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "fragment"
-    }
-   },
-   "source": [
-    "* index\n",
-    "* value"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {
-    "slideshow": {
-     "slide_type": "slide"
-    }
-   },
-   "source": [
-    "## Operations"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 35,
-   "metadata": {
-    "collapsed": false,
-    "slideshow": {
-     "slide_type": "subslide"
-    }
-   },
-   "outputs": [],
-   "source": [
-    "# new(10)\n",
-    "array = (ord('a'), ord('b'), ord('c'), ord('d'), ord('e'), ord('f'), ord('g'), ord('h'), ord('i'), ord('j'))"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 36,
-   "metadata": {
-    "collapsed": false,
-    "slideshow": {
-     "slide_type": "subslide"
-    }
-   },
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "This is the fifth element: \n",
-      "101\n",
-      "e\n"
-     ]
-    }
-   ],
-   "source": [
-    "# get\n",
-    "x = array[4]\n",
-    "print('This is the fifth element: ')\n",
-    "print(x)\n",
-    "print(chr(x))"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 37,
-   "metadata": {
-    "collapsed": false,
-    "slideshow": {
-     "slide_type": "subslide"
-    }
-   },
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "10\n"
-     ]
-    }
-   ],
-   "source": [
-    "# length\n",
-    "print(len(array))\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 38,
-   "metadata": {
-    "collapsed": false,
-    "slideshow": {
-     "slide_type": "subslide"
-    }
-   },
-   "outputs": [
-    {
-     "ename": "TypeError",
-     "evalue": "'tuple' object does not support item assignment",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[1;31mTypeError\u001b[0m                                 Traceback (most recent call last)",
-      "\u001b[1;32m<ipython-input-38-d5c047e0318d>\u001b[0m in \u001b[0;36m<module>\u001b[1;34m()\u001b[0m\n\u001b[0;32m      1\u001b[0m \u001b[1;31m# set\u001b[0m\u001b[1;33m\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[1;32m----> 2\u001b[1;33m \u001b[0marray\u001b[0m\u001b[1;33m[\u001b[0m\u001b[1;36m4\u001b[0m\u001b[1;33m]\u001b[0m \u001b[1;33m=\u001b[0m \u001b[1;34m'leeloo'\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n\u001b[0m\u001b[0;32m      3\u001b[0m \u001b[0mprint\u001b[0m\u001b[1;33m(\u001b[0m\u001b[0marray\u001b[0m\u001b[1;33m[\u001b[0m\u001b[1;36m4\u001b[0m\u001b[1;33m]\u001b[0m\u001b[1;33m)\u001b[0m\u001b[1;33m\u001b[0m\u001b[0m\n",
-      "\u001b[1;31mTypeError\u001b[0m: 'tuple' object does not support item assignment"
-     ]
-    }
-   ],
-   "source": [
-    "# set\n",
-    "array[4] = 'leeloo'\n",
-    "print(array[4])"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {
-    "collapsed": false,
-    "slideshow": {
-     "slide_type": "subslide"
-    }
-   },
-   "outputs": [],
-   "source": [
-    "vector = list(array)\n",
-    "vector[4] = 'leelo'\n",
-    "print(vector[4])"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {
-    "collapsed": false,
-    "slideshow": {
-     "slide_type": "subslide"
-    }
-   },
-   "outputs": [],
-   "source": [
-    "#add\n",
-    "vector.append(ord('k'))\n",
-    "print(vector)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {
-    "collapsed": false,
-    "slideshow": {
-     "slide_type": "subslide"
-    }
-   },
-   "outputs": [],
-   "source": [
-    "#insert\n",
-    "vector.insert(4, 'life, love, and art.')\n",
-    "print(vector)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {
-    "collapsed": true
-   },
-   "outputs": [],
-   "source": [
-    "#remove\n",
-    "vector.remove('leelo')\n",
-    "print(vector)"
-   ]
-  }
- ],
- "metadata": {
-  "celltoolbar": "Slideshow",
-  "kernelspec": {
-   "display_name": "Python 3",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.5.1"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 0
-}
+.. slideconf::
+    :autoslides: False
+
+.. slide:: Arrays
+    :level: 1
+
+    .. rst-class:: center
+
+    A basic Abstract Data Type in action
+
+
+.. slide:: Base Definition and Operations
+    :level: 2
+
+    Ignoring size, an array may be seen as a data type with the following operations, where ``i`` is a numeric index, ``v`` is a value, and ``A`` is an array.
+
+    .. rst-class:: build
+
+    * ``new(N)``: create a new array of length ``N``
+    * ``set(A, i, v)``: in array ``A`` set the value at index ``i`` to ``v``
+    * ``get(A, i)``: get the value of the ``i``th element of array ``A``
+    * ``size(A)``: return the size/length of the array
+    * ``remove(A, i)``: removes a value from the array, maintaining array size
+
+
+.. slide:: Motivation
+    :level: 2
+
+    .. rst-class:: build
+
+    * Take advantage of contiguous memory to organize fixed-width groups of bits (data) in a list.
+    * In the most basic version, it cannot be changed (immutable). A number of memory slots are allocated and filled with data
+    * Arrays are used to represent matrices, vectors (tuples in Python).
+    * Random access to data
+
+
+.. slide:: Attributes
+    :level: 2
+
+    .. rst-class:: build
+
+    * index: a position in the array 
+    * value: an element in the array 
+
+
+.. slide:: Implementation
+    :level: 2
+
+    .. rst-class:: center
+
+    First we have the data holder (the Node) and then we have the data container and displayer (the Array)
+
+.. slide:: Implementation - Node
+    :level: 3
+
+    .. rst-class:: center
+    .. code-block:: python
+
+        class Node(object):
+            def __init__(self, value):
+                """The keeper of individual data"""
+                self.value = value
+
+            def __repr__(self):
+                """Display the data in this node"""
+                return str(self.value)
+
+
+.. slide:: Implementation - Array
+    :level: 3
+
+    .. rst-class:: center
+    .. code-block:: python
+
+        class Array(object):
+            def __init__(self, length):
+                """Create a new Array object, ready for filling!"""
+                container = [None] * length
+                self._container = container
+
+            def get(self, index):
+                """Get the value of the item at the given index"""
+                if hasattr(self._container[index], "value"):
+                    return self._container[index].value
+                return "None"
+
+            def set(self, index, value):
+                """Set the item at the given index to the given value"""
+                if value:
+                    new_node = Node(value)
+                    self._container[index] = new_node
+                else:
+                    self._container[index] = None
+
+            def remove(self, index):
+                """Remove the value at the given index"""
+                self.set(index, None)
+
+            def __repr__(self):
+                """Display the current state of the array"""
+                return str([node.value if hasattr(node, "value") else None for node in self._container])
+
+            def __len__(self):
+                """Return the size of the array"""
+                return len(self._container)
+
+
+.. slide:: new(N)
+    :level: 3
+
+    .. rst-class:: left
+
+    Create a new empty array of length ``N``.
+
+    .. code-block:: ipython
+
+        In [1]: my_array = Array(10)
+
+        In [2]: my_array
+        Out[2]: [None, None, None, None, None, None, None, None, None, None]
+
+
+.. slide:: set(A, i, v)
+    :level: 3
+
+    .. rst-class:: left
+
+    Set the sixth element in the array to 'kidney beans'
+
+    .. code-block:: ipython
+
+        In [3]: my_array.set(5, "kidney beans")
+
+        In [4]: my_array
+        Out[4]: [None, None, None, None, None, 'kidney beans', None, None, None, None]
+
+
+.. slide:: get(A, i)
+    :level: 3
+
+    .. rst-class:: left
+
+    Get the sixth element in the array
+
+    .. code-block:: ipython
+
+        In [5]: my_array.get(5)
+        Out[5]: 'kidney beans'
+
+
+.. slide:: size(A)
+    :level: 3
+
+    .. rst-class:: left
+
+    Get the size/length of an array (how many elements are there in it?)
+
+    .. code-block:: ipython
+
+        In [6]: len(my_array)
+        Out[6]: 10
+
+
+.. slide:: remove(A, i)
+    :level: 3
+
+    Remove the data from the array 
+
+    .. code-block:: ipython
+
+        In [7]: my_array.remove(5)
+
+        In [8]: my_array
+        Out[8]: [None, None, None, None, None, None, None, None, None, None]
+
+
+=====
+Arrays
+=====
+
+Motivation
+==========
+
+* Take advantage of contiguous memory to organize fixed-width groups of bits (data) in a list.
+* In the most basic version, it cannot be changed (immutable). A number of memory slots are allocated and filled with data
+* Arrays are used to represent matrices, vectors (tuples in Python).
+* Random access to data
+  
+Base Definition and Operations
+==============================
+
+Ignoring size, an array may be seen as a data type with the following operations 
+
+* ``new(N)``: create a new array of length ``N``
+* ``set(A, i, v)``: in array ``A`` set the value at index ``i`` to ``v``
+* ``get(A, i)``: get the value of the ``i``th element of array ``A``
+* ``size(A)``: return the size/length of the array
+* ``remove(A, i)``: removes a value from the array, maintaining array size
+
+where ``i`` is a numeric index, ``v`` is a value, and ``A`` is an array.
+
+Attributes
+==========
+
+* index: a position in the array 
+* value: an element in the array 
+
+Implementation
+==============
+
+.. code-block:: python
+
+    class Node(object):
+        def __init__(self, value):
+            """The keeper of individual data"""
+            self.value = value
+
+        def __repr__(self):
+            """Display the data in this node"""
+            return str(self.value)
+
+    class Array(object):
+        def __init__(self, length):
+            """Create a new Array object, ready for filling!"""
+            container = [None] * length
+            self._container = container
+
+        def get(self, index):
+            """Get the value of the item at the given index"""
+            if hasattr(self._container[index], "value"):
+                return self._container[index].value
+            return "None"
+
+        def set(self, index, value):
+            """Set the item at the given index to the given value"""
+            if value:
+                new_node = Node(value)
+                self._container[index] = new_node
+            else:
+                self._container[index] = None
+
+        def remove(self, index):
+            """Remove the value at the given index"""
+            self.set(index, None)
+
+        def __repr__(self):
+            """Display the current state of the array"""
+            return str([node.value if hasattr(node, "value") else None for node in self._container])
+
+        def __len__(self):
+            """Return the size of the array"""
+            return len(self._container)
+
+new(``N``)
+----------
+
+Create a new empty array of length ``N``.
+
+.. code-block:: ipython
+
+    In [1]: my_array = Array(10)
+
+    In [2]: my_array
+    Out[2]: [None, None, None, None, None, None, None, None, None, None]
+
+
+set(``A, i, v``)
+----------------
+
+.. code-block:: ipython
+
+    In [3]: my_array.set(5, "kidney beans")
+
+    In [4]: my_array
+    Out[4]: [None, None, None, None, None, 'kidney beans', None, None, None, None]
+
+
+get(``A, i``)
+-------------
+
+.. code-block:: ipython
+
+    In [5]: my_array.get(5)
+    Out[5]: 'kidney beans'
+
+
+size(``A``)
+-----------
+
+.. code-block:: ipython
+
+    In [6]: len(my_array)
+    Out[6]: 10
+
+
+remove(``A, i``)
+----------------
+
+.. code-block:: ipython
+
+    In [7]: my_array.remove(5)
+
+    In [8]: my_array
+    Out[8]: [None, None, None, None, None, None, None, None, None, None]
+

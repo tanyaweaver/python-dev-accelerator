@@ -181,35 +181,49 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="Stack">
-<h1>Stack<a class="headerlink" href="#Stack" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Motivation">
-<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Sequential</li>
-<li>Limited Access</li>
-<li>L.I.F.O</li>
-<li>Linear</li>
+<span class="admonition-stack"></span><span class="admonition-motivation"></span><span class="admonition-attributes"></span><span class="admonition-operations"></span><div class="section" id="stack">
+<h1>Stack<a class="headerlink" href="#stack" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
+<p>A <em>Stack</em> is a data structure where elements are inserted into and removed from the head of the container.</p>
+<a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Data_stack.svg/391px-Data_stack.svg.png"><img alt="An example of a data stack. Source: https://en.wikibooks.org/wiki/Data_Structures/Stacks_and_Queues" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Data_stack.svg/391px-Data_stack.svg.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Sequential</p>
+</li>
+<li><p class="first">Limited access</p>
+</li>
+<li><p class="first">Last-In First-Out (LIFO) access</p>
+</li>
+<li><p class="first">Linear</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>When might I actually use this?</strong></dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="https://larc.unt.edu/ian/TowersOfHanoi/4-256.gif">Towers of Hanoi puzzle</a></li>
+<li>Rearranging railroad cars</li>
+<li>Sorting...anything</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </div>
-<div class="section" id="Definition">
-<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
-<p>A queue is a data structure where elements are inserted into and removed
-from a container using the first-in-first-out principle.</p>
-</div>
-<div class="section" id="Attributes">
-<h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>size</li>
 <li>top</li>
 <li>is_empty</li>
+<li>size</li>
 </ul>
 </div>
-<div class="section" id="Operations">
-<h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>push(e)</li>
-<li>pop</li>
+<li>push(item)</li>
+<li>pop()</li>
 </ul>
 </div>
 </div>
@@ -223,10 +237,10 @@ from a container using the first-in-first-out principle.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Stack</a><ul>
-<li><a class="reference internal" href="#Motivation">Motivation</a></li>
-<li><a class="reference internal" href="#Definition">Definition</a></li>
-<li><a class="reference internal" href="#Attributes">Attributes</a></li>
-<li><a class="reference internal" href="#Operations">Operations</a></li>
+<li><a class="reference internal" href="#definition">Definition</a></li>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#operations">Operations</a></li>
 </ul>
 </li>
 </ul>

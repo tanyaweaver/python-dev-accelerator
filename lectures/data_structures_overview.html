@@ -1,0 +1,456 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Data Structures: An Overview &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="next" title="Decision Trees &amp; Random Forests Experiment" href="decision_trees_forest.html" />
+    <link rel="prev" title="Getting Data In" href="cgi_wsgi.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="decision_trees_forest.html" title="Decision Trees &amp; Random Forests Experiment"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cgi_wsgi.html" title="Getting Data In"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<span class="admonition-data-structures-an-overview"></span><span class="admonition-history"></span><span class="admonition-storying-and-fetching-data"></span><span class="admonition-types-of-data-structures"></span><span class="admonition-primitive-data-types"></span><span class="admonition-composite-data-types"></span><span class="admonition-abstract-data-types"></span><span class="admonition-for-this-class"></span><span class="admonition-common-attributes-of-abstract-data-types"></span><span class="admonition-common-operations-of-abstract-data-types"></span><div class="section" id="data-structures-an-overview">
+<h1>Data Structures: An Overview<a class="headerlink" href="#data-structures-an-overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="read-this">
+<h2>Read This<a class="headerlink" href="#read-this" title="Permalink to this headline">¶</a></h2>
+<p>Getting Real Chapter 2: <a class="reference external" href="https://gettingreal.37signals.com/ch02_Whats_Your_Problem.php">What&#8217;s Your Problem</a></p>
+</div>
+<div class="section" id="history">
+<h2>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Charles_Babbage">Charles Babbage</a> (1791 - 1871) designed the Difference Machine: <a class="reference external" href="https://www.youtube.com/watch?v=be1EM3gQkAY">https://www.youtube.com/watch?v=be1EM3gQkAY</a> to build error-free mathmatical tables. He automated the process by creating printing plates, thereby reducing the typesetting errors of the time.</p>
+<p>He then generalized the Difference Machine to the first (if it had been built) Turing-complete computer. It has an arithmetic logic, memory, and control flow (branching &amp; loops).</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Ada_Lovelace">Ada Lovelace</a> (1815 - 1852) wrote the first algorithm to compute the Bernoulli (Kowa) sequence for the Babbage Analytical Engine.</p>
+<blockquote>
+<div><p>“As soon as an Analytical Engine exists, it will necessarily guide the future course of the science. Whenever any result is sought by its aid, the question will then arise—By what course of calculation can these results be arrived at by the machine in the shortest time?”</p>
+<p>~ Charles Babbage - Passages from the Life of a Philosopher</p>
+</div></blockquote>
+<p>Babbage’s design was revolutionary in that the computer could store and then retrieve data. Then it was “pegs in a barrel” –like a music box. Today it’s groups of bits (GOBs).</p>
+</div>
+<div class="section" id="storing-and-fetching-data">
+<h2>Storing and Fetching Data<a class="headerlink" href="#storing-and-fetching-data" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The Analytical Engine only used fixed point arithmetic (column width of 50).</li>
+<li>Data Structures improve the storing and/or fetching of GOBS.</li>
+<li>Data Structures organize GOBs</li>
+</ul>
+</div>
+<div class="section" id="types-of-data-structures">
+<h2>Types of Data Structures<a class="headerlink" href="#types-of-data-structures" title="Permalink to this headline">¶</a></h2>
+<p>GOBs are organized into data structures. These are then grouped into data types:</p>
+<ul class="simple">
+<li>Primitive</li>
+<li>Composite</li>
+<li>Abstract Data Types</li>
+</ul>
+<div class="section" id="primitive-data-types">
+<h3>Primitive Data Types<a class="headerlink" href="#primitive-data-types" title="Permalink to this headline">¶</a></h3>
+<p>Primitive data types are basically built-in types like integers and booleans.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="58%" />
+<col width="19%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Type</th>
+<th class="head">Values</th>
+<th class="head">Python Implementation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Boolean</td>
+<td>True or False</td>
+<td><code class="docutils literal"><span class="pre">bool</span></code></td>
+</tr>
+<tr class="row-odd"><td>Character</td>
+<td><a class="reference external" href="https://en.wikipedia.org/wiki/Grapheme">grapheme</a> or unicode point</td>
+<td><code class="docutils literal"><span class="pre">s[n]</span></code> or <code class="docutils literal"><span class="pre">ord(s[n])</span></code></td>
+</tr>
+<tr class="row-even"><td>Floating Point</td>
+<td>single-precision real numbers (±1.18 x 10<sup>-38</sup> to ±3.4 x 10<sup>38</sup>)</td>
+<td>n/a</td>
+</tr>
+<tr class="row-odd"><td>Double-precision Floating Point</td>
+<td>wider float (±2.23 x 10<sup>-308</sup> to ±1.80 x 10<sup>308</sup>)</td>
+<td><code class="docutils literal"><span class="pre">float</span></code></td>
+</tr>
+<tr class="row-even"><td>Integer</td>
+<td>fixed-precision values (ex: ...-3, -2, -1, 0, 1, 2, 3...)</td>
+<td><code class="docutils literal"><span class="pre">int</span></code></td>
+</tr>
+<tr class="row-odd"><td>NoneType</td>
+<td>empty variable without meaningful value</td>
+<td><code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="composite-data-types">
+<h3>Composite Data Types<a class="headerlink" href="#composite-data-types" title="Permalink to this headline">¶</a></h3>
+<p>Data types composed of two or more other data types. Here are <em>some</em>:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="59%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Type</th>
+<th class="head">Values</th>
+<th class="head">Python Implementation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Array</td>
+<td>Mutable object containing other values</td>
+<td><code class="docutils literal"><span class="pre">list</span></code> or <code class="docutils literal"><span class="pre">[]</span></code></td>
+</tr>
+<tr class="row-odd"><td>Record</td>
+<td>Immutable object containing other values</td>
+<td><code class="docutils literal"><span class="pre">tuple</span></code> or <code class="docutils literal"><span class="pre">()</span></code></td>
+</tr>
+<tr class="row-even"><td>Union</td>
+<td>Contains values that can be multiple types</td>
+<td><code class="docutils literal"><span class="pre">dict</span></code> or <code class="docutils literal"><span class="pre">{}</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="abstract-data-types">
+<h3>Abstract Data Types<a class="headerlink" href="#abstract-data-types" title="Permalink to this headline">¶</a></h3>
+<p>An abstract data type is a set of data values and associated operations that are precisely specified independent of any particular implementation. The implementation is up to the problem trying to be solved and the programmer solving it.</p>
+<p>Note: Since the data values and operations are defined with mathematical precision, rather than as an implementation in a computer language, we may reason about effects of the operations, relations to other abstract data types, whether a program implements the data type, etc.</p>
+<p>Abstract data types follow some mathmatical model of a data structure. A developer implements the data structure, and a user expects certain behaviors from the implementation characteristic of the data type. Here are a few:</p>
+<ul class="simple">
+<li>List (singly- and doubly-linked)</li>
+<li>Stack</li>
+<li>Queue</li>
+<li>Deque (Double-ended queue)</li>
+<li>Priority queue</li>
+<li>Associative array</li>
+<li>Multimap</li>
+<li>Multiset</li>
+<li>Set</li>
+<li>Tree</li>
+<li>Graph</li>
+</ul>
+<div class="section" id="for-this-class">
+<h4>For this class<a class="headerlink" href="#for-this-class" title="Permalink to this headline">¶</a></h4>
+<p>We will <em>consume</em> primitive and composite data types.</p>
+<ul class="simple">
+<li>These are encapsulated quite nicely by Python.</li>
+<li>We care about what they do and what they allow us to do</li>
+</ul>
+<p>We will <em>implement</em> abstract data types</p>
+<ul class="simple">
+<li>We care about performance</li>
+<li>We look at their attributes and operations.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="common-attributes-of-abstract-data-types">
+<h2>Common Attributes of Abstract Data Types<a class="headerlink" href="#common-attributes-of-abstract-data-types" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>index, key</li>
+<li>node</li>
+<li>edge</li>
+<li>length, size</li>
+<li>value, cargo, information</li>
+<li>next</li>
+<li>previous</li>
+<li>leaf</li>
+<li>head, root</li>
+<li>tail</li>
+</ul>
+</div>
+<div class="section" id="common-operations-of-abstract-data-types">
+<h2>Common Operations of Abstract Data Types<a class="headerlink" href="#common-operations-of-abstract-data-types" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="87%" />
+<col width="7%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operation</th>
+<th class="head">Definition</th>
+<th class="head">Also Known As...</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">search(S,</span> <span class="pre">k)</span></code></td>
+<td>Given a structure <code class="docutils literal"><span class="pre">S</span></code> and a key <code class="docutils literal"><span class="pre">k</span></code>, returns the value that <code class="docutils literal"><span class="pre">S</span></code> points to at position <code class="docutils literal"><span class="pre">k</span></code></td>
+<td>traverse, walk, find</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">insert(S,</span> <span class="pre">x[,</span> <span class="pre">k])</span></code></td>
+<td>A modifying operation for mutable types. Adds the element assigned to <code class="docutils literal"><span class="pre">x</span></code> to the structure <code class="docutils literal"><span class="pre">S</span></code>. We usually assume that any attributes in element <code class="docutils literal"><span class="pre">x</span></code> needed by the structure implementation have already been initialized.  Sometimes takes an optional argument <code class="docutils literal"><span class="pre">k</span></code> specifying exactly where in the structure to insert <code class="docutils literal"><span class="pre">x</span></code></td>
+<td>push, append</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">delete(S,</span> <span class="pre">x)</span></code></td>
+<td>A modifying operation for mutable types. Removes the element assigned to <code class="docutils literal"><span class="pre">x</span></code> from the structure <code class="docutils literal"><span class="pre">S</span></code>.</td>
+<td>remove, pop</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">minimum(S)</span></code></td>
+<td>A query on an ordered structure that returns the element of <code class="docutils literal"><span class="pre">S</span></code> with the smallest value.</td>
+<td>min</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">maximum(S)</span></code></td>
+<td>Similar to above, returns the element of <code class="docutils literal"><span class="pre">S</span></code> with the largest value.</td>
+<td>max</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">successor(S,</span> <span class="pre">x)</span></code></td>
+<td>A query on an ordered structure <code class="docutils literal"><span class="pre">S</span></code> that returns the next value after element <code class="docutils literal"><span class="pre">x</span></code> if one exists.</td>
+<td>next, child</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">predecessor(S,</span> <span class="pre">x)</span></code></td>
+<td>Similar to above, returning the value before element <code class="docutils literal"><span class="pre">x</span></code> if one exists</td>
+<td>previous, prior, parent</td>
+</tr>
+</tbody>
+</table>
+<p>For operations like <code class="docutils literal"><span class="pre">size</span></code>, <code class="docutils literal"><span class="pre">maximum</span></code>, and <code class="docutils literal"><span class="pre">minimum</span></code>, do what you can to make them compatible with python built-in functions like <code class="docutils literal"><span class="pre">len()</span></code>, <code class="docutils literal"><span class="pre">max()</span></code>, and <code class="docutils literal"><span class="pre">min()</span></code>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Data Structures: An Overview</a><ul>
+<li><a class="reference internal" href="#read-this">Read This</a></li>
+<li><a class="reference internal" href="#history">History</a></li>
+<li><a class="reference internal" href="#storing-and-fetching-data">Storing and Fetching Data</a></li>
+<li><a class="reference internal" href="#types-of-data-structures">Types of Data Structures</a><ul>
+<li><a class="reference internal" href="#primitive-data-types">Primitive Data Types</a></li>
+<li><a class="reference internal" href="#composite-data-types">Composite Data Types</a></li>
+<li><a class="reference internal" href="#abstract-data-types">Abstract Data Types</a><ul>
+<li><a class="reference internal" href="#for-this-class">For this class</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#common-attributes-of-abstract-data-types">Common Attributes of Abstract Data Types</a></li>
+<li><a class="reference internal" href="#common-operations-of-abstract-data-types">Common Operations of Abstract Data Types</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cgi_wsgi.html"
+                        title="previous chapter">Getting Data In</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="decision_trees_forest.html"
+                        title="next chapter">Decision Trees &amp; Random Forests Experiment</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="decision_trees_forest.html" title="Decision Trees &amp; Random Forests Experiment"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cgi_wsgi.html" title="Getting Data In"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

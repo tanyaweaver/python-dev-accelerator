@@ -181,47 +181,77 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="Heap">
-<h1>Heap<a class="headerlink" href="#Heap" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Motivation">
-<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Search</li>
-<li>Sorts in place</li>
-<li>Top N items</li>
+<span class="admonition-heap"></span><span class="admonition-motivation"></span><span class="admonition-attributes"></span><span class="admonition-operations"></span><div class="section" id="heap">
+<h1>Heap<a class="headerlink" href="#heap" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
+<p>A <em>Binary Heap</em> is the first tree-type data structure you&#8217;ll encounter. You create this structure by feeding in an array (Python <code class="docutils literal"><span class="pre">list</span></code>). It is a binary tree with two main properties:</p>
+<ul>
+<li><p class="first">Shape property: The tree is mostly complete with only the deepest level left unfilled. This level is filled with new nodes from left to right.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Heap property: The heap property has two modes dictating relationships between parent and child nodes</dt>
+<dd><ul class="first last simple">
+<li><strong>Max Heap:</strong> Each node is greater than or equal to its child nodes</li>
+<li><strong>Min Heap:</strong> Each node is less than or equal to its child nodes (see the image below)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>Insertion:</strong> When inserting a new node into a Binary Heap, put it at the first open space. Once inserted, shift it into the proper position by comparing it to its parent node. Repeat as necessary.</p>
+<a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/6/60/Binary_heap_indexing.png"><img alt="An example of a Binary Heap. Source: https://en.wikipedia.org/wiki/Heap_(data_structure)" src="https://upload.wikimedia.org/wikipedia/commons/6/60/Binary_heap_indexing.png" style="width: 250px;" /></a>
+</div>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Efficient search</p>
+</li>
+<li><p class="first">Sorts in place</p>
+</li>
+<li><p class="first">Easy to retrieve top N items</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>When might I actually use this?</strong></dt>
+<dd><ul class="first last simple">
+<li>Quick minimum or quick maximum value in a set of values</li>
+<li>(For the future): Djikstra&#8217;s algorithm</li>
+<li>(For the future): Priority Queues</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </div>
-<div class="section" id="Definition">
-<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
-<p>A binary heap is a heap data structure created using an array (or more
-precisely a vector).</p>
-<div class="line-block">
-<div class="line">More formally it is a binary tree with:</div>
-<div class="line">* Shape property -</div>
-<div class="line">The tree is mostly complete with only the deepest level left unfilled.
-This level is filled from left until right.</div>
-</div>
-<ul class="simple">
-<li>Heap property -
-Each node is greater than or equal to its decendant nodes (max) <em>or</em>
-Each node is less than or equal to its descendant nodes (min)</li>
-</ul>
-</div>
-<div class="section" id="Attributes">
-<h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>length, size</li>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="first docutils">
+<dt>Nodes</dt>
+<dd><ul class="first last simple">
 <li>left</li>
 <li>right</li>
 <li>parent</li>
 </ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Heap</dt>
+<dd><ul class="first last simple">
+<li>length, size</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
 </div>
-<div class="section" id="Operations">
-<h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>heapify</li>
-<li>insert (push)</li>
-<li>extract (pop)</li>
+<li>heapify()</li>
+<li>insert()/push()</li>
+<li>extract()/pop()</li>
 </ul>
 </div>
 </div>
@@ -235,10 +265,10 @@ Each node is less than or equal to its descendant nodes (min)</li>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Heap</a><ul>
-<li><a class="reference internal" href="#Motivation">Motivation</a></li>
-<li><a class="reference internal" href="#Definition">Definition</a></li>
-<li><a class="reference internal" href="#Attributes">Attributes</a></li>
-<li><a class="reference internal" href="#Operations">Operations</a></li>
+<li><a class="reference internal" href="#definition">Definition</a></li>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#operations">Operations</a></li>
 </ul>
 </li>
 </ul>

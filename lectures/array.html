@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Array &mdash; Python Dev Accelerator 2.0 documentation</title>
+    <title>Arrays &mdash; Python Dev Accelerator 2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -181,161 +181,119 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="Array">
-<h1>Array<a class="headerlink" href="#Array" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Motivation">
-<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
+<span class="admonition-arrays"></span><span class="admonition-base-definition-and-operations"></span><span class="admonition-motivation"></span><span class="admonition-attributes"></span><span class="admonition-implementation"></span><span class="admonition-implementation-node"></span><span class="admonition-implementation-array"></span><span class="admonition-new-n"></span><span class="admonition-set-a-i-v"></span><span class="admonition-get-a-i"></span><span class="admonition-size-a"></span><span class="admonition-remove-a-i"></span><div class="section" id="arrays">
+<h1>Arrays<a class="headerlink" href="#arrays" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Take advantage of continguous memory to organize fixed width GOBs in
-a list.</li>
-<li>In the most basic version created it cannot be changed (immutable).</li>
-<li>Arrays are used to represent matrices, vectors (tuples).</li>
-<li>Random Access</li>
-<li>In Python arrays are represented as tuples.</li>
+<li>Take advantage of contiguous memory to organize fixed-width groups of bits (data) in a list.</li>
+<li>In the most basic version, it cannot be changed (immutable). A number of memory slots are allocated and filled with data</li>
+<li>Arrays are used to represent matrices, vectors (tuples in Python).</li>
+<li>Random access to data</li>
 </ul>
 </div>
-<div class="section" id="Definition">
-<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
-<p>Ignoring size an array may be seen as an abstract data type with the
-operations new(), set(i, v, A), and get(i, A), where i is a numeric
-index, v is a value, and A is an array</p>
-</div>
-<div class="section" id="Attributes">
-<h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="base-definition-and-operations">
+<h2>Base Definition and Operations<a class="headerlink" href="#base-definition-and-operations" title="Permalink to this headline">¶</a></h2>
+<p>Ignoring size, an array may be seen as a data type with the following operations</p>
 <ul class="simple">
-<li>index</li>
-<li>value</li>
+<li><code class="docutils literal"><span class="pre">new(N)</span></code>: create a new array of length <code class="docutils literal"><span class="pre">N</span></code></li>
+<li><code class="docutils literal"><span class="pre">set(A,</span> <span class="pre">i,</span> <span class="pre">v)</span></code>: in array <code class="docutils literal"><span class="pre">A</span></code> set the value at index <code class="docutils literal"><span class="pre">i</span></code> to <code class="docutils literal"><span class="pre">v</span></code></li>
+<li><code class="docutils literal"><span class="pre">get(A,</span> <span class="pre">i)</span></code>: get the value of the <code class="docutils literal"><span class="pre">i``th</span> <span class="pre">element</span> <span class="pre">of</span> <span class="pre">array</span> <span class="pre">``A</span></code></li>
+<li><code class="docutils literal"><span class="pre">size(A)</span></code>: return the size/length of the array</li>
+<li><code class="docutils literal"><span class="pre">remove(A,</span> <span class="pre">i)</span></code>: removes a value from the array, maintaining array size</li>
+</ul>
+<p>where <code class="docutils literal"><span class="pre">i</span></code> is a numeric index, <code class="docutils literal"><span class="pre">v</span></code> is a value, and <code class="docutils literal"><span class="pre">A</span></code> is an array.</p>
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>index: a position in the array</li>
+<li>value: an element in the array</li>
 </ul>
 </div>
-<div class="section" id="Operations">
-<h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput nblast container">
-<div class="highlight-none"><div class="highlight"><pre>
-In [35]:
-</pre></div>
-</div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
-<span class="c1"># new(10)</span>
-<span class="n">array</span> <span class="o">=</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;j&#39;</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput container">
-<div class="highlight-none"><div class="highlight"><pre>
-In [36]:
-</pre></div>
-</div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
-<span class="c1"># get</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;This is the fifth element: &#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast container">
-<div class="container">
-</div>
-<div class="container">
-<div class="highlight"><pre>
-This is the fifth element:
-101
-e
-</pre></div></div>
-</div>
-<div class="nbinput container">
-<div class="highlight-none"><div class="highlight"><pre>
-In [37]:
-</pre></div>
-</div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
-<span class="c1"># length</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The keeper of individual data&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast container">
-<div class="container">
-</div>
-<div class="container">
-<div class="highlight"><pre>
-10
-</pre></div></div>
-</div>
-<div class="nbinput container">
-<div class="highlight-none"><div class="highlight"><pre>
-In [38]:
-</pre></div>
-</div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
-<span class="c1"># set</span>
-<span class="n">array</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;leeloo&#39;</span>
-<span class="k">print</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast container">
-<div class="container">
-</div>
-<div class="container">
-<div class="highlight"><pre>
-<span class="ansired">---------------------------------------------------------------------------</span>
-<span class="ansired">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansigreen">&lt;ipython-input-38-d5c047e0318d&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
-<span class="ansigreen">      1</span> <span class="ansired"># set</span><span class="ansiyellow"></span><span class="ansiyellow"></span>
-<span class="ansigreen">----&gt; 2</span><span class="ansiyellow"> </span>array<span class="ansiyellow">[</span><span class="ansicyan">4</span><span class="ansiyellow">]</span> <span class="ansiyellow">=</span> <span class="ansiblue">&apos;leeloo&apos;</span><span class="ansiyellow"></span>
-<span class="ansigreen">      3</span> print<span class="ansiyellow">(</span>array<span class="ansiyellow">[</span><span class="ansicyan">4</span><span class="ansiyellow">]</span><span class="ansiyellow">)</span><span class="ansiyellow"></span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Display the data in this node&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
-<span class="ansired">TypeError</span>: &apos;tuple&apos; object does not support item assignment
-</pre></div></div>
-</div>
-<div class="nbinput nblast container">
-<div class="highlight-none"><div class="highlight"><pre>
-In [ ]:
+<span class="k">class</span> <span class="nc">Array</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new Array object, ready for filling!&quot;&quot;&quot;</span>
+        <span class="n">container</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container</span> <span class="o">=</span> <span class="n">container</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the value of the item at the given index&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="s2">&quot;value&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">return</span> <span class="s2">&quot;None&quot;</span>
+
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the item at the given index to the given value&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">new_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_node</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove the value at the given index&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Display the current state of the array&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">([</span><span class="n">node</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">None</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the size of the array&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
-<span class="n">vector</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-<span class="n">vector</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;leelo&#39;</span>
-<span class="k">print</span><span class="p">(</span><span class="n">vector</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+<div class="section" id="new-n">
+<h3>new(<code class="docutils literal"><span class="pre">N</span></code>)<a class="headerlink" href="#new-n" title="Permalink to this headline">¶</a></h3>
+<p>Create a new empty array of length <code class="docutils literal"><span class="pre">N</span></code>.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">my_array</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="gp">In [2]: </span><span class="n">my_array</span>
+<span class="gh">Out[2]: </span><span class="go">[None, None, None, None, None, None, None, None, None, None]</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast container">
-<div class="highlight-none"><div class="highlight"><pre>
-In [ ]:
-</pre></div>
-</div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
-<span class="c1">#add</span>
-<span class="n">vector</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
+<div class="section" id="set-a-i-v">
+<h3>set(<code class="docutils literal"><span class="pre">A,</span> <span class="pre">i,</span> <span class="pre">v</span></code>)<a class="headerlink" href="#set-a-i-v" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [3]: </span><span class="n">my_array</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;kidney beans&quot;</span><span class="p">)</span>
+
+<span class="gp">In [4]: </span><span class="n">my_array</span>
+<span class="gh">Out[4]: </span><span class="go">[None, None, None, None, None, &#39;kidney beans&#39;, None, None, None, None]</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast container">
-<div class="highlight-none"><div class="highlight"><pre>
-In [ ]:
-</pre></div>
-</div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
-<span class="c1">#insert</span>
-<span class="n">vector</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;life, love, and art.&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
+<div class="section" id="get-a-i">
+<h3>get(<code class="docutils literal"><span class="pre">A,</span> <span class="pre">i</span></code>)<a class="headerlink" href="#get-a-i" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="n">my_array</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gh">Out[5]: </span><span class="go">&#39;kidney beans&#39;</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast container">
-<div class="highlight-none"><div class="highlight"><pre>
-In [ ]:
+<div class="section" id="size-a">
+<h3>size(<code class="docutils literal"><span class="pre">A</span></code>)<a class="headerlink" href="#size-a" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [6]: </span><span class="nb">len</span><span class="p">(</span><span class="n">my_array</span><span class="p">)</span>
+<span class="gh">Out[6]: </span><span class="go">10</span>
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
-<span class="c1">#remove</span>
-<span class="n">vector</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;leelo&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
+</div>
+<div class="section" id="remove-a-i">
+<h3>remove(<code class="docutils literal"><span class="pre">A,</span> <span class="pre">i</span></code>)<a class="headerlink" href="#remove-a-i" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [7]: </span><span class="n">my_array</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="gp">In [8]: </span><span class="n">my_array</span>
+<span class="gh">Out[8]: </span><span class="go">[None, None, None, None, None, None, None, None, None, None]</span>
 </pre></div>
 </div>
 </div>
@@ -350,11 +308,18 @@ In [ ]:
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Array</a><ul>
-<li><a class="reference internal" href="#Motivation">Motivation</a></li>
-<li><a class="reference internal" href="#Definition">Definition</a></li>
-<li><a class="reference internal" href="#Attributes">Attributes</a></li>
-<li><a class="reference internal" href="#Operations">Operations</a></li>
+<li><a class="reference internal" href="#">Arrays</a><ul>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#base-definition-and-operations">Base Definition and Operations</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#implementation">Implementation</a><ul>
+<li><a class="reference internal" href="#new-n">new(<code class="docutils literal"><span class="pre">N</span></code>)</a></li>
+<li><a class="reference internal" href="#set-a-i-v">set(<code class="docutils literal"><span class="pre">A,</span> <span class="pre">i,</span> <span class="pre">v</span></code>)</a></li>
+<li><a class="reference internal" href="#get-a-i">get(<code class="docutils literal"><span class="pre">A,</span> <span class="pre">i</span></code>)</a></li>
+<li><a class="reference internal" href="#size-a">size(<code class="docutils literal"><span class="pre">A</span></code>)</a></li>
+<li><a class="reference internal" href="#remove-a-i">remove(<code class="docutils literal"><span class="pre">A,</span> <span class="pre">i</span></code>)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

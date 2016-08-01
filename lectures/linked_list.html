@@ -27,7 +27,7 @@
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
     <link rel="up" title="Monday" href="../schedule/week02/mon.html" />
     <link rel="next" title="Introduction To Python: Part 5" href="intro_to_python_5_classes.html" />
-    <link rel="prev" title="Array" href="array.html" />
+    <link rel="prev" title="Arrays" href="array.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -55,7 +55,7 @@
           <a href="intro_to_python_5_classes.html" title="Introduction To Python: Part 5"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="array.html" title="Array"
+          <a href="array.html" title="Arrays"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../schedule/week02/mon.html" accesskey="U">Monday</a> &raquo;</li> 
@@ -181,44 +181,69 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="Linked-List">
-<h1>Linked List<a class="headerlink" href="#Linked-List" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Motivation">
-<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
-<p>Sometimes the size of the list is not known in advance.</p>
-<p>Insertion in the middle of an array is expensive.</p>
-<p>Linked structures store items linearly and allow quick inserts.
-Searching for an element becomes, more expensive.</p>
-</div>
-<div class="section" id="Definition">
-<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
+<span class="admonition-linked-list"></span><span class="admonition-definition"></span><span class="admonition-motivation"></span><span class="admonition-attributes"></span><span class="admonition-operations"></span><div class="section" id="linked-list">
+<h1>Linked List<a class="headerlink" href="#linked-list" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>A linked list consists of nodes each of which contains data and one
-pointer to the next node.</li>
-<li>Self-referential (naturally recursive)</li>
-<li>tail: null, dummy, head</li>
+<li>A <em>Linked List</em> consists of <em>Nodes</em>, each of which contains some data and a pointer to the next node.</li>
+<li>Self-referential (naturally recusive)</li>
+</ul>
+<a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Singly-linked-list.svg/408px-Singly-linked-list.svg.png"><img alt="A simple singly-linked list. Source: https://en.wikipedia.org/wiki/Linked_list" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Singly-linked-list.svg/408px-Singly-linked-list.svg.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Arrays are great for holding data, but you don&#8217;t always know the size of the array you need in advance</li>
+<li>Insertion in the middle of an array is expensive</li>
+<li>Linked structures store items linearly and allow quick inserts, though searching for an element becomes expensive</li>
+<li>Linked structure also allows for easy removal operations</li>
+<li>Reduce access time and expand in real time without memory overhead</li>
+<li><strong>When might I actually use this?</strong> a web crawler cacheing links and the next link from that link</li>
 </ul>
 </div>
-<div class="section" id="Attributes">
-<h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>node</li>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="first docutils">
+<dt>Nodes:</dt>
+<dd><ul class="first last simple">
+<li>data</li>
+<li>next</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">*</span> <span class="n">data</span>
-</pre></div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Linked List:</dt>
+<dd><ul class="first last simple">
+<li>head</li>
+<li>tail</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">*</span> <span class="nb">next</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="Operations">
-<h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>insert(value, next=None)</li>
-<li>remove(node)</li>
-<li>search(value)</li>
-<li>display()</li>
-<li>pop()</li>
+<div class="section" id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">insert(value, next=None)</p>
+</li>
+<li><p class="first">remove(value)</p>
+</li>
+<li><p class="first">search(value)</p>
+</li>
+<li><p class="first">display()</p>
+</li>
+<li><dl class="first docutils">
+<dt>pop()</dt>
+<dd><ul class="first last simple">
+<li>note: pop() is a remove-and-return operation</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </div>
 </div>
@@ -232,17 +257,17 @@ pointer to the next node.</li>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Linked List</a><ul>
-<li><a class="reference internal" href="#Motivation">Motivation</a></li>
-<li><a class="reference internal" href="#Definition">Definition</a></li>
-<li><a class="reference internal" href="#Attributes">Attributes</a></li>
-<li><a class="reference internal" href="#Operations">Operations</a></li>
+<li><a class="reference internal" href="#definition">Definition</a></li>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#operations">Operations</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="array.html"
-                        title="previous chapter">Array</a></p>
+                        title="previous chapter">Arrays</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="intro_to_python_5_classes.html"
                         title="next chapter">Introduction To Python: Part 5</a></p>
@@ -273,7 +298,7 @@ pointer to the next node.</li>
           <a href="intro_to_python_5_classes.html" title="Introduction To Python: Part 5"
              >next</a> |</li>
         <li class="right" >
-          <a href="array.html" title="Array"
+          <a href="array.html" title="Arrays"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../schedule/week02/mon.html" >Monday</a> &raquo;</li> 

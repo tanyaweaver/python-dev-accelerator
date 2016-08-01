@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Entrance Exam Guidelines for Code 401: Advanced Software Development in Python &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="entrance-exam-guidelines-for-code-401-advanced-software-development-in-python">
+<span id="entrance-exam-guidelines-for-code-401-advanced-software-development-in-python"></span><h1>Entrance Exam Guidelines for Code 401: Advanced Software Development in Python<a class="headerlink" href="#entrance-exam-guidelines-for-code-401-advanced-software-development-in-python" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="html-css-proficiency">
+<span id="html-css-proficiency"></span><h2>HTML/CSS Proficiency<a class="headerlink" href="#html-css-proficiency" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference external" href="401test-in/layouts">layouts</a> you will find PDFs for three pages of a site. Use your skills in HTML and CSS to build this site, with appropriate links between pages. Read thoroughly through the guidelines below. You may use the internet for help, however <strong>any code that is not yours should be noted in your README</strong>. Use this project as an opportunity to display your knowledge and abilities with Git by employing best practices in version control. Commit frequently with meaningful commit messages.</p>
+<div class="section" id="fonts-and-colors">
+<span id="fonts-and-colors"></span><h3>Fonts and Colors<a class="headerlink" href="#fonts-and-colors" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="fonts">
+<span id="fonts"></span><h4>Fonts<a class="headerlink" href="#fonts" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Menu</strong>: Droid Sans, Bold (Note: this is not one of the default fonts)</li>
+<li><strong>Body</strong>: Helvetica, Light</li>
+<li><strong>Button Text</strong>: Helvetica, Bold</li>
+</ul>
+</div>
+<div class="section" id="colors">
+<span id="colors"></span><h4>Colors<a class="headerlink" href="#colors" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Menu Text</strong>: #878787</li>
+<li><strong>Menu Text Selected</strong>: #FFFFFF</li>
+<li><strong>Menu Top Bar</strong>: #000000</li>
+<li><strong>Menu Top Bar Selected</strong>: #E00000</li>
+<li><strong>Menu Background</strong>: #2D2D2D</li>
+<li><strong>&#8220;Slider&#8221; circles</strong>: #FFFFFF</li>
+<li><strong>&#8220;Slider&#8221; text box</strong>: #3A3A3A at 70% opacity</li>
+<li><strong>Body Background</strong>: #EAEAEA</li>
+<li><strong>Body Text</strong>: #FFFFFF when white, #000000 when black</li>
+<li><strong>Body Text Box</strong>: #3A3A3A</li>
+<li><strong>Buttons</strong>: #E00000</li>
+<li><strong>Button Text</strong>: #FFFFFF</li>
+<li><strong>Footer</strong>: #2D2D2D</li>
+</ul>
+</div>
+</div>
+<div class="section" id="guidelines">
+<span id="guidelines"></span><h3>Guidelines<a class="headerlink" href="#guidelines" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>YOU DO NOT NEED TO USE ANY JAVASCRIPT FOR THIS PROJECT.</strong> It is not at all required. If you decide to use it, use it wisely.</li>
+<li>You can replace the cat images with whatever you want, as long as it&#8217;s tasteful. Use good judgement. Placeholder images are fine. The current images came from <a class="reference external" href="http://www.placekitten.com">placekitten.com</a></li>
+<li>You can replace the page text with whatever you want, however keep the subject matter throughout the site self-consistent, and again keep it tasteful.</li>
+<li>Any links that would lead to external pages (e.g. social media sites) should just remain as either dead links (so, link to &#8220;#&#8221;) or simply to the homepages of those sites (e.g. Facebook icon links to facebook.com). <strong>There should be no other external links.</strong></li>
+<li>You don&#8217;t have to use the same exact social media icons used here, but they should be the same brands</li>
+<li>The Contact form shouldn&#8217;t actually submit data to anything</li>
+<li>Use standard conventions for indenting nested tags and structuring your CSS. Keep it clean.</li>
+</ul>
+</div>
+<div class="section" id="submitting-your-work">
+<span id="submitting-your-work"></span><h3>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>You will deploy your site to <a class="reference external" href="https://www.heroku.com/">Heroku</a>. This may require learning an additional toolset for deployment. The documentation is well written, and should provide enough guidance for you to learn and deploy without any prior knowledge of the tool.</li>
+<li>You will create a public GitHub repository for your work and submit the link to that repository</li>
+<li>In the README of that repository, you&#8217;ll include the link to the site that you&#8217;ve built. Use your README as an opportunity to document your submission, utilizing markdown for basic formatting.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="python-proficiency">
+<span id="python-proficiency"></span><h2>Python Proficiency<a class="headerlink" href="#python-proficiency" title="Permalink to this headline">¶</a></h2>
+<p>The guidelines for this task can be found here: <a class="reference internal" href="python_pretest.html"><em>Build a Python Module</em></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Entrance Exam Guidelines for Code 401: Advanced Software Development in Python</a><ul>
+<li><a class="reference internal" href="#html-css-proficiency">HTML/CSS Proficiency</a><ul>
+<li><a class="reference internal" href="#fonts-and-colors">Fonts and Colors</a><ul>
+<li><a class="reference internal" href="#fonts">Fonts</a></li>
+<li><a class="reference internal" href="#colors">Colors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#guidelines">Guidelines</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python-proficiency">Python Proficiency</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

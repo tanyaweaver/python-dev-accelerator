@@ -181,31 +181,42 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="Deque">
-<h1>Deque<a class="headerlink" href="#Deque" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Motivation">
-<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Sequential</li>
-<li>Limited Access</li>
+<span class="admonition-deque"></span><span class="admonition-motivation"></span><span class="admonition-attributes"></span><span class="admonition-operations"></span><div class="section" id="deque">
+<h1>Deque<a class="headerlink" href="#deque" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
+<p>A <em>Deque</em> is a Queue that works at both ends. Data can be inserted at the head or tail, and retrieved from the head or the tail.</p>
+<a class="reference internal image-reference" href="http://www.codeproject.com/KB/recipes/669131/deque.png"><img alt="An example of a Deque. Source: http://www.codeproject.com" src="http://www.codeproject.com/KB/recipes/669131/deque.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Sequential</p>
+</li>
+<li><p class="first">Limited access</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>When might I actually use this?</strong></dt>
+<dd><ul class="first last simple">
+<li>Tracking the running minimum and maximum run times for code being tested</li>
+<li>Modeling how passengers board and deboard an airplane with two entrances/exits</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </div>
-<div class="section" id="Definition">
-<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
-<p>A deque is a data structure where elements are inserted into and removed
-from a container at the head (first) or the tail(last)</p>
-</div>
-<div class="section" id="Attributes">
-<h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>first</li>
-<li>last</li>
-<li>size</li>
+<li>head</li>
+<li>tail</li>
 <li>is_empty</li>
+<li>size</li>
 </ul>
 </div>
-<div class="section" id="Operations">
-<h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>add_first()</li>
 <li>add_last()</li>
@@ -225,10 +236,10 @@ from a container at the head (first) or the tail(last)</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Deque</a><ul>
-<li><a class="reference internal" href="#Motivation">Motivation</a></li>
-<li><a class="reference internal" href="#Definition">Definition</a></li>
-<li><a class="reference internal" href="#Attributes">Attributes</a></li>
-<li><a class="reference internal" href="#Operations">Operations</a></li>
+<li><a class="reference internal" href="#definition">Definition</a></li>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#operations">Operations</a></li>
 </ul>
 </li>
 </ul>

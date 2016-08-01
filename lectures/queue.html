@@ -181,31 +181,44 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="Queue">
-<h1>Queue<a class="headerlink" href="#Queue" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Motivation">
-<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Sequential</li>
-<li>Limited Access</li>
-<li>F.I.F.O.</li>
+<span class="admonition-queue"></span><span class="admonition-motivation"></span><span class="admonition-attributes"></span><span class="admonition-operations"></span><div class="section" id="queue">
+<h1>Queue<a class="headerlink" href="#queue" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
+<p>Unlike a <strong>Stack</strong>, a <em>Queue</em> is a data structure that inserts elements at the tail (enqueue) and accesses/removes elements at the head (dequeue).</p>
+<a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Data_Queue.svg/405px-Data_Queue.svg.png"><img alt="An example of a data Queue. Source: https://en.wikipedia.org/wiki/Queue_(abstract_data_type)" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Data_Queue.svg/405px-Data_Queue.svg.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Sequential</p>
+</li>
+<li><p class="first">Limited access</p>
+</li>
+<li><p class="first">First-In First-Out (FIFO) access</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>When might I actually use this?</strong></dt>
+<dd><ul class="first last simple">
+<li>Building a task manager</li>
+<li>Modeling traffic patterns</li>
+<li>Printing a document (or several documents) in proper order</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </div>
-<div class="section" id="Definition">
-<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
-<p>A queue is a data structure where elements are inserted into and removed
-from a container using the first-in-first-out principle.</p>
-</div>
-<div class="section" id="Attributes">
-<h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>head</li>
-<li>size</li>
 <li>is_empty</li>
+<li>size</li>
 </ul>
 </div>
-<div class="section" id="Operations">
-<h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>enqueue()</li>
 <li>dequeue()</li>
@@ -223,10 +236,10 @@ from a container using the first-in-first-out principle.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Queue</a><ul>
-<li><a class="reference internal" href="#Motivation">Motivation</a></li>
-<li><a class="reference internal" href="#Definition">Definition</a></li>
-<li><a class="reference internal" href="#Attributes">Attributes</a></li>
-<li><a class="reference internal" href="#Operations">Operations</a></li>
+<li><a class="reference internal" href="#definition">Definition</a></li>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#operations">Operations</a></li>
 </ul>
 </li>
 </ul>

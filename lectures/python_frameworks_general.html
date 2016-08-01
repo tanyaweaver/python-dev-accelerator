@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python Web Frameworks in the Wild &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="401 Python: Lecture Notes" href="index.html" />
+    <link rel="next" title="Distributing Python Packages" href="python_packages.html" />
+    <link rel="prev" title="Pyramid Routes, Views, and Templates" href="pyramid_routes_views_templates.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="python_packages.html" title="Distributing Python Packages"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyramid_routes_views_templates.html" title="Pyramid Routes, Views, and Templates"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Lecture Notes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="python-web-frameworks-in-the-wild">
+<h1>Python Web Frameworks in the Wild<a class="headerlink" href="#python-web-frameworks-in-the-wild" title="Permalink to this headline">¶</a></h1>
+<p>Source: <a class="reference external" href="https://wiki.python.org/moin/WebFrameworks">Python Web Frameworks</a></p>
+<div class="section" id="frameworks-we-teach">
+<h2>Frameworks We Teach<a class="headerlink" href="#frameworks-we-teach" title="Permalink to this headline">¶</a></h2>
+<p>We will be installing and using the following two web frameworks because without them, we&#8217;d have to do a lot of stuff ourselves that we may not want to do (or may not be able to do well). Frameworks give you a set of tools to deal with incoming requests, export responses to those requests, interact with a database, create programmable templates for creating web front-ends, etc.</p>
+<div class="section" id="id1">
+<h3><a class="reference external" href="https://trypyramid.com/">Pyramid</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Pyramid makes it extremely easy to write web applications, whether small or large. Unlike larger frameworks, Pyramid makes fewer decisions for you and demands less of you. It focuses on producing a simple, finished product regardless of the size.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.quora.com">Quora</a></li>
+<li><a class="reference external" href="https://www.hypothes.is">Hypothesis</a></li>
+<li><a class="reference external" href="https://www.majerti.fr/fr/">Majerti</a></li>
+<li><a class="reference external" href="http://itcase.pro/">ITCase</a></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3><a class="reference external" href="https://www.djangoproject.com/">Django</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Django is arguably the most popular Python Web framework, encouraging rapid development and clean design whether your site is small or a massive sprawling behemoth. Django has more moving parts than Pyramid, but is also much more easily customized (see <a class="reference external" href="https://www.djangopackages.com/">django packages</a>) in a wider variety of ways. You can use Django to make a full site if you want, or to encapsulate some smaller piece of functionality that you want to use across multiple projects.</p>
+<p>From the Top 10 Sites Built with Django <a class="reference external" href="https://www.linkedin.com/pulse/top-10-sites-built-django-framework-vladimir-bogdanov">Article</a></p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.disqus.com">Disqus</a></li>
+<li><a class="reference external" href="https://www.nasa.gov/">NASA</a></li>
+<li><a class="reference external" href="https://www.pinterest.com/">Pinterest</a></li>
+<li><a class="reference external" href="https://www.instagram.com/">Instagram</a></li>
+<li><a class="reference external" href="https://bitbucket.org/">BitBucket</a></li>
+<li><a class="reference external" href="http://mahalo.com/">Mahalo</a></li>
+<li><a class="reference external" href="https://support.mozilla.org/en-US/">Mozilla Support</a></li>
+<li><a class="reference external" href="http://www.theonion.com/">The Onion</a></li>
+<li><a class="reference external" href="https://www.washingtonpost.com/">The Washington Post</a></li>
+<li><a class="reference external" href="https://www.eventbrite.com/">Eventbrite</a></li>
+</ul>
+<p>For a fuller listing of sites using Django, go <a class="reference external" href="https://www.djangosites.org/">here</a></p>
+</div>
+</div>
+<div class="section" id="the-wider-world-of-python-frameworks">
+<h2>The Wider World of Python Frameworks<a class="headerlink" href="#the-wider-world-of-python-frameworks" title="Permalink to this headline">¶</a></h2>
+<p>Here are some other Python Frameworks and some notable sites built either entirely by or using parts of those frameworks.</p>
+<div class="section" id="id3">
+<h3><a class="reference external" href="http://turbogears.org/whos-using.html">TurboGears</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="http://sourceforge.net/p/allura">SourceForge</a></li>
+<li>the <a class="reference external" href="https://admin.fedoraproject.org/community/">Fedora distribution</a> of Linux</li>
+<li><a class="reference external" href="http://1000corks.com/">1000 Corks</a> wine comparison site</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3><a class="reference external" href="http://web2py.com/poweredby">Web2Py</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="https://outreach.scidac.gov/scidac-overview/">US Department of Energy</a></li>
+<li><a class="reference external" href="http://www.northsidechurchrva.org/">The Northside Church of Richmond Virginia</a></li>
+<li><a class="reference external" href="http://www.starmakerstudios.com/">Starmaker Studios</a></li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h3><a class="reference external" href="http://www.cherrypy.org/">CherryPy</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="https://www.netflix.com">Netflix</a></li>
+<li><a class="reference external" href="https://www.hulu.com">Hulu</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python Web Frameworks in the Wild</a><ul>
+<li><a class="reference internal" href="#frameworks-we-teach">Frameworks We Teach</a><ul>
+<li><a class="reference internal" href="#id1">Pyramid</a></li>
+<li><a class="reference internal" href="#id2">Django</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-wider-world-of-python-frameworks">The Wider World of Python Frameworks</a><ul>
+<li><a class="reference internal" href="#id3">TurboGears</a></li>
+<li><a class="reference internal" href="#id4">Web2Py</a></li>
+<li><a class="reference internal" href="#id5">CherryPy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyramid_routes_views_templates.html"
+                        title="previous chapter">Pyramid Routes, Views, and Templates</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="python_packages.html"
+                        title="next chapter">Distributing Python Packages</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="python_packages.html" title="Distributing Python Packages"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyramid_routes_views_templates.html" title="Pyramid Routes, Views, and Templates"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Lecture Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python Learning Journal: Step 1 &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
+    <link rel="next" title="Python Learning Journal: Step 2" href="pyramid_lj_2.html" />
+    <link rel="prev" title="Web Protocols Readings" href="protocols.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyramid_lj_2.html" title="Python Learning Journal: Step 2"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="protocols.html" title="Web Protocols Readings"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="python-learning-journal-step-1">
+<h1>Python Learning Journal: Step 1<a class="headerlink" href="#python-learning-journal-step-1" title="Permalink to this headline">¶</a></h1>
+<p>You’ve been creating your learning journal entries so far using a shared journal I have created for you. It’s time now to make your own version.</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>If you do not already have one, create a <code class="docutils literal"><span class="pre">learning-journal</span></code> repository in GitHub. Add the application skeleton created in class to this repository. Ensure that the repository also contains a good Python .gitignore file and an appropriate OSS license.</p>
+<p>Once the basics are in place, create a new branch (<code class="docutils literal"><span class="pre">step1</span></code>) for today&#8217;s work. Do your work on this branch.</p>
+<p>Using what you learned today, both in class and in your readings, accomplish the following tasks for your learning journal:</p>
+<ul>
+<li><p class="first">Move your HTML mockups into the <code class="docutils literal"><span class="pre">templates</span></code> directory and your CSS stylesheet into the <code class="docutils literal"><span class="pre">static</span></code> directory.</p>
+</li>
+<li><p class="first">Write today&#8217;s learning journal entry in pure HTML and stick it in your <code class="docutils literal"><span class="pre">templates</span></code> directory, following the same style rules as the mockup for your HTML detail page.</p>
+</li>
+<li><p class="first">Remove the existing views from your <code class="docutils literal"><span class="pre">views.py</span></code> file.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Create the following view callables:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">list</span></code> view: for the list of journal entries</li>
+<li><code class="docutils literal"><span class="pre">detail</span></code> view: for a single journal entry</li>
+<li><code class="docutils literal"><span class="pre">create</span></code> view: for creating a new view</li>
+<li><code class="docutils literal"><span class="pre">update</span></code> view: for updating an existing view</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Connect each of the above views to the following routes, with descriptive but concise route names:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">/</span></code></li>
+<li><code class="docutils literal"><span class="pre">/journal/{id:\d+}</span></code></li>
+<li><code class="docutils literal"><span class="pre">/journal/new-entry</span></code></li>
+<li><code class="docutils literal"><span class="pre">/journal/{id:\d+}/edit-entry</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Your <code class="docutils literal"><span class="pre">list</span></code> view will serve up your home page mockup, with today&#8217;s journal entry being the top on. The title for each entry on the list must be a link.</p>
+</li>
+<li><p class="first">Your <code class="docutils literal"><span class="pre">detail</span></code> view will serve up today&#8217;s journal entry.</p>
+</li>
+<li><p class="first">Your <code class="docutils literal"><span class="pre">create</span></code> view will serve up the mockup for creating a new entry (should be a form page).</p>
+</li>
+<li><p class="first">Your <code class="docutils literal"><span class="pre">update</span></code> view will serve up the mockup for editing entries.</p>
+</li>
+<li><p class="first">Ensure that each page has a &#8220;Home&#8221; button visible that returns the viewer to the home page, and a &#8220;New Entry&#8221; button that allows the user to create new entries.</p>
+</li>
+</ul>
+<p>You are working with a partner to complete this application.</p>
+<p>When all of the above work is completed, deploy your site to Heroku. Make sure to include the URL to your Heroku deployment in your <code class="docutils literal"><span class="pre">README.md</span></code> file. Also make sure that your <code class="docutils literal"><span class="pre">README.md</span></code> documents the routes and views used and that any function you write is appropriately documented.</p>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>When your work is done and your site is deployed, push all your work to your GitHub repo. Open a new pull request from the <code class="docutils literal"><span class="pre">step1</span></code> branch to <code class="docutils literal"><span class="pre">master</span></code>. Submit the URL of that pull request to Canvas.</p>
+<p>Finally, merge your pull request to prepare for the work in <a class="reference external" href="pyramid_lj_2.html">Python Learning Journal: Step 2</a></p>
+<p>Use the comment feature in canvas to submit the following:</p>
+<ul class="simple">
+<li>At least one well-formed question about the work you did for this assignment</li>
+<li>At least one comment on what went well</li>
+<li>At least one comment on what was particularly difficult or challenging</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python Learning Journal: Step 1</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your work</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="protocols.html"
+                        title="previous chapter">Web Protocols Readings</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyramid_lj_2.html"
+                        title="next chapter">Python Learning Journal: Step 2</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyramid_lj_2.html" title="Python Learning Journal: Step 2"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="protocols.html" title="Web Protocols Readings"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>
