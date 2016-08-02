@@ -15,9 +15,9 @@ In this assignment you will build an echo server using Python sockets.
 Tasks
 =====
 
-Create a new repository called 'http-server' in GitHub for this work.
-Make sure it contains an appropriate license and .gitignore file.
-Make a branch "echo" from master to do your work for this assignment.
+Create a new repository called ``http-server`` in GitHub for this work.
+Make sure it contains an appropriate license and ``.gitignore`` file.
+Make a branch ``echo`` from ``master`` to do your work for this assignment.
 
 Create two new python modules in your repository, ``client.py`` and ``server.py``.
 In addition, create a ``test_servers.py`` file to contain your tests.
@@ -63,7 +63,7 @@ Testing
 
 The tests you write for this work may be considered *functional* tests, as opposed to *unit* tests.
 They will test the system, rather than either individual function.
-Your tests should use the client function from ``client.py`` to send test messages and return the replies sent by the server.
+Your tests should use the ``client`` function from ``client.py`` to send test messages and return the replies sent by the server.
 They should assert that the message sent is identical to the reply received.
 
 The following conditions should be tested:
@@ -76,11 +76,11 @@ The following conditions should be tested:
 Submitting Your Work
 ====================
 
-When you are finished implementing your server and client and all your tests are passing both in Python 2 and Python 3, push your changes to the *echo* branch to github.
-Open a pull request from the *echo* branch to your master.
+When you are finished implementing your server and client and all your tests are passing both in Python 2 and Python 3, push your changes to the ``echo`` branch to github.
+Open a pull request from the ``echo`` branch to your master.
 Paste the URL of this pull request as your submission.
 
 As with every primary submission, use the Comments feature for this submission
 to add questions, comments and reflections on the work you have done so far.
 
-Once you have submitted your assignment, you may merge your *echo* branch back to master in preparation for the next step in this assignment series.
+Once you have submitted your assignment, you may merge your ``echo`` branch back to master in preparation for the next step in this assignment series.
