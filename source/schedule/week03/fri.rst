@@ -27,6 +27,7 @@ Assignments
 ===========
 
 * :doc:`/assignments/project_05_wireframe_begin`
+* :doc:`/assignments/kata_sort_cards`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/blog_post_outline`
 .. * :doc:`/assignments/learning_journal_4`
