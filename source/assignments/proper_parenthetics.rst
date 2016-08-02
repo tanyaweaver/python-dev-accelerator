@@ -13,8 +13,9 @@ Interview Challenge: Proper Parenthetics
 My first programming language was Lisp.  If you're at all familiar with it,
 you'll probably know that in Lisp there are a lot of parentheses.
 
-Your assignment is to build a quick Python function that takes a unicode string
-(text) as input and returns one of three possible values:
+Your assignment is to build a quick Python function **incorporating one of this 
+week's data structures** that takes a unicode string (text) as input and returns 
+one of three possible values:
 
 * Return 1 if the string is "open" (there are open parens that are not closed)
 * Return 0 if the string is "balanced" (there are an equal number of open and
