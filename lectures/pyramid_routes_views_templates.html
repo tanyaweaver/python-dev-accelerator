@@ -515,30 +515,29 @@ In <span class="o">[</span>1<span class="o">]</span>:
 <h3>Our Templates<a class="headerlink" href="#our-templates" title="Permalink to this headline">¶</a></h3>
 <p>There&#8217;s more that Jinja2 templates can do, but it will be easier to introduce you to that in the context of a working template. So let&#8217;s make some.</p>
 <p>We have a Pyramid <code class="docutils literal"><span class="pre">view</span></code> that returns a single entry. Let&#8217;s create a template to show it. In <code class="docutils literal"><span class="pre">learning_journal/templates/</span></code> create a new file <code class="docutils literal"><span class="pre">detail.jinja2</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">article</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">entry</span><span class="o">.</span><span class="n">title</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">hr</span><span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">entry</span><span class="o">.</span><span class="n">body</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">hr</span><span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Created</span> <span class="o">&lt;</span><span class="n">strong</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;{{ entry.created }}&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="n">entry</span><span class="o">.</span><span class="n">created</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">strong</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="n">article</span><span class="o">&gt;</span>
+<div class="highlight-html"><div class="highlight"><pre><span class="p">&lt;</span><span class="nt">article</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ entry.title }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">hr</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ entry.body }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">hr</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Created <span class="p">&lt;</span><span class="nt">strong</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;{{ entry.created }}&quot;</span><span class="p">&gt;</span>{{entry.created}}<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">article</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>Then wire it up to the detail view in <code class="docutils literal"><span class="pre">learning_journal/views/default.py</span></code>:</p>
-<blockquote>
-<div><p># views.py
-&#64;view_config(route_name=&#8217;detail&#8217;, renderer=&#8217;../templates/detail.jinja2&#8217;)
-def view(request):</p>
-<blockquote>
-<div>#...</div></blockquote>
-</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># views.py</span>
+<span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s1">&#39;detail&#39;</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s1">&#39;../templates/detail.jinja2&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1">#...</span>
+</pre></div>
+</div>
 <p>Now we should be able to see some rendered HTML for our journal entry details. Start up your server:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ pserve development.ini
 Starting server in PID 53587.
 serving on http://127.0.0.1:6543
 </pre></div>
 </div>
-<p>Then try viewing an individual journal entry: <a href="#id2"><span class="problematic" id="id3">`http://localhost:6543/journal/1`_</span></a></p>
+<p>Then try viewing an individual journal entry: <a class="reference external" href="http://localhost:6543/journal/1">http://localhost:6543/journal/1</a></p>
 <p>Let&#8217;s now create a template such that our index shows a list of journal entries. In <code class="docutils literal"><span class="pre">learning_journal/templates/</span></code> create a new file <code class="docutils literal"><span class="pre">list.jinja2</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">entries</span> <span class="o">%</span><span class="p">}</span>
 <span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;</span><span class="n">Journal</span> <span class="n">Entries</span><span class="o">&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
@@ -582,32 +581,32 @@ serving on http://127.0.0.1:6543
 <p>These views are reasonable, if quite plain. It&#8217;d be nice to put them into something that looks more like a website.</p>
 <p>Jinja2 allows you to combine templates using something called <a class="reference external" href="http://jinja.pocoo.org/docs/dev/templates/#template-inheritance">template inheritance</a>. You can create a basic page structure, and then <em>inherit</em> that structure in other templates.</p>
 <p>Let&#8217;s make a template for the basic outer structure of our pages. The following code will serve as our page template, and will go into a file called <code class="docutils literal"><span class="pre">layout.jinja2</span></code>. Save that file to your templates directory. Here&#8217;s the code:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-  &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
-    &lt;title&gt;Python Learning Journal&lt;/title&gt;
-    &lt;!--[if lt IE 9]&gt;&lt;script src=&quot;http://html5shiv.googlecode.com/svn/trunk/html5.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;header&gt;
-      &lt;nav&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;{{ request.route_url(&#39;home&#39;) }}&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/nav&gt;
-    &lt;/header&gt;
-    &lt;main&gt;
-      &lt;h1&gt;My Python Journal&lt;/h1&gt;
-      &lt;section id=&quot;content&quot;&gt;{% block body %}{% endblock %}&lt;/section&gt;
-    &lt;/main&gt;
-    &lt;footer&gt;&lt;p&gt;Created in the Code Fellows 401 Python Program&lt;/p&gt;&lt;/footer&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
+<div class="highlight-html"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Python Learning Journal<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="c">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;http://html5shiv.googlecode.com/svn/trunk/html5.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">nav</span><span class="p">&gt;&lt;</span><span class="nt">ul</span><span class="p">&gt;&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ request.route_url(&#39;home&#39;) }}&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;&lt;/</span><span class="nt">ul</span><span class="p">&gt;&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>My Python Journal<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">section</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;content&quot;</span><span class="p">&gt;</span>{% block body %}{% endblock %}<span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Created in the Code Fellows 401 Python Program<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>The important part here is the <code class="docutils literal"><span class="pre">{%</span> <span class="pre">block</span> <span class="pre">body</span> <span class="pre">%}...{%</span> <span class="pre">endblock</span> <span class="pre">%}</span></code> expression. This is a template <strong>block</strong> and it is a kind of placeholder. Other templates can inherit from this one, and fill that block with additional HTML.</p>
 <p>Let&#8217;s update our detail and list templates:</p>
-<div class="highlight-python"><div class="highlight"><pre>{% extends &quot;layout.jinja2&quot; %}
-{% block body %}
-&lt;!-- everything else that was already here goes here --&gt;
-{% endblock %}
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;layout.jinja2&quot;</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span>
+<span class="c">&lt;!-- everything else that was already here goes here --&gt;</span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
 </pre></div>
 </div>
 <p>Start the server so we can see the result.</p>
@@ -645,10 +644,10 @@ serving on http://127.0.0.1:6543
 </ul>
 <p>Once you have a static view configured, you can use assets in that location in templates. The <em>request</em> object in Pyramid provides a <code class="docutils literal"><span class="pre">static_path</span></code> method that will render an appropriate asset path for us.</p>
 <p>Add the following to our <code class="docutils literal"><span class="pre">layout.jinja2</span></code> template:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;head&gt;
-  &lt;!-- ... --&gt;
-  &lt;link href=&quot;{{ request.static_path(&#39;learning_journal:static/style.css&#39;) }}&quot; rel=&quot;stylesheet&quot;&gt;
-&lt;/head&gt;
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="c">&lt;!-- ... --&gt;</span>
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">request.static_path</span><span class="o">(</span><span class="s1">&#39;learning_journal:static/style.css&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>The <strong>one required argument</strong> to <code class="docutils literal"><span class="pre">request.static_path</span></code> is a <em>path</em> to an asset. Note that because any package <em>might</em> define a static view, we have to specify which package we want to look in. That&#8217;s why we have <code class="docutils literal"><span class="pre">learning_journal:static/style.css</span></code> in our call.</p>
@@ -670,7 +669,7 @@ serving on http://127.0.0.1:6543
 </pre></div>
 </div>
 <p>Then, in the root directory for this project, re-install our package to download and install the new dependency.</p>
-<div class="highlight-bash-3"><div class="highlight"><pre>(pyramid_lj) bash-3.2$ pip install -e .
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ pip install -e .
 </pre></div>
 </div>
 </div>
@@ -759,16 +758,16 @@ serving on http://127.0.0.1:6543
 </div>
 <p>Now restart your server and look at the results, at <a class="reference external" href="http://localhost:6543/journal/create">http://localhost:6543/journal/create</a></p>
 <p>Great! Now you can add new entries to your journal. But in order to do so, you have to hand-enter the URL. You should add a new link in the UI somewhere that helps you get there more easily. Add the following to <code class="docutils literal"><span class="pre">list.jinja2</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre>{% extends &quot;layout.jinja2&quot; %}
-{% block body %}
-{% if entries %}
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;layout.jinja2&quot;</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">entries</span> <span class="cp">%}</span>
 ...
-{% else %}
+<span class="cp">{%</span> <span class="k">else</span> <span class="cp">%}</span>
 ...
-{% endif %}
-&lt;!-- Add This Link --&gt;
-&lt;p&gt;&lt;a href=&quot;{{ request.route_url(&#39;action&#39;, action=&#39;create&#39;) }}&quot;&gt;New Entry&lt;/a&gt;&lt;/p&gt;
-{% endblock %}
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+<span class="c">&lt;!-- Add This Link --&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">request.route_url</span><span class="o">(</span><span class="s1">&#39;action&#39;</span><span class="o">,</span> <span class="nv">action</span><span class="o">=</span><span class="s1">&#39;create&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="p">&gt;</span>New Entry<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
 </pre></div>
 </div>
 <p>That way, you can get to your post-creation view from the front page!</p>

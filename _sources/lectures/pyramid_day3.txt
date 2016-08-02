@@ -79,7 +79,7 @@ Another major change is found in our ``development.ini`` file. In the ``[app:mai
 Later on when we learn about `PostgreSQL <https://pypi.python.org/pypi/psycopg2>`_, we'll change value associated with this keyword to point to a Postgres database.
 
 The MVC/MVT Directory Tree
-----------------------
+--------------------------
 
 If we investigate the ``learning_journal`` directory in our project root, what we see is going to be significantly different from what we'd built with our ``starter`` scaffold.
 
