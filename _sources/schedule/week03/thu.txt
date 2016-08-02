@@ -16,8 +16,9 @@ Objectives
 Readings
 ========
 
-* `WTForms Crash Course <https://wtforms.readthedocs.org/en/latest/crash_course.html>`_
+.. * `WTForms Crash Course <https://wtforms.readthedocs.org/en/latest/crash_course.html>`_
 * `Consider Jinja2 Macros for Form Rendering <http://jinja.pocoo.org/docs/dev/templates/#macros>`_
+* `SQLite and PostgreSQL on Heroku <https://devcenter.heroku.com/articles/sqlite3>`_
 
 Review
 ======
@@ -30,12 +31,13 @@ Concepts
 
    /lectures/graphs
    /lectures/graph_example
+   /lectures/pyramid_day4
 
-* Form handling in web applications
-* Testing views
+.. * Form handling in web applications
+.. * Testing views
 
-    - Unit tests
-    - Functional tests
+..     - Unit tests
+..     - Functional tests
 
 Demo
 ====
@@ -43,9 +45,10 @@ Demo
 Assignments
 ===========
 
-* :doc:`/assignments/learning_journal_3`
 * :doc:`/assignments/graph_1`
-* :doc:`/assignments/learning_journal_mockup`
+* :doc:`/assignments/pyramid_lj_4.rst`
 * :doc:`/assignments/project_04_readme`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/blog_post_outline` (due Friday)
+.. * :doc:`/assignments/learning_journal_3`
+.. * :doc:`/assignments/learning_journal_mockup`

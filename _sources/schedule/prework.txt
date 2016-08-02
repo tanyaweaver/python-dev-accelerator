@@ -24,8 +24,16 @@ One hour is enough, though just.
 The key is to work every single day.
 Do not let a day go by without spending your time practicing.
 
-.. toctree::
-   :maxdepth: 1
-   :glob:
+.. .. toctree::
+..    :maxdepth: 1
+..    :glob:
 
-   /assignments/prework*
+..    /assignments/prework*
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /assignments/prework_python_html
+    /assignments/prework_command_line
+    /assignments/prework_mindset

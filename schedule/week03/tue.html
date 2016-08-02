@@ -26,7 +26,7 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
     <link rel="next" title="Heap" href="../../lectures/heap.html" />
-    <link rel="prev" title="Deque" href="../../lectures/deque.html" />
+    <link rel="prev" title="Getting Started With Pyramid" href="../../lectures/pyramid_day1.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -54,7 +54,7 @@
           <a href="../../lectures/heap.html" title="Heap"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/deque.html" title="Deque"
+          <a href="../../lectures/pyramid_day1.html" title="Getting Started With Pyramid"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
@@ -185,21 +185,17 @@ div.nboutput  > :nth-child(2).stderr {
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Learn about the <code class="docutils literal"><span class="pre">heap</span></code> data structure and its properties</li>
-<li>Understand how to start a Pyramid project</li>
-<li>Get familiar with how Pyramid works at a high level</li>
-<li>Learn the way that database sessions are connected to the request/response cycle in Pyramid</li>
+</ul>
+<ul class="simple">
 <li>Establish a model for testing database models within the world of pytest</li>
 </ul>
 </div>
 <div class="section" id="readings">
 <h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
-<p>These readings will support the work you do on Wednesday.</p>
 <ul class="simple">
-<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/router.html">Request Processing in Pyramid</a></li>
-<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/urldispatch.html">Routes and URL Dispatch in Pyramid</a></li>
-<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/views.html">View Callables in Pyramid</a></li>
 <li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/renderers.html">Renderers in Pyramid</a></li>
 <li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/templates.html">Template Handling in Pyramid</a></li>
+<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/testing.html">Testing in Pyramid</a></li>
 </ul>
 </div>
 <div class="section" id="review">
@@ -225,63 +221,24 @@ div.nboutput  > :nth-child(2).stderr {
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/max_heap_example.html#Heapify">Heapify</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/pyramid_day2.html">Pyramid Views, Templates, and Front-end Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day2.html#the-mvc-view">The MVC View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day2.html#presenting-data">Presenting Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day2.html#templates-applied">Templates Applied</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day2.html#testing-your-pyramid-app">Testing Your Pyramid App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day2.html#recap">Recap</a></li>
 </ul>
-</div>
-<ul>
-<li><p class="first">Getting Started with Pyramid</p>
-<blockquote>
-<div><ul class="simple">
-<li>Installing Pyramid</li>
-<li>Additional Packages Used by Pyramid</li>
-<li>Writing a &#8220;hello world&#8221; app</li>
-<li>Using the <code class="docutils literal"><span class="pre">pcreate</span></code> function to create a scaffold</li>
-<li>Using the <code class="docutils literal"><span class="pre">pshell</span></code> command to work interactively</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first">Understanding the layout of a Pyramid Project</p>
-<blockquote>
-<div><ul class="simple">
-<li>What files are created in a scaffold</li>
-<li>Pyramid apps as &#8220;distributions&#8221;</li>
-<li>Pyramid&#8217;s use of &#8220;entry points&#8221;</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first">Database Sessions</p>
-<blockquote>
-<div><ul class="simple">
-<li>Scoped sessions and the request/response cycle</li>
-<li>Understanding session management and transactions</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first">Testing with Databases, pytest and fixtures.</p>
-<blockquote>
-<div><ul class="simple">
-<li>Strategies for testing &#8220;models&#8221;</li>
-<li>Creating fixtures to manage database sessions</li>
-<li>Differences between testing and running</li>
-</ul>
-</div></blockquote>
 </li>
 </ul>
 </div>
-<div class="section" id="demo">
-<h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><a class="reference download internal" href="../../_downloads/pyramid_db_fixtures.py"><code class="xref download docutils literal"><span class="pre">Pyramid</span> <span class="pre">Database</span> <span class="pre">Test</span> <span class="pre">Fixtures</span></code></a></li>
-</ul>
 </div>
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../../assignments/learning_journal_1.html"><em>Python Learning Journal: Step 1</em></a></li>
 <li><a class="reference internal" href="../../assignments/binary_heap.html"><em>Implement a Binary Heap in Python</em></a></li>
+<li><a class="reference internal" href="../../assignments/pyramid_lj_2.html"><em>Python Learning Journal: Step 2</em></a></li>
 <li><a class="reference internal" href="../../assignments/project_02_idea.html"><em>Group Project: Form Groups</em></a></li>
-<li><a class="reference internal" href="../../assignments/intro_to_jinja2.html"><em>Introduction to Jinja2 Templating</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
-<li><a class="reference internal" href="../../assignments/learning_journal_mockup.html"><em>Python Learning Journal: HTML Mockup</em></a> (due Thursday)</li>
 <li><a class="reference internal" href="../../assignments/blog_post_outline.html"><em>Technical Blog Post: Outline a Post</em></a> (due Friday)</li>
 </ul>
 </div>
@@ -300,15 +257,14 @@ div.nboutput  > :nth-child(2).stderr {
 <li><a class="reference internal" href="#readings">Readings</a></li>
 <li><a class="reference internal" href="#review">Review</a></li>
 <li><a class="reference internal" href="#concepts">Concepts</a></li>
-<li><a class="reference internal" href="#demo">Demo</a></li>
 <li><a class="reference internal" href="#assignments">Assignments</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../../lectures/deque.html"
-                        title="previous chapter">Deque</a></p>
+  <p class="topless"><a href="../../lectures/pyramid_day1.html"
+                        title="previous chapter">Getting Started With Pyramid</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../../lectures/heap.html"
                         title="next chapter">Heap</a></p>
@@ -339,7 +295,7 @@ div.nboutput  > :nth-child(2).stderr {
           <a href="../../lectures/heap.html" title="Heap"
              >next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/deque.html" title="Deque"
+          <a href="../../lectures/pyramid_day1.html" title="Getting Started With Pyramid"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>

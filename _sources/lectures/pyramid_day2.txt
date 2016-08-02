@@ -2,17 +2,27 @@
 Pyramid Views, Templates, and Front-end Testing
 ===============================================
 
-Last time, we got started with a Pyramid app with the intention to display learning journal entries online. Toward this end, we created basic views that read raw HTML files and provided them to the browser as an HTTP response. That worked, but it's a really crappy way to use Pyramid and doesn't even begin to take advantage of its capabilities. Today we'll learn about better ways to connect views to the HTML they serve, and how to use templates to display our information.
+Last time, we got started with a Pyramid app with the intention to display learning journal entries online.
+Toward this end, we created basic views that read raw HTML files and provided them to the browser as an HTTP response.
+That worked, but it's a really crappy way to use Pyramid and doesn't even begin to take advantage of its capabilities.
+Today we'll learn about better ways to connect views to the HTML they serve, and how to use templates to display our information.
 
 The MVC View
 ============
 
-We return again to the *Model-View-Controller* pattern. We've built our *controller* using Pyramid's **view** callables that take *HTTP requests* as arguments. We've also created the beginnings of our MVC *view* using our HTTP files. Let's dig into both of these some more.
+We return again to the *Model-View-Controller* pattern.
+We've built our *controller* using Pyramid's **view** callables that take *HTTP requests* as arguments.
+We've also created the beginnings of our MVC *view* using our HTTP files.
+Let's dig into both of these some more.
 
-Presenting Data 
+Presenting Data
 ===============
 
-The job of the *view* in the *MVC* pattern is to present data in a format that is readable to the user of the system. There are many ways to present data. Some are readable by humans (e.g. tables, charts, graphs, HTML pages, text files), while others are more for machines (e.g. xml files, csv, json). Which of these formats is the *right one* depends on your purpose. What is the purpose of our learning journal?
+The job of the *view* in the *MVC* pattern is to present data in a format that is readable to the user of the system.
+There are many ways to present data.
+Some are readable by humans (e.g. tables, charts, graphs, HTML pages, text files), while others are more for machines (e.g. xml files, csv, json).
+Which of these formats is the *right one* depends on your purpose.
+What is the purpose of our learning journal?
 
 Pyramid Renderers and ``view_config``
 -------------------------------------
@@ -84,7 +94,7 @@ After refactoring, our code should look *something* like this:
     def update_view(request):
         return ("This is", "a tuple")
 
-Note that for each of the above views, *anything* that was in the ``return`` statement was printed to the browser as a string, without having to have it wrapped in an HTTP response object. 
+Note that for each of the above views, *anything* that was in the ``return`` statement was printed to the browser as a string, without having to have it wrapped in an HTTP response object.
 
 We can attach external renderers to our views as well. We have in fact included one in ``__init__.py`` with the ``pyramid_jinja2`` package. Recall:
 
@@ -101,8 +111,8 @@ Jinja2 Template Basics
 We'll start with the absolute basics. Fire up an iPython interpreter in your virtual environment and import the ``Template`` class from the ``jinja2`` package:
 
 .. code-block:: bash
-    
-    (pyramid_lj) bash-3.2$ ipython 
+
+    (pyramid_lj) bash-3.2$ ipython
     ...
     In [1]: from jinja2 import Template
 
@@ -112,7 +122,7 @@ A template is constructed with a simple string:
 
     In [2]: t1 = Template("Hello {{ name }}, how are you")
 
-Here, we've simply typed the string directly, but it is more common to build a template from the contents of a *file*. 
+Here, we've simply typed the string directly, but it is more common to build a template from the contents of a *file*.
 
 Notice that our string has some odd stuff in it: ``{{name}}``. This is called a *placeholder*, and when the template is *rendered* it is replaced. We can see that if we call ``t1``'s ``render`` method, providing *context* for ``{{name}}``:
 
@@ -139,7 +149,7 @@ Dictionaries passed in as part of the *context* can be addressed with either sub
        ...:           'last_name': 'Herbert'}
     In [7]: t2 = Template("{{ person.last_name }}, {{ person['first_name'] }}")
     In [8]: t2.render(person=person)
-    Out[8]: 'Herbert, Frank'    
+    Out[8]: 'Herbert, Frank'
 
 * Jinja2 will try the *correct* way first (attr for dotted, item for subscript).
 * If nothing is found, it will try the opposite.
@@ -187,7 +197,7 @@ Logical `control structures <http://jinja.pocoo.org/docs/dev/templates/#list-of-
     In [19]: t6.render(list=['a', 'b', 'c', 'd', 'e'])
     Out[19]: '\na, b, c, d, e, '
 
-Any control structure introduced in a template **must** be paired with an explicit closing tag (``{% for %} ... {% endfor %}``, ``{% if %} ... {% elif %} ... {% else %} ... {% endif %}``). 
+Any control structure introduced in a template **must** be paired with an explicit closing tag (``{% for %} ... {% endfor %}``, ``{% if %} ... {% elif %} ... {% else %} ... {% endif %}``).
 
 Remember, although template tags like ``{% for %}`` or ``{% if %}`` look a lot like Python, *they are not*. The syntax is specific and must be followed correctly.
 
@@ -249,7 +259,7 @@ We have a Pyramid ``view`` that'll return the content of a single entry. Let's c
         </body>
     </html>
 
-We're going to hold on replacing names with keywords. First, let's just serve up this HTML. Notice that the file type is ``.jinja2``, not ``.html``. 
+We're going to hold on replacing names with keywords. First, let's just serve up this HTML. Notice that the file type is ``.jinja2``, not ``.html``.
 
 Wire up our new detail template to the detail view in ``learning_journal_basic/views.py``:
 
@@ -264,15 +274,15 @@ Now we should be able to see some rendered HTML for our journal entry details. S
 
 .. code-block:: bash
 
-    (pyramid_lj) bash-3.2$ pserve development.ini 
+    (pyramid_lj) bash-3.2$ pserve development.ini
     Starting server in PID 53587.
     serving on http://127.0.0.1:6543
 
-Then try viewing an individual journal entry: `http://localhost:6543/journal/1`_
+Then try viewing an individual journal entry: http://localhost:6543/journal/1
 
-The HTML in our Jinja2 template comes up just as we've structured it! However there's a problem. If we were to continue on like this we'd still have to create an individual template for *every* journal entry. If we just wanted to write static HTML this way, why would we ever use a template? 
+The HTML in our Jinja2 template comes up just as we've structured it! However there's a problem. If we were to continue on like this we'd still have to create an individual template for *every* journal entry. If we just wanted to write static HTML this way, why would we ever use a template?
 
-Jinja2 templates are rendered with a *context*. A Pyramid *view* returns a dictionary, which is passed to the renderer as part of that *context*. This means we can access values we return from our *view* in the *renderer* using the names we assigned to them. 
+Jinja2 templates are rendered with a *context*. A Pyramid *view* returns a dictionary, which is passed to the renderer as part of that *context*. This means we can access values we return from our *view* in the *renderer* using the names we assigned to them.
 
 Just like we did in the command line, we can use placeholders and feed data to those placeholders through the ``return`` statement of our ``detail_view``:
 
@@ -387,7 +397,7 @@ We can now see our list page in all its glory. Let's try starting the server:
 
 .. code-block:: bash
 
-    (pyramid_lj) bash-3.2$ pserve development.ini 
+    (pyramid_lj) bash-3.2$ pserve development.ini
     Starting server in PID 53587.
     serving on http://127.0.0.1:6543
 
@@ -448,7 +458,7 @@ Start the server so we can see the result.
 
 .. code-block:: bash
 
-    (pyramid_lj) bash-3.2$ pserve development.ini 
+    (pyramid_lj) bash-3.2$ pserve development.ini
     Starting server in PID 53587.
     serving on http://127.0.0.1:6543
 
@@ -543,7 +553,7 @@ Our scaffold provided for us a ``tests.py`` file. Let's inspect it.
 
 We use the ``unittest`` package provided by ``pytest``, which was specified in our ``setup.py`` file in the ``tests_require`` list.
 
-``unittest`` comes with a ``TestCase`` object that we can inherit from and modify. When we inherit from ``TestCase``, we get access to a ton of ``asserts``, such as the ``assertEqual`` and ``assertTrue`` seen here, as well as functionality for setting up a testing environment (``setUp``) and tearing it down (``tearDown``). This is not Pyramid-specific, but available whenever we import ``unittest``. 
+``unittest`` comes with a ``TestCase`` object that we can inherit from and modify. When we inherit from ``TestCase``, we get access to a ton of ``asserts``, such as the ``assertEqual`` and ``assertTrue`` seen here, as well as functionality for setting up a testing environment (``setUp``) and tearing it down (``tearDown``). This is not Pyramid-specific, but available whenever we import ``unittest``.
 
 As part of the setup, we have pyramid's own ``testing`` object, which allows us to set up the configuration we need to run our app and have access to the ``request`` and ``response`` objects that we need to test our views. Recall that our views can only run when taking a ``request`` object as an argument. So, we provide a ``request`` with ``testing.DummyRequest``.
 
@@ -569,7 +579,7 @@ Let's comment out ``FunctionalTests`` bit for now (I'm removing it entirely) and
             request = testing.DummyRequest()
             info = detail_view(request)
             self.assertIn("title", info.keys())
- 
+
 
 Running Pyramid Tests
 ---------------------
@@ -602,7 +612,7 @@ We've designed this one test to pass, so we should get a statement saying it pas
         pytest-cov
         webtest
 
-Now we run tox as we always have and ensure that our test passes across Python 2.7 and 3.5. On top of that, we get a report of the coverage of our tests in the console. 
+Now we run tox as we always have and ensure that our test passes across Python 2.7 and 3.5. On top of that, we get a report of the coverage of our tests in the console.
 
 .. code-block:: bash
 
@@ -782,18 +792,18 @@ Woo!
 Recap
 =====
 
-Today's work involved a lot of refactoring, switching to Jinja2 templates, and finally dipping our feet into testing. 
-Specifically, we used Pyramid's built-in ``view_config`` decorator to wire our views to the appropriate renderers, removing the need to manually include views and connect routes to those views. 
+Today's work involved a lot of refactoring, switching to Jinja2 templates, and finally dipping our feet into testing.
+Specifically, we used Pyramid's built-in ``view_config`` decorator to wire our views to the appropriate renderers, removing the need to manually include views and connect routes to those views.
 
-We then of course made the appropriate renderers using Jinja2 templates. 
-Within those templates, we used placeholders with Jinja2 syntax to wire the data we wanted into the appropriate places without having to manually include them. 
+We then of course made the appropriate renderers using Jinja2 templates.
+Within those templates, we used placeholders with Jinja2 syntax to wire the data we wanted into the appropriate places without having to manually include them.
 We also saw how we could even make our front-end DRY by using template inheritance, creating a master ``layout.jinja2`` template that wrapped each page as needed.
 
-Finally, we saw how to write unit tests for individual views, providing our view callable with a dummy HTTP request and inspecting the data that resulted from that view being called. 
-In this process, we saw how we could use Pyramid's own ``testing`` module to set up a dummy app and send requests without having to access the browser. 
-We then stepped into functional tests, seeing how we could validate our front-end after the data has been passed and the page has been rendered. 
+Finally, we saw how to write unit tests for individual views, providing our view callable with a dummy HTTP request and inspecting the data that resulted from that view being called.
+In this process, we saw how we could use Pyramid's own ``testing`` module to set up a dummy app and send requests without having to access the browser.
+We then stepped into functional tests, seeing how we could validate our front-end after the data has been passed and the page has been rendered.
 Lastly, we saw how we could use ``BeautifulSoup`` to make our front-end tests more robust, piecing apart the rendered HTML itself and ensuring that the contents of our page match our expectations at a functional level.
 
-Tonight you will use these to update your learning journal app with sensible DRY templates and connections between views and routes using the declarative style of ``view_config``. 
-You will then write comprehensive tests for your individual views as well as your front end. 
+Tonight you will use these to update your learning journal app with sensible DRY templates and connections between views and routes using the declarative style of ``view_config``.
+You will then write comprehensive tests for your individual views as well as your front end.
 Tomorrow, we'll stop messing about with hard-coded data and learn how we can use Pyramid models and SQL persistence for a more robust web app.

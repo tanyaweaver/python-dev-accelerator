@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python Practice: Distance Between Points &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="401 Python: Homework Assignments" href="index.html" />
+    <link rel="next" title="Python Practice: Sort a Deck of Cards" href="kata_sort_cards.html" />
+    <link rel="prev" title="Read Iterate Towards Your Win Condition" href="iterate_win.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="kata_sort_cards.html" title="Python Practice: Sort a Deck of Cards"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="iterate_win.html" title="Read Iterate Towards Your Win Condition"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="python-practice-distance-between-points">
+<h1>Python Practice: Distance Between Points<a class="headerlink" href="#python-practice-distance-between-points" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-python-practice-distance-between-points"></span><p>Below is a function that will calculate the sortest distance between any two
+points on the Earth&#8217;s surface.
+<strong>Do not worry about how it works.</strong>
+<strong>It is simply a tool for this exercise.</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">calculate_distance</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the distance (in miles) between point1 and point2.</span>
+<span class="sd">    point1 and point2 must have the format [latitude, longitude].</span>
+<span class="sd">    The return value is a float.</span>
+
+<span class="sd">    Modified and converted to Python from: http://www.movable-type.co.uk/scripts/latlong.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">math</span>
+
+    <span class="k">def</span> <span class="nf">convert_to_radians</span><span class="p">(</span><span class="n">degrees</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">degrees</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+
+    <span class="n">radius_earth</span> <span class="o">=</span> <span class="mf">6.371E3</span> <span class="c1"># km</span>
+    <span class="n">phi1</span> <span class="o">=</span> <span class="n">convert_to_radians</span><span class="p">(</span><span class="n">point1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">phi2</span> <span class="o">=</span> <span class="n">convert_to_radians</span><span class="p">(</span><span class="n">point2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">delta_phi</span> <span class="o">=</span> <span class="n">convert_to_radians</span><span class="p">(</span><span class="n">point1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">point2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">delta_lam</span> <span class="o">=</span> <span class="n">convert_to_radians</span><span class="p">(</span><span class="n">point1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">point2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">delta_phi</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">delta_lam</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">radius_earth</span> <span class="o">*</span> <span class="n">c</span> <span class="o">/</span> <span class="mf">1.60934</span> <span class="c1"># convert km to miles</span>
+</pre></div>
+</div>
+<p>The JSON file <code class="xref doc docutils literal"><span class="pre">at</span> <span class="pre">this</span> <span class="pre">URL</span></code> contains some cities with international airports, each with
+a latitude, a longitude, and a city that it connects to.
+For the curious, the list of airports comes from <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_international_airports_by_country">Wikipedia</a>.</p>
+<p>Write a function that,</p>
+<ul class="simple">
+<li>given a starting city and an ending city, will return a path between the two cities (including the two cities).</li>
+<li>also returns the total distance traveled between cities.</li>
+<li>appropriately handles the situation where no path exists.</li>
+</ul>
+<div class="section" id="stretch-goals">
+<h2>Stretch Goals<a class="headerlink" href="#stretch-goals" title="Permalink to this headline">¶</a></h2>
+<p>Try to incorporate any (or all) of these. They are/can be independent of each other.</p>
+<ul class="simple">
+<li>Add to your function a parameter that makes it return the <strong>shortest path</strong> (lowest distance) between the two cities.</li>
+<li>Add to your function a parameter that makes it return the <strong>path with the fewest stops</strong> between the two cities.</li>
+<li>Have your function take a parameter for a limit to the distance between any two cities. If specified, your function returns a path where each city-to-city jump is less than or equal to that limit.</li>
+</ul>
+<div class="section" id="submitting-your-work">
+<h3>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h3>
+<p>Create a <code class="docutils literal"><span class="pre">flight-paths</span></code> branch in your <code class="docutils literal"><span class="pre">code-katas</span></code> repository.
+Add this function in a script to your <code class="docutils literal"><span class="pre">flight-paths</span></code> branch.</p>
+<p>The tests that demonstrate your code works should be in a <code class="docutils literal"><span class="pre">test_flight_paths.py</span></code> file.
+Add documentation about your code in the repo&#8217;s <code class="docutils literal"><span class="pre">README.md</span></code>.
+Make sure to add notes about and resources or collaborators you worked with in
+solving this problem.</p>
+<p>After you&#8217;ve added your code solution into GitHub, send a pull request
+to your master branch.
+<strong>Submit the link to that pull request to Canvas.</strong></p>
+<p>Use the comment box in Canvas to add any questions, comments or reflections on this
+assignment and your approach to it.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python Practice: Distance Between Points</a><ul>
+<li><a class="reference internal" href="#stretch-goals">Stretch Goals</a><ul>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="iterate_win.html"
+                        title="previous chapter">Read Iterate Towards Your Win Condition</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="kata_sort_cards.html"
+                        title="next chapter">Python Practice: Sort a Deck of Cards</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="kata_sort_cards.html" title="Python Practice: Sort a Deck of Cards"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="iterate_win.html" title="Read Iterate Towards Your Win Condition"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >401 Python: Homework Assignments</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

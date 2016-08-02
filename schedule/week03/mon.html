@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
-    <link rel="next" title="SQL Persistence in Python" href="../../lectures/sql_persistence_in_python.html" />
+    <link rel="next" title="Deque" href="../../lectures/deque.html" />
     <link rel="prev" title="Friday" href="../week02/fri.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -51,7 +51,7 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../lectures/sql_persistence_in_python.html" title="SQL Persistence in Python"
+          <a href="../../lectures/deque.html" title="Deque"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../week02/fri.html" title="Friday"
@@ -184,20 +184,19 @@ div.nboutput  > :nth-child(2).stderr {
 <span class="admonition-course-presentations"></span><div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Familiarize ourselves with the basics of SQL persistence</li>
-<li>Learn the DBAPI specification and how to interact directly with databases using it</li>
-<li>Gain an understanding of the purpose and usage of an Object-Relational Mapper</li>
-<li>Generate the basic structure for our learning journal project</li>
 <li>Understand the structure and uses of the Deque data structure</li>
+<li>Generate the basic structure for our learning journal project</li>
+<li>Understand how to start a Pyramid project</li>
+<li>Get familiar with how Pyramid works at a high level</li>
+<li>Learn the way that database sessions are connected to the request/response cycle in Pyramid</li>
 </ul>
 </div>
 <div class="section" id="readings">
 <h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
-<p>These readings will support the work you do on Tuesday:</p>
 <ul class="simple">
-<li><a class="reference external" href="http://docs.sqlalchemy.org/en/rel_1_0/orm/tutorial.html">The SQLAlchemy ORM Tutorial</a>
-(Read up to and including the <a class="reference external" href="http://docs.sqlalchemy.org/en/rel_1_0/orm/tutorial.html#querying">section on querying</a>)</li>
-<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/commandline.html#the-interactive-shell">Command-Line Pyramid: The Interactive Shell</a></li>
+<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/router.html">Request Processing in Pyramid</a></li>
+<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/urldispatch.html">Routes and URL Dispatch in Pyramid</a></li>
+<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/views.html">View Callables in Pyramid</a></li>
 </ul>
 </div>
 <div class="section" id="review">
@@ -207,12 +206,6 @@ div.nboutput  > :nth-child(2).stderr {
 <h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../lectures/sql_persistence_in_python.html">SQL Persistence in Python</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/sql_persistence_in_python.html#interacting-with-the-database">Interacting With the Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/sql_persistence_in_python.html#handling-errors-with-rollback">Handling Errors with Rollback</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/sql_persistence_in_python.html#wrap-up">Wrap-Up</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lectures/deque.html">Deque</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/deque.html#definition">Definition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/deque.html#motivation">Motivation</a></li>
@@ -220,27 +213,31 @@ div.nboutput  > :nth-child(2).stderr {
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/deque.html#operations">Operations</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/python_frameworks_general.html">Python Web Frameworks in the Wild</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/python_frameworks_general.html#frameworks-we-teach">Frameworks We Teach</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/python_frameworks_general.html#the-wider-world-of-python-frameworks">The Wider World of Python Frameworks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/pyramid_day1.html">Getting Started With Pyramid</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day1.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day1.html#writing-a-hello-world-app">Writing a &#8220;Hello World&#8221; App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day1.html#using-the-pcreate-command-to-create-a-scaffold">Using the <code class="docutils literal"><span class="pre">pcreate</span></code> Command to Create a Scaffold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day1.html#pyramid-is-python">Pyramid is Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day1.html#routes-and-the-mvc-controller">Routes and The MVC Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day1.html#recap">Recap</a></li>
+</ul>
+</li>
 </ul>
 </div>
-</div>
-<div class="section" id="demo">
-<h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
-<p>Interfacing with a database using the SQLAlchemy ORM</p>
 </div>
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
-<p>(due Monday morning):</p>
-<ul class="simple">
-<li><a class="reference internal" href="../../assignments/intro_to_sql.html"><em>Introduction to SQL</em></a></li>
-<li><a class="reference internal" href="../../assignments/heroku_account.html"><em>Acquire a Heroku Account</em></a></li>
-</ul>
-<p>(Work on Monday):</p>
 <ul class="simple">
 <li><a class="reference internal" href="../../assignments/deque.html"><em>Implement a Deque in Python</em></a></li>
-<li><a class="reference internal" href="../../assignments/algorithmic_analysis.html"><em>Algorithm Analysis</em></a></li>
+<li><a class="reference internal" href="../../assignments/pyramid_lj_1.html"><em>Python Learning Journal: Step 1</em></a></li>
 <li><a class="reference internal" href="../../assignments/project_01_pitch.html"><em>Group Project: Pitch Ideas</em></a></li>
+<li><a class="reference internal" href="../../assignments/algorithmic_analysis.html"><em>Algorithm Analysis</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
-<li><a class="reference internal" href="../../assignments/learning_journal_mockup.html"><em>Python Learning Journal: HTML Mockup</em></a> (due Thursday)</li>
 <li><a class="reference internal" href="../../assignments/blog_post_outline.html"><em>Technical Blog Post: Outline a Post</em></a> (due Friday)</li>
 </ul>
 </div>
@@ -259,7 +256,6 @@ div.nboutput  > :nth-child(2).stderr {
 <li><a class="reference internal" href="#readings">Readings</a></li>
 <li><a class="reference internal" href="#review">Review</a></li>
 <li><a class="reference internal" href="#concepts">Concepts</a></li>
-<li><a class="reference internal" href="#demo">Demo</a></li>
 <li><a class="reference internal" href="#assignments">Assignments</a></li>
 </ul>
 </li>
@@ -269,8 +265,8 @@ div.nboutput  > :nth-child(2).stderr {
   <p class="topless"><a href="../week02/fri.html"
                         title="previous chapter">Friday</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../../lectures/sql_persistence_in_python.html"
-                        title="next chapter">SQL Persistence in Python</a></p>
+  <p class="topless"><a href="../../lectures/deque.html"
+                        title="next chapter">Deque</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
@@ -295,7 +291,7 @@ div.nboutput  > :nth-child(2).stderr {
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../lectures/sql_persistence_in_python.html" title="SQL Persistence in Python"
+          <a href="../../lectures/deque.html" title="Deque"
              >next</a> |</li>
         <li class="right" >
           <a href="../week02/fri.html" title="Friday"

@@ -26,7 +26,7 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
     <link rel="next" title="Graphs" href="../../lectures/graphs.html" />
-    <link rel="prev" title="Priority Queue" href="../../lectures/priority_queue.html" />
+    <link rel="prev" title="Models, Forms, and SQL Alchemy" href="../../lectures/pyramid_day3.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -54,7 +54,7 @@
           <a href="../../lectures/graphs.html" title="Graphs"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/priority_queue.html" title="Priority Queue"
+          <a href="../../lectures/pyramid_day3.html" title="Models, Forms, and SQL Alchemy"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
@@ -187,8 +187,8 @@ div.nboutput  > :nth-child(2).stderr {
 <div class="section" id="readings">
 <h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="https://wtforms.readthedocs.org/en/latest/crash_course.html">WTForms Crash Course</a></li>
 <li><a class="reference external" href="http://jinja.pocoo.org/docs/dev/templates/#macros">Consider Jinja2 Macros for Form Rendering</a></li>
+<li><a class="reference external" href="https://devcenter.heroku.com/articles/sqlite3">SQLite and PostgreSQL on Heroku</a></li>
 </ul>
 </div>
 <div class="section" id="review">
@@ -206,20 +206,14 @@ div.nboutput  > :nth-child(2).stderr {
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lectures/graph_example.html">Graph Sample</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/pyramid_day4.html">PostgreSQL and Working With the Environment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day4.html#postgresql">PostgreSQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day4.html#environment-variables-and-python">Environment Variables and Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day4.html#recap">Recap</a></li>
+</ul>
+</li>
 </ul>
 </div>
-<ul>
-<li><p class="first">Form handling in web applications</p>
-</li>
-<li><p class="first">Testing views</p>
-<blockquote>
-<div><ul class="simple">
-<li>Unit tests</li>
-<li>Functional tests</li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
 </div>
 <div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
@@ -227,9 +221,8 @@ div.nboutput  > :nth-child(2).stderr {
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../../assignments/learning_journal_3.html"><em>Python Learning Journal: Step 3</em></a></li>
 <li><a class="reference internal" href="../../assignments/graph_1.html"><em>Implement a Graph in Python</em></a></li>
-<li><a class="reference internal" href="../../assignments/learning_journal_mockup.html"><em>Python Learning Journal: HTML Mockup</em></a></li>
+<li><code class="xref doc docutils literal"><span class="pre">/assignments/pyramid_lj_4.rst</span></code></li>
 <li><a class="reference internal" href="../../assignments/project_04_readme.html"><em>Group Project: Add a README</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
 <li><a class="reference internal" href="../../assignments/blog_post_outline.html"><em>Technical Blog Post: Outline a Post</em></a> (due Friday)</li>
@@ -257,8 +250,8 @@ div.nboutput  > :nth-child(2).stderr {
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../../lectures/priority_queue.html"
-                        title="previous chapter">Priority Queue</a></p>
+  <p class="topless"><a href="../../lectures/pyramid_day3.html"
+                        title="previous chapter">Models, Forms, and SQL Alchemy</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../../lectures/graphs.html"
                         title="next chapter">Graphs</a></p>
@@ -289,7 +282,7 @@ div.nboutput  > :nth-child(2).stderr {
           <a href="../../lectures/graphs.html" title="Graphs"
              >next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/priority_queue.html" title="Priority Queue"
+          <a href="../../lectures/pyramid_day3.html" title="Models, Forms, and SQL Alchemy"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>

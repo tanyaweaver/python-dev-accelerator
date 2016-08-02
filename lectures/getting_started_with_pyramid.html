@@ -420,7 +420,7 @@ __init__.py     meta.py     mymodel.py
 </div>
 <p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code> to make this new required package stick. This will allow us to access PostGreSQL and use it as our database moving forward.</p>
 <p>We of course have to create the database that we want to use before we can use it. Fortunately, when we installed <code class="docutils literal"><span class="pre">psycopg2</span></code> we got a nice shell command that makes this easy.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ createdb testapp
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ createdb learning_journal
 </pre></div>
 </div>
 <p>We must also alter our <code class="docutils literal"><span class="pre">development.ini</span></code> file, changing the <code class="docutils literal"><span class="pre">sqlalchemy.url</span></code> parameter to point to our spankin&#8217;-new <code class="docutils literal"><span class="pre">learning_journal</span></code> database.</p>

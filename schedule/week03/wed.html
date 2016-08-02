@@ -26,7 +26,7 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../../index.html" />
     <link rel="next" title="Priority Queue" href="../../lectures/priority_queue.html" />
-    <link rel="prev" title="Max Heap Test" href="../../lectures/max_heap_example.html" />
+    <link rel="prev" title="Pyramid Views, Templates, and Front-end Testing" href="../../lectures/pyramid_day2.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -54,7 +54,7 @@
           <a href="../../lectures/priority_queue.html" title="Priority Queue"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/max_heap_example.html" title="Max Heap Test"
+          <a href="../../lectures/pyramid_day2.html" title="Pyramid Views, Templates, and Front-end Testing"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>
@@ -186,9 +186,11 @@ div.nboutput  > :nth-child(2).stderr {
 </div>
 <div class="section" id="readings">
 <h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
-<p>These readings will support the work you do on Thursday</p>
 <ul class="simple">
-<li><a class="reference external" href="https://wtforms.readthedocs.org/en/latest/crash_course.html">WTForms Crash Course</a></li>
+<li><a class="reference external" href="http://docs.sqlalchemy.org/en/rel_1_0/orm/tutorial.html">The SQLAlchemy ORM Tutorial</a>
+(Read up to and including the <a class="reference external" href="http://docs.sqlalchemy.org/en/rel_1_0/orm/tutorial.html#querying">section on querying</a>)</li>
+<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/commandline.html#the-interactive-shell">Command-Line Pyramid: The Interactive Shell</a></li>
+<li><a class="reference external" href="http://docs.pylonsproject.org/projects/pyramid_cookbook/en/latest/pylons/models.html">Models in Python</a></li>
 </ul>
 </div>
 <div class="section" id="review">
@@ -205,12 +207,17 @@ div.nboutput  > :nth-child(2).stderr {
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/priority_queue.html#Operations">Operations</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/pyramid_day3.html">Models, Forms, and SQL Alchemy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day3.html#the-alchemy-scaffold">The &#8220;Alchemy&#8221; Scaffold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day3.html#pyramid-models">Pyramid Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day3.html#testing-models">Testing Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day3.html#connecting-m-to-vc">Connecting &#8220;M&#8221; to &#8220;VC&#8221;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day3.html#working-with-forms-in-pyramid">Working with Forms in Pyramid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day3.html#recap">Recap</a></li>
+</ul>
+</li>
 </ul>
 </div>
-<ul class="simple">
-<li>Templates and template inheritance in Jinja2</li>
-<li>View callables in Pyramid</li>
-</ul>
 </div>
 <div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
@@ -218,11 +225,10 @@ div.nboutput  > :nth-child(2).stderr {
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../../assignments/learning_journal_2.html"><em>Python Learning Journal: Step 2</em></a></li>
 <li><a class="reference internal" href="../../assignments/priority_queue.html"><em>Implement a Priority Queue in Python</em></a></li>
+<li><a class="reference internal" href="../../assignments/pyramid_lj_3.html"><em>Python Learning Journal: Step 3</em></a></li>
 <li><a class="reference internal" href="../../assignments/project_03_repo.html"><em>Group Project: Create a Repository</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
-<li><a class="reference internal" href="../../assignments/learning_journal_mockup.html"><em>Python Learning Journal: HTML Mockup</em></a> (due Thursday)</li>
 <li><a class="reference internal" href="../../assignments/blog_post_outline.html"><em>Technical Blog Post: Outline a Post</em></a> (due Friday)</li>
 </ul>
 </div>
@@ -248,8 +254,8 @@ div.nboutput  > :nth-child(2).stderr {
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../../lectures/max_heap_example.html"
-                        title="previous chapter">Max Heap Test</a></p>
+  <p class="topless"><a href="../../lectures/pyramid_day2.html"
+                        title="previous chapter">Pyramid Views, Templates, and Front-end Testing</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../../lectures/priority_queue.html"
                         title="next chapter">Priority Queue</a></p>
@@ -280,7 +286,7 @@ div.nboutput  > :nth-child(2).stderr {
           <a href="../../lectures/priority_queue.html" title="Priority Queue"
              >next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/max_heap_example.html" title="Max Heap Test"
+          <a href="../../lectures/pyramid_day2.html" title="Pyramid Views, Templates, and Front-end Testing"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li> 
       </ul>

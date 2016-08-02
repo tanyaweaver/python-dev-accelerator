@@ -39,8 +39,8 @@
 
     .. rst-class:: build
 
-    * index: a position in the array 
-    * value: an element in the array 
+    * index: a position in the array
+    * value: an element in the array
 
 
 .. slide:: Implementation
@@ -164,7 +164,7 @@
 .. slide:: remove(A, i)
     :level: 3
 
-    Remove the data from the array 
+    Remove the data from the array
 
     .. code-block:: ipython
 
@@ -174,9 +174,9 @@
         Out[8]: [None, None, None, None, None, None, None, None, None, None]
 
 
-=====
+======
 Arrays
-=====
+======
 
 Motivation
 ==========
@@ -185,11 +185,11 @@ Motivation
 * In the most basic version, it cannot be changed (immutable). A number of memory slots are allocated and filled with data
 * Arrays are used to represent matrices, vectors (tuples in Python).
 * Random access to data
-  
+
 Base Definition and Operations
 ==============================
 
-Ignoring size, an array may be seen as a data type with the following operations 
+Ignoring size, an array may be seen as a data type with the following operations
 
 * ``new(N)``: create a new array of length ``N``
 * ``set(A, i, v)``: in array ``A`` set the value at index ``i`` to ``v``
@@ -202,8 +202,8 @@ where ``i`` is a numeric index, ``v`` is a value, and ``A`` is an array.
 Attributes
 ==========
 
-* index: a position in the array 
-* value: an element in the array 
+* index: a position in the array
+* value: an element in the array
 
 Implementation
 ==============

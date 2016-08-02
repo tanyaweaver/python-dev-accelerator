@@ -1,0 +1,533 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PostgreSQL and Working With the Environment &mdash; Python Dev Accelerator 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python Dev Accelerator 2.0 documentation" href="../index.html" />
+    <link rel="up" title="Thursday" href="../schedule/week03/thu.html" />
+    <link rel="next" title="Friday" href="../schedule/week03/fri.html" />
+    <link rel="prev" title="Graph Sample" href="graph_example.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../schedule/week03/fri.html" title="Friday"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="graph_example.html" title="Graph Sample"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week03/thu.html" accesskey="U">Thursday</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="postgresql-and-working-with-the-environment">
+<h1>PostgreSQL and Working With the Environment<a class="headerlink" href="#postgresql-and-working-with-the-environment" title="Permalink to this headline">¶</a></h1>
+<p>Thus far we&#8217;ve been able to add user input and view that input in the browser with templating.
+Persisting data has been addressed to a point, but using Heroku gives us a different problem.
+While data may persist for a given Heroku push, every sqlite database is saved on the file system.
+Heroku uses an <a class="reference external" href="https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem">ephemeral filesystem</a>.
+At best, your sqlite database may last 24 hours.</p>
+<p>Heroku <a class="reference external" href="https://www.heroku.com/postgres">provides support</a> for a persisted PostgreSQL database.
+Since we&#8217;re deploying to Heroku, why not use that?</p>
+<p>As we will see, Postgres uses <em>basically</em> the same language as sqlite3.
+So integration into our app should be <em>pretty</em> straightforward.</p>
+<div class="section" id="postgresql">
+<h2>PostgreSQL<a class="headerlink" href="#postgresql" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.postgresql.org/about/">PostgreSQL</a> is an open-source object-relational database management system (ORDBMS).
+It&#8217;s available across most major platforms, and has a reputation for security and reliability.
+Due to the large open-source community contributing to the project, it&#8217;s also frequently maintained.
+Not to mention, it&#8217;s free.</p>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>Heroku conveniently includes Postgres <a class="reference external" href="https://www.heroku.com/postgres">as an add-on</a>.
+Python also generously lets you <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span></code> a package that interacts with a Postgres database.
+We, however, still need to install it to our machines.</p>
+<p>Installation is simple from the command line.
+If you don&#8217;t yet have Homebrew, download it <a class="reference external" href="http://brew.sh/">here</a>.
+Once you have Homebrew, the following command gives you all you need.</p>
+<div class="highlight-bash"><div class="highlight"><pre>(pyramid_lj) bash-3.2$ brew install postgresql
+==&gt; Installing dependencies for postgresql: openssl, readline
+==&gt; Installing postgresql dependency: openssl
+...
+==&gt; Installing postgresql
+==&gt; Downloading https://homebrew.bintray.com/bottles/postgresql-9.5.3.el_capitan.bottle.tar.gz
+...
+To have launchd start postgresql now and restart at login:
+  brew services start postgresql
+Or, if you don&#39;t want/need a background service you can just run:
+  postgres -D /usr/local/var/postgres
+==&gt; Summary
+/usr/local/Cellar/postgresql/9.5.3: 3,142 files, 35.0M
+</pre></div>
+</div>
+<p>To start using Postgres, we need to...start it up.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ brew services start <span class="nv">postgresql</span>
+<span class="o">==</span>&gt; Tapping homebrew/services
+Cloning into <span class="s1">&#39;/usr/local/Library/Taps/homebrew/homebrew-services&#39;</span>...
+remote: Counting objects: 7, <span class="k">done</span>.
+remote: Compressing objects: 100% <span class="o">(</span>6/6<span class="o">)</span>, <span class="k">done</span>.
+remote: Total <span class="m">7</span> <span class="o">(</span>delta 0<span class="o">)</span>, reused <span class="m">3</span> <span class="o">(</span>delta 0<span class="o">)</span>, pack-reused 0
+Unpacking objects: 100% <span class="o">(</span>7/7<span class="o">)</span>, <span class="k">done</span>.
+Checking connectivity... <span class="k">done</span>.
+Tapped <span class="m">0</span> formulae <span class="o">(</span><span class="m">32</span> files, 46.1K<span class="o">)</span>
+<span class="o">==</span>&gt; Successfully started <span class="sb">`</span>postgresql<span class="sb">`</span> <span class="o">(</span>label: homebrew.mxcl.postgresql<span class="o">)</span>
+</pre></div>
+</div>
+<p>Now Postgres is available for fun and for profit.
+The final thing you&#8217;ll need to do is create a database to work in.
+If you try to start postgres without it, it&#8217;ll throw you an error like this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ psql
+psql: FATAL:  database <span class="s2">&quot;&lt;Your Username Here&gt;&quot;</span> does not exist
+</pre></div>
+</div>
+<p>So start by creating a database with the <code class="docutils literal"><span class="pre">createdb</span></code> command.
+Since we&#8217;re working on our learning journal, call it <code class="docutils literal"><span class="pre">learning_journal</span></code></p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ createdb &lt;Your Username Here&gt;
+</pre></div>
+</div>
+<p>With our database created, we can enter the Postgres shell with the <code class="docutils literal"><span class="pre">psql</span></code> command.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ psql
+psql <span class="o">(</span>9.5.3<span class="o">)</span>
+Type <span class="s2">&quot;help&quot;</span> <span class="k">for</span> help.
+
+&lt;Your Username Here&gt;<span class="o">=</span><span class="c1">#</span>
+</pre></div>
+</div>
+<p>Investigating your Postgres database will show that it&#8217;s empty.
+Let&#8217;s fill it with data from our Pyramid app.</p>
+</div>
+<div class="section" id="postgres-and-pyramid">
+<h3>Postgres and Pyramid<a class="headerlink" href="#postgres-and-pyramid" title="Permalink to this headline">¶</a></h3>
+<p>To integrate Postgres into our Pyramid app we need to change a few things.
+To start, we should include the <code class="docutils literal"><span class="pre">psycopg2</span></code> package that lets Python interact with Postgres.
+In <code class="docutils literal"><span class="pre">setup.py</span></code> add it to the <code class="docutils literal"><span class="pre">requires</span></code> list.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">requires</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;pyramid&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pyramid_jinja2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pyramid_debugtoolbar&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pyramid_tm&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SQLAlchemy&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;transaction&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;zope.sqlalchemy&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;waitress&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;psycopg2&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">pip</span></code> install your app so that <code class="docutils literal"><span class="pre">psycopg2</span></code> becomes available.</p>
+<p>Next up, go investigate <code class="docutils literal"><span class="pre">development.ini</span></code>.
+You need to change where SQLAlchemy looks for a database to interact with.
+Since we&#8217;ll no longer be using <code class="docutils literal"><span class="pre">sqlite</span></code>, replace</p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="na">sqlalchemy.url</span> <span class="o">=</span> <span class="s">sqlite:///%(here)s/learning_journal.sqlite</span>
+</pre></div>
+</div>
+<p>with</p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="na">sqlalchemy.url</span> <span class="o">=</span> <span class="s">postgres://&lt;Your Username Here&gt;@localhost:5432/learning_journal</span>
+</pre></div>
+</div>
+<p>With all these various pieces now wired together, let&#8217;s re-initialize our database.
+Keep in mind that since we&#8217;re switching to a new database, any data we&#8217;ve saved prior to now will be gone.
+This is why in <code class="docutils literal"><span class="pre">learning_journal/scripts/initializedb.py</span></code> we included these lines:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="n">transaction</span><span class="o">.</span><span class="n">manager</span><span class="p">:</span>
+        <span class="n">dbsession</span> <span class="o">=</span> <span class="n">get_tm_session</span><span class="p">(</span><span class="n">session_factory</span><span class="p">,</span> <span class="n">transaction</span><span class="o">.</span><span class="n">manager</span><span class="p">)</span>
+
+        <span class="n">entries</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">Entry</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;LJ - Day 10&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s2">&quot;Sample body text.&quot;</span><span class="p">),</span>
+                <span class="n">Entry</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;LJ - Day 11&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s2">&quot;Sample body text.&quot;</span><span class="p">),</span>
+                <span class="n">Entry</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;LJ - Day 12&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s2">&quot;Sample body text.&quot;</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="n">dbsession</span><span class="o">.</span><span class="n">add_all</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this way, upon creation of a new database we&#8217;re able to repopulate it with data we already know we want.
+We can see that our database is populated with our default data above by inspecting the db.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ psql
+psql <span class="o">(</span>9.5.3<span class="o">)</span>
+Type <span class="s2">&quot;help&quot;</span> <span class="k">for</span> help.
+
+<span class="nv">Nick</span><span class="o">=</span><span class="c1"># \l</span>
+                                                                  List of databases
+           Name       <span class="p">|</span> Owner <span class="p">|</span> Encoding <span class="p">|</span>   Collate   <span class="p">|</span>    Ctype    <span class="p">|</span> Access privileges
+------------------+-------+----------+-------------+-------------+-------------------
+ Nick             <span class="p">|</span> Nick  <span class="p">|</span> UTF8     <span class="p">|</span> en_US.UTF-8 <span class="p">|</span> en_US.UTF-8 <span class="p">|</span>
+ learning_journal <span class="p">|</span> Nick  <span class="p">|</span> UTF8     <span class="p">|</span> en_US.UTF-8 <span class="p">|</span> en_US.UTF-8 <span class="p">|</span>
+ postgres         <span class="p">|</span> Nick  <span class="p">|</span> UTF8     <span class="p">|</span> en_US.UTF-8 <span class="p">|</span> en_US.UTF-8 <span class="p">|</span>
+ template0        <span class="p">|</span> Nick  <span class="p">|</span> UTF8     <span class="p">|</span> en_US.UTF-8 <span class="p">|</span> en_US.UTF-8 <span class="p">|</span> <span class="o">=</span>c/Nick          +
+                                  <span class="p">|</span>       <span class="p">|</span>          <span class="p">|</span>             <span class="p">|</span>             <span class="p">|</span> <span class="nv">Nick</span><span class="o">=</span>CTc/Nick
+ template1        <span class="p">|</span> Nick  <span class="p">|</span> UTF8     <span class="p">|</span> en_US.UTF-8 <span class="p">|</span> en_US.UTF-8 <span class="p">|</span> <span class="o">=</span>c/Nick          +
+                                  <span class="p">|</span>       <span class="p">|</span>          <span class="p">|</span>             <span class="p">|</span>             <span class="p">|</span> <span class="nv">Nick</span><span class="o">=</span>CTc/Nick
+
+<span class="nv">Nick</span><span class="o">=</span><span class="c1"># \c learning_journal</span>
+You are now connected to database <span class="s2">&quot;learning_journal&quot;</span> as user <span class="s2">&quot;Nick&quot;</span>.
+
+<span class="nv">learning_journal</span><span class="o">=</span><span class="c1"># \dt</span>
+           List of relations
+Schema <span class="p">|</span>  Name   <span class="p">|</span> Type  <span class="p">|</span> Owner
+--------+---------+-------+-------
+public <span class="p">|</span> entries <span class="p">|</span> table <span class="p">|</span> Nick
+<span class="o">(</span><span class="m">1</span> row<span class="o">)</span>
+
+<span class="nv">learning_journal</span><span class="o">=</span><span class="c1"># SELECT * FROM entries;</span>
+ id <span class="p">|</span>    title    <span class="p">|</span>       body        <span class="p">|</span>       creation_date
+----+-------------+-------------------+----------------------------
+  <span class="m">1</span> <span class="p">|</span> LJ - Day <span class="m">10</span> <span class="p">|</span> Sample body text. <span class="p">|</span> 2016-07-14 09:27:16.674145
+  <span class="m">2</span> <span class="p">|</span> LJ - Day <span class="m">11</span> <span class="p">|</span> Sample body text. <span class="p">|</span> 2016-07-14 09:27:16.748319
+  <span class="m">3</span> <span class="p">|</span> LJ - Day <span class="m">12</span> <span class="p">|</span> Sample body text. <span class="p">|</span> 2016-07-14 09:27:16.750044
+<span class="o">(</span><span class="m">3</span> rows<span class="o">)</span>
+</pre></div>
+</div>
+<p>Once your database is back up and running, it&#8217;s back to business as usual.</p>
+</div>
+</div>
+<div class="section" id="environment-variables-and-python">
+<h2>Environment Variables and Python<a class="headerlink" href="#environment-variables-and-python" title="Permalink to this headline">¶</a></h2>
+<p>One of the benefits to having used sqlite3 is that wherever our site was deployed, Pyramid would generate a new database.
+A consequence of having switched to PostgreSQL is that our database is bound to the one we&#8217;ve set up on our local computer.
+Once deployed, our <code class="docutils literal"><span class="pre">sqlalchemy.url</span></code> in <code class="docutils literal"><span class="pre">development.ini</span></code> will be pointing to the wrong place.</p>
+<p>We could use <code class="docutils literal"><span class="pre">production.ini</span></code> to set up a <code class="docutils literal"><span class="pre">sqlalchemy.url</span></code> for a database on our production server.
+However, this only works on a static server whose location we know.
+Heroku uses its own server to host its Postgres database, whose location we do not know.
+Further, they may copy the database and move it elsewhere without our knowledge.
+We want our data to persist no matter where it goes.</p>
+<p>What we need is an <a class="reference external" href="http://www.tutorialspoint.com/unix/unix-environment.htm">Environment Variable</a>.
+This is something that will belong to whatever environment we launch our site in.
+When you use the <a class="reference external" href="https://devcenter.heroku.com/articles/heroku-postgresql#create-a-new-database">postgres add-on in Heroku</a>, an environment variable becomes available to you called <code class="docutils literal"><span class="pre">DATABASE_URL</span></code>.
+<code class="docutils literal"><span class="pre">DATABASE_URL</span></code> holds the url for your Postgres database, and will be accessible no matter what Heroku does with it.</p>
+<p>If we could create that variable on our local machine and call it into Pyramid, then we could use it in our app and be set.</p>
+<div class="section" id="making-and-seeing-environment-variables">
+<h3>Making and Seeing Environment Variables<a class="headerlink" href="#making-and-seeing-environment-variables" title="Permalink to this headline">¶</a></h3>
+<p>Environment variables live in your environment&#8217;s <code class="docutils literal"><span class="pre">bin/activate</span></code> file, as well as in your <code class="docutils literal"><span class="pre">.bashrc</span></code> and <code class="docutils literal"><span class="pre">.bash_profile</span></code> files.</p>
+<p>You&#8217;ve already seen a few. For example, your <code class="docutils literal"><span class="pre">PATH</span></code>.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ <span class="nb">echo</span> $PATH
+/Users/Nick/Documents/codefellows/courses/code401_python/pyramid_lj/bin:/Library/Frameworks/Python.framework/Versions/3.5/bin:/Users/Nick/:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/usr/texbin:/usr/local/bin:/Users/Nick/bin:/Applications/MAMP/Library/bin/:/Applications/mongodb/bin/:/Applications/Postgres.app/Contents/Versions/latest/bin
+</pre></div>
+</div>
+<p>Your <code class="docutils literal"><span class="pre">PATH</span></code> variable holds all the places that your computer will look for console commands and Python packages.
+You can inspect it using <code class="docutils literal"><span class="pre">echo</span></code> in the console.</p>
+<p>You can create a new environment variable using the <code class="docutils literal"><span class="pre">export</span></code> command.
+You define that variable with some name and attach it to some value, like a string.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ <span class="nb">export</span> <span class="nv">FOO</span><span class="o">=</span><span class="s2">&quot;BAR&quot;</span>
+<span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ <span class="nb">echo</span> <span class="nv">$F</span>OO
+BAR
+</pre></div>
+</div>
+<p>Defining an environment variable in this way will not persist that variable across different terminal instances.
+To create a lasting variable, you have to add it to your <code class="docutils literal"><span class="pre">.bashrc</span></code>, <code class="docutils literal"><span class="pre">.bash_profile</span></code>, or <code class="docutils literal"><span class="pre">$VIRTUAL_ENV/bin/activate</span></code>.
+Note, if you add a variable to <code class="docutils literal"><span class="pre">$VIRTUAL_ENV/bin/activate</span></code> it&#8217;ll only be accessible in that environment.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c1"># inside $VIRTUAL_ENV/bin/activate</span>
+...
+<span class="nb">export</span> <span class="nv">FOO</span><span class="o">=</span><span class="s2">&quot;BAR&quot;</span>
+...
+
+<span class="c1"># back to the command line, not in environment</span>
+bash-3.2$ <span class="nb">echo</span> <span class="nv">$F</span>OO
+
+bash-3.2$ <span class="nb">source</span> bin/activate
+<span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ <span class="nb">echo</span> <span class="nv">$F</span>OO
+BAR
+</pre></div>
+</div>
+</div>
+<div class="section" id="calling-environment-variables">
+<h3>Calling Environment Variables<a class="headerlink" href="#calling-environment-variables" title="Permalink to this headline">¶</a></h3>
+<p>It&#8217;s actually fairly simple to call environment variables into Python.
+<code class="docutils literal"><span class="pre">os.environ</span></code> returns a <code class="docutils literal"><span class="pre">dict</span></code>-like object whose keys are the currently-available variables.
+Pop open a <code class="docutils literal"><span class="pre">pshell</span></code> and investigate.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">key</span> <span class="o">+</span> <span class="s2">&quot; = &quot;</span> <span class="o">+</span> <span class="n">value</span><span class="p">)</span>
+   <span class="o">...</span><span class="p">:</span>
+   <span class="c1"># ... a bunch of other variables</span>
+   <span class="c1"># ...</span>
+   <span class="n">FOO</span> <span class="o">=</span> <span class="n">BAR</span>
+   <span class="c1"># ...</span>
+   <span class="c1"># ... even more variables</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;FOO&quot;</span><span class="p">]</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="s1">&#39;BAR&#39;</span>
+</pre></div>
+</div>
+<p>If we defined our <code class="docutils literal"><span class="pre">DATABASE_URL</span></code> variable in <code class="docutils literal"><span class="pre">$VIRTUAL_ENV/bin/activate</span></code>, then we could call that out too.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATABASE_URL&quot;</span><span class="p">]</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="s1">&#39;postgres://Nick@localhost:5432/learning_journal&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="environment-variables-in-pyramid">
+<h3>Environment Variables in Pyramid<a class="headerlink" href="#environment-variables-in-pyramid" title="Permalink to this headline">¶</a></h3>
+<p>What we ultimately want to do is dynamically set the <code class="docutils literal"><span class="pre">sqlalchemy.url</span></code> to the value of our <code class="docutils literal"><span class="pre">DATABASE_URL</span></code> environment variable.
+<code class="docutils literal"><span class="pre">learning_journal/__init__.py</span></code> is where our <code class="docutils literal"><span class="pre">.ini</span></code> file&#8217;s configuration gets bound to our Pyramid app.
+Before the current settings get added to the <code class="docutils literal"><span class="pre">Configurator</span></code>, we can use os.environ to bring in our environment&#8217;s <code class="docutils literal"><span class="pre">DATABASE_URL</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># __init__.py</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">pyramid.config</span> <span class="kn">import</span> <span class="n">Configurator</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">global_config</span><span class="p">,</span> <span class="o">**</span><span class="n">settings</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; This function returns a Pyramid WSGI application.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;sqlalchemy.url&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATABASE_URL&quot;</span><span class="p">]</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">Configurator</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">include</span><span class="p">(</span><span class="s1">&#39;pyramid_jinja2&#39;</span><span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">include</span><span class="p">(</span><span class="s1">&#39;.models&#39;</span><span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">include</span><span class="p">(</span><span class="s1">&#39;.routes&#39;</span><span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">scan</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">make_wsgi_app</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Because we should always try to keep code DRY (and prevent future confusion), remove the <code class="docutils literal"><span class="pre">sqlalchemy.url</span></code> keyword from <code class="docutils literal"><span class="pre">development.ini</span></code>.</p>
+<p>If we invoke <code class="docutils literal"><span class="pre">pserve</span> <span class="pre">development.ini</span></code> and navigate to the site in the browser, everything should show up the same.
+Now, when we re-deploy to Heroku, we&#8217;ll connect to whatever Postgres database they have running for our own site.</p>
+</div>
+</div>
+<div class="section" id="recap">
+<h2>Recap<a class="headerlink" href="#recap" title="Permalink to this headline">¶</a></h2>
+<p>Today&#8217;s work focused on getting set up with our own PostgreSQL database.
+We downloaded, installed, and ran Postgres, started up a database, and connected that database to our Pyramid app.
+We populated the new database with some default data, and inspected the database to ensure it contained what we expected.</p>
+<p>After ensuring that Postgres worked the way we needed, we discussed environment variables.
+We found out where they&#8217;re stored, how to create one, and how to persist one.
+Finally, we defined the <code class="docutils literal"><span class="pre">DATABASE_URL</span></code> environment variable and pulled it into our Pyramid app.
+With that as a part of our app, we nullified the need to define the <code class="docutils literal"><span class="pre">sqlalchemy.url</span></code> keyword in our <code class="docutils literal"><span class="pre">.ini</span></code> config file(s).</p>
+<p>Tonight&#8217;s work on the Learning Journal will be far lighter than previous nights.
+Your job is simply to add the <code class="docutils literal"><span class="pre">DATABASE_URL</span></code> environment variable, connect to PostgreSQL, and re-deploy to Heroku.
+Ensure that the app is complete up to this point, with thorough tests for your code.</p>
+<p>Our next hit of Pyramid will introduce a more efficient way of handling forms.
+We&#8217;ll also add User registration, authentication and authorization to our web apps.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">PostgreSQL and Working With the Environment</a><ul>
+<li><a class="reference internal" href="#postgresql">PostgreSQL</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#postgres-and-pyramid">Postgres and Pyramid</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#environment-variables-and-python">Environment Variables and Python</a><ul>
+<li><a class="reference internal" href="#making-and-seeing-environment-variables">Making and Seeing Environment Variables</a></li>
+<li><a class="reference internal" href="#calling-environment-variables">Calling Environment Variables</a></li>
+<li><a class="reference internal" href="#environment-variables-in-pyramid">Environment Variables in Pyramid</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#recap">Recap</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="graph_example.html"
+                        title="previous chapter">Graph Sample</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../schedule/week03/fri.html"
+                        title="next chapter">Friday</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../schedule/week03/fri.html" title="Friday"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="graph_example.html" title="Graph Sample"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python Dev Accelerator 2.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week03/thu.html" >Thursday</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>
