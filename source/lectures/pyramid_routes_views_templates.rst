@@ -2,7 +2,7 @@
 Pyramid Routes, Views, and Templates
 ====================================
 
-Last time we discussed the **model** part of the *MVC* application design pattern. We set up a project using the Pyramid web framework and the SQLAlchemy library for persisting our data to a database. We looked at how to define a simple model by investigating the demo model created on our behalf. 
+Last time we discussed the **model** part of the *MVC* application design pattern. We set up a project using the Pyramid web framework and the SQLAlchemy library for persisting our data to a database. We looked at how to define a simple model by investigating the demo model created on our behalf.
 
 Finally, we briefly covered how we can interact with this model at the command line with ``pshell`` to make sure we've got it right. Now we move forward toward displaying the data that we save to the database.
 
@@ -28,7 +28,7 @@ If you recall from the HTTP server that we built last week, internet software is
 An HTTP request arrives at a server through the magic of a **URL**
 
 .. code-block:: bash
-    
+
     http://www.codefellows.org/courses/code-401/advanced-software-development-in-python
 
 Let's break that up into its constituent parts:
@@ -51,7 +51,7 @@ Routes in Pyramid
 
 Most web frameworks now call the *path* a **route**, and provide a way of matching *routes* to the code that will be run to handle requests. In our Pyramid scaffold, routes are handled as *configuration* and are included in the *main* function in ``__init__.py``:
 
-.. code-block:: python 
+.. code-block:: python
 
     # __init__.py
     def main(global_config, **settings):
@@ -62,19 +62,19 @@ Most web frameworks now call the *path* a **route**, and provide a way of matchi
 That ``config.include`` function will look in the ``routes.py`` module in the same directory for a function called ``includeme``, which tells Pyramid what routes to add (amongst other things):
 
 .. code-block:: python
-    
+
     # routes.py
     def includeme(config):
         # ...
         config.add_route('home', '/')
 
-Our Pyramid scaffold created a sample route for us, using the ``add_route`` method of the Configurator class. The ``add_route`` method has two required arguments: a **name** and a **pattern**. In our sample route, the *name* is ``'home'``, and the *pattern* is ``'/'``. 
+Our Pyramid scaffold created a sample route for us, using the ``add_route`` method of the Configurator class. The ``add_route`` method has two required arguments: a **name** and a **pattern**. In our sample route, the *name* is ``'home'``, and the *pattern* is ``'/'``.
 
 When a request comes in to a Pyramid application, the framework looks at all the *routes* that have been configured. One by one, in order, it tries to match the path of the incoming request against the *pattern* of the route. As soon as a *pattern* matches the *path* from the incoming request, that route is used and no further matching is performed. If no route is found that matches, then the request will automatically get a **404 Not Found** error response.
 
 In our sample app, we have one sample *route* named ``'home'``, with a pattern of ``'/'``. This means that any request that comes in for ``/`` will be matched to this route, and any other request will be **404**.
 
-In a very real sense, the *routes* defined in an application *are* the public API. Any route that is present represents something the user can do. Any route that is not present is something the user cannot do. 
+In a very real sense, the *routes* defined in an application *are* the public API. Any route that is present represents something the user can do. Any route that is not present is something the user cannot do.
 
 You can use the proper definition of routes to help conceptualize what your app will do. What routes might we want for a learning journal application? What will our application do?
 
@@ -85,7 +85,7 @@ Let's add routes for our application. Open ``learning_journal/routes.py``.
 
 For our list page, the existing ``home`` route will do fine, so leave it as is. Add the following two routes:
 
-.. code-block:: python 
+.. code-block:: python
 
     # in learning_journal/routes.py
 
@@ -93,13 +93,13 @@ For our list page, the existing ``home`` route will do fine, so leave it as is. 
     config.add_route('detail', '/journal/{id:\d+}')
     config.add_route('action', '/journal/{action}')
 
-* The ``detail`` route will serve a single journal entry, identified by the provided ``id``. 
+* The ``detail`` route will serve a single journal entry, identified by the provided ``id``.
 * The ``action`` route will serve ``create`` and ``edit`` actions, which will be encapsulated in views, depending on the ``action`` specified.
 
 In both cases, we want to capture a portion of the matched path to use information it provides. In a pattern, you can capture a *path segment replacement marker*, a valid Python symbol surrounded by curly braces:
 
 .. code-block:: python
-    
+
     /home/{foo}/
 
 If you want to match a particular pattern, add a *regular expression*. In the following example, we specify that we want digits only with ``\d+``:
@@ -110,7 +110,7 @@ If you want to match a particular pattern, add a *regular expression*. In the fo
 
 Matched path segments are captured in a ``matchdict``:
 
-.. code-block:: python 
+.. code-block:: python
 
     # pattern           # actual url    # matchdict
     /journal/{id:\d+}   /journal/27     {'id': '27'}
@@ -192,7 +192,7 @@ Note what happens if you visit a URL that isn't specified in our routes.
 Now that we've got temporary views that work, we can fix them to get the information from our database. We'll begin with the list view, which will list our individual Learning Journal entries. We need some code that will fetch all the journal entries we've written, in reverse order (newest at the top), and hand that collection back for rendering.
 
 .. code-block:: python
-    
+
     # in learning_journal/views/default.py
     # ...
 
@@ -237,22 +237,22 @@ Then try viewing the list page and the entry page.
 
 * http://localhost:6543/
 * http://localhost:6543/journal/1
-  
+
 What happens when you request an entry with an id that isn't in the database?
 
 * http://localhost:6543/journal/100
-  
+
 The MVC View
 ============
 
 Again, back to the *Model-View-Controller* pattern. We've built a *model* and we've created some *controllers* that use it. In Pyramid, we call *controllers* **views** and they are callables that take *request* as an argument. Let's turn to the last piece of the *MVC* pattern, the *view*.
 
-Presenting Data 
+Presenting Data
 ---------------
 
 The job of the *view* in the *MVC* pattern is to present data in a format that is readable to the user of the system. There are many ways to present data. Some are readable by humans (e.g. tables, charts, graphs, HTML pages, text files), while others are more for machines (e.g. xml files, csv, json). Which of these formats is the *right one* depends on your purpose. What is the purpose of our learning journal?
 
-Pyramid Renderers 
+Pyramid Renderers
 -----------------
 
 In Pyramid, the job of presenting data is performed by a *renderer*. So we can consider the Pyramid **renderer** to be the *view* in our *MVC* app.
@@ -284,8 +284,8 @@ Jinja2 Template Basics
 We'll start with the absolute basics. Fire up an iPython interpreter in your virtual environment.
 
 .. code-block:: bash
-    
-    (pyramid_lj) bash-3.2$ ipython 
+
+    (pyramid_lj) bash-3.2$ ipython
     ...
     In [1]:
 
@@ -301,7 +301,7 @@ A template is constructed with a simple string:
 
     In [2]: t1 = Template("Hello {{ name }}, how are you")
 
-Here, we've simple typed the string directly, but it is more common to build a template from the contents of a *file*. 
+Here, we've simple typed the string directly, but it is more common to build a template from the contents of a *file*.
 
 Notice that our string has some odd stuff in it: ``{{name}}``. This is called a *placeholder*, and when the template is *rendered* it is replaced. We can see that if we call ``t1``'s ``render`` method, providing *context* for ``{{name}}``:
 
@@ -328,7 +328,7 @@ Dictionaries passed in as part of the *context* can be addressed with either sub
        ...:           'last_name': 'Herbert'}
     In [7]: t2 = Template("{{ person.last_name }}, {{ person['first_name'] }}")
     In [8]: t2.render(person=person)
-    Out[8]: 'Herbert, Frank'    
+    Out[8]: 'Herbert, Frank'
 
 * Jinja2 will try the *correct* way first (attr for dotted, item for subscript).
 * If nothing is found, it will try the opposite.
@@ -376,7 +376,7 @@ Logical `control structures <http://jinja.pocoo.org/docs/dev/templates/#list-of-
     In [19]: t6.render(list=['a', 'b', 'c', 'd', 'e'])
     Out[19]: '\na, b, c, d, e, '
 
-Any control structure introduced in a template **must** be paired with an explicit closing tag (``{% for %} ... {% endfor %}``, ``{% if %} ... {% elif %} ... {% else %} ... {% endif %}``). 
+Any control structure introduced in a template **must** be paired with an explicit closing tag (``{% for %} ... {% endfor %}``, ``{% if %} ... {% elif %} ... {% else %} ... {% endif %}``).
 
 Remember, although template tags like ``{% for %}`` or ``{% if %}`` look a lot like Python, *they are not*. The syntax is specific and must be followed correctly.
 
@@ -422,7 +422,7 @@ There's more that Jinja2 templates can do, but it will be easier to introduce yo
 
 We have a Pyramid ``view`` that returns a single entry. Let's create a template to show it. In ``learning_journal/templates/`` create a new file ``detail.jinja2``:
 
-.. code-block:: python
+.. code-block:: html
 
     <article>
         <h1>{{ entry.title }}</h1>
@@ -434,6 +434,8 @@ We have a Pyramid ``view`` that returns a single entry. Let's create a template 
 
 Then wire it up to the detail view in ``learning_journal/views/default.py``:
 
+.. code-block:: python
+
     # views.py
     @view_config(route_name='detail', renderer='../templates/detail.jinja2')
     def view(request):
@@ -443,11 +445,11 @@ Now we should be able to see some rendered HTML for our journal entry details. S
 
 .. code-block:: bash
 
-    (pyramid_lj) bash-3.2$ pserve development.ini 
+    (pyramid_lj) bash-3.2$ pserve development.ini
     Starting server in PID 53587.
     serving on http://127.0.0.1:6543
 
-Then try viewing an individual journal entry: `http://localhost:6543/journal/1`_
+Then try viewing an individual journal entry: http://localhost:6543/journal/1
 
 Let's now create a template such that our index shows a list of journal entries. In ``learning_journal/templates/`` create a new file ``list.jinja2``:
 
@@ -496,7 +498,7 @@ We can now see our list page too. Let's try starting the server:
 
 .. code-block:: bash
 
-    (pyramid_lj) bash-3.2$ pserve development.ini 
+    (pyramid_lj) bash-3.2$ pserve development.ini
     Starting server in PID 53587.
     serving on http://127.0.0.1:6543
 
@@ -508,7 +510,7 @@ Jinja2 allows you to combine templates using something called `template inherita
 
 Let's make a template for the basic outer structure of our pages. The following code will serve as our page template, and will go into a file called ``layout.jinja2``. Save that file to your templates directory. Here's the code:
 
-.. code-block:: python
+.. code-block:: html
 
     <!DOCTYPE html>
     <html lang="en">
@@ -533,7 +535,7 @@ The important part here is the ``{% block body %}...{% endblock %}`` expression.
 
 Let's update our detail and list templates:
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     {% extends "layout.jinja2" %}
     {% block body %}
@@ -544,7 +546,7 @@ Start the server so we can see the result.
 
 .. code-block:: bash
 
-    (pyramid_lj) bash-3.2$ pserve development.ini 
+    (pyramid_lj) bash-3.2$ pserve development.ini
     Starting server in PID 53587.
     serving on http://127.0.0.1:6543
 
@@ -583,7 +585,7 @@ Once you have a static view configured, you can use assets in that location in t
 
 Add the following to our ``layout.jinja2`` template:
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     <head>
       <!-- ... -->
@@ -602,7 +604,7 @@ We have a site that allows us to view a list of journal entries. We can also vie
 User Input
 ----------
 
-In HTML websites, the traditional way of getting input from users is via `HTML forms <https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms>`_. Forms use *input elements* to allow users to enter data, pick from drop-down lists, or choose items via checkbox or radio button. 
+In HTML websites, the traditional way of getting input from users is via `HTML forms <https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms>`_. Forms use *input elements* to allow users to enter data, pick from drop-down lists, or choose items via checkbox or radio button.
 
 It is possible to create plain HTML forms in templates and use them with Pyramid. It's a lot easier, however, to work with a *form library* to create forms, render them in templates, and interact with data sent by a client.
 
@@ -617,7 +619,7 @@ We'll be using a form library called `WTForms <http://wtforms.readthedocs.org/en
 
 Then, in the root directory for this project, re-install our package to download and install the new dependency.
 
-.. code-block:: bash-3
+.. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pip install -e .
 
@@ -649,7 +651,7 @@ Add a new file called ``forms.py`` to our learning_journal package in ``learning
 Just like we imported our ``Entry`` model into ``learning_journal/models/__init__.py``, we have to give our app access to our ``EntryCreateForm`` form model. So add the following line to ``__init__.py``, right under where you import your ``Entry`` model.
 
 .. code-block:: python
-    
+
     # in learning_journal/models/__init__.py
     # ...
     from .entries import Entry
@@ -663,7 +665,7 @@ Next, we need to add a new view that users this form to create a new entry. Add 
     # add these imports
     from pyramid.httpexceptions import HTTPFound
     from ..models import (
-        Entry, 
+        Entry,
         EntryCreateForm,
     )
 
@@ -685,7 +687,7 @@ Next, we need to add a new view that users this form to create a new entry. Add 
 We already have a route that connects here. Let's test it. Start your server and try connecting to the ``action`` route at http://localhost:6543/journal/create. You should see something like this:
 
 .. code-block:: python
-    
+
     {'form': <learning_journal.models.forms.EntryCreateForm object at 0x104ded2e8>, 'action': 'create'}
 
 Finally, we need to create a template that will render our form. Add a new template called ``edit.jinja2`` in ``learning_journal/templates/``
@@ -722,7 +724,7 @@ Now restart your server and look at the results, at http://localhost:6543/journa
 
 Great! Now you can add new entries to your journal. But in order to do so, you have to hand-enter the URL. You should add a new link in the UI somewhere that helps you get there more easily. Add the following to ``list.jinja2``:
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     {% extends "layout.jinja2" %}
     {% block body %}
