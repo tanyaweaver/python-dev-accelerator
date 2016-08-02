@@ -307,7 +307,7 @@ We of course have to create the database that we want to use before we can use i
 
 .. code-block::  bash
 
-    (pyramid_lj) bash-3.2$ createdb testapp
+    (pyramid_lj) bash-3.2$ createdb learning_journal
 
 We must also alter our ``development.ini`` file, changing the ``sqlalchemy.url`` parameter to point to our spankin'-new ``learning_journal`` database.
 

@@ -25,7 +25,7 @@ you'll need and set them up.
 DO NOT follow through with step 3 of the tutorial, "Prepare the app".  You will
 do that tomorrow.
 
-You will need this for your assignment Tuesday, so ensure that you complete
+You will need this for your assignment Monday, so ensure that you complete
 this assignment on time.
 
 Submitting Your Assignment

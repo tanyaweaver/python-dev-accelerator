@@ -18,10 +18,10 @@
 
     .. rst-class:: build
 
-    * A *Doubly-Linked List* consists of *Nodes*, each of which contains some data and pointers to the next and previous nodes. 
+    * A *Doubly-Linked List* consists of *Nodes*, each of which contains some data and pointers to the next and previous nodes.
     * Self-referential (naturally recusive)
-           
-           
+
+
 .. slide:: Motivation
     :level: 2
 
@@ -29,7 +29,7 @@
 
     * Similar benefits as the singly-linked list
     * Allows for traversal forward AND backward
-    * **When might I actually use this?** 
+    * **When might I actually use this?**
         - traversing through pages of blog posts
         - images in a slider
 
@@ -62,14 +62,14 @@
         - note: pop() is a remove-and-return operation
 
 
-===========
+==================
 Doubly-Linked List
-===========
+==================
 
 Definition
 ==========
 
-* A *Doubly-Linked List* consists of *Nodes*, each of which contains some data and pointers to the next and previous nodes. 
+* A *Doubly-Linked List* consists of *Nodes*, each of which contains some data and pointers to the next and previous nodes.
 * Self-referential (naturally recusive)
 
 .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Doubly-linked-list.svg/610px-Doubly-linked-list.svg.png
@@ -81,7 +81,7 @@ Motivation
 
 * Similar benefits as the singly-linked list
 * Allows for traversal forward AND backward
-* **When might I actually use this?** 
+* **When might I actually use this?**
     - traversing through pages of blog posts
     - images in a slider
 
@@ -96,8 +96,8 @@ Attributes
 * Doubly-Linked List:
     - head
     - tail
-      
-Operations 
+
+Operations
 ==========
 
 * add(value, next=head, previous)
