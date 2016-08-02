@@ -25,9 +25,18 @@ Feel free to test your code with the same tests performed by Code Wars.
 Submitting Your Work
 ====================
 
-Submit a screenshot to Canvas of your code solution with all tests passing.
-Use the comment box in Canvas to talk about your thought process, as well as any difficulty you had with this code kata.
+Create a ``sort-cards`` branch in your ``code-katas`` repository.
+When your solution passes the tests at Code Wars, copy your code into a script
+on the ``sort-cards`` branch.
 
-If you complete the stretch goal, submit the link to your repo (with all tests
-passing) and comment on how your solution is different from the one submitted
-to Code Wars.
+**IF YOU COMPLETE THE STRETCH GOAL** add to your solution file the second solution
+using the Priority Queue.
+
+Add documentation about your code in the repo's ``README.md``.
+Finally, copy the tests administered by Code Wars into a ``test_sort_cards.py`` file.
+
+After you've copied your code solution over into GitHub, send a pull request
+to your master branch.
+**Submit the URL of that pull request to Canvas.**
+
+Use the comment box in Canvas to talk about your thought process, as well as any difficulty you had with this code kata.
