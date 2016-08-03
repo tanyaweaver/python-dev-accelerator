@@ -14,19 +14,11 @@ Objectives
 ==========
 
 * Learn about the ``heap`` data structure and its properties
-.. * Understand how to start a Pyramid project
-.. * Get familiar with how Pyramid works at a high level
-.. * Learn the way that database sessions are connected to the request/response cycle in Pyramid
 * Establish a model for testing database models within the world of pytest
 
 Readings
 ========
 
-.. These readings will support the work you do on Wednesday.
-
-.. * `Request Processing in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/router.html>`_
-.. * `Routes and URL Dispatch in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/urldispatch.html>`_
-.. * `View Callables in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/views.html>`_
 * `Renderers in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/renderers.html>`_
 * `Template Handling in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/templates.html>`_
 * `Testing in Pyramid <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/testing.html>`_
@@ -44,36 +36,6 @@ Concepts
    /lectures/max_heap_example
    /lectures/pyramid_day2
 
-.. * Getting Started with Pyramid
-
-..     - Installing Pyramid
-..     - Additional Packages Used by Pyramid
-..     - Writing a "hello world" app
-..     - Using the ``pcreate`` function to create a scaffold
-..     - Using the ``pshell`` command to work interactively
-
-.. * Understanding the layout of a Pyramid Project
-
-..     - What files are created in a scaffold
-..     - Pyramid apps as "distributions"
-..     - Pyramid's use of "entry points"
-
-.. * Database Sessions
-
-..     - Scoped sessions and the request/response cycle
-..     - Understanding session management and transactions
-
-.. * Testing with Databases, pytest and fixtures.
-
-..     - Strategies for testing "models"
-..     - Creating fixtures to manage database sessions
-..     - Differences between testing and running
-
-
-.. Demo
-.. ====
-
-.. * :download:`Pyramid Database Test Fixtures </downloads/pyramid_db_fixtures.py>`
 
 Assignments
 ===========
@@ -83,6 +45,3 @@ Assignments
 * :doc:`/assignments/project_02_idea`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/blog_post_outline` (due Friday)
-.. * :doc:`/assignments/learning_journal_1`
-.. * :doc:`/assignments/intro_to_jinja2`
-.. * :doc:`/assignments/learning_journal_mockup` (due Thursday)
