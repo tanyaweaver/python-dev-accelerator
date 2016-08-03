@@ -14,11 +14,11 @@ Tasks
 =====
 
 Create a new branch for your data structures repository.
-Call it "bst".
+Call it ``bst``.
 You will use this branch to do your work for this assignment.
 
 Add a new file to your data-structures repository.
-Call it bst.py.
+Call it ``bst.py``.
 
 In this file, implement a Binary Search Tree as a Python class (or classes).
 Your tree should have the following methods:
@@ -82,9 +82,9 @@ Expand your README to include notes about the BST you've constructed. Include an
 Submitting Your Work
 ====================
 
-When you've completed your work and all your tests are passing, submit a pull request from the bst branch back to master.
+When you've completed your work and all your tests are passing, submit a pull request from the ``bst`` branch back to ``master``.
 Copy the URL for that pull request and submit it using the URL input.
-When that is done, you may merge your branch back to master.
+When that is done, you may merge your branch back to ``master``.
 However, do not delete your working branch until your assignment has been graded.
 
 As usual, use the comment function to submit questions, comments and reflections on the work you've done here.
