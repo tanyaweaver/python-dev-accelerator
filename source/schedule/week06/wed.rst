@@ -13,11 +13,24 @@ Wednesday
 Objectives
 ==========
 
+* Understand how relationships between data models are handled in Django
+* Learn about how Django accesses files 
+
 Readings
 ========
 
+Django Views
+------------
+
+.. include:: /readings/django_readings.rst
+    :start-line: 34
+    :end-line: 54
+
 Review
 ======
+
+* Traversing the Binary Search Tree
+* Testing in Django
 
 Concepts
 ========
@@ -25,17 +38,26 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    /lectures/stats_day3
-    /lectures/intro_to_python_9_generators
-    /lectures/django_testing
+    .. /lectures/stats_day3
+    .. /lectures/intro_to_python_9_generators
+    .. /lectures/django_testing
+
+    /lectures/django_relationships
+    /lectures/django_files
+
+* Binary Search Tree: Node Deletion
 
 Demo
 ====
 
+Managing relationships in the Django ORM
+
 Assignments
 ===========
 
-* :doc:`/assignments/bst_2_traversal`
-* :doc:`/assignments/statistics_problem_set3`
+.. * :doc:`/assignments/statistics_problem_set3`
+.. * :doc:`/assignments/django_1_data_model`
+
+* :doc:`/assignments/bst_3_delete`
 * :doc:`/assignments/daily_lj_entry`
-* :doc:`/assignments/django_1_data_model` (Due Friday)
+* :doc:`/assignments/django_2_registration`

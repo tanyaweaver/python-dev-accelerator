@@ -10,9 +10,16 @@ Friday
 
     This document contains no slides.
 
+Concepts
+========
+
+Code Fellows Professional Development Workshop
+
 Assignments
 ===========
 
-* :doc:`/assignments/django_1_data_model`
+.. * :doc:`/assignments/bst_3_delete` (Due Monday)
+.. * :doc:`/assignments/django_1_data_model`
+
+* Wrap up this week's Django assignments by Monday
 * :doc:`/assignments/daily_lj_entry`
-* :doc:`/assignments/bst_3_delete` (Due Monday)

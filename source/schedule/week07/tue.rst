@@ -19,7 +19,7 @@ Readings
 Review
 ======
 
-* Django Models (the Photo and Album)
+.. * Django Models (the Photo and Album)
 
 Concepts
 ========
@@ -27,17 +27,17 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    /lectures/django_views
+    .. /lectures/django_views
 
 Demo
 ====
 
-Deploying a basic WSGI app to AWS
+.. Deploying a basic WSGI app to AWS
 
 Assignments
 ===========
 
-* :doc:`/assignments/django_2_registration`
-* :doc:`/assignments/aws_account`
+.. * :doc:`/assignments/django_2_registration`
+.. * :doc:`/assignments/aws_account`
+.. * :doc:`/assignments/bst_4_balancing` (Due Wednesday)
 * :doc:`/assignments/daily_lj_entry`
-* :doc:`/assignments/bst_4_balancing` (Due Wednesday)

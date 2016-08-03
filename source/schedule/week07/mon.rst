@@ -16,18 +16,18 @@ Objectives
 Readings
 ========
 
-Django Views
-------------
+.. Django Views
+.. ------------
 
-.. include:: /readings/django_readings.rst
-    :start-line: 34
-    :end-line: 54
+.. .. include:: /readings/django_readings.rst
+..     :start-line: 34
+..     :end-line: 54
 
 Review
 ======
 
-* Node Deletion in the Binary Search Tree
-* Django Models (the ``ImagerProfile``)
+.. * Node Deletion in the Binary Search Tree
+.. * Django Models (the ``ImagerProfile``)
 
 Concepts
 ========
