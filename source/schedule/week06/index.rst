@@ -10,7 +10,7 @@ Week Six
 
     This document contains no slides.
 
-The theme for the week is statistics.
+The themes for the week are Django and Binary Search Trees.
 
 .. toctree::
    :maxdepth: 1
