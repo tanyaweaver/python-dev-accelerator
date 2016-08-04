@@ -27,11 +27,11 @@ Readings
 
 * Walk through how to add and insert nodes to a binary search tree at `VisuAlgo <http://visualgo.net/bst>`_
 * `Travis CI Tutorial: Getting Started <https://www.raywenderlich.com/109418/travis-ci-tutorial>`_
+* Code School's `Try Django Tutorial <http://campus.codeschool.com/courses/try-django/contents>`_
 
 .. include:: /readings/django_readings.rst
     :start-line: 17
     :end-line: 29
-
 
 
 Review
