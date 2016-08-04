@@ -59,5 +59,5 @@ Assignments
 .. * :doc:`/assignments/django_1_data_model`
 
 * :doc:`/assignments/bst_3_delete`
-* :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/django_2_registration`
+* :doc:`/assignments/daily_lj_entry`

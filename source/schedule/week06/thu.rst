@@ -16,6 +16,9 @@ Objectives
 Readings
 ========
 
+- `Writing Views in Django <https://docs.djangoproject.com/en/1.9/topics/http/views/>`_
+- (Read *ONLY!* Don't *do* this yet) `Deploying a Django App to Amazon AWS <https://ashokfernandez.wordpress.com/2014/03/11/deploying-a-django-app-to-amazon-aws-with-nginx-gunicorn-git/>`_
+
 Review
 ======
 
