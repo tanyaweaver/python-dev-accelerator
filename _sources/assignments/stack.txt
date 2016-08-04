@@ -18,10 +18,10 @@ For this assignment, you will add the implementation of a `stack`_ to your
 Tasks
 =====
 
-The Stack class should be in a file called stack.py and the class should be
+The Stack class should be in a file called ``stack.py`` and the class should be
 called Stack.  This class should implement two methods:
 
-* **push(value)** - Adds a value to the stack. The parameter is the valute to
+* **push(value)** - Adds a value to the stack. The parameter is the value to
   be added to the stack.
 * **pop()** - Removes a value from the stack and returns that value.  If the
   stack is empty, attempts to call pop should raise an appropriate Python
@@ -41,18 +41,18 @@ the methods that will support them. Be thorough in your tests, test failure
 modes as well as successes. Tests are as much a part of this assignment as the
 stack itself.
 
-Update the repository README with information about the Stack you implemented,
+Update the repository ``README.md`` with information about the Stack you implemented,
 including any resources or collaborations you used.
 
 Submitting Your Work
 ====================
 
-Work on a branch in your github repository.  When you are done, and all tests
-are passing, open a pull request from your stack branch back to the master
+Work on a branch in your GitHub repository.  When you are done, and all tests
+are passing, open a pull request from your ``stack`` branch back to the ``master``
 branch of your repository.  Submit the URL for that pull request.
 
 Once you have submitted the assignment, you may merge the pull request back to
-master.  I'll still be able to interact with it properly.
+``master``.  I'll still be able to interact with it properly.
 
 Use the comment feature to add any questions or comments you come up with while
 working on this assignment.

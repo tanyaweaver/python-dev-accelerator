@@ -82,7 +82,7 @@ If you use git status you'll see all of the new files that were just created in 
 
 This project root directory will contain a bunch of files that contain metadata and operational instructions for our application:
 
-.. code-block:: bash
+.. code-block:: text
 
     (pyramid_lj) bash-3.2$ tree .
 

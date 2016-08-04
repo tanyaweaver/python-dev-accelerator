@@ -181,10 +181,11 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<span class="admonition-arrays"></span><span class="admonition-base-definition-and-operations"></span><span class="admonition-motivation"></span><span class="admonition-attributes"></span><span class="admonition-implementation"></span><span class="admonition-implementation-node"></span><span class="admonition-implementation-array"></span><span class="admonition-new-n"></span><span class="admonition-set-a-i-v"></span><span class="admonition-get-a-i"></span><span class="admonition-size-a"></span><span class="admonition-remove-a-i"></span><div class="section" id="arrays">
+<div class="section" id="arrays">
 <h1>Arrays<a class="headerlink" href="#arrays" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="motivation">
 <h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<div class="left container">
 <ul class="simple">
 <li>Take advantage of contiguous memory to organize fixed-width groups of bits (data) in a list.</li>
 <li>In the most basic version, it cannot be changed (immutable). A number of memory slots are allocated and filled with data</li>
@@ -192,9 +193,11 @@ div.nboutput  > :nth-child(2).stderr {
 <li>Random access to data</li>
 </ul>
 </div>
+</div>
 <div class="section" id="base-definition-and-operations">
 <h2>Base Definition and Operations<a class="headerlink" href="#base-definition-and-operations" title="Permalink to this headline">¶</a></h2>
 <p>Ignoring size, an array may be seen as a data type with the following operations</p>
+<div class="left container">
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">new(N)</span></code>: create a new array of length <code class="docutils literal"><span class="pre">N</span></code></li>
 <li><code class="docutils literal"><span class="pre">set(A,</span> <span class="pre">i,</span> <span class="pre">v)</span></code>: in array <code class="docutils literal"><span class="pre">A</span></code> set the value at index <code class="docutils literal"><span class="pre">i</span></code> to <code class="docutils literal"><span class="pre">v</span></code></li>
@@ -202,17 +205,24 @@ div.nboutput  > :nth-child(2).stderr {
 <li><code class="docutils literal"><span class="pre">size(A)</span></code>: return the size/length of the array</li>
 <li><code class="docutils literal"><span class="pre">remove(A,</span> <span class="pre">i)</span></code>: removes a value from the array, maintaining array size</li>
 </ul>
+</div>
 <p>where <code class="docutils literal"><span class="pre">i</span></code> is a numeric index, <code class="docutils literal"><span class="pre">v</span></code> is a value, and <code class="docutils literal"><span class="pre">A</span></code> is an array.</p>
 </div>
 <div class="section" id="attributes">
 <h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<div class="left container">
 <ul class="simple">
 <li>index: a position in the array</li>
 <li>value: an element in the array</li>
 </ul>
 </div>
+</div>
 <div class="section" id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>We will implement the array with a container (node) for one item, and an array class to hold all the items.</p>
+<div class="section" id="implementing-the-node">
+<h3>Implementing the Node<a class="headerlink" href="#implementing-the-node" title="Permalink to this headline">¶</a></h3>
+<p>First, a container for one item:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The keeper of individual data&quot;&quot;&quot;</span>
@@ -221,40 +231,53 @@ div.nboutput  > :nth-child(2).stderr {
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Display the data in this node&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-
-<span class="k">class</span> <span class="nc">Array</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="implementing-the-array">
+<h3>Implementing the Array<a class="headerlink" href="#implementing-the-array" title="Permalink to this headline">¶</a></h3>
+<p>Then, initialize the arrray class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Array</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a new Array object, ready for filling!&quot;&quot;&quot;</span>
         <span class="n">container</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_container</span> <span class="o">=</span> <span class="n">container</span>
-
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get the value of the item at the given index&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="s2">&quot;value&quot;</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
-        <span class="k">return</span> <span class="s2">&quot;None&quot;</span>
-
-    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set the item at the given index to the given value&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
-            <span class="n">new_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_node</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-
-    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Remove the value at the given index&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Display the current state of the array&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">([</span><span class="n">node</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">None</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">])</span>
-
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the size of the array&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Get, set, and remove values by index:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the value of the item at the given index&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="s2">&quot;value&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+    <span class="k">return</span> <span class="s2">&quot;None&quot;</span>
+
+<span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set the item at the given index to the given value&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+        <span class="n">new_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_node</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Remove the value at the given index&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Query size and represent the array:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Display the current state of the array&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">([</span><span class="n">node</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">None</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the size of the array&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-our-array">
+<h2>Using Our Array<a class="headerlink" href="#using-our-array" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="new-n">
 <h3>new(<code class="docutils literal"><span class="pre">N</span></code>)<a class="headerlink" href="#new-n" title="Permalink to this headline">¶</a></h3>
 <p>Create a new empty array of length <code class="docutils literal"><span class="pre">N</span></code>.</p>
@@ -313,6 +336,11 @@ div.nboutput  > :nth-child(2).stderr {
 <li><a class="reference internal" href="#base-definition-and-operations">Base Definition and Operations</a></li>
 <li><a class="reference internal" href="#attributes">Attributes</a></li>
 <li><a class="reference internal" href="#implementation">Implementation</a><ul>
+<li><a class="reference internal" href="#implementing-the-node">Implementing the Node</a></li>
+<li><a class="reference internal" href="#implementing-the-array">Implementing the Array</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-our-array">Using Our Array</a><ul>
 <li><a class="reference internal" href="#new-n">new(<code class="docutils literal"><span class="pre">N</span></code>)</a></li>
 <li><a class="reference internal" href="#set-a-i-v">set(<code class="docutils literal"><span class="pre">A,</span> <span class="pre">i,</span> <span class="pre">v</span></code>)</a></li>
 <li><a class="reference internal" href="#get-a-i">get(<code class="docutils literal"><span class="pre">A,</span> <span class="pre">i</span></code>)</a></li>

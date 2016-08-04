@@ -31,8 +31,8 @@ Submitting Your Work
 As you read, make note of your questions, comments and concerns.  Enter these
 as your submission for this assignment.
 
-When you are finished with your readings, take the HTTP Protocol Quiz in Canvas
-to be sure you got the important bits.
+.. When you are finished with your readings, take the HTTP Protocol Quiz in Canvas
+.. to be sure you got the important bits.
 
 .. _this introduction to the HTTP Protocol: http://www.jmarshall.com/easy/http/
 .. _Internet Protocols: https://pymotw.com/2/internet_protocols.html

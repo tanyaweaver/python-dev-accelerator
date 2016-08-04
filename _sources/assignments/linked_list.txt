@@ -20,17 +20,17 @@ Armed with this knowledge, implement a singly-linked list in Python:
 Tasks
 =====
 
-Create a github repository, call it data-structures.
+Create a GitHub repository, call it ``data-structures``.
 
-Add to the repository a README that explains that it will hold sample code for
+Add to the repository a ``README.md`` that explains that it will hold sample code for
 a number of classic data structures implemented in Python. Be sure to include a
-section of the README to list resources or collaborations you used in
+section of the ``README.md`` to list resources or collaborations you used in
 completing your data structures assignments.
 
 When this preliminary work is finished, commit your changes and make a new
-branch in your repository called `linked_list`.
+branch in your repository called ``linked_list``.
 
-Check out your new branch. Add a Python module called linked_list.py
+Check out your new branch. Add a Python module called ``linked_list.py``
 
 In that module, write the required Python class(es) to implement a linked list.
 The list class should be named LinkedList.  Your list implementation should

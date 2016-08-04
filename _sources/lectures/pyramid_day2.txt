@@ -286,7 +286,7 @@ Jinja2 templates are rendered with a *context*. A Pyramid *view* returns a dicti
 
 Just like we did in the command line, we can use placeholders and feed data to those placeholders through the ``return`` statement of our ``detail_view``:
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     # templates/detail.jinja2
     <!DOCTYPE html>
@@ -303,7 +303,7 @@ Just like we did in the command line, we can use placeholders and feed data to t
         </body>
     </html>
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     # views.py
     def detail_view(request):
@@ -315,7 +315,7 @@ Just like we did in the command line, we can use placeholders and feed data to t
 
 The *request* object is also placed in the context by Pyramid *by default*. ``request`` has a method ``route_url`` that will create a URL for a named route and an attribute ``url`` that will create a URL for the current page. This allows you to include URLs in your template without needing to know exactly what they will be. This process is called *reversing*, since it's a bit like a reverse phone book lookup.
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     <!DOCTYPE html>
     <html>
@@ -334,7 +334,7 @@ The *request* object is also placed in the context by Pyramid *by default*. ``re
 
 Let's now create a template such that our index shows a list of journal entries, showing only the title and the date of creation. In ``learning_journal_basic/templates/`` create a new file ``list.jinja2``:
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     <!DOCTYPE html>
     <html>
@@ -358,7 +358,7 @@ Let's now create a template such that our index shows a list of journal entries,
 
 It's worth taking a look at a few specifics of this template.
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     {% for entry in entries %}
     ... # stuff here
@@ -368,7 +368,7 @@ Pyramid has *control structures* just like Python, however every ``for`` loop an
 
 Let's look at another aspect of the same template.
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     <a href="{{ request.route_url('detail', id=entry.id) }}">{{ entry.title }}</a>
 
@@ -412,7 +412,7 @@ Jinja2 allows you to combine templates using something called `template inherita
 
 Let's make a template for the basic outer structure of our pages. The following code will serve as our page template, and will go into a file called ``layout.jinja2``. Save that file to your ``templates`` directory. Here's the code:
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     <!DOCTYPE html>
     <html lang="en">
@@ -447,7 +447,7 @@ The important part here is the ``{% block body %}...{% endblock %}`` expression.
 
 Let's update our ``detail`` and ``list`` templates:
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     {% extends "layout.jinja2" %}
     {% block body %}
@@ -496,7 +496,7 @@ Once you have a static view configured, you can use assets in that location in t
 
 Add the following to your ``layout.jinja2`` template:
 
-.. code-block:: python
+.. code-block:: html+jinja
 
     <head>
       # stuff that was here before
@@ -551,7 +551,7 @@ Our scaffold provided for us a ``tests.py`` file. Let's inspect it.
             res = self.testapp.get('/', status=200)
             self.assertTrue(b'Pyramid' in res.body)
 
-We use the ``unittest`` package provided by ``pytest``, which was specified in our ``setup.py`` file in the ``tests_require`` list.
+We use the ``unittest`` module, which is part of the Python standard library.
 
 ``unittest`` comes with a ``TestCase`` object that we can inherit from and modify. When we inherit from ``TestCase``, we get access to a ton of ``asserts``, such as the ``assertEqual`` and ``assertTrue`` seen here, as well as functionality for setting up a testing environment (``setUp``) and tearing it down (``tearDown``). This is not Pyramid-specific, but available whenever we import ``unittest``.
 
@@ -660,13 +660,17 @@ This is great and all, however it seems somewhat silly to test for HTML elements
 The BeautifulSoup Interlude
 ---------------------------
 
-`Beautiful Soup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ is a Python package for reading and working with HTML as if you were traversing the DOM. Luckily for us, Pyramid installed BeautifulSoup for us when it was itself installed. ``pip freeze`` for evidence of this (and other packages you may not know you had access to). Let's fire up ``pshell`` and use it a little.
+`Beautiful Soup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ is a Python package for reading and working with HTML as if you were traversing the DOM.
+Luckily for us, WebTest installed BeautifulSoup for us when it was itself installed.
+``pip freeze`` for evidence of this (and other packages you may not know you had access to).
+Let's fire up ``pshell`` and use it a little.
 
 .. code-block:: ipython
 
     In [1]: from bs4 import BeautifulSoup
 
-``bs4`` is the package name, and BeautifulSoup is an object that we use to wrap HTML so that we can parse it apart. Let's give it some of the HTML that we wrote for our mockups before we knew about the joys of templates.
+``bs4`` is the package name, and BeautifulSoup is an object that we use to wrap HTML so that we can parse it apart.
+Let's give it some of the HTML that we wrote for our mockups before we knew about the joys of templates.
 
 .. code-block:: ipython
 
@@ -686,7 +690,7 @@ The BeautifulSoup Interlude
         </body>
     </html>
 
-In order to actually interact with the HTML à la DOM traversal, we must first wrap our HTML in a ``BeautifulSoup`` instance.
+In order to actually interact with the HTML à la DOM traversal, we must first parse our HTML with a ``BeautifulSoup`` instance.
 
 .. code-block:: ipython
 
@@ -699,19 +703,23 @@ If we don't specify the parser, ``BeautifulSoup`` uses the best-available parser
     In [5]: tmp_soup = BeautifulSoup(some_html)
     /Users/Nick/Documents/codefellows/courses/code401_python/pyramid_lj/lib/python3.5/site-packages/bs4/__init__.py:166: UserWarning: No parser was explicitly specified, so I'm using the best available HTML parser for this system ("html.parser"). This usually isn't a problem, but if you run this code on another system, or in a different virtual environment, it may use a different parser and behave differently.
 
-    To get rid of this warning, change this:
+To get rid of this warning, change this:
 
-     BeautifulSoup([your markup])
+.. code-block:: python
 
-    to this:
+    BeautifulSoup([your markup])
 
-     BeautifulSoup([your markup], "html.parser")
+to this:
 
-      markup_type=markup_type))
+.. code-block:: python
+
+    BeautifulSoup([your markup], "html.parser")
 
 So, be sure to specify your parser. Note, there are other parsers that you can install. Check the docs for more info.
 
-We've now made our ``soup`` object and it comes packed with some useful methods and attributes. One of these is ``soup.findAll('html_element')``. When given the appropriate HTML element, like say ``'li'``, it'll find every instance of that object and return it to you in a ``list``-like object.
+We've now made our ``soup`` object and it comes packed with some useful methods and attributes.
+One of these is ``soup.findAll('html_element')``.
+When given the appropriate HTML element, like say ``'li'``, it'll find every ``li`` element and return it to you in a ``list``-like object.
 
 .. code-block:: ipython
 
@@ -725,7 +733,9 @@ We've now made our ``soup`` object and it comes packed with some useful methods 
     In [9]: len(these_results)
     Out[9]: 3
 
-You can also inspect individual DOM elements. For example, I may want to check what's actually contained within the text of my ``<h1>`` tag. It's simple with ``BeautifulSoup``.
+You can also inspect individual DOM elements.
+For example, I may want to check what's actually contained within the text of my ``<h1>`` tag.
+It's simple with ``BeautifulSoup``.
 
 .. code-block:: ipython
 
@@ -733,7 +743,10 @@ You can also inspect individual DOM elements. For example, I may want to check w
     In [11]: h1.get_text()
     Out[11]: 'This is styled HTML'
 
-You don't just have to inspect the body of the document either. You can look at anything that was a part of that HTML document. For example, I may want to look into the ``link`` tag at the top. With ``BeautifulSoup`` I can look at the individual attributes that comprise it.
+You don't just have to inspect the body of the document either.
+You can look at anything that was a part of that HTML document.
+For example, I may want to look into the ``link`` tag at the top.
+With ``BeautifulSoup`` I can look at the individual attributes that comprise it.
 
 .. code-block:: ipython
 
@@ -744,7 +757,9 @@ You don't just have to inspect the body of the document either. You can look at 
     In [14]: style.attrs
     Out[14]: {'href': 'static/style.css', 'rel': ['stylesheet'], 'type': 'text/css'}
 
-Of course this is only a cursory look, but ``BeautifulSoup`` goes deep and wide, and is entirely worth dipping into. Even though we've only scratched the surface of ``BeautifulSoup``, we can use what we've seen thus far to more thoroughly test our fledgling app.
+Of course this is only a cursory look, but ``BeautifulSoup`` goes deep and wide, and is entirely worth dipping into.
+We'll spend a bit more time with it later in class, but this will be enough for now.
+Even though we've only scratched the surface of ``BeautifulSoup``, we can use what we've seen thus far to more thoroughly test our fledgling app.
 
 Return of the Functional Test
 -----------------------------
@@ -758,7 +773,16 @@ Recall our functional test, specifically the one that renders the home page.
         response = self.testapp.get('/', status=200)
         self.assertTrue(b'<article>' in response.body)
 
-This page is supposed to put up an ``<article>`` tag for every given journal entry. That being the case, we should make sure that there are as many tags on the page as journal entries. ``BeautifulSoup`` makes that possible.
+Here, we are asserting that there is an ``article`` tag in our html somewhere.
+But this page is supposed to put up an ``<article>`` tag for every given journal entry.
+We should make sure that there are as many ``article`` tags on the page as there are journal entries.
+``BeautifulSoup`` makes that simple.
+
+Remember that ``response.body`` above is a bytestring that is the rendered html of our page.
+We could pass that string to ``BeautifulSoup`` to be parsed if we so desired.
+But we don't actually need to.
+``WebTest`` has already done this for us.
+Our ``response`` has an ``html`` attribute that is a parsed ``BeautifulSoup`` object:
 
 .. code-block:: python
 
@@ -768,8 +792,8 @@ This page is supposed to put up an ``<article>`` tag for every given journal ent
         from bs4 import BeautifulSoup as Soup
 
         response = self.testapp.get('/', status=200)
-        soup = Soup(response.body, 'html.parser')
-        self.assertEqual(len(ENTRIES), len(soup.findAll("article")))
+        html = response.html
+        self.assertEqual(len(ENTRIES), len(html.findAll("article")))
 
 That's our new functional test for the home page. Notice that instead of simply testing for the existence of any article tag, it tests specifically that the number on the page matches the number of journal entries. This is the type of test you want, and you can keep the general form of this one the same when we incorporate data models (with some minor tweaks). Now, run ``tox`` and look at that sweet, sweet coverage:
 

@@ -415,79 +415,79 @@ serving on http://127.0.0.1:6543
 <p>The HTML in our Jinja2 template comes up just as we&#8217;ve structured it! However there&#8217;s a problem. If we were to continue on like this we&#8217;d still have to create an individual template for <em>every</em> journal entry. If we just wanted to write static HTML this way, why would we ever use a template?</p>
 <p>Jinja2 templates are rendered with a <em>context</em>. A Pyramid <em>view</em> returns a dictionary, which is passed to the renderer as part of that <em>context</em>. This means we can access values we return from our <em>view</em> in the <em>renderer</em> using the names we assigned to them.</p>
 <p>Just like we did in the command line, we can use placeholders and feed data to those placeholders through the <code class="docutils literal"><span class="pre">return</span></code> statement of our <code class="docutils literal"><span class="pre">detail_view</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre># templates/detail.jinja2
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-    &lt;head&gt;&lt;/head&gt;
-    &lt;body&gt;
-        &lt;article&gt;
-            &lt;h1&gt;{{ title }}&lt;/h1&gt;
-            &lt;hr /&gt;
-            &lt;p&gt;Created &lt;strong&gt;{{ creation_date }}&lt;/strong&gt;&lt;/p&gt;
-            &lt;hr /&gt;
-            &lt;p&gt;{{ body }}&lt;/p&gt;
-        &lt;/article&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
+<div class="highlight-html+jinja"><div class="highlight"><pre># templates/detail.jinja2
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">article</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">title</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">hr</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Created <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">creation_date</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">hr</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">body</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">article</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="c1"># views.py</span>
-<span class="k">def</span> <span class="nf">detail_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;LJ - Day 12&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;creation_date&quot;</span><span class="p">:</span> <span class="s2">&quot;Aug 23, 2016&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;Sample body text.&quot;</span>
-    <span class="p">}</span>
+<div class="highlight-html+jinja"><div class="highlight"><pre># views.py
+def detail_view(request):
+    return {
+        &quot;title&quot;: &quot;LJ - Day 12&quot;,
+        &quot;creation_date&quot;: &quot;Aug 23, 2016&quot;,
+        &quot;body&quot;: &quot;Sample body text.&quot;
+    }
 </pre></div>
 </div>
 <p>The <em>request</em> object is also placed in the context by Pyramid <em>by default</em>. <code class="docutils literal"><span class="pre">request</span></code> has a method <code class="docutils literal"><span class="pre">route_url</span></code> that will create a URL for a named route and an attribute <code class="docutils literal"><span class="pre">url</span></code> that will create a URL for the current page. This allows you to include URLs in your template without needing to know exactly what they will be. This process is called <em>reversing</em>, since it&#8217;s a bit like a reverse phone book lookup.</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-    &lt;head&gt;&lt;/head&gt;
-    &lt;body&gt;
-        &lt;article&gt;
-            &lt;h1&gt;&lt;a href=&quot;{{ request.url }}&quot;&gt;{{ title }}&lt;/a&gt;&lt;/h1&gt; # this is new
-            &lt;hr /&gt;
-            &lt;p&gt;Created &lt;strong&gt;{{ creation_date }}&lt;/strong&gt;&lt;/p&gt;
-            &lt;hr /&gt;
-            &lt;p&gt;{{ body }}&lt;/p&gt;
-        &lt;/article&gt;
-        &lt;footer&gt;&lt;a href=&quot;{{ request.route_url(&#39;home&#39;) }}&quot;&gt;Home&lt;/a&gt;&lt;/footer&gt; # this is also new
-    &lt;/body&gt;
-&lt;/html&gt;
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">article</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">request.url</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">title</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span> # this is new
+            <span class="p">&lt;</span><span class="nt">hr</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Created <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">creation_date</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">hr</span> <span class="p">/&gt;</span>
+            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">body</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">article</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">request.route_url</span><span class="o">(</span><span class="s1">&#39;home&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span> # this is also new
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>Let&#8217;s now create a template such that our index shows a list of journal entries, showing only the title and the date of creation. In <code class="docutils literal"><span class="pre">learning_journal_basic/templates/</span></code> create a new file <code class="docutils literal"><span class="pre">list.jinja2</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-    &lt;head&gt;&lt;/head&gt;
-    &lt;body&gt;
-        &lt;h1&gt;Home Page&lt;/h1&gt;
-        {% if entries %}
-            {% for entry in entries %}
-                &lt;article&gt;
-                    &lt;h2&gt;&lt;a href=&quot;{{ request.route_url(&#39;detail&#39;, id=entry.id) }}&quot;&gt;{{ entry.title }}&lt;/a&gt;&lt;/h2&gt;
-                    &lt;hr /&gt;
-                    &lt;p&gt;Created &lt;strong&gt;{{ entry.creation_date }}&lt;/strong&gt;&lt;/p&gt;
-                &lt;/article&gt;
-            {% endfor %}
-        {% else %}
-            &lt;p&gt;This journal is empty&lt;/p&gt;
-        {% endif %}
-        &lt;footer&gt;&lt;a href=&quot;{{ request.route_url(&#39;home&#39;) }}&quot;&gt;Home&lt;/a&gt;&lt;/footer&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Home Page<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="cp">{%</span> <span class="k">if</span> <span class="nv">entries</span> <span class="cp">%}</span>
+            <span class="cp">{%</span> <span class="k">for</span> <span class="nv">entry</span> <span class="k">in</span> <span class="nv">entries</span> <span class="cp">%}</span>
+                <span class="p">&lt;</span><span class="nt">article</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">request.route_url</span><span class="o">(</span><span class="s1">&#39;detail&#39;</span><span class="o">,</span> <span class="nv">id</span><span class="o">=</span><span class="nv">entry.id</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">entry.title</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">hr</span> <span class="p">/&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Created <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">entry.creation_date</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">article</span><span class="p">&gt;</span>
+            <span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+        <span class="cp">{%</span> <span class="k">else</span> <span class="cp">%}</span>
+            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>This journal is empty<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+        <span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">request.route_url</span><span class="o">(</span><span class="s1">&#39;home&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>It&#8217;s worth taking a look at a few specifics of this template.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span> <span class="o">%</span><span class="p">}</span>
-<span class="o">...</span> <span class="c1"># stuff here</span>
-<span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">for</span> <span class="nv">entry</span> <span class="k">in</span> <span class="nv">entries</span> <span class="cp">%}</span>
+... # stuff here
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
 </pre></div>
 </div>
 <p>Pyramid has <em>control structures</em> just like Python, however every <code class="docutils literal"><span class="pre">for</span></code> loop and <code class="docutils literal"><span class="pre">if</span></code> block in Pyramid must end with an <code class="docutils literal"><span class="pre">endfor</span></code>/<code class="docutils literal"><span class="pre">endif</span></code>. As with looping in Python, as long as the variable being referenced by the loop is an iterable, you can alias the individual items within the iterable and use those items in your code.</p>
 <p>Let&#8217;s look at another aspect of the same template.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;{{ request.route_url(&#39;detail&#39;, id=entry.id) }}&quot;</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">entry</span><span class="o">.</span><span class="n">title</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">request.route_url</span><span class="o">(</span><span class="s1">&#39;detail&#39;</span><span class="o">,</span> <span class="nv">id</span><span class="o">=</span><span class="nv">entry.id</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">entry.title</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>Before we saw <code class="docutils literal"><span class="pre">request.route_url</span></code> used to...request the url of the route named <code class="docutils literal"><span class="pre">home</span></code>. Now we&#8217;re seeing it used to get the url for the <code class="docutils literal"><span class="pre">detail</span></code> route, but note in <code class="docutils literal"><span class="pre">routes.py</span></code> that the <code class="docutils literal"><span class="pre">detail</span></code> route takes the keyword <code class="docutils literal"><span class="pre">id</span></code>. Up to now we&#8217;ve been bypassing this by just providing a number that would fit the bill. In this case, we have to provide any keywords we want to reference in the url as an argument to <code class="docutils literal"><span class="pre">request.route_url</span></code>.</p>
@@ -519,42 +519,42 @@ serving on http://127.0.0.1:6543
 <h3>Template Inheritance<a class="headerlink" href="#template-inheritance" title="Permalink to this headline">¶</a></h3>
 <p>Jinja2 allows you to combine templates using something called <a class="reference external" href="http://jinja.pocoo.org/docs/dev/templates/#template-inheritance">template inheritance</a>. You can create a basic page structure, and then <em>inherit</em> that structure in other templates.</p>
 <p>Let&#8217;s make a template for the basic outer structure of our pages. The following code will serve as our page template, and will go into a file called <code class="docutils literal"><span class="pre">layout.jinja2</span></code>. Save that file to your <code class="docutils literal"><span class="pre">templates</span></code> directory. Here&#8217;s the code:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;utf-8&quot;&gt;
-        &lt;title&gt;Python Learning Journal&lt;/title&gt;
-        &lt;!--[if lt IE 9]&gt;&lt;script src=&quot;http://html5shiv.googlecode.com/svn/trunk/html5.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;
-    &lt;/head&gt;
-&lt;body&gt;
-&lt;header&gt;
-    &lt;nav&gt;
-        &lt;ul&gt;
-            &lt;li&gt;
-                &lt;a href=&quot;{{ request.route_url(&#39;home&#39;) }}&quot;&gt;Home&lt;/a&gt;
-            &lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/nav&gt;
-&lt;/header&gt;
-&lt;main&gt;
-    &lt;h1&gt;My Python Journal&lt;/h1&gt;
-    &lt;section id=&quot;content&quot;&gt;
-        {% block body %}{% endblock %}
-    &lt;/section&gt;
-&lt;/main&gt;
-&lt;/body&gt;
-&lt;footer&gt;
-    &lt;p&gt;Created in the Code Fellows 401 Python Program&lt;/p&gt;
-&lt;/footer&gt;
-&lt;/html&gt;
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Python Learning Journal<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+        <span class="c">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;http://html5shiv.googlecode.com/svn/trunk/html5.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">nav</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">request.route_url</span><span class="o">(</span><span class="s1">&#39;home&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>My Python Journal<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">section</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;content&quot;</span><span class="p">&gt;</span>
+        <span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
+    <span class="p">&lt;/</span><span class="nt">section</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">footer</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Created in the Code Fellows 401 Python Program<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">footer</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>The important part here is the <code class="docutils literal"><span class="pre">{%</span> <span class="pre">block</span> <span class="pre">body</span> <span class="pre">%}...{%</span> <span class="pre">endblock</span> <span class="pre">%}</span></code> expression. This is a template <strong>block</strong> and it is a kind of placeholder. Other templates can inherit from this one, and fill that block with additional HTML.</p>
 <p>Let&#8217;s update our <code class="docutils literal"><span class="pre">detail</span></code> and <code class="docutils literal"><span class="pre">list</span></code> templates:</p>
-<div class="highlight-python"><div class="highlight"><pre>{% extends &quot;layout.jinja2&quot; %}
-{% block body %}
-&lt;!-- the meat for each page goes here --&gt;
-{% endblock %}
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;layout.jinja2&quot;</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span>
+<span class="c">&lt;!-- the meat for each page goes here --&gt;</span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
 </pre></div>
 </div>
 <p>Start the server so we can see the result.</p>
@@ -591,11 +591,11 @@ serving on http://127.0.0.1:6543
 </ul>
 <p>Once you have a static view configured, you can use assets in that location in templates. The <em>request</em> object in Pyramid provides a <code class="docutils literal"><span class="pre">static_path</span></code> method that will render an appropriate asset path for us.</p>
 <p>Add the following to your <code class="docutils literal"><span class="pre">layout.jinja2</span></code> template:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
-  <span class="c1"># stuff that was here before</span>
-  <span class="o">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;{{ request.static_path(&#39;learning_journal_basic:static/style.css&#39;) }}&quot;</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;stylesheet&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
-<span class="c1"># everything else</span>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  # stuff that was here before
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">request.static_path</span><span class="o">(</span><span class="s1">&#39;learning_journal_basic:static/style.css&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+# everything else
 </pre></div>
 </div>
 <p>The <strong>one required argument</strong> to <code class="docutils literal"><span class="pre">request.static_path</span></code> is a <em>path</em> to an asset. Note that because any package <em>might</em> define a static view with the directory name <code class="docutils literal"><span class="pre">static</span></code>, we have to specify which package we want to look in. That&#8217;s why we have <code class="docutils literal"><span class="pre">learning_journal_basic:static/style.css</span></code> in our call.</p>
@@ -640,7 +640,7 @@ serving on http://127.0.0.1:6543
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;Pyramid&#39;</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>We use the <code class="docutils literal"><span class="pre">unittest</span></code> package provided by <code class="docutils literal"><span class="pre">pytest</span></code>, which was specified in our <code class="docutils literal"><span class="pre">setup.py</span></code> file in the <code class="docutils literal"><span class="pre">tests_require</span></code> list.</p>
+<p>We use the <code class="docutils literal"><span class="pre">unittest</span></code> module, which is part of the Python standard library.</p>
 <p><code class="docutils literal"><span class="pre">unittest</span></code> comes with a <code class="docutils literal"><span class="pre">TestCase</span></code> object that we can inherit from and modify. When we inherit from <code class="docutils literal"><span class="pre">TestCase</span></code>, we get access to a ton of <code class="docutils literal"><span class="pre">asserts</span></code>, such as the <code class="docutils literal"><span class="pre">assertEqual</span></code> and <code class="docutils literal"><span class="pre">assertTrue</span></code> seen here, as well as functionality for setting up a testing environment (<code class="docutils literal"><span class="pre">setUp</span></code>) and tearing it down (<code class="docutils literal"><span class="pre">tearDown</span></code>). This is not Pyramid-specific, but available whenever we import <code class="docutils literal"><span class="pre">unittest</span></code>.</p>
 <p>As part of the setup, we have pyramid&#8217;s own <code class="docutils literal"><span class="pre">testing</span></code> object, which allows us to set up the configuration we need to run our app and have access to the <code class="docutils literal"><span class="pre">request</span></code> and <code class="docutils literal"><span class="pre">response</span></code> objects that we need to test our views. Recall that our views can only run when taking a <code class="docutils literal"><span class="pre">request</span></code> object as an argument. So, we provide a <code class="docutils literal"><span class="pre">request</span></code> with <code class="docutils literal"><span class="pre">testing.DummyRequest</span></code>.</p>
 <p>Let&#8217;s comment out <code class="docutils literal"><span class="pre">FunctionalTests</span></code> bit for now (I&#8217;m removing it entirely) and for the moment just focus on <code class="docutils literal"><span class="pre">ViewTests</span></code>. Let&#8217;s also replace <code class="docutils literal"><span class="pre">my_view</span></code> with <code class="docutils literal"><span class="pre">detail_view</span></code>. Finally, recall that our <code class="docutils literal"><span class="pre">detail_view</span></code> returns a dictionary, with the &#8220;title&#8221;, &#8220;creation_date&#8221;, and &#8220;body&#8221; of a sample learning journal entry. Let&#8217;s make our test reflect that, checking that &#8220;title&#8221; is an attribute of our <code class="docutils literal"><span class="pre">detail_view</span></code>&#8216;s return statement. For now, we&#8217;ll be working with this:</p>
@@ -729,11 +729,15 @@ TOTAL                             <span class="m">23</span>     <span class="m">
 </div>
 <div class="section" id="the-beautifulsoup-interlude">
 <h3>The BeautifulSoup Interlude<a class="headerlink" href="#the-beautifulsoup-interlude" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a> is a Python package for reading and working with HTML as if you were traversing the DOM. Luckily for us, Pyramid installed BeautifulSoup for us when it was itself installed. <code class="docutils literal"><span class="pre">pip</span> <span class="pre">freeze</span></code> for evidence of this (and other packages you may not know you had access to). Let&#8217;s fire up <code class="docutils literal"><span class="pre">pshell</span></code> and use it a little.</p>
+<p><a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a> is a Python package for reading and working with HTML as if you were traversing the DOM.
+Luckily for us, WebTest installed BeautifulSoup for us when it was itself installed.
+<code class="docutils literal"><span class="pre">pip</span> <span class="pre">freeze</span></code> for evidence of this (and other packages you may not know you had access to).
+Let&#8217;s fire up <code class="docutils literal"><span class="pre">pshell</span></code> and use it a little.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">bs4</span></code> is the package name, and BeautifulSoup is an object that we use to wrap HTML so that we can parse it apart. Let&#8217;s give it some of the HTML that we wrote for our mockups before we knew about the joys of templates.</p>
+<p><code class="docutils literal"><span class="pre">bs4</span></code> is the package name, and BeautifulSoup is an object that we use to wrap HTML so that we can parse it apart.
+Let&#8217;s give it some of the HTML that we wrote for our mockups before we knew about the joys of templates.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [2]: </span><span class="n">some_html</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;learning_journal_basic/templates/sample.html&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="gp">In [3]: </span><span class="k">print</span><span class="p">(</span><span class="n">some_html</span><span class="p">)</span>
 <span class="go">&lt;html&gt;</span>
@@ -751,27 +755,27 @@ TOTAL                             <span class="m">23</span>     <span class="m">
 <span class="go">&lt;/html&gt;</span>
 </pre></div>
 </div>
-<p>In order to actually interact with the HTML à la DOM traversal, we must first wrap our HTML in a <code class="docutils literal"><span class="pre">BeautifulSoup</span></code> instance.</p>
+<p>In order to actually interact with the HTML à la DOM traversal, we must first parse our HTML with a <code class="docutils literal"><span class="pre">BeautifulSoup</span></code> instance.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">some_html</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>If we don&#8217;t specify the parser, <code class="docutils literal"><span class="pre">BeautifulSoup</span></code> uses the best-available parser, and will tell you so with a nice verbose warning.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="n">tmp_soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">some_html</span><span class="p">)</span>
 <span class="go">/Users/Nick/Documents/codefellows/courses/code401_python/pyramid_lj/lib/python3.5/site-packages/bs4/__init__.py:166: UserWarning: No parser was explicitly specified, so I&#39;m using the best available HTML parser for this system (&quot;html.parser&quot;). This usually isn&#39;t a problem, but if you run this code on another system, or in a different virtual environment, it may use a different parser and behave differently.</span>
-
-<span class="go">To get rid of this warning, change this:</span>
-
-<span class="go"> BeautifulSoup([your markup])</span>
-
-<span class="go">to this:</span>
-
-<span class="go"> BeautifulSoup([your markup], &quot;html.parser&quot;)</span>
-
-<span class="go">  markup_type=markup_type))</span>
+</pre></div>
+</div>
+<p>To get rid of this warning, change this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">BeautifulSoup</span><span class="p">([</span><span class="n">your</span> <span class="n">markup</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>to this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">BeautifulSoup</span><span class="p">([</span><span class="n">your</span> <span class="n">markup</span><span class="p">],</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>So, be sure to specify your parser. Note, there are other parsers that you can install. Check the docs for more info.</p>
-<p>We&#8217;ve now made our <code class="docutils literal"><span class="pre">soup</span></code> object and it comes packed with some useful methods and attributes. One of these is <code class="docutils literal"><span class="pre">soup.findAll('html_element')</span></code>. When given the appropriate HTML element, like say <code class="docutils literal"><span class="pre">'li'</span></code>, it&#8217;ll find every instance of that object and return it to you in a <code class="docutils literal"><span class="pre">list</span></code>-like object.</p>
+<p>We&#8217;ve now made our <code class="docutils literal"><span class="pre">soup</span></code> object and it comes packed with some useful methods and attributes.
+One of these is <code class="docutils literal"><span class="pre">soup.findAll('html_element')</span></code>.
+When given the appropriate HTML element, like say <code class="docutils literal"><span class="pre">'li'</span></code>, it&#8217;ll find every <code class="docutils literal"><span class="pre">li</span></code> element and return it to you in a <code class="docutils literal"><span class="pre">list</span></code>-like object.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [6]: </span><span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">)</span>
 <span class="gh">Out[6]: </span><span class="go">[&lt;li&gt;One&lt;/li&gt;, &lt;li&gt;Two&lt;/li&gt;, &lt;li&gt;Three&lt;/li&gt;]</span>
 
@@ -783,13 +787,18 @@ TOTAL                             <span class="m">23</span>     <span class="m">
 <span class="gh">Out[9]: </span><span class="go">3</span>
 </pre></div>
 </div>
-<p>You can also inspect individual DOM elements. For example, I may want to check what&#8217;s actually contained within the text of my <code class="docutils literal"><span class="pre">&lt;h1&gt;</span></code> tag. It&#8217;s simple with <code class="docutils literal"><span class="pre">BeautifulSoup</span></code>.</p>
+<p>You can also inspect individual DOM elements.
+For example, I may want to check what&#8217;s actually contained within the text of my <code class="docutils literal"><span class="pre">&lt;h1&gt;</span></code> tag.
+It&#8217;s simple with <code class="docutils literal"><span class="pre">BeautifulSoup</span></code>.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [10]: </span><span class="n">h1</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;h1&quot;</span><span class="p">)</span>
 <span class="gp">In [11]: </span><span class="n">h1</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
 <span class="gh">Out[11]: </span><span class="go">&#39;This is styled HTML&#39;</span>
 </pre></div>
 </div>
-<p>You don&#8217;t just have to inspect the body of the document either. You can look at anything that was a part of that HTML document. For example, I may want to look into the <code class="docutils literal"><span class="pre">link</span></code> tag at the top. With <code class="docutils literal"><span class="pre">BeautifulSoup</span></code> I can look at the individual attributes that comprise it.</p>
+<p>You don&#8217;t just have to inspect the body of the document either.
+You can look at anything that was a part of that HTML document.
+For example, I may want to look into the <code class="docutils literal"><span class="pre">link</span></code> tag at the top.
+With <code class="docutils literal"><span class="pre">BeautifulSoup</span></code> I can look at the individual attributes that comprise it.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [12]: </span><span class="n">style</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;link&quot;</span><span class="p">)</span>
 <span class="gp">In [13]: </span><span class="k">print</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
 <span class="go">&lt;link href=&quot;static/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;/&gt;</span>
@@ -798,7 +807,9 @@ TOTAL                             <span class="m">23</span>     <span class="m">
 <span class="gh">Out[14]: </span><span class="go">{&#39;href&#39;: &#39;static/style.css&#39;, &#39;rel&#39;: [&#39;stylesheet&#39;], &#39;type&#39;: &#39;text/css&#39;}</span>
 </pre></div>
 </div>
-<p>Of course this is only a cursory look, but <code class="docutils literal"><span class="pre">BeautifulSoup</span></code> goes deep and wide, and is entirely worth dipping into. Even though we&#8217;ve only scratched the surface of <code class="docutils literal"><span class="pre">BeautifulSoup</span></code>, we can use what we&#8217;ve seen thus far to more thoroughly test our fledgling app.</p>
+<p>Of course this is only a cursory look, but <code class="docutils literal"><span class="pre">BeautifulSoup</span></code> goes deep and wide, and is entirely worth dipping into.
+We&#8217;ll spend a bit more time with it later in class, but this will be enough for now.
+Even though we&#8217;ve only scratched the surface of <code class="docutils literal"><span class="pre">BeautifulSoup</span></code>, we can use what we&#8217;ve seen thus far to more thoroughly test our fledgling app.</p>
 </div>
 <div class="section" id="return-of-the-functional-test">
 <h3>Return of the Functional Test<a class="headerlink" href="#return-of-the-functional-test" title="Permalink to this headline">¶</a></h3>
@@ -809,15 +820,23 @@ TOTAL                             <span class="m">23</span>     <span class="m">
     <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;&lt;article&gt;&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This page is supposed to put up an <code class="docutils literal"><span class="pre">&lt;article&gt;</span></code> tag for every given journal entry. That being the case, we should make sure that there are as many tags on the page as journal entries. <code class="docutils literal"><span class="pre">BeautifulSoup</span></code> makes that possible.</p>
+<p>Here, we are asserting that there is an <code class="docutils literal"><span class="pre">article</span></code> tag in our html somewhere.
+But this page is supposed to put up an <code class="docutils literal"><span class="pre">&lt;article&gt;</span></code> tag for every given journal entry.
+We should make sure that there are as many <code class="docutils literal"><span class="pre">article</span></code> tags on the page as there are journal entries.
+<code class="docutils literal"><span class="pre">BeautifulSoup</span></code> makes that simple.</p>
+<p>Remember that <code class="docutils literal"><span class="pre">response.body</span></code> above is a bytestring that is the rendered html of our page.
+We could pass that string to <code class="docutils literal"><span class="pre">BeautifulSoup</span></code> to be parsed if we so desired.
+But we don&#8217;t actually need to.
+<code class="docutils literal"><span class="pre">WebTest</span></code> has already done this for us.
+Our <code class="docutils literal"><span class="pre">response</span></code> has an <code class="docutils literal"><span class="pre">html</span></code> attribute that is a parsed <code class="docutils literal"><span class="pre">BeautifulSoup</span></code> object:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_root_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Tests that the contents of the root page contains as many &lt;article&gt; tags as journal entries&quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">.views</span> <span class="kn">import</span> <span class="n">ENTRIES</span>
     <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span> <span class="k">as</span> <span class="n">Soup</span>
 
     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">testapp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-    <span class="n">soup</span> <span class="o">=</span> <span class="n">Soup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ENTRIES</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s2">&quot;article&quot;</span><span class="p">)))</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">html</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ENTRIES</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s2">&quot;article&quot;</span><span class="p">)))</span>
 </pre></div>
 </div>
 <p>That&#8217;s our new functional test for the home page. Notice that instead of simply testing for the existence of any article tag, it tests specifically that the number on the page matches the number of journal entries. This is the type of test you want, and you can keep the general form of this one the same when we incorporate data models (with some minor tweaks). Now, run <code class="docutils literal"><span class="pre">tox</span></code> and look at that sweet, sweet coverage:</p>

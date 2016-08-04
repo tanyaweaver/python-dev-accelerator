@@ -155,7 +155,7 @@ slide article div.slide-no {
   letter-spacing: -3px;
   color: #393939; }
 .level-1 article {
-  text-align: center; }
+  text-align: left; }
   .level-1 article img {
     margin-top: 10px; }
 
@@ -166,7 +166,7 @@ slide article div.slide-no {
   padding: 5px 0px;
   color: #393939; }
 .level-2 article {
-  text-align: center; }
+  text-align: left; }
 
 .level-3 h3 {
   position: static;

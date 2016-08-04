@@ -679,7 +679,7 @@ More on this later.
         In [1]:
 
 There are a few basic tricks you'll use every day.
-The help system shows you information about any object::
+The help system shows you information about any object:
 
 .. code-block:: ipython
 
@@ -740,8 +740,17 @@ This preserves whitespace correctly, which makes it much easier to paste long co
 
     In [6]: %paste
 
-Finally, command line recall in iPython allows you to use the up and down arrows to navigate through previous commands.
+Command line recall in iPython allows you to use the up and down arrows to navigate through previous commands.
 If you type a bit, then using the up and down arrows will navigate through previous lines that started the same way.
+
+Finally, it can often be helpful to remember what you did in an interactive session.
+The iPython shell has a ``save`` magic command that allows you to export all or some of the lines you've written.
+It takes a valid python name and some representation of the line numbers you wish to save.
+The following command will save lines 25-50 and line 58 to a file called ``remember_me.py`` in your current working directory:
+
+.. code-block:: ipython
+
+    In [7]: %save remember_me 25-50 58
 
 The combination of these few tricks can get you quite a long way in learning Python.
 There's not a lot more you'll use every day.
@@ -757,6 +766,10 @@ There's not a lot more you'll use every day.
             In [6]: %paste
 
         Command line recall
+
+        .. code-block:: ipython
+
+            In [7]: %save remember_me 25-50 58
 
         That'll get you pretty far.
 

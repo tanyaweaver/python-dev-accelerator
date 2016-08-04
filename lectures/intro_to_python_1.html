@@ -451,11 +451,9 @@ This can be handy.
 More on this later.</p>
 <span class="admonition-start-ipython"></span><p>There are a few basic tricks you&#8217;ll use every day.
 The help system shows you information about any object:</p>
-<div class="highlight-python"><div class="highlight"><pre>.. code-block:: ipython
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [2]: </span>str<span class="o">?</span>
 </pre></div>
 </div>
-<blockquote>
-<div>In [2]: str?</div></blockquote>
 <p>You can use two question marks to get more detailed information.
 In some cases, this will even show you the source code for the thing you are asking about.
 If you are done with the help system, typing <code class="docutils literal"><span class="pre">q</span></code> will exit back to the iPython prompt.</p>
@@ -481,8 +479,15 @@ This preserves whitespace correctly, which makes it much easier to paste long co
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [6]: </span><span class="o">%</span><span class="k">paste</span>
 </pre></div>
 </div>
-<p>Finally, command line recall in iPython allows you to use the up and down arrows to navigate through previous commands.
+<p>Command line recall in iPython allows you to use the up and down arrows to navigate through previous commands.
 If you type a bit, then using the up and down arrows will navigate through previous lines that started the same way.</p>
+<p>Finally, it can often be helpful to remember what you did in an interactive session.
+The iPython shell has a <code class="docutils literal"><span class="pre">save</span></code> magic command that allows you to export all or some of the lines you&#8217;ve written.
+It takes a valid python name and some representation of the line numbers you wish to save.
+The following command will save lines 25-50 and line 58 to a file called <code class="docutils literal"><span class="pre">remember_me.py</span></code> in your current working directory:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [7]: </span><span class="o">%</span><span class="k">save</span> remember_me 25-50 58
+</pre></div>
+</div>
 <p>The combination of these few tricks can get you quite a long way in learning Python.
 There&#8217;s not a lot more you&#8217;ll use every day.</p>
 <span class="admonition-basic-usage"></span></div>

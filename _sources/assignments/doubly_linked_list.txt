@@ -32,7 +32,7 @@ Be sure to write tests to cover your new data structure.  For each feature of
 your list, write the test that demonstrates it first, then implement the
 feature.
 
-Update the README to include this new structure.  In particular, add a
+Update the ``README.md`` to include this new structure.  In particular, add a
 paragraph explaining different use-cases where the singly or doubly-linked list
 might be more appropriate.
 
@@ -40,9 +40,9 @@ Submitting Your Work
 ====================
 
 When you are done working and all your tests are passing, create a pull request
-from the dll branch to master. Copy the URL of the pull request and submit that
+from the ``dll`` branch to ``master``. Copy the URL of the pull request and submit that
 using the URL input.  After this is done, you may merge your branch back to
-master.
+``master``.
 
 As usual, use the comment feature to submit questions, comments and reflections
 on the work you did for this assignment.

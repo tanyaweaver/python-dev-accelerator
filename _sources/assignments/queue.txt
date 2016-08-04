@@ -32,7 +32,7 @@ features:
 As with the linked list and stack assignments before this, you may not use any
 existing Python implementation to create your queue.
 
-You should update the repository README with information about the Queue you
+You should update the repository ``README.md`` with information about the Queue you
 implemented, including any resources or collaborations you used.
 
 Submitting Your Work
@@ -40,9 +40,9 @@ Submitting Your Work
 
 
 When your tasks are complete and all tests are passing, submit a pull request
-from your queue branch back to master.  Copy the URL for that pull request and
+from your queue branch back to ``master``.  Copy the URL for that pull request and
 submit it.  After you submit your assignment, you may merge your queue branch
-back to master.
+back to ``master``.
 
 Use the comment feature in Canvas to submit questions, comments and
 reflections.

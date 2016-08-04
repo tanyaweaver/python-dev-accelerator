@@ -183,7 +183,7 @@ div.nboutput  > :nth-child(2).stderr {
 </style>
 <div class="section" id="django-testing">
 <span id="django-testing"></span><h1>Django Testing<a class="headerlink" href="#django-testing" title="Permalink to this headline">¶</a></h1>
-<p>Testing in Django, including a bit on using Factory Boy to manage test data</p>
+<span class="admonition-django-testing"></span><p>Testing in Django, including a bit on using Factory Boy to manage test data</p>
 <hr class="docutils" />
 <p>By this point we should be moving forward on our models for our imager app. That means we should be testing these models - and that means we need to look at Django&#8217;s testing framework.</p>
 <p>Up until this point, we&#8217;ve been using <code class="docutils literal"><span class="pre">py.test</span></code>. It is possible to use <code class="docutils literal"><span class="pre">py.test</span></code> with Django, but if we want to use Django&#8217;s testing methods, we need to be familiar with <code class="docutils literal"><span class="pre">unittest</span></code>. The biggest difference between <code class="docutils literal"><span class="pre">py.test</span></code> and <code class="docutils literal"><span class="pre">unittest</span></code> is that <code class="docutils literal"><span class="pre">unittest</span></code> is predicated on the idea of a <code class="docutils literal"><span class="pre">TestCase</span></code> class.</p>
