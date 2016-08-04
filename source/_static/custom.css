@@ -193,3 +193,18 @@ slide article div.slide-no {
   text-align: left;
   float: left;
 }
+div.sidebar {
+  background-color: #eee;
+  border-color: #ddd;
+  border-right-style: solid;
+  border-left-style: solid;
+}
+div.sidebar p.sidebar-title {
+    margin: 0px -20px;
+    padding: 0px 20px;
+    font-size: 125%;
+}
+div.sidebar p.sidebar-subtitle {
+    padding-left: 2em;
+    font-size: 80%;
+}

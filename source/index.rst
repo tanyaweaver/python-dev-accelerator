@@ -18,6 +18,16 @@ at Code Fellows in Seattle, WA.
 Overview
 ========
 
+.. sidebar:: This Week
+    :subtitle: quick links to daily schedules
+
+    **Week 01**
+
+    .. include:: schedule/week01/index.rst
+        :start-line: 12
+
+
+
 A quick read on the objectives, philosophy and values held by Code Fellows and
 followed by this Course.
 
@@ -113,57 +123,57 @@ Week 05
 .. include:: schedule/week05/index.rst
     :start-line: 12
 
-Week 06
--------
+.. Week 06
+.. -------
 
-.. include:: schedule/week06/index.rst
-    :start-line: 12
+.. .. include:: schedule/week06/index.rst
+..     :start-line: 12
 
-Week 07
--------
+.. Week 07
+.. -------
 
-.. include:: schedule/week07/index.rst
-    :start-line: 12
+.. .. include:: schedule/week07/index.rst
+..     :start-line: 12
 
-Week 08
--------
+.. Week 08
+.. -------
 
-.. include:: schedule/week08/index.rst
-    :start-line: 12
+.. .. include:: schedule/week08/index.rst
+..     :start-line: 12
 
-Week 09
--------
+.. Week 09
+.. -------
 
-.. include:: schedule/week09/index.rst
-    :start-line: 12
+.. .. include:: schedule/week09/index.rst
+..     :start-line: 12
 
-Week 10
--------
+.. Week 10
+.. -------
 
-.. include:: schedule/week10/index.rst
-    :start-line: 12
+.. .. include:: schedule/week10/index.rst
+..     :start-line: 12
 
-All Course materials
-====================
+.. All Course materials
+.. ====================
 
-Direct links to all course materials, without reference to schedule
+.. Direct links to all course materials, without reference to schedule
 
-Under Construction
+.. Under Construction
 
-Lecture Notes
--------------
+.. Lecture Notes
+.. -------------
 
-.. include:: lectures/index.rst
-    :start-line: 12
+.. .. include:: lectures/index.rst
+..     :start-line: 12
 
-Assignments
------------
+.. Assignments
+.. -----------
 
-.. include:: assignments/index.rst
-    :start-line: 12
+.. .. include:: assignments/index.rst
+..     :start-line: 12
 
-Readings
---------
+.. Readings
+.. --------
 
-.. include:: readings/index.rst
-    :start-line: 12
+.. .. include:: readings/index.rst
+..     :start-line: 12
