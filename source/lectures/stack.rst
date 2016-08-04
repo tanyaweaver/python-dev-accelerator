@@ -15,7 +15,7 @@ A *Stack* is a data structure where elements are inserted into and removed from 
 Motivation
 ==========
 
-* Sequential 
+* Sequential
 * Limited access
 * Last-In First-Out (LIFO) access
 * Linear
@@ -23,7 +23,7 @@ Motivation
     - `Towers of Hanoi puzzle <https://larc.unt.edu/ian/TowersOfHanoi/4-256.gif>`_
     - Rearranging railroad cars
     - Sorting...anything
-  
+
 
 Attributes
 ==========
@@ -31,7 +31,7 @@ Attributes
 * top
 * is_empty
 * size
- 
+
 
 Operations
 ==========
