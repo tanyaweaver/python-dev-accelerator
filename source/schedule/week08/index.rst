@@ -10,7 +10,7 @@ Week Eight
 
     This document contains no slides.
 
-The theme for the week is Django Security and Deployment.
+The theme for the week is REST and Django Add-Ons.
 
 .. toctree::
    :maxdepth: 1

@@ -25,20 +25,20 @@ Concepts
 .. toctree::
    :maxdepth: 2
 
-   /lectures/trie
+   .. /lectures/trie
 
-* Configuration management with Ansible
+.. * Configuration management with Ansible
 
 Demo
 ====
 
-Deploy a Django application using ansible
+.. Deploy a Django application using ansible
 
 Assignments
 ===========
 
-* :doc:`/assignments/trie_traversal`
+.. * :doc:`/assignments/trie_traversal`
 * :doc:`/assignments/project_08_stories_continue`
 * :doc:`/assignments/daily_lj_entry`
-* :doc:`/assignments/aws_2_ansible_imager` (Due Friday)
-* :doc:`/assignments/django_8_api` (Due Friday)
+.. * :doc:`/assignments/aws_2_ansible_imager` (Due Friday)
+.. * :doc:`/assignments/django_8_api` (Due Friday)

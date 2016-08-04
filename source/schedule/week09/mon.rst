@@ -25,7 +25,7 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    /lectures/web_app_security_2
+    .. /lectures/web_app_security_2
 
 Demo
 ====
@@ -33,7 +33,7 @@ Demo
 Assignments
 ===========
 
-* :doc:`/assignments/web_app_security_assignment2`
-* :doc:`/assignments/django_6_drf_tutorial_a`
+.. * :doc:`/assignments/web_app_security_assignment2`
+.. * :doc:`/assignments/django_6_drf_tutorial_a`
 * :doc:`/assignments/project_06_wireframe_end`
 * :doc:`/assignments/daily_lj_entry`

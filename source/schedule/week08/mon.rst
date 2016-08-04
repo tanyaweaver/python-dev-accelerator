@@ -13,11 +13,16 @@ Monday
 Objectives
 ==========
 
+* Understand and implement a RESTful API
+
 Readings
 ========
 
-Django Forms
-------------
+* `What Is REST? <http://www.restapitutorial.com/lessons/whatisrest.html>`_
+* `Online REST Web Service Demo <https://www.predic8.com/rest-demo.htm>`_
+
+.. Django Forms
+.. ------------
 
 .. .. include:: /readings/django_readings.rst
 ..     :start-line: 57
@@ -35,12 +40,19 @@ Concepts
     :maxdepth: 2
 
     .. /lectures/django_forms
+    /lectures/web_app_security_2
+
+* The Quick Sort algorithm
+* Implementing REST for existing Django Projects
 
 .. * The Hash Table
 .. * The Insertion Sort algorithm
 
 Demo
 ====
+
+* Quick Sort!!!
+* Use a DRF-based api to connect to an existing Django application
 
 .. * Interacting with Django Forms.
 .. * Insertion Sort!!
@@ -51,6 +63,8 @@ Assignments
 .. * :doc:`/assignments/hash_table`
 .. * :doc:`/assignments/sort_1_insertion`
 .. * :doc:`/assignments/django_4_data_editing`
+* :doc:`/assignments/sort_3_quicksort`
+* :doc:`/assignments/django_7_drf_tutorial_b`
 * :doc:`/assignments/project_01_pitch`
 * :doc:`/assignments/daily_lj_entry`
-* :doc:`/assignments/blog_post_publish` (Due April 29)
+* :doc:`/assignments/blog_post_publish` (Due Friday)

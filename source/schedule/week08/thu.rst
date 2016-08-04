@@ -25,7 +25,9 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    /lectures/web_app_security1
+    .. /lectures/web_app_security1
+
+* Facial Recognition with Algorithmia
 
 Demo
 ====
@@ -33,7 +35,7 @@ Demo
 Assignments
 ===========
 
-* :doc:`/assignments/sort_4_radix`
+.. * :doc:`/assignments/sort_4_radix`
 * :doc:`/assignments/project_04_readme`
 * :doc:`/assignments/daily_lj_entry`
-* :doc:`/assignments/web_app_security_assignment1` (Due Monday)
+.. * :doc:`/assignments/web_app_security_assignment1` (Due Monday)
