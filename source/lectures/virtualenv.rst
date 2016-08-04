@@ -1,6 +1,6 @@
-***********************
-Working with Virtualenv
-***********************
+*********************************
+Working with Virtual Environments
+*********************************
 
 .. epigraph::
 
