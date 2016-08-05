@@ -42,6 +42,6 @@ Demo
 Assignments
 ===========
 
-* :doc:`/assignments/mailroom_madness_2_building`
+* :doc:`/assignments/mailroom_madness_2_building` (due Friday)
 * :doc:`/assignments/deliberate_programming`
 * :doc:`/assignments/daily_lj_entry`
