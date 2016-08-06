@@ -19,7 +19,7 @@ Make a new branch of your data structures repository.  Call it ``dll`` On that
 branch implement a doubly-linked list.  Your implementation should have the
 following methods:
 
-* **insert(val)** will insert the value 'val' at the head of the list
+* **push(val)** will insert the value 'val' at the head of the list
 * **append(val)** will append the value 'val' at the tail of the list
 * **pop()** will pop the first value off the head of the list and return it.
 * **shift()** will remove the last value from the tail of the list and return

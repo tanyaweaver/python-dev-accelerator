@@ -195,36 +195,34 @@ branch in your repository called <code class="docutils literal"><span class="pre
 The list class should be named LinkedList.  Your list implementation should
 support the following methods:</p>
 <ul class="simple">
-<li><strong>insert(val)</strong> will insert the value &#8216;val&#8217; at the head of the list</li>
+<li><strong>push(val)</strong> will insert the value &#8216;val&#8217; at the head of the list</li>
 <li><strong>pop()</strong> will pop the first value off the head of the list and return it.</li>
 <li><strong>size()</strong> will return the length of the list</li>
 <li><strong>search(val)</strong> will return the node containing &#8216;val&#8217; in the list, if present, else None</li>
 <li><strong>remove(node)</strong> will remove the given node from the list, wherever it might be (node must be an item in the list)</li>
-<li><strong>display()</strong> will print the list represented as a Python tuple literal: &#8220;(12, &#8216;sam&#8217;, 37, &#8216;tango&#8217;)&#8221;</li>
+<li><strong>display()</strong> will return a unicode string representing the list as if it were a Python tuple literal: &#8220;(12, &#8216;sam&#8217;, 37, &#8216;tango&#8217;)&#8221;</li>
 </ul>
-<p>The constructor for your LinkedList class should allow optionally passing an
-iterable of values. which will result in a linked list instance containing the
-values in the iterable. The head of the list should be the last item in the
-iterable:</p>
+<p>The constructor for your LinkedList class should allow optionally passing an iterable of values.
+If an iterable is provided, the result will be a linked list instance containing the values in the iterable.
+The head of the list should be the last item in the iterable:</p>
 <div class="highlight-python"><div class="highlight"><pre>LinkedList([1, 2, 3]) =&gt; (3)-&gt;(2)-&gt;(1)
 </pre></div>
 </div>
-<p><strong>You must not use the Python list type to solve this problem.</strong></p>
-<p>Include pytest unit tests for your linked list class in a file called
-test_linked_list.py. Use Test Driven Development principles. For each method of
-your class, including the constructor, first implement a test that would verify
-that the method works, run the tests to show that it fails, then implement the
-code needed to make it pass. Be thorough in your testing.  Ensure that you
-cover failure modes and possible edge-cases. The tests you write are as much a
-part of this assignment as the linked list itself.</p>
+<p><strong>You must not use the Python list or tuple type to solve this problem.</strong></p>
+<p>Include pytest unit tests for your linked list class in a file called test_linked_list.py.
+Use Test Driven Development principles. For each method of your class, including the constructor.
+First implement a test that would verify that the method works.
+Run the tests to show that it fails, then implement the code needed to make it pass.
+Be thorough in your testing.
+Ensure that you cover failure modes and possible edge-cases.
+The tests you write are as much a part of this assignment as the linked list itself.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When you have finished your work and all your tests are passing, create a new
-Pull Request from your <code class="docutils literal"><span class="pre">linked_list</span></code> branch back to your <code class="docutils literal"><span class="pre">master</span></code> branch.
+<p>When you have finished your work and all your tests are passing, create a new Pull Request from your <code class="docutils literal"><span class="pre">linked_list</span></code> branch back to your <code class="docutils literal"><span class="pre">master</span></code> branch.
 For your submission, provide a link to that pull request.</p>
-<p>Once you have submitted the assignment, you may merge the pull request back to
-master. I’ll still be able to interact with it properly.</p>
+<p>Once you have submitted the assignment, you may merge the pull request back to master.
+I’ll still be able to interact with it properly.</p>
 </div>
 </div>
 

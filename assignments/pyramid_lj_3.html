@@ -186,7 +186,8 @@ For now, simply focus on the process and getting to a working application.</p>
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
 <p>Create a new branch (<code class="docutils literal"><span class="pre">step3</span></code>) for today&#8217;s work.
 Do your work on this branch.</p>
-<p>Using what you learned today, both in class and in your readings, accomplish the following tasks for your learning journal along with your partner:</p>
+<p>Using what you learned today, both in class and in your readings,
+accomplish the following tasks for your learning journal along with your partner:</p>
 <ul>
 <li><p class="first">Clear out the views, models, templates, routes, tests, and database provided by the scaffold/made in class.</p>
 </li>
@@ -209,12 +210,15 @@ Do your work on this branch.</p>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Heroku will not persist your data across different deployments using sqlite3! To circumvent this, you should have your Entries populate your database upon creation of the database in <code class="docutils literal"><span class="pre">learning_journal/scripts/initializedb.py</span></code></p>
+<p class="last">Heroku will not persist your data across different deployments using sqlite3!
+To circumvent this, you should have your Entries populate your database upon creation of the database in <code class="docutils literal"><span class="pre">learning_journal/scripts/initializedb.py</span></code></p>
 </div>
 <ul class="simple">
 <li>Modify all of your views so that they call on the database (e.g. your <code class="docutils literal"><span class="pre">list</span></code> view performs a query to get all of the journal entries).</li>
-<li>The <code class="docutils literal"><span class="pre">create</span></code> view should take the data from the user&#8217;s input and use it to create a new model instance. When a new entry is created, the user should be redirected to the home page.</li>
-<li>The <code class="docutils literal"><span class="pre">update</span></code> view should only post the edited data to the page. It should not yet update the data in the database.</li>
+<li>The <code class="docutils literal"><span class="pre">create</span></code> view should take the data from the user&#8217;s input and use it to create a new model instance.
+When a new entry is created, the user should be redirected to the home page.</li>
+<li>The <code class="docutils literal"><span class="pre">update</span></code> view should only post the edited data to the page.
+It should not yet update the data in the database.</li>
 </ul>
 <p>Your code should be <em>thoroughly</em> tested.
 Write unit tests of the view functions themselves, unit tests for your models, and <em>functional</em> tests that show the configured system works properly.</p>

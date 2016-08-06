@@ -22,7 +22,7 @@ Big-O means.
 When you're done, Submit questions, concerns, and reflections on what you
 learned using the text box.
 
-Then, test yourself with the Big-O Quiz
+Then, test yourself with the Big-O Quiz in Canvas
 
 .. _thorough introduction: http://interactivepython.org/runestone/static/pythonds/AlgorithmAnalysis/WhatIsAlgorithmAnalysis.html
 .. _more entertaining exploration: http://computationaltales.blogspot.com/2011/04/understanding-big-o-notation-and.html

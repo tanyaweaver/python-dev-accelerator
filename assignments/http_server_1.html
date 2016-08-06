@@ -176,19 +176,16 @@ div.nboutput  > :nth-child(2).stderr {
 </style>
 <div class="section" id="socket-http-server-step-1">
 <h1>Socket HTTP Server, Step 1<a class="headerlink" href="#socket-http-server-step-1" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-socket-http-server-step-1"></span><p>Building on the foundation of your Echo Server, you will begin to implement a
-simple HTTP server.</p>
+<span class="admonition-socket-http-server-step-1"></span><p>Building on the foundation of your Echo Server, you will begin to implement a simple HTTP server.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
 <p>Use your <code class="docutils literal"><span class="pre">http-server</span></code> repository in GitHub for this work.
 Make a branch <code class="docutils literal"><span class="pre">step1</span></code> from <code class="docutils literal"><span class="pre">master</span></code> to do your work for this assignment.</p>
 <ul class="simple">
-<li>Implement a function called <code class="docutils literal"><span class="pre">response_ok</span></code> that will return a well formed HTTP
-&#8220;200 OK&#8221; response as a byte string suitable for transmission through a
-socket. This method should accept no arguments and return a fully-formed
-proper response.</li>
-<li>Implement a function called <code class="docutils literal"><span class="pre">response_error</span></code> that will return a well formed
-HTTP &#8220;500 Internal Server Error&#8221; response.</li>
+<li>Implement a function called <code class="docutils literal"><span class="pre">response_ok</span></code> that will return a well formed HTTP &#8220;200 OK&#8221; response.
+It will need to be a byte string suitable for transmission through a socket.
+This method should accept no arguments and return a fully-formed proper response.</li>
+<li>Implement a function called <code class="docutils literal"><span class="pre">response_error</span></code> that will return a well formed HTTP &#8220;500 Internal Server Error&#8221; response.</li>
 <li>Update the server loop you built for the echo server so that it:<ul>
 <li>accumulates an incoming request into a variable</li>
 <li>&#8220;logs&#8221; that request by printing it to stdout</li>
@@ -196,21 +193,21 @@ HTTP &#8220;500 Internal Server Error&#8221; response.</li>
 </ul>
 </li>
 </ul>
-<p>As usual, write unit tests demonstrating each function you write before you
-implement the code to achieve it.  When you&#8217;ve finished the server loop, write
-a functional test that demonstrates that it works correctly.</p>
+<p>As usual, write unit tests demonstrating each function you write before you implement the code to achieve it.
+Think carefully about how you want to test your functions.
+Are you validating that the result is a valid HTTP response, or merely that it matches a given string?
+What is the difference?</p>
+<p>When you&#8217;ve finished the server loop, write a functional test that demonstrates that it works correctly.</p>
 <p>Include a solid <code class="docutils literal"><span class="pre">README.md</span></code> file with a description of the server you&#8217;re building.
 Include any sources or collaborations you used.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When you are done and your tests are all passing, push your work to GitHub and
-submit a pull request from the <code class="docutils literal"><span class="pre">step1</span></code> branch back to <code class="docutils literal"><span class="pre">master</span></code>.  Copy the URL of
-the pull request.  After you&#8217;ve created the pull request you may merge the
-<code class="docutils literal"><span class="pre">step1</span></code> branch back to <code class="docutils literal"><span class="pre">master</span></code>.</p>
+<p>When you are done and your tests are all passing, push your work to GitHub and submit a pull request from the <code class="docutils literal"><span class="pre">step1</span></code> branch back to <code class="docutils literal"><span class="pre">master</span></code>.
+Submit the URL of the pull request.
+After you&#8217;ve created the pull request you may merge the <code class="docutils literal"><span class="pre">step1</span></code> branch back to <code class="docutils literal"><span class="pre">master</span></code>.</p>
 <p>Submit the URL of your pull request.</p>
-<p>As with every primary submission, use the Comments feature for this submission
-to add questions, comments and reflections on the work you have done so far.</p>
+<p>As with every primary submission, use the Comments feature for this submission to add questions, comments and reflections on the work you have done so far.</p>
 </div>
 </div>
 

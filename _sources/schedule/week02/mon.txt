@@ -37,7 +37,7 @@ Concepts
    :maxdepth: 2
 
    /lectures/sockets
-   /lectures/data_structures
+   /lectures/data_structures_overview
    /lectures/array
    /lectures/linked_list
    /lectures/intro_to_python_5_classes

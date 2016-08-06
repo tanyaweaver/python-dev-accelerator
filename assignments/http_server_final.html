@@ -176,31 +176,27 @@ div.nboutput  > :nth-child(2).stderr {
 </style>
 <div class="section" id="socket-http-server-final">
 <h1>Socket HTTP Server, Final<a class="headerlink" href="#socket-http-server-final" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-socket-http-server-final"></span><p>In parts one, two, and three of this assignment, you implemented a simple HTTP
-server using standard Python network sockets.</p>
-<p>In class we&#8217;ve discussed the problems this server will face when it comes to
-higher traffic. Let&#8217;s improve our model so that it can handle a heavier traffic
-load.</p>
+<span class="admonition-socket-http-server-final"></span><p>In parts one, two, and three of this assignment, you implemented a simple HTTP server using standard Python network sockets.</p>
+<p>In class we&#8217;ve discussed the problems this server will face when it comes to higher traffic.
+Let&#8217;s improve our model so that it can handle a heavier traffic load.</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
-<p>Create a new branch in your network tools repository.  Call it <code class="docutils literal"><span class="pre">concurrency</span></code>.
+<p>Create a new branch in your network tools repository.
+Call it <code class="docutils literal"><span class="pre">concurrency</span></code>.
 You&#8217;ll do your work in this branch.</p>
 <p>Use pip to install <a class="reference external" href="http://www.gevent.org/">gevent</a> into your http project virtual environment.</p>
-<p>Add a new file that will hold your concurrent HTTP server script. In it you
-will re-write your server loop appropriately as a handler for the gevent
-StreamServer.</p>
-<p>You should be able to import most of the required functionality from your
-original HTTP server without need for repeating yourself.</p>
-<p>The functionality of the server should not change, so you should be able to
-maintain the test suite you created for the original server.</p>
+<p>Add a new file that will hold your concurrent HTTP server script.
+In it you will re-write your server loop appropriately as a handler for the gevent StreamServer.</p>
+<p>You should be able to import most of the required functionality from your original HTTP server without need for repeating yourself.</p>
+<p>The functionality of the server should not change.
+You should be able to maintain the test suite you created for the original server.</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>When you are done and all your tests are passing, submit a pull request from
-the <code class="docutils literal"><span class="pre">concurrency</span></code> branch back to master.  Copy the URL and submit it. When
-you are done you may merge concurrency to master on your own.</p>
-<p>As with every primary submission, use the Comments feature to add questions,
-comments and reflections on your assignment.</p>
+<p>When you are done and all your tests are passing, submit a pull request from the <code class="docutils literal"><span class="pre">concurrency</span></code> branch back to master.
+Copy the URL and submit it.
+When you are done you may merge concurrency to master on your own.</p>
+<p>As with every primary submission, use the Comments feature to add questions, comments and reflections on your assignment.</p>
 </div>
 </div>
 
