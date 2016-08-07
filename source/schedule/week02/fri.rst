@@ -10,6 +10,11 @@ Friday
 
     This document contains no slides.
 
+Concepts
+========
+
+Professional Development with Code Fellows Staff
+
 Readings
 ========
 
@@ -22,7 +27,7 @@ Assignments
 * :doc:`/assignments/proper_parenthetics`
 * :doc:`/assignments/http_server_final`
 * :doc:`/assignments/daily_lj_entry`
-  
+
 (Necessary for Monday)
 
 * :doc:`/assignments/learning_journal_mockup`
