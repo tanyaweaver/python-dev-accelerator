@@ -29,7 +29,6 @@ Concepts
    :maxdepth: 2
 
    /lectures/graphs
-   /lectures/graph_example
    /lectures/pyramid_day4
 
 .. * Form handling in web applications
@@ -45,7 +44,7 @@ Assignments
 ===========
 
 * :doc:`/assignments/graph_1`
-* :doc:`/assignments/pyramid_lj_4.rst`
+* :doc:`/assignments/pyramid_lj_4`
 * :doc:`/assignments/project_04_readme`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/blog_post_outline` (due Friday)

@@ -20,14 +20,51 @@ Presenting Data
 
 The job of the *view* in the *MVC* pattern is to present data in a format that is readable to the user of the system.
 There are many ways to present data.
-Some are readable by humans (e.g. tables, charts, graphs, HTML pages, text files), while others are more for machines (e.g. xml files, csv, json).
+Some are readable by humans (e.g. tables, charts, graphs, HTML pages, text files),
+while others are more for machines (e.g. xml files, csv, json).
 Which of these formats is the *right one* depends on your purpose.
 What is the purpose of our learning journal?
 
 Pyramid Renderers and ``view_config``
 -------------------------------------
 
-In Pyramid, the job of presenting data is performed by a *renderer*, which can come in a variety of types. Pyramid has two `renderers <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/renderers.html>`_ built-in: string, json. These renderers will take a *non-response* object and return it as an HTTP response in the given format. They are attached to a view using the ``@view_config`` decorator:
+In part one of our introduction to Pyramid, we created our first view like so:
+
+.. code-block:: python
+
+    from pyramid.response import Response
+
+    def home_page(request):
+        return Response("This is my first view!")
+
+    def includeme(config):
+        config.add_view(home_page, route_name='home')
+
+By doing so, we conflated the tasks of the *MVC controller* and the *MVC view*.
+This is simple, and allows us to get started, but it is not the preferred method.
+More typically, we allow a *view callable* to function solely as a controller,
+and delegate data presentation to a *renderer*
+
+Renderers in Pyramid come in a variety of types.
+There are three `renderers <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/renderers.html>`_ built-in: ``string``, ``json``, and ``jsonp``.
+With plugins, like ``pyramid_jinja2``, we can extend this list by adding renderers that implement popular templating languages.
+
+Pyramid renderers take a Python object (a string, list or dict) object and return it as an HTTP response.
+The ``Content-Type`` header of the response is set automatically, depending on the renderer used.
+
+We associate a renderer with a view using configuration.
+We can extend the **imperative** configuration we used yesterday with a ``renderer`` argument:
+
+.. code-block:: python
+
+    def includeme(config):
+        config.add_view(home_page, route_name='home', renderer='string')
+
+However, that approach is also considered to be a bit awkward.
+The problem is that it separates the configuration of a view from the location of the view callable.
+This makes it more difficult to quickly understand what each part of your code is doing.
+
+Instead, let's use a **declarative** style with the ``@view_config`` decorator:
 
 .. code-block:: python
 
@@ -36,23 +73,18 @@ In Pyramid, the job of presenting data is performed by a *renderer*, which can c
     from pyramid.view import view_config
 
     # ...
-    @view_config(renderer='string')
-    def detail_view(request):
+    @view_config(route_name='home', renderer='string')
+    def home_view(request):
         return "This was transformed into an HTTP response"
 
     # ...
 
-If we want to see the result of this code, we of course have to connect this view to a route. Since we're using this **declarative style** of defining a view, we can add in the ``route_name`` as a parameter to ``view_config``:
-
-.. code-block:: python
-
-    @view_config(route_name='detail', renderer='string')
-
-Finally, since we're now connecting our view to our route with this decorator (and we will forever onward), we'll need to start refactoring our code...
+Finally, since we're now connecting our view to our route with this decorator (and we will forever onward),
+we'll need to refactor our code a bit...
 
 * We no longer need to import or use ``Response`` from ``pyramid.response``
-* Decorate each of our views with a ``view_config`` where the ``renderer`` is ``string`` and ``route_name`` is the appropriate route name for that view
-* We don't need the ``includeme`` function as ``view_config`` ensures that the decorated view is automatically included.
+* We will decorate each of our views with ``view_config`` where the ``renderer`` is ``string`` and ``route_name`` is the appropriate route name for that view
+* We don't need the ``includeme`` function as ``view_config`` and other configuration decorators are found automatically by ``config.scan()``.
 * In ``__init__.py`` we don't have to use ``config.include('.views')`` for the same reason as above.
 
 After refactoring, our code should look *something* like this:
@@ -94,21 +126,26 @@ After refactoring, our code should look *something* like this:
     def update_view(request):
         return ("This is", "a tuple")
 
-Note that for each of the above views, *anything* that was in the ``return`` statement was printed to the browser as a string, without having to have it wrapped in an HTTP response object.
+Notice that for each of the above views, *anything* that was returned was printed to the browser as a string.
+We did not have to have it wrapped in an HTTP response object.
+Check your browser and verify that the ``Content-Type`` of the response was ``text/plain``.
 
-We can attach external renderers to our views as well. We have in fact included one in ``__init__.py`` with the ``pyramid_jinja2`` package. Recall:
+As we noted above, we can attach external renderers to our views as well.
+We have in fact included one in ``__init__.py`` with the ``pyramid_jinja2`` package. Recall:
 
 .. code-block:: python
 
     # __init__.py
     config.include('pyramid_jinja2')
 
-The ``pyramid_jinja2`` package supports using the *Jinja2* template language. Let's learn a bit about how `Jinja2 templates <http://jinja.pocoo.org/docs/templates/>`_ work.
+The ``pyramid_jinja2`` package supports using the *Jinja2* template language.
+Let's learn a bit about how `Jinja2 templates <http://jinja.pocoo.org/docs/templates/>`_ work.
 
 Jinja2 Template Basics
 ----------------------
 
-We'll start with the absolute basics. Fire up an iPython interpreter in your virtual environment and import the ``Template`` class from the ``jinja2`` package:
+We'll start with the absolute basics.
+Fire up an iPython interpreter in your virtual environment and import the ``Template`` class from the ``jinja2`` package:
 
 .. code-block:: bash
 
@@ -122,9 +159,18 @@ A template is constructed with a simple string:
 
     In [2]: t1 = Template("Hello {{ name }}, how are you")
 
-Here, we've simply typed the string directly, but it is more common to build a template from the contents of a *file*.
+Here, we've typed the string directly, but it is more common to build a template from the contents of a *file*.
 
-Notice that our string has some odd stuff in it: ``{{name}}``. This is called a *placeholder*, and when the template is *rendered* it is replaced. We can see that if we call ``t1``'s ``render`` method, providing *context* for ``{{name}}``:
+Notice that our string has some odd stuff in it: ``{{ name }}``.
+This is called a *placeholder* (it is marked as such by the double curly braces).
+When the template is *rendered* any placeholder in our template is replaced.
+
+Where does the template engine find the values to use in place of the placeholders?
+We are responsible for passing them to the template in the form of *context*.
+Context is passed as keyword arguments to the render method of the template.
+The names of the provided keyword arguments map onto the names of the placeholders in the template.
+
+We can see this if we call ``t1``'s ``render`` method, providing *context* for ``{{name}}``:
 
 .. code-block:: ipython
 
@@ -134,7 +180,7 @@ Notice that our string has some odd stuff in it: ``{{name}}``. This is called a 
     In [4]: t1.render(name="Gloria")
     Out[4]: 'Hello Gloria, how are you'
 
-*Context* can either be keyword arguments, or a dictionary. Note the resemblance to the string formatting we've seen before:
+Note the resemblance to the string formatting we've seen before:
 
 .. code-block:: ipython
 
@@ -170,7 +216,7 @@ The exact same is true of objects passed in as part of *context*:
 
 This means your templates can be agnostic as to the nature of the things found in *context*.
 
-You can apply `filters <http://jinja.pocoo.org/docs/dev/templates/#filters>`_ to the data passed in *context* with the pip ('|') operator:
+You can apply `filters <http://jinja.pocoo.org/docs/dev/templates/#filters>`_ to the data passed in *context* with the pipe ('|') operator:
 
 .. code-block:: ipython
 
@@ -186,7 +232,8 @@ You can also chain filters together:
     In [16]: t5.render(phrase="howdy doody")
     Out[16]: 'confusing: YDOOD YDWOH'
 
-Logical `control structures <http://jinja.pocoo.org/docs/dev/templates/#list-of-control-structures>`_ are also available:
+Logical `control structures <http://jinja.pocoo.org/docs/dev/templates/#list-of-control-structures>`_ are also available.
+They are marked by a curly brace combined with a percent sign (``{% control_name %}``):
 
 .. code-block:: ipython
 
@@ -197,9 +244,11 @@ Logical `control structures <http://jinja.pocoo.org/docs/dev/templates/#list-of-
     In [19]: t6.render(list=['a', 'b', 'c', 'd', 'e'])
     Out[19]: '\na, b, c, d, e, '
 
-Any control structure introduced in a template **must** be paired with an explicit closing tag (``{% for %} ... {% endfor %}``, ``{% if %} ... {% elif %} ... {% else %} ... {% endif %}``).
+Any control structure introduced in a template **must** be paired with an explicit closing tag
+(``{% for %} ... {% endfor %}``, ``{% if %} ... {% elif %} ... {% else %} ... {% endif %}``).
 
-Remember, although template tags like ``{% for %}`` or ``{% if %}`` look a lot like Python, *they are not*. The syntax is specific and must be followed correctly.
+Remember, although template tags like ``{% for %}`` or ``{% if %}`` look a lot like Python, *they are not*.
+The syntax is specific and must be followed correctly.
 
 There are a number of specialized *tests* available for use with the ``if...elif...else`` control structure:
 
@@ -239,9 +288,12 @@ Basic `Python-like expressions <http://jinja.pocoo.org/docs/dev/templates/#expre
 Templates Applied
 =================
 
-There's more that Jinja2 templates can do, but it will be easier to introduce you to that in the context of a working template. So let's make some.
+There's more that Jinja2 templates can do, but it is easier to introduce you to that in the context of a working template.
+So let's make some.
 
-We have a Pyramid ``view`` that'll return the content of a single entry. Let's create a template to show it. In ``learning_journal_basic/templates/`` create a new file ``detail.jinja2``:
+We have a Pyramid ``view`` that'll return the content of a single entry.
+Let's create a template to show it.
+In ``learning_journal_basic/templates/`` create a new file ``detail.jinja2``:
 
 .. code-block:: html
 
@@ -259,9 +311,10 @@ We have a Pyramid ``view`` that'll return the content of a single entry. Let's c
         </body>
     </html>
 
-We're going to hold on replacing names with keywords. First, let's just serve up this HTML. Notice that the file type is ``.jinja2``, not ``.html``.
+We'll start with this *static* template, without trying placeholders yet.
+Notice that the file type is ``.jinja2``, not ``.html``.
 
-Wire up our new detail template to the detail view in ``learning_journal_basic/views.py``:
+Wire up our new detail template *renderer* to the detail view in ``learning_journal_basic/views.py``:
 
 .. code-block:: python
 
@@ -280,11 +333,17 @@ Now we should be able to see some rendered HTML for our journal entry details. S
 
 Then try viewing an individual journal entry: http://localhost:6543/journal/1
 
-The HTML in our Jinja2 template comes up just as we've structured it! However there's a problem. If we were to continue on like this we'd still have to create an individual template for *every* journal entry. If we just wanted to write static HTML this way, why would we ever use a template?
+The HTML in our Jinja2 template comes up just as we've structured it!
+However there's a problem.
+If we were to continue on like this we'd still have to create an individual template for *every* journal entry.
+If we just wanted to write static HTML this way, why would we ever use a template?
 
-Jinja2 templates are rendered with a *context*. A Pyramid *view* returns a dictionary, which is passed to the renderer as part of that *context*. This means we can access values we return from our *view* in the *renderer* using the names we assigned to them.
+Jinja2 templates are rendered with a *context*.
+A Pyramid *view* returns a dictionary, which is passed to the renderer as that *context*.
+This means we can access values we return from our *view* in the *renderer* using the names we assigned to them.
 
-Just like we did in the command line, we can use placeholders and feed data to those placeholders through the ``return`` statement of our ``detail_view``:
+Just like we did in the command line, we can use placeholders.
+We'll feed data to those placeholders through the ``return`` statement of our ``detail_view``:
 
 .. code-block:: html+jinja
 
@@ -313,7 +372,17 @@ Just like we did in the command line, we can use placeholders and feed data to t
             "body": "Sample body text."
         }
 
-The *request* object is also placed in the context by Pyramid *by default*. ``request`` has a method ``route_url`` that will create a URL for a named route and an attribute ``url`` that will create a URL for the current page. This allows you to include URLs in your template without needing to know exactly what they will be. This process is called *reversing*, since it's a bit like a reverse phone book lookup.
+There are some other pieces of data that Pyramid adds to the *context* you return from your view.
+One of these is the *request* object.
+It gives us access to information that the framework provides automatically.
+
+The Pyramid ``request`` has a method called ``route_url``.
+The job of this method is to return a URL corresponding to some route in your configured application.
+This allows you to include URLs in your template without needing to know exactly what they will be.
+The process is called *reversing*, since it's a bit like a reverse phone book lookup.
+
+The request also provides an attribute called ``url`` that will return the URL for the current page.
+We can use these features to begin creating connections from our template to other views in our application.
 
 .. code-block:: html+jinja
 
@@ -332,7 +401,9 @@ The *request* object is also placed in the context by Pyramid *by default*. ``re
         </body>
     </html>
 
-Let's now create a template such that our index shows a list of journal entries, showing only the title and the date of creation. In ``learning_journal_basic/templates/`` create a new file ``list.jinja2``:
+Let's now create a template such that our index shows a list of journal entries.
+We'll show only the title and the date of creation.
+In ``learning_journal_basic/templates/`` create a new file ``list.jinja2``:
 
 .. code-block:: html+jinja
 
@@ -364,7 +435,9 @@ It's worth taking a look at a few specifics of this template.
     ... # stuff here
     {% endfor %}
 
-Pyramid has *control structures* just like Python, however every ``for`` loop and ``if`` block in Pyramid must end with an ``endfor``/``endif``. As with looping in Python, as long as the variable being referenced by the loop is an iterable, you can alias the individual items within the iterable and use those items in your code.
+Pyramid has *control structures* just like Python.
+Remember though that every ``for`` loop and ``if`` block in Pyramid must end with an ``endfor``/``endif``.
+As with looping in Python, you can iterate over values that are iterable and render each in turn.
 
 Let's look at another aspect of the same template.
 
@@ -372,9 +445,15 @@ Let's look at another aspect of the same template.
 
     <a href="{{ request.route_url('detail', id=entry.id) }}">{{ entry.title }}</a>
 
-Before we saw ``request.route_url`` used to...request the url of the route named ``home``. Now we're seeing it used to get the url for the ``detail`` route, but note in ``routes.py`` that the ``detail`` route takes the keyword ``id``. Up to now we've been bypassing this by just providing a number that would fit the bill. In this case, we have to provide any keywords we want to reference in the url as an argument to ``request.route_url``.
+Before we saw ``request.route_url`` used to...request the url of the route named ``home``.
+Now we're seeing it used to get the url for the ``detail`` route.
+Note that in ``routes.py`` that the ``detail`` route requires a value to serve as the ``id``.
+Up to now we've been bypassing this by just providing a number that would fit the bill.
+In this case, we have to provide any keywords we want to reference in the url as an argument to ``request.route_url``.
 
-Finally, you'll need to connect this new renderer to your listing view. Since we need to display data on the page, we have to feed it data to be displayed. Let's alter views.py:
+Finally, you'll need to connect this new renderer to your listing view.
+Since we need to display data on the page, we have to feed it data to be displayed.
+Let's alter views.py:
 
 .. code-block:: python
 
@@ -391,7 +470,10 @@ Finally, you'll need to connect this new renderer to your listing view. Since we
 
     #...
 
-``ENTRIES`` here is a rare global variable. You're going to want to use this for your ``detail`` view tonight. When we discuss models tomorrow, we'll dispose of this entirely.
+``ENTRIES`` here is a rare global variable.
+For the time being, we will use it as a substitute for a more robust data source.
+You're going to want to use this for your ``detail`` view tonight.
+When we discuss models tomorrow, we'll dispose of this entirely.
 
 We can now see our list page in all its glory. Let's try starting the server:
 
@@ -401,16 +483,23 @@ We can now see our list page in all its glory. Let's try starting the server:
     Starting server in PID 53587.
     serving on http://127.0.0.1:6543
 
-View the home page of your journal at http://localhost:6543/. Click on the link to an entry, and it should route you to the detail view.
+View the home page of your journal at http://localhost:6543/.
+Click on the link to an entry, and it should route you to the detail view.
 
-These views are reasonable, if quite plain. There's also code between them that's repeated **heavily**, and we want to do our best to keep code DRY. Let's put our templates into something that looks more like a website.
+These views are reasonable, if quite plain.
+There's also code between them that's repeated **heavily**, and we want to do our best to keep code DRY.
+Let's put our templates into something that looks more like a website.
 
 Template Inheritance
 --------------------
 
-Jinja2 allows you to combine templates using something called `template inheritance <http://jinja.pocoo.org/docs/dev/templates/#template-inheritance>`_. You can create a basic page structure, and then *inherit* that structure in other templates.
+Jinja2 allows you to combine templates using something called `template inheritance <http://jinja.pocoo.org/docs/dev/templates/#template-inheritance>`_.
+You can create a basic page structure, and then *inherit* that structure in other templates.
 
-Let's make a template for the basic outer structure of our pages. The following code will serve as our page template, and will go into a file called ``layout.jinja2``. Save that file to your ``templates`` directory. Here's the code:
+Let's make a template for the basic outer structure of our pages.
+The following code will serve as our page template, and will go into a file called ``layout.jinja2``.
+Save that file to your ``templates`` directory.
+Here's the code:
 
 .. code-block:: html+jinja
 
@@ -443,7 +532,9 @@ Let's make a template for the basic outer structure of our pages. The following 
     </footer>
     </html>
 
-The important part here is the ``{% block body %}...{% endblock %}`` expression. This is a template **block** and it is a kind of placeholder. Other templates can inherit from this one, and fill that block with additional HTML.
+The important part here is the ``{% block body %}...{% endblock %}`` expression.
+This is a template **block** and it is a kind of placeholder.
+Other templates can inherit from this one, and fill that block with additional HTML.
 
 Let's update our ``detail`` and ``list`` templates:
 
@@ -462,16 +553,19 @@ Start the server so we can see the result.
     Starting server in PID 53587.
     serving on http://127.0.0.1:6543
 
-Start at the home page, click on an entry, and it should still work. Now, you've shared page structure that is in both.
+Start at the home page, click on an entry, and it should still work.
+Now, you've shared page structure that is in both.
 
 Static Assets
 -------------
 
-Although we have a shared structure, it isn't particularly nice to look at. Aspects of how a website looks are controlled by CSS (*Cascading Style Sheets*). Stylesheets are one of what we generally speak of as *static assets*.
-
+Although we have a shared structure, it isn't particularly nice to look at.
+Aspects of how a website looks are controlled by CSS (*Cascading Style Sheets*).
+Stylesheets are one of what we generally speak of as *static assets*.
 Other static assets include *images* that are part of the site's design (logos, button images, etc) and *JavaScript* files that add client-side dynamic behavior.
 
-Serving static assets in Pyramid requires adding a *static view* to configuration. Luckily, it's a simple addition for us to get and serve these assets.
+Serving static assets in Pyramid requires adding a *static view* to configuration.
+Luckily, it's a simple addition for us to get and serve these assets.
 
 .. code-block:: python
 
@@ -488,11 +582,13 @@ Serving static assets in Pyramid requires adding a *static view* to configuratio
         config.scan()
         return config.make_wsgi_app()
 
-* The first argument to ``add_static_view`` is a name that will need to appear in the path of URLs requesting assets.
-* The second argument is a *path* that is relative to the package being configured. Assets referenced by the *name* in a URL will be searched for in the location defined by the *path*.
+* The first argument we have provided to ``add_static_view`` is a name that must appear in the path of URLs requesting assets.
+* The second argument is a *path* that is relative to the package being configured.
+  Assets referenced by the *name* in a URL will be searched for in the location defined by the *path*.
 * Additional keyword arguments control other aspects of how the view works.
 
-Once you have a static view configured, you can use assets in that location in templates. The *request* object in Pyramid provides a ``static_path`` method that will render an appropriate asset path for us.
+Once you have a static view configured, you can use assets in that location in templates.
+The *request* object in Pyramid also provides a ``static_path`` method that will render an appropriate asset path for us.
 
 Add the following to your ``layout.jinja2`` template:
 
@@ -504,14 +600,24 @@ Add the following to your ``layout.jinja2`` template:
     </head>
     # everything else
 
-The **one required argument** to ``request.static_path`` is a *path* to an asset. Note that because any package *might* define a static view with the directory name ``static``, we have to specify which package we want to look in. That's why we have ``learning_journal_basic:static/style.css`` in our call.
+The **one required argument** to ``request.static_path`` is a *path* to an asset.
+Note that because any package *might* define a static view with the directory name ``static``, we have to specify which package we want to look in.
+That's why we have ``learning_journal_basic:static/style.css`` in our call.
 
-Create a very basic style for your learning journal and add it to ``learning_journal_basic/static``. Then, restart your web server and see what a difference a little style makes.
+Create a very basic style for your learning journal and add it to ``learning_journal_basic/static``.
+Then, restart your web server and see what a difference a little style makes.
 
 Testing Your Pyramid App
 ========================
 
-Thus far we have written tons of code for handling HTTP routing and filling templates with data, but we haven't yet written any tests of our own to make sure that things work the way that we need them to work. We can fortunately do this with a combination of Pyramid's own ``testing`` module (`Documentation <http://docs.pylonsproject.org/projects/pyramid/en/latest/api/testing.html#module-pyramid.testing>`_), as well as the ``unittest`` package from ``pytest`` (`Documentation <https://docs.python.org/3/library/unittest.html#module-unittest>`_). When it comes to testing your Pyramid app, you need to not only do unit tests for individual pieces of functionality. You need to test for how things perform when in practice. For example, if your app sends an email, you need to check that the email is actually sent.
+Thus far we have written tons of code for handling HTTP routing and filling templates with data.
+But we haven't yet written any tests of our own to make sure that things work the way that we need them to work.
+We can fortunately do this with a combination of Pyramid's own ``testing`` module
+(`Documentation <http://docs.pylonsproject.org/projects/pyramid/en/latest/api/testing.html#module-pyramid.testing>`_),
+as well as the ``unittest`` package from the Python standard library (`Documentation <https://docs.python.org/3/library/unittest.html#module-unittest>`_).
+When it comes to testing your Pyramid app, you need to not only do unit tests for individual pieces of functionality.
+You need to test for how things perform when in practice.
+For example, if your app sends an email, you need to check that the email is actually sent.
 
 Setting Up a Test for a View
 ----------------------------
@@ -553,11 +659,25 @@ Our scaffold provided for us a ``tests.py`` file. Let's inspect it.
 
 We use the ``unittest`` module, which is part of the Python standard library.
 
-``unittest`` comes with a ``TestCase`` object that we can inherit from and modify. When we inherit from ``TestCase``, we get access to a ton of ``asserts``, such as the ``assertEqual`` and ``assertTrue`` seen here, as well as functionality for setting up a testing environment (``setUp``) and tearing it down (``tearDown``). This is not Pyramid-specific, but available whenever we import ``unittest``.
+The ``unittest`` module provides a ``TestCase`` object that we inherit from and modify.
+When we inherit from ``TestCase``, we get access to a ton of ``assert*`` methods, such as the ``assertEqual`` and ``assertTrue`` seen here.
+We also get functionality for setting up a testing environment (``setUp``) and tearing it down (``tearDown``).
+This is not Pyramid-specific, but available in any project where we use ``unittest``.
 
-As part of the setup, we have pyramid's own ``testing`` object, which allows us to set up the configuration we need to run our app and have access to the ``request`` and ``response`` objects that we need to test our views. Recall that our views can only run when taking a ``request`` object as an argument. So, we provide a ``request`` with ``testing.DummyRequest``.
+As part of the setup, we have pyramid's own ``testing`` module.
+This module provides tools to set up the configuration we need for our app.
+It also gives access to the ``request`` and ``response`` objects that we need to test our views.
+Recall that our views must be called with a ``request`` as an argument.
+Depending on what work your views must do, this can be any Python object, even a simple string or dict.
+But if you require something with a bit more resemblance to a real request, you can use ``testing.DummyRequest``.
 
-Let's comment out ``FunctionalTests`` bit for now (I'm removing it entirely) and for the moment just focus on ``ViewTests``. Let's also replace ``my_view`` with ``detail_view``. Finally, recall that our ``detail_view`` returns a dictionary, with the "title", "creation_date", and "body" of a sample learning journal entry. Let's make our test reflect that, checking that "title" is an attribute of our ``detail_view``'s return statement. For now, we'll be working with this:
+Let's comment out the ``FunctionalTests`` TestCase class for now (I'm removing it entirely).
+For the moment we'll just focus on ``ViewTests``.
+These will be unit tests for our views.
+Let's also replace ``my_view`` with ``detail_view``.
+Finally, recall that our ``detail_view`` returns a dictionary, with the "title", "creation_date", and "body" of a sample learning journal entry.
+Let's make our test reflect that, checking that "title" is in the value returned by our ``detail_view``.
+For now, we'll be working with this:
 
 .. code-block:: python
 
@@ -578,19 +698,21 @@ Let's comment out ``FunctionalTests`` bit for now (I'm removing it entirely) and
             from .views import detail_view
             request = testing.DummyRequest()
             info = detail_view(request)
-            self.assertIn("title", info.keys())
+            self.assertIn("title", info)
 
 
 Running Pyramid Tests
 ---------------------
 
-To run this test we have to first install all the things we need for testing. We defined those in our ``setup.py`` so just navigate to the project root and install like so:
+To run this test we have to first install all the things we need for testing.
+We defined those in our ``setup.py`` so just navigate to the project root and install like so:
 
 .. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pip install -e ".[testing]"
 
-In between the quotes we have ``.[testing]`` because we want to install everything in the current directory (the ``.``), but we want the extra packages that we specified for testing. If you have other extra packages you want for some other reason, you install them in this fashion.
+In between the quotes we have ``.[testing]`` because we want to install everything in the current directory (the ``.``), but we also want the extra packages that we specified for testing.
+If you have other extra packages you want for some other reason, you install them in this fashion.
 
 Now that all is installed, run our test!
 
@@ -598,7 +720,15 @@ Now that all is installed, run our test!
 
     py.test learning_journal_basic/tests.py -q
 
-We've designed this one test to pass, so we should get a statement saying it passes. Spectacular. But we want to test across versions of Python, so we need to incorporate ``tox``. Recall that when we first set up our app via the scaffold, we added ``tox`` into ``tests_require``. When we pip-installed ``testing`` above, tox was installed along with everything else. Now we just have to construct our ``tox.ini`` configuration file so that we can run tox. Let's add a little bit more to our tox file than we usually do. We don't want to just run our tests across versions, we ultimately want to make sure that our app is well-tested across everything we've written. We want to add coverage. So, our tox file should look like the following:
+We've designed this one test to pass, so we should get a statement saying it passes.
+Spectacular.
+But we want to test across versions of Python, so we need to incorporate ``tox``.
+Recall that when we first set up our app via the scaffold, we added ``tox`` into ``tests_require``.
+When we pip-installed ``testing`` above, tox was installed along with everything else.
+Now we just have to construct our ``tox.ini`` configuration file so that we can run tox.
+Let's add a little bit more to our tox file than we usually do.
+We don't want to just run our tests across versions, we ultimately want to make sure that our app is well-tested across everything we've written.
+We want to add coverage. So, our tox file should look like the following:
 
 .. code-block:: bash
 
@@ -612,7 +742,8 @@ We've designed this one test to pass, so we should get a statement saying it pas
         pytest-cov
         webtest
 
-Now we run tox as we always have and ensure that our test passes across Python 2.7 and 3.5. On top of that, we get a report of the coverage of our tests in the console.
+Now we run tox as we always have and ensure that our test passes across Python 2.7 and 3.5.
+On top of that, we get a report of the coverage of our tests in the console.
 
 .. code-block:: bash
 
@@ -627,12 +758,19 @@ Now we run tox as we always have and ensure that our test passes across Python 2
 
     1 passed in 1.48 seconds
 
-This seems trivial now because in this particular moment we're just testing that the view is returning the data that we put into it in the first place. That's OK, even trivial tests are still evidence that your code works. Tomorrow when we talk about data models and hook those up to our views, testing our views will involve several more bits.
+This seems trivial now because in this particular moment we're just testing that the view is returning the data that we put into it in the first place.
+That's OK, even trivial tests are still evidence that your code works.
+Tomorrow when we talk about data models and hook those up to our views, testing our views will involve several more bits.
 
 Enter Functional Tests
 ----------------------
 
-As the name implies, `functional tests <http://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/functional_testing.html>`_ verify that various components of our app function together as they should. We'll use functional tests to "look" at our front-end and make sure that what's being displayed is what we expect. To set up our functional tests we again inherit from the ``unittest.TestCase`` object. We then set up a "working" version of our app and use HTTP methods on our routes. As an example (expanded from what was provided by the scaffold):
+As the name implies, `functional tests <http://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/functional_testing.html>`_ verify that various components of our app function together as they should.
+They are an important complement to unit tests, which ensure that each individual piece does the job it is designed to do.
+We'll use functional tests to "look" at our front-end and make sure that what's being displayed is what we expect.
+To set up our functional tests we again inherit from the ``unittest.TestCase`` object.
+We then set up a "working" version of our app and use HTTP methods on our routes.
+As an example (expanded from what was provided by the scaffold):
 
 .. code-block:: python
 
@@ -653,9 +791,13 @@ As the name implies, `functional tests <http://docs.pylonsproject.org/projects/p
             response = self.testapp.get('/', status=200)
             self.assertTrue(b'<article>' in response.body)
 
-Here, we set up a new WSGI app instance by providing our ``main`` function, which is already taking our base global configuration, with an empty dict for settings. ``webtest.TestApp`` wraps that app to provide some additional functionality, such as the ability to send ``GET`` requests to a given route. ``WebTest`` is a great app for testing functionality with respect to real HTTP requests, but it can do so much more (even check for cookies!). `Read the documentation <http://webtest.pythonpaste.org/en/latest/api.html#webtest.app.TestApp>`_ for more details about how ``WebTest`` can help you write robust tests for your web app.
+Here, we set up a new WSGI app instance by providing our ``main`` function, which is already taking our base global configuration, with an empty dict for settings.
+The ``TestApp``  class from the ``WebTest`` package wraps that app to provide some additional functionality, such as the ability to send ``GET`` requests to a given route.
+``WebTest`` is a great app for testing functionality with respect to real HTTP requests, but it can do so much more (even check for cookies!).
+`Read the documentation <http://webtest.pythonpaste.org/en/latest/api.html#webtest.app.TestApp>`_ for more details about how ``WebTest`` can help you write robust tests for your web app.
 
-This is great and all, however it seems somewhat silly to test for HTML elements and content using byte strings. It would be great if a package existed that specialized in collecting and picking apart the DOM.
+This is great and all, however it seems somewhat silly to test for HTML elements and content using byte strings.
+It would be great if a package existed that specialized in collecting and picking apart the DOM.
 
 The BeautifulSoup Interlude
 ---------------------------
@@ -669,7 +811,7 @@ Let's fire up ``pshell`` and use it a little.
 
     In [1]: from bs4 import BeautifulSoup
 
-``bs4`` is the package name, and BeautifulSoup is an object that we use to wrap HTML so that we can parse it apart.
+The package is called ``bs4``, and BeautifulSoup is an object that we use to wrap HTML so that we can parse it apart.
 Let's give it some of the HTML that we wrote for our mockups before we knew about the joys of templates.
 
 .. code-block:: ipython
@@ -690,7 +832,7 @@ Let's give it some of the HTML that we wrote for our mockups before we knew abou
         </body>
     </html>
 
-In order to actually interact with the HTML à la DOM traversal, we must first parse our HTML with a ``BeautifulSoup`` instance.
+In order to actually interact with the HTML à la DOM traversal, we first parse our HTML into a ``BeautifulSoup`` instance.
 
 .. code-block:: ipython
 
@@ -701,21 +843,26 @@ If we don't specify the parser, ``BeautifulSoup`` uses the best-available parser
 .. code-block:: ipython
 
     In [5]: tmp_soup = BeautifulSoup(some_html)
-    /Users/Nick/Documents/codefellows/courses/code401_python/pyramid_lj/lib/python3.5/site-packages/bs4/__init__.py:166: UserWarning: No parser was explicitly specified, so I'm using the best available HTML parser for this system ("html.parser"). This usually isn't a problem, but if you run this code on another system, or in a different virtual environment, it may use a different parser and behave differently.
+    /Users/Nick/Documents/codefellows/courses/code401_python/pyramid_lj/lib/python3.5/site-packages/bs4/__init__.py:166:
+      UserWarning: No parser was explicitly specified, so I'm using the best available HTML parser for this system ("html.parser").
+      This usually isn't a problem, but if you run this code on another system, or in a different virtual environment,
+      it may use a different parser and behave differently.
 
 To get rid of this warning, change this:
 
 .. code-block:: python
 
-    BeautifulSoup([your markup])
+    BeautifulSoup(<your markup>)
 
 to this:
 
 .. code-block:: python
 
-    BeautifulSoup([your markup], "html.parser")
+    BeautifulSoup(<your markup>, "html.parser")
 
-So, be sure to specify your parser. Note, there are other parsers that you can install. Check the docs for more info.
+So, be sure to specify your parser.
+There are other, better parsers that you can install.
+Check the docs for more info.
 
 We've now made our ``soup`` object and it comes packed with some useful methods and attributes.
 One of these is ``soup.findAll('html_element')``.
@@ -795,7 +942,10 @@ Our ``response`` has an ``html`` attribute that is a parsed ``BeautifulSoup`` ob
         html = response.html
         self.assertEqual(len(ENTRIES), len(html.findAll("article")))
 
-That's our new functional test for the home page. Notice that instead of simply testing for the existence of any article tag, it tests specifically that the number on the page matches the number of journal entries. This is the type of test you want, and you can keep the general form of this one the same when we incorporate data models (with some minor tweaks). Now, run ``tox`` and look at that sweet, sweet coverage:
+That's our new functional test for the home page. Notice that instead of simply testing for the existence of any article tag,
+it tests specifically that the number on the page matches the number of journal entries.
+This is the type of test you want, and you can keep the general form of this one the same when we incorporate data models.
+Now, run ``tox`` and look at that sweet, sweet coverage:
 
 .. code-block:: bash
 

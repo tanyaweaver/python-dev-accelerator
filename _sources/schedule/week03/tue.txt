@@ -33,7 +33,6 @@ Concepts
    :maxdepth: 2
 
    /lectures/heap
-   /lectures/max_heap_example
    /lectures/pyramid_day2
 
 
