@@ -30,5 +30,4 @@ Assignments
 
 (Necessary for Monday)
 
-* :doc:`/assignments/learning_journal_mockup`
 * :doc:`/assignments/heroku_account`
