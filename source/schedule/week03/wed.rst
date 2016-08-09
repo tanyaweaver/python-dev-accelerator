@@ -45,4 +45,5 @@ Assignments
 * :doc:`/assignments/pyramid_lj_3`
 * :doc:`/assignments/project_03_repo`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/get_dns_account`
 * :doc:`/assignments/blog_post_outline` (due Friday)
