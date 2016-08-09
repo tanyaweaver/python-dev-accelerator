@@ -38,11 +38,12 @@ Concepts
    /lectures/deque
    /lectures/python_frameworks_general
    /lectures/pyramid_day1
+   /lectures/pyramid_heroku
 
-.. Demo
-.. ====
+Demo
+====
 
-.. Interfacing with a database using the SQLAlchemy ORM
+Deploy a Pyramid Starter App to Heroku
 
 Assignments
 ===========
