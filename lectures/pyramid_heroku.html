@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Graphs &mdash; Python 401 2.1 documentation</title>
+    <title>Deploying Pyramid to Heroku &mdash; Python 401 2.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,9 +25,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python 401 2.1 documentation" href="../index.html" />
-    <link rel="up" title="Thursday" href="../schedule/week03/thu.html" />
-    <link rel="next" title="PostgreSQL and Working With the Environment" href="pyramid_day4.html" />
-    <link rel="prev" title="Thursday" href="../schedule/week03/thu.html" />
+    <link rel="up" title="Monday" href="../schedule/week03/mon.html" />
+    <link rel="next" title="Tuesday" href="../schedule/week03/tue.html" />
+    <link rel="prev" title="Getting Started With Pyramid" href="pyramid_day1.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 
@@ -55,13 +55,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="pyramid_day4.html" title="PostgreSQL and Working With the Environment"
+          <a href="../schedule/week03/tue.html" title="Tuesday"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../schedule/week03/thu.html" title="Thursday"
+          <a href="pyramid_day1.html" title="Getting Started With Pyramid"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../schedule/week03/thu.html" accesskey="U">Thursday</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../schedule/week03/mon.html" accesskey="U">Monday</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -184,49 +184,9 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="Graphs">
-<h1>Graphs<a class="headerlink" href="#Graphs" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Motivation">
-<h2>Motivation<a class="headerlink" href="#Motivation" title="Permalink to this headline">¶</a></h2>
-<p>“Thus you see, most noble sir, how this type of solution bears little
-relationship to mathematics and I do not understand why you expect a
-mathematician to produce it rather than anyone else, for the solution is
-based on reason alone, and its discovery does not depend on any
-mathematical principle. Because of this, I do not know why even
-questions which bear so little relationship to mathematics are solved
-more quickly by mathematicians than by others. In the meantime most
-noble sir, you have a assigned this question to the geometry of position
-but I am ignorant as to what this new discipline involves, and as to
-which types of problem Leibniz and Wolff expected to see expressed this
-way.”</p>
-<p>— Leonhard Euler, describing the Königsberg bridge problem bridge
-problem in a letter to Carl Leonhard Gottlieb Ehler (April 3, 1736)</p>
-</div>
-<div class="section" id="Definition">
-<h2>Definition<a class="headerlink" href="#Definition" title="Permalink to this headline">¶</a></h2>
-<p>A graph is a set of {vertices, nodes, points} and a collection of
-{edges, lines, arcs} that each connect a pair of vertices.</p>
-</div>
-<div class="section" id="Attributes">
-<h2>Attributes<a class="headerlink" href="#Attributes" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>nodes</li>
-<li>edges</li>
-</ul>
-</div>
-<div class="section" id="Operations">
-<h2>Operations<a class="headerlink" href="#Operations" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>add_node(node)</li>
-<li>add_edge(node1, node2)</li>
-<li>del_node(node)</li>
-<li>del_edge(node1, node2)</li>
-<li>has_node(node)</li>
-<li>has_edge(node1, node2)</li>
-<li>neigbhors(node)</li>
-<li>is_adjacent(node1, node2)</li>
-</ul>
-</div>
+<div class="section" id="deploying-pyramid-to-heroku">
+<h1>Deploying Pyramid to Heroku<a class="headerlink" href="#deploying-pyramid-to-heroku" title="Permalink to this headline">¶</a></h1>
+<p>In which we learn how to make a simple Pyramid application run in the Heroku environment.</p>
 </div>
 
 
@@ -235,23 +195,12 @@ problem in a letter to Carl Leonhard Gottlieb Ehler (April 3, 1736)</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Graphs</a><ul>
-<li><a class="reference internal" href="#Motivation">Motivation</a></li>
-<li><a class="reference internal" href="#Definition">Definition</a></li>
-<li><a class="reference internal" href="#Attributes">Attributes</a></li>
-<li><a class="reference internal" href="#Operations">Operations</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../schedule/week03/thu.html"
-                        title="previous chapter">Thursday</a></p>
+  <p class="topless"><a href="pyramid_day1.html"
+                        title="previous chapter">Getting Started With Pyramid</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pyramid_day4.html"
-                        title="next chapter">PostgreSQL and Working With the Environment</a></p>
+  <p class="topless"><a href="../schedule/week03/tue.html"
+                        title="next chapter">Tuesday</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -276,13 +225,13 @@ problem in a letter to Carl Leonhard Gottlieb Ehler (April 3, 1736)</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="pyramid_day4.html" title="PostgreSQL and Working With the Environment"
+          <a href="../schedule/week03/tue.html" title="Tuesday"
              >next</a> |</li>
         <li class="right" >
-          <a href="../schedule/week03/thu.html" title="Thursday"
+          <a href="pyramid_day1.html" title="Getting Started With Pyramid"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../schedule/week03/thu.html" >Thursday</a> &raquo;</li> 
+          <li class="nav-item nav-item-1"><a href="../schedule/week03/mon.html" >Monday</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

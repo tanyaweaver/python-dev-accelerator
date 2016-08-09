@@ -97,14 +97,14 @@ That way, we can allow python packaging tools to install them for us.
 Our package is certainly not going to depend on ``tox`` just to be installed.
 Really, ``tox`` is a dependency for our tests.
 Remember, we can add *optional* dependencies using the concept of *setuptools extras*.
-And we have alread created a ``test`` extra so we could depend on ``pytest`` and ``pytest-xdist``.
+And we have alread created a ``test`` extra so we could depend on ``pytest`` and ``pytest-``.
 Let's add ``tox`` as a new testing dependency for our distribution:
 
 .. code-block:: python
 
     # in setup.py
 
-    extras_require={'test': ['pytest', 'pytest-xdist', 'tox']},
+    extras_require={'test': ['pytest', 'pytest-watch', 'tox']},
 
 Now that we've updated the requirements for our ``test`` extra, let's re-install our distribution with ``pip`` and allow it to resolve the new dependency:
 
@@ -138,7 +138,7 @@ Now that we've updated the requirements for our ``test`` extra, let's re-install
             .. code-block:: python
 
                 # in setup.py
-                extras_require={'test': ['pytest', 'pytest-xdist', 'tox']},
+                extras_require={'test': ['pytest', 'pytest-watch', 'tox']},
 
         .. container::
 
@@ -266,7 +266,7 @@ Let's add the following to our ``tox.ini`` file:
 
 The ``commands`` setting allows us to specify exactly the command we want to use to run our tests.
 The ``deps`` setting allows us to specify dependencies our tests will require.
-It is essentially the same as our ``[test]`` extra, but we don't need to provide tox (because tox is running the tests) or pytest-xdist (since we are not doing TDD here).
+It is essentially the same as our ``[test]`` extra, but we don't need to provide tox (because tox is running the tests) or pytest-watch (since we are not doing TDD here).
 
 Another potentially useful configuration setting for testing environments is ``basepython``.
 This setting takes a name (which must be available in ``$PATH``) or an absolute path to the Python executable which will be used for the specified environment.

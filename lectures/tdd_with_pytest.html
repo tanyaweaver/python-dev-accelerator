@@ -403,18 +403,18 @@ Yes we can!</p>
 <p>The <code class="docutils literal"><span class="pre">pytest</span></code> system is pluggable.
 We can install plugins to provide different kinds of functionality.
 That includes letting us automatically re-run our tests every time a test in our project is updated.
-To get that particular functionality, let&#8217;s install <code class="docutils literal"><span class="pre">pytest-xdist</span></code>:</p>
+To get that particular functionality, let&#8217;s install <code class="docutils literal"><span class="pre">pytest-watch</span></code>:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
-Banks:tdd-play cewing$ pip install pytest-xdist
+Banks:tdd-play cewing$ pip install pytest-watch
 ...
-Successfully installed apipkg-1.4 execnet-1.4.1 pytest-xdist-1.14
+Successfully installed apipkg-1.4 execnet-1.4.1 pytest-watch-4.1.0
 <span class="o">[</span>tdd-play<span class="o">]</span>
 Banks:tdd-play cewing$
 </pre></div>
 </div>
-<span class="admonition-test-on-save"></span><p>To use this new feature, we invoke the <code class="docutils literal"><span class="pre">py.test</span></code> command with the <code class="docutils literal"><span class="pre">-f</span></code> option:</p>
+<span class="admonition-test-on-save"></span><p>To use this new feature, we invoke a new command provided by our plugin: <code class="docutils literal"><span class="pre">ptw</span></code>:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>tdd-play<span class="o">]</span>
-Banks:tdd-play cewing$ py.test -f
+Banks:tdd-play cewing$ <span class="nv">ptw</span>
 <span class="o">=============================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">==============================</span>
 platform darwin -- Python 3.5.1, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
 rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
@@ -427,10 +427,6 @@ src/test_ack.py .
 <span class="o">===========================</span> <span class="m">1</span> passed in 0.19 <span class="nv">seconds</span> <span class="o">===========================</span>
 <span class="c1">####################### waiting for changes ########################</span>
 <span class="c1">### Watching:   /Users/cewing/projects/training/codefellows/tests/tdd-play</span>
-</pre></div>
-</div>
-<p>If you don&#8217;t see color output for the line reporting our test passed, try this:</p>
-<div class="highlight-bash"><div class="highlight"><pre>$ py.test -f --color<span class="o">=</span>yes
 </pre></div>
 </div>
 <p>Now that that&#8217;s in place, let&#8217;s begin working on our project.</p>

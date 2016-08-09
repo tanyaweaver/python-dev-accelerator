@@ -191,7 +191,7 @@ In building it, we used Test Driven Development.
 This means that we have a well-tested function that could be of use to another developer.</p>
 <p>We&#8217;ve also used code that others have written for us.
 Our tests make use of the <code class="docutils literal"><span class="pre">pytest</span></code> module.
-And our TDD set up uses the pytest plugin <code class="docutils literal"><span class="pre">pytest-xdist</span></code>.
+And our TDD set up uses the pytest plugin <code class="docutils literal"><span class="pre">pytest-watch</span></code>.
 Both of these packages were written by other developers, but are available for us to install and use.</p>
 <p>How does that work?</p>
 <p>These packages are also &#8220;distributions&#8221;.</p>
@@ -474,7 +474,7 @@ Then installing our package would cause the <code class="docutils literal"><span
 </pre></div>
 </div>
 <span class="admonition-dependency-management"></span><p>Our package does not require any dependencies to run.
-But we do use the <code class="docutils literal"><span class="pre">pytest</span></code> and <code class="docutils literal"><span class="pre">pytest-xdist</span></code> packages when testing.
+But we do use the <code class="docutils literal"><span class="pre">pytest</span></code> and <code class="docutils literal"><span class="pre">pytest-watch</span></code> packages when testing.
 The <code class="docutils literal"><span class="pre">setup</span></code> function also allows for this, with the <code class="docutils literal"><span class="pre">extras_require</span></code> argument.
 The argument takes a dict as an argument.
 The keys of the dict are the names of &#8220;extras&#8221; (installation options for our package).
@@ -484,7 +484,7 @@ In our <code class="docutils literal"><span class="pre">setup.py</span></code>, 
 <div class="highlight-python"><div class="highlight"><pre><span class="n">setup</span><span class="p">(</span>
     <span class="c1"># ...</span>
     <span class="n">install_requires</span><span class="o">=</span><span class="p">[],</span>
-    <span class="n">extras_require</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pytest&#39;</span><span class="p">,</span> <span class="s1">&#39;pytest-xdist&#39;</span><span class="p">]},</span>
+    <span class="n">extras_require</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pytest&#39;</span><span class="p">,</span> <span class="s1">&#39;pytest-watch&#39;</span><span class="p">]},</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -508,7 +508,7 @@ Banks:tdd-play cewing$ pip install -U pip setuptools
 <span class="o">[</span>tdd-play<span class="o">]</span>
 Banks:tdd-play cewing$ pip install -e .<span class="o">[</span>test<span class="o">]</span>
 ...
-Successfully installed ackermann apipkg-1.4 execnet-1.4.1 py-1.4.31 pytest-2.8.7 pytest-xdist-1.14
+Successfully installed ackermann apipkg-1.4 execnet-1.4.1 py-1.4.31 pytest-2.8.7 pytest-watch-4.1.0
 <span class="o">[</span>tdd-play<span class="o">]</span>
 Banks:tdd-play cewing$
 </pre></div>

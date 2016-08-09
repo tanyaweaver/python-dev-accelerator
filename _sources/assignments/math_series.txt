@@ -27,7 +27,7 @@ Tasks
 Along with your partner for the week, create a github repository called `math-series`.
 In this new repository, create a module ``series.py``.
 In this same ``math-series`` repository, create a virtualenv.
-Install ``pytest`` and ``pytest-xdist``.
+Install ``pytest`` and ``pytest-watch``.
 Use a ``.gitignore`` file to ensure that the artifacts of your virtual environment do not end up in GitHub.
 
 Add a file ``test_series.py`` to your repository.

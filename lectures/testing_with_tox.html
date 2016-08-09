@@ -225,11 +225,11 @@ That way, we can allow python packaging tools to install them for us.</p>
 <p>Our package is certainly not going to depend on <code class="docutils literal"><span class="pre">tox</span></code> just to be installed.
 Really, <code class="docutils literal"><span class="pre">tox</span></code> is a dependency for our tests.
 Remember, we can add <em>optional</em> dependencies using the concept of <em>setuptools extras</em>.
-And we have alread created a <code class="docutils literal"><span class="pre">test</span></code> extra so we could depend on <code class="docutils literal"><span class="pre">pytest</span></code> and <code class="docutils literal"><span class="pre">pytest-xdist</span></code>.
+And we have alread created a <code class="docutils literal"><span class="pre">test</span></code> extra so we could depend on <code class="docutils literal"><span class="pre">pytest</span></code> and <code class="docutils literal"><span class="pre">pytest-</span></code>.
 Let&#8217;s add <code class="docutils literal"><span class="pre">tox</span></code> as a new testing dependency for our distribution:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c1"># in setup.py</span>
 
-<span class="n">extras_require</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pytest&#39;</span><span class="p">,</span> <span class="s1">&#39;pytest-xdist&#39;</span><span class="p">,</span> <span class="s1">&#39;tox&#39;</span><span class="p">]},</span>
+<span class="n">extras_require</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;pytest&#39;</span><span class="p">,</span> <span class="s1">&#39;pytest-watch&#39;</span><span class="p">,</span> <span class="s1">&#39;tox&#39;</span><span class="p">]},</span>
 </pre></div>
 </div>
 <p>Now that we&#8217;ve updated the requirements for our <code class="docutils literal"><span class="pre">test</span></code> extra, let&#8217;s re-install our distribution with <code class="docutils literal"><span class="pre">pip</span></code> and allow it to resolve the new dependency:</p>
@@ -289,7 +289,7 @@ Let&#8217;s add the following to our <code class="docutils literal"><span class=
 </div>
 <p>The <code class="docutils literal"><span class="pre">commands</span></code> setting allows us to specify exactly the command we want to use to run our tests.
 The <code class="docutils literal"><span class="pre">deps</span></code> setting allows us to specify dependencies our tests will require.
-It is essentially the same as our <code class="docutils literal"><span class="pre">[test]</span></code> extra, but we don&#8217;t need to provide tox (because tox is running the tests) or pytest-xdist (since we are not doing TDD here).</p>
+It is essentially the same as our <code class="docutils literal"><span class="pre">[test]</span></code> extra, but we don&#8217;t need to provide tox (because tox is running the tests) or pytest-watch (since we are not doing TDD here).</p>
 <p>Another potentially useful configuration setting for testing environments is <code class="docutils literal"><span class="pre">basepython</span></code>.
 This setting takes a name (which must be available in <code class="docutils literal"><span class="pre">$PATH</span></code>) or an absolute path to the Python executable which will be used for the specified environment.
 This setting should not be used in the <code class="docutils literal"><span class="pre">[testenv]</span></code> shared configuration section, but only in a <code class="docutils literal"><span class="pre">[testenv:&lt;envname&gt;]</span></code> section.</p>
