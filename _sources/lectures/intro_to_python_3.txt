@@ -917,12 +917,12 @@ It allows you to skip statements later in the loop block while continuing the lo
 
 .. code-block:: ipython
 
-    In [143]: for in in range(101):
+    In [143]: for i in range(101):
        .....:     if i > 50:
        .....:         break
        .....:     if i < 25:
        .....:         continue
-       .....:     print(i),
+       .....:     print(i, end=' ')
        .....:
        25 26 27 28 29 ... 41 42 43 44 45 46 47 48 49 50
 
@@ -938,12 +938,12 @@ It allows you to skip statements later in the loop block while continuing the lo
 
         .. code-block:: ipython
 
-            In [143]: for in in range(101):
+            In [143]: for i in range(101):
                .....:     if i > 50:
                .....:         break
                .....:     if i < 25:
                .....:         continue
-               .....:     print(i),
+               .....:     print(i, end=' ')
                .....:
                25 26 27 28 29 ... 41 42 43 44 45 46 47 48 49 50
 

@@ -187,6 +187,265 @@ div.nboutput  > :nth-child(2).stderr {
 <div class="section" id="deploying-pyramid-to-heroku">
 <h1>Deploying Pyramid to Heroku<a class="headerlink" href="#deploying-pyramid-to-heroku" title="Permalink to this headline">¶</a></h1>
 <p>In which we learn how to make a simple Pyramid application run in the Heroku environment.</p>
+<div class="section" id="heroku-s-environment">
+<h2>Heroku&#8217;s Environment<a class="headerlink" href="#heroku-s-environment" title="Permalink to this headline">¶</a></h2>
+<p>Heroku is a great system for getting web applicatons up and running fast.
+But to work with it, you have to make sure that your application meets with Heroku&#8217;s expectations.
+Let&#8217;s take a moment to walk through setting up a simple Pyramid application to run on Heroku.</p>
+<div class="section" id="assumptions">
+<h3>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this headline">¶</a></h3>
+<p>This quick tutorial assumes that you have:</p>
+<ul class="simple">
+<li>Created an account with Heroku</li>
+<li>Installed the <a class="reference external" href="https://toolbelt.heroku.com/">Heroku Toolbelt</a></li>
+<li>Authenticated the toolbelt via <cite>heroku login</cite> or similar</li>
+</ul>
+</div>
+</div>
+<div class="section" id="create-a-simple-app">
+<h2>Create a Simple App<a class="headerlink" href="#create-a-simple-app" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s begin by creating a simple Pyramid application.</p>
+<p>First, make a project directory then create and activate a virtual environment in that directory:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ mkdir pyramid_starter
+$ <span class="nb">cd</span> pyramid_starter
+$ python3 -m venv ./
+$ . bin/activate
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ pip install -U pip setuptools
+</pre></div>
+</div>
+<p>Next, install pyramid:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid-heroku-demo<span class="o">)</span>$ pip install pyramid
+...
+Successfully installed PasteDeploy-1.5.2 WebOb-1.6.1 pyramid-1.7 repoze.lru-0.6
+  translationstring-1.3 venusian-1.0 zope.deprecation-4.1.2 zope.interface-4.2.0
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal"><span class="pre">pcreate</span></code> command to create a simple application using the <code class="docutils literal"><span class="pre">starter</span></code> scaffold:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid-heroku-demo<span class="o">)</span>$ pcreate -s starter demoapp
+...
+Welcome to Pyramid.  Sorry <span class="k">for</span> the convenience.
+</pre></div>
+</div>
+<p>Install the new application so that you can test that it works:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ pip install -e .
+Obtaining file:///Users/cewing/Desktop/pyramid_starter/demoapp
+...
+Successfully installed Chameleon-2.24 Mako-1.0.4 MarkupSafe-0.23 Pygments-2.1.3
+  demoapp pyramid-chameleon-0.3 pyramid-debugtoolbar-3.0.4 pyramid-mako-1.0.2 waitress-0.9.0
+</pre></div>
+</div>
+<p>Now, test the application by starting it up and loading <a class="reference external" href="http://localhost:6543">http://localhost:6543</a></p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ pserve development.ini
+Starting server in PID 6795.
+serving on http://127.0.0.1:6543
+</pre></div>
+</div>
+<p>If you see the nice, cranberry-colored front page of the starter app, you&#8217;re all set so far.
+Go ahead and quit the pyramid server.</p>
+</div>
+<div class="section" id="put-it-in-git">
+<h2>Put it in Git<a class="headerlink" href="#put-it-in-git" title="Permalink to this headline">¶</a></h2>
+<p>The application deployment story for Heroku is tightly coupled to git.
+It is <strong>not</strong> tightly coupled to github.
+We&#8217;ll use github here because it is familiar.
+But the same process will work for gitlab, bitbucket, or whatever.</p>
+<p>Start by initializing a new git repository in your application root:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ git init
+Initialized empty Git repository in /Users/cewing/Desktop/pyramid_starter/demoapp/.git/
+</pre></div>
+</div>
+<p>Set up a .gitignore file to ignore whatever you don&#8217;t want:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ touch .gitignore
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ <span class="nb">echo</span> <span class="s2">&quot;*.py[cod]&quot;</span> &gt; .gitignore
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ <span class="nb">echo</span> <span class="s2">&quot;__pycache__&quot;</span> &gt;&gt; .gitignore
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ <span class="nb">echo</span> <span class="s2">&quot;*.egg-info&quot;</span> &gt;&gt; .gitignore
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ more .gitignore
+*.py<span class="o">[</span>cod<span class="o">]</span>
+__pycache__
+*.egg-info
+</pre></div>
+</div>
+<p>Now, add the .gitignore file and then the rest of your files to your git repository:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ git add .
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ git commit -m <span class="s2">&quot;adding a simple starter app for demo purposes&quot;</span>
+</pre></div>
+</div>
+<p>At this point, your application is a git repository.
+It isn&#8217;t connected to any remote repository, like GitHub, GitLab, or BitBucket.
+But that doesn&#8217;t really matter for this demo.  Let&#8217;s go on.</p>
+</div>
+<div class="section" id="build-heroku-needs">
+<h2>Build Heroku Needs<a class="headerlink" href="#build-heroku-needs" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have an application in a git repository, we are ready to integrate Heroku.</p>
+<div class="section" id="tell-heroku-this-is-python">
+<h3>Tell Heroku This is Python<a class="headerlink" href="#tell-heroku-this-is-python" title="Permalink to this headline">¶</a></h3>
+<p>Heroku uses a series of heuristics to determine what type of application you have.
+The primary heuristic for a Python app is the presence of a <cite>requirements.txt</cite> file
+Let&#8217;s create that file and add it to our repository:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ pip freeze &gt; requirements.txt
+</pre></div>
+</div>
+<p>The file that was created will contain a reference to your <code class="docutils literal"><span class="pre">demoapp</span></code>.
+However, you don&#8217;t actually want to install this with pip when on heroku.
+So edit the <code class="docutils literal"><span class="pre">requirements.txt</span></code> file to remove these lines:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1">## !! Could not determine repository location</span>
+<span class="n">demoapp</span><span class="o">==</span><span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>Add that file to your git repository and commit:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ git add requirements.txt
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ git commit -m <span class="s2">&quot;adds requirements file so Heroku knows it is a Python app&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tell-heroku-how-to-run-your-app">
+<h3>Tell Heroku How to Run Your App<a class="headerlink" href="#tell-heroku-how-to-run-your-app" title="Permalink to this headline">¶</a></h3>
+<p>Heroku requires a plain text file called <cite>Procfile</cite> (spelling and capitalization count).
+This file tells Heroku what to do to run your application.
+Add this file to your repository, containing the text <code class="docutils literal"><span class="pre">web:</span> <span class="pre">./run</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ <span class="nb">echo</span> <span class="sb">``</span>web: ./run<span class="sb">``</span> &gt; Procfile
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ git add Procfile
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ git commit -m <span class="s2">&quot;Tells Heroku how to run my app&quot;</span>
+</pre></div>
+</div>
+<p>Now Heroku is going to look for an executable script by the name <code class="docutils literal"><span class="pre">run</span></code> in our application&#8217;s root directory.
+We need to make that file.
+We&#8217;d like it to install our application and then start up a server to serve it.</p>
+<p>Create the file <code class="docutils literal"><span class="pre">run</span></code> in the <code class="docutils literal"><span class="pre">demoapp</span></code> directory.
+Then type the following text into it:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span> -e
+python setup.py develop
+python runapp.py
+</pre></div>
+</div>
+<p>This script tells the Heroku server to use the <code class="docutils literal"><span class="pre">bash</span></code> shell (<code class="docutils literal"><span class="pre">#!/bin/bash</span></code>).
+It says that if any part of the script returns an error, it should exit the script (<code class="docutils literal"><span class="pre">set</span> <span class="pre">-e</span></code>).
+It then installs our application in develop mode (equivalent to running <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code>).
+Finally, it executes a Python module called <code class="docutils literal"><span class="pre">runnapp.py</span></code>.</p>
+<p>This file needs to be executable, so that Heroku can run it.
+We can use the <code class="docutils literal"><span class="pre">chmod</span></code> command to fix that:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ chmod u+x run
+</pre></div>
+</div>
+<p>Now, add the file to your repository and commit it:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ git add run
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ git commit -m <span class="s2">&quot;adds a shell script to start my app&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-the-runapp-py-module">
+<h3>Create the <code class="docutils literal"><span class="pre">runapp.py</span></code> module<a class="headerlink" href="#create-the-runapp-py-module" title="Permalink to this headline">¶</a></h3>
+<p>Finally, we need to actually write the Python module that will run our application.
+Create a file <code class="docutils literal"><span class="pre">runapp.py</span></code> and type the following Python code into it:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">paste.deploy</span> <span class="kn">import</span> <span class="n">loadapp</span>
+<span class="kn">from</span> <span class="nn">waitress</span> <span class="kn">import</span> <span class="n">serve</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span> <span class="mi">5000</span><span class="p">))</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">loadapp</span><span class="p">(</span><span class="s1">&#39;config:production.ini&#39;</span><span class="p">,</span> <span class="n">relative_to</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+    <span class="n">serve</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>In line 6, we use a &#8220;main&#8221; block to make this module a Python script.
+The code in this block will only be executed when the script is run.</p>
+<p>In line 7, we read the &#8220;PORT&#8221; variable from the operating system environment.
+Heroku uses environmental variables to pass information to applications.
+This allows you to separate configuration from code and is a good pattern.
+Notice that we default to port 5000 if no &#8216;PORT&#8217; has been set in the environment.</p>
+<p>In line 8, we create an application, using the <code class="docutils literal"><span class="pre">production.ini</span></code> file that is located adjacent to this Python module.</p>
+<p>Finally, in line 10, we serve our application, setting it up to listen on any available IP address.</p>
+<p>Add this file to our git repository and commit your changes:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ git add runapp.py
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ git commit -m <span class="s2">&quot;adds a python script to run our application&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="set-up-heroku-and-deploy">
+<h2>Set Up Heroku and Deploy<a class="headerlink" href="#set-up-heroku-and-deploy" title="Permalink to this headline">¶</a></h2>
+<p>Okay, with that, we&#8217;ve got all we need to get our app running on Heroku.
+Next, we&#8217;ll use the Heroku toolbelt to create a new app:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ $ heroku create
+Creating app... <span class="k">done</span>, ⬢ safe-scrubland-24595
+https://safe-scrubland-24595.herokuapp.com/ <span class="p">|</span> https://git.heroku.com/safe-scrubland-24595.git
+</pre></div>
+</div>
+<p>Finally, we push our app to heroku:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ git push heroku master
+...
+remote: Verifying deploy... <span class="k">done</span>.
+</pre></div>
+</div>
+<p>And once that is finished, you can view your app in a browser:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ heroku open
+</pre></div>
+</div>
+</div>
+<div class="section" id="cleaning-up-the-edges">
+<h2>Cleaning Up the Edges<a class="headerlink" href="#cleaning-up-the-edges" title="Permalink to this headline">¶</a></h2>
+<p>There&#8217;s one last problem here.
+Heroku defaults to serving our application over <code class="docutils literal"><span class="pre">https</span></code>.
+This is desireable.</p>
+<p>But our Pyramid application has no idea that it is being served securely.
+When it generates the URLs for css files, it uses <code class="docutils literal"><span class="pre">http</span></code>.
+Our browsers will not appreciate this.</p>
+<p>We can fix it using configuration.</p>
+<p>Open the file <code class="docutils literal"><span class="pre">production.ini</span></code> from your application root directory in your text editor.
+First, find the first section header at the top that contains this <code class="docutils literal"><span class="pre">[app:main]</span></code>.
+Change that to read <code class="docutils literal"><span class="pre">[app:demoapp]</span></code></p>
+<p>Next, find the section of the file that looks like this:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="c1">###</span>
+<span class="c1"># wsgi server configuration</span>
+<span class="c1">###</span>
+
+<span class="k">[server:main]</span>
+<span class="na">use</span> <span class="o">=</span> <span class="s">egg:waitress#main</span>
+<span class="na">host</span> <span class="o">=</span> <span class="s">0.0.0.0</span>
+<span class="na">port</span> <span class="o">=</span> <span class="s">6543</span>
+</pre></div>
+</div>
+<p><strong>Before</strong> this section, add the following configuration:</p>
+<div class="highlight-ini"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">[filter:paste_prefix]</span>
+<span class="na">use</span> <span class="o">=</span> <span class="s">egg:PasteDeploy#prefix</span>
+
+<span class="k">[pipeline:main]</span>
+<span class="na">pipeline</span> <span class="o">=</span><span class="s"></span>
+<span class="s">    paste_prefix</span>
+<span class="s">    demoapp</span>
+</pre></div>
+</td></tr></table></div>
+<p>Lines 1-2 create a wsgi middleware filter that will detect the <code class="docutils literal"><span class="pre">https</span></code> scheme and make that information available to our Pyramid app.</p>
+<p>Lines 4-7 set up a wsgi pipeline which puts this filter before our new app (remember, we changed the app name above to <code class="docutils literal"><span class="pre">demoapp</span></code>).</p>
+<p>Save these changes, add them to the stage, and commit them to your repository.
+Then you can re-deploy your application using <code class="docutils literal"><span class="pre">git</span> <span class="pre">push</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_starter<span class="o">)</span>$ git add production.ini
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ git commit -m <span class="s2">&quot;enables pyramid to properly render https urls for static resources&quot;</span>
+<span class="o">(</span>pyramid_starter<span class="o">)</span>$ git push heroku master
+</pre></div>
+</div>
+<p>And that finishes us up.
+We now have a small, functional Pyramid application running on Heroku, serving resources over https.
+Tonight, you&#8217;ll repeat this process with your own Pyramid app.</p>
+</div>
 </div>
 
 
@@ -195,6 +454,27 @@ div.nboutput  > :nth-child(2).stderr {
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Deploying Pyramid to Heroku</a><ul>
+<li><a class="reference internal" href="#heroku-s-environment">Heroku&#8217;s Environment</a><ul>
+<li><a class="reference internal" href="#assumptions">Assumptions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#create-a-simple-app">Create a Simple App</a></li>
+<li><a class="reference internal" href="#put-it-in-git">Put it in Git</a></li>
+<li><a class="reference internal" href="#build-heroku-needs">Build Heroku Needs</a><ul>
+<li><a class="reference internal" href="#tell-heroku-this-is-python">Tell Heroku This is Python</a></li>
+<li><a class="reference internal" href="#tell-heroku-how-to-run-your-app">Tell Heroku How to Run Your App</a></li>
+<li><a class="reference internal" href="#create-the-runapp-py-module">Create the <code class="docutils literal"><span class="pre">runapp.py</span></code> module</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#set-up-heroku-and-deploy">Set Up Heroku and Deploy</a></li>
+<li><a class="reference internal" href="#cleaning-up-the-edges">Cleaning Up the Edges</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="pyramid_day1.html"
                         title="previous chapter">Getting Started With Pyramid</a></p>

@@ -1954,7 +1954,7 @@ You can also use a ``dict`` with keys and values to accomplish the same thing:
 
         .. container::
 
-            And pass to ``format()``with ``**``
+            And pass to ``format()`` with ``**``
 
             .. code-block:: ipython
 

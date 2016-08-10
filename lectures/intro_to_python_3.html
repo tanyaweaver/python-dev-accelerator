@@ -534,12 +534,12 @@ Loops can be controlled in two ways, with <code class="docutils literal"><span c
 </div>
 <span class="admonition-break"></span><p>And <code class="docutils literal"><span class="pre">continue</span></code> returns you immediately to the head of the loop.
 It allows you to skip statements later in the loop block while continuing the loop itself:</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [143]: </span><span class="k">for</span> <span class="ow">in</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">101</span><span class="p">):</span>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [143]: </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">101</span><span class="p">):</span>
 <span class="gp">   .....: </span>    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
 <span class="gp">   .....: </span>        <span class="k">break</span>
 <span class="gp">   .....: </span>    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">:</span>
 <span class="gp">   .....: </span>        <span class="k">continue</span>
-<span class="gp">   .....: </span>    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
+<span class="gp">   .....: </span>    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
 <span class="gp">   .....:</span>
 <span class="go">   25 26 27 28 29 ... 41 42 43 44 45 46 47 48 49 50</span>
 </pre></div>
