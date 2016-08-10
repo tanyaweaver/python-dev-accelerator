@@ -227,3 +227,89 @@ Add this file to our git repository and commit your changes:
     (pyramid_starter)$ git add runapp.py
     (pyramid_starter)$ git commit -m "adds a python script to run our application"
 
+Set Up Heroku and Deploy
+========================
+
+Okay, with that, we've got all we need to get our app running on Heroku.
+Next, we'll use the Heroku toolbelt to create a new app:
+
+.. code-block:: bash
+
+    (pyramid_starter)$ $ heroku create
+    Creating app... done, ⬢ safe-scrubland-24595
+    https://safe-scrubland-24595.herokuapp.com/ | https://git.heroku.com/safe-scrubland-24595.git
+
+Finally, we push our app to heroku:
+
+.. code-block:: bash
+
+    (pyramid_starter)$ git push heroku master
+    ...
+    remote: Verifying deploy... done.
+
+And once that is finished, you can view your app in a browser:
+
+.. code-block:: bash
+
+    (pyramid_starter)$ heroku open
+
+Cleaning Up the Edges
+=====================
+
+There's one last problem here.
+Heroku defaults to serving our application over ``https``.
+This is desireable.
+
+But our Pyramid application has no idea that it is being served securely.
+When it generates the URLs for css files, it uses ``http``.
+Our browsers will not appreciate this.
+
+We can fix it using configuration.
+
+Open the file ``production.ini`` from your application root directory in your text editor.
+First, find the first section header at the top that contains this ``[app:main]``.
+Change that to read ``[app:demoapp]``
+
+Next, find the section of the file that looks like this:
+
+.. code-block:: ini
+
+    ###
+    # wsgi server configuration
+    ###
+
+    [server:main]
+    use = egg:waitress#main
+    host = 0.0.0.0
+    port = 6543
+
+**Before** this section, add the following configuration:
+
+.. code-block:: ini
+    :linenos:
+
+    [filter:paste_prefix]
+    use = egg:PasteDeploy#prefix
+
+    [pipeline:main]
+    pipeline =
+        paste_prefix
+        demoapp
+
+Lines 1-2 create a wsgi middleware filter that will detect the ``https`` scheme and make that information available to our Pyramid app.
+
+Lines 4-7 set up a wsgi pipeline which puts this filter before our new app (remember, we changed the app name above to ``demoapp``).
+
+Save these changes, add them to the stage, and commit them to your repository.
+Then you can re-deploy your application using ``git push``:
+
+.. code-block:: bash
+
+    (pyramid_starter)$ git add production.ini
+    (pyramid_starter)$ git commit -m "enables pyramid to properly render https urls for static resources"
+    (pyramid_starter)$ git push heroku master
+
+And that finishes us up.
+We now have a small, functional Pyramid application running on Heroku, serving resources over https.
+Tonight, you'll repeat this process with your own Pyramid app.
+
