@@ -17,10 +17,11 @@ Readings
 * Watch Clayton Parker's PyCon talk `So You Think You Can PDB? <https://www.youtube.com/watch?v=P0pIW5tJrRM>`_
 
 
-Whiteboard
+Task
 ==========
 
-:doc:`/lectures/whiteboard_1`
+* Weekly Gist challenge
+* Group Whiteboard Assignment
 
 Assignments
 ===========
