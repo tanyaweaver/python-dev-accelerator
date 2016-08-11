@@ -32,7 +32,7 @@ Concepts
 .. toctree::
    :maxdepth: 2
 
-   /lectures/doubly_linked_list
+   /lectures/double_linked_list
    /lectures/intro_to_python_6_super_etc
 
 Demo
