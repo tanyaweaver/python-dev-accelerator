@@ -6,7 +6,7 @@ Definition
 ==========
 
 * A *Doubly-Linked List* consists of *Nodes*, each of which contains some data and pointers to the next and previous nodes.
-* Self-referential (naturally recusive)
+* Self-referential (naturally recursive)
 
 .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Doubly-linked-list.svg/610px-Doubly-linked-list.svg.png
     :width: 400px
