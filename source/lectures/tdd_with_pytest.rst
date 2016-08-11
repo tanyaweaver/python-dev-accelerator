@@ -521,14 +521,14 @@ Test On Save
 The ``pytest`` system is pluggable.
 We can install plugins to provide different kinds of functionality.
 That includes letting us automatically re-run our tests every time a test in our project is updated.
-To get that particular functionality, let's install ``pytest-xdist``:
+To get that particular functionality, let's install ``pytest-watch``:
 
 .. code-block:: bash
 
     [tdd-play]
-    Banks:tdd-play cewing$ pip install pytest-xdist
+    Banks:tdd-play cewing$ pip install pytest-watch
     ...
-    Successfully installed apipkg-1.4 execnet-1.4.1 pytest-xdist-1.14
+    Successfully installed apipkg-1.4 execnet-1.4.1 pytest-watch-4.1.0
     [tdd-play]
     Banks:tdd-play cewing$
 
@@ -547,18 +547,18 @@ To get that particular functionality, let's install ``pytest-xdist``:
         .. code-block:: bash
 
             [tdd-play]
-            Banks:tdd-play cewing$ pip install pytest-xdist
+            Banks:tdd-play cewing$ pip install pytest-watch
             ...
-            Successfully installed apipkg-1.4 execnet-1.4.1 pytest-xdist-1.14
+            Successfully installed apipkg-1.4 execnet-1.4.1 pytest-watch-4.1.0
             [tdd-play]
             Banks:tdd-play cewing$
 
-To use this new feature, we invoke the ``py.test`` command with the ``-f`` option:
+To use this new feature, we invoke a new command provided by our plugin: ``ptw``:
 
 .. code-block:: bash
 
     [tdd-play]
-    Banks:tdd-play cewing$ py.test -f
+    Banks:tdd-play cewing$ ptw
     ============================= test session starts ==============================
     platform darwin -- Python 3.5.1, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
     rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
@@ -572,18 +572,12 @@ To use this new feature, we invoke the ``py.test`` command with the ``-f`` optio
     ####################### waiting for changes ########################
     ### Watching:   /Users/cewing/projects/training/codefellows/tests/tdd-play
 
-If you don't see color output for the line reporting our test passed, try this:
-
-.. code-block:: bash
-
-    $ py.test -f --color=yes
-
 Now that that's in place, let's begin working on our project.
 
 .. slide:: Invoking `failloop mode`
     :level: 3
 
-    Run ``py.test`` with the ``-f`` flag
+    Run the new ``ptw`` command from ``pytest-watch``:
 
     .. rst-class:: build
     .. container::
@@ -591,7 +585,7 @@ Now that that's in place, let's begin working on our project.
         ::
 
             [tdd-play]
-            Banks:tdd-play cewing$ py.test -f
+            Banks:tdd-play cewing$ ptw
             ============================= test session starts ==============================
             platform darwin -- Python 3.5.1, pytest-2.8.7, py-1.4.31, pluggy-0.3.1
             rootdir: /Users/cewing/projects/training/codefellows/tests/tdd-play, inifile:
@@ -604,8 +598,6 @@ Now that that's in place, let's begin working on our project.
             =========================== 1 passed in 0.19 seconds ===========================
             ####################### waiting for changes ########################
             ### Watching:   /Users/cewing/projects/training/codefellows/tests/tdd-play
-
-        No colors? Try ``py.test -f --color=yes``
 
 The Ackermann Function
 ----------------------
