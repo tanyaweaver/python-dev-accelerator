@@ -2,22 +2,33 @@
 Models, Forms, and SQL Alchemy
 ==============================
 
-The central component of MVC, the *model*, captures the behavior of the application in terms of its problem domain, independent of the user interface. **The model directly manages the data, logic, and rules of the application**. A model can be any "thing", e.g. an individual blog post on a blog, a photo or an album on a photo site, a user that visits and enrolls in the site, etc.
+The central component of MVC, the *model*, captures the behavior of the application in terms of its problem domain, independent of the user interface. 
+**The model directly manages the data, logic, and rules of the application**. 
+A model can be any "thing", e.g. an individual blog post on a blog, a photo or an album on a photo site, a user that visits and enrolls in the site, etc.
 
-A model is most useful when the data that it describes is *persisted*. To do that, we'll be interacting with a SQL database and saving information to that database with SQL Alchemy. In order to have this all easily wired together for us, we're going to start a new scaffold that includes all of that SQL functionality. We'll also find that with this new scaffold, the MVC of our app is far more *explicity* separated into entire directories instead of individual files. Let's dip in.
+A model is most useful when the data that it describes is *persisted*. 
+To do that, we'll be interacting with a SQL database and saving information to that database with SQL Alchemy. 
+In order to have this all easily wired together for us, we're going to start a new scaffold that includes all of that SQL functionality. 
+We'll also find that with this new scaffold, the MVC of our app is far more *explicity* separated into entire directories instead of individual files. Let's dip in.
 
 The "Alchemy" Scaffold
 ======================
 
-Before we use ``pcreate`` to construct a new scaffold to fill with our information and functionality, let's back out into the root directory housing Pyramid.  Call ``pcreate`` in this directory, but this time with the SQLAlchemy scaffold.
+Before we use ``pcreate`` to construct a new scaffold to fill with our information and functionality, let's back out into the root directory housing Pyramid.  
+Call ``pcreate`` in this directory, but this time with the SQLAlchemy scaffold.
 
 .. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pcreate -s alchemy learning_journal
 
-This scaffold sets us up to connect to any database that we specify via SQLAlchemy. Running this command creates a few more files and directories than we'd seen before. Before we investigate, navigate into the ``learning_journal`` directory and initialize a ``git`` repository. Provide this new repo with an appropriate ``.gitignore`` file. Now add everything in this directory to the repo and commit.
+This scaffold sets us up to connect to any database that we specify via SQLAlchemy. 
+Running this command creates a few more files and directories than we'd seen before. 
+Before we investigate, navigate into the ``learning_journal`` directory and initialize a ``git`` repository. 
+Provide this new repo with an appropriate ``.gitignore`` file. 
+Now add everything in this directory to the repo and commit.
 
-This project root directory will have the same named files that we've come to know and love in our Pyramid app, however some of their contents have changed. Let's inspect ``setup.py``.
+This project root directory will have the same named files that we've come to know and love in our Pyramid app, however some of their contents have changed. 
+Let's inspect ``setup.py``.
 
 .. code-block:: python
 
@@ -649,31 +660,6 @@ Since methods in this category return Query objects, they can be safely ``chaine
 Note that you can do this inline as well (``Session.query(MyModel).filter(MyModel.value < 20).order_by(MyModel.name)``). 
 Also note that when using chained queries like this, no query is actually sent to the database until you require a result.
 
-Testing Models
-==============
-
-Look at the code in ``learning_journal/tests/tests.py``.
-Notice that the tests are pretty significantly different.
-A ``BaseTest`` class is declared that sets up the app and initializes a connection to the database. 
-Other tests then inherit from this class to reduce repeating code.
-
-Notice also that the ``tearDown`` method is actually useful.
-
-.. code-block:: python
-
-    def tearDown(self):
-        from .models.meta import Base
-
-        testing.tearDown()
-        transaction.abort()
-        Base.metadata.drop_all(self.engine)
-
-Your tests will need to access and save data to the database to ensure all things are wired correctly.
-You however do not want to save any of the data that you generate during testing.
-At the end of your tests, drop all your changes.
-
-``TestMyViewSuccessCondition`` initializes a new instance of the ``MyModel`` class and adds it to the session. 
-The app then tests for the existence of this model in the ``response`` from the available view.
 
 Connecting "M" to "VC"
 ======================
@@ -830,8 +816,132 @@ Knowing this, we can reconfigure our ``edit_view`` function to handle a first-re
         return {"data": data}
 
 Now when we load our edit page and submit a form with some data, that new data shows up right in the ``<h1>``.
-
 Tonight you'll use the fact that you can harvest form data in a view to add new model instances to your site.
+
+Testing Models and MVC Interaction
+==================================
+
+We've added data models to our site in a pretty significant way. 
+Not only do we have an entire separate directory housing those models, but we have two views that pipe the model data over to the front-end.
+One of those views even edits model data!
+We need to write some tests for these processes to ensure the integrity of our code as we continue to build out.
+
+Remove everything within ``learning_journal/tests/tests.py``.
+Replace it with following code:
+
+.. code-block:: python
+    
+    import pytest
+    import transaction
+
+    from pyramid import testing
+
+    from ..models import (
+        MyModel,
+        get_engine,
+        get_session_factory,
+        get_tm_session,
+    )
+    from ..models.meta import Base
+
+
+    @pytest.fixture(scope="session")
+    def sqlengine(request):
+        config = testing.setUp(settings={
+            'sqlalchemy.url': 'sqlite:///:memory:'
+        })
+        config.include("..models")
+        settings = config.get_settings()
+        engine = get_engine(settings)
+        Base.metadata.create_all(engine)
+
+        def teardown():
+            testing.tearDown()
+            transaction.abort()
+            Base.metadata.drop_all(engine)
+
+        request.addfinalizer(teardown)
+        return engine
+
+
+    @pytest.fixture(scope="function")
+    def new_session(sqlengine, request):
+        session_factory = get_session_factory(sqlengine)
+        session = get_tm_session(session_factory, transaction.manager)
+
+        def teardown():
+            transaction.abort()
+
+        request.addfinalizer(teardown)
+        return session
+
+
+Here we set ourselves up to create fixtures that allows us to interact with a database.
+The ``sqlengine`` fixture takes our settings and our desired database location (note, not our actual database!) and populates it with empty tables. 
+**NOTE:** the ``request`` parameter coming into the function IS NOT a HTTP request object.
+In an unfortunate circumstance of naming conflicts, ``pytest`` provides a function-level ``request`` fixture for use in setting up and tearing down tests (amongst other things).
+In ``sqlengine``, at the end of our interaction with the database the ``pytest`` ``request`` fixture will tie off the last transaction.
+It will then drop all tables from our testing database (one of the reasons you don't want to use your actual DB).
+
+The ``new_session`` fixture will use the engine set up by ``sqlengine`` to set up a transaction manager and create an actual database session.
+With it we can interact with the database just like we did earlier in the command line.
+
+Testing the Models
+------------------
+
+Now add the following to your test file:
+
+.. code-block:: python
+
+    def test_model_gets_added(new_session):
+        assert len(new_session.query(MyModel).all()) == 0
+        model = MyModel(name="Bob", value=42)
+        new_session.add(model)
+        new_session.flush()
+        assert len(new_session.query(MyModel).all()) == 1
+
+We're testing the creation of a new model.
+Since we're using a testing database, it shouldn't have *any* model instances saved within.
+After we create a model instance and save the change, we should be able to query the database and find our new model instance present.
+If my model instances had other attributes that depended on the time of creation, or really any other functionality, I'd want to test that those work as well.
+
+Testing the Views
+-----------------
+
+Our models will be called into our Views before their data is brought into the templates.
+We have to test that **every View** using our models is returning what we need it to return, as it needs to be returned.
+Previously, we saw that ``my_view`` will return a dictionary containing the first ``MyModel`` instance with the name "one", and the name of our project.
+Provided that that's what we want from our view, we should test for that.
+Add the following code to your tests:
+
+.. code-block:: python
+    
+    def dummy_http_request(new_session):
+        return testing.DummyRequest()
+
+
+    def test_my_view(new_session):
+        from ..views.default import my_view
+
+        new_session.add(MyModel(name="one", value=1))
+        new_session.flush()
+
+        http_request = dummy_request(new_session)
+        result = my_view(http_request)
+        assert result["one"].name == "one"
+
+We create a simple function that generates an HTTP request, as every view takes a request as an argument.
+We then enter our ``test_my_view`` function.
+First, we create a new model instance with the name "one" and some value, adding it to our database.
+Because we will of course be testing more than one view in the future, it'd be best to abstract this model-creation functionality into its own function. Do that tonight.
+
+We then send a new HTTP request to ``my_view`` and assign the response to ``result``.
+``result`` should now be a ``dict`` with two keys: ``one`` and ``project``.
+
+The Templates get tested in effectively the same exact way as yesterday.
+The main difference will be that you won't just be testing that the contents look as designed,
+but that whatever the model manipulates within that template is manipulated as designed.
+
 
 Recap
 =====
@@ -844,13 +954,13 @@ We then went on to talk about data models.
 We saw how Pyramid converts model attributes to data for the database, and used the interpreter to persist that data across separate sessions. 
 Most notably, we saw that while changes may be made with models being created and/or deleted, nothing persists without commitment.
 
-We also saw how to test models, with significant changes in how we built up a test suite.
-We have to now not only use an instance of our app. 
-We must also call up a database session so that we can test models along with our view and fully functional Pyramid app.
-
-Finally, we connected our "Models" to the "View" and "Controller" pieces of our Pyramid app. 
+We connected our "Models" to the "View" and "Controller" pieces of our Pyramid app. 
 We created a template that uses a form to take user input, as well as a view that handles form data.
 We investigated the ``request`` object in greater detail, seeing that its ``.method``, ``.POST``, and ``.GET`` attributes can allow us to produce different outputs on the same view and template.
+
+Finally, we saw how to test models, with significant changes in how we built up a test suite.
+We have to now not only use an instance of our app. 
+We must also call up a database session so that we can test models along with our view and fully functional Pyramid app.
 
 Tonight you will use this new scaffold to add some persistence to your deployed Learning Journal by creating a data model for your learning journal entries.
 You'll wire it all together with appropriate templates and views.

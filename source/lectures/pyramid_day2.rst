@@ -612,57 +612,50 @@ Testing Your Pyramid App
 
 Thus far we have written tons of code for handling HTTP routing and filling templates with data.
 But we haven't yet written any tests of our own to make sure that things work the way that we need them to work.
-We can fortunately do this with a combination of Pyramid's own ``testing`` module
-(`Documentation <http://docs.pylonsproject.org/projects/pyramid/en/latest/api/testing.html#module-pyramid.testing>`_),
-as well as the ``unittest`` package from the Python standard library (`Documentation <https://docs.python.org/3/library/unittest.html#module-unittest>`_).
+We can fortunately do this with Pyramid's own ``testing`` module
+(`Documentation <http://docs.pylonsproject.org/projects/pyramid/en/latest/api/testing.html#module-pyramid.testing>`_). 
 When it comes to testing your Pyramid app, you need to not only do unit tests for individual pieces of functionality.
-You need to test for how things perform when in practice.
+You also need to test for how things perform when in practice.
 For example, if your app sends an email, you need to check that the email is actually sent.
 
 Setting Up a Test for a View
 ----------------------------
 
-Our scaffold provided for us a ``tests.py`` file. Let's inspect it.
+Our scaffold provided for us a ``tests.py`` file complete with some basic tests.
+However, since we won't be using ``unittest`` for our test suite we'll gut it completely.
+In its place, write:
 
 .. code-block:: python
 
     # tests.py
-    import unittest
+    import pytest
 
     from pyramid import testing
 
 
-    class ViewTests(unittest.TestCase):
-        def setUp(self):
-            self.config = testing.setUp()
+    def test_detail_view():
+        from .views import detail_view
+        request = testing.DummyRequest()
+        info = detail_view(request)
+        assert "title" in info
 
-        def tearDown(self):
-            testing.tearDown()
+    # ------- Functional Tests -------
 
-        def test_my_view(self):
-            from .views import my_view
-            request = testing.DummyRequest()
-            info = my_view(request)
-            self.assertEqual(info['project'], 'learning_journal_basic')
+    @pytest.fixture()
+    def testapp():
+        from learning_journal_basic import main
+        app = main({})
+        from webtest import TestApp
+        return TestApp(app)
 
+    def test_layout_root(testapp):
+        response = testapp.get('/', status=200)
+        assert b'Created in the Code Fellows 401 Python Program' in response.body
 
-    class FunctionalTests(unittest.TestCase):
-        def setUp(self):
-            from learning_journal_basic import main
-            app = main({})
-            from webtest import TestApp
-            self.testapp = TestApp(app)
+    def test_root_contents(testapp):
+        response = testapp.get('/', status=200)
+        assert b'<article>' in response.body
 
-        def test_root(self):
-            res = self.testapp.get('/', status=200)
-            self.assertTrue(b'Pyramid' in res.body)
-
-We use the ``unittest`` module, which is part of the Python standard library.
-
-The ``unittest`` module provides a ``TestCase`` object that we inherit from and modify.
-When we inherit from ``TestCase``, we get access to a ton of ``assert*`` methods, such as the ``assertEqual`` and ``assertTrue`` seen here.
-We also get functionality for setting up a testing environment (``setUp``) and tearing it down (``tearDown``).
-This is not Pyramid-specific, but available in any project where we use ``unittest``.
 
 As part of the setup, we have pyramid's own ``testing`` module.
 This module provides tools to set up the configuration we need for our app.
@@ -671,34 +664,26 @@ Recall that our views must be called with a ``request`` as an argument.
 Depending on what work your views must do, this can be any Python object, even a simple string or dict.
 But if you require something with a bit more resemblance to a real request, you can use ``testing.DummyRequest``.
 
-Let's comment out the ``FunctionalTests`` TestCase class for now (I'm removing it entirely).
-For the moment we'll just focus on ``ViewTests``.
-These will be unit tests for our views.
-Let's also replace ``my_view`` with ``detail_view``.
-Finally, recall that our ``detail_view`` returns a dictionary, with the "title", "creation_date", and "body" of a sample learning journal entry.
-Let's make our test reflect that, checking that "title" is in the value returned by our ``detail_view``.
-For now, we'll be working with this:
+Let's comment out everything after "Functional Tests" for now (I'm removing it entirely).
+For the moment we'll just focus on the unit test for our ``detail_view``.
+
+Recall that our ``detail_view`` returns a dictionary, with the "title", "creation_date", and "body" of a sample learning journal entry.
+We make our test reflect that, checking that "title" is in the value returned by our ``detail_view``.
 
 .. code-block:: python
 
     # tests.py
-    import unittest
+    import pytest
 
     from pyramid import testing
 
 
-    class ViewTests(unittest.TestCase):
-        def setUp(self):
-            self.config = testing.setUp()
+    def test_detail_view():
+        from .views import detail_view
+        request = testing.DummyRequest()
+        info = detail_view(request)
+        assert "title" in info
 
-        def tearDown(self):
-            testing.tearDown()
-
-        def test_detail_view(self):
-            from .views import detail_view
-            request = testing.DummyRequest()
-            info = detail_view(request)
-            self.assertIn("title", info)
 
 
 Running Pyramid Tests
@@ -760,6 +745,7 @@ On top of that, we get a report of the coverage of our tests in the console.
 
 This seems trivial now because in this particular moment we're just testing that the view is returning the data that we put into it in the first place.
 That's OK, even trivial tests are still evidence that your code works.
+You will of course write more unit tests than just this one, though for the moment even those will be small.
 Tomorrow when we talk about data models and hook those up to our views, testing our views will involve several more bits.
 
 Enter Functional Tests
@@ -768,36 +754,46 @@ Enter Functional Tests
 As the name implies, `functional tests <http://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/functional_testing.html>`_ verify that various components of our app function together as they should.
 They are an important complement to unit tests, which ensure that each individual piece does the job it is designed to do.
 We'll use functional tests to "look" at our front-end and make sure that what's being displayed is what we expect.
-To set up our functional tests we again inherit from the ``unittest.TestCase`` object.
-We then set up a "working" version of our app and use HTTP methods on our routes.
-As an example (expanded from what was provided by the scaffold):
+To set up our functional tests we first create a ``pytest`` fixture to take the place of a "working" web app.
 
 .. code-block:: python
 
-    class FunctionalTests(unittest.TestCase):
-        def setUp(self):
-            from learning_journal_basic import main
-            app = main({})
-            from webtest import TestApp
-            self.testapp = TestApp(app)
-
-        def test_layout_root(self):
-            """Tests that our layout template is present in the rendered root"""
-            response = self.testapp.get('/', status=200)
-            self.assertTrue(b'Created in the Code Fellows 401 Python Program' in response.body)
-
-        def test_root_contents(self):
-            """Tests that the contents of the root page contains <article>"""
-            response = self.testapp.get('/', status=200)
-            self.assertTrue(b'<article>' in response.body)
+    @pytest.fixture()
+    def testapp():
+        from learning_journal_basic import main
+        app = main({})
+        from webtest import TestApp
+        return TestApp(app)
 
 Here, we set up a new WSGI app instance by providing our ``main`` function, which is already taking our base global configuration, with an empty dict for settings.
 The ``TestApp``  class from the ``WebTest`` package wraps that app to provide some additional functionality, such as the ability to send ``GET`` requests to a given route.
 ``WebTest`` is a great app for testing functionality with respect to real HTTP requests, but it can do so much more (even check for cookies!).
 `Read the documentation <http://webtest.pythonpaste.org/en/latest/api.html#webtest.app.TestApp>`_ for more details about how ``WebTest`` can help you write robust tests for your web app.
 
+
+.. code-block:: python
+
+    @pytest.fixture()
+    def testapp():
+        from learning_journal_basic import main
+        app = main({})
+        from webtest import TestApp
+        return TestApp(app)
+
+    def test_layout_root(testapp):
+        response = testapp.get('/', status=200)
+        assert b'Created in the Code Fellows 401 Python Program' in response.body
+
+    def test_root_contents(testapp):
+        response = testapp.get('/', status=200)
+        assert b'<article>' in response.body
+
+For each of these functional tests, we send an actual get request to a route.
+We then test for the contents of the body, looking at output that should come first from the layout template, and then from actual generated content.
+
 This is great and all, however it seems somewhat silly to test for HTML elements and content using byte strings.
-It would be great if a package existed that specialized in collecting and picking apart the DOM.
+It would be great if pick apart the DOM as with jQuery.
+
 
 The BeautifulSoup Interlude
 ---------------------------
@@ -915,32 +911,27 @@ Recall our functional test, specifically the one that renders the home page.
 
 .. code-block:: python
 
-    def test_root_contents(self):
-        """Tests that the contents of the root page contains <article>"""
-        response = self.testapp.get('/', status=200)
-        self.assertTrue(b'<article>' in response.body)
+    def test_root_contents(testapp):
+        """Test that the contents of the root page contains <article>."""
+        response = testapp.get('/', status=200)
+        assert b'<article>' in response.body
 
 Here, we are asserting that there is an ``article`` tag in our html somewhere.
 But this page is supposed to put up an ``<article>`` tag for every given journal entry.
 We should make sure that there are as many ``article`` tags on the page as there are journal entries.
-``BeautifulSoup`` makes that simple.
 
-Remember that ``response.body`` above is a bytestring that is the rendered html of our page.
-We could pass that string to ``BeautifulSoup`` to be parsed if we so desired.
-But we don't actually need to.
-``WebTest`` has already done this for us.
-Our ``response`` has an ``html`` attribute that is a parsed ``BeautifulSoup`` object:
+``BeautifulSoup`` would make that a simple task, but we don't actually need to use ``BeautifulSoup``!
+The ``response`` object from ``WebTest`` has already parsed the HTML for us, available via its ``html`` attribute:
 
 .. code-block:: python
 
-    def test_root_contents(self):
-        """Tests that the contents of the root page contains as many <article> tags as journal entries"""
+    def test_root_contents(testapp):
+        """Test that the contents of the root page contains as many <article> tags as journal entries."""
         from .views import ENTRIES
-        from bs4 import BeautifulSoup as Soup
 
-        response = self.testapp.get('/', status=200)
+        response = testapp.get('/', status=200)
         html = response.html
-        self.assertEqual(len(ENTRIES), len(html.findAll("article")))
+        assert len(ENTRIES) == len(html.findAll("article"))
 
 That's our new functional test for the home page. Notice that instead of simply testing for the existence of any article tag,
 it tests specifically that the number on the page matches the number of journal entries.
@@ -976,7 +967,7 @@ We also saw how we could even make our front-end DRY by using template inheritan
 Finally, we saw how to write unit tests for individual views, providing our view callable with a dummy HTTP request and inspecting the data that resulted from that view being called.
 In this process, we saw how we could use Pyramid's own ``testing`` module to set up a dummy app and send requests without having to access the browser.
 We then stepped into functional tests, seeing how we could validate our front-end after the data has been passed and the page has been rendered.
-Lastly, we saw how we could use ``BeautifulSoup`` to make our front-end tests more robust, piecing apart the rendered HTML itself and ensuring that the contents of our page match our expectations at a functional level.
+Finally, we saw how we could use the HTML returned by ``response.html`` to make our front-end tests more robust, piecing apart the rendered HTML itself and ensuring that the contents of our page match our expectations at a functional level.
 
 Tonight you will use these to update your learning journal app with sensible DRY templates and connections between views and routes using the declarative style of ``view_config``.
 You will then write comprehensive tests for your individual views as well as your front end.
