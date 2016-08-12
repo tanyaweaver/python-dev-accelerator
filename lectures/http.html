@@ -253,7 +253,7 @@ Host: www.mysite1.com:80&lt;CRLF&gt;
 <p>Every HTTP request <strong>must</strong> begin with a single line, broken by whitespace into three parts.
 The three parts are called the <em>method</em>, the <em>URI</em> and the <em>protocol</em>.
 We&#8217;ll look at each in turn below.</p>
-<div class="highlight-python"><div class="highlight"><pre>GET /path/to/index.html HTTP/1.1
+<div class="build highlight-python"><div class="highlight"><pre>GET /path/to/index.html HTTP/1.1
 </pre></div>
 </div>
 </div>
@@ -488,7 +488,7 @@ It is best practice to include information about what <em>codec</em> was used in
 <p>It&#8217;s tempting to think of the <code class="docutils literal"><span class="pre">Content-Encoding</span></code> header as the proper place to send this data.
 In fact that header is used to inform the client of <em>compressed</em> data (.zip or similar).
 Instead, the correct way to inform the client of the encoding used is to append a <code class="docutils literal"><span class="pre">charset</span> <span class="pre">&lt;name&gt;</span></code> value to the <code class="docutils literal"><span class="pre">Content-Type</span></code> header:</p>
-<div class="highlight-python"><div class="highlight"><pre>Content-Type: text/plain; charset=utf-8
+<div class="build highlight-python"><div class="highlight"><pre>Content-Type: text/plain; charset=utf-8
 </pre></div>
 </div>
 </div>

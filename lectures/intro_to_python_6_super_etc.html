@@ -27,7 +27,7 @@
     <link rel="top" title="Python 401 2.1 documentation" href="../index.html" />
     <link rel="up" title="Wednesday" href="../schedule/week02/wed.html" />
     <link rel="next" title="Thursday" href="../schedule/week02/thu.html" />
-    <link rel="prev" title="Wednesday" href="../schedule/week02/wed.html" />
+    <link rel="prev" title="Doubly-Linked List" href="double_linked_list.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 
@@ -58,7 +58,7 @@
           <a href="../schedule/week02/thu.html" title="Thursday"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../schedule/week02/wed.html" title="Wednesday"
+          <a href="double_linked_list.html" title="Doubly-Linked List"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../schedule/week02/wed.html" accesskey="U">Wednesday</a> &raquo;</li> 
@@ -222,6 +222,13 @@ It&#8217;s a bit hard to understand all of the <em>stuff</em> in a call to <code
 &#8220;Then, call the __init__ method on that object, using this instance as <code class="docutils literal"><span class="pre">self</span></code>.&#8221;</p>
 <p>It&#8217;s important to realize that the value returned by the call to <code class="docutils literal"><span class="pre">super</span></code> <strong>is not</strong> the superclass object itself.
 However, it <strong>is</strong> a proxy that ensures that the method you call will be invoked on the superclass object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that in Python 3, it is possible (and encouraged) to call <code class="docutils literal"><span class="pre">super</span></code> with <em>no arguments</em>.
+It just does the right thing.</p>
+<p>This syntax is <strong>not</strong> compatible with Python 2.x.
+If you have to maintain compatibility, you <strong>must</strong> provide the class name and self.</p>
 <div class="section" id="super-issues">
 <h3>super() issues...<a class="headerlink" href="#super-issues" title="Permalink to this headline">¶</a></h3>
 <p>There are a few issues around using super that you must keep track of.
@@ -389,8 +396,8 @@ implements an alternate constructor that <em>can</em>.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../schedule/week02/wed.html"
-                        title="previous chapter">Wednesday</a></p>
+  <p class="topless"><a href="double_linked_list.html"
+                        title="previous chapter">Doubly-Linked List</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../schedule/week02/thu.html"
                         title="next chapter">Thursday</a></p>
@@ -421,7 +428,7 @@ implements an alternate constructor that <em>can</em>.</p>
           <a href="../schedule/week02/thu.html" title="Thursday"
              >next</a> |</li>
         <li class="right" >
-          <a href="../schedule/week02/wed.html" title="Wednesday"
+          <a href="double_linked_list.html" title="Doubly-Linked List"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../schedule/week02/wed.html" >Wednesday</a> &raquo;</li> 
