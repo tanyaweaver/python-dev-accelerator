@@ -1,0 +1,11 @@
+pkg: toolz-0.7.4
+dist: toolz-0.7.4-py35_0
+home: http://toolz.readthedocs.org/en/latest/
+license: BSD
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

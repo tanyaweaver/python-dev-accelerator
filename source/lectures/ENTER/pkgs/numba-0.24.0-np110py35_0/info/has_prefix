@@ -1,0 +1,4 @@
+/opt/anaconda1anaconda2anaconda3 text bin/numba
+/opt/anaconda1anaconda2anaconda3 text bin/pycc
+/opt/anaconda1anaconda2anaconda3 text lib/python3.5/site-packages/numba-0.24.0-py3.5-macosx-10.5-x86_64.egg-info/scripts/numba
+/opt/anaconda1anaconda2anaconda3 text lib/python3.5/site-packages/numba-0.24.0-py3.5-macosx-10.5-x86_64.egg-info/scripts/pycc

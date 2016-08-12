@@ -1,0 +1,13 @@
+lib/python3.5/site-packages/colorama-0.3.7-py3.5.egg-info
+lib/python3.5/site-packages/colorama/__init__.py
+lib/python3.5/site-packages/colorama/__pycache__/__init__.cpython-35.pyc
+lib/python3.5/site-packages/colorama/__pycache__/ansi.cpython-35.pyc
+lib/python3.5/site-packages/colorama/__pycache__/ansitowin32.cpython-35.pyc
+lib/python3.5/site-packages/colorama/__pycache__/initialise.cpython-35.pyc
+lib/python3.5/site-packages/colorama/__pycache__/win32.cpython-35.pyc
+lib/python3.5/site-packages/colorama/__pycache__/winterm.cpython-35.pyc
+lib/python3.5/site-packages/colorama/ansi.py
+lib/python3.5/site-packages/colorama/ansitowin32.py
+lib/python3.5/site-packages/colorama/initialise.py
+lib/python3.5/site-packages/colorama/win32.py
+lib/python3.5/site-packages/colorama/winterm.py

@@ -1,0 +1,33 @@
+{
+  "arch": "x86_64",
+  "build": "py35_0",
+  "build_number": 0,
+  "depends": [
+    "python 3.5*"
+  ],
+  "files": [
+    "lib/python3.5/site-packages/ptyprocess-0.5-py3.5.egg-info",
+    "lib/python3.5/site-packages/ptyprocess/__init__.py",
+    "lib/python3.5/site-packages/ptyprocess/__pycache__/__init__.cpython-35.pyc",
+    "lib/python3.5/site-packages/ptyprocess/__pycache__/_fork_pty.cpython-35.pyc",
+    "lib/python3.5/site-packages/ptyprocess/__pycache__/ptyprocess.cpython-35.pyc",
+    "lib/python3.5/site-packages/ptyprocess/__pycache__/util.cpython-35.pyc",
+    "lib/python3.5/site-packages/ptyprocess/_fork_pty.py",
+    "lib/python3.5/site-packages/ptyprocess/ptyprocess.py",
+    "lib/python3.5/site-packages/ptyprocess/util.py"
+  ],
+  "license": "ISC",
+  "license_family": "Other",
+  "link": {
+    "source": "/Users/Nick/Documents/codefellows/courses/python-dev-accelerator/source/lectures/ENTER/pkgs/ptyprocess-0.5-py35_0",
+    "type": "hard-link"
+  },
+  "name": "ptyprocess",
+  "platform": "osx",
+  "requires": [
+    "python 3.5"
+  ],
+  "subdir": "osx-64",
+  "url": "https://repo.continuum.io/pkgs/free/osx-64/ptyprocess-0.5-py35_0.tar.bz2",
+  "version": "0.5"
+}

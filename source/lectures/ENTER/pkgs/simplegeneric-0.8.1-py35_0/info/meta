@@ -1,0 +1,11 @@
+pkg: simplegeneric-0.8.1
+dist: simplegeneric-0.8.1-py35_0
+home: http://cheeseshop.python.org/pypi/simplegeneric
+license: ZPL 2.1
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

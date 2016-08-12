@@ -1,0 +1,22 @@
+{
+  "arch": "x86_64", 
+  "build": "py35_1", 
+  "build_number": 1, 
+  "depends": [
+    "itsdangerous", 
+    "jinja2", 
+    "python 3.5*", 
+    "werkzeug"
+  ], 
+  "license": "BSD", 
+  "name": "flask", 
+  "platform": "osx", 
+  "requires": [
+    "itsdangerous 0.24", 
+    "jinja2 2.8", 
+    "python 3.5", 
+    "werkzeug 0.10.4"
+  ], 
+  "subdir": "osx-64", 
+  "version": "0.10.1"
+}

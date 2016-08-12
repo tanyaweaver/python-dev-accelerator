@@ -1,0 +1,11 @@
+pkg: configobj-5.0.6
+dist: configobj-5.0.6-py35_0
+home: http://www.voidspace.org.uk/python/configobj.html
+license: BSD
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

@@ -1,0 +1,11 @@
+pkg: pycosat-0.6.1
+dist: pycosat-0.6.1-py35_0
+home: https://github.com/ilanschnell/pycosat
+license: MIT
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

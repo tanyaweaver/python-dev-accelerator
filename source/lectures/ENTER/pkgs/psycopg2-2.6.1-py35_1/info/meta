@@ -1,0 +1,11 @@
+pkg: psycopg2-2.6.1
+dist: psycopg2-2.6.1-py35_1
+home: http://initd.org/psycopg/
+license: LGPL, BSD-like, ZPL
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

@@ -1,0 +1,57 @@
+{
+  "arch": "x86_64",
+  "build": "py35_0",
+  "build_number": 0,
+  "depends": [
+    "python 3.5*"
+  ],
+  "files": [
+    "lib/python3.5/site-packages/pycparser-2.14-py3.5.egg-info",
+    "lib/python3.5/site-packages/pycparser/__init__.py",
+    "lib/python3.5/site-packages/pycparser/__pycache__/__init__.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/__pycache__/_ast_gen.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/__pycache__/_build_tables.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/__pycache__/ast_transforms.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/__pycache__/c_ast.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/__pycache__/c_generator.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/__pycache__/c_lexer.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/__pycache__/c_parser.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/__pycache__/lextab.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/__pycache__/plyparser.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/__pycache__/yacctab.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/_ast_gen.py",
+    "lib/python3.5/site-packages/pycparser/_build_tables.py",
+    "lib/python3.5/site-packages/pycparser/_c_ast.cfg",
+    "lib/python3.5/site-packages/pycparser/ast_transforms.py",
+    "lib/python3.5/site-packages/pycparser/c_ast.py",
+    "lib/python3.5/site-packages/pycparser/c_generator.py",
+    "lib/python3.5/site-packages/pycparser/c_lexer.py",
+    "lib/python3.5/site-packages/pycparser/c_parser.py",
+    "lib/python3.5/site-packages/pycparser/lextab.py",
+    "lib/python3.5/site-packages/pycparser/ply/__init__.py",
+    "lib/python3.5/site-packages/pycparser/ply/__pycache__/__init__.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/ply/__pycache__/cpp.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/ply/__pycache__/ctokens.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/ply/__pycache__/lex.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/ply/__pycache__/yacc.cpython-35.pyc",
+    "lib/python3.5/site-packages/pycparser/ply/cpp.py",
+    "lib/python3.5/site-packages/pycparser/ply/ctokens.py",
+    "lib/python3.5/site-packages/pycparser/ply/lex.py",
+    "lib/python3.5/site-packages/pycparser/ply/yacc.py",
+    "lib/python3.5/site-packages/pycparser/plyparser.py",
+    "lib/python3.5/site-packages/pycparser/yacctab.py"
+  ],
+  "license": "BSD",
+  "link": {
+    "source": "/Users/Nick/Documents/codefellows/courses/python-dev-accelerator/source/lectures/ENTER/pkgs/pycparser-2.14-py35_0",
+    "type": "hard-link"
+  },
+  "name": "pycparser",
+  "platform": "osx",
+  "requires": [
+    "python 3.5"
+  ],
+  "subdir": "osx-64",
+  "url": "https://repo.continuum.io/pkgs/free/osx-64/pycparser-2.14-py35_0.tar.bz2",
+  "version": "2.14"
+}

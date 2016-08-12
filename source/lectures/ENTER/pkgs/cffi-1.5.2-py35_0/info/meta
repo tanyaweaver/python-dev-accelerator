@@ -1,0 +1,11 @@
+pkg: cffi-1.5.2
+dist: cffi-1.5.2-py35_0
+home: http://cffi.readthedocs.org
+license: MIT
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

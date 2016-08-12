@@ -1,0 +1,11 @@
+pkg: curl-7.45.0
+dist: curl-7.45.0-0
+home: http://curl.haxx.se/
+license: MIT/X derivate (http://curl.haxx.se/docs/copyright.html)
+has_bin: True
+has_lib: False
+has_py: False
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

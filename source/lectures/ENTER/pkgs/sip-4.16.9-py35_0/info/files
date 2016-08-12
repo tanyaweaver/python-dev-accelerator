@@ -1,0 +1,5 @@
+bin/sip
+include/python3.5m/sip.h
+lib/python3.5/site-packages/sip.so
+lib/python3.5/site-packages/sipconfig.py
+lib/python3.5/site-packages/sipdistutils.py

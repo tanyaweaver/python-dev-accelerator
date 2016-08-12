@@ -1,0 +1,20 @@
+{
+  "arch": "x86_64", 
+  "build": "py35_1", 
+  "build_number": 1, 
+  "depends": [
+    "appnope", 
+    "decorator", 
+    "pexpect", 
+    "pickleshare", 
+    "python 3.5*", 
+    "python.app", 
+    "simplegeneric >0.8", 
+    "traitlets"
+  ], 
+  "license": "BSD", 
+  "name": "ipython", 
+  "platform": "osx", 
+  "subdir": "osx-64", 
+  "version": "4.1.2"
+}

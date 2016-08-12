@@ -1,0 +1,18 @@
+{
+  "arch": "x86_64", 
+  "build": "py35_1", 
+  "build_number": 1, 
+  "depends": [
+    "python 3.5*", 
+    "yaml 0.1.6"
+  ], 
+  "license": "MIT", 
+  "name": "pyyaml", 
+  "platform": "osx", 
+  "requires": [
+    "python 3.5", 
+    "yaml 0.1.6"
+  ], 
+  "subdir": "osx-64", 
+  "version": "3.11"
+}

@@ -1,0 +1,11 @@
+pkg: terminado-0.5
+dist: terminado-0.5-py35_1
+home: https://github.com/takluyver/terminado
+license: BSD
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

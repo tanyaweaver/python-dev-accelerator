@@ -1,0 +1,23 @@
+{
+  "arch": "x86_64",
+  "build": "py35_0",
+  "build_number": 0,
+  "depends": [
+    "python 3.5*"
+  ],
+  "files": [
+    "include/python3.5m/greenlet/greenlet.h",
+    "lib/python3.5/site-packages/greenlet-0.4.9-py3.5.egg-info",
+    "lib/python3.5/site-packages/greenlet.cpython-35m-darwin.so"
+  ],
+  "license": "MIT",
+  "link": {
+    "source": "/Users/Nick/Documents/codefellows/courses/python-dev-accelerator/source/lectures/ENTER/pkgs/greenlet-0.4.9-py35_0",
+    "type": "hard-link"
+  },
+  "name": "greenlet",
+  "platform": "osx",
+  "subdir": "osx-64",
+  "url": "https://repo.continuum.io/pkgs/free/osx-64/greenlet-0.4.9-py35_0.tar.bz2",
+  "version": "0.4.9"
+}

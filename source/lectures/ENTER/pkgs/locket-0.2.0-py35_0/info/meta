@@ -1,0 +1,11 @@
+pkg: locket-0.2.0
+dist: locket-0.2.0-py35_0
+home: http://github.com/mwilliamson/locket.py
+license: BSD
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

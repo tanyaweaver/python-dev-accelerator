@@ -1,0 +1,6 @@
+bin/activate-global-python-argcomplete
+bin/python-argcomplete-check-easy-install-script
+bin/register-python-argcomplete
+lib/python3.5/site-packages/argcomplete-1.0.0-py3.5.egg-info/scripts/activate-global-python-argcomplete
+lib/python3.5/site-packages/argcomplete-1.0.0-py3.5.egg-info/scripts/python-argcomplete-check-easy-install-script
+lib/python3.5/site-packages/argcomplete-1.0.0-py3.5.egg-info/scripts/register-python-argcomplete

@@ -1,0 +1,53 @@
+{
+  "about": {
+    "home": "http://xlwings.org/", 
+    "license": "3-clause BSD", 
+    "license_family": "BSD", 
+    "license_file": "LICENSE.txt", 
+    "summary": "Make Excel fly. Interact with Excel from Python and vice versa"
+  }, 
+  "app": {}, 
+  "build": {
+    "entry_points": [
+      "xlwings = xlwings.command_line:main"
+    ], 
+    "features": [], 
+    "pin_depends": "", 
+    "script_env": [], 
+    "string": "", 
+    "track_features": []
+  }, 
+  "package": {
+    "name": "xlwings", 
+    "version": "0.7.0"
+  }, 
+  "requirements": {
+    "build": [
+      "python"
+    ], 
+    "conflicts": [], 
+    "run": [
+      "python", 
+      "pytz", 
+      "psutil", 
+      "appscript"
+    ]
+  }, 
+  "source": {
+    "fn": "xlwings-0.7.0.tar.gz", 
+    "git_rev": "", 
+    "md5": "cd66ddb1725f3003623f918ab2dadf71", 
+    "patches": [], 
+    "path": "", 
+    "svn_rev": "", 
+    "url": "https://pypi.python.org/packages/source/x/xlwings/xlwings-0.7.0.tar.gz"
+  }, 
+  "test": {
+    "commands": "", 
+    "files": [], 
+    "imports": [
+      "xlwings"
+    ], 
+    "requires": []
+  }
+}

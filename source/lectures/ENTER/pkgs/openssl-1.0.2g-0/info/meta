@@ -1,0 +1,11 @@
+pkg: openssl-1.0.2g
+dist: openssl-1.0.2g-0
+home: http://www.openssl.org/
+license: Apache-style (http://www.openssl.org/source/license.html)
+has_bin: True
+has_lib: False
+has_py: False
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

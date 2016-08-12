@@ -1,0 +1,11 @@
+pkg: xz-5.0.5
+dist: xz-5.0.5-1
+home: http://tukaani.org/xz/
+license: Public-Domain, GPLv2
+has_bin: True
+has_lib: False
+has_py: False
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

@@ -1,0 +1,18 @@
+{
+  "arch": "x86_64", 
+  "build": "py35_1", 
+  "build_number": 1, 
+  "depends": [
+    "python 3.5*", 
+    "setuptools"
+  ], 
+  "license": "Apache", 
+  "name": "argcomplete", 
+  "platform": "osx", 
+  "requires": [
+    "python 3.5", 
+    "setuptools 18.4"
+  ], 
+  "subdir": "osx-64", 
+  "version": "1.0.0"
+}

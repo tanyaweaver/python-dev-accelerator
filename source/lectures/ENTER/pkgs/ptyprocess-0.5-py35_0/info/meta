@@ -1,0 +1,11 @@
+pkg: ptyprocess-0.5
+dist: ptyprocess-0.5-py35_0
+home: https://github.com/pexpect/ptyprocess
+license: ISC
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

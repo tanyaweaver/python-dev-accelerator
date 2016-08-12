@@ -1,0 +1,11 @@
+pkg: pickleshare-0.5
+dist: pickleshare-0.5-py35_0
+home: https://github.com/vivainio/pickleshare
+license: MIT
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

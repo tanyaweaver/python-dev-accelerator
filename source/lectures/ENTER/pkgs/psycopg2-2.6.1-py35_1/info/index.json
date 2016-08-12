@@ -1,0 +1,19 @@
+{
+  "arch": "x86_64", 
+  "build": "py35_1", 
+  "build_number": 1, 
+  "depends": [
+    "openssl 1.0.2*", 
+    "python 3.5*"
+  ], 
+  "license": "LGPL, BSD-like, ZPL", 
+  "license_family": "LGPL", 
+  "name": "psycopg2", 
+  "platform": "osx", 
+  "requires": [
+    "openssl 1.0.2f", 
+    "python 3.5"
+  ], 
+  "subdir": "osx-64", 
+  "version": "2.6.1"
+}

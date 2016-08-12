@@ -1,0 +1,26 @@
+{
+  "arch": "x86_64", 
+  "build": "py35_0", 
+  "build_number": 0, 
+  "depends": [
+    "cffi", 
+    "idna 2.0", 
+    "pyasn1 0.1.9", 
+    "python 3.5*", 
+    "setuptools", 
+    "six"
+  ], 
+  "license": "Apache", 
+  "name": "cryptography", 
+  "platform": "osx", 
+  "requires": [
+    "cffi 1.5.2", 
+    "idna 2.0", 
+    "pyasn1 0.1.9", 
+    "python 3.5", 
+    "setuptools 20.3", 
+    "six 1.10.0"
+  ], 
+  "subdir": "osx-64", 
+  "version": "1.3"
+}

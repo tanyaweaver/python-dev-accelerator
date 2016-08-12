@@ -1,0 +1,11 @@
+pkg: tornado-4.3
+dist: tornado-4.3-py35_0
+home: http://www.tornadoweb.org/
+license: Apache
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

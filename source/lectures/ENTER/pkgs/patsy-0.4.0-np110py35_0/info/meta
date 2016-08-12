@@ -1,0 +1,11 @@
+pkg: patsy-0.4.0
+dist: patsy-0.4.0-np110py35_0
+home: https://github.com/pydata/patsy
+license: BSD
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

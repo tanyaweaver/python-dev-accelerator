@@ -1,0 +1,11 @@
+pkg: jinja2-2.8
+dist: jinja2-2.8-py35_0
+home: http://jinja.pocoo.org/docs/
+license: BSD
+has_bin: False
+has_lib: False
+has_py: True
+==> sw_vers <==
+ProductName:	Mac OS X
+ProductVersion:	10.7.5
+BuildVersion:	11G63b

@@ -1,0 +1,17 @@
+{
+  "arch": "x86_64", 
+  "build": "py35_0", 
+  "build_number": 0, 
+  "depends": [
+    "appscript", 
+    "psutil", 
+    "python 3.5*", 
+    "pytz"
+  ], 
+  "license": "3-clause BSD", 
+  "license_family": "BSD", 
+  "name": "xlwings", 
+  "platform": "osx", 
+  "subdir": "osx-64", 
+  "version": "0.7.0"
+}
