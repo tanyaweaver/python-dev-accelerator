@@ -10,15 +10,23 @@ Concurrency In Python
 .. rst-class:: left
 .. container::
 
-    We've been working for a few days now on writing servers and clients in
-    Python.
+    .. ifslides::
 
-    To do so, we've made extensive use of the :mod:`socket <python2:socket>`
-    (:py:mod:`py3 <socket>`) library and the interface it provides to low-level
-    network I/O primitives.
+        .. rst-class:: build
 
-    There's a problem with the code we've been writing, however. It is
-    ``blocking``.
+        * We can now write servers and clients in Python
+        * We've been using the ``socket`` library to do so
+        * But it is **blocking** code
+        * We can only handle one request at time
+
+    .. ifnotslides::
+    
+        We've been working for a few days now on writing servers and clients in Python.
+
+        To do so, we've made extensive use of the :mod:`socket <python2:socket>` (:py:mod:`py3 <socket>`) library
+        and the interface it provides to low-level network I/O primitives.
+
+        There's a problem with the code we've been writing, however. It is **blocking**.
 
 Blocking Calls
 --------------
@@ -78,21 +86,18 @@ Consider the following code, our basic echo server:
 
 .. ifnotslides::
 
-    The call to ``socket.accept`` on line 10 is *blocking*. It will not
-    return until a new connection is made by a client.
+    The call to ``socket.accept`` on line 10 is *blocking*.
+    It will not return until a new connection is made by a client.
 
-    This means that although in principle our server can handle more than one
-    connection (it has a backlog of 5, right?), in fact it is only able to
-    process one request at a time.
+    This means that although in principle our server can handle more than one connection (it has a backlog of 5, right?),
+    in fact it is only able to process one request at a time.
 
-    Even for a trivial program like this, this is a problem. What if the
-    message the client is sending us to be echoed back is the collected works
-    of Shakespeare? Any other clients looking to have their simple messages
-    echoed would be fored to wait while we process Shakespeare 16 bytes at a
-    time.
+    Even for a trivial program like this, this is a problem.
+    What if the message the client is sending us to be echoed back is the collected works of Shakespeare?
+    Any other clients looking to have their simple messages echoed would be fored to wait while we process Shakespeare 16 bytes at a time.
 
-    Operations that ``block`` like this are called *synchronous*. Getting
-    around them is one of the tasks that comes with scaling a program.
+    Operations that ``block`` like this are called *synchronous*.
+    Getting around them is one of the tasks that comes with scaling a program.
 
 .. ifslides::
 
@@ -112,13 +117,20 @@ Simple Concurrency w/ ``select``
 .. rst-class:: left
 .. container::
 
-    The Python standard library provides the ``select`` module to help us
-    alleviate some of the issues with blocking I/O operations.
+    .. ifnotslides::
+    
+        The Python standard library provides the ``select`` module to help us alleviate some of the issues with blocking I/O operations.
 
-    The module provides ``select``, an interface to the underlying Unix
-    ``select`` system call. The purpose of select is to take a list of possible
-    I/O channels (file handles, Unix sockets, network sockets) and return lists
-    of those that are ready to be read, written or in an error state.
+        The module provides ``select``, an interface to the underlying Unix ``select`` system call.
+        The purpose of select is to take a list of possible I/O channels (file handles, Unix sockets, network sockets)
+        and return lists of those that are ready to be read, written or in an error state.
+
+    .. ifslides::
+    
+        * Python stdlib: ``select`` module
+        * ``select.select()`` uses underlying Unix system calls
+        * Takes list of potential I/O channels
+        * Returns any that are ready for interaction
 
 
 Using ``select``
