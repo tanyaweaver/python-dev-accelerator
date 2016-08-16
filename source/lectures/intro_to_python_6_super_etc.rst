@@ -217,8 +217,7 @@ A *static method* is a method that doesn't get self:
 
 .. nextslide:: Syntactic Sugar
 
-Like ``properties``, static methods can be written *declaratively* using the
-``staticmethod`` built-in as a *decorator*:
+Static methods can be written *declaratively* using the ``staticmethod`` built-in as a *decorator*:
 
 .. code-block:: python
 
