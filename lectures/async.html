@@ -190,13 +190,10 @@ div.nboutput  > :nth-child(2).stderr {
 <div class="section" id="concurrency-in-python">
 <h2>Concurrency In Python<a class="headerlink" href="#concurrency-in-python" title="Permalink to this headline">¶</a></h2>
 <div class="left container">
-<p>We&#8217;ve been working for a few days now on writing servers and clients in
-Python.</p>
-<p>To do so, we&#8217;ve made extensive use of the <a class="reference external" href="http://docs.python.org/2/library/socket.html#module-socket" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a>
-(<a class="reference external" href="http://docs.python.org/3/library/socket.html#module-socket" title="(in Python v3.5)"><code class="xref py py-mod docutils literal"><span class="pre">py3</span></code></a>) library and the interface it provides to low-level
-network I/O primitives.</p>
-<p>There&#8217;s a problem with the code we&#8217;ve been writing, however. It is
-<code class="docutils literal"><span class="pre">blocking</span></code>.</p>
+<p>We&#8217;ve been working for a few days now on writing servers and clients in Python.</p>
+<p>To do so, we&#8217;ve made extensive use of the <a class="reference external" href="http://docs.python.org/2/library/socket.html#module-socket" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">socket</span></code></a> (<a class="reference external" href="http://docs.python.org/3/library/socket.html#module-socket" title="(in Python v3.5)"><code class="xref py py-mod docutils literal"><span class="pre">py3</span></code></a>) library
+and the interface it provides to low-level network I/O primitives.</p>
+<p>There&#8217;s a problem with the code we&#8217;ve been writing, however. It is <strong>blocking</strong>.</p>
 </div>
 <div class="section" id="blocking-calls">
 <h3>Blocking Calls<a class="headerlink" href="#blocking-calls" title="Permalink to this headline">¶</a></h3>
@@ -248,29 +245,24 @@ network I/O primitives.</p>
         <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
-<p>The call to <code class="docutils literal"><span class="pre">socket.accept</span></code> on line 10 is <em>blocking</em>. It will not
-return until a new connection is made by a client.</p>
-<p>This means that although in principle our server can handle more than one
-connection (it has a backlog of 5, right?), in fact it is only able to
-process one request at a time.</p>
-<p>Even for a trivial program like this, this is a problem. What if the
-message the client is sending us to be echoed back is the collected works
-of Shakespeare? Any other clients looking to have their simple messages
-echoed would be fored to wait while we process Shakespeare 16 bytes at a
-time.</p>
-<p>Operations that <code class="docutils literal"><span class="pre">block</span></code> like this are called <em>synchronous</em>. Getting
-around them is one of the tasks that comes with scaling a program.</p>
+<p>The call to <code class="docutils literal"><span class="pre">socket.accept</span></code> on line 10 is <em>blocking</em>.
+It will not return until a new connection is made by a client.</p>
+<p>This means that although in principle our server can handle more than one connection (it has a backlog of 5, right?),
+in fact it is only able to process one request at a time.</p>
+<p>Even for a trivial program like this, this is a problem.
+What if the message the client is sending us to be echoed back is the collected works of Shakespeare?
+Any other clients looking to have their simple messages echoed would be fored to wait while we process Shakespeare 16 bytes at a time.</p>
+<p>Operations that <code class="docutils literal"><span class="pre">block</span></code> like this are called <em>synchronous</em>.
+Getting around them is one of the tasks that comes with scaling a program.</p>
 </div>
 </div>
 <div class="section" id="simple-concurrency-w-select">
 <h2>Simple Concurrency w/ <code class="docutils literal"><span class="pre">select</span></code><a class="headerlink" href="#simple-concurrency-w-select" title="Permalink to this headline">¶</a></h2>
 <div class="left container">
-<p>The Python standard library provides the <code class="docutils literal"><span class="pre">select</span></code> module to help us
-alleviate some of the issues with blocking I/O operations.</p>
-<p>The module provides <code class="docutils literal"><span class="pre">select</span></code>, an interface to the underlying Unix
-<code class="docutils literal"><span class="pre">select</span></code> system call. The purpose of select is to take a list of possible
-I/O channels (file handles, Unix sockets, network sockets) and return lists
-of those that are ready to be read, written or in an error state.</p>
+<p>The Python standard library provides the <code class="docutils literal"><span class="pre">select</span></code> module to help us alleviate some of the issues with blocking I/O operations.</p>
+<p>The module provides <code class="docutils literal"><span class="pre">select</span></code>, an interface to the underlying Unix <code class="docutils literal"><span class="pre">select</span></code> system call.
+The purpose of select is to take a list of possible I/O channels (file handles, Unix sockets, network sockets)
+and return lists of those that are ready to be read, written or in an error state.</p>
 </div>
 <div class="section" id="using-select">
 <h3>Using <code class="docutils literal"><span class="pre">select</span></code><a class="headerlink" href="#using-select" title="Permalink to this headline">¶</a></h3>
