@@ -14,7 +14,8 @@ Objectives
 ==========
 
 * Learn about the Hash Table data structure
-* Understand the difference (and increased utility of) class-based views from function-based views
+* Understand the difference between (and increased utility of) class-based views from function-based views
+* Get practice setting up your own Relational Database Server (RDS) on AWS
 
 Readings
 ========
@@ -70,5 +71,5 @@ Assignments
 
 * :doc:`/assignments/hash_table`
 * :doc:`/assignments/django_3_data_views` (adding class-based views)
-* :doc:`/assignments/aws_0_deploy_wsgi_app`
+* :doc:`/assignments/aws_1_deploy_imager`
 * :doc:`/assignments/daily_lj_entry`

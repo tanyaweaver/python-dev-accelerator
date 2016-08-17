@@ -13,7 +13,7 @@ Tuesday
 Objectives
 ==========
 
-* Learn how to tag objects with a Django add-on.
+* Learn how to incorporate a Django add-on.
 
 Readings
 ========

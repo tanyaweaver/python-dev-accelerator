@@ -13,7 +13,7 @@ Monday
 Objectives
 ==========
 
-* Understand and implement a RESTful API
+* Understand RESTful APIs and how to connect to them
 
 Readings
 ========

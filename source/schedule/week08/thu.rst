@@ -13,8 +13,13 @@ Thursday
 Objectives
 ==========
 
+* Understand what "bad data" is and how to account for it.
+
 Readings
 ========
+
+* `What Is Data Munging? <https://www.quora.com/What-is-data-munging>`_
+* `Data Munging in Python (using Pandas) - Baby steps in Python <https://www.analyticsvidhya.com/blog/2014/09/data-munging-python-using-pandas-baby-steps-python/>`_
 
 Review
 ======

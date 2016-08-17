@@ -52,6 +52,6 @@ Assignments
 .. * :doc:`/assignments/statistics_problem_set4`
 
 * :doc:`/assignments/django_3_data_views`
-* :doc:`/assignments/aws_account`
+* :doc:`/assignments/aws_0_deploy_wsgi_app`
 * :doc:`/assignments/bst_4_balancing`
 * :doc:`/assignments/daily_lj_entry`

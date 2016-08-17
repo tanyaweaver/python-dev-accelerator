@@ -13,13 +13,14 @@ Wednesday
 Objectives
 ==========
 
-* Add pagination to the images/albums in our Django app.
+* Gain a cursory understanding of what Machine Learning is and what Python tools can be used to do it.
 
 Readings
 ========
 
 * `Machine Learning (wikipedia) <https://en.wikipedia.org/wiki/Machine_learning>`_
 * `Introduction to Machine Learning in Python with scikit-learn <http://ipython-books.github.io/featured-04/>`_ (down to but not including Getting Started with scikit-learn)
+* `matplotlib.pyplot tutorial <http://matplotlib.org/users/pyplot_tutorial.html>`_
 
 Review
 ======

@@ -13,7 +13,9 @@ Thursday
 Objectives
 ==========
 
-Be comfortable working with Django forms and form handling
+* Learn how to automate the deployment of a Django app with Ansible
+* Understand how Merge Sort works
+* Learn about the myriad ways in which a web app can be compromised
 
 Readings
 ========
@@ -55,7 +57,7 @@ Concepts
 .. * The Hash Table
   
 * Configuration Management with Ansible
-* The Mergesort algorithm
+* The Mergesort Algorithm
 
 Demo
 ====

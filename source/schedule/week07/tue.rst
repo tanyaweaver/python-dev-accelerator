@@ -13,8 +13,8 @@ Tuesday
 Objectives
 ==========
 
-* Include forms for data input and output to our Django app
-* Learn how to automate the deployment of a Django app
+* Be comfortable working with Django forms and form handling
+* Learn how text can be handled as a tree with the Trie Tree
 
 Readings
 ========
