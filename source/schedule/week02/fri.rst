@@ -20,7 +20,7 @@ Readings
 ========
 
 * `Pyramid Quick Tour <http://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tour.html>`_
-* `Deploying Pyramid to Heroku <http://docs.pylonsproject.org/projects/pyramid-cookbook/en/latest/deployment/heroku.html>`_
+* :doc:`Deploying Pyramid to Heroku </lectures/pyramid_heroku>`
 
 Assignments
 ===========

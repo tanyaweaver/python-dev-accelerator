@@ -311,5 +311,5 @@ Then you can re-deploy your application using ``git push``:
 
 And that finishes us up.
 We now have a small, functional Pyramid application running on Heroku, serving resources over https.
-Tonight, you'll repeat this process with your own Pyramid app.
+Later, you'll repeat this process with your own learning journal application
 
