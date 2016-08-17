@@ -64,7 +64,8 @@ Assignments
 .. * :doc:`/assignments/sort_1_insertion`
 .. * :doc:`/assignments/django_4_data_editing`
 * :doc:`/assignments/sort_3_quicksort`
-* :doc:`/assignments/django_7_drf_tutorial_b`
+* :doc:`/assignments/django_6_drf_tutorial_a`
 * :doc:`/assignments/project_01_pitch`
-* :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/web_app_security_assignment2`
 * :doc:`/assignments/blog_post_publish` (Due Friday)
+* :doc:`/assignments/daily_lj_entry`

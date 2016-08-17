@@ -15,6 +15,7 @@ Objectives
 
 * Understand how relationships between data models are handled in Django
 * Learn about how Django accesses files 
+* Learn how node deletion affects a Binary Search Tree
 
 Readings
 ========

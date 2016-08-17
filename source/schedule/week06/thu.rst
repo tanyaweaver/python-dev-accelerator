@@ -13,6 +13,9 @@ Thursday
 Objectives
 ==========
 
+* Understanding function-based views in Django, and how they hook up to Django's URL configuration.
+* Learn how to deploy a simple WSGI app to AWS.
+
 Readings
 ========
 

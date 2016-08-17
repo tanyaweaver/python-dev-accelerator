@@ -39,5 +39,6 @@ Assignments
 
 .. * :doc:`/assignments/trie_implementation`
 .. * :doc:`/assignments/django_7_drf_tutorial_b`
+* Facial Recognition with Algorithmia
 * :doc:`/assignments/project_07_stories_begin`
 * :doc:`/assignments/daily_lj_entry`

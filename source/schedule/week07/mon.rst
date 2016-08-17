@@ -57,8 +57,8 @@ Demo
 ====
 
 * Setting up EC2 and RDS to Communicate With Each Other
-* Using django-configurations to achieve 12-factor nirvana
-* The Hash Table
+* Using django-configurations to achieve 12-factor Nirvana
+* Hashing and The Hash Table
 
 .. Managing relationships in the Django ORM
 

@@ -74,5 +74,5 @@ Assignments
 * :doc:`/assignments/aws_2_ansible_imager` 
 * :doc:`/assignments/sort_2_mergesort`
 * :doc:`/assignments/web_app_security_assignment1` (Due Monday)
-* :doc:`/assignments/trie_autocomplete`
+* :doc:`/assignments/trie_autocomplete` (Due Monday)
 * :doc:`/assignments/daily_lj_entry`
