@@ -13,7 +13,8 @@ Friday
 Concepts
 ========
 
-Professional Development with Code Fellows Staff
+* Weekly Gist
+* Whiteboard Challenge
 
 Readings
 ========
