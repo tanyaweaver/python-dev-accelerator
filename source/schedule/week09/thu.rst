@@ -19,8 +19,10 @@ Thursday
 .. Review
 .. ======
 
-.. Concepts
-.. ========
+Concepts
+========
+
+Wrap Up Loose Ends and Prepare for Project Week
 
 .. Demo
 .. ====

@@ -10,6 +10,14 @@ Friday
 
     This document contains no slides.
 
+Concepts
+========
+
+* Gist challenge
+* Whiteboarding
+* Wrap Up Loose Ends and Prepare for Project Week
+
+
 Assignments
 ===========
 
