@@ -20,7 +20,7 @@ following articles about the TCP/IP Stack and Sockets:
 As you read, make note of your questions, comments and thoughts about what you
 are reading.  Submit these questions when you are finished.
 
-.. Finally, return to the quiz in Canvas and complete it to show what you've learned.
+Finally, return to the quiz in Canvas and complete it to show what you've learned.
 
 .. _TCP/IP: http://www.garykessler.net/library/tcpip.html
 .. _Network Sockets: https://en.wikipedia.org/wiki/Network_socket

@@ -14,8 +14,8 @@ Objectives
 ==========
 
 * Have working installs of Python 2.7 and 3.5
-* Install and understand virtualenv
-* Ensure a basic common understanding of Python Syntax
+* Understand how to work with Python virtual environments
+* Ensure a common understanding of basic Python syntax
 * Establish a common editor setup with linting and syntax highlighting
 
 Readings
@@ -34,12 +34,15 @@ Concepts
 .. toctree::
    :maxdepth: 2
 
+   /lectures/installing_python
    /lectures/virtualenv
    /lectures/intro_to_python_1
 
 
 Demo
 ====
+
+Creating and managing a Python 3 virtual environment
 
 Assignments
 ===========

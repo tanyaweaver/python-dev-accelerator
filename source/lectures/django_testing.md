@@ -1,4 +1,17 @@
+```eval_rst
+.. slideconf::
+    :autoslides: False
+```
+
 # Django Testing
+
+```eval_rst
+.. slide:: Django Testing
+    :level: 1
+
+    This document contains no slides.
+```
+
 
 Testing in Django, including a bit on using Factory Boy to manage test data
 

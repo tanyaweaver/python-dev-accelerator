@@ -34,7 +34,9 @@ Using what you learned today, both in class and in your readings, accomplish the
 
 You are working with a partner to complete this application.
 
-When all of the above work is completed, **deploy your site to Heroku**. Make sure to include the URL to your Heroku deployment in your ``README.md`` file. Also make sure that your ``README.md`` documents the routes and views used and that any function you write is appropriately documented.
+When all of the above work is completed, **deploy your site to Heroku**.
+Make sure to include the URL to your Heroku deployment in your ``README.md`` file.
+Also make sure that your ``README.md`` documents the routes and views used and that any function you write is appropriately documented.
 
 Submitting Your work
 ====================

@@ -19,7 +19,7 @@ This means that we have a well-tested function that could be of use to another d
 
 We've also used code that others have written for us.
 Our tests make use of the ``pytest`` module.
-And our TDD set up uses the pytest plugin ``pytest-xdist``.
+And our TDD set up uses the pytest plugin ``pytest-watch``.
 Both of these packages were written by other developers, but are available for us to install and use.
 
 How does that work?
@@ -43,7 +43,7 @@ And you can make your code into distributions as well.
 
             Our tests make use of the ``pytest`` module
 
-            Our TDD set up uses the ``pytest-xdist`` plugin
+            Our TDD set up uses the ``pytest-watch`` plugin
 
             How does it work that we can install that code?
 
@@ -707,7 +707,7 @@ Then installing our package would cause the ``foo`` package also to be installed
 
 
 Our package does not require any dependencies to run.
-But we do use the ``pytest`` and ``pytest-xdist`` packages when testing.
+But we do use the ``pytest`` and ``pytest-watch`` packages when testing.
 The ``setup`` function also allows for this, with the ``extras_require`` argument.
 The argument takes a dict as an argument.
 The keys of the dict are the names of "extras" (installation options for our package).
@@ -721,7 +721,7 @@ In our ``setup.py``, add the following:
     setup(
         # ...
         install_requires=[],
-        extras_require={'test': ['pytest', 'pytest-xdist']},
+        extras_require={'test': ['pytest', 'pytest-watch']},
     )
 
 .. slide:: Extras
@@ -732,7 +732,7 @@ In our ``setup.py``, add the following:
     .. rst-class:: build
     .. container::
 
-        Our package depends on ``pytest``, ``pytest-xdist``
+        Our package depends on ``pytest``, ``pytest-watch``
 
         But **only** for tests
 
@@ -743,7 +743,7 @@ In our ``setup.py``, add the following:
             setup(
                 # ...
                 install_requires=[],
-                extras_require={'test': ['pytest', 'pytest-xdist']},
+                extras_require={'test': ['pytest', 'pytest-watch']},
             )
 
         Install the *extra* (from where ``setup.py`` is):
@@ -779,7 +779,7 @@ Finally, install our package *with the test extra*:
     [tdd-play]
     Banks:tdd-play cewing$ pip install -e .[test]
     ...
-    Successfully installed ackermann apipkg-1.4 execnet-1.4.1 py-1.4.31 pytest-2.8.7 pytest-xdist-1.14
+    Successfully installed ackermann apipkg-1.4 execnet-1.4.1 py-1.4.31 pytest-2.8.7 pytest-watch-4.1.0
     [tdd-play]
     Banks:tdd-play cewing$
 
@@ -826,7 +826,7 @@ And now, we should be able to run our tests, just as before:
             [tdd-play]
             Banks:tdd-play cewing$ pip install -e .[test]
             ...
-            Successfully installed ackermann apipkg-1.4 execnet-1.4.1 py-1.4.31 pytest-2.8.7 pytest-xdist-1.14
+            Successfully installed ackermann apipkg-1.4 execnet-1.4.1 py-1.4.31 pytest-2.8.7 pytest-watch-4.1.0
 
         .. code-block:: bash
 

@@ -23,9 +23,10 @@ Objectives
 Readings
 ========
 
-* `The Internet: Packets, Routing & Reliability <https://www.youtube.com/watch?v=AYdF7b3nMto>`_
-* `The Internet: IP Addresses and DNS <https://www.youtube.com/watch?v=5o8CwafCxnU>`_
-* `The Internet: Wires, Cables & WIFI <https://www.youtube.com/watch?v=ZhEf7e4kopM>`_
+* `The Internet: Packets, Routing & Reliability <https://www.youtube.com/watch?v=AYdF7b3nMto>`_ (video)
+* `The Internet: IP Addresses and DNS <https://www.youtube.com/watch?v=5o8CwafCxnU>`_ (video)
+* `The Internet: Wires, Cables & WIFI <https://www.youtube.com/watch?v=ZhEf7e4kopM>`_ (video)
+* :doc:`Array, a sample Python data structure </lectures/array>`
 
 Review
 ======
@@ -37,8 +38,7 @@ Concepts
    :maxdepth: 2
 
    /lectures/sockets
-   /lectures/data_structures
-   /lectures/array
+   /lectures/data_structures_overview
    /lectures/linked_list
    /lectures/intro_to_python_5_classes
 

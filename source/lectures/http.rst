@@ -160,6 +160,7 @@ HTTP 1.1 added a required header **Host**, to support virtual hosting::
 
         Let's look at each in turn.
 
+.. rst-class:: build
 ::
 
     GET /path/to/index.html HTTP/1.1
@@ -762,6 +763,7 @@ HTTP Headers
 
         Use ``charset`` extension to ``Contet-Type`` header value:
 
+.. rst-class:: build
 ::
 
     Content-Type: text/plain; charset=utf-8

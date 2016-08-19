@@ -155,7 +155,7 @@ slide article div.slide-no {
   letter-spacing: -3px;
   color: #393939; }
 .level-1 article {
-  text-align: center; }
+  text-align: left; }
   .level-1 article img {
     margin-top: 10px; }
 
@@ -166,7 +166,7 @@ slide article div.slide-no {
   padding: 5px 0px;
   color: #393939; }
 .level-2 article {
-  text-align: center; }
+  text-align: left; }
 
 .level-3 h3 {
   position: static;
@@ -192,4 +192,19 @@ slide article div.slide-no {
 .figure.align-left {
   text-align: left;
   float: left;
+}
+div.sidebar {
+  background-color: #eee;
+  border-color: #ddd;
+  border-right-style: solid;
+  border-left-style: solid;
+}
+div.sidebar p.sidebar-title {
+    margin: 0px -20px;
+    padding: 0px 20px;
+    font-size: 125%;
+}
+div.sidebar p.sidebar-subtitle {
+    padding-left: 2em;
+    font-size: 80%;
 }

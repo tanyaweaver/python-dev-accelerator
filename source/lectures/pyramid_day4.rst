@@ -1,5 +1,5 @@
 ===========================================
-PostgreSQL and Working With the Environment 
+PostgreSQL and Working With the Environment
 ===========================================
 
 Thus far we've been able to add user input and view that input in the browser with templating.
@@ -8,7 +8,7 @@ While data may persist for a given Heroku push, every sqlite database is saved o
 Heroku uses an `ephemeral filesystem <https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem>`_.
 At best, your sqlite database may last 24 hours.
 
-Heroku `provides support <https://www.heroku.com/postgres>`_ for a persisted PostgreSQL database. 
+Heroku `provides support <https://www.heroku.com/postgres>`_ for a persisted PostgreSQL database.
 Since we're deploying to Heroku, why not use that?
 
 As we will see, Postgres uses *basically* the same language as sqlite3.
@@ -35,7 +35,7 @@ Installation is simple from the command line.
 If you don't yet have Homebrew, download it `here <http://brew.sh/>`_.
 Once you have Homebrew, the following command gives you all you need.
 
-.. code-block:: bash
+.. code-block:: text
 
 	(pyramid_lj) bash-3.2$ brew install postgresql
 	==> Installing dependencies for postgresql: openssl, readline
@@ -49,7 +49,7 @@ Once you have Homebrew, the following command gives you all you need.
 	Or, if you don't want/need a background service you can just run:
 	  postgres -D /usr/local/var/postgres
 	==> Summary
-	/usr/local/Cellar/postgresql/9.5.3: 3,142 files, 35.0M    
+	/usr/local/Cellar/postgresql/9.5.3: 3,142 files, 35.0M
 
 To start using Postgres, we need to...start it up.
 
@@ -66,7 +66,7 @@ To start using Postgres, we need to...start it up.
 	Tapped 0 formulae (32 files, 46.1K)
 	==> Successfully started `postgresql` (label: homebrew.mxcl.postgresql)
 
-Now Postgres is available for fun and for profit. 
+Now Postgres is available for fun and for profit.
 The final thing you'll need to do is create a database to work in.
 If you try to start postgres without it, it'll throw you an error like this:
 
@@ -75,7 +75,7 @@ If you try to start postgres without it, it'll throw you an error like this:
 	(pyramid_lj) bash-3.2$ psql
 	psql: FATAL:  database "<Your Username Here>" does not exist
 
-So start by creating a database with the ``createdb`` command. 
+So start by creating a database with the ``createdb`` command.
 Since we're working on our learning journal, call it ``learning_journal``
 
 .. code-block:: bash
@@ -90,7 +90,7 @@ With our database created, we can enter the Postgres shell with the ``psql`` com
 	psql (9.5.3)
 	Type "help" for help.
 
-	<Your Username Here>=# 
+	<Your Username Here>=#
 
 Investigating your Postgres database will show that it's empty.
 Let's fill it with data from our Pyramid app.
@@ -161,11 +161,11 @@ We can see that our database is populated with our default data above by inspect
 
 	Nick=# \l
 									  List of databases
-		   Name       | Owner | Encoding |   Collate   |    Ctype    | Access privileges 
+		   Name       | Owner | Encoding |   Collate   |    Ctype    | Access privileges
 	------------------+-------+----------+-------------+-------------+-------------------
-	 Nick             | Nick  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
-	 learning_journal | Nick  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
-	 postgres         | Nick  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+	 Nick             | Nick  | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+	 learning_journal | Nick  | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+	 postgres         | Nick  | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
 	 template0        | Nick  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/Nick          +
 					  |       |          |             |             | Nick=CTc/Nick
 	 template1        | Nick  | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/Nick          +
@@ -176,13 +176,13 @@ We can see that our database is populated with our default data above by inspect
 
 	learning_journal=# \dt
 		   List of relations
-	Schema |  Name   | Type  | Owner 
+	Schema |  Name   | Type  | Owner
 	--------+---------+-------+-------
 	public | entries | table | Nick
 	(1 row)
 
 	learning_journal=# SELECT * FROM entries;
-	 id |    title    |       body        |       creation_date        
+	 id |    title    |       body        |       creation_date
 	----+-------------+-------------------+----------------------------
 	  1 | LJ - Day 10 | Sample body text. | 2016-07-14 09:27:16.674145
 	  2 | LJ - Day 11 | Sample body text. | 2016-07-14 09:27:16.748319
@@ -200,7 +200,7 @@ A consequence of having switched to PostgreSQL is that our database is bound to 
 Once deployed, our ``sqlalchemy.url`` in ``development.ini`` will be pointing to the wrong place.
 
 We could use ``production.ini`` to set up a ``sqlalchemy.url`` for a database on our production server.
-However, this only works on a static server whose location we know. 
+However, this only works on a static server whose location we know.
 Heroku uses its own server to host its Postgres database, whose location we do not know.
 Further, they may copy the database and move it elsewhere without our knowledge.
 We want our data to persist no matter where it goes.
@@ -238,7 +238,7 @@ You define that variable with some name and attach it to some value, like a stri
 	BAR
 
 Defining an environment variable in this way will not persist that variable across different terminal instances.
-To create a lasting variable, you have to add it to your ``.bashrc``, ``.bash_profile``, or ``$VIRTUAL_ENV/bin/activate``. 
+To create a lasting variable, you have to add it to your ``.bashrc``, ``.bash_profile``, or ``$VIRTUAL_ENV/bin/activate``.
 Note, if you add a variable to ``$VIRTUAL_ENV/bin/activate`` it'll only be accessible in that environment.
 
 .. code-block:: bash
@@ -284,7 +284,7 @@ If we defined our ``DATABASE_URL`` variable in ``$VIRTUAL_ENV/bin/activate``, th
 
 	In [4]: os.environ["DATABASE_URL"]
 	Out[4]: 'postgres://Nick@localhost:5432/learning_journal'
-	
+
 
 Environment Variables in Pyramid
 --------------------------------

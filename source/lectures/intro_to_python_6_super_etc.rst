@@ -88,6 +88,31 @@ Super
 
         The return value is a *proxy* that finds the right object and calls the right method.
 
+.. nextslide:: Compatibility
+
+.. code-block:: python
+
+    super().__init__(*args, **kwargs)
+
+.. ifnotslides::
+
+    Note that in Python 3, it is possible (and encouraged) to call ``super`` with *no arguments*.
+    It just does the right thing.
+
+    This syntax is **not** compatible with Python 2.x.
+    If you have to maintain compatibility, you **must** provide the class name and self.
+
+.. ifslides::
+
+    .. rst-class:: build
+    .. container::
+
+        In Python 3, you can call super with no arguments.
+
+        This does not work in Python 2
+
+        Keep ``classname`` and ``self`` for compatibility
+
 super() issues...
 -----------------
 
@@ -192,8 +217,7 @@ A *static method* is a method that doesn't get self:
 
 .. nextslide:: Syntactic Sugar
 
-Like ``properties``, static methods can be written *declaratively* using the
-``staticmethod`` built-in as a *decorator*:
+Static methods can be written *declaratively* using the ``staticmethod`` built-in as a *decorator*:
 
 .. code-block:: python
 

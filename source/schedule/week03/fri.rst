@@ -23,6 +23,7 @@ Concepts
 
 Professional Development with Code Fellows Staff
 
+
 Assignments
 ===========
 
@@ -30,4 +31,3 @@ Assignments
 * :doc:`/assignments/kata_sort_cards`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/blog_post_outline`
-.. * :doc:`/assignments/learning_journal_4`
