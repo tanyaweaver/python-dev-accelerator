@@ -186,16 +186,27 @@ div.nboutput  > :nth-child(2).stderr {
 </style>
 <div class="section" id="models-forms-and-sql-alchemy">
 <h1>Models, Forms, and SQL Alchemy<a class="headerlink" href="#models-forms-and-sql-alchemy" title="Permalink to this headline">¶</a></h1>
-<p>The central component of MVC, the <em>model</em>, captures the behavior of the application in terms of its problem domain, independent of the user interface. <strong>The model directly manages the data, logic, and rules of the application</strong>. A model can be any &#8220;thing&#8221;, e.g. an individual blog post on a blog, a photo or an album on a photo site, a user that visits and enrolls in the site, etc.</p>
-<p>A model is most useful when the data that it describes is <em>persisted</em>. To do that, we&#8217;ll be interacting with a SQL database and saving information to that database with SQL Alchemy. In order to have this all easily wired together for us, we&#8217;re going to start a new scaffold that includes all of that SQL functionality. We&#8217;ll also find that with this new scaffold, the MVC of our app is far more <em>explicity</em> separated into entire directories instead of individual files. Let&#8217;s dip in.</p>
+<p>The central component of MVC, the <em>model</em>, captures the behavior of the application in terms of its problem domain, independent of the user interface.
+<strong>The model directly manages the data, logic, and rules of the application</strong>.
+A model can be any &#8220;thing&#8221;, e.g. an individual blog post on a blog, a photo or an album on a photo site, a user that visits and enrolls in the site, etc.</p>
+<p>A model is most useful when the data that it describes is <em>persisted</em>.
+To do that, we&#8217;ll be interacting with a SQL database and saving information to that database with SQL Alchemy.
+In order to have this all easily wired together for us, we&#8217;re going to start a new scaffold that includes all of that SQL functionality.
+We&#8217;ll also find that with this new scaffold, the MVC of our app is far more <em>explicity</em> separated into entire directories instead of individual files. Let&#8217;s dip in.</p>
 <div class="section" id="the-alchemy-scaffold">
 <h2>The &#8220;Alchemy&#8221; Scaffold<a class="headerlink" href="#the-alchemy-scaffold" title="Permalink to this headline">¶</a></h2>
-<p>Before we use <code class="docutils literal"><span class="pre">pcreate</span></code> to construct a new scaffold to fill with our information and functionality, let&#8217;s back out into the root directory housing Pyramid.  Call <code class="docutils literal"><span class="pre">pcreate</span></code> in this directory, but this time with the SQLAlchemy scaffold.</p>
+<p>Before we use <code class="docutils literal"><span class="pre">pcreate</span></code> to construct a new scaffold to fill with our information and functionality, let&#8217;s back out into the root directory housing Pyramid.
+Call <code class="docutils literal"><span class="pre">pcreate</span></code> in this directory, but this time with the SQLAlchemy scaffold.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>pyramid_lj<span class="o">)</span> bash-3.2$ pcreate -s alchemy learning_journal
 </pre></div>
 </div>
-<p>This scaffold sets us up to connect to any database that we specify via SQLAlchemy. Running this command creates a few more files and directories than we&#8217;d seen before. Before we investigate, navigate into the <code class="docutils literal"><span class="pre">learning_journal</span></code> directory and initialize a <code class="docutils literal"><span class="pre">git</span></code> repository. Provide this new repo with an appropriate <code class="docutils literal"><span class="pre">.gitignore</span></code> file. Now add everything in this directory to the repo and commit.</p>
-<p>This project root directory will have the same named files that we&#8217;ve come to know and love in our Pyramid app, however some of their contents have changed. Let&#8217;s inspect <code class="docutils literal"><span class="pre">setup.py</span></code>.</p>
+<p>This scaffold sets us up to connect to any database that we specify via SQLAlchemy.
+Running this command creates a few more files and directories than we&#8217;d seen before.
+Before we investigate, navigate into the <code class="docutils literal"><span class="pre">learning_journal</span></code> directory and initialize a <code class="docutils literal"><span class="pre">git</span></code> repository.
+Provide this new repo with an appropriate <code class="docutils literal"><span class="pre">.gitignore</span></code> file.
+Now add everything in this directory to the repo and commit.</p>
+<p>This project root directory will have the same named files that we&#8217;ve come to know and love in our Pyramid app, however some of their contents have changed.
+Let&#8217;s inspect <code class="docutils literal"><span class="pre">setup.py</span></code>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c1"># setup.py</span>
 <span class="o">...</span>
 <span class="n">requires</span> <span class="o">=</span> <span class="p">[</span>
@@ -725,27 +736,6 @@ Also note that when using chained queries like this, no query is actually sent t
 </div>
 </div>
 </div>
-<div class="section" id="testing-models">
-<h2>Testing Models<a class="headerlink" href="#testing-models" title="Permalink to this headline">¶</a></h2>
-<p>Look at the code in <code class="docutils literal"><span class="pre">learning_journal/tests/tests.py</span></code>.
-Notice that the tests are pretty significantly different.
-A <code class="docutils literal"><span class="pre">BaseTest</span></code> class is declared that sets up the app and initializes a connection to the database.
-Other tests then inherit from this class to reduce repeating code.</p>
-<p>Notice also that the <code class="docutils literal"><span class="pre">tearDown</span></code> method is actually useful.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">.models.meta</span> <span class="kn">import</span> <span class="n">Base</span>
-
-    <span class="n">testing</span><span class="o">.</span><span class="n">tearDown</span><span class="p">()</span>
-    <span class="n">transaction</span><span class="o">.</span><span class="n">abort</span><span class="p">()</span>
-    <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">drop_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Your tests will need to access and save data to the database to ensure all things are wired correctly.
-You however do not want to save any of the data that you generate during testing.
-At the end of your tests, drop all your changes.</p>
-<p><code class="docutils literal"><span class="pre">TestMyViewSuccessCondition</span></code> initializes a new instance of the <code class="docutils literal"><span class="pre">MyModel</span></code> class and adds it to the session.
-The app then tests for the existence of this model in the <code class="docutils literal"><span class="pre">response</span></code> from the available view.</p>
-</div>
 <div class="section" id="connecting-m-to-vc">
 <h2>Connecting &#8220;M&#8221; to &#8220;VC&#8221;<a class="headerlink" href="#connecting-m-to-vc" title="Permalink to this headline">¶</a></h2>
 <p>We now have four instances of <code class="docutils literal"><span class="pre">MyModel</span></code> in our database.
@@ -875,8 +865,118 @@ The only time we have a <code class="docutils literal"><span class="pre">POST</s
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">}</span>
 </pre></div>
 </div>
-<p>Now when we load our edit page and submit a form with some data, that new data shows up right in the <code class="docutils literal"><span class="pre">&lt;h1&gt;</span></code>.</p>
-<p>Tonight you&#8217;ll use the fact that you can harvest form data in a view to add new model instances to your site.</p>
+<p>Now when we load our edit page and submit a form with some data, that new data shows up right in the <code class="docutils literal"><span class="pre">&lt;h1&gt;</span></code>.
+Tonight you&#8217;ll use the fact that you can harvest form data in a view to add new model instances to your site.</p>
+</div>
+<div class="section" id="testing-models-and-mvc-interaction">
+<h2>Testing Models and MVC Interaction<a class="headerlink" href="#testing-models-and-mvc-interaction" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ve added data models to our site in a pretty significant way.
+Not only do we have an entire separate directory housing those models, but we have two views that pipe the model data over to the front-end.
+One of those views even edits model data!
+We need to write some tests for these processes to ensure the integrity of our code as we continue to build out.</p>
+<p>Remove everything within <code class="docutils literal"><span class="pre">learning_journal/tests/tests.py</span></code>.
+Replace it with following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">transaction</span>
+
+<span class="kn">from</span> <span class="nn">pyramid</span> <span class="kn">import</span> <span class="n">testing</span>
+
+<span class="kn">from</span> <span class="nn">..models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">MyModel</span><span class="p">,</span>
+    <span class="n">get_engine</span><span class="p">,</span>
+    <span class="n">get_session_factory</span><span class="p">,</span>
+    <span class="n">get_tm_session</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..models.meta</span> <span class="kn">import</span> <span class="n">Base</span>
+
+
+<span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;session&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">sqlengine</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">testing</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="n">settings</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;sqlalchemy.url&#39;</span><span class="p">:</span> <span class="s1">&#39;sqlite:///:memory:&#39;</span>
+    <span class="p">})</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">include</span><span class="p">(</span><span class="s2">&quot;..models&quot;</span><span class="p">)</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get_settings</span><span class="p">()</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">get_engine</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+    <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">teardown</span><span class="p">():</span>
+        <span class="n">testing</span><span class="o">.</span><span class="n">tearDown</span><span class="p">()</span>
+        <span class="n">transaction</span><span class="o">.</span><span class="n">abort</span><span class="p">()</span>
+        <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">drop_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+    <span class="n">request</span><span class="o">.</span><span class="n">addfinalizer</span><span class="p">(</span><span class="n">teardown</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">engine</span>
+
+
+<span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">new_session</span><span class="p">(</span><span class="n">sqlengine</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+    <span class="n">session_factory</span> <span class="o">=</span> <span class="n">get_session_factory</span><span class="p">(</span><span class="n">sqlengine</span><span class="p">)</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">get_tm_session</span><span class="p">(</span><span class="n">session_factory</span><span class="p">,</span> <span class="n">transaction</span><span class="o">.</span><span class="n">manager</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">teardown</span><span class="p">():</span>
+        <span class="n">transaction</span><span class="o">.</span><span class="n">abort</span><span class="p">()</span>
+
+    <span class="n">request</span><span class="o">.</span><span class="n">addfinalizer</span><span class="p">(</span><span class="n">teardown</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">session</span>
+</pre></div>
+</div>
+<p>Here we set ourselves up to create fixtures that allows us to interact with a database.
+The <code class="docutils literal"><span class="pre">sqlengine</span></code> fixture takes our settings and our desired database location (note, not our actual database!) and populates it with empty tables.
+<strong>NOTE:</strong> the <code class="docutils literal"><span class="pre">request</span></code> parameter coming into the function IS NOT a HTTP request object.
+In an unfortunate circumstance of naming conflicts, <code class="docutils literal"><span class="pre">pytest</span></code> provides a function-level <code class="docutils literal"><span class="pre">request</span></code> fixture for use in setting up and tearing down tests (amongst other things).
+In <code class="docutils literal"><span class="pre">sqlengine</span></code>, at the end of our interaction with the database the <code class="docutils literal"><span class="pre">pytest</span></code> <code class="docutils literal"><span class="pre">request</span></code> fixture will tie off the last transaction.
+It will then drop all tables from our testing database (one of the reasons you don&#8217;t want to use your actual DB).</p>
+<p>The <code class="docutils literal"><span class="pre">new_session</span></code> fixture will use the engine set up by <code class="docutils literal"><span class="pre">sqlengine</span></code> to set up a transaction manager and create an actual database session.
+With it we can interact with the database just like we did earlier in the command line.</p>
+<div class="section" id="testing-the-models">
+<h3>Testing the Models<a class="headerlink" href="#testing-the-models" title="Permalink to this headline">¶</a></h3>
+<p>Now add the following to your test file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_model_gets_added</span><span class="p">(</span><span class="n">new_session</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">MyModel</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">new_session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">new_session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">MyModel</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>We&#8217;re testing the creation of a new model.
+Since we&#8217;re using a testing database, it shouldn&#8217;t have <em>any</em> model instances saved within.
+After we create a model instance and save the change, we should be able to query the database and find our new model instance present.
+If my model instances had other attributes that depended on the time of creation, or really any other functionality, I&#8217;d want to test that those work as well.</p>
+</div>
+<div class="section" id="testing-the-views">
+<h3>Testing the Views<a class="headerlink" href="#testing-the-views" title="Permalink to this headline">¶</a></h3>
+<p>Our models will be called into our Views before their data is brought into the templates.
+We have to test that <strong>every View</strong> using our models is returning what we need it to return, as it needs to be returned.
+Previously, we saw that <code class="docutils literal"><span class="pre">my_view</span></code> will return a dictionary containing the first <code class="docutils literal"><span class="pre">MyModel</span></code> instance with the name &#8220;one&#8221;, and the name of our project.
+Provided that that&#8217;s what we want from our view, we should test for that.
+Add the following code to your tests:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">dummy_http_request</span><span class="p">(</span><span class="n">new_session</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">testing</span><span class="o">.</span><span class="n">DummyRequest</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">test_my_view</span><span class="p">(</span><span class="n">new_session</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">..views.default</span> <span class="kn">import</span> <span class="n">my_view</span>
+
+    <span class="n">new_session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MyModel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">new_session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="n">http_request</span> <span class="o">=</span> <span class="n">dummy_request</span><span class="p">(</span><span class="n">new_session</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">my_view</span><span class="p">(</span><span class="n">http_request</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;one&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;one&quot;</span>
+</pre></div>
+</div>
+<p>We create a simple function that generates an HTTP request, as every view takes a request as an argument.
+We then enter our <code class="docutils literal"><span class="pre">test_my_view</span></code> function.
+First, we create a new model instance with the name &#8220;one&#8221; and some value, adding it to our database.
+Because we will of course be testing more than one view in the future, it&#8217;d be best to abstract this model-creation functionality into its own function. Do that tonight.</p>
+<p>We then send a new HTTP request to <code class="docutils literal"><span class="pre">my_view</span></code> and assign the response to <code class="docutils literal"><span class="pre">result</span></code>.
+<code class="docutils literal"><span class="pre">result</span></code> should now be a <code class="docutils literal"><span class="pre">dict</span></code> with two keys: <code class="docutils literal"><span class="pre">one</span></code> and <code class="docutils literal"><span class="pre">project</span></code>.</p>
+<p>The Templates get tested in effectively the same exact way as yesterday.
+The main difference will be that you won&#8217;t just be testing that the contents look as designed,
+but that whatever the model manipulates within that template is manipulated as designed.</p>
+</div>
 </div>
 <div class="section" id="recap">
 <h2>Recap<a class="headerlink" href="#recap" title="Permalink to this headline">¶</a></h2>
@@ -886,12 +986,12 @@ We walked through all the parts of the Pyramid scaffold that were new, and saw s
 <p>We then went on to talk about data models.
 We saw how Pyramid converts model attributes to data for the database, and used the interpreter to persist that data across separate sessions.
 Most notably, we saw that while changes may be made with models being created and/or deleted, nothing persists without commitment.</p>
-<p>We also saw how to test models, with significant changes in how we built up a test suite.
-We have to now not only use an instance of our app.
-We must also call up a database session so that we can test models along with our view and fully functional Pyramid app.</p>
-<p>Finally, we connected our &#8220;Models&#8221; to the &#8220;View&#8221; and &#8220;Controller&#8221; pieces of our Pyramid app.
+<p>We connected our &#8220;Models&#8221; to the &#8220;View&#8221; and &#8220;Controller&#8221; pieces of our Pyramid app.
 We created a template that uses a form to take user input, as well as a view that handles form data.
 We investigated the <code class="docutils literal"><span class="pre">request</span></code> object in greater detail, seeing that its <code class="docutils literal"><span class="pre">.method</span></code>, <code class="docutils literal"><span class="pre">.POST</span></code>, and <code class="docutils literal"><span class="pre">.GET</span></code> attributes can allow us to produce different outputs on the same view and template.</p>
+<p>Finally, we saw how to test models, with significant changes in how we built up a test suite.
+We have to now not only use an instance of our app.
+We must also call up a database session so that we can test models along with our view and fully functional Pyramid app.</p>
 <p>Tonight you will use this new scaffold to add some persistence to your deployed Learning Journal by creating a data model for your learning journal entries.
 You&#8217;ll wire it all together with appropriate templates and views.
 You&#8217;ll also write a battery of tests, showing that your app can persist data in addition to the unit tests and functional tests you&#8217;re already writing.</p>
@@ -927,9 +1027,13 @@ You&#8217;ll also write a battery of tests, showing that your app can persist da
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#testing-models">Testing Models</a></li>
 <li><a class="reference internal" href="#connecting-m-to-vc">Connecting &#8220;M&#8221; to &#8220;VC&#8221;</a></li>
 <li><a class="reference internal" href="#working-with-forms-in-pyramid">Working with Forms in Pyramid</a></li>
+<li><a class="reference internal" href="#testing-models-and-mvc-interaction">Testing Models and MVC Interaction</a><ul>
+<li><a class="reference internal" href="#testing-the-models">Testing the Models</a></li>
+<li><a class="reference internal" href="#testing-the-views">Testing the Views</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#recap">Recap</a></li>
 </ul>
 </li>
