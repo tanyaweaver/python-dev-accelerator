@@ -806,6 +806,7 @@ The only time we have a ``POST`` request is when we submit a form.
 Knowing this, we can reconfigure our ``edit_view`` function to handle a first-rendering of the page, as well as a separate rendering if a form is submitted.
 
 .. code-block:: python
+    # in views/default.py
 
     @view_config(route_name='edit', renderer="../templates/edit-model.jinja2")
     def edit_view(request):
@@ -815,8 +816,52 @@ Knowing this, we can reconfigure our ``edit_view`` function to handle a first-re
 
         return {"data": data}
 
-Now when we load our edit page and submit a form with some data, that new data shows up right in the ``<h1>``.
-Tonight you'll use the fact that you can harvest form data in a view to add new model instances to your site.
+Now when we load our edit page and submit a form with some data, that new data shows up right in the ``<h1>``. 
+But, aside from a confirmation message this is effectively useless. 
+We want to save data to the database. 
+
+Let's change our edit view to add information to our database.
+
+.. code-block:: python
+    # in views/default.py
+
+    @view_config(route_name="edit", renderer="../templates/edit-model.jinja2")
+    def edit_view(request):
+        if request.method == "POST":
+            new_name = request.POST["name"]
+            new_val = request.POST["value"]
+            new_model = MyModel(name=new_name, value=new_val)
+            
+            request.dbsession.add(new_model)
+
+            return {"data": {"name": "We made a new model!"}}
+
+        return {"data": {"name": "A New Form"}}        
+
+Alter the template so that it takes a name AND a value as input:
+
+.. code-block:: html
+
+    {% extends "layout.jinja2" %}
+
+    {% block content %}
+    <div class="content">
+        {% if data %}        
+        <h1>{{ data.name }}</h1>
+        {% endif %}
+        <form action="{{ request.route_url('edit') }}" method="POST">
+            <label for="name">New Instance Name: </label><br/>
+            <input type="text" name="name"/><br/>
+
+            <label for="value">New Instance Value: </label><br/>
+            <input type="number" name="value"/><br/>
+
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
+    {% endblock content %}
+
+And now when we submit a new model instance, we get a message telling us that we made a new model!
 
 Testing Models and MVC Interaction
 ==================================
