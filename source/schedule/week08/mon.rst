@@ -13,20 +13,25 @@ Monday
 Objectives
 ==========
 
+* Understand RESTful APIs and how to connect to them
+
 Readings
 ========
 
-Django Forms
-------------
+* `What Is REST? <http://www.restapitutorial.com/lessons/whatisrest.html>`_
+* `Online REST Web Service Demo <https://www.predic8.com/rest-demo.htm>`_
 
-.. include:: /readings/django_readings.rst
-    :start-line: 57
-    :end-line: 70
+.. Django Forms
+.. ------------
+
+.. .. include:: /readings/django_readings.rst
+..     :start-line: 57
+..     :end-line: 70
 
 Review
 ======
 
-* Django Views, class-based and otherwise
+.. * Django Views, class-based and otherwise
 
 Concepts
 ========
@@ -34,23 +39,33 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    /lectures/django_forms
+    .. /lectures/django_forms
+    /lectures/web_app_security_2
 
-* The Hash Table
-* The Insertion Sort algorithm
+* The Quick Sort algorithm
+* Implementing REST for existing Django Projects
+
+.. * The Hash Table
+.. * The Insertion Sort algorithm
 
 Demo
 ====
 
-* Interacting with Django Forms.
-* Insertion Sort!!
+* Quick Sort!!!
+* Use a DRF-based api to connect to an existing Django application
+
+.. * Interacting with Django Forms.
+.. * Insertion Sort!!
 
 Assignments
 ===========
 
-* :doc:`/assignments/hash_table`
-* :doc:`/assignments/sort_1_insertion`
-* :doc:`/assignments/django_4_data_editing`
+.. * :doc:`/assignments/hash_table`
+.. * :doc:`/assignments/sort_1_insertion`
+.. * :doc:`/assignments/django_4_data_editing`
+* :doc:`/assignments/sort_3_quicksort`
+* :doc:`/assignments/django_6_drf_tutorial_a`
 * :doc:`/assignments/project_01_pitch`
+* :doc:`/assignments/web_app_security_assignment2`
+* :doc:`/assignments/blog_post_publish` (Due Friday)
 * :doc:`/assignments/daily_lj_entry`
-* :doc:`/assignments/blog_post_publish` (Due April 29)

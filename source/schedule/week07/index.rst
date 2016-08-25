@@ -10,7 +10,7 @@ Week Seven
 
     This document contains no slides.
 
-The theme for the week is Django Views.
+The themes for the week are Django Views and Automation.
 
 .. toctree::
    :maxdepth: 1
