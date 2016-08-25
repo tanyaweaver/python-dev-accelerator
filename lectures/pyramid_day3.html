@@ -856,17 +856,32 @@ With the <code class="docutils literal"><span class="pre">GET</span></code> or <
 Note that no matter what, when we first load the page it&#8217;ll be with a <code class="docutils literal"><span class="pre">GET</span></code> request.
 The only time we have a <code class="docutils literal"><span class="pre">POST</span></code> request is when we submit a form.</p>
 <p>Knowing this, we can reconfigure our <code class="docutils literal"><span class="pre">edit_view</span></code> function to handle a first-rendering of the page, as well as a separate rendering if a form is submitted.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s1">&#39;edit&#39;</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s2">&quot;../templates/edit-model.jinja2&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">edit_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;A new form&quot;</span><span class="p">}</span>
-    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
-        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+<p>Now when we load our edit page and submit a form with some data, that new data shows up right in the <code class="docutils literal"><span class="pre">&lt;h1&gt;</span></code>.
+But, aside from a confirmation message this is effectively useless.
+We want to save data to the database.</p>
+<p>Let&#8217;s change our edit view to add information to our database.</p>
+<p>Alter the template so that it takes a name AND a value as input:</p>
+<div class="highlight-html"><div class="highlight"><pre>{% extends &quot;layout.jinja2&quot; %}
 
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">}</span>
+{% block content %}
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;content&quot;</span><span class="p">&gt;</span>
+    {% if data %}
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ data.name }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    {% endif %}
+    <span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;{{ request.route_url(&#39;edit&#39;) }}&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">&gt;</span>New Instance Name: <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">/&gt;&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+
+        <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;value&quot;</span><span class="p">&gt;</span>New Instance Value: <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;number&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;value&quot;</span><span class="p">/&gt;&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Submit&quot;</span><span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+{% endblock content %}
 </pre></div>
 </div>
-<p>Now when we load our edit page and submit a form with some data, that new data shows up right in the <code class="docutils literal"><span class="pre">&lt;h1&gt;</span></code>.
-Tonight you&#8217;ll use the fact that you can harvest form data in a view to add new model instances to your site.</p>
+<p>And now when we submit a new model instance, we get a message telling us that we made a new model!</p>
 </div>
 <div class="section" id="testing-models-and-mvc-interaction">
 <h2>Testing Models and MVC Interaction<a class="headerlink" href="#testing-models-and-mvc-interaction" title="Permalink to this headline">¶</a></h2>
