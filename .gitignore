@@ -58,6 +58,7 @@ docs/_build/
 .buildinfo
 
 .DS_Store
+*/ENTER/*
 
 *.sublime-*
 pip-selfcheck.json
