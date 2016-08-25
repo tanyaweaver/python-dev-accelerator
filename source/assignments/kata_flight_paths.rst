@@ -38,7 +38,7 @@ points on the Earth's surface.
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
         return radius_earth * c / 1.60934 # convert km to miles
 
-The JSON file :doc:`at this URL </downloads/cities_with_airports>` contains some cities with international airports, each with 
+The JSON file :download:`at this URL </downloads/cities_with_airport.json>` contains some cities with international airports, each with 
 a latitude, a longitude, and a city that it connects to. 
 For the curious, the list of airports comes from `Wikipedia`_.
 
