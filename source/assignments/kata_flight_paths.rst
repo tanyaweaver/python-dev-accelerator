@@ -10,8 +10,8 @@ Python Practice: Distance Between Points
 
     This document contains no slides.
 
-Below is a function that will calculate the sortest distance between any two 
-points on the Earth's surface. 
+Below is a function that will calculate the sortest distance between any two
+points on the Earth's surface.
 **Do not worry about how it works.**
 **It is simply a tool for this exercise.**::
 
@@ -38,15 +38,15 @@ points on the Earth's surface.
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
         return radius_earth * c / 1.60934 # convert km to miles
 
-The JSON file :download:`at this URL </downloads/cities_with_airport.json>` contains some cities with international airports, each with 
-a latitude, a longitude, and a city that it connects to. 
+The JSON file :download:`at this URL </downloads/cities_with_airports.json>` contains some cities with international airports, each with
+a latitude, a longitude, and a city that it connects to.
 For the curious, the list of airports comes from `Wikipedia`_.
 
 .. _Wikipedia: https://en.wikipedia.org/wiki/List_of_international_airports_by_country
 
-Write a function that, 
+Write a function that,
 
-* given a starting city and an ending city, will return a path between the two cities (including the two cities). 
+* given a starting city and an ending city, will return a path between the two cities (including the two cities).
 * also returns the total distance traveled between cities.
 * appropriately handles the situation where no path exists.
 
@@ -63,7 +63,7 @@ Submitting Your Work
 ====================
 
 Create a ``flight-paths`` branch in your ``code-katas`` repository.
-Add this function in a script to your ``flight-paths`` branch. 
+Add this function in a script to your ``flight-paths`` branch.
 
 The tests that demonstrate your code works should be in a ``test_flight_paths.py`` file.
 Add documentation about your code in the repo's ``README.md``.
