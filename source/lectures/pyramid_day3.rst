@@ -824,6 +824,7 @@ We want to save data to the database.
 Let's change our edit view to add information to our database.
 
 .. code-block:: python
+
     # in views/default.py
 
     @view_config(route_name="edit", renderer="../templates/edit-model.jinja2")
