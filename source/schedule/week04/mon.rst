@@ -18,7 +18,7 @@ Readings
 
 These readings will support the work you do on Tuesday
 
-* `Deploying Pyramid to Heroku <http://docs.pylonsproject.org/projects/pyramid-cookbook/en/latest/deployment/heroku.html>`_
+.. * `Deploying Pyramid to Heroku <http://docs.pylonsproject.org/projects/pyramid-cookbook/en/latest/deployment/heroku.html>`_
 
 Review
 ======
