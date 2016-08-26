@@ -6,40 +6,40 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Week Six &mdash; Python 401 2.1 documentation</title>
+    <title>Python Practice: Spell Check a Document &mdash; Python 401 2.1 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
+        URL_ROOT:    '../',
         VERSION:     '2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Python 401 2.1 documentation" href="../../index.html" />
+    <link rel="top" title="Python 401 2.1 documentation" href="../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 
-<link rel="stylesheet" href="../../_static/custom.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../_static/custom.css" type="text/css" media="screen" charset="utf-8" />
 
 <!--[if lte IE 6]>
-<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
 
   </head>
   <body role="document">
 <div class="header">
   <div class="logo">
-    <a href="../../index.html">
-      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
       <p>Code Fellows</p>
     </a>
   </div>
@@ -49,9 +49,9 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -174,17 +174,31 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="week-six">
-<h1>Week Six<a class="headerlink" href="#week-six" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-course-presentations"></span><p>The themes for the week are Django and Binary Search Trees.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="mon.html">Monday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tue.html">Tuesday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wed.html">Wednesday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="thu.html">Thursday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fri.html">Friday</a></li>
-</ul>
+<div class="section" id="python-practice-spell-check-a-document">
+<h1>Python Practice: Spell Check a Document<a class="headerlink" href="#python-practice-spell-check-a-document" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-python-practice-spell-check-a-document"></span><p>Create a function that reads a text document (<code class="docutils literal"><span class="pre">.txt</span></code> only) from file.
+When run, this function will return a <code class="docutils literal"><span class="pre">list</span></code> of words that are potentially misspelled.</p>
+<p>Recall that a list of words from the English dictionary can be found in your file system at the path <code class="docutils literal"><span class="pre">/usr/share/dict/words</span></code> (on Mac).
+If you decide to make a copy of this file in your working directory (you really don&#8217;t need to), <strong>make sure it&#8217;s in your</strong> <code class="docutils literal"><span class="pre">.gitignore</span></code>.
+It is a very, <em>very</em> large file.</p>
+<p>Here is a sample text you may want to use for testing your code: <code class="xref doc docutils literal"><span class="pre">Sample</span> <span class="pre">Text</span></code></p>
+<div class="section" id="stretch-goal">
+<h2>Stretch Goal<a class="headerlink" href="#stretch-goal" title="Permalink to this headline">¶</a></h2>
+<p>Add a parameter to your function for auto-suggesting corrections.
+When <code class="docutils literal"><span class="pre">True</span></code> your function outputs a <code class="docutils literal"><span class="pre">dict</span></code> instead of a <code class="docutils literal"><span class="pre">list</span></code>.
+Each key within the dict will be a misspelled word, and each value is a list of possible corrections.
+If there are no possible corrections, the <code class="docutils literal"><span class="pre">list</span></code> is simply empty.</p>
+<div class="section" id="submitting-your-work">
+<h3>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h3>
+<p>Create a <code class="docutils literal"><span class="pre">spell-check</span></code> branch in your <code class="docutils literal"><span class="pre">code-katas</span></code> repository.
+Do all of your work on this branch.</p>
+<p>Add documentation about your code in the repo&#8217;s <code class="docutils literal"><span class="pre">README.md</span></code>.
+Write appropriate tests for your code, and save them in a <code class="docutils literal"><span class="pre">test_spell_check.py</span></code> file.</p>
+<p>After you&#8217;ve pushed your code solution over into GitHub, send a pull request
+to your master branch.
+<strong>Submit the URL of that pull request to Canvas.</strong></p>
+<p>Use the comment box in Canvas to talk about your thought process, as well as any difficulty you had with this code kata.</p>
+</div>
 </div>
 </div>
 
@@ -194,9 +208,20 @@ div.nboutput  > :nth-child(2).stderr {
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python Practice: Spell Check a Document</a><ul>
+<li><a class="reference internal" href="#stretch-goal">Stretch Goal</a><ul>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -215,9 +240,9 @@ div.nboutput  > :nth-child(2).stderr {
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

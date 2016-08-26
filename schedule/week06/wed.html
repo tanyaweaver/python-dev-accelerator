@@ -178,57 +178,77 @@ div.nboutput  > :nth-child(2).stderr {
 <h1>Wednesday<a class="headerlink" href="#wednesday" title="Permalink to this headline">¶</a></h1>
 <span class="admonition-course-presentations"></span><div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Understand how relationships between data models are handled in Django</li>
+<li>Learn about how Django accesses files</li>
+<li>Learn how node deletion affects a Binary Search Tree</li>
+</ul>
 </div>
 <div class="section" id="readings">
 <h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="django-views">
+<h3>Django Views<a class="headerlink" href="#django-views" title="Permalink to this headline">¶</a></h3>
+<p>For your tasks this week, you&#8217;ll need to create a number of views in Django.
+Please refer to the following readings for help in answering your quesitons:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/http/views/">Writing Views in Django</a></li>
+<li>An overview of <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/class-based-views/">Django&#8217;s Class-Based Views</a></li>
+<li>Full <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/class-based-views/">API Documentation</a> for Class-Based Views</li>
+</ul>
+<p>You may also wish to refer to the following materials for help in writing templates in Django:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/templates/language/">An overview</a> of the Django Template Language</li>
+<li>Django <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/templates/">Templates Configuration</a> (including configuration of template lookup and engine selection)</li>
+<li>The <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/templates/builtins/">built-in template tags and filters</a> in Django</li>
+<li>Creating your own <a class="reference external" href="https://docs.djangoproject.com/en/1.9/howto/custom-template-tags/">custom template tags and filters</a></li>
+</ul>
+</div>
 </div>
 <div class="section" id="review">
 <h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Traversing the Binary Search Tree</li>
+<li>Testing in Django</li>
+</ul>
 </div>
 <div class="section" id="concepts">
 <h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../lectures/stats_day3.html">Statistics 3: More about Tests, Confidence Intervals, Goodness of Fit, and Model Validation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day3.html#More-about-the-t-Test">More about the t-Test</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day3.html#One-and-Two-Tailed-t-Tests">One and Two-Tailed t-Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day3.html#Example">Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day3.html#Mann-Whitney-U-test">Mann-Whitney U-test</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day3.html#Example:-Subway-Ridership-on-Rainy-and-Non-rainy-days">Example: Subway Ridership on Rainy and Non-rainy days</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day3.html#Goodness-of-Fit">Goodness of Fit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/stats_day3.html#Example:-Divining-the-mean-temperature-by-brute-force">Example: Divining the mean temperature by brute force</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/django_relationships.html">Django Relationships</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_relationships.html#users">Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_relationships.html#relating-users-to-profiles">Relating Users to Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_relationships.html#relationships-and-back-references">Relationships and Back References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_relationships.html#relationships-and-managers">Relationships and Managers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_relationships.html#summary">Summary</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../lectures/intro_to_python_9_generators.html">A Python Miscellany: Iterators &amp; Generators</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_9_generators.html#iterators">Iterators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_9_generators.html#generators">Generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_9_generators.html#wrap-up">Wrap Up</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../lectures/django_testing.html">Django Testing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_testing.html#django-and-unittest">Django and UnitTest</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_testing.html#setup-teardown">setUp / teardown</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_testing.html#self-client">self.client</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_testing.html#factory-boy">Factory Boy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_testing.html#factory-values">Factory Values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_testing.html#lazy-attributes">Lazy Attributes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_testing.html#sequences">Sequences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_testing.html#testing-signaled-profile">Testing Signaled Profile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/django_files.html">Files in Django</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#a-new-application">A New Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#files-and-media">Files and Media</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#media-root">MEDIA_ROOT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#media-urls">Media URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#storages">Storages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#testing-tricks">Testing Tricks</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<ul class="simple">
+<li>Binary Search Tree: Node Deletion</li>
+</ul>
 </div>
 <div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
+<p>Managing relationships in the Django ORM</p>
 </div>
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../../assignments/bst_2_traversal.html"><em>Binary Search Tree: Traversals</em></a></li>
-<li><a class="reference internal" href="../../assignments/statistics_problem_set3.html"><em>Problem Set - Statistics 3</em></a></li>
+<li><a class="reference internal" href="../../assignments/bst_3_delete.html"><em>Binary Search Tree: Deleting Nodes</em></a></li>
+<li><a class="reference internal" href="../../assignments/aws_account.html"><em>Get an Amazon AWS Account</em></a></li>
+<li><a class="reference internal" href="../../assignments/django_2_registration.html"><em>Django Imager: Registration, Login and Home</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
-<li><a class="reference internal" href="../../assignments/django_1_data_model.html"><em>Django Imager: Create a Data Model</em></a> (Due Friday)</li>
 </ul>
 </div>
 </div>
@@ -243,7 +263,10 @@ div.nboutput  > :nth-child(2).stderr {
   <ul>
 <li><a class="reference internal" href="#">Wednesday</a><ul>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
-<li><a class="reference internal" href="#readings">Readings</a></li>
+<li><a class="reference internal" href="#readings">Readings</a><ul>
+<li><a class="reference internal" href="#django-views">Django Views</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#review">Review</a></li>
 <li><a class="reference internal" href="#concepts">Concepts</a></li>
 <li><a class="reference internal" href="#demo">Demo</a></li>

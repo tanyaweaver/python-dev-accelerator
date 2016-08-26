@@ -6,40 +6,40 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Week Six &mdash; Python 401 2.1 documentation</title>
+    <title>Binary Search Tree &mdash; Python 401 2.1 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
+        URL_ROOT:    '../',
         VERSION:     '2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Python 401 2.1 documentation" href="../../index.html" />
+    <link rel="top" title="Python 401 2.1 documentation" href="../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 
-<link rel="stylesheet" href="../../_static/custom.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../_static/custom.css" type="text/css" media="screen" charset="utf-8" />
 
 <!--[if lte IE 6]>
-<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
 
   </head>
   <body role="document">
 <div class="header">
   <div class="logo">
-    <a href="../../index.html">
-      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
       <p>Code Fellows</p>
     </a>
   </div>
@@ -49,9 +49,9 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -174,16 +174,49 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="week-six">
-<h1>Week Six<a class="headerlink" href="#week-six" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-course-presentations"></span><p>The themes for the week are Django and Binary Search Trees.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="mon.html">Monday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tue.html">Tuesday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wed.html">Wednesday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="thu.html">Thursday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fri.html">Friday</a></li>
+<div class="section" id="binary-search-tree">
+<h1>Binary Search Tree<a class="headerlink" href="#binary-search-tree" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Binary_search_tree.svg/300px-Binary_search_tree.svg.png"><img alt="A binary search tree. Source: https://en.wikipedia.org/wiki/Binary_search_tree" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Binary_search_tree.svg/300px-Binary_search_tree.svg.png" style="width: 400px;" /></a>
+<div class="section" id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
+<p>A binary search tree is a data structure that allows for fast lookup (log N), addition,
+and removal of items.
+Every item in a binary search tree (hereon called a &#8220;Node&#8221;) is related to every other item by its key.</p>
+<p>If the tree is empty, then a new node inserted into the tree becomes the tree&#8217;s root.
+The next node inserted will have its key compared to the key of the root node.
+If lower, it will occupy the &#8220;left&#8221; attribute of the root node.
+If higher, it occupies the &#8220;right&#8221; attribute.
+If a node tries to occupy the &#8220;left&#8221; or &#8220;right&#8221; attribute of the root and that attribute
+is already occupied, it moves down the tree to that node and has its key compared again.</p>
+<p>On average, each comparison allows searching to ignore half of the tree.
+As such, each search takes time proportional to the <em>logarithm</em> of the number of items stored in the tree.</p>
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="node">
+<h3>Node<a class="headerlink" href="#node" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>key - the identifier of the node.</li>
+<li>value - the data each node holds. A simple tree may only have nodes whose values are the keys.</li>
+<li>left - the next node whose key is less than the current one. Can be null.</li>
+<li>right - the next node whose key is greater than the current one. Can be null.</li>
+</ul>
+</div>
+<div class="section" id="tree">
+<h3>Tree<a class="headerlink" href="#tree" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>root - a pointer to the first node in the tree</li>
+<li>size - the number of nodes in the tree; example above has size 9</li>
+<li>depth - the lowest level to which the tree extends; example above has depth of 3</li>
+<li>balance - an integer representing how well-balanced the tree is. Trees which are higher on the left than the right are positive; trees which are higher on the right than the left are negative. A balanced tree has a balance of zero.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">insert()</span></code> - adds a new node to the tree</li>
+<li><code class="docutils literal"><span class="pre">contains()</span></code> - returns whether or not the tree contains the given node</li>
 </ul>
 </div>
 </div>
@@ -194,9 +227,23 @@ div.nboutput  > :nth-child(2).stderr {
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Binary Search Tree</a><ul>
+<li><a class="reference internal" href="#definition">Definition</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a><ul>
+<li><a class="reference internal" href="#node">Node</a></li>
+<li><a class="reference internal" href="#tree">Tree</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#operations">Operations</a></li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -215,9 +262,9 @@ div.nboutput  > :nth-child(2).stderr {
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

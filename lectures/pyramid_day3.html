@@ -856,6 +856,17 @@ With the <code class="docutils literal"><span class="pre">GET</span></code> or <
 Note that no matter what, when we first load the page it&#8217;ll be with a <code class="docutils literal"><span class="pre">GET</span></code> request.
 The only time we have a <code class="docutils literal"><span class="pre">POST</span></code> request is when we submit a form.</p>
 <p>Knowing this, we can reconfigure our <code class="docutils literal"><span class="pre">edit_view</span></code> function to handle a first-rendering of the page, as well as a separate rendering if a form is submitted.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in views/default.py</span>
+
+<span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s1">&#39;edit&#39;</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s2">&quot;../templates/edit-model.jinja2&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">edit_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;A new form&quot;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">}</span>
+</pre></div>
+</div>
 <p>Now when we load our edit page and submit a form with some data, that new data shows up right in the <code class="docutils literal"><span class="pre">&lt;h1&gt;</span></code>.
 But, aside from a confirmation message this is effectively useless.
 We want to save data to the database.</p>

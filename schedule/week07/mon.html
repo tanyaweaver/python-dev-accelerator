@@ -178,6 +178,11 @@ div.nboutput  > :nth-child(2).stderr {
 <h1>Monday<a class="headerlink" href="#monday" title="Permalink to this headline">¶</a></h1>
 <span class="admonition-course-presentations"></span><div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Learn about the Hash Table data structure</li>
+<li>Understand the difference between (and increased utility of) class-based views from function-based views</li>
+<li>Get practice setting up your own Relational Database Server (RDS) on AWS</li>
+</ul>
 </div>
 <div class="section" id="readings">
 <h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
@@ -196,50 +201,49 @@ Please refer to the following readings for help in answering your quesitons:</p>
 <li>Django <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/templates/">Templates Configuration</a> (including configuration of template lookup and engine selection)</li>
 <li>The <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/templates/builtins/">built-in template tags and filters</a> in Django</li>
 <li>Creating your own <a class="reference external" href="https://docs.djangoproject.com/en/1.9/howto/custom-template-tags/">custom template tags and filters</a></li>
+<li>Hash Tables at <a class="reference external" href="http://visualgo.net/hashtable">VisuAlgo</a></li>
+<li>(Read <em>ONLY!</em> Do not <em>do</em> yet!) <a class="reference external" href="http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/getting-started-create-rds.html">Creating a Database Server</a></li>
+<li>Be aware of the <a class="reference external" href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html">security controls for Amazon RDS</a></li>
+<li>In particular, learn about <a class="reference external" href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html">RDS Security Groups</a> and controlling access between RDS and EC2</li>
 </ul>
 </div>
 </div>
 <div class="section" id="review">
 <h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Node Deletion in the Binary Search Tree</li>
-<li>Django Models (the <code class="docutils literal"><span class="pre">ImagerProfile</span></code>)</li>
+<li>Django Urls and Views</li>
+<li>Binary Search Tree</li>
 </ul>
 </div>
 <div class="section" id="concepts">
 <h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../lectures/django_relationships.html">Django Relationships</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_relationships.html#users">Users</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_relationships.html#relating-users-to-profiles">Relating Users to Profiles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_relationships.html#relationships-and-back-references">Relationships and Back References</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_relationships.html#relationships-and-managers">Relationships and Managers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_relationships.html#summary">Summary</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../lectures/django_files.html">Files in Django</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#a-new-application">A New Application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#files-and-media">Files and Media</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#media-root">MEDIA_ROOT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#media-urls">Media URLs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#storages">Storages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_files.html#testing-tricks">Testing Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/django_cbv.html">sea_d35_day27_django_CBV</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/django_cbv.html#dispatch">(21:23) <code class="docutils literal"><span class="pre">dispatch()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </div>
+<ul class="simple">
+<li>AWS Database Management: RDS</li>
+</ul>
 </div>
 <div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
-<p>Managing relationships in the Django ORM</p>
+<ul class="simple">
+<li>Setting up EC2 and RDS to Communicate With Each Other</li>
+<li>Using django-configurations to achieve 12-factor Nirvana</li>
+<li>Hashing and The Hash Table</li>
+</ul>
 </div>
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../../assignments/django_2_registration.html"><em>Django Imager: Registration, Login and Home</em></a></li>
+<li><a class="reference internal" href="../../assignments/hash_table.html"><em>Implement a Hash Table in Python</em></a></li>
+<li><a class="reference internal" href="../../assignments/django_3_data_views.html"><em>Django Imager: Data Views</em></a> (adding class-based views)</li>
+<li><a class="reference internal" href="../../assignments/aws_1_deploy_imager.html"><em>Deploy the Imager app to AWS</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
-<li><a class="reference internal" href="../../assignments/bst_4_balancing.html"><em>Binary Search Tree: Self-Balancing</em></a> (Due Wednesday)</li>
 </ul>
 </div>
 </div>

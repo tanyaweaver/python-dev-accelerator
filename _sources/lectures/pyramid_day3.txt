@@ -806,6 +806,7 @@ The only time we have a ``POST`` request is when we submit a form.
 Knowing this, we can reconfigure our ``edit_view`` function to handle a first-rendering of the page, as well as a separate rendering if a form is submitted.
 
 .. code-block:: python
+
     # in views/default.py
 
     @view_config(route_name='edit', renderer="../templates/edit-model.jinja2")
