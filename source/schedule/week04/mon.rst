@@ -16,12 +16,13 @@ Objectives
 Readings
 ========
 
-These readings will support the work you do on Tuesday
-
-.. * `Deploying Pyramid to Heroku <http://docs.pylonsproject.org/projects/pyramid-cookbook/en/latest/deployment/heroku.html>`_
+* :ref:`pyramid:security_chapter`: A deep dive into *authorization* in Pyramid,
+  the use of ACLs and how to use permissions to control access to views.
 
 Review
 ======
+
+Code Review of Pyramid and the Graph data structure.
 
 Concepts
 ========
@@ -31,15 +32,14 @@ Concepts
 
    /lectures/graph_traversal_bfs
    /lectures/graph_traversal_dfs
+   /lectures/pyramid_day5_auth
 
-* Authentication and authorization in Pyramid
-* Sessions in Pyramid
-* Cross-Site Request Forgery (and how to avoid it)
-* The importance of password encryption (and how to accomplish it)
 
 
 Demo
 ====
+
+Using Test-Driven Development to implement security in a Pyramid App.
 
 Assignments
 ===========
