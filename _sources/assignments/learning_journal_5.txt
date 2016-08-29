@@ -34,8 +34,6 @@ Now that you have authentication and authorization, use it protect those parts o
 Using the ``create`` and ``edit`` permissions, ensure that no buttons leading to the creating or editing of entries are visible to anonymous users.
 Also ensure that the views themselves are not accessible.
 
-Finally, ensure that both the ``create`` and ``edit`` forms for your journal are protected from CSRF attacks as described in class.
-
 Add tests or update your existing tests to cover this new functionality.
 Ensure that the access controls you have implemented work.
 Be sure that you cannot see or access the pages for adding or editing entries unless you have logged in.

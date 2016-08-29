@@ -1,11 +1,11 @@
 .. slideconf::
     :autoslides: False
 
-***********************************
-Python Learning Journal: Deployment
-***********************************
+****************************************
+Python Learning Journal: CSRF Protection
+****************************************
 
-.. slide:: Python Learning Journal: Deployment
+.. slide:: Python Learning Journal: CSRF Protection
     :level: 1
 
     This document contains no slides.
@@ -17,17 +17,28 @@ Each partner should submit a different pull request URL..
 Tasks
 =====
 
-You've completed the basic functionality for your learning journal.
-You've also secured the journal so that it is safe to use in the open.
-Now, it's time to deploy your application.
+Continue your work today in the ``security`` branch you created previously.
 
-As described in class, prepare your application for deployment to Heroku.
+You've completed the basic functionality for your learning journal.
+You've also secured the journal so that it is safer to use in the open.
+
+But there is still a critical flaw in the security of your Journal.
+It is open to CSRF attacks.
+
+As described in class, ensure that both the ``create`` and ``edit`` forms for your journal are protected from CSRF attacks.
 Ensure that all sensitive data needed by your app is being extracted from environmental variables.
 Set those variables in Heroku.
-Deploy your application.
-Deal with any bugs or failures that arise from your deployment.
+Redeploy your application
 
 Submitting Your Work
 ====================
 
-Once you have finished deploying and getting the DNS for your journal properly configured, Submit the URL of your new learning journal and a screenshot of it running on Heroku.
+When your work is complete and all your tests are passing, push your work to your fork of the repository in GitHub.
+Open a pull request from the ``security`` branch to ``master``.
+Submit the URL for that pull request.
+
+Use the comment feature in canvas to submit the following:
+
+* At least one well-formed question about the work you did for this assignment
+* At least one comment on what went well
+* At least one comment on what was particularly difficult or challenging

@@ -871,6 +871,22 @@ The only time we have a <code class="docutils literal"><span class="pre">POST</s
 But, aside from a confirmation message this is effectively useless.
 We want to save data to the database.</p>
 <p>Let&#8217;s change our edit view to add information to our database.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in views/default.py</span>
+
+<span class="nd">@view_config</span><span class="p">(</span><span class="n">route_name</span><span class="o">=</span><span class="s2">&quot;edit&quot;</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s2">&quot;../templates/edit-model.jinja2&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">edit_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">new_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+        <span class="n">new_val</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+        <span class="n">new_model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">new_name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">new_val</span><span class="p">)</span>
+
+        <span class="n">request</span><span class="o">.</span><span class="n">dbsession</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_model</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;We made a new model!&quot;</span><span class="p">}}</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;A New Form&quot;</span><span class="p">}}</span>
+</pre></div>
+</div>
 <p>Alter the template so that it takes a name AND a value as input:</p>
 <div class="highlight-html"><div class="highlight"><pre>{% extends &quot;layout.jinja2&quot; %}
 

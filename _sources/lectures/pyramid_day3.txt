@@ -2,32 +2,32 @@
 Models, Forms, and SQL Alchemy
 ==============================
 
-The central component of MVC, the *model*, captures the behavior of the application in terms of its problem domain, independent of the user interface. 
-**The model directly manages the data, logic, and rules of the application**. 
+The central component of MVC, the *model*, captures the behavior of the application in terms of its problem domain, independent of the user interface.
+**The model directly manages the data, logic, and rules of the application**.
 A model can be any "thing", e.g. an individual blog post on a blog, a photo or an album on a photo site, a user that visits and enrolls in the site, etc.
 
-A model is most useful when the data that it describes is *persisted*. 
-To do that, we'll be interacting with a SQL database and saving information to that database with SQL Alchemy. 
-In order to have this all easily wired together for us, we're going to start a new scaffold that includes all of that SQL functionality. 
+A model is most useful when the data that it describes is *persisted*.
+To do that, we'll be interacting with a SQL database and saving information to that database with SQL Alchemy.
+In order to have this all easily wired together for us, we're going to start a new scaffold that includes all of that SQL functionality.
 We'll also find that with this new scaffold, the MVC of our app is far more *explicity* separated into entire directories instead of individual files. Let's dip in.
 
 The "Alchemy" Scaffold
 ======================
 
-Before we use ``pcreate`` to construct a new scaffold to fill with our information and functionality, let's back out into the root directory housing Pyramid.  
+Before we use ``pcreate`` to construct a new scaffold to fill with our information and functionality, let's back out into the root directory housing Pyramid.
 Call ``pcreate`` in this directory, but this time with the SQLAlchemy scaffold.
 
 .. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pcreate -s alchemy learning_journal
 
-This scaffold sets us up to connect to any database that we specify via SQLAlchemy. 
-Running this command creates a few more files and directories than we'd seen before. 
-Before we investigate, navigate into the ``learning_journal`` directory and initialize a ``git`` repository. 
-Provide this new repo with an appropriate ``.gitignore`` file. 
+This scaffold sets us up to connect to any database that we specify via SQLAlchemy.
+Running this command creates a few more files and directories than we'd seen before.
+Before we investigate, navigate into the ``learning_journal`` directory and initialize a ``git`` repository.
+Provide this new repo with an appropriate ``.gitignore`` file.
 Now add everything in this directory to the repo and commit.
 
-This project root directory will have the same named files that we've come to know and love in our Pyramid app, however some of their contents have changed. 
+This project root directory will have the same named files that we've come to know and love in our Pyramid app, however some of their contents have changed.
 Let's inspect ``setup.py``.
 
 .. code-block:: python
@@ -56,7 +56,7 @@ This scaffold comes with dependencies for `SQLAlchemy <http://docs.sqlalchemy.or
 
 Make sure to add ``tox`` to the required packages for testing.
 
-The ``entry_points`` argument gets a new bit called ``console_scripts``. It declares...console scripts. In our current case, we have a script that initializes our database. This gets used when we create or change one of our data models. 
+The ``entry_points`` argument gets a new bit called ``console_scripts``. It declares...console scripts. In our current case, we have a script that initializes our database. This gets used when we create or change one of our data models.
 
 I find that ``initialize_learning_journal_db`` is an unreasonably long name for a console command that will be invoked fairly often. Let's shorten this to ``initialize_db`` such that our ``setup`` function ends with...
 
@@ -78,7 +78,7 @@ We need to make sure that this command is available to our app. To do so, instal
 
 And now our package has added ``transaction``, ``SQLAlchemy``, ``zope.sqlalchemy``, as well as our ``initialize_db`` command into our current environment. We won't initialize a database yet though until we've created our data model.
 
-Another major change is found in our ``development.ini`` file. In the ``[app:main]`` section, there's a new keyword: ``sqlalchemy.url``. This keyword points sqlalchemy to the database that we want to use. Currently, it's pointed at a sqlite database that will be created in our project root when we call ``initialize_db``. 
+Another major change is found in our ``development.ini`` file. In the ``[app:main]`` section, there's a new keyword: ``sqlalchemy.url``. This keyword points sqlalchemy to the database that we want to use. Currently, it's pointed at a sqlite database that will be created in our project root when we call ``initialize_db``.
 
 .. code-block:: bash
 
@@ -187,7 +187,7 @@ In an MVC application, we define the *problem domain* by creating one or more **
 
 In Python-based MVC applications, these **Models** are implemented as Python classes, inheriting from the ``Base`` class set up in ``meta.py``. The individual bits of data we want to know about are **attributes** of our classes. When the database is initialized, *every attribute* that instantiates the ``Column`` class will become a column in the database. The actions we want to take using that data are **methods** of our classes. Together, we can refer to this as the **API** of our system.
 
-The model provided by this scaffold, ``MyModel``, is fairly simple. 
+The model provided by this scaffold, ``MyModel``, is fairly simple.
 
 .. code-block:: python
 
@@ -224,7 +224,7 @@ Python provides a specification for interacting directly with databases: `dbapi2
 * `python-mysql <http://mysql-python.sourceforge.net/MySQLdb.html>`_
 * `psycopg2 <https://pypi.python.org/pypi/psycopg2>`_
 
-With these, you can write SQL to save your Python objects into your database, but that's a pain. SQL, while not impossible, is yet another language to learn. On top of that **you should never ever ever ever use raw SQL to manipulate your DB through your site!** 
+With these, you can write SQL to save your Python objects into your database, but that's a pain. SQL, while not impossible, is yet another language to learn. On top of that **you should never ever ever ever use raw SQL to manipulate your DB through your site!**
 
 Let me reiterate this, because this is a seriously important point. **YOU SHOULD NEVER. EVER EVER. EVER EVER. EVER EVER EVER EVER USE RAW SQL TO MANIPULATE YOUR DB THROUGH YOUR SITE!!!!**.
 
@@ -300,20 +300,20 @@ That ``initialize_db`` command is tied to the ``main`` function in ``learning_jo
             model = MyModel(name='one', value=1)
             dbsession.add(model)
 
-At a higher level, when ``main`` is called our Pyramid app will create a new ``MyModel`` instance and insert it into the database. 
+At a higher level, when ``main`` is called our Pyramid app will create a new ``MyModel`` instance and insert it into the database.
 To make that happen, it'll take a configuration file (held in the ``config_uri`` variable above) such as our ``development.ini`` and any options we may pass in.
 ``development.ini`` will tell Pyramid what to do when trying to initialize a database.
 
 .. code-block:: ini
-    
+
     # in development.ini
     [app:main]
     # ...
     sqlalchemy.url = sqlite:///%(here)s/learning_journal.sqlite
 
-As mentioned before, this keyword tells Pyramid where to look for a database. 
-Since we're currently using `SQLite <https://docs.python.org/2/library/sqlite3.html>`_, it'll create the database if one does not exist. 
-This will not happen with ``PostgreSQL``. 
+As mentioned before, this keyword tells Pyramid where to look for a database.
+Since we're currently using `SQLite <https://docs.python.org/2/library/sqlite3.html>`_, it'll create the database if one does not exist.
+This will not happen with ``PostgreSQL``.
 The string assigned to ``sqlalchemy.url`` will replace ``here`` with your project root.
 
 .. code-block:: ini
@@ -324,12 +324,12 @@ The string assigned to ``sqlalchemy.url`` will replace ``here`` with your projec
     handlers =
     qualname = sqlalchemy.engine
 
-These lines provide guidelines for how verbose Pyramid will be when it creates your database. 
+These lines provide guidelines for how verbose Pyramid will be when it creates your database.
 ``level = INFO`` means that it'll simply tell you what queries are being used.
 This is great for development so that you know exactly what's going into and out of your database.
 When in production, you want to set ``level = WARN``.
 
-Let's return to ``learning_journal/scripts/initializedb.py``. 
+Let's return to ``learning_journal/scripts/initializedb.py``.
 
 .. code-block:: python
 
@@ -352,7 +352,7 @@ This means that you should be able to add a new model to your Pyramid app withou
         model = MyModel(name='one', value=1)
         dbsession.add(model)
 
-This last bit of code isn't actually *necessary*. 
+This last bit of code isn't actually *necessary*.
 What it does is creates a database session and adds a new row that's an instance of the ``MyModel`` model.
 It is in effect a way of checking that your database works the way that it's supposed to.
 If this stays uncommented and you run ``initialize_db`` more than once, Pyramid will yell at you for trying to create a row that already exists.
@@ -365,17 +365,17 @@ Let's invoke ``initialize_db``.
     2016-07-12 09:53:33,686 INFO  [sqlalchemy.engine.base.Engine:1192][MainThread] SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
     ...
     2016-07-12 09:53:33,705 INFO  [sqlalchemy.engine.base.Engine:1100][MainThread] ()
-    2016-07-12 09:53:33,708 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] 
+    2016-07-12 09:53:33,708 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread]
     CREATE TABLE models (
-        id INTEGER NOT NULL, 
-        name TEXT, 
-        value INTEGER, 
+        id INTEGER NOT NULL,
+        name TEXT,
+        value INTEGER,
         CONSTRAINT pk_models PRIMARY KEY (id)
     )
     ...
     2016-07-12 09:53:33,719 INFO  [sqlalchemy.engine.base.Engine:686][MainThread] COMMIT
 
-So what happened here? 
+So what happened here?
 
 - Not visible in the stdout log messages, but the ``learning_journal.sqlite`` file was created in our project root.
 - We created a table called ``models`` in our sqlite database, with columns ``id``, ``name``, and ``value``.
@@ -401,7 +401,7 @@ Let's fire up ``pshell`` and explore for a moment to see what we have at our dis
 .. code-block:: bash
 
     (pyramid_lj) bash-3.2$ pshell development.ini
-    Python 3.5.1 (v3.5.1:37a07cee5969, Dec  5 2015, 21:12:44) 
+    Python 3.5.1 (v3.5.1:37a07cee5969, Dec  5 2015, 21:12:44)
     Type "copyright", "credits" or "license" for more information.
 
     IPython 4.2.0 -- An enhanced Interactive Python.
@@ -435,14 +435,14 @@ Let's use this environment to build a database session and interact with our dat
     In [5]: session = Session()
     In [6]: session.query(MyModel).all()
     #...
-    2016-07-12 10:19:02,254 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] SELECT models.id AS models_id, models.name AS models_name, models.value AS models_value 
+    2016-07-12 10:19:02,254 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] SELECT models.id AS models_id, models.name AS models_name, models.value AS models_value
     FROM models
     2016-07-12 10:19:02,254 INFO  [sqlalchemy.engine.base.Engine:1100][MainThread] ()
     Out[6]: [<learning_journal.models.mymodel.MyModel at 0x1054fe470>]
 
-We've stolen a lot of this from the ``initializedb.py`` script. 
-Any persisting interaction with the database requires a ``session``. 
-This object *represents* the active, current connection to the database. 
+We've stolen a lot of this from the ``initializedb.py`` script.
+Any persisting interaction with the database requires a ``session``.
+This object *represents* the active, current connection to the database.
 All database queries are phrased as methods of the session.
 
 .. code-block:: ipython
@@ -451,18 +451,18 @@ All database queries are phrased as methods of the session.
     In [8]: type(query)
     Out[8]: sqlalchemy.orm.query.Query
 
-The ``query`` method of the session object returns a ``Query`` object. 
+The ``query`` method of the session object returns a ``Query`` object.
 Arguments to the ``query`` method can be a *model* class or even *columns* from a model class.
 Query objects are themselves iterable, with the result depending on the args you passed.
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [9]: query1 = session.query(MyModel)
     In [10]: for row in query1:
        ....:     print(row)
        ....:     print(type(row))
-       ....:     
-    2016-07-12 10:22:32,165 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] SELECT models.id AS models_id, models.name AS models_name, models.value AS models_value 
+       ....:
+    2016-07-12 10:22:32,165 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] SELECT models.id AS models_id, models.name AS models_name, models.value AS models_value
     FROM models
     2016-07-12 10:22:32,166 INFO  [sqlalchemy.engine.base.Engine:1100][MainThread] ()
 
@@ -473,7 +473,7 @@ Query objects are themselves iterable, with the result depending on the args you
 
     # these two lines are the result of the for loop
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [11]: query2 = session.query(MyModel.name, MyModel.id, MyModel.value)
     In [12]: for name, id, val in query2:
@@ -483,8 +483,8 @@ Query objects are themselves iterable, with the result depending on the args you
        ....:     print(type(id))
        ....:     print(val)
        ....:     print(type(val))
-       ....:     
-    2016-07-12 10:24:33,866 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] SELECT models.name AS models_name, models.id AS models_id, models.value AS models_value 
+       ....:
+    2016-07-12 10:24:33,866 INFO  [sqlalchemy.engine.base.Engine:1097][MainThread] SELECT models.name AS models_name, models.id AS models_id, models.value AS models_value
     FROM models
     2016-07-12 10:24:33,868 INFO  [sqlalchemy.engine.base.Engine:1100][MainThread] ()
     one
@@ -496,7 +496,7 @@ Query objects are themselves iterable, with the result depending on the args you
 
 We can see the SQL query on its own by looking at its string representation.
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [13]: str(query1)
     Out[13]: 'SELECT models.id AS models_id, models.name AS models_name, models.value AS models_value \nFROM models'
@@ -504,15 +504,15 @@ We can see the SQL query on its own by looking at its string representation.
     In [14]: str(query2)
     Out[14]: 'SELECT models.name AS models_name, models.id AS models_id, models.value AS models_value \nFROM models'
 
-You can use this to check that the query the ORM is constructing looks like what you expect. 
+You can use this to check that the query the ORM is constructing looks like what you expect.
 It can be very helpful for testing and debugging.
 
 The methods of the ``Query`` object roughly fall into two categories:
 
 1. Methods that return a new ``Query`` object
 2. Methods that return *scalar* values or *model instances*
-   
-Let's start by looking quickly at a few methods from the second category. 
+
+Let's start by looking quickly at a few methods from the second category.
 
 Methods Returning Values & Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -520,7 +520,7 @@ Methods Returning Values & Instances
 A good example of this category of methods is ``get``, which returns one model instance only.
 It takes a primary key as an argument:
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [15]: session.query(MyModel).get(1)
     Out[15]: <learning_journal.models.mymodel.MyModel at 0x105546080>
@@ -528,12 +528,12 @@ It takes a primary key as an argument:
     In [16]: session.query(MyModel).get(10)
     In [17]:
 
-If no item with that primary key is present, then the method returns ``None``. 
-Another example is one we've already seen. 
+If no item with that primary key is present, then the method returns ``None``.
+Another example is one we've already seen.
 ``query.all()`` returns a list of all rows matching the given query.
 
-.. code-block:: ipython 
-    
+.. code-block:: ipython
+
     In [17]: query1.all()
     Out[17]: [<learning_journal.models.mymodel.MyModel at 0x105546080>]
 
@@ -542,14 +542,14 @@ Another example is one we've already seen.
 
 ``query.count()`` returns the number of rows that would have been returned by the query:
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [19]: query1.count()
     Out[19]: 1
 
 Before getting into the other category (i.e. returning a new ``Query`` object), let's learn how to create new objects. We can create new instances of our *model* just like normal Python objects:
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [20]: new_model = MyModel(name="fred", value=3)
     In [21]: new_model
@@ -557,14 +557,14 @@ Before getting into the other category (i.e. returning a new ``Query`` object), 
 
 In this state, the instance is *ephemeral*; our ``session`` knows nothing about it:
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [22]: session.new
     Out[22]: IdentitySet([])
 
 For the database to know about our new object, we must add it to the session with the ``session.add()``
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [23]: session.add(new_model)
     In [24]: session.new
@@ -572,7 +572,7 @@ For the database to know about our new object, we must add it to the session wit
 
 We can even bulk-add new objects with ``session.add_all()``:
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [25]: new_data = []
     In [26]: for name, val in [('bob', 34), ('tom', 13)]:
@@ -583,11 +583,11 @@ We can even bulk-add new objects with ``session.add_all()``:
     In [28]: session.new
     Out[28]: Out[37]: IdentitySet([<learning_journal.models.mymodel.MyModel object at 0x1055e3048>, <learning_journal.models.mymodel.MyModel object at 0x1053f8710>, <learning_journal.models.mymodel.MyModel object at 0x1055cb390>])
 
-Up until now, the changes you've made are not permanent. 
-They're recognized by your session, but they haven't been saved into the database. 
+Up until now, the changes you've made are not permanent.
+They're recognized by your session, but they haven't been saved into the database.
 Just like we saw when we initialized the database, our current session must be **committed**.
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [29]: other_session = Session()
     In [30]: other_session.query(MyModel).count()
@@ -603,25 +603,25 @@ Notice how this new DB session is completely unaware of the "changes" we've made
 
 And now they're seen, as ``other_session``'s query is looking directly at the database when it queries.
 
-When you are using a ``scoped_session`` in Pyramid, this action is automatically handled for you. 
+When you are using a ``scoped_session`` in Pyramid, this action is automatically handled for you.
 The session that is bound to a particular HTTP request is committed when a response is sent back.
 
 You can edit objects that are already part of a session, or that are fetched by a query.
 Simply change the values of a persisted attribute, the session will know it's been updated:
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [33]: new_model
     Out[33]: <learning_journal.models.mymodel.MyModel at 0x1053f8710>
     In [34]: new_model.name
     Out[34]: 'fred'
     In [35]: new_model.name = 'larry'
-    In [36]: session.dirty 
+    In [36]: session.dirty
     Out[36]: IdentitySet([<learning_journal.models.mymodel.MyModel object at 0x1053f8710>])
 
 Commit the session to persist the changes:
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [37]: session.commit()
     In [38]: [model.name for model in other_session.query(MyModel)]
@@ -633,14 +633,14 @@ Methods Returning Query Objects
 Returning to query methods, a good example of the second type is the ``filter`` method.
 This method allows you to reduce the number of results, based on criteria:
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [39]: [(o.name, o.value) for o in session.query(MyModel).filter(MyModel.value < 20)]
     Out[39]: [('one', 1), ('larry', 3), ('tom', 13)]
 
 Another typical method in this category is ``order_by``:
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [40]: [o.value for o in session.query(MyModel).order_by(MyModel.value)]
     Out[40]: [1, 3, 13, 34]
@@ -650,14 +650,14 @@ Another typical method in this category is ``order_by``:
 
 Since methods in this category return Query objects, they can be safely ``chained`` to build more complex queries:
 
-.. code-block:: ipython 
+.. code-block:: ipython
 
     In [42]: query1 = Session.query(MyModel).filter(MyModel.value < 20)
     In [43]: query1 = query1.order_by(MyModel.name)
     In [44]: [(o.name, o.value) for o in query1]
     Out[44]: [('larry', 3), ('one', 1), ('tom', 13)]
 
-Note that you can do this inline as well (``Session.query(MyModel).filter(MyModel.value < 20).order_by(MyModel.name)``). 
+Note that you can do this inline as well (``Session.query(MyModel).filter(MyModel.value < 20).order_by(MyModel.name)``).
 Also note that when using chained queries like this, no query is actually sent to the database until you require a result.
 
 
@@ -669,7 +669,7 @@ We should be able to see them on our site, and the way to make that happen is th
 Our scaffold already has a View in ``learning_journal/views/default.py`` accessing the DB and returning one of the model instances.
 
 .. code-block:: python
-    
+
     # ...
     from ..models import MyModel
 
@@ -683,7 +683,7 @@ Our scaffold already has a View in ``learning_journal/views/default.py`` accessi
             return Response(db_err_msg, content_type='text/plain', status=500)
         return {'one': one, 'project': 'learning_journal'}
 
-Notice that the database session is attached to the request object. 
+Notice that the database session is attached to the request object.
 That way, we don't need to create a new session as we did in the interpreter.
 We refine the query to select only one model instance, and we then provide that instance to the template through the keyword ``one``.
 
@@ -716,7 +716,7 @@ Working with Forms in Pyramid
 =============================
 
 The whole point of creating a model is so that we can persist data across sessions.
-However, how can we add new data if there is no interface in our web app that allows us to add new model instances? 
+However, how can we add new data if there is no interface in our web app that allows us to add new model instances?
 Forms allow for user input, and we can use the ``request`` method in a view to handle that input and create new data.
 
 Let's create a template called ``edit-model.jinja2``.
@@ -727,7 +727,7 @@ Let's create a template called ``edit-model.jinja2``.
 
     {% block content %}
     <div class="content">
-        {% if data %}        
+        {% if data %}
         <h1>{{ data.name }}</h1>
         {% endif %}
         <form action="{{ request.route_url('edit') }}" method="POST">
@@ -765,7 +765,7 @@ And lets connect it to an appropriate view.
 And because we've made some significant changes, reinstall the package.
 Then start up the server and look at the page.
 
-Here we have a simple form. 
+Here we have a simple form.
 We can fill out the input field and submit it, and the data that we sent goes...absolutely nowhere.
 We can check our database and see that nothing new has been added.
 
@@ -799,8 +799,8 @@ Whether it's a ``GET`` or a ``POST`` method, that data will come out in the form
 For our purposes it acts the same as a Python dictionary.
 With the ``GET`` or ``POST`` multidict, the **name** of the form field will be a **key** in the multidict.
 
-The ``request`` object also has an attribute called ``.method`` that holds the type of HTTP method used to call up the page. 
-Note that no matter what, when we first load the page it'll be with a ``GET`` request. 
+The ``request`` object also has an attribute called ``.method`` that holds the type of HTTP method used to call up the page.
+Note that no matter what, when we first load the page it'll be with a ``GET`` request.
 The only time we have a ``POST`` request is when we submit a form.
 
 Knowing this, we can reconfigure our ``edit_view`` function to handle a first-rendering of the page, as well as a separate rendering if a form is submitted.
@@ -817,13 +817,14 @@ Knowing this, we can reconfigure our ``edit_view`` function to handle a first-re
 
         return {"data": data}
 
-Now when we load our edit page and submit a form with some data, that new data shows up right in the ``<h1>``. 
-But, aside from a confirmation message this is effectively useless. 
-We want to save data to the database. 
+Now when we load our edit page and submit a form with some data, that new data shows up right in the ``<h1>``.
+But, aside from a confirmation message this is effectively useless.
+We want to save data to the database.
 
 Let's change our edit view to add information to our database.
 
 .. code-block:: python
+
     # in views/default.py
 
     @view_config(route_name="edit", renderer="../templates/edit-model.jinja2")
@@ -832,12 +833,12 @@ Let's change our edit view to add information to our database.
             new_name = request.POST["name"]
             new_val = request.POST["value"]
             new_model = MyModel(name=new_name, value=new_val)
-            
+
             request.dbsession.add(new_model)
 
             return {"data": {"name": "We made a new model!"}}
 
-        return {"data": {"name": "A New Form"}}        
+        return {"data": {"name": "A New Form"}}
 
 Alter the template so that it takes a name AND a value as input:
 
@@ -847,7 +848,7 @@ Alter the template so that it takes a name AND a value as input:
 
     {% block content %}
     <div class="content">
-        {% if data %}        
+        {% if data %}
         <h1>{{ data.name }}</h1>
         {% endif %}
         <form action="{{ request.route_url('edit') }}" method="POST">
@@ -867,7 +868,7 @@ And now when we submit a new model instance, we get a message telling us that we
 Testing Models and MVC Interaction
 ==================================
 
-We've added data models to our site in a pretty significant way. 
+We've added data models to our site in a pretty significant way.
 Not only do we have an entire separate directory housing those models, but we have two views that pipe the model data over to the front-end.
 One of those views even edits model data!
 We need to write some tests for these processes to ensure the integrity of our code as we continue to build out.
@@ -876,7 +877,7 @@ Remove everything within ``learning_journal/tests/tests.py``.
 Replace it with following code:
 
 .. code-block:: python
-    
+
     import pytest
     import transaction
 
@@ -923,7 +924,7 @@ Replace it with following code:
 
 
 Here we set ourselves up to create fixtures that allows us to interact with a database.
-The ``sqlengine`` fixture takes our settings and our desired database location (note, not our actual database!) and populates it with empty tables. 
+The ``sqlengine`` fixture takes our settings and our desired database location (note, not our actual database!) and populates it with empty tables.
 **NOTE:** the ``request`` parameter coming into the function IS NOT a HTTP request object.
 In an unfortunate circumstance of naming conflicts, ``pytest`` provides a function-level ``request`` fixture for use in setting up and tearing down tests (amongst other things).
 In ``sqlengine``, at the end of our interaction with the database the ``pytest`` ``request`` fixture will tie off the last transaction.
@@ -961,7 +962,7 @@ Provided that that's what we want from our view, we should test for that.
 Add the following code to your tests:
 
 .. code-block:: python
-    
+
     def dummy_http_request(new_session):
         return testing.DummyRequest()
 
@@ -993,19 +994,19 @@ Recap
 =====
 
 Today handled a ton.
-First, we spun up an entirely new scaffold in order to incorporate SQLAlchemy into our Pyramid app. 
+First, we spun up an entirely new scaffold in order to incorporate SQLAlchemy into our Pyramid app.
 We walked through all the parts of the Pyramid scaffold that were new, and saw specifically what parts of our Pyramid app included connections to the database.
 
-We then went on to talk about data models. 
-We saw how Pyramid converts model attributes to data for the database, and used the interpreter to persist that data across separate sessions. 
+We then went on to talk about data models.
+We saw how Pyramid converts model attributes to data for the database, and used the interpreter to persist that data across separate sessions.
 Most notably, we saw that while changes may be made with models being created and/or deleted, nothing persists without commitment.
 
-We connected our "Models" to the "View" and "Controller" pieces of our Pyramid app. 
+We connected our "Models" to the "View" and "Controller" pieces of our Pyramid app.
 We created a template that uses a form to take user input, as well as a view that handles form data.
 We investigated the ``request`` object in greater detail, seeing that its ``.method``, ``.POST``, and ``.GET`` attributes can allow us to produce different outputs on the same view and template.
 
 Finally, we saw how to test models, with significant changes in how we built up a test suite.
-We have to now not only use an instance of our app. 
+We have to now not only use an instance of our app.
 We must also call up a database session so that we can test models along with our view and fully functional Pyramid app.
 
 Tonight you will use this new scaffold to add some persistence to your deployed Learning Journal by creating a data model for your learning journal entries.

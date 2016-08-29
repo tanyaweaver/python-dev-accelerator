@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python Learning Journal: Deployment &mdash; Python 401 2.1 documentation</title>
+    <title>Python Learning Journal: CSRF Protection &mdash; Python 401 2.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -174,25 +174,34 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="python-learning-journal-deployment">
-<h1>Python Learning Journal: Deployment<a class="headerlink" href="#python-learning-journal-deployment" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-python-learning-journal-deployment"></span><p>This weeks learning journal assignments should be done on your own.
+<div class="section" id="python-learning-journal-csrf-protection">
+<h1>Python Learning Journal: CSRF Protection<a class="headerlink" href="#python-learning-journal-csrf-protection" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-python-learning-journal-csrf-protection"></span><p>This weeks learning journal assignments should be done on your own.
 You may consult with your classmates, but do the work in your own fork of the journal project.
 Each partner should submit a different pull request URL..</p>
 <div class="section" id="tasks">
 <h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>Continue your work today in the <code class="docutils literal"><span class="pre">security</span></code> branch you created previously.</p>
 <p>You&#8217;ve completed the basic functionality for your learning journal.
-You&#8217;ve also secured the journal so that it is safe to use in the open.
-Now, it&#8217;s time to deploy your application.</p>
-<p>As described in class, prepare your application for deployment to Heroku.
+You&#8217;ve also secured the journal so that it is safer to use in the open.</p>
+<p>But there is still a critical flaw in the security of your Journal.
+It is open to CSRF attacks.</p>
+<p>As described in class, ensure that both the <code class="docutils literal"><span class="pre">create</span></code> and <code class="docutils literal"><span class="pre">edit</span></code> forms for your journal are protected from CSRF attacks.
 Ensure that all sensitive data needed by your app is being extracted from environmental variables.
 Set those variables in Heroku.
-Deploy your application.
-Deal with any bugs or failures that arise from your deployment.</p>
+Redeploy your application</p>
 </div>
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
-<p>Once you have finished deploying and getting the DNS for your journal properly configured, Submit the URL of your new learning journal and a screenshot of it running on Heroku.</p>
+<p>When your work is complete and all your tests are passing, push your work to your fork of the repository in GitHub.
+Open a pull request from the <code class="docutils literal"><span class="pre">security</span></code> branch to <code class="docutils literal"><span class="pre">master</span></code>.
+Submit the URL for that pull request.</p>
+<p>Use the comment feature in canvas to submit the following:</p>
+<ul class="simple">
+<li>At least one well-formed question about the work you did for this assignment</li>
+<li>At least one comment on what went well</li>
+<li>At least one comment on what was particularly difficult or challenging</li>
+</ul>
 </div>
 </div>
 
@@ -204,7 +213,7 @@ Deal with any bugs or failures that arise from your deployment.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Python Learning Journal: Deployment</a><ul>
+<li><a class="reference internal" href="#">Python Learning Journal: CSRF Protection</a><ul>
 <li><a class="reference internal" href="#tasks">Tasks</a></li>
 <li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
 </ul>

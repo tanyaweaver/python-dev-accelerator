@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python 401 2.1 documentation" href="../../index.html" />
-    <link rel="next" title="Wednesday" href="wed.html" />
-    <link rel="prev" title="Graph Traversal: Depth First Search" href="../../lectures/graph_traversal_dfs.html" />
+    <link rel="next" title="CSRF Protection and Sessions" href="../../lectures/pyramid_day6_csrf.html" />
+    <link rel="prev" title="Controlling Access" href="../../lectures/pyramid_day5_auth.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 
@@ -54,10 +54,10 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="wed.html" title="Wednesday"
+          <a href="../../lectures/pyramid_day6_csrf.html" title="CSRF Protection and Sessions"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/graph_traversal_dfs.html" title="Graph Traversal: Depth First Search"
+          <a href="../../lectures/pyramid_day5_auth.html" title="Controlling Access"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>
@@ -195,18 +195,37 @@ div.nboutput  > :nth-child(2).stderr {
 </div>
 <div class="section" id="concepts">
 <h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>The 12-Factor application and <code class="docutils literal"><span class="pre">os.environ</span></code></li>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/pyramid_day6_csrf.html">CSRF Protection and Sessions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day6_csrf.html#how-csrf-attacks-work">How CSRF Attacks Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day6_csrf.html#how-to-prevent-csrf-attacks">How to Prevent CSRF Attacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day6_csrf.html#sessions">Sessions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day6_csrf.html#engaging-csrf-protection">Engaging CSRF Protection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day6_csrf.html#other-uses-for-sessions">Other Uses for Sessions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/pyramid_day6_csrf.html#wrap-up">Wrap Up</a></li>
 </ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lectures/intro_to_python_8_decorators.html">A Python Miscellany: Decorators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_8_decorators.html#review-of-functions">Review of Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_8_decorators.html#first-class-objects">First Class Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_8_decorators.html#decorator-defined">Decorator Defined</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_8_decorators.html#callables">Callables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lectures/intro_to_python_8_decorators.html#wrap-up">Wrap Up</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
+<p>Working with Python Decorators</p>
 </div>
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="../../assignments/graph_3_weighted.html"><em>Graph: Implement Weighted Edges</em></a></li>
-<li><a class="reference internal" href="../../assignments/learning_journal_6.html"><em>Python Learning Journal: Deployment</em></a></li>
+<li><a class="reference internal" href="../../assignments/learning_journal_6.html"><em>Python Learning Journal: CSRF Protection</em></a></li>
 <li><a class="reference internal" href="../../assignments/mashup_1_scraper.html"><em>Mashup Part 1: Scraping Data from King County</em></a></li>
 <li><a class="reference internal" href="../../assignments/project_07_stories_begin.html"><em>Group Project: Begin User Stories</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
@@ -235,11 +254,11 @@ div.nboutput  > :nth-child(2).stderr {
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../../lectures/graph_traversal_dfs.html"
-                        title="previous chapter">Graph Traversal: Depth First Search</a></p>
+  <p class="topless"><a href="../../lectures/pyramid_day5_auth.html"
+                        title="previous chapter">Controlling Access</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="wed.html"
-                        title="next chapter">Wednesday</a></p>
+  <p class="topless"><a href="../../lectures/pyramid_day6_csrf.html"
+                        title="next chapter">CSRF Protection and Sessions</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
@@ -264,10 +283,10 @@ div.nboutput  > :nth-child(2).stderr {
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="wed.html" title="Wednesday"
+          <a href="../../lectures/pyramid_day6_csrf.html" title="CSRF Protection and Sessions"
              >next</a> |</li>
         <li class="right" >
-          <a href="../../lectures/graph_traversal_dfs.html" title="Graph Traversal: Depth First Search"
+          <a href="../../lectures/pyramid_day5_auth.html" title="Controlling Access"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>

@@ -22,13 +22,12 @@ Review
 Concepts
 ========
 
-.. toctree::
-    :maxdepth: 2
-
-    /lectures/intro_to_python_8_decorators
+No New Concepts
 
 Demo
 ====
+
+Whiteboard Challenge
 
 Assignments
 ===========

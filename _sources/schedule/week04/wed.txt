@@ -22,8 +22,13 @@ Review
 Concepts
 ========
 
+* AJAX
+* APIs and JSON in Python
+
 Demo
 ====
+
+Interacting with JSON using ``requests`` and ``WebTest``
 
 Assignments
 ===========
