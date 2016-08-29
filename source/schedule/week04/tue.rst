@@ -22,10 +22,16 @@ Review
 Concepts
 ========
 
-* The 12-Factor application and ``os.environ``
+.. toctree::
+   :maxdepth: 2
+
+   /lectures/pyramid_day6_csrf
+   /lectures/intro_to_python_8_decorators
 
 Demo
 ====
+
+Working with Python Decorators
 
 Assignments
 ===========
