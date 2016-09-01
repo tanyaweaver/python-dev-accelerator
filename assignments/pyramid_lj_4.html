@@ -198,9 +198,27 @@ You should have coverage reports for steps 1, 2, and 3 in your <code class="docu
 <div class="section" id="submitting-your-work">
 <h2>Submitting Your work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
 <p>When your work is done and your site is deployed, push all of your work to your GitHub repo.
-Open a new pull request from the <code class="docutils literal"><span class="pre">step4</span></code> branch to <code class="docutils literal"><span class="pre">master</span></code>.
-Submit the URL of that pull request to Canvas.</p>
-<p>Finally, merge your pull request to prepare for the work in <a class="reference external" href="pyramid_lj_5.html">Python Learning Journal: Step 5</a></p>
+Merge your <code class="docutils literal"><span class="pre">step4</span></code> branch to master to prepare for your next steps.</p>
+<p>Finally, for your submission, a special pull request.</p>
+<p>On your development machine, check out the last commit you made to the learning-journal repository prior to starting work on step one of the learning journal project
+(This is probably your initial commit of the repo).
+You can do so by providing the commit hash as the argument to <code class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ git checkout 1a39dc40
+</pre></div>
+</div>
+<p>Once you&#8217;ve made that checkout, you will see that you are in &#8220;detached HEAD&#8221; state.
+From here create a new branch called start:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ git checkout -b start
+</pre></div>
+</div>
+<p>Then, push this branch up to your repository in github:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ git push -u origin start
+</pre></div>
+</div>
+<p>Finally, make a pull request in github from your master branch to the new start branch.
+This will result in a pull request containing all the code you&#8217;ve written during the tutorial.
+<strong>Do not merge this pull request</strong>.</p>
+<p>To submit this assignment, submit the link to this special &#8220;reverse pull request&#8221;.</p>
 <p>Use the comment feature in canvas to submit the following:</p>
 <ul class="simple">
 <li>At least one well-formed question about the work you did for this assignment</li>

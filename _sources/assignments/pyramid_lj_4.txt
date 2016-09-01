@@ -30,10 +30,36 @@ Submitting Your work
 ====================
 
 When your work is done and your site is deployed, push all of your work to your GitHub repo. 
-Open a new pull request from the ``step4`` branch to ``master``. 
-Submit the URL of that pull request to Canvas.
+Merge your ``step4`` branch to master to prepare for your next steps.
 
-Finally, merge your pull request to prepare for the work in `Python Learning Journal: Step 5 <pyramid_lj_5.html>`_
+Finally, for your submission, a special pull request.
+
+On your development machine, check out the last commit you made to the learning-journal repository prior to starting work on step one of the learning journal project
+(This is probably your initial commit of the repo).
+You can do so by providing the commit hash as the argument to ``git checkout``:
+
+.. code-block:: bash
+
+    $ git checkout 1a39dc40
+
+Once you've made that checkout, you will see that you are in "detached HEAD" state.
+From here create a new branch called start:
+
+.. code-block:: bash
+
+    $ git checkout -b start
+
+Then, push this branch up to your repository in github:
+
+.. code-block:: bash
+
+    $ git push -u origin start
+
+Finally, make a pull request in github from your master branch to the new start branch.
+This will result in a pull request containing all the code you've written during the tutorial.
+**Do not merge this pull request**.
+
+To submit this assignment, submit the link to this special "reverse pull request".
 
 Use the comment feature in canvas to submit the following:
 
