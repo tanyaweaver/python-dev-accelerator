@@ -6,8 +6,11 @@ Machine Learning is tightly coupled with Data Science, and is for the most part 
 It's chiefly concerned with taking some initial data set as a starting point and using it to predict the properties of unknown data.
 As such, Machine Learning problems tend to come in two flavors: Classification and Regression
 
+Machine Learning Problems
+=========================
+
 Classification
-==============
+--------------
 
 .. image:: http://scikit-learn.org/stable/_images/plot_classification_0012.png
     :width: 400px
@@ -24,7 +27,7 @@ For example:
 
 
 Regression
-==========
+----------
 
 .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Linear_regression.svg/2000px-Linear_regression.svg.png
     :width: 400px
@@ -160,12 +163,325 @@ To exit out of Jupyter Notebook entirely, return to your command line and hit ``
 You'll be asked to confirm the shutdown of the server that the Notebook, and if you take too long it'll assume you made a mistake and resume operations.
 When you confirm shutdown of the server, it'll also shutdown any currently-running notebooks being served from that port.
 
+When you create a notebook, Jupyter creates a ``.ipynb_checkpoints`` directory to keep track of the checkpoints that it/you save.
+There's no need for you to commit these checkpoints, so add that directory to your ``.gitignore``.
+
 Numpy
 =====
 
-Pandas
-======
+`Numpy <http://www.numpy.org/>`_ is the primary package for doing scientific/numerical computing in Python.
+You can do lovely things like linear algebra (matrix math and the like), as well as store regular data like floats, ints, strings, and dicts.
+It comes pre-built with some objects and functions that already exist as built-ins for Python or as part of Python's standard library.
+Examples are the number Pi, the ``sum`` function, min, max, trigonometry functions, and square roots.
+As such, **YOU SHOULD NEVER EVER EVER IMPORT EVERYTHING FROM NUMPY INTO YOUR GLOBAL NAMESPACE!!!!**.
+We usually alias ``numpy`` as ``np``.
+
+.. code-block:: python
+
+    >>> import numpy as np
+    >>> np.pi
+    3.141592653589793
+
+Numpy Arrays
+------------
+
+Numpy introduces a new data structure into the mix called an Array.
+Numpy Arrays (hereon ``np.ndarray``) look like lists, but are most definitely not lists.
+**They are semi-mutable containers of single-type objects.**
+Let's see what this means.
+
+You can create an ``np.ndarray`` from a list or tuple fairly easily.
+
+.. code-block:: python
+
+    >>> this_list = list(range(0, 100, 10))
+    >>> this_array = np.array(this_list)
+    >>> print(this_array)
+    [ 0 10 20 30 40 50 60 70 80 90]
+
+No commas! Not a list!
+
+When checking the type of object this is you'll see that it's of the type ``np.ndarray``, and inherits directly from ``object``:
+
+.. code-block:: python
+
+    >>> type(this_array)
+    <class 'numpy.ndarray'>
+
+    >>> np.ndarray.__mro__
+    (<class 'numpy.ndarray'>, <class 'object'>)
+
+You can reference values reference you'd use for a list.
+You can even slice like a list:
+
+.. code-block:: python
+
+    >>> this_array[2]
+    20
+
+    >>> this_array[5: 12]
+    array([30, 40, 50, 60, 70])
+
+    >>> this_array[7:]
+    array([70, 80, 90])
+
+    >>> this_array[22]
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    IndexError: index 22 is out of bounds for axis 0 with size 10
+
+    >>> this_array[6:22]
+    array([60, 70, 80, 90])
+
+    >>> this_array[::-2]
+    array([90, 70, 50, 30, 10])
+
+You can even re-assign values like you would in a list.
+
+.. code-block:: python
+
+    >>> this_array[2] = 12
+    >>> print(this_array)
+    [ 0 10 12 30 40 50 60 70 80 90]
+
+    >>> this_array[2:4] = [145, 269]
+    >>> print(this_array)
+    [  0  10 145 269  40  50  60  70  80  90]
+
+You cannot, however, reassign a value inside of the ``np.ndarray`` with a non-numerical data type that doesn't match what's in the array.
+
+.. code-block:: python
+
+    >>> this_array[2] = "banana"
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    ValueError: invalid literal for int() with base 10: 'banana'
+
+If you try to reassign with a numerical value that doesn't match what's in the ``np.ndarray`` already, it'll assume you made a mistake and alter its type for you.
+If your ``np.ndarray`` is filled with ``floats`` and you try to reassign with an ``int``, it'll convert it to a ``float``.
+If you try to put a ``float`` amongst ``ints``, it'll round the number down.
+
+.. code-block:: python
+
+    >>> this_array[8] = np.pi
+    >>> print(this_array)
+    [  0  10 145 269  40  50  60  70   3  90]
+
+You can always inspect your ``np.ndarray`` to see what data type is being held, or you can get Python to tell you.
+
+.. code-block:: python
+
+    >>> type(this_array[0])
+    <class 'numpy.int64'>
+
+    >>> this_array.dtype
+    dtype('int64')
+
+Notice, Numpy has its own integer type. 
+It also uses its own versions of other types like ``float`` and even ``string``.
+
+``np.ndarray`` has no "append" or "push" method.
+You **cannot** extend an ``np.ndarray``.
+That's kind of the point.
+You can, however, stick multiple arrays together and assign the result to a new variable with ``np.concatenate``:
+
+.. code-block:: python
+
+    >>> that_array = np.array(range(256, 266))
+    >>> other_array = np.array(range(-20, -1))
+    >>> bigger_array = np.concatenate([this_array, that_array, other_array])
+    >>> print(bigger_array)
+    [  0  10 145 269  40  50  60  70   3  90 256 257 258 259 260 261 262 263 
+    264 265 -20 -19 -18 -17 -16 -15 -14 -13 -12 -11 -10  -9  -8  -7  -6  -5 
+    -4  -3  -2]
+
+Sticking to a single data type in a container of a fixed size makes ``np.ndarray`` ridiculously fast for mathematical operations.
+That's also part of the point, and ``np.ndarrays`` have special methods for math operations for just that reason.
+
+For example if you wanted to double every number in a list, you'd have to do something like this:
+
+.. code-block:: python
+
+    >>> [num * 2 for num in this_list]
+    [0, 20, 40, 60, 80, 100, 120, 140, 160, 180]
+
+With ``np.ndarray``, you can just apply math operations directly.
+
+.. code-block:: python
+
+    >>> this_array * 2
+    array([  0,  20, 290, 538,  80, 100, 120, 140,   6, 180])
+
+You can also do a numerical comparison across the entire array, finding out which indices match your criteria.
+
+.. code-block:: python
+
+    >>> this_array < 50
+    array([ True,  True, False, False,  True, False, False, False,  True, False], dtype=bool)
+
+    >>> this_array[this_array < 50]
+    array([ 0, 10, 40,  3])    
+
+You can also do operations between arrays of the same size.
+
+.. code-block:: python
+
+    >>> this_array + that_array
+    array([256, 267, 403, 528, 300, 311, 322, 333, 267, 355])
+
+Arrays of a different size raise a ``ValueError``
+
+.. code-block:: python
+
+    >>> small_array = np.array([2, 2, 2, 2])
+    >>> this_array / small_array
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    ValueError: operands could not be broadcast together with shapes (10,) (4,) 
+
+``np.ndarrays`` also have some aggregate methods like ``.sum()`` and `` .min()``
+
+.. code-block:: python
+
+    >>> this_array.sum() # Sum
+    737
+
+    >>> this_array.min() # Min value
+    0
+
+    >>> this_array.max() # Max value
+    269
+
+    >>> this_array.mean() # Average of the array
+    73.700000000000003
+
+    >>> this_array.std() # Standard Deviation
+    77.380940805859936
+
+Finally, you can do awesome things like find the index of the minimum/maximum value in the array.
+This comes in handy when you need to find that sort of thing quickly.
+
+.. code-block:: python
+
+    >>> this_array.argmax()
+    3
+    >>> this_array[this_array.argmax()]
+    269
+
+Other Useful Numpy Things
+-------------------------
+
+If you need an array of some size filled with zeros or ones, ``np.zeros`` and ``np.ones`` have you covered.
+They both take an argument that is the size of the array you want.
+
+.. code-block:: python
+
+    >>> np.zeros(10)
+    array([ 0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.])
+
+    >>> np.ones(5, dtype="bool")
+    array([ True,  True,  True,  True,  True], dtype=bool)
+
+Numpy is also great for reading and writing numerical data.
+`np.loadtxt <http://docs.scipy.org/doc/numpy/reference/generated/numpy.loadtxt.html>`_ and `np.genfromtxt <http://docs.scipy.org/doc/numpy/reference/generated/numpy.genfromtxt.html>`_ are the two functions used for reading regularly-delimited files like ``CSV`` files.
+That data is read one row at a time directly into an array of arrays.
+To get it organized by columns instead,  
+
+.. code-block:: python
+
+    >>> np.loadtxt("data.csv", unpack=True, delimiter=",")
+    array([[   1.   ,    1.   ,    1.   ,    1.   ,    1.   ,    1.   ],
+           [   1.   ,    1.   ,    1.   ,    1.   ,    1.   ,    1.   ],
+           [   0.   ,    0.   ,    0.   ,    0.   ,    0.   ,    0.   ],
+           [   1.   ,    1.   ,    2.   ,    2.   ,    2.   ,    5.   ],
+           [   1.   ,    2.   ,    1.   ,    2.   ,    3.   ,    0.   ],
+           [   1.855,    1.959,    1.929,    2.054,    2.193,    1.63 ],
+           [  16.4  ,   35.2  ,   14.3  ,   31.8  ,   28.5  ,   25.6  ],
+           [  15.5  ,   58.7  ,   18.8  ,   40.5  ,  201.7  ,  103.   ]])
+
+The above code is assuming that your data file is delimited by commas.
+If it's instead delimited by pipes or anything else, specify that in the "delimiter" field.
+``np.genfromtxt`` does the same thing, but allows you to specify the data type of each incoming column for when you have rows with mixed data.
+
 
 Matplotlib
 ==========
+
+Data is great, but it's difficult to interpret when it's all sitting as raw numbers in a file.
+Throwing those numbers into an array is great, but even that's difficult to interpret as data sets grow in size.
+Do you really want to read through 20,000 rows of data in order to get an idea of the trends within?
+
+Data scientists communicate with words and figures. 
+You already have words, let's make some figures.
+`matplotlib <http://matplotlib.org/>`_ is the major plotting library for Python.
+There are of course others, like `ggplot <http://ggplot.yhathq.com/>`_ and `seaborn <https://stanford.edu/~mwaskom/software/seaborn/>`_, but ``matplotlib`` is the basic and most-used library so we'll be using that.
+
+If you use ``matplotlib`` from your terminal, it'll stop your interpreter and pop open a new window whenever you want to produce a figure.
+This is annoying and counter-productive.
+Use an iPython Notebook and import like so:
+
+.. code-block:: ipython
+
+    In [1]: import matplotlib.pyplot as plt
+
+``matplotlib`` is a huge package.
+All the plotting functionality you'll need is in the ``pyplot`` module, so we can import just that.
+Convention is to alias it as either ``plt`` or just ``p``.
+``plt`` is a little more intuitive so we'll be using that.
+
+We'll still have the issue of Python popping open your figures in separate windows and we don't want that, so we'll use a little iPython magic to render all of our figures in line with the cells that generate them.
+
+.. code-block:: ipython
+
+    In [2]: %matplotlib inline
+
+We can visualize some data right away as a **scatter plot** using a small handful of commands.
+Let's start with creating some data showing exponential growth.
+
+.. code-block:: ipython
+
+    In [3]: x = np.arange(0, 5, 0.1)
+    In [4]: print(x)
+    [ 0.   0.1  0.2  0.3  0.4  0.5  0.6  0.7  0.8  0.9  1.   1.1  1.2  1.3  1.4
+      1.5  1.6  1.7  1.8  1.9  2.   2.1  2.2  2.3  2.4  2.5  2.6  2.7  2.8  2.9
+      3.   3.1  3.2  3.3  3.4  3.5  3.6  3.7  3.8  3.9  4.   4.1  4.2  4.3  4.4
+      4.5  4.6  4.7  4.8  4.9]
+
+    In [5]: y = np.exp(x)
+    In [6]: print(y)
+    [   1.            1.10517092    1.22140276    1.34985881    1.4918247
+        1.64872127    1.8221188     2.01375271    2.22554093    2.45960311
+        2.71828183    3.00416602    3.32011692    3.66929667    4.05519997
+        4.48168907    4.95303242    5.47394739    6.04964746    6.68589444
+        7.3890561     8.16616991    9.0250135     9.97418245   11.02317638
+       12.18249396   13.46373804   14.87973172   16.44464677   18.17414537
+       20.08553692   22.19795128   24.5325302    27.11263892   29.96410005
+       33.11545196   36.59823444   40.44730436   44.70118449   49.40244911
+       54.59815003   60.3402876    66.68633104   73.6997937    81.45086866
+       90.0171313    99.48431564  109.94717245  121.51041752  134.28977968]
+
+Great, tons of numbers.
+Let's see these numbers as points on a chart.
+
+.. ipython::
+
+    In [7]: plt.scatter(x, y)
+    In [8]: plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
