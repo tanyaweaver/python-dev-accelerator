@@ -407,7 +407,7 @@ If it's instead delimited by pipes or anything else, specify that in the "delimi
 Matplotlib
 ==========
 
-Data is great, but it's difficult to interpret when it's all sitting as raw numbers in a file.
+Data is great, but it's difficult to interpret when it all sits as raw numbers in a file.
 Throwing those numbers into an array is great, but even that's difficult to interpret as data sets grow in size.
 Do you really want to read through 20,000 rows of data in order to get an idea of the trends within?
 
@@ -420,68 +420,150 @@ If you use ``matplotlib`` from your terminal, it'll stop your interpreter and po
 This is annoying and counter-productive.
 Use an iPython Notebook and import like so:
 
-.. code-block:: ipython
+.. ipython::
 
-    In [1]: import matplotlib.pyplot as plt
+    In [1]: import numpy as np
+    
+    In [2]: import matplotlib.pyplot as plt
+
+    In [3]: plt.ion()
 
 ``matplotlib`` is a huge package.
 All the plotting functionality you'll need is in the ``pyplot`` module, so we can import just that.
 Convention is to alias it as either ``plt`` or just ``p``.
 ``plt`` is a little more intuitive so we'll be using that.
 
-We'll still have the issue of Python popping open your figures in separate windows and we don't want that, so we'll use a little iPython magic to render all of our figures in line with the cells that generate them.
-
-.. code-block:: ipython
-
-    In [2]: %matplotlib inline
+We'll still have the issue of Python popping open your figures in separate windows and we don't want that, so we'll use the ``%matplotlib inline`` iPython magic to render all of our figures in line with the cells that generate them.
 
 We can visualize some data right away as a **scatter plot** using a small handful of commands.
 Let's start with creating some data showing exponential growth.
 
-.. code-block:: ipython
+.. ipython::
 
-    In [3]: x = np.arange(0, 5, 0.1)
-    In [4]: print(x)
-    [ 0.   0.1  0.2  0.3  0.4  0.5  0.6  0.7  0.8  0.9  1.   1.1  1.2  1.3  1.4
-      1.5  1.6  1.7  1.8  1.9  2.   2.1  2.2  2.3  2.4  2.5  2.6  2.7  2.8  2.9
-      3.   3.1  3.2  3.3  3.4  3.5  3.6  3.7  3.8  3.9  4.   4.1  4.2  4.3  4.4
-      4.5  4.6  4.7  4.8  4.9]
+    In [4]: x = np.arange(0, 5, 0.1)
 
-    In [5]: y = np.exp(x)
-    In [6]: print(y)
-    [   1.            1.10517092    1.22140276    1.34985881    1.4918247
-        1.64872127    1.8221188     2.01375271    2.22554093    2.45960311
-        2.71828183    3.00416602    3.32011692    3.66929667    4.05519997
-        4.48168907    4.95303242    5.47394739    6.04964746    6.68589444
-        7.3890561     8.16616991    9.0250135     9.97418245   11.02317638
-       12.18249396   13.46373804   14.87973172   16.44464677   18.17414537
-       20.08553692   22.19795128   24.5325302    27.11263892   29.96410005
-       33.11545196   36.59823444   40.44730436   44.70118449   49.40244911
-       54.59815003   60.3402876    66.68633104   73.6997937    81.45086866
-       90.0171313    99.48431564  109.94717245  121.51041752  134.28977968]
+    In [5]: print(x)
+
+    In [6]: y = np.exp(x)
+
+    In [7]: print(y)
 
 Great, tons of numbers.
 Let's see these numbers as points on a chart.
 
 .. ipython::
 
-    In [7]: plt.scatter(x, y)
-    In [8]: plt.show()
+    @savefig intro_to_ml_1.png width=6in
+    In [8]: plt.scatter(x, y)
+
+Joyful hallelujah!
+When making a scatter plot, there's 3 things you'll want to concern yourself with:
+
+* point size
+* point color
+* point edge color
+
+You can control each of these using keyword arguments in ``plt.scatter()``. 
+Let's alter this plot such that our points are big, red, and don't have black edges as follows:
+
+.. ipython::
+
+    @savefig intro_to_ml_2.png width=6in
+    In [9]: plt.scatter(x, y, s=50, c="red", edgecolor="None")
 
 
+You can also change the point shape by using the keyword "marker". 
+The available markers are...
+
+* s: Square
+* o: Circle
+* D: Diamond
+* .: Point
+* ^, v, >, <: Triangles
+* \*: Star
+* p: Pentagon
+* +: Plus signs
+* x: X's
+* |: Vertical Lines
+* \_': Horizontal Lines
+
+Figures are meaningless without some description of what they're showing.
+Every figure should have axis labels.
+You can set those labels using the ``plt.xlabel`` and ``plt.ylabel`` methods.
+You can also add a title with ``plt.title``
+
+.. ipython::
+
+    In [10]: plt.xlabel("Number of Bottles [$x$]")
+
+    In [11]: plt.ylabel("Level of Drunkeness [$y = e^x$]")
+
+    In [12]: plt.title("This is a Scatter Plot")
+
+    @savefig intro_to_ml_3.png width=6in
+    In [13]: plt.scatter(x, y, s=50, c="red", edgecolor="None")
+
+You can also plot two data sets on top of each other.
+It helps of course to use different colors for each.
+
+.. ipython::
+
+    In [14]: z = y.max() - y
+
+    In [15]: plt.title("This is a Second Plot")
 
 
+    In [18]: plt.xlabel("Flergs [$x$]")
+
+    In [19]: plt.ylabel("Blergs per Flerg [$y = e^x$]")
+
+    In [16]: plt.scatter(x, y, s=50, c="red", edgecolor="None")
+
+    @savefig intro_to_ml_4.png width=6in
+    In [17]: plt.scatter(x, z, s=50, c="blue", edgecolor="None")
+
+You don't have to only use numpy arrays to plot your data.
+If it's in a simple list, that works too.
+This time, let's plot some data as lines instead of points.
+Let's also limit the axes so that we're only looking at a fraction of the data.
+
+.. ipython::
+
+    In [20]: plt.title("Some Lines Instead of Points")
+
+    In [21]: plt.plot([1, 2, 3, 4, 5, 6, 7, 8], [4, 5, 6, 5, 4, 3, 2, 1], color="red")
+
+    In [22]: plt.plot([1.5, 2.5, 3.5, 2.5, 1.5, 0.5, -1.5, -2.5], [1, 2, 3, 4, 5, 6, 7, 8], color="blue")
+
+    In [23]: plt.xlabel("Fizz")
+
+    In [24]: plt.ylabel("Buzz")
+
+    In [25]: plt.xlim(-0.5, 2)
+
+    @savefig new_thing.png width=6in
+    In [26]: plt.ylim(1, 15)
+
+Typically when we want to simply show the plot without having the ``repr`` for the plotting object show up, we use ``plt.show()``.
+If you want to save the figure to a file, use ``plt.savefig("relative/or/absolute/path/to/file.png")``.
+You don't have to save as ``.png`` either; a number of image formats including ``.jpg`` and even ``.pdf`` will work just fine.
 
 
+Recap
+=====
 
+We're about to step into a different realm of Python, where we consider specifically how to work with data instead of how to serve it for a website.
+Machine Learning in Python allows us to use the same language we've been writing this entire class to make predictions.
+We can use known data to predict unknown data, or use entirely unknown data to find out interesting insights.
 
+Jupyter Notebook allows us to keep those insights in line with our executable code.
+We can even style those thoughts with Markdown, giving us a nice interactive environment for experimenting with code.
 
+We can use Python's powerful ``Numpy`` library to do quick math operations and store data in semi-mutable data structures.
+We can also use ``Numpy`` to read data from file into neatly-organized arrays.
 
+``Matplotlib`` affords us the luxury of being able to visualize the data that we have.
+It's a massive library so there's no end to the things it can do, but for our purposes we can use it to plot points and lines to show trends in our data.
 
-
-
-
-
-
-
-
+Tonight you will get some practice applying these libraries.
+Tomorrow we'll meet one more library, ``Pandas``, and learn about how we can clean our data.

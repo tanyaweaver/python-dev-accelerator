@@ -89,7 +89,7 @@ release = '2.1'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['**/.ipynb_checkpoints', '_themes/**/*.md']
+exclude_patterns = ['**/.ipynb_checkpoints', '_themes/**/*.md', '**/*.ipynb']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
