@@ -28,10 +28,13 @@ Review
 Concepts
 ========
 
-.. * The Quicksort algorithm
-* Introduction to Machine Learning:
-    - Numpy, Pandas, Matplotlib, and Jupyter Notebook
+.. toctree::
+    :maxdepth: 2
+
+    /lectures/intro_to_machine_learning
+
 * Django Miscellany
+.. * The Quicksort algorithm
 
 Demo
 ====
@@ -43,7 +46,7 @@ Assignments
 
 .. * :doc:`/assignments/sort_3_quicksort`
 .. * :doc:`/assignments/aws_1_deploy_imager`
-* Reading, Writing, and Visualizing Data
+* :doc:`/assignments/visualizing_data`
 * :doc:`/assignments/project_03_repo`
 * Add Tagging to the Django Imager (Due Friday)
 * :doc:`/assignments/blog_post_publish` (Due Friday)
