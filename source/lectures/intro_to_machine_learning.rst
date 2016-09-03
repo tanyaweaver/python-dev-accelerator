@@ -312,7 +312,7 @@ With ``np.ndarray``, you can just apply math operations directly.
     >>> this_array * 2
     array([  0,  20, 290, 538,  80, 100, 120, 140,   6, 180])
 
-You can also do a numerical comparison across the entire array, finding out which indices match your criteria.
+You can also filter across the entire array, finding out which indices match your criteria.
 
 .. code-block:: python
 
