@@ -38,11 +38,8 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    .. /lectures/kmeans
-    .. /lectures/stats_day2
-    .. /lectures/django_models
-
     /lectures/django_testing
+    /lectures/django_migrations
     /lectures/intro_to_python_9_generators
 
 * Traversing a Binary Search Tree
@@ -53,11 +50,6 @@ Demo
 Assignments
 ===========
 
-.. * :doc:`/assignments/statistics_problem_set2`
-.. * :doc:`/assignments/recitation_assignment`
-.. * :doc:`/assignments/django_1_data_model` (Due Friday)
-.. * :doc:`/assignments/bst_1`
-
-* :doc:`/assignments/bst_2_traversal`
+* :doc:`/assignments/bst_1`
 * :doc:`/assignments/daily_lj_entry`
-
+* :doc:`/assignments/django_1_data_model` (Due Friday)
