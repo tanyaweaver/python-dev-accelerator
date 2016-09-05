@@ -34,18 +34,15 @@ Concepts
     /lectures/intro_to_machine_learning
 
 * Django Miscellany
-.. * The Quicksort algorithm
+
 
 Demo
 ====
 
-.. * Quicksort!!
 
 Assignments
 ===========
 
-.. * :doc:`/assignments/sort_3_quicksort`
-.. * :doc:`/assignments/aws_1_deploy_imager`
 * :doc:`/assignments/visualizing_data`
 * :doc:`/assignments/project_03_repo`
 * Add Tagging to the Django Imager (Due Friday)
