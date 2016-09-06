@@ -12,7 +12,7 @@ Python Practice: String Pyramid
 
 Complete the `String Pyramid`_ kata on Code Wars with whatever solution works for you.
 
-.. _Sum of the First Nth Terms of a Series: http://www.codewars.com/kata/string-pyramid
+.. _String Pyramid: http://www.codewars.com/kata/string-pyramid
 
 Submitting Your Work
 ====================

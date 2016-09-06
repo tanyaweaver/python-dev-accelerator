@@ -10,7 +10,7 @@ You can read more about it `here <https://archive.ics.uci.edu/ml/datasets/Housin
 Tasks
 =====
 
-If you haven't already, start a new virtual environment and create a repository named ``machine_learning``.
+If you haven't already, start a new virtual environment and create a repository named ``machine-learning``.
 Within that repository start a branch called ``analyze``.
 
 Open a new Jupyter Notebook entitled **Analyze a Data Set**.
@@ -41,6 +41,9 @@ Submitting Your Work
 
 Once you're done with the above questions, reset your Notebook and run all of the cells from top to bottom.
 When it's done, your cells should start with ``[1]`` and every sequent cell should have numbering ``[N + 1]``.
+
+Include in your README.md a link to the original data source at ``uci.edu``.
+Describe what's in the data set you investigated and what steps you took to look into it.
 
 When your Notebook is clean of unnecessary comments and is well organized from top to bottom, push your Notebook **and only your Notebook** (not the ``.ipynb-checkpoints`` directory or your data) to GitHub and open a pull request to your ``master`` branch.
 Submit the link to that pull request to Canvas.
