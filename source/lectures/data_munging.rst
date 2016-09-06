@@ -197,5 +197,203 @@ What is Valid?
 
 When working with a data set, a decent first approximation comes from removing records with invalid information.
 You can determine what's valid based on auxiliary information about the set, or just from looking at the set itself.
-If you're looking at data about people and it includes negative ages, those records with negative ages are invalid.
-If your data looks at rental prices of apartments around the city, chances are 
+If you're looking at data about people and it includes negative ages, those records with negative ages are to some degree invalid.
+If your data looks at rental prices of apartments around the city, chances are that prices won't be in the 10's of thousands of dollars are above.
+Whatever the data, think about it, think about values are plausible, and reject those rows with data that fall outside of that realm of plausability.
+
+We'll discuss two ways of handling bad data: **removal**, **filling**.
+You can also manually alter data, but you had better have a damn good reason to do so.
+
+Removing Bad Data
+-----------------
+
+Maybe the data got corrupted on entry?
+Perhaps some records aren't relevant to the question at hand.
+Whatever the case, sometimes you just need to be able to filter out what you don't want.
+
+Note that this **doesn't** mean that you should *DELETE* data.
+Your data is your data, whether it's good or not.
+It's valuable in some way, shape, or form, and to artificially remove data in its entirety is an unacceptable practice.
+When you filter out information, you must say why and how otherwise your analysis is seen as questionable at best.
+
+Let's say that we have the following data set.
+
+.. code-block:: ipython:
+
+    In [23]: print(data)
+             ages    heights
+    0   -1.000000  61.623766
+    1   34.850545  61.231887
+    2   -1.000000  62.012366
+    3   -1.000000  60.776548
+    4   -1.000000  71.331092
+    5   32.454987  70.932109
+    6   34.324364  70.600538
+    7   28.425111  66.755211
+    8   -1.000000  61.205107
+    9   -1.000000  69.932608
+    10  32.226644  70.130044
+    11  34.633665  70.428263
+    12  35.582740  68.087174
+    13  39.245149  69.507355
+    14  39.364419  71.366009
+    15  35.780590  61.853659
+    16  -1.000000  66.879470
+    17  -1.000000  66.495248
+    18  -1.000000  60.654402
+    19  -1.000000  63.833324
+    20  -1.000000  71.715755
+    ...
+
+Clearly, folks shouldn't have negative ages, and those entries would be useless for an analysis of ages or ages vs heights.
+Recall from the previous section that we can filter out rows in Pandas fairly easily.
+
+.. code-block:: ipython:
+
+    In [24]: print(data[data.ages != -1])
+             ages    heights
+    1   34.850545  61.231887
+    5   32.454987  70.932109
+    6   34.324364  70.600538
+    7   28.425111  66.755211
+    10  32.226644  70.130044
+    11  34.633665  70.428263
+    12  35.582740  68.087174
+    13  39.245149  69.507355
+    14  39.364419  71.366009
+    15  35.780590  61.853659
+    22  34.967948  66.308030
+    23  26.754890  70.697276
+    24  39.388898  70.603496
+    27  40.060202  71.432532
+    29  42.883102  67.030701
+    32  30.602126  63.557139
+    36  37.374404  67.276436
+    40  43.892979  61.926341
+    41  38.357550  67.625260
+    42  28.814544  65.478372
+    46  31.351512  66.442712
+    47  36.443522  69.275935
+
+You can assign this filtered DataFrame to a new variable and then move forward with your analysis from there.
+If of course you don't care about the ages, then you could go with the data as it was and think about your heights.
+
+Making Assumptions on Bad Data
+------------------------------
+
+Data tends to come in bad.
+However, we may not want to just throw it out wholesale; there may be some portions of bad data that are entirely valid.
+As an example, I have the following information in a file called "nmhw_sample_data.csv":
+
+.. code-block:: bash
+
+    Name,Age,Hometown,Country,Desired Income,Favorite Food,Number of Cats
+    James,22,New York,,75000,,0
+    Bob,25,Seattle,USA,0,pad thai,2
+    Annette,28,San Francisco,USA,,spaghetti,1
+    Florence,23,Beijing,China,60000,xiaolong bao,4
+    Martha,30,Kansas City,,,corn,3
+    Desean,27,Newark,USA,85000,,
+    Jamal,28,New York,,65000,pizza,3
+    Kaede,31,Kyoto,Japan,65000,sushi,4
+    Milton,23,Austin,,78000,bbq,
+    Ivana,29,Moscow,Russia,,borscht,1
+    Jorge,35,Rio de Janeiro,Brasil,90000,farofa,2
+
+If I were to read it in as-is, I'd get the following
+
+.. code-block:: ipython
+
+    In [25]: data = pd.read_csv("./downloads/nmhw_sample_data.csv")
+
+    In [26]: print(data)
+            Name  Age        Hometown Country  Desired Income Favorite Food  Number of Cats
+    0      James   22        New York     NaN         75000.0           NaN             0.0 
+    1        Bob   25         Seattle     USA             0.0      pad thai             2.0
+    2    Annette   28   San Francisco     USA             NaN     spaghetti             1.0
+    3   Florence   23         Beijing   China         60000.0  xiaolong bao             4.0
+    4     Martha   30     Kansas City     NaN             NaN          corn             3.0
+    5     Desean   27          Newark     USA         85000.0           NaN             NaN
+    6      Jamal   28        New York     NaN         65000.0         pizza             3.0
+    7      Kaede   31           Kyoto   Japan         65000.0         sushi             4.0
+    8     Milton   23          Austin     NaN         78000.0           bbq             NaN
+    9      Ivana   29          Moscow  Russia             NaN       borscht             1.0
+    10     Jorge   35  Rio de Janeiro  Brasil         90000.0        farofa             2.0
+
+Those "NaN"s are "Not a Number"s, the way for Pandas and NumPy to identify missing or otherwise invalid data.
+Here, they're not consistent across rows.
+Some entries have no country, some have no income, etc.
+We can make some assumptions about what the missing data should be filled with based on the data that surrounds it.
+This works especially well if our data comes in sorted in some way.
+Pandas DataFrames have a method "``.fillna()``" for filling in data in a variety of ways.
+
+.. code-block:: ipython
+
+    In [27]: data.fillna(method="ffill")
+    Out[27]:
+            Name  Age        Hometown Country  Desired Income Favorite Food  Number of Cats
+    0      James   22        New York     NaN         75000.0           NaN             0.0 
+    1        Bob   25         Seattle     USA             0.0      pad thai             2.0
+    2    Annette   28   San Francisco     USA             0.0     spaghetti             1.0
+    3   Florence   23         Beijing   China         60000.0  xiaolong bao             4.0
+    4     Martha   30     Kansas City   China         60000.0          corn             3.0
+    5     Desean   27          Newark     USA         85000.0          corn             3.0
+    6      Jamal   28        New York     USA         65000.0         pizza             3.0
+    7      Kaede   31           Kyoto   Japan         65000.0         sushi             4.0
+    8     Milton   23          Austin   Japan         78000.0           bbq             4.0
+    9      Ivana   29          Moscow  Russia         78000.0       borscht             1.0
+    10     Jorge   35  Rio de Janeiro  Brasil         90000.0        farofa             2.0    
+
+The above is the result of a "forward fill".
+Whatever data came before the invalid entry IN ITS OWN COLUMN will fill that invalid entry in with its own value.
+
+Similarly, there's a "backward fill", which fills in missing data with information that comes after.
+
+.. code-block:: ipython
+
+    In [28]: data.fillna(method="bfill")
+    Out[28]:
+            Name  Age        Hometown Country  Desired Income Favorite Food  Number of Cats
+    0      James   22        New York     USA         75000.0      pad thai             0.0 
+    1        Bob   25         Seattle     USA             0.0      pad thai             2.0
+    2    Annette   28   San Francisco     USA         60000.0     spaghetti             1.0
+    3   Florence   23         Beijing   China         60000.0  xiaolong bao             4.0
+    4     Martha   30     Kansas City     USA         85000.0          corn             3.0
+    5     Desean   27          Newark     USA         85000.0         pizza             3.0
+    6      Jamal   28        New York   Japan         65000.0         pizza             3.0
+    7      Kaede   31           Kyoto   Japan         65000.0         sushi             4.0
+    8     Milton   23          Austin  Russia         78000.0           bbq             1.0
+    9      Ivana   29          Moscow  Russia         90000.0       borscht             1.0
+    10     Jorge   35  Rio de Janeiro  Brasil         90000.0        farofa             2.0    
+
+Finally, you can fill in individual columns instead of doing global fills.
+
+.. code-block:: ipython
+
+    In [29]: data["Desired Income"].fillna(data["Desired Income"].mean())
+
+Doing the above with a mean or a median gives you plausible values based on the rest of the data set.
+This way you can still use all the data in the column and (more or less) not change how it's distributed.
+
+Note the above methods have their obvious consequences.
+Blindly filling with information can at times produce more data artifacts than you originally had.
+Be aware of what you're filling with and how you're doing it before you go ahead and do it.
+Perhaps re-sorting your data would be a better idea before forward or backward-filling.
+It's never a perfect process, and you should always document what you do and why you do it.
+Use the Markdown cells in your Jupyter Notebooks to inject that rationale into your data report.
+That way, your choices don't seem quite as arbitrary (even if they were entirely arbitrary to begin with).
+
+
+Recap
+=====
+
+Real data is without fail imperfect.
+As analysts, you need to use your chosen language to handle that data before you proceed with your work.
+Pandas gives us the tools to handle our data in a structured way, and the methods needed to fill and remove data as need be.
+
+Tonight you will use these methods to clean some data of your own.
+Never forget to document your rationale; until you do, only you know why you did what you did.
+Keep those intermediate steps in mind while you finalize your report.
+
+
+
