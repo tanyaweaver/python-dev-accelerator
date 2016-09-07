@@ -36,10 +36,10 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    .. /lectures/web_app_security_2
-    * Pagination in Django Apps
-    * Supervised Classification
-    * The Decision Tree Classifier
+    /lectures/supervised_classification.rst
+
+* Pagination in Django Apps
+* The Decision Tree Classifier
 
 Demo
 ====
@@ -47,8 +47,8 @@ Demo
 Assignments
 ===========
 
-.. * :doc:`/assignments/web_app_security_assignment2`
-.. * :doc:`/assignments/django_6_drf_tutorial_a`
+
+
 * Sign up for the Whiteboarding Schedule
 * Django Imager: Add Pagination to your Photos and Albums
 * Implement and Apply the Decision Tree Classifier
