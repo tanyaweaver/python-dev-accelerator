@@ -14,17 +14,17 @@ Objectives
 ==========
 
 * Add pagination to the images/albums in our Django app.
-* Become familiar with what constitutes supervised classification.
-* Learn how a decision tree works, and how to apply it to data.
+* Learn about when it's appropriate to rescale data.
+* Become a boss at the K-Nearest Neighbors algorithm.
 
 
 Readings
 ========
 
+* `Feature Scaling <https://www.udacity.com/course/viewer#!/c-ud120/l-2864738562/e-3125078537/m-3136558541>`_ (up to and including Feature Scaling Formula Quiz 3)
+* `How kNN Algorithm Works <https://www.youtube.com/watch?v=UqYde-LULfs>`_
+* `Introduction to K Nearest Neighbor <https://www.youtube.com/watch?v=SQOdBjjA2y8>`_ (apologies for sound quality)
 * `Pagination in Django <https://docs.djangoproject.com/en/1.9/topics/pagination/>`_
-* `Supervised Classification (Wikipedia) <https://en.wikipedia.org/wiki/Supervised_learning>`_
-* `Supervised Learning (Coursera) <https://www.coursera.org/learn/machine-learning/lecture/1VkCb/supervised-learning>`_
-* `Decision Trees (Udacity) <https://www.udacity.com/course/viewer#!/c-ud120/l-2258728540/m-2428648555>`_ (this video up to but not including "Coding a Decision Tree")
 
 Review
 ======
@@ -33,13 +33,10 @@ Review
 Concepts
 ========
 
-.. toctree::
-    :maxdepth: 2
-
-    /lectures/supervised_classification.rst
-
+* When, Why, and How to Rescale Data
+* The K-Nearest Neighbors Algorithm
 * Pagination in Django Apps
-* The Decision Tree Classifier
+
 
 Demo
 ====
@@ -47,10 +44,8 @@ Demo
 Assignments
 ===========
 
-
-
 * Sign up for the Whiteboarding Schedule
 * Django Imager: Add Pagination to your Photos and Albums
-* Implement and Apply the Decision Tree Classifier
+* Implement the K-Nearest Neighbors Algorithm
 * :doc:`/assignments/project_06_wireframe_end`
 * :doc:`/assignments/daily_lj_entry`
