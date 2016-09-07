@@ -12,7 +12,12 @@ Divisions occur one characteristic at a time, so classification ends up followin
 
 .. image:: http://perclass.com/doc/guide/images/clas_sdtree_2.png
     :width: 400px
-    :alt: A visualization of the classification
+    :alt: A visualization of the classification regions
+
+The Algorithm
+=============
+
+
 
 Advantages
 ==========

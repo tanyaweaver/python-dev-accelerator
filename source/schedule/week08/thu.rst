@@ -46,7 +46,7 @@ Demo
 Assignments
 ===========
 
-* Implement the Decision Tree Classifier
+* :doc:`/assignments/decision_tree`
 * :doc:`/assignments/project_04_readme`
 * Add Tagging to the Django Imager (Due Friday)
 * :doc:`/assignments/blog_post_publish` (Due Friday)
