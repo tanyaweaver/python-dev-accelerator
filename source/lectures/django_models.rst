@@ -730,13 +730,14 @@ Our Needs
     Using this will allow Django to expect--and return--only one value.
 
     You'll need to create an app to hold this profile.
+    Call this new app ``imager_profile``.
     Use what you learned from the Django tutorial to accomplish this task.
 
 Wrap Up
 =======
 
 .. ifnotslides::
-    
+
     We've learned a bit now about how Django works.
     We learned about starting new applications, and managing them.
     We've learned about the Django ORM and how it works
