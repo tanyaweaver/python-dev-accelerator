@@ -21,7 +21,8 @@ Readings
 
 * `Supervised Classification (Wikipedia) <https://en.wikipedia.org/wiki/Supervised_learning>`_
 * `Supervised Learning (Coursera) <https://www.coursera.org/learn/machine-learning/lecture/1VkCb/supervised-learning>`_
-* `Decision Trees (Udacity) <https://www.udacity.com/course/viewer#!/c-ud120/l-2258728540/m-2428648555>`_ (this video up to but not including "Coding a Decision Tree")* `The Decision Tree Classifier <http://scikit-learn.org/stable/modules/tree.html>`_
+* `Decision Trees (Udacity) <https://www.udacity.com/course/viewer#!/c-ud120/l-2258728540/m-2428648555>`_ (this video up to but not including "Coding a Decision Tree")
+* `The Decision Tree Classifier <http://scikit-learn.org/stable/modules/tree.html>`_
 * `How decision trees algorithm works <https://www.youtube.com/watch?v=Qdi0GBWrDO8>`_ (Sorry for sound quality)
 * `Decision Trees <https://www.youtube.com/watch?v=3uAW18yB2aU>`_
 

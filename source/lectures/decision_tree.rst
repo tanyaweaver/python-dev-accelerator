@@ -17,6 +17,41 @@ Divisions occur one characteristic at a time, so classification ends up followin
 The Algorithm
 =============
 
+For every step in the tree:
+
+1. There is data :math:`D`, with each row having characteristics (:math:`x_1`, :math:`x_2`, ..., :math:`x_N`) and label :math:`y`
+
+2. Within one characteristic :math:`x_j`, :math:`D` will be divided along a decision boundary :math:`t`. The data will be split into :math:`D_{left}` and :math:`D_{right}`.
+
+.. math::
+
+    D_{left} = D[\text{where } x_j \le t]
+
+    D_{right} = D[\text{where } x_j > t]
+
+3. The best decision boundary will be where the following function is at a minimum:
+
+.. math::
+    
+    G(D) = \frac{n_{left}}{N_D} \cdot H(D_{left}) + \frac{n_{right}}{N_D} \cdot H(D_{right})
+
+where...
+
+.. math::
+
+    H(D) =  p(1) \cdot (1 - p(1)) + p(2) \cdot (1 - p(2))
+
+is the measurement of impurity (i.e. this region is dominated by one class or a mix of multiple classes), and
+
+.. math::
+
+    p(k) = \frac{n_D(\text{class} = k)}{N_D}
+
+is the fraction of data in the region in class `k`.
+
+4. Split the data at the best available decision boundary, and for each portion (left and right) return to step 1.
+
+5. Iterate on steps 1-4 until you hit you hit your minimum "leaf" size, your maximum tree depth, or :math:`N_D = 1`.
 
 
 Advantages
@@ -42,6 +77,5 @@ Operations
 ==========
 
 * tree.fit(``training_data``): construct the tree and build up the decision chains. Returns nothing.
-* tree.predict(``test_data``) -> test_data + classification: predict the classification of new data given the decision chains built already built.
-Returns the data given, as well as the labels output by the tree.
+* tree.predict(``test_data``) -> test_data + classification: predict the classification of new data given the decision chains built already built. Returns the data given, as well as the labels output by the tree.
 
