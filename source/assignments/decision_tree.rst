@@ -11,8 +11,8 @@ Add a new file to your data-structures repository called ``decision_tree.py``.
 In this file, implement a Decision Tree Classifier object.
 Your classifier should have the following public methods:
 
-* tree.fit(self, data): construct a decision tree based on some incoming data set; returns nothing
-* tree.predict(self, data): returns labels for your test data.
+* clf.fit(self, data): construct a decision tree based on some incoming data set; returns nothing
+* clf.predict(self, data): returns labels for your test data.
 This should be able to take in an iterable of data records (either a tuple of records, or a list of records, or Pandas DataFrame).
 
 The tree should take two optional parameters: ``max_depth`` and ``min_leaf_size``.
@@ -21,6 +21,10 @@ The tree should take two optional parameters: ``max_depth`` and ``min_leaf_size`
 If not specified, it'll walk down the chain until a region of parameter space has 100% of one type of class OR only 1 data point.
 * ``min_leaf_size`` will limit the minimum number of data points that may exist within a region before ending a decision chain.
 If not specified, it'll also walk down the chain until a region of parameter space has 100% of one type of class OR only 1 data point.
+
+Your implementation should only work on two characteristics total.
+Keep the scope narrow.
+To decide which characteristics to use, try visualizing your data and figuring out where the best separation between classes lies.
 
 Your implementation must include tests.
 The tests must run in both Python 2 and Python 3.
@@ -33,10 +37,17 @@ You can either use the column named "target" or "class_name" as your class label
 They each map directly to each other.
 
 
+Stretch Goal
+-----------
+
+Enable your classifier to use as many characteristics as you provide.
+For example, if your input data from ``flowers_data.csv`` looks like (petal_length, petal_width, sepal_length, sepal_width), your tree should be able to split along any one of those characteristics.
+
+
 Submitting Your Work
 ====================
 
-When you've completed your work and all your tests are passing, submit a pull request from the ``decision-tree`` branch back to master.
+When you've completed your work and all your tests are passing, submit a pull request from the ``decision-tree`` branch back to ``master``.
 Copy the URL for that pull request and submit it using the URL input on Canvas.
 Once submitted you may merge your branch back to ``master``.
 
