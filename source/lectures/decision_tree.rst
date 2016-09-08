@@ -76,6 +76,6 @@ Attributes
 Operations
 ==========
 
-* **tree.fit(training_data)**: construct the tree and build up the decision chains. Returns nothing.
-* **tree.predict(test_data)** -> test_data + classification: predict the classification of new data given the decision chains built already built. Returns the data given, as well as the labels output by the tree.
+* **clf.fit(training_data)**: construct the tree and build up the decision chains. Returns nothing.
+* **clf.predict(test_data)** -> test_data + classification: predict the classification of new data given the decision chains built already built. Returns the data given, as well as the labels output by the tree.
 
