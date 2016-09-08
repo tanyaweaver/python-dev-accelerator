@@ -35,7 +35,7 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    /lectures/intro_to-pandas
+    /lectures/intro_to_pandas
     /lectures/supervised_classification
     /lectures/decision_tree
 

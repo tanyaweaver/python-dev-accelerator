@@ -32,8 +32,11 @@ Review
 
 Concepts
 ========
+.. toctree::
+   :maxdepth: 1
 
-* When, Why, and How to Rescale Data
+   /lectures/rescaling_data
+
 * The K-Nearest Neighbors Algorithm
 * Pagination in Django Apps
 

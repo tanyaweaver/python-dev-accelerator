@@ -70,12 +70,12 @@ Disadvantages
 Attributes
 ==========
 
-* max_depth: the maximum number of decisions any branch can take
-* min_leaf_size: the minimum number of data points acceptable before stopping iteration
+* **max_depth**: the maximum number of decisions any branch can take
+* **min_leaf_size**: the minimum number of data points acceptable before stopping iteration
 
 Operations
 ==========
 
-* tree.fit(``training_data``): construct the tree and build up the decision chains. Returns nothing.
-* tree.predict(``test_data``) -> test_data + classification: predict the classification of new data given the decision chains built already built. Returns the data given, as well as the labels output by the tree.
+* **tree.fit(training_data)**: construct the tree and build up the decision chains. Returns nothing.
+* **tree.predict(test_data)** -> test_data + classification: predict the classification of new data given the decision chains built already built. Returns the data given, as well as the labels output by the tree.
 
