@@ -24,8 +24,8 @@ Django Views
 ------------
 
 .. include:: /readings/django_readings.rst
-    :start-line: 34
-    :end-line: 54
+    :start-line: 36
+    :end-line: 56
 
 Review
 ======

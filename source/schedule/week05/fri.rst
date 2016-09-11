@@ -21,7 +21,7 @@ In addition, you should **skim** these before the beginning of the next week:
 
 .. include:: /readings/django_readings.rst
     :start-line: 17
-    :end-line: 29
+    :end-line: 31
 
 
 Assignments

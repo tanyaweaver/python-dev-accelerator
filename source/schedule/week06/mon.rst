@@ -27,7 +27,7 @@ Readings
 
 .. include:: /readings/django_readings.rst
     :start-line: 17
-    :end-line: 29
+    :end-line: 31
 
 
 Review
