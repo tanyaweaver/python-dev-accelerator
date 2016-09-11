@@ -483,28 +483,430 @@ In general, we use only the basic form, and apply all available, unapplied migra
       Applying library_patron.0001_initial... OK
       Applying sessions.0001_initial... OK
 
-Because we haven't ever migrated anything in this project our migration is applied in addition to all the other migrations that are needed for basic Django functionality.
+Whoa! That's a lot of stuff.
+We didn't create all those migrations.
+What happened?
+Because we haven't ever migrated anything in this project our migration is not alone.
+Django detects that there are other migrations that need running, and applies them all.
 
-In Process
-==========
+Rollback and Retry
+------------------
 
-Basic Usage
+Let's now imagine that we decide that this simple patron profile we've built is not enough.
+Perhaps we need to have an address for our patrons.
+So we have to add a few fields to our model, perhaps like this:
 
-    creating Migrations
+.. code-block:: python
 
-    applying Migrations
+    # in library_patron/models.py
+
+    class PatronProfile(models.Model):
+        """A profile representing a library patron"""
+        # ... other fields here
+        address_1 = models.CharField(
+            "Street Address 1",
+            max_length=255,
+            blank=True,
+            null=True)
+        address_2 = models.CharField(
+            "Street Address 2",
+            max_length=255,
+            blank=True,
+            null=True)
+        city = models.CharField(
+            max_length=128,
+            blank=True,
+            null=True)
+        state = models.CharField(
+            max_length=2,
+            blank=True,
+            null=True)
+        post_code = models.CharField(
+            max_length=5,
+            blank=True,
+            null=True)
+
+Once we have updated our model code, we can create a new migration file and then apply it:
+
+.. code-block:: bash
+
+    (library_project)$ ./manage.py makemigrations library_patron --name add_address_fields
+    Migrations for 'library_patron':
+      library_patron/migrations/0002_add_address_fields.py:
+        - Add field address_1 to patronprofile
+        - Add field address_2 to patronprofile
+        - Add field city to patronprofile
+        - Add field post_code to patronprofile
+        - Add field state to patronprofile
+    (library_project)$ ./manage.py migrate
+    Operations to perform:
+      Apply all migrations: admin, auth, contenttypes, library_patron, sessions
+    Running migrations:
+      Applying library_patron.0002_add_address_fields... OK
+
+But wait, we've made a mistake.
+As it turns out while ZIP-codes in the US have only 5 digits,
+in Canada they have 6 (and a dash in the middle).
+So our limit of 5 characters for the post code field is not sufficient.
+
+We could fix this by updating the model and then making and applying a new migration,
+but we haven't actually pushed this code yet.
+Let's do something a bit more sophisticated.
+
+We can also run our migrations in reverse, undoing the changes they made.
+To do so, we specify the migration we want to be the last one applied.
+In our case here, we can specify our initial migration to roll back to that state:
+
+.. code-block:: bash
+
+    (library_project)$ ./manage.py migrate library_patron 0001
+    Operations to perform:
+      Target specific migration: 0001_initial, from library_patron
+    Running migrations:
+      Rendering model states... DONE
+      Unapplying library_patron.0002_add_address_fields... OK
+
+Once our database has been changed back to the previous state,
+we can edit our Django model code to make the required update:
+
+.. code-block:: python
+
+    # in library_patron/models.py
+
+    post_code = models.CharField(
+        max_length=7, # <-- update this
+        blank=True,
+        null=True)
+
+And now we can remove the old migration file, create a new one and re-apply our changes:
+
+.. code-block:: bash
+
+    (library_project)$ rm library_patron/migrations/0002_add_address_fields.py
+    (library_project)$ ./manage.py makemigrations library_patron --name add_address_fields
+    Migrations for 'library_patron':
+      library_patron/migrations/0002_add_address_fields.py:
+        - Add field address_1 to patronprofile
+        - Add field address_2 to patronprofile
+        - Add field city to patronprofile
+        - Add field post_code to patronprofile
+        - Add field state to patronprofile
+    (library_project)$ ./manage.py migrate
+    Operations to perform:
+      Apply all migrations: admin, auth, contenttypes, library_patron, sessions
+    Running migrations:
+      Applying library_patron.0002_add_address_fields... OK
+
+Please do note that some migrations cannot be undone.
+If you have a migration that deletes a field that contained data,
+it is not possible to fully undo that migration.
+The data that had been held in that field is lost when the field is dropped.
+Unless you took the extra step of migrating your data first.
+
 
 Data Migrations
+===============
 
-    creating
+Consider the following scenario.
+We have now discovered that our Patron profile ought to allow for more than one address.
+We could add a new set of fields for a second address,
+but many (or perhaps most) of our patrons will only have one address.
+We would end up with a lot of empty columns in our database, which is wasteful of space.
+And what if a patron needs three addresses?  Or four?
+When will the madness end?
 
-    applying
+Instead, let's break an address out as a separate model.
+If we have a foreign key on that field to our profile, we can have as many addresses as we want associated with a single profile.
 
-Migration Dependencies
+But we have a problem.
+Our one-address form has been in use for some time now.
+There is data in the database that we care about.
+Should we leave the existing address fields in place?
+That would be silly.
+We'd have data about the same thing in two difference places.
 
-    automatic dependencies
+Instead, let's migrate our data out of the fields on our patron profile.
 
-    Things to watch out for
+We can create new address records to hold them.
+We'll get our new storage format, and not lose any data along the way.
 
-    resolving parallel Migrations
+Let's begin with our new address class:
+
+.. code-block:: python
+
+    @python_2_unicode_compatible
+    class PatronAddress(models.Model):
+        """A physical address for a patron"""
+        profile = models.ForeignKey(PatronProfile, related_name="addresses")
+        address_1 = models.CharField(
+            "Street Address 1",
+            max_length=255)
+        address_2 = models.CharField(
+            "Street Address 2",
+            max_length=255,
+            blank=True,
+            null=True)
+        city = models.CharField(max_length=128)
+        state = models.CharField(max_length=2)
+        post_code = models.CharField(max_length=7)
+
+Now, we *could* just remove the fields for addresses from the ``PatronProfile`` model and add this new model and make a migration.
+After running it, we'd have our new model, and the old model would be cleaned up.
+But we would have lost all the data about addresses that is already in our database.
+What we need to do is create this model first, then move the data from one model to the other.
+Finally, we can remove the original fields.
+
+That middle step is a thing we call a **data migration**.
+The data migration allows us to change the data in our database, as opposed to changing the schema of the database itself.
+Data migrations are a powerful tool in managing a database over time.
+They allow us to change where or how data is stored in our database.
+This greatly increases our power to update the database to match new challenges.
+
+So, let's create a migration to add this new model, and then think about how to address the problem of moving address data.
+
+.. code-block:: bash
+
+    (library_project)$ ./manage.py makemigrations library_patron --name add_address_model
+    Migrations for 'library_patron':
+      library_patron/migrations/0003_add_address_model.py:
+        - Create model PatronAddress
+
+Creating Data Migrations
+------------------------
+
+Data migrations are not different on the surface from standard migrations.
+But the ORM cannot automatically detect what we want to do with our data.
+So instead we have to create an *empty* migration and manually add the operations we need.
+To do so, we issue an altered ``makemigrations`` command.
+We use the ``--empty`` command flag to indicate that we don't want any operations to be generated for us.
+
+.. code-block:: bash
+
+    (library_project)$ ./manage.py makemigrations --empty --name move_address_fields library_patron
+    Migrations for 'library_patron':
+      library_patron/migrations/0004_move_address_fields.py:
+
+Let's take a quick look at what we got:
+
+.. code-block:: python
+
+    # library_patron/migrations/0004_move_address_fields.py
+    class Migration(migrations.Migration):
+
+        dependencies = [
+            ('library_patron', '0003_add_address_model'),
+        ]
+
+        operations = [
+        ]
+
+Our migration is dependent on the previous one we created,
+the one that adds the address model.
+This means that at the point when this migration runs, we can count on that model existing.
+
+The reason that is important is because we need that model (and the table that stores its data) to exist.
+That way we have a way to store the data we are moving from the existing ``PatronProfile`` instances.
+
+So how do we move that data?
+The key is in a special kind of operation provided by the migration system, ``RunPython``
+
+The ``RunPython`` operation is a bit different from other operations.
+The others we've seen so far are all aimed at making schema changes to our database.
+This operation allows us to run an arbitrary Python function instead.
+In this function we can write code to interact with instances of models in our application.
+
+In our case, we'd like to work with instances of our ``PatronProfile``.
+For each instance, we'd like to read the value of the fields that provide address information.
+We'll create a new instance of our new ``PatronAddress`` model, and write the data to the corresponding field there.
+Then, we'll relate the new address model instance to our existing profile instance.
+Finally, we'll save these new model instances.
+
+Let's write a function that will do this.
+Functions that are run by the migrations ``RunPython`` operation *require* a particular argument signature.
+They will be called with ``apps`` and ``schema_editor``.
+The ``apps`` argument gives us tools to interact with installed applications.
+The ``schema_editor`` argument provides tools for updating your database schema directly.
+We will not likely need to use it directly.
+
+Here's a function that fills our needs:
+
+.. code-block:: python
+
+    # in library_patron/migrations/0004_move_address_fields.py
+    def move_address_data_to_address_model(apps, schema_editor):
+        PatronProfile = apps.get_model('library_patron', 'PatronProfile')
+        PatronAddress = apps.get_model('library_patron', 'PatronAddress')
+        fields = ['address_1', 'address_2', 'city', 'state', 'post_code']
+        for profile in PatronProfile.objects.all():
+            if profile.address_1:
+                address = PatronAddress(profile=profile)
+                for fieldname in fields:
+                    setattr(address, fieldname, getattr(profile, fieldname))
+                address.save()
+
+We use ``apps.get_model`` to retrieve the Model classes we need to interact with.
+You should always do this, rather than importing the models directly.
+There are subtle but significant differences in how the models are instrumented to interact with the database.
+
+Once we have the Model classes, we can interact with them just as normal.
+All the same query operations work just as they do in normal Django code.
+So we can use the Python ``setattr`` and ``getattr`` functions to copy the values of specific attributes from one model to the other.
+Also notice that if our Profile did not originally include address data, we do not create an address instance for it.
+To apply our migration, we'll need to add this function as an operation, using ``RunPython``:
+
+.. code-block:: python
+
+    # in library_patron/migrations/0004_move_address_fields.py
+    class Migration(migrations.Migration):
+
+        dependencies = [
+            ('library_patron', '0003_add_address_model'),
+        ]
+
+        operations = [  # add the following statement
+            migrations.RunPython(
+                move_address_data_to_address_model
+            )
+        ]
+
+
+Applying Data Migrations
+------------------------
+
+Once we've got this set up, we can apply both our model migration and our new data migration in one shot.
+But what if we want to undo the changes we made?
+Schema migrations are in many cases self-reversing.
+The opposite operation can be calculated by the ORM.
+In data migrations this is not the case.
+
+We *can* however, supply our own reverse operations.
+The ``RunPython`` migration operation can take a second argument that is the function to be run to undo whatever changes were made.
+If it is not possible to undo a data migration, then do not supply this argument.
+The migration system will recognize this as a migration that cannot be undone and refuse to apply it.
+
+Let's add a reverse function:
+
+.. code-block:: python
+
+    def move_address_data_back_to_profile(apps, schema_editor):
+        PatronProfile = apps.get_model('library_patron', 'PatronProfile')
+        fields = ['address_1', 'address_2', 'city', 'state', 'post_code']
+        for profile in PatronProfile.objects.all():
+            first_addr = profile.addresses.order_by('pk').first()
+            if first_addr is not None:
+                for fieldname in fields:
+                    setattr(profile, fieldname, getattr(first_addr, fieldname))
+
+Now we can add this reverse function as a second positional argument to our operation:
+
+.. code-block:: python
+
+    # in library_patron/migrations/0004_move_address_fields.py
+    class Migration(migrations.Migration):
+
+        dependencies = [
+            ('library_patron', '0003_add_address_model'),
+        ]
+
+        operations = [  # add the following statement
+            migrations.RunPython(
+                move_address_data_to_address_model,
+                move_address_data_back_to_profile, # <-- add this line
+            )
+        ]
+
+Once this is set, we can apply our new migrations,
+both forward and in reverse:
+
+.. code-block:: bash
+
+    (library_project)$ ./manage.py migrate
+    Operations to perform:
+      Apply all migrations: admin, auth, contenttypes, library_patron, sessions
+    Running migrations:
+      Applying library_patron.0003_add_address_model... OK
+      Applying library_patron.0004_move_address_fields... OK
+
+.. code-block:: bash
+
+    (library_project)$ ./manage.py migrate library_patron 0002
+    Operations to perform:
+      Target specific migration: 0002_add_address_fields, from library_patron
+    Running migrations:
+      Rendering model states... DONE
+      Unapplying library_patron.0004_move_address_fields... OK
+      Unapplying library_patron.0003_add_address_model... OK
+    The following content types are stale and need to be deleted:
+
+        library_patron | patronaddress
+
+    Any objects related to these content types by a foreign key will also
+    be deleted. Are you sure you want to delete these content types?
+    If you're unsure, answer 'no'.
+
+        Type 'yes' to continue, or 'no' to cancel: yes
+
+Notice the extra work that Django is performing here.
+When we create a model, Django adds an entry to the `content types` table.
+This entry allows us to make dynamic references to our models classes.
+When we remove models, Django tracks the fact, and alerts us that there are now entries,
+both in that table and potentially in other tables that will be deleted.
+In general, this is perfectly safe, but you will want to think about the state of your database.
+You can prevent these deletions by answering `no` to the prompt.
+It is always possible to clean up later, manually.
+
+Other Uses for Data Migrations
+------------------------------
+
+Data migrations allow us to manage the *content* of our database, instead of the *structure*.
+This is useful when we need to update the structure of an existing database.
+We can move data from one table to another, change it from one type to another, and much more.
+
+But we can also use data migrations to create data our system requires in order to run.
+Imagine that we have a ``branch`` field on our ``PatronProfile`` model.
+It might be a "ForeignKey" field that references an instance of a ``LibraryBranch`` model.
+That way, we can associate a patron with the specific branch where they pick up and return books.
+It might look something like this:
+
+.. code-block:: python
+
+    # in library_assets/models.py
+
+    @python_2_unicode_compatible
+    class Branch(models.Model):
+        branch_name = models.CharField(max_length=128)
+
+    # in library_patron/models.py on the PatronProfile class:
+
+    branch = models.ForeignKeyField(
+        "Branch",
+        blank=True,
+        null=True)
+
+It would probably be nice to have a few branches available to choose from when a new patron signs up.
+And we don't really want to have some employee manually type them all in.
+We can use a data migration to inject a number of new ``Branch`` instances as part of the app upgrade process.
+
+Older versions of Django documentation encourage using "initial data fixtures" to do this type of work.
+The problem with that approach is that the data in a fixture is "frozen" to a particular version of a model.
+If the model changes over time, the fixture needs to be updated as well.
+But because data migrations are run in a specific position in your data migration,
+you can rely on the items you insert being correct for the state of your models *at that point in time*.
+And you can use later data migrations to make needed change to that initial data.
+
+
+Wrapping Up
+===========
+
+In this lecture, we've learned about Django migrations.
+We've learned that migrations help us to manage the changes in our database over time.
+We've seen how to create migrations, and how to apply them.
+And we've learned about data migrations.
+We've seen that they can help us to make more complex changes to our database.
+And that we can use them to inject initial data into our database.
+
+A final word about migrations.
+**They are absolutely a part of your source code**\ .
+You **must** add them to your repository and keep them.
+
 
