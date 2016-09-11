@@ -14,7 +14,7 @@ Objectives
 ==========
 
 * Understand how relationships between data models are handled in Django
-* Learn about how Django accesses files 
+* Learn about how Django accesses files
 * Learn how node deletion affects a Binary Search Tree
 
 Readings
@@ -24,8 +24,8 @@ Django Views
 ------------
 
 .. include:: /readings/django_readings.rst
-    :start-line: 34
-    :end-line: 54
+    :start-line: 36
+    :end-line: 56
 
 Review
 ======
@@ -38,10 +38,6 @@ Concepts
 
 .. toctree::
     :maxdepth: 2
-
-    .. /lectures/stats_day3
-    .. /lectures/intro_to_python_9_generators
-    .. /lectures/django_testing
 
     /lectures/django_relationships
     /lectures/django_files
@@ -59,7 +55,7 @@ Assignments
 .. * :doc:`/assignments/statistics_problem_set3`
 .. * :doc:`/assignments/django_1_data_model`
 
-* :doc:`/assignments/bst_3_delete`
+* :doc:`/assignments/bst_2_traversal`
 * :doc:`/assignments/aws_account`
 * :doc:`/assignments/django_2_registration`
 * :doc:`/assignments/daily_lj_entry`

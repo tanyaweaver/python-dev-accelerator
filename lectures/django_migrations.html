@@ -1,0 +1,900 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Django: Migrations &mdash; Python 401 2.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python 401 2.1 documentation" href="../index.html" />
+    <link rel="up" title="Tuesday" href="../schedule/week06/tue.html" />
+    <link rel="next" title="A Python Miscellany: Iterators &amp; Generators" href="intro_to_python_9_generators.html" />
+    <link rel="prev" title="Django Testing" href="django_testing.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+
+<link rel="stylesheet" href="../_static/custom.css" type="text/css" media="screen" charset="utf-8" />
+
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="intro_to_python_9_generators.html" title="A Python Miscellany: Iterators &amp; Generators"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="django_testing.html" title="Django Testing"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week06/tue.html" accesskey="U">Tuesday</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="django-migrations">
+<h1>Django: Migrations<a class="headerlink" href="#django-migrations" title="Permalink to this headline">¶</a></h1>
+<p>In which we learn how to manage a database schema over time</p>
+<div class="section" id="why-migrations">
+<h2>Why Migrations?<a class="headerlink" href="#why-migrations" title="Permalink to this headline">¶</a></h2>
+<p>In a web application that is backed by a database, our data model represents all the things you care about persisting.
+The <a class="reference external" href="https://en.wikipedia.org/wiki/Database_schema">schema</a> of our database represents your data model.
+Establishing a solid data model and a good schema to hold it is key to building a good web application.
+But is the creation of a data model (and the associated schema) a one-and-done job?
+There are a number of reasons that the answer to that question should be <strong>no</strong>.</p>
+<p>First, the form of our data is not static, over time it can change.
+Sometimes you can adapt this new form into an existing schema,
+but sometimes it&#8217;s easier or better to adapt our schema to the change.
+Second, the problem we are trying to solve may change.
+New problems can lead to a need for new data models.
+We&#8217;ll need to be able to update our model to solve new challenges as they arise.
+Third, our application may require new features.
+Often these features involve using data we have in ways we have not anticipated.
+Or, they may require integrating new data we didn&#8217;t care to keep before.
+Finally, we may reach a scale where our current schema is no longer viable.
+Queries that work well at a small scale may not do so well when larger numbers are involved.
+Often, changing the shape of our data can help reduce the load.</p>
+<p>For all these reasons (and more) it is important that we be able to update our database.
+And it is important that we be able to do so <em>while there is data in it that we care about</em>.</p>
+<p>Up until this point, when we have made changes to a database we have dropped our existing tables and replaced them with new ones.
+We&#8217;ve used code that looks like this in our database initialization scripts:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">get_engine</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+<span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">drop_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="n">session_factory</span> <span class="o">=</span> <span class="n">get_session_factory</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">transaction</span><span class="o">.</span><span class="n">manager</span><span class="p">:</span>
+    <span class="n">dbsession</span> <span class="o">=</span> <span class="n">get_tm_session</span><span class="p">(</span><span class="n">session_factory</span><span class="p">,</span> <span class="n">transaction</span><span class="o">.</span><span class="n">manager</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">fields</span> <span class="ow">in</span> <span class="n">starter_data</span><span class="p">:</span>
+        <span class="n">dbsession</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Model</span><span class="p">(</span><span class="o">**</span><span class="n">fields</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This is fine, so long as the only data we have in our database is what comes from <code class="docutils literal"><span class="pre">starter_data</span></code>.
+But if we have a system where user-provided data is generated over time,
+or where our own system generates information we are keeping,
+it is not okay to simply throw that data away when we need to change our database.
+So how can we make changes to an existing database?</p>
+<p>One possible solution is to store the SQL statements needed to build our database tables.
+Each time a change is made, we add two files.
+The first file is the SQL needed to build the new database tables.
+The second file is a series of SQL statements needed to make changes to the previous tables to transform them.
+Executing the former file will build a brand new database in the new state.
+Executing the latter will update an existing database to the new state.</p>
+<p>But we should ask ourselves a few questions here.
+First, how are we going to keep track of all these sql files.
+Can we build a naming scheme that makes it clear which is the right one, <em>right now</em>?
+Second, are we really interested in writing all the SQL required to make these files.
+We are building models in Python, building our app in Python.</p>
+</div>
+<div class="section" id="what-is-a-migration">
+<h2>What is a Migration?<a class="headerlink" href="#what-is-a-migration" title="Permalink to this headline">¶</a></h2>
+<p>The answer to our problem is to use Python to manage database change over time.
+A <em>migration</em> in Python uses the features of an ORM to provide tools to change our database.
+A migration system compares the current state of our application&#8217;s models to the existing state of the database.
+When a difference is found, that difference can be described with a set of <em>operations</em>.
+These operations are saved into a python script that can be executed.
+When we run the script, the operations run one after another, and the database is updated.
+In the end, the state of the database is a match for the state of your models.</p>
+<p>The dominant ORM systems for Python all support migrations.
+The <a class="reference external" href="http://alembic.zzzcomputing.com/en/latest/">Alembic</a> package provides migration support for the SQLAlchemy ORM.
+For the Django ORM, the ability is included in the Django distribution.
+The <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/migrations/">django.db.migrations</a> package provides all the tools you need.
+This has not always been the case.
+Systems that use Django versions before 1.7 will use an add-on package called <code class="docutils literal"><span class="pre">south</span></code> instead.</p>
+</div>
+<div class="section" id="using-django-migrations">
+<h2>Using Django Migrations<a class="headerlink" href="#using-django-migrations" title="Permalink to this headline">¶</a></h2>
+<p>Since migration support moved into the core of Django in version 1.7,
+they&#8217;ve been promoted as <em>the</em> right way to deal with setting up your models.
+There once was a way to create your database without migrations.
+That time is gone.
+You should always create migrations to set up your initial models.
+And you should make migrations to account for all changes you make to those models.
+The Django migration system should be as much a part of your development routine as version control and testing.</p>
+<div class="section" id="creating-migrations">
+<h3>Creating Migrations<a class="headerlink" href="#creating-migrations" title="Permalink to this headline">¶</a></h3>
+<p>As a concrete example, let&#8217;s consider a simple application for a library.</p>
+<p>We&#8217;ll begin by creating our application using our well-worn path:</p>
+<div class="highlight-bash"><div class="highlight"><pre>$ python3 -m venv library_project
+$ <span class="nb">cd</span> library_project
+$ <span class="nb">source</span> ./bin/activate
+<span class="o">(</span>library_project<span class="o">)</span>$ django-admin start project library
+<span class="o">(</span>library_project<span class="o">)</span>$ <span class="nb">cd</span> library
+<span class="o">(</span>library_project<span class="o">)</span>$ ls
+library  manage.py
+</pre></div>
+</div>
+<p>At this point, we&#8217;ve created a project called <code class="docutils literal"><span class="pre">library</span></code>.
+The <code class="docutils literal"><span class="pre">library</span></code> <em>project root</em> folder it created contains a <code class="docutils literal"><span class="pre">manage.py</span></code> script
+and a <code class="docutils literal"><span class="pre">library</span></code> <em>configuration root</em>, which is a Python package.
+This should be increasingly familiar to us at this point.</p>
+<p>Our next step is to create our first models for this application.
+As a start, we&#8217;d like to have a model that represents the information we need to know about a library patron.
+We can start with a simple model that contains only their library card number.
+Let&#8217;s begin by creating a Django <em>app</em> to hold this model:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>library_project<span class="o">)</span>$ ./manage.py startapp library_patron
+<span class="o">(</span>library_project<span class="o">)</span>$ ls
+library     library_patron  manage.py
+</pre></div>
+</div>
+<p>In our editor, we&#8217;ll sketch in the basic code needed to represent our patron profile.
+We&#8217;d like it to have a one-to-one relationship to our <code class="docutils literal"><span class="pre">AUTH_USER_MODEL</span></code>.
+And we&#8217;d like it to have a library card number that is automatically generated and random.
+Something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in library_patron/models.py</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.utils.encoding</span> <span class="kn">import</span> <span class="n">python_2_unicode_compatible</span>
+
+
+<span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">PatronProfile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A profile representing a library patron&quot;&quot;&quot;</span>
+
+    <span class="n">card_number</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">UUIDField</span><span class="p">(</span>
+        <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
+        <span class="n">editable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">AUTH_USER_MODEL</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">get_username</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s2">&quot;{}: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">card_number</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once we have a model, we need to make a migration in order to allow Django to build the database table(s) needed to support it.
+But before we can make a migration, we have to be certain that Django will be aware of our model.
+That requires adding our new app to the <code class="docutils literal"><span class="pre">INSTALLED_APPS</span></code> setting:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in library/settings.py</span>
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;library_patron&#39;</span><span class="p">,</span> <span class="c1">#&lt;-- Add this line</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>When that&#8217;s all set, we can go ahead and create a new migration for our app.
+The command is in the form <code class="docutils literal"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">makemigrations</span> <span class="pre">&lt;app_name&gt;</span></code>.
+We substitute the name of our app package for <code class="docutils literal"><span class="pre">&lt;app_name&gt;</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>library_project<span class="o">)</span>$ ./manage.py makemigrations library_patron
+Migrations <span class="k">for</span> <span class="s1">&#39;library_patron&#39;</span>:
+  library_patron/migrations/0001_initial.py:
+    - Create model PatronProfile
+</pre></div>
+</div>
+<p>We should pay attention to a few things about what just happened there.
+First, notice that our migration is automatically named for us.
+The filename that was created is <code class="docutils literal"><span class="pre">0001_initial.py</span></code>.
+The number is automatically generated, we don&#8217;t have control over that.
+But the name part (after the <code class="docutils literal"><span class="pre">_</span></code>) can be controlled.
+If you provide a name on the command line that will be used instead:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>library_project<span class="o">)</span>$ rm library_patron/migrations/0001_initial.py
+<span class="o">(</span>library_project<span class="o">)</span>$ ./manage.py makemigrations library_patron --name silly_name
+Migrations <span class="k">for</span> <span class="s1">&#39;library_patron&#39;</span>:
+  library_patron/migrations/0001_silly_name.py:
+    - Create model PatronProfile
+</pre></div>
+</div>
+<p>But that&#8217;s a silly name, so let&#8217;s put the original back.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>library_patron<span class="o">)</span>$ ./manage.py makemigrations library_patron
+Migrations <span class="k">for</span> <span class="s1">&#39;library_patron&#39;</span>:
+  library_patron/migrations/0001_initial.py:
+    - Create model PatronProfile
+</pre></div>
+</div>
+<p>One more thing we should notice about what we just did.
+Until they have been applied, there&#8217;s nothing particularly special about migrations.
+We can create and delete them.
+This will become important later.</p>
+</div>
+<div class="section" id="what-s-in-a-migration">
+<h3>What&#8217;s In a Migration?<a class="headerlink" href="#what-s-in-a-migration" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s take a moment to look over and talk about what was generated by that <code class="docutils literal"><span class="pre">makemigrations</span></code> command.
+There are a coupld of important aspects to the code there that we should understand.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in library_patron/migrations/0001_initial.py</span>
+
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+
+    <span class="n">initial</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">swappable_dependency</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">AUTH_USER_MODEL</span><span class="p">),</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+<p>Notice that our migration system generates <code class="docutils literal"><span class="pre">Migration</span></code> class objects.
+These objects bear the methods that power the migration system.
+The <code class="docutils literal"><span class="pre">initial</span></code> class attribute tells us whether this migration is the first one for an app.
+The <code class="docutils literal"><span class="pre">dependencies</span></code> class attribute provides a list of the other migrations upon which this one depends.
+Django uses these lists to assemble a graph of migrations that need to be run,
+and to calculate the correct order in which to run them.</p>
+<p>Moving on.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">migrations</span><span class="o">.</span><span class="n">CreateModel</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;PatronProfile&#39;</span><span class="p">,</span>
+        <span class="n">fields</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">(</span><span class="s1">&#39;card_number&#39;</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">UUIDField</span><span class="p">(</span>
+                <span class="n">default</span><span class="o">=</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">,</span>
+                <span class="n">editable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                <span class="n">serialize</span><span class="o">=</span><span class="bp">False</span>
+            <span class="p">)),</span>
+            <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span>
+                <span class="n">on_delete</span><span class="o">=</span><span class="n">django</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">deletion</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+                <span class="n">to</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">AUTH_USER_MODEL</span>
+            <span class="p">)),</span>
+        <span class="p">],</span>
+    <span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The final class attribute is <code class="docutils literal"><span class="pre">operations</span></code>.
+This attribure is a list of <em>operation</em> instances from the <code class="docutils literal"><span class="pre">django.db.migrations</span></code> package.
+There are operations for creating and deleting tables.
+For adding, altering and dropping columns.
+And even for running arbitrary Python and SQL code.</p>
+<p>In our initial migration we can see there is only one operation.
+We will be creating a table.
+Notice that the field definitions from our model are replicated here.
+Everything needed to create the SQL that will represent those fields is present on those model field instances.</p>
+<p>It is always a good idea to review the operations generated by the <code class="docutils literal"><span class="pre">makemigrations</span></code> command.
+The migration system is good, but it is not perfect.
+There are times when it misses something.
+And situations you can create that it cannot handle.
+If what you see does not align with what you expect, try to figure out why before you apply the migration.
+Remember that you can always delete this file and re-create the migration,
+so long as you haven&#8217;t yet applied it.</p>
+</div>
+<div class="section" id="applying-migrations">
+<h3>Applying Migrations<a class="headerlink" href="#applying-migrations" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have a better understanding of what we&#8217;ve created, it is time for us to do apply the migration.
+To do so, we use the <code class="docutils literal"><span class="pre">migrate</span></code> Django management command.
+The command takes the form <code class="docutils literal"><span class="pre">./manage.py</span> <span class="pre">migrate</span> <span class="pre">&lt;app_name&gt;</span> <span class="pre">&lt;migration_name&gt;</span></code>.
+Both the <code class="docutils literal"><span class="pre">app_name</span></code> and <code class="docutils literal"><span class="pre">migration_name</span></code> arguments are optional
+Django will apply any migrations that need applying.
+If we supply a specific <cite>app_name</cite>, only migrations from that app will be applied.
+If we supply a specific migration name, then only that specific migration will be applied.</p>
+<p>In general, we use only the basic form, and apply all available, unapplied migrations:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>library_project<span class="o">)</span>$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, library_patron, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying library_patron.0001_initial... OK
+  Applying sessions.0001_initial... OK
+</pre></div>
+</div>
+<p>Whoa! That&#8217;s a lot of stuff.
+We didn&#8217;t create all those migrations.
+What happened?
+Because we haven&#8217;t ever migrated anything in this project our migration is not alone.
+Django detects that there are other migrations that need running, and applies them all.</p>
+</div>
+<div class="section" id="rollback-and-retry">
+<h3>Rollback and Retry<a class="headerlink" href="#rollback-and-retry" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s now imagine that we decide that this simple patron profile we&#8217;ve built is not enough.
+Perhaps we need to have an address for our patrons.
+So we have to add a few fields to our model, perhaps like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in library_patron/models.py</span>
+
+<span class="k">class</span> <span class="nc">PatronProfile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A profile representing a library patron&quot;&quot;&quot;</span>
+    <span class="c1"># ... other fields here</span>
+    <span class="n">address_1</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="s2">&quot;Street Address 1&quot;</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">address_2</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="s2">&quot;Street Address 2&quot;</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">city</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">post_code</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once we have updated our model code, we can create a new migration file and then apply it:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>library_project<span class="o">)</span>$ ./manage.py makemigrations library_patron --name add_address_fields
+Migrations <span class="k">for</span> <span class="s1">&#39;library_patron&#39;</span>:
+  library_patron/migrations/0002_add_address_fields.py:
+    - Add field address_1 to patronprofile
+    - Add field address_2 to patronprofile
+    - Add field city to patronprofile
+    - Add field post_code to patronprofile
+    - Add field state to patronprofile
+<span class="o">(</span>library_project<span class="o">)</span>$ ./manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, library_patron, sessions
+Running migrations:
+  Applying library_patron.0002_add_address_fields... OK
+</pre></div>
+</div>
+<p>But wait, we&#8217;ve made a mistake.
+As it turns out while ZIP-codes in the US have only 5 digits,
+in Canada they have 6 (and a dash in the middle).
+So our limit of 5 characters for the post code field is not sufficient.</p>
+<p>We could fix this by updating the model and then making and applying a new migration,
+but we haven&#8217;t actually pushed this code yet.
+Let&#8217;s do something a bit more sophisticated.</p>
+<p>We can also run our migrations in reverse, undoing the changes they made.
+To do so, we specify the migration we want to be the last one applied.
+In our case here, we can specify our initial migration to roll back to that state:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>library_project<span class="o">)</span>$ ./manage.py migrate library_patron 0001
+Operations to perform:
+  Target specific migration: 0001_initial, from library_patron
+Running migrations:
+  Rendering model states... DONE
+  Unapplying library_patron.0002_add_address_fields... OK
+</pre></div>
+</div>
+<p>Once our database has been changed back to the previous state,
+we can edit our Django model code to make the required update:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in library_patron/models.py</span>
+
+<span class="n">post_code</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+    <span class="n">max_length</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="c1"># &lt;-- update this</span>
+    <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And now we can remove the old migration file, create a new one and re-apply our changes:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>library_project<span class="o">)</span>$ rm library_patron/migrations/0002_add_address_fields.py
+<span class="o">(</span>library_project<span class="o">)</span>$ ./manage.py makemigrations library_patron --name add_address_fields
+Migrations <span class="k">for</span> <span class="s1">&#39;library_patron&#39;</span>:
+  library_patron/migrations/0002_add_address_fields.py:
+    - Add field address_1 to patronprofile
+    - Add field address_2 to patronprofile
+    - Add field city to patronprofile
+    - Add field post_code to patronprofile
+    - Add field state to patronprofile
+<span class="o">(</span>library_project<span class="o">)</span>$ ./manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, library_patron, sessions
+Running migrations:
+  Applying library_patron.0002_add_address_fields... OK
+</pre></div>
+</div>
+<p>Please do note that some migrations cannot be undone.
+If you have a migration that deletes a field that contained data,
+it is not possible to fully undo that migration.
+The data that had been held in that field is lost when the field is dropped.
+Unless you took the extra step of migrating your data first.</p>
+</div>
+</div>
+<div class="section" id="data-migrations">
+<h2>Data Migrations<a class="headerlink" href="#data-migrations" title="Permalink to this headline">¶</a></h2>
+<p>Consider the following scenario.
+We have now discovered that our Patron profile ought to allow for more than one address.
+We could add a new set of fields for a second address,
+but many (or perhaps most) of our patrons will only have one address.
+We would end up with a lot of empty columns in our database, which is wasteful of space.
+And what if a patron needs three addresses?  Or four?
+When will the madness end?</p>
+<p>Instead, let&#8217;s break an address out as a separate model.
+If we have a foreign key on that field to our profile, we can have as many addresses as we want associated with a single profile.</p>
+<p>But we have a problem.
+Our one-address form has been in use for some time now.
+There is data in the database that we care about.
+Should we leave the existing address fields in place?
+That would be silly.
+We&#8217;d have data about the same thing in two difference places.</p>
+<p>Instead, let&#8217;s migrate our data out of the fields on our patron profile.</p>
+<p>We can create new address records to hold them.
+We&#8217;ll get our new storage format, and not lose any data along the way.</p>
+<p>Let&#8217;s begin with our new address class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">PatronAddress</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A physical address for a patron&quot;&quot;&quot;</span>
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">PatronProfile</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;addresses&quot;</span><span class="p">)</span>
+    <span class="n">address_1</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="s2">&quot;Street Address 1&quot;</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">address_2</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="s2">&quot;Street Address 2&quot;</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">city</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">post_code</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, we <em>could</em> just remove the fields for addresses from the <code class="docutils literal"><span class="pre">PatronProfile</span></code> model and add this new model and make a migration.
+After running it, we&#8217;d have our new model, and the old model would be cleaned up.
+But we would have lost all the data about addresses that is already in our database.
+What we need to do is create this model first, then move the data from one model to the other.
+Finally, we can remove the original fields.</p>
+<p>That middle step is a thing we call a <strong>data migration</strong>.
+The data migration allows us to change the data in our database, as opposed to changing the schema of the database itself.
+Data migrations are a powerful tool in managing a database over time.
+They allow us to change where or how data is stored in our database.
+This greatly increases our power to update the database to match new challenges.</p>
+<p>So, let&#8217;s create a migration to add this new model, and then think about how to address the problem of moving address data.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>library_project<span class="o">)</span>$ ./manage.py makemigrations library_patron --name add_address_model
+Migrations <span class="k">for</span> <span class="s1">&#39;library_patron&#39;</span>:
+  library_patron/migrations/0003_add_address_model.py:
+    - Create model PatronAddress
+</pre></div>
+</div>
+<div class="section" id="creating-data-migrations">
+<h3>Creating Data Migrations<a class="headerlink" href="#creating-data-migrations" title="Permalink to this headline">¶</a></h3>
+<p>Data migrations are not different on the surface from standard migrations.
+But the ORM cannot automatically detect what we want to do with our data.
+So instead we have to create an <em>empty</em> migration and manually add the operations we need.
+To do so, we issue an altered <code class="docutils literal"><span class="pre">makemigrations</span></code> command.
+We use the <code class="docutils literal"><span class="pre">--empty</span></code> command flag to indicate that we don&#8217;t want any operations to be generated for us.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>library_project<span class="o">)</span>$ ./manage.py makemigrations --empty --name move_address_fields library_patron
+Migrations <span class="k">for</span> <span class="s1">&#39;library_patron&#39;</span>:
+  library_patron/migrations/0004_move_address_fields.py:
+</pre></div>
+</div>
+<p>Let&#8217;s take a quick look at what we got:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># library_patron/migrations/0004_move_address_fields.py</span>
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;library_patron&#39;</span><span class="p">,</span> <span class="s1">&#39;0003_add_address_model&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+<p>Our migration is dependent on the previous one we created,
+the one that adds the address model.
+This means that at the point when this migration runs, we can count on that model existing.</p>
+<p>The reason that is important is because we need that model (and the table that stores its data) to exist.
+That way we have a way to store the data we are moving from the existing <code class="docutils literal"><span class="pre">PatronProfile</span></code> instances.</p>
+<p>So how do we move that data?
+The key is in a special kind of operation provided by the migration system, <code class="docutils literal"><span class="pre">RunPython</span></code></p>
+<p>The <code class="docutils literal"><span class="pre">RunPython</span></code> operation is a bit different from other operations.
+The others we&#8217;ve seen so far are all aimed at making schema changes to our database.
+This operation allows us to run an arbitrary Python function instead.
+In this function we can write code to interact with instances of models in our application.</p>
+<p>In our case, we&#8217;d like to work with instances of our <code class="docutils literal"><span class="pre">PatronProfile</span></code>.
+For each instance, we&#8217;d like to read the value of the fields that provide address information.
+We&#8217;ll create a new instance of our new <code class="docutils literal"><span class="pre">PatronAddress</span></code> model, and write the data to the corresponding field there.
+Then, we&#8217;ll relate the new address model instance to our existing profile instance.
+Finally, we&#8217;ll save these new model instances.</p>
+<p>Let&#8217;s write a function that will do this.
+Functions that are run by the migrations <code class="docutils literal"><span class="pre">RunPython</span></code> operation <em>require</em> a particular argument signature.
+They will be called with <code class="docutils literal"><span class="pre">apps</span></code> and <code class="docutils literal"><span class="pre">schema_editor</span></code>.
+The <code class="docutils literal"><span class="pre">apps</span></code> argument gives us tools to interact with installed applications.
+The <code class="docutils literal"><span class="pre">schema_editor</span></code> argument provides tools for updating your database schema directly.
+We will not likely need to use it directly.</p>
+<p>Here&#8217;s a function that fills our needs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in library_patron/migrations/0004_move_address_fields.py</span>
+<span class="k">def</span> <span class="nf">move_address_data_to_address_model</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
+    <span class="n">PatronProfile</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s1">&#39;library_patron&#39;</span><span class="p">,</span> <span class="s1">&#39;PatronProfile&#39;</span><span class="p">)</span>
+    <span class="n">PatronAddress</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s1">&#39;library_patron&#39;</span><span class="p">,</span> <span class="s1">&#39;PatronAddress&#39;</span><span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;address_1&#39;</span><span class="p">,</span> <span class="s1">&#39;address_2&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;post_code&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">PatronProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">profile</span><span class="o">.</span><span class="n">address_1</span><span class="p">:</span>
+            <span class="n">address</span> <span class="o">=</span> <span class="n">PatronAddress</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">fieldname</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">fieldname</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">fieldname</span><span class="p">))</span>
+            <span class="n">address</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We use <code class="docutils literal"><span class="pre">apps.get_model</span></code> to retrieve the Model classes we need to interact with.
+You should always do this, rather than importing the models directly.
+There are subtle but significant differences in how the models are instrumented to interact with the database.</p>
+<p>Once we have the Model classes, we can interact with them just as normal.
+All the same query operations work just as they do in normal Django code.
+So we can use the Python <code class="docutils literal"><span class="pre">setattr</span></code> and <code class="docutils literal"><span class="pre">getattr</span></code> functions to copy the values of specific attributes from one model to the other.
+Also notice that if our Profile did not originally include address data, we do not create an address instance for it.
+To apply our migration, we&#8217;ll need to add this function as an operation, using <code class="docutils literal"><span class="pre">RunPython</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in library_patron/migrations/0004_move_address_fields.py</span>
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;library_patron&#39;</span><span class="p">,</span> <span class="s1">&#39;0003_add_address_model&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>  <span class="c1"># add the following statement</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">RunPython</span><span class="p">(</span>
+            <span class="n">move_address_data_to_address_model</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="applying-data-migrations">
+<h3>Applying Data Migrations<a class="headerlink" href="#applying-data-migrations" title="Permalink to this headline">¶</a></h3>
+<p>Once we&#8217;ve got this set up, we can apply both our model migration and our new data migration in one shot.
+But what if we want to undo the changes we made?
+Schema migrations are in many cases self-reversing.
+The opposite operation can be calculated by the ORM.
+In data migrations this is not the case.</p>
+<p>We <em>can</em> however, supply our own reverse operations.
+The <code class="docutils literal"><span class="pre">RunPython</span></code> migration operation can take a second argument that is the function to be run to undo whatever changes were made.
+If it is not possible to undo a data migration, then do not supply this argument.
+The migration system will recognize this as a migration that cannot be undone and refuse to apply it.</p>
+<p>Let&#8217;s add a reverse function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">move_address_data_back_to_profile</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
+    <span class="n">PatronProfile</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s1">&#39;library_patron&#39;</span><span class="p">,</span> <span class="s1">&#39;PatronProfile&#39;</span><span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;address_1&#39;</span><span class="p">,</span> <span class="s1">&#39;address_2&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;post_code&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">PatronProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="n">first_addr</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;pk&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">first_addr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">fieldname</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">fieldname</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">first_addr</span><span class="p">,</span> <span class="n">fieldname</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Now we can add this reverse function as a second positional argument to our operation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in library_patron/migrations/0004_move_address_fields.py</span>
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;library_patron&#39;</span><span class="p">,</span> <span class="s1">&#39;0003_add_address_model&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>  <span class="c1"># add the following statement</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">RunPython</span><span class="p">(</span>
+            <span class="n">move_address_data_to_address_model</span><span class="p">,</span>
+            <span class="n">move_address_data_back_to_profile</span><span class="p">,</span> <span class="c1"># &lt;-- add this line</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+<p>Once this is set, we can apply our new migrations,
+both forward and in reverse:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>library_project<span class="o">)</span>$ ./manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, library_patron, sessions
+Running migrations:
+  Applying library_patron.0003_add_address_model... OK
+  Applying library_patron.0004_move_address_fields... OK
+</pre></div>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre>(library_project)$ ./manage.py migrate library_patron 0002
+Operations to perform:
+  Target specific migration: 0002_add_address_fields, from library_patron
+Running migrations:
+  Rendering model states... DONE
+  Unapplying library_patron.0004_move_address_fields... OK
+  Unapplying library_patron.0003_add_address_model... OK
+The following content types are stale and need to be deleted:
+
+    library_patron | patronaddress
+
+Any objects related to these content types by a foreign key will also
+be deleted. Are you sure you want to delete these content types?
+If you&#39;re unsure, answer &#39;no&#39;.
+
+    Type &#39;yes&#39; to continue, or &#39;no&#39; to cancel: yes
+</pre></div>
+</div>
+<p>Notice the extra work that Django is performing here.
+When we create a model, Django adds an entry to the <cite>content types</cite> table.
+This entry allows us to make dynamic references to our models classes.
+When we remove models, Django tracks the fact, and alerts us that there are now entries,
+both in that table and potentially in other tables that will be deleted.
+In general, this is perfectly safe, but you will want to think about the state of your database.
+You can prevent these deletions by answering <cite>no</cite> to the prompt.
+It is always possible to clean up later, manually.</p>
+</div>
+<div class="section" id="other-uses-for-data-migrations">
+<h3>Other Uses for Data Migrations<a class="headerlink" href="#other-uses-for-data-migrations" title="Permalink to this headline">¶</a></h3>
+<p>Data migrations allow us to manage the <em>content</em> of our database, instead of the <em>structure</em>.
+This is useful when we need to update the structure of an existing database.
+We can move data from one table to another, change it from one type to another, and much more.</p>
+<p>But we can also use data migrations to create data our system requires in order to run.
+Imagine that we have a <code class="docutils literal"><span class="pre">branch</span></code> field on our <code class="docutils literal"><span class="pre">PatronProfile</span></code> model.
+It might be a &#8220;ForeignKey&#8221; field that references an instance of a <code class="docutils literal"><span class="pre">LibraryBranch</span></code> model.
+That way, we can associate a patron with the specific branch where they pick up and return books.
+It might look something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># in library_assets/models.py</span>
+
+<span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">Branch</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">branch_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+
+<span class="c1"># in library_patron/models.py on the PatronProfile class:</span>
+
+<span class="n">branch</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKeyField</span><span class="p">(</span>
+    <span class="s2">&quot;Branch&quot;</span><span class="p">,</span>
+    <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It would probably be nice to have a few branches available to choose from when a new patron signs up.
+And we don&#8217;t really want to have some employee manually type them all in.
+We can use a data migration to inject a number of new <code class="docutils literal"><span class="pre">Branch</span></code> instances as part of the app upgrade process.</p>
+<p>Older versions of Django documentation encourage using &#8220;initial data fixtures&#8221; to do this type of work.
+The problem with that approach is that the data in a fixture is &#8220;frozen&#8221; to a particular version of a model.
+If the model changes over time, the fixture needs to be updated as well.
+But because data migrations are run in a specific position in your data migration,
+you can rely on the items you insert being correct for the state of your models <em>at that point in time</em>.
+And you can use later data migrations to make needed change to that initial data.</p>
+</div>
+</div>
+<div class="section" id="wrapping-up">
+<h2>Wrapping Up<a class="headerlink" href="#wrapping-up" title="Permalink to this headline">¶</a></h2>
+<p>In this lecture, we&#8217;ve learned about Django migrations.
+We&#8217;ve learned that migrations help us to manage the changes in our database over time.
+We&#8217;ve seen how to create migrations, and how to apply them.
+And we&#8217;ve learned about data migrations.
+We&#8217;ve seen that they can help us to make more complex changes to our database.
+And that we can use them to inject initial data into our database.</p>
+<p>A final word about migrations.
+<strong>They are absolutely a part of your source code</strong>.
+You <strong>must</strong> add them to your repository and keep them.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Django: Migrations</a><ul>
+<li><a class="reference internal" href="#why-migrations">Why Migrations?</a></li>
+<li><a class="reference internal" href="#what-is-a-migration">What is a Migration?</a></li>
+<li><a class="reference internal" href="#using-django-migrations">Using Django Migrations</a><ul>
+<li><a class="reference internal" href="#creating-migrations">Creating Migrations</a></li>
+<li><a class="reference internal" href="#what-s-in-a-migration">What&#8217;s In a Migration?</a></li>
+<li><a class="reference internal" href="#applying-migrations">Applying Migrations</a></li>
+<li><a class="reference internal" href="#rollback-and-retry">Rollback and Retry</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-migrations">Data Migrations</a><ul>
+<li><a class="reference internal" href="#creating-data-migrations">Creating Data Migrations</a></li>
+<li><a class="reference internal" href="#applying-data-migrations">Applying Data Migrations</a></li>
+<li><a class="reference internal" href="#other-uses-for-data-migrations">Other Uses for Data Migrations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#wrapping-up">Wrapping Up</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="django_testing.html"
+                        title="previous chapter">Django Testing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="intro_to_python_9_generators.html"
+                        title="next chapter">A Python Miscellany: Iterators &amp; Generators</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="intro_to_python_9_generators.html" title="A Python Miscellany: Iterators &amp; Generators"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="django_testing.html" title="Django Testing"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week06/tue.html" >Tuesday</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

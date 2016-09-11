@@ -25,6 +25,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python 401 2.1 documentation" href="../index.html" />
+    <link rel="up" title="Thursday" href="../schedule/week06/thu.html" />
+    <link rel="next" title="Friday" href="../schedule/week06/fri.html" />
+    <link rel="prev" title="Django URLs, Views and Templates" href="django_views.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 
@@ -51,7 +54,14 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="../schedule/week06/fri.html" title="Friday"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="django_views.html" title="Django URLs, Views and Templates"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week06/thu.html" accesskey="U">Thursday</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -178,16 +188,15 @@ div.nboutput  > :nth-child(2).stderr {
 <h1>Deploying a Simple WSGI Application on AWS<a class="headerlink" href="#deploying-a-simple-wsgi-application-on-aws" title="Permalink to this headline">¶</a></h1>
 <p>Let&#8217;s walk through manually deploying a simple WSGI application to an AWS EC2
 instance we&#8217;ve created.</p>
-<p>For this exercise we&#8217;ll use the fabfile you set up as part of the fabric
-walkthrough.</p>
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre>heffalump:~ cewing$ workon fabrictests
-<span class="o">[</span>fabrictests<span class="o">]</span>
-heffalump:fabrictests cewing$
+<div class="highlight-bash"><div class="highlight"><pre>$ python3 -m venv wsgiapp
+$ <span class="nb">cd</span> wsgiapp
+$ . bin/activate
+<span class="o">(</span>wsgiapp<span class="o">)</span>$
 </pre></div>
 </div>
-<p>In the fabric directory, create a very simple WSGI application. Start by
+<p>In the new <code class="docutils literal"><span class="pre">wsgiapp</span></code> directory, create a very simple WSGI application. Start by
 creating a new file <code class="docutils literal"><span class="pre">myapp.py</span></code> and opening it in your editor. In the file,
 type the following Python code:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c1"># -*- coding: utf-8 -*-</span>
@@ -206,54 +215,37 @@ type the following Python code:</p>
 </pre></div>
 </div>
 <p>Test your application to be sure it works by running it from the command line:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nb">source</span>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>wsgiapp<span class="o">)</span>$ python myapp.py
 </pre></div>
 </div>
-<p>Then, if you don&#8217;t already have one running, provision an AWS instance and
-install <code class="docutils literal"><span class="pre">nginx</span></code>, using your fabfile:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>fabrictests<span class="o">]</span>
-heffalump:fabrictests cewing$ fab provision_instance
-...
-<span class="o">[</span>fabrictests<span class="o">]</span>
-heffalump:fabrictests cewing$ fab install_nginx
-<span class="o">[</span>localhost<span class="o">]</span> Executing task <span class="s1">&#39;install_nginx&#39;</span>
-Connected to EC2 region us-west-2
-Please <span class="k">select</span> from the following instances:
- 1: running instance i-08b12201
-Choose an instance: 1
-<span class="o">[</span>ubuntu@ec2-54-184-162-20.us-west-2.compute.amazonaws.com<span class="o">]</span> Executing task <span class="s1">&#39;_install_nginx&#39;</span>
-...
-</pre></div>
-</div>
-<p>Next, use the shell command <code class="docutils literal"><span class="pre">scp</span></code> to securely copy your wsgi application to
-the new server instance:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>fabrictests<span class="o">]</span>
-heffalump:fabrictests cewing$ scp -i ~/.ssh/pk-cpe.pem myapp.py ubuntu@ec2-54-184-162-20.us-west-2.compute.amazonaws.com:~/
+<p>Point your web browser at <a class="reference external" href="http://localhost:8080/">http://localhost:8080/</a> and verify that you can see &#8220;Hello World!&#8221; printed.</p>
+<p>Next, provision a new EC2 instance on AWS using the through-the web provisioner.
+Make sure you are using an Ubuntu image, either version 12.04 or 14.04.</p>
+<p>Next, use the shell command <code class="docutils literal"><span class="pre">scp</span></code> to securely copy your wsgi application to the new server instance.
+You&#8217;ll need to update the path to your private key file and the public DNS name of your EC2 instance from the values shown here.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>wsgiapp<span class="o">)</span>$ scp -i ~/.ssh/pk-cpe.pem myapp.py ubuntu@ec2-54-184-162-20.us-west-2.compute.amazonaws.com:~/
 ...
 Are you sure you want to <span class="k">continue</span> connecting <span class="o">(</span>yes/no<span class="o">)</span>? yes
 ...
 myapp.py                                      100%  <span class="m">381</span>     0.4KB/s   00:00
-<span class="o">[</span>fabrictests<span class="o">]</span>
-heffalump:fabrictests cewing$
+<span class="o">(</span>wsgiapp<span class="o">)</span>$
 </pre></div>
 </div>
 </div>
 <div class="section" id="manual-configuration">
 <h2>Manual Configuration<a class="headerlink" href="#manual-configuration" title="Permalink to this headline">¶</a></h2>
-<p>We are going to do this manually once together.  Afterwards, take what you
-learned and automate these tasks using <code class="docutils literal"><span class="pre">fabric</span></code>.</p>
+<p>We are going to do this manually once together.
+Later, you&#8217;ll have a chance to repeat the process using a configuration management tool.</p>
 <div class="section" id="configure-nginx">
 <h3>Configure Nginx<a class="headerlink" href="#configure-nginx" title="Permalink to this headline">¶</a></h3>
-<p>The first step is to configure <code class="docutils literal"><span class="pre">nginx</span></code> to proxy HTTP requests to our simple
-application.</p>
-<p>If you know, or are more comfortable with the <code class="docutils literal"><span class="pre">Apache</span></code> webserver, you can
-also use that. However, the trend I&#8217;ve seen over the last few years is toward
-the use of <code class="docutils literal"><span class="pre">nginx</span></code> over the old stand-by.</p>
-<p>Nginx stores site configuration on Ubuntu in the <code class="docutils literal"><span class="pre">/etc/nginx/sites-available</span></code>
-directory.</p>
+<p>The first step is to configure <code class="docutils literal"><span class="pre">nginx</span></code> to proxy HTTP requests to our simple application.</p>
+<p>If you know, or are more comfortable with the <code class="docutils literal"><span class="pre">Apache</span></code> webserver, you can also use that.
+However, the trend I&#8217;ve seen over the last few years is toward the use of <code class="docutils literal"><span class="pre">nginx</span></code> over the old stand-by.</p>
+<p>Nginx stores site configuration on Ubuntu in the <code class="docutils literal"><span class="pre">/etc/nginx/sites-available</span></code> directory.
+This is in fact a pattern you&#8217;ll get used to.
+On most Linux machines, configuration of individual applications can be found in the <code class="docutils literal"><span class="pre">/etc</span></code> directory.</p>
 <p>Let&#8217;s shell into our new instance and look at what&#8217;s there:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>fabrictests<span class="o">]</span>
-heffalump:fabrictests cewing$ ssh -i ~/.ssh/pk-cpe.pem ubuntu@ec2-54-184-162-20.us-west-2.compute.amazonaws.com
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>wsgiapp<span class="o">)</span>$ ssh -i ~/.ssh/pk-cpe.pem ubuntu@ec2-54-184-162-20.us-west-2.compute.amazonaws.com
 Welcome to Ubuntu 12.04.4 LTS <span class="o">(</span>GNU/Linux 3.2.0-58-virtual x86_64<span class="o">)</span>
 ...
 Last login: Wed Feb <span class="m">26</span> 19:10:01 <span class="m">2014</span> from 199.231.242.170
@@ -270,8 +262,7 @@ ubuntu@ip-10-254-159-140:~$ more /etc/nginx/sites-available/default
 ubuntu@ip-10-254-159-140:~$
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">sites-available</span></code> directory will hold individual site configuration for
-<strong>all</strong> sites that <strong>might</strong> be available on a server.</p>
+<p>The <code class="docutils literal"><span class="pre">sites-available</span></code> directory will hold individual site configuration for <strong>all</strong> sites that <strong>might</strong> be available on a server.</p>
 <p><strong>Active</strong> site configuration is listed in the <code class="docutils literal"><span class="pre">/etc/nginx/sites-enabled</span></code>:</p>
 <div class="highlight-bash"><div class="highlight"><pre>ubuntu@ip-10-254-159-140:~$ ls /etc/nginx/sites-enabled/
 default
@@ -281,15 +272,14 @@ lrwxrwxrwx <span class="m">1</span> root root <span class="m">34</span> Feb <spa
 ubuntu@ip-10-254-159-140:~$
 </pre></div>
 </div>
-<p>Notice that in fact, although <code class="docutils literal"><span class="pre">default</span></code> is in that directory too, it&#8217;s
-actually a soft link to the file in <code class="docutils literal"><span class="pre">sites-available</span></code>.</p>
-<p>Let&#8217;s move aside the existing <code class="docutils literal"><span class="pre">default</span></code> config and replace it with a simple
-one of our own.</p>
-<p>On your local machine, in the <code class="docutils literal"><span class="pre">fabtests</span></code> directory, make a new file
-<code class="docutils literal"><span class="pre">simple_nginx_config</span></code>. Open that file in your editor and add the following:</p>
+<p>Notice that in fact, although <code class="docutils literal"><span class="pre">default</span></code> is in that directory too,
+it&#8217;s actually a soft link to the file in <code class="docutils literal"><span class="pre">sites-available</span></code>.</p>
+<p>Let&#8217;s move aside the existing <code class="docutils literal"><span class="pre">default</span></code> config and replace it with a simple one of our own.</p>
+<p>On your local machine, in the <code class="docutils literal"><span class="pre">wsgiapp</span></code> directory, make a new file <code class="docutils literal"><span class="pre">simple_nginx_config</span></code>.
+Open that file in your editor and add the following:</p>
 <div class="highlight-nginx"><div class="highlight"><pre><span class="k">server</span> <span class="p">{</span>
     <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
-    <span class="kn">server_name</span> <span class="s">http://ec2-54-184-162-20.us-west-2.compute.amazonaws.com/</span><span class="p">;</span>
+    <span class="kn">server_name</span> <span class="s">ec2-54-184-162-20.us-west-2.compute.amazonaws.com</span><span class="p">;</span>
     <span class="kn">access_log</span>  <span class="s">/var/log/nginx/test.log</span><span class="p">;</span>
 
     <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
@@ -301,18 +291,14 @@ one of our own.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Remember, you want to use the name of your actual server on aws, not the
-example used above.</p>
+<p>Remember, you want to use the name of your actual server on aws, not the example used above.</p>
 <p>Now, copy that file up to your server too:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>fabrictests<span class="o">]</span>
-heffalump:fabrictests cewing$ scp -i ~/.ssh/pk-cpe.pem simple_nginx_config ubuntu@ec2-54-184-162-20.us-west-2.compute.amazonaws.com:~/
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">(</span>wsgiapp<span class="o">)</span>$ scp -i ~/.ssh/pk-cpe.pem simple_nginx_config ubuntu@ec2-54-184-162-20.us-west-2.compute.amazonaws.com:~/
 simple_nginx_config                           100%  <span class="m">363</span>     0.4KB/s   00:00
-<span class="o">[</span>fabrictests<span class="o">]</span>
-heffalump:fabrictests cewing$
+<span class="o">(</span>wsgiapp<span class="o">)</span>$
 </pre></div>
 </div>
-<p>Next, on the server, move the original default configuration file aside and put
-your new one in its place:</p>
+<p>Next, on the server, move the original default configuration file aside and put your new one in its place:</p>
 <div class="highlight-bash"><div class="highlight"><pre>ubuntu@ip-10-254-159-140:~$ ls
 myapp.py  simple_nginx_config
 ubuntu@ip-10-254-159-140:~$ sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.orig
@@ -324,19 +310,17 @@ ubuntu@ip-10-254-159-140:~$
 </pre></div>
 </div>
 <p>Once that&#8217;s complete, you can restart nginx to have it pick up your changes:</p>
-<div class="highlight-bash"><div class="highlight"><pre>ubuntu@ip-10-254-159-140:~$ sudo /etc/init.d/nginx restart
-Restarting nginx: nginx: <span class="o">[</span>warn<span class="o">]</span> server name <span class="s2">&quot;http://ec2-54-184-162-20.us-west-2.compute.amazonaws.com/&quot;</span> has suspicious symbols in /etc/nginx/sites-enabled/default:3
-nginx.
+<div class="highlight-bash"><div class="highlight"><pre>ubuntu@ip-10-254-159-140:~$ sudo service nginx restart
+...
 ubuntu@ip-10-254-159-140:~$
 </pre></div>
 </div>
-<p>If you now try to load the public DNS name for your EC2 instance, you&#8217;ll see
-that nginx has updated and is now throwing an error:</p>
+<p>If you now try to load the public DNS name for your EC2 instance, you&#8217;ll see that nginx has updated and is now throwing an error:</p>
 <div class="highlight-python"><div class="highlight"><pre>http://ec2-54-184-162-20.us-west-2.compute.amazonaws.com
 </pre></div>
 </div>
-<p>This should tell you <strong>Bad Gateway</strong>.  That&#8217;s the error that means &#8220;I am a
-proxy, but the thing I&#8217;m proxying to is not running!&#8221;</p>
+<p>This should tell you <strong>Bad Gateway</strong>.
+That&#8217;s the error that means &#8220;I am a proxy, but the thing I&#8217;m proxying to is not running!&#8221;</p>
 </div>
 <div class="section" id="running-a-wsgi-server">
 <h3>Running a WSGI Server<a class="headerlink" href="#running-a-wsgi-server" title="Permalink to this headline">¶</a></h3>
@@ -350,16 +334,11 @@ proxy, but the thing I&#8217;m proxying to is not running!&#8221;</p>
 </div>
 <div class="section" id="automation">
 <h2>Automation<a class="headerlink" href="#automation" title="Permalink to this headline">¶</a></h2>
-<p>The steps we took there allowed us to upload an application and some
-configuration to our server, apply the configuration to the <code class="docutils literal"><span class="pre">nginx</span></code> web
-server we installed, and then run our WSGI application in a terminal to get a
-response via public DNS.</p>
-<p>Your next task is to automate this process using fabric.</p>
-<p>For this task, You&#8217;ll want to look at two important sub-packages in <code class="docutils literal"><span class="pre">fabric</span></code>:</p>
-<ul class="simple">
-<li><a class="reference external" href="http://docs.fabfile.org/en/1.8/api/contrib/files.html">fabric.contrib.files</a></li>
-<li><a class="reference external" href="http://docs.fabfile.org/en/1.8/api/contrib/project.html">fabric.contrib.project</a></li>
-</ul>
+<p>The steps we took there allowed us to upload an application and some configuration to our server,
+apply the configuration to the <code class="docutils literal"><span class="pre">nginx</span></code> web server we installed,
+and then run our WSGI application in a terminal to get a response via public DNS.</p>
+<p>Your task is to repeat this process for homework.
+Later, we&#8217;ll learn how to automate this task using configuration management tools.</p>
 </div>
 </div>
 
@@ -383,6 +362,12 @@ response via public DNS.</p>
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="django_views.html"
+                        title="previous chapter">Django URLs, Views and Templates</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../schedule/week06/fri.html"
+                        title="next chapter">Friday</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -406,7 +391,14 @@ response via public DNS.</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="../schedule/week06/fri.html" title="Friday"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="django_views.html" title="Django URLs, Views and Templates"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../schedule/week06/thu.html" >Thursday</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -28,6 +28,8 @@ These readings will support your work on the Data Model for our Django Imager we
 
 * Using Dynamic Test Fixtures with `Factory Boy <http://factoryboy.readthedocs.org/>`_ (in particular pay attention to `using Factory Boy with Django <http://factoryboy.readthedocs.org/en/latest/orms.html#django>`_)
 
+* `Django Migrations <https://docs.djangoproject.com/en/1.10/topics/migrations/#data-migrations>`_
+
 
 Django Views
 ============
@@ -68,4 +70,3 @@ To support creating and editing objects in Django, you'll need to learn about Dj
 * You'll want to keep a reference open for the `Forms API <https://docs.djangoproject.com/en/1.9/ref/forms/api/>`_
 
 * Keep in mind that the custom form field you imagine may already have been created and check `the Forms category <https://www.djangopackages.com/grids/g/forms/>`_ on http://www.djangopackages.com
-* 

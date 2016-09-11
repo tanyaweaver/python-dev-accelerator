@@ -13,8 +13,8 @@ Python Practice: The Forbes Top 40
 Tasks
 =====
 
-Download :doc:`this JSON file </downloads/forbes_billionaires_2016>` containing the top 40 billionaires in the world. 
-Each has a name, age, rank, net worth, industry that made them rich, and their country.
+Download :download:`this JSON file </downloads/forbes_billionaires_2016.json>` containing the top 40 billionaires in the world. 
+Each has a name, age, rank, net worth, industry that made them rich, and their country. For the curious, the data was compiled from `Forbes.com <http://www.forbes.com/billionaires/list/>`_.
 
 Write a function that,
 

@@ -24,8 +24,8 @@ Django Views
 ------------
 
 .. include:: /readings/django_readings.rst
-    :start-line: 34
-    :end-line: 54
+    :start-line: 36
+    :end-line: 56
 
 * Hash Tables at `VisuAlgo <http://visualgo.net/hashtable>`_
 * (Read *ONLY!* Do not *do* yet!) `Creating a Database Server <http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/getting-started-create-rds.html>`_

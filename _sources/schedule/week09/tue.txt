@@ -23,34 +23,22 @@ Readings
 * `How kNN Algorithm Works <https://www.youtube.com/watch?v=UqYde-LULfs>`_
 * `Introduction to K Nearest Neighbor <https://www.youtube.com/watch?v=SQOdBjjA2y8>`_ (apologies for sound quality)
 
-.. Review
-.. ======
-
 Concepts
 ========
 
-.. toctree::
-   :maxdepth: 2
-
-   .. /lectures/trie
-
-   * When, Why, and How to Rescale Data
-   * The K-Nearest Neighbors Algorithm
-   * Facial Recognition in Django
-
-.. * Implementing REST for existing Django Projects
+* When, Why, and How to Rescale Data
+* The K-Nearest Neighbors Algorithm
+* Facial Recognition in Django
+* Whiteboard Challenge
 
 
 Demo
 ====
 
-.. Use a DRF-based api to connect to an existing Django application
 
 Assignments
 ===========
 
-.. * :doc:`/assignments/trie_implementation`
-.. * :doc:`/assignments/django_7_drf_tutorial_b`
 * Facial Recognition with Algorithmia
 * Implement and Apply the K-Nearest Neighbors Algorithm
 * :doc:`/assignments/project_07_stories_begin`
