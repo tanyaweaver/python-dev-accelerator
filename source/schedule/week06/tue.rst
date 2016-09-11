@@ -23,6 +23,7 @@ Readings
 * `Testing in Django <https://docs.djangoproject.com/en/1.10/topics/testing/>`_
 * `Writing and Running Tests in Django <https://docs.djangoproject.com/en/1.10/topics/testing/overview/>`_
 * `Django Testing Tools <https://docs.djangoproject.com/en/1.10/topics/testing/tools/>`_
+* `Django Migrations <https://docs.djangoproject.com/en/1.10/topics/migrations/#data-migrations>`_
 * `Iterators & Generators <http://anandology.com/python-practice-book/iterators.html>`_
 
 Review
