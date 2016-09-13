@@ -36,6 +36,8 @@ Concepts
     /lectures/django_views
     /lectures/simple_wsgi_deployment
 
+* Binary Search Tree: Node Deletion
+
 
 Demo
 ====
