@@ -31,10 +31,6 @@ Concepts
 .. toctree::
    :maxdepth: 2
 
-   .. /lectures/trie
-
-.. * Configuration management with Ansible
-
 * Unsupervised Classification
 * K-Means Classifier
 
