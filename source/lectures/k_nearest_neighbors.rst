@@ -2,7 +2,7 @@
 K-Nearest Neighbors Classifier
 ******************************
 
-Another classifier, ther K-Nearest Neighbors algorithm seeks to categorize new data based on the labels of the K closest data points.
+Another classifier, the K-Nearest Neighbors algorithm seeks to categorize new data based on the labels of the K closest data points.
 "Closeness" is determined by the distance between test point :math:`p` with characteristics :math:`(p_1, p_2,..., p_N)` and another point :math:`q` with characteristics :math:`(q_1, q_2,..., q_N)`.
 
 The distance between any two points can be calculated as
@@ -67,5 +67,5 @@ Attributes
 Operations
 ==========
 
-* **clf.fit(full_data, test_data)**
+* **clf.predict(full_data, test_data)**: given some full data set, predict the classifications on a new data set of one or many points.
 
