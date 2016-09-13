@@ -41,8 +41,7 @@ Concepts
 
     /lectures/django_relationships
     /lectures/django_files
-
-* Binary Search Tree: Node Deletion
+    /lectures/intro_to_python_9_generators
 
 Demo
 ====
