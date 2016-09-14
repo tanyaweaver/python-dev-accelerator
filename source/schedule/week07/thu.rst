@@ -51,11 +51,8 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    .. /lectures/django_forms
     /lectures/web_app_security1
 
-.. * The Hash Table
-  
 * Configuration Management with Ansible
 * The Mergesort Algorithm
 

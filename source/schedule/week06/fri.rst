@@ -10,10 +10,8 @@ Friday
 
     This document contains no slides.
 
-Concepts
-========
 
-Code Fellows Professional Development Workshop
+Whiteboard Challenge
 
 
 Assignments
