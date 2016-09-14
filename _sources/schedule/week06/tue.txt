@@ -39,9 +39,7 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    /lectures/django_testing
     /lectures/django_migrations
-    /lectures/intro_to_python_9_generators
 
 * Traversing a Binary Search Tree
 
