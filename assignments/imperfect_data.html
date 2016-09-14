@@ -6,42 +6,40 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Friday &mdash; Python 401 2.1 documentation</title>
+    <title>Working with Imperfect Data &mdash; Python 401 2.1 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
+        URL_ROOT:    '../',
         VERSION:     '2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Python 401 2.1 documentation" href="../../index.html" />
-    <link rel="next" title="Prework - Python, HTML, CSS, JS" href="../../assignments/prework_python_html.html" />
-    <link rel="prev" title="Deploying a Simple WSGI Application on AWS" href="../../lectures/simple_wsgi_deployment.html" />
+    <link rel="top" title="Python 401 2.1 documentation" href="../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 
-<link rel="stylesheet" href="../../_static/custom.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../_static/custom.css" type="text/css" media="screen" charset="utf-8" />
 
 <!--[if lte IE 6]>
-<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
 
   </head>
   <body role="document">
 <div class="header">
   <div class="logo">
-    <a href="../../index.html">
-      <img class="logo" src="../../_static/cf_logo.png" alt="Logo"/>
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
       <p>Code Fellows</p>
     </a>
   </div>
@@ -51,15 +49,9 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../assignments/prework_python_html.html" title="Prework - Python, HTML, CSS, JS"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="../../lectures/simple_wsgi_deployment.html" title="Deploying a Simple WSGI Application on AWS"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -182,21 +174,36 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="friday">
-<h1>Friday<a class="headerlink" href="#friday" title="Permalink to this headline">¶</a></h1>
-<span class="admonition-course-presentations"></span><div class="section" id="concepts">
-<h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
-<p>Code Fellows Professional Development Workshop</p>
-</div>
-<div class="section" id="assignments">
-<h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="working-with-imperfect-data">
+<h1>Working with Imperfect Data<a class="headerlink" href="#working-with-imperfect-data" title="Permalink to this headline">¶</a></h1>
+<p>The messiest data I&#8217;ve encountered has been user-entered.
+The next best thing to that is publicly-available data, so for this assignment we&#8217;re going to find some.</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>Pick a major US city and download some data with at least 200 rows in it.
+Most major cities have open data portals where you can download simple &#8221;.csv&#8221; files.
+For example:</p>
 <ul class="simple">
-<li><a class="reference internal" href="../../assignments/bst_3_delete.html"><em>Binary Search Tree: Deleting Nodes</em></a></li>
-<li><a class="reference internal" href="../../assignments/django_1_data_model.html"><em>Django Imager: Create a Data Model</em></a></li>
-<li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
-<li><a class="reference internal" href="../../assignments/kata_forbes_billionaires.html"><em>Python Practice: The Forbes Top 40</em></a> (Due Monday)</li>
-<li><a class="reference internal" href="../../assignments/aws_account.html"><em>Get an Amazon AWS Account</em></a> (Due Monday)</li>
+<li><a class="reference external" href="https://data.seattle.gov">Seattle</a></li>
+<li><a class="reference external" href="https://data.cityofnewyork.us/">New York City</a></li>
+<li><a class="reference external" href="http://opendata.dc.gov/">Washington DC</a></li>
+<li><a class="reference external" href="https://data.cityofchicago.org/">Chicago</a></li>
+<li><a class="reference external" href="https://data.lacity.org/">Los Angeles</a></li>
 </ul>
+<p>Describe your data set in your README.md file and why you chose it, along with a link to where you obtained your set.
+Clean and normalize your data however you wish in a Jupyter Notebook.
+Document every (any) step you take to pre-process data before asking questions about it.
+Pose 5+ numerical questions about the data and answer those questions within your Jupyter notebook.
+Produce at least one figure relevant to the questions you&#8217;ve asked.</p>
+</div>
+<div class="section" id="submitting-your-working">
+<h2>Submitting Your Working<a class="headerlink" href="#submitting-your-working" title="Permalink to this headline">¶</a></h2>
+<p>Create an <code class="docutils literal"><span class="pre">imperfect-data</span></code> branch in your <code class="docutils literal"><span class="pre">machine-learning</span></code> repository.
+When you&#8217;re done posing and answering your own questions about your data, reset your Notebook and run all of the cells from top to bottom.</p>
+<p>When it&#8217;s done, your cells should start with <code class="docutils literal"><span class="pre">[1]</span></code> and every sequent cell should have numbering <code class="docutils literal"><span class="pre">[N</span> <span class="pre">+</span> <span class="pre">1]</span></code>.
+When your Notebook is clean of unnecessary comments and is well organized from top to bottom, push your Notebook <strong>and only your Notebook</strong> (not the <code class="docutils literal"><span class="pre">.ipynb-checkpoints</span></code> directory or your data) to GitHub and open a pull request to your <code class="docutils literal"><span class="pre">master</span></code> branch.
+Submit the link to that pull request to Canvas.
+When you&#8217;re done, merge your <code class="docutils literal"><span class="pre">imperfect-data</span></code> branch to <code class="docutils literal"><span class="pre">master</span></code>.</p>
 </div>
 </div>
 
@@ -206,24 +213,18 @@ div.nboutput  > :nth-child(2).stderr {
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Friday</a><ul>
-<li><a class="reference internal" href="#concepts">Concepts</a></li>
-<li><a class="reference internal" href="#assignments">Assignments</a></li>
+<li><a class="reference internal" href="#">Working with Imperfect Data</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-working">Submitting Your Working</a></li>
 </ul>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../../lectures/simple_wsgi_deployment.html"
-                        title="previous chapter">Deploying a Simple WSGI Application on AWS</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../../assignments/prework_python_html.html"
-                        title="next chapter">Prework - Python, HTML, CSS, JS</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -242,15 +243,9 @@ div.nboutput  > :nth-child(2).stderr {
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../../assignments/prework_python_html.html" title="Prework - Python, HTML, CSS, JS"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="../../lectures/simple_wsgi_deployment.html" title="Deploying a Simple WSGI Application on AWS"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

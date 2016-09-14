@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Supervised Classification &mdash; Python 401 2.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python 401 2.1 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+
+<link rel="stylesheet" href="../_static/custom.css" type="text/css" media="screen" charset="utf-8" />
+
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="supervised-classification">
+<h1>Supervised Classification<a class="headerlink" href="#supervised-classification" title="Permalink to this headline">¶</a></h1>
+<p>Consider an average e-mail inbox.
+This inbox receives any number of messages from various sources many times per day.
+Some of those sources aren&#8217;t folks that you want to hear from, so you manually filter them away.
+Most emails you get with &#8220;Special Offer Guarantee!&#8221; in the body can go straight to spam.
+Some are marked &#8220;important!&#8221;, typically ones from emails ending in &#8220;&#64;mycompany.com&#8221;.
+Others still are just regular emails that you may look into at some point in the future.</p>
+<p>If you&#8217;re fortunate, your e-mail client will start to learn from what you&#8217;ve been doing with your messages and try to emulate that activity.
+It&#8217;ll look at all the things you&#8217;ve labeled as &#8220;spam&#8221; or &#8220;trash&#8221; and infer what constitutes a message to be labeled as such from the patterns within.
+Similarly, &#8220;important&#8221; messages will likely have certain similarities that would identify them ahead of time, without you having to mark it yousrelf.</p>
+<p>If your email client has any sort of message-filtering built in it&#8217;s making use of a <strong>Supervised Classification</strong> algorithm, using data that you DO know about to infer labels for data that you DON&#8217;T know about.</p>
+<p>Common <a class="reference external" href="http://scikit-learn.org/stable/supervised_learning.html">supervised classification algorithms</a> include:</p>
+<ul class="simple">
+<li>Regression algorithms</li>
+<li>Support Vector Machines</li>
+<li><strong>K-Nearest Neighbors</strong></li>
+<li>Gaussian Processes</li>
+<li>Neural Networks</li>
+<li>Naive Bayes</li>
+<li><strong>Decision Trees</strong></li>
+</ul>
+<p>We&#8217;ll talk about the ones in bold here.
+You&#8217;re encouraged to explore the rest on your own.</p>
+<div class="section" id="the-look-of-labeled-data">
+<h2>The Look of Labeled Data<a class="headerlink" href="#the-look-of-labeled-data" title="Permalink to this headline">¶</a></h2>
+<p>What constitutes a label, or a <em>class</em>, is entirely dependent upon the question being asked.
+Consider this data about survivors of the Titanic:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="gp">In [2]: </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../downloads/titanic_data.csv&quot;</span><span class="p">)</span>
+
+<span class="gp">In [3]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">   PassengerId  Survived  Pclass                                                Name     Sex   Age  SibSp Parch            Ticket     Fare Cabin Embarked</span>
+<span class="go">0            1         0       3                             Braund, Mr. Owen Harris    male  22.0      1     0         A/5 21171   7.2500   NaN        S</span>
+<span class="go">1            2         1       1   Cumings, Mrs. John Bradley (Florence Briggs Th...  female  38.0      1     0          PC 17599  71.2833   C85        C</span>
+<span class="go">2            3         1       3                              Heikkinen, Miss. Laina  female  26.0      0     0  STON/O2. 3101282   7.9250   NaN        S</span>
+<span class="go">3            4         1       1        Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1     0            113803  53.1000  C123        S</span>
+<span class="go">4            5         0       3                            Allen, Mr. William Henry    male  35.0      0     0            373450   8.0500   NaN        S</span>
+<span class="go">5            6         0       3                                    Moran, Mr. James    male   NaN      0     0            330877   8.4583   NaN        Q</span>
+<span class="go">6            7         0       1                             McCarthy, Mr. Timothy J    male  54.0      0     0             17463  51.8625   E46        S</span>
+<span class="go">7            8         0       3                      Palsson, Master. Gosta Leonard    male   2.0      3     1            349909  21.0750   NaN        S</span>
+<span class="go">8            9         1       3   Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)  female  27.0      0     2            347742  11.1333   NaN        S</span>
+<span class="go">9           10         1       2                 Nasser, Mrs. Nicholas (Adele Achem)  female  14.0      1     0            237736  30.0708   NaN        C</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>If my question were &#8220;Who lived and who died on the Titanic?&#8221; then clearly the class would be &#8220;Survived&#8221;, and I would write an algorithm that most efficiently predicted survival.
+However, if my question had been, &#8220;What&#8217;s the best determinant of where a passenger embarked from?&#8221; my classes would be entirely different and would pull from the &#8220;Embarked&#8221; column.</p>
+<p>When writing your own machine learning algorithms, you can tailor them to interpret along the classes given in your data.
+This means your classes can be &#8220;1, 2, 3&#8221; or &#8220;A, B, C&#8221; or &#8220;fruit, vegetable, meat&#8221;, or whatever.
+However, if you were to use the algorithms present in Python&#8217;s <a class="reference external" href="http://scikit-learn.org/">scikit-learn</a> package for Data Science and Machine Learning, you&#8217;d have to translate the classes to numerical information.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Supervised Classification</a><ul>
+<li><a class="reference internal" href="#the-look-of-labeled-data">The Look of Labeled Data</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

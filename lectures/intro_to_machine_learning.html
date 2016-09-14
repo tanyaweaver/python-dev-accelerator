@@ -1,0 +1,729 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction to Machine Learning &mdash; Python 401 2.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python 401 2.1 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+
+<link rel="stylesheet" href="../_static/custom.css" type="text/css" media="screen" charset="utf-8" />
+
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="introduction-to-machine-learning">
+<h1>Introduction to Machine Learning<a class="headerlink" href="#introduction-to-machine-learning" title="Permalink to this headline">¶</a></h1>
+<p>Machine Learning is tightly coupled with Data Science, and is for the most part a data-driven field.
+It&#8217;s chiefly concerned with taking some initial data set as a starting point and using it to predict the properties of unknown data.
+As such, Machine Learning problems tend to come in two flavors: Classification and Regression</p>
+<div class="section" id="machine-learning-problems">
+<h2>Machine Learning Problems<a class="headerlink" href="#machine-learning-problems" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classification">
+<h3>Classification<a class="headerlink" href="#classification" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="http://scikit-learn.org/stable/_images/plot_classification_0012.png"><img alt="K-Nearest Neighbors Classification Example. Source: http://scikit-learn.org/stable/tutorial/statistical_inference/supervised_learning.html" src="http://scikit-learn.org/stable/_images/plot_classification_0012.png" style="width: 400px;" /></a>
+<p><em>The main statement</em>: Data from the same population should share similar characteristics that differentiate them from other populations.
+Thus given some data, we should be able to adequately categorize some new data.</p>
+<p>For example:</p>
+<ul class="simple">
+<li>Teenagers tend to have fewer financial assets and know fewer people than thirty-somethings.</li>
+<li>Sea water near the equator has higher temperatures and lower mineral content than water near the poles.</li>
+<li>Public schools tend to have larger class sizes, lower test scores, and less funding than private schools.</li>
+</ul>
+</div>
+<div class="section" id="regression">
+<h3>Regression<a class="headerlink" href="#regression" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Linear_regression.svg/2000px-Linear_regression.svg.png"><img alt="Linear Regression Example. Source: https://en.wikipedia.org/wiki/Linear_regression" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Linear_regression.svg/2000px-Linear_regression.svg.png" style="width: 400px;" /></a>
+<p><em>The main statement</em>: While it may not be simple, the world acts in a predictable, regular manner.
+So, given data on the way that a certain thing has been behaving thus far, I can predict how it will behave in the future.</p>
+<p>For example:</p>
+<ul class="simple">
+<li>Stock market (or Bitcoin) prices with time</li>
+<li>The average width of a tree&#8217;s leaf given the height of the tree</li>
+<li>Activity on Twitter given the hour of the day</li>
+</ul>
+<p>Whether attacking an issue of classification or regression, a Machine Learning problem will require data to make decisions.
+Python&#8217;s scientific and numerical tools allow us to read, write, visualize, and otherwise work with this data in an efficient and organized manner.
+Typically those tools are wrapped together and included in the Anaconda distribution of Python.
+<strong>DO NOT DOWNLOAD THIS DISTRIBUTION. IT WILL WRECK YOUR WORK WITH ENVIRONMENTS</strong>.</p>
+<p>Instead follow these steps:</p>
+<div class="highlight-shell"><div class="highlight"><pre>bash-3.2$ mkdir machine_learning
+bash-3.2$ <span class="nb">cd</span> machine_learning
+bash-3.2$ python3 -m venv .
+bash-3.2$ <span class="nb">source</span> bin/activate
+</pre></div>
+</div>
+<p>Download the tools in the requirements file <a href="#id1"><span class="problematic" id="id2">:download:`here &lt;/downloads/data_science_requirements.txt&gt;`_</span></a> to your new <code class="docutils literal"><span class="pre">machine_learning</span></code> directory.
+Then, <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span></code> the requirements file:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span class="o">(</span>machine_learning<span class="o">)</span> bash-3.2$ pip install -r data_science_requirements.txt --upgrade
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="jupyter-notebook">
+<h2>Jupyter Notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">¶</a></h2>
+<p>Thus far we&#8217;ve written all of our Python code either in scripts or on the command line using the Python interpreter.
+Jupyter notebooks combine the convenience and code-persistence of the iPython interpreter with the editability and thought-persistence of a script.
+The file extensions for Jupyter notebooks are <code class="docutils literal"><span class="pre">.ipynb</span></code> since they inherit from what used to be iPython notebooks.
+Let&#8217;s create one!</p>
+<div class="highlight-shell"><div class="highlight"><pre><span class="o">(</span>machine_learning<span class="o">)</span> bash-3.2$ jupyter notebook
+<span class="o">[</span>I 17:24:55.837 NotebookApp<span class="o">]</span> Serving notebooks from <span class="nb">local</span> directory: /Users/Nick/Documents/codefellows/courses/code401_python/machine_learning
+<span class="o">[</span>I 17:24:55.838 NotebookApp<span class="o">]</span> <span class="m">0</span> active kernels
+<span class="o">[</span>I 17:24:55.838 NotebookApp<span class="o">]</span> The Jupyter Notebook is running at: http://localhost:8888/
+<span class="o">[</span>I 17:24:55.838 NotebookApp<span class="o">]</span> Use Control-C to stop this server and shut down all kernels <span class="o">(</span>twice to skip confirmation<span class="o">)</span>.
+</pre></div>
+</div>
+<p>Unless told otherwise (or there&#8217;s another instance of Jupyter Notebook already running), Jupyter Notebook will always serve on port 8888.
+Jupyter Notebook will pop open a tab in your browser at the address <code class="docutils literal"><span class="pre">http://localhost:8888/tree</span></code> where you will see your current working directory.
+In it will be all the files you currently have access to.</p>
+<p>We can create a new notebook using the menu on the left side of the screen.
+Click the &#8220;New&#8221; button to get a dropdown menu and <code class="docutils literal"><span class="pre">Python</span> <span class="pre">3</span></code> to open a new Python 3 Jupyter Notebook.
+If your environment also included Python 2, you&#8217;d have the option to open a notebook in Python 2.</p>
+<p>When you open a new notebook you&#8217;re started off with an empty cell.
+Within this cell you will write code as you would either in a script file or in the command line.
+The code that you write will automatically have syntax highlighting for your convenience.
+You execute the code within a cell by holding <code class="docutils literal"><span class="pre">Shift</span></code> and pressing <code class="docutils literal"><span class="pre">Enter</span></code>.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">)</span>
+<span class="go">Hello World</span>
+</pre></div>
+</div>
+<p>If the line of code that you write prints to stdout, that output will appear below the cell.
+If instead you declare a variable, import anything, or declare a function or a class, nothing will appear.
+You can of course write multiple lines of code, because otherwise it&#8217;d just be silly.</p>
+<p>You can write code in your notebook as you would in any script file.
+If you try to write code blocks, it will auto-indent for you.
+Some of the same commands for applying comments or indentations in Sublime (or Atom) are present here.</p>
+<p>If you need to check the documentation of an object or method, type the following</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [2]: </span><span class="o">?</span> object_or_method
+</pre></div>
+</div>
+<p>Jupyter Notebook will pop up a mini-window from the bottom of your screen containing the top-level documentation for that object or method.
+You can also get more detailed documentation by typing</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [3]: </span><span class="n">help</span><span class="p">(</span><span class="n">object_or_method</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Jupyter will print the detailed documentation for you below that cell in a scrollable field.</p>
+<p>One important difference between Jupyter Notebook and iPython is that the order in which code is executed can change and is extremely important.
+Consider the line numbers on the left side.
+The higher the number, the more recently that cell has been executed.
+If you re-bind a name to a different value in a previous cell, any code executed after that will use the new value even though it appears earlier on in the notebook.
+This allows for experimentation with your code without having to re-run an entire script.
+It can however be dangerous if you don&#8217;t maintain an understanding of how your code is working.</p>
+<p>If you&#8217;ve been experimenting with code in your notebook and want to refresh and run all the cells from top-to-bottom, click on <code class="docutils literal"><span class="pre">Kernel</span></code> in the menu at the top.
+<code class="docutils literal"><span class="pre">Restart</span> <span class="pre">&amp;</span> <span class="pre">Run</span> <span class="pre">All</span></code> will wipe all of your output, restart the kernel upon which this particular notebook is running, and execute every cell in order from top to bottom.
+If any exceptions are thrown along the way that execution will stop at the offending cell, and the stack trace will print into the notebook.</p>
+<p>Because these notebooks were modeled after how scientists write and think in their own notebooks, you have the option of being able to write text and/or Markdown in cells amongst your code.
+This is accomplished via the dropdown menu at the top currently entitled <code class="docutils literal"><span class="pre">Code</span></code>.
+Select a cell, click on that menu, and change the cell&#8217;s format to <code class="docutils literal"><span class="pre">Markdown</span></code>.
+Then you can write code in Markdown as you please, and render that Markdown when you execute the cell.
+This is very handy for writing down thoughts as you try out code.</p>
+<p>As you write more code and text, your notebook will no doubt become cluttered.
+Keep a clear mind by keeping a clean notebook. If you&#8217;re not using a cell, delete it.
+To delete a cell, select that cell and navigate to the <code class="docutils literal"><span class="pre">Cell</span></code> menu at the top.
+Select <code class="docutils literal"><span class="pre">Delete</span> <span class="pre">Cells</span></code> and poof, the cell is gone.
+You can accomplish this faster with keyboard commands.
+Selecting a cell (without the cursor blinking inside the cell) and hitting the <code class="docutils literal"><span class="pre">D</span></code> key twice will delete a cell.
+Alternatively, you can add a new cell by hitting the <code class="docutils literal"><span class="pre">A</span></code> key once.
+All of these keyboard commands and more are available in the <code class="docutils literal"><span class="pre">Help</span></code> menu at the top under <code class="docutils literal"><span class="pre">Keyboard</span> <span class="pre">Shortcuts</span></code>.</p>
+<p>Finally, save your notebook!
+You can use your normal keystroke for saving files here if you&#8217;d like, or you can navigate to the <code class="docutils literal"><span class="pre">File</span></code> menu and select <code class="docutils literal"><span class="pre">Save</span> <span class="pre">and</span> <span class="pre">Checkpoint</span></code>.
+A checkpoint acts sort of like a Git commit, allowing you access to a previous state for your code.
+If you go too long without saving, Jupyter Notebook will autosave (though not that frequently, so save often!).</p>
+<p>You&#8217;ll notice that when you save, you don&#8217;t get the option to change the name of your notebook.
+You can do that by clicking on &#8220;Untitled&#8221; at the top, and changing it there.
+This will change the filename itself on the file system.</p>
+<p>If you want to shutdown this individual notebook, navigate back to <code class="docutils literal"><span class="pre">https://localhost:8888/tree</span></code> and select the checkbox next to the name of your notebook.
+The click on the <code class="docutils literal"><span class="pre">Shutdown</span></code> button at the top.
+To exit out of Jupyter Notebook entirely, return to your command line and hit <code class="docutils literal"><span class="pre">Control-C</span></code>.
+You&#8217;ll be asked to confirm the shutdown of the server that the Notebook, and if you take too long it&#8217;ll assume you made a mistake and resume operations.
+When you confirm shutdown of the server, it&#8217;ll also shutdown any currently-running notebooks being served from that port.</p>
+<p>When you create a notebook, Jupyter creates a <code class="docutils literal"><span class="pre">.ipynb_checkpoints</span></code> directory to keep track of the checkpoints that it/you save.
+There&#8217;s no need for you to commit these checkpoints, so add that directory to your <code class="docutils literal"><span class="pre">.gitignore</span></code>.</p>
+</div>
+<div class="section" id="numpy">
+<h2>Numpy<a class="headerlink" href="#numpy" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://www.numpy.org/">Numpy</a> is the primary package for doing scientific/numerical computing in Python.
+You can do lovely things like linear algebra (matrix math and the like), as well as store regular data like floats, ints, strings, and dicts.
+It comes pre-built with some objects and functions that already exist as built-ins for Python or as part of Python&#8217;s standard library.
+Examples are the number Pi, the <code class="docutils literal"><span class="pre">sum</span></code> function, min, max, trigonometry functions, and square roots.
+As such, <strong>YOU SHOULD NEVER EVER EVER IMPORT EVERYTHING FROM NUMPY INTO YOUR GLOBAL NAMESPACE!!!!</strong>.
+We usually alias <code class="docutils literal"><span class="pre">numpy</span></code> as <code class="docutils literal"><span class="pre">np</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="go">3.141592653589793</span>
+</pre></div>
+</div>
+<div class="section" id="numpy-arrays">
+<h3>Numpy Arrays<a class="headerlink" href="#numpy-arrays" title="Permalink to this headline">¶</a></h3>
+<p>Numpy introduces a new data structure into the mix called an Array.
+Numpy Arrays (hereon <code class="docutils literal"><span class="pre">np.ndarray</span></code>) look like lists, but are most definitely not lists.
+<strong>They are semi-mutable containers of single-type objects.</strong>
+Let&#8217;s see what this means.</p>
+<p>You can create an <code class="docutils literal"><span class="pre">np.ndarray</span></code> from a list or tuple fairly easily.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">this_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">this_list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">this_array</span><span class="p">)</span>
+<span class="go">[ 0 10 20 30 40 50 60 70 80 90]</span>
+</pre></div>
+</div>
+<p>No commas! Not a list!</p>
+<p>When checking the type of object this is you&#8217;ll see that it&#8217;s of the type <code class="docutils literal"><span class="pre">np.ndarray</span></code>, and inherits directly from <code class="docutils literal"><span class="pre">object</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">this_array</span><span class="p">)</span>
+<span class="go">&lt;class &#39;numpy.ndarray&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">.</span><span class="n">__mro__</span>
+<span class="go">(&lt;class &#39;numpy.ndarray&#39;&gt;, &lt;class &#39;object&#39;&gt;)</span>
+</pre></div>
+</div>
+<p>You can reference values reference you&#8217;d use for a list.
+You can even slice like a list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="go">20</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span> <span class="mi">12</span><span class="p">]</span>
+<span class="go">array([30, 40, 50, 60, 70])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[</span><span class="mi">7</span><span class="p">:]</span>
+<span class="go">array([70, 80, 90])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[</span><span class="mi">22</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">IndexError</span>: <span class="n">index 22 is out of bounds for axis 0 with size 10</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">22</span><span class="p">]</span>
+<span class="go">array([60, 70, 80, 90])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[::</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="go">array([90, 70, 50, 30, 10])</span>
+</pre></div>
+</div>
+<p>You can even re-assign values like you would in a list.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">this_array</span><span class="p">)</span>
+<span class="go">[ 0 10 12 30 40 50 60 70 80 90]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">145</span><span class="p">,</span> <span class="mi">269</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">this_array</span><span class="p">)</span>
+<span class="go">[  0  10 145 269  40  50  60  70  80  90]</span>
+</pre></div>
+</div>
+<p>You cannot, however, reassign a value inside of the <code class="docutils literal"><span class="pre">np.ndarray</span></code> with a non-numerical data type that doesn&#8217;t match what&#8217;s in the array.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;banana&quot;</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">ValueError</span>: <span class="n">invalid literal for int() with base 10: &#39;banana&#39;</span>
+</pre></div>
+</div>
+<p>If you try to reassign with a numerical value that doesn&#8217;t match what&#8217;s in the <code class="docutils literal"><span class="pre">np.ndarray</span></code> already, it&#8217;ll assume you made a mistake and alter its type for you.
+If your <code class="docutils literal"><span class="pre">np.ndarray</span></code> is filled with <code class="docutils literal"><span class="pre">floats</span></code> and you try to reassign with an <code class="docutils literal"><span class="pre">int</span></code>, it&#8217;ll convert it to a <code class="docutils literal"><span class="pre">float</span></code>.
+If you try to put a <code class="docutils literal"><span class="pre">float</span></code> amongst <code class="docutils literal"><span class="pre">ints</span></code>, it&#8217;ll round the number down.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">this_array</span><span class="p">)</span>
+<span class="go">[  0  10 145 269  40  50  60  70   3  90]</span>
+</pre></div>
+</div>
+<p>You can always inspect your <code class="docutils literal"><span class="pre">np.ndarray</span></code> to see what data type is being held, or you can get Python to tell you.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">this_array</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">&lt;class &#39;numpy.int64&#39;&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="o">.</span><span class="n">dtype</span>
+<span class="go">dtype(&#39;int64&#39;)</span>
+</pre></div>
+</div>
+<p>Notice, Numpy has its own integer type.
+It also uses its own versions of other types like <code class="docutils literal"><span class="pre">float</span></code> and even <code class="docutils literal"><span class="pre">string</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">np.ndarray</span></code> has no &#8220;append&#8221; or &#8220;push&#8221; method.
+You <strong>cannot</strong> extend an <code class="docutils literal"><span class="pre">np.ndarray</span></code>.
+That&#8217;s kind of the point.
+You can, however, stick multiple arrays together and assign the result to a new variable with <code class="docutils literal"><span class="pre">np.concatenate</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">that_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">266</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">other_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bigger_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">this_array</span><span class="p">,</span> <span class="n">that_array</span><span class="p">,</span> <span class="n">other_array</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">bigger_array</span><span class="p">)</span>
+<span class="go">[  0  10 145 269  40  50  60  70   3  90 256 257 258 259 260 261 262 263</span>
+<span class="go">264 265 -20 -19 -18 -17 -16 -15 -14 -13 -12 -11 -10  -9  -8  -7  -6  -5</span>
+<span class="go">-4  -3  -2]</span>
+</pre></div>
+</div>
+<p>Sticking to a single data type in a container of a fixed size makes <code class="docutils literal"><span class="pre">np.ndarray</span></code> ridiculously fast for mathematical operations.
+That&#8217;s also part of the point, and <code class="docutils literal"><span class="pre">np.ndarrays</span></code> have special methods for math operations for just that reason.</p>
+<p>For example if you wanted to double every number in a list, you&#8217;d have to do something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">this_list</span><span class="p">]</span>
+<span class="go">[0, 20, 40, 60, 80, 100, 120, 140, 160, 180]</span>
+</pre></div>
+</div>
+<p>With <code class="docutils literal"><span class="pre">np.ndarray</span></code>, you can just apply math operations directly.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="go">array([  0,  20, 290, 538,  80, 100, 120, 140,   6, 180])</span>
+</pre></div>
+</div>
+<p>You can also filter across the entire array, finding out which indices match your criteria.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span> <span class="o">&lt;</span> <span class="mi">50</span>
+<span class="go">array([ True,  True, False, False,  True, False, False, False,  True, False], dtype=bool)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[</span><span class="n">this_array</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">]</span>
+<span class="go">array([ 0, 10, 40,  3])</span>
+</pre></div>
+</div>
+<p>You can also do operations between arrays of the same size.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span> <span class="o">+</span> <span class="n">that_array</span>
+<span class="go">array([256, 267, 403, 528, 300, 311, 322, 333, 267, 355])</span>
+</pre></div>
+</div>
+<p>Arrays of a different size raise a <code class="docutils literal"><span class="pre">ValueError</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">small_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span> <span class="o">/</span> <span class="n">small_array</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">ValueError</span>: <span class="n">operands could not be broadcast together with shapes (10,) (4,)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">np.ndarrays</span></code> also have some aggregate methods like <code class="docutils literal"><span class="pre">.sum()</span></code> and `` .min()``</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="c1"># Sum</span>
+<span class="go">737</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="c1"># Min value</span>
+<span class="go">0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="c1"># Max value</span>
+<span class="go">269</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1"># Average of the array</span>
+<span class="go">73.700000000000003</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="c1"># Standard Deviation</span>
+<span class="go">77.380940805859936</span>
+</pre></div>
+</div>
+<p>Finally, you can do awesome things like find the index of the minimum/maximum value in the array.
+This comes in handy when you need to find that sort of thing quickly.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">this_array</span><span class="p">[</span><span class="n">this_array</span><span class="o">.</span><span class="n">argmax</span><span class="p">()]</span>
+<span class="go">269</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="other-useful-numpy-things">
+<h3>Other Useful Numpy Things<a class="headerlink" href="#other-useful-numpy-things" title="Permalink to this headline">¶</a></h3>
+<p>If you need an array of some size filled with zeros or ones, <code class="docutils literal"><span class="pre">np.zeros</span></code> and <code class="docutils literal"><span class="pre">np.ones</span></code> have you covered.
+They both take an argument that is the size of the array you want.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">array([ 0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;bool&quot;</span><span class="p">)</span>
+<span class="go">array([ True,  True,  True,  True,  True], dtype=bool)</span>
+</pre></div>
+</div>
+<p>Numpy is also great for reading and writing numerical data.
+<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.loadtxt.html">np.loadtxt</a> and <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.genfromtxt.html">np.genfromtxt</a> are the two functions used for reading regularly-delimited files like <code class="docutils literal"><span class="pre">CSV</span></code> files.
+That data is read one row at a time directly into an array of arrays.
+To get it organized by columns instead,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">,</span> <span class="n">unpack</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+<span class="go">array([[   1.   ,    1.   ,    1.   ,    1.   ,    1.   ,    1.   ],</span>
+<span class="go">       [   1.   ,    1.   ,    1.   ,    1.   ,    1.   ,    1.   ],</span>
+<span class="go">       [   0.   ,    0.   ,    0.   ,    0.   ,    0.   ,    0.   ],</span>
+<span class="go">       [   1.   ,    1.   ,    2.   ,    2.   ,    2.   ,    5.   ],</span>
+<span class="go">       [   1.   ,    2.   ,    1.   ,    2.   ,    3.   ,    0.   ],</span>
+<span class="go">       [   1.855,    1.959,    1.929,    2.054,    2.193,    1.63 ],</span>
+<span class="go">       [  16.4  ,   35.2  ,   14.3  ,   31.8  ,   28.5  ,   25.6  ],</span>
+<span class="go">       [  15.5  ,   58.7  ,   18.8  ,   40.5  ,  201.7  ,  103.   ]])</span>
+</pre></div>
+</div>
+<p>The above code is assuming that your data file is delimited by commas.
+If it&#8217;s instead delimited by pipes or anything else, specify that in the &#8220;delimiter&#8221; field.
+<code class="docutils literal"><span class="pre">np.genfromtxt</span></code> does the same thing, but allows you to specify the data type of each incoming column for when you have rows with mixed data.</p>
+</div>
+</div>
+<div class="section" id="matplotlib">
+<h2>Matplotlib<a class="headerlink" href="#matplotlib" title="Permalink to this headline">¶</a></h2>
+<p>Data is great, but it&#8217;s difficult to interpret when it all sits as raw numbers in a file.
+Throwing those numbers into an array is great, but even that&#8217;s difficult to interpret as data sets grow in size.
+Do you really want to read through 20,000 rows of data in order to get an idea of the trends within?</p>
+<p>Data scientists communicate with words and figures.
+You already have words, let&#8217;s make some figures.
+<a class="reference external" href="http://matplotlib.org/">matplotlib</a> is the major plotting library for Python.
+There are of course others, like <a class="reference external" href="http://ggplot.yhathq.com/">ggplot</a> and <a class="reference external" href="https://stanford.edu/~mwaskom/software/seaborn/">seaborn</a>, but <code class="docutils literal"><span class="pre">matplotlib</span></code> is the basic and most-used library so we&#8217;ll be using that.</p>
+<p>If you use <code class="docutils literal"><span class="pre">matplotlib</span></code> from your terminal, it&#8217;ll stop your interpreter and pop open a new window whenever you want to produce a figure.
+This is annoying and counter-productive.
+Use an iPython Notebook and import like so:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="gp">In [2]: </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="gp">In [3]: </span><span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">matplotlib</span></code> is a huge package.
+All the plotting functionality you&#8217;ll need is in the <code class="docutils literal"><span class="pre">pyplot</span></code> module, so we can import just that.
+Convention is to alias it as either <code class="docutils literal"><span class="pre">plt</span></code> or just <code class="docutils literal"><span class="pre">p</span></code>.
+<code class="docutils literal"><span class="pre">plt</span></code> is a little more intuitive so we&#8217;ll be using that.</p>
+<p>We&#8217;ll still have the issue of Python popping open your figures in separate windows and we don&#8217;t want that, so we&#8217;ll use the <code class="docutils literal"><span class="pre">%matplotlib</span> <span class="pre">inline</span></code> iPython magic to render all of our figures in line with the cells that generate them.</p>
+<p>We can visualize some data right away as a <strong>scatter plot</strong> using a small handful of commands.
+Let&#8217;s start with creating some data showing exponential growth.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+<span class="gp">In [5]: </span><span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">[ 0.   0.1  0.2  0.3  0.4  0.5  0.6  0.7  0.8  0.9  1.   1.1  1.2  1.3  1.4</span>
+<span class="go">  1.5  1.6  1.7  1.8  1.9  2.   2.1  2.2  2.3  2.4  2.5  2.6  2.7  2.8  2.9</span>
+<span class="go">  3.   3.1  3.2  3.3  3.4  3.5  3.6  3.7  3.8  3.9  4.   4.1  4.2  4.3  4.4</span>
+<span class="go">  4.5  4.6  4.7  4.8  4.9]</span>
+
+<span class="gp">In [6]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="gp">In [7]: </span><span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="go">[   1.            1.10517092    1.22140276    1.34985881    1.4918247</span>
+<span class="go">    1.64872127    1.8221188     2.01375271    2.22554093    2.45960311</span>
+<span class="go">    2.71828183    3.00416602    3.32011692    3.66929667    4.05519997</span>
+<span class="go">    4.48168907    4.95303242    5.47394739    6.04964746    6.68589444</span>
+<span class="go">    7.3890561     8.16616991    9.0250135     9.97418245   11.02317638</span>
+<span class="go">   12.18249396   13.46373804   14.87973172   16.44464677   18.17414537</span>
+<span class="go">   20.08553692   22.19795128   24.5325302    27.11263892   29.96410005</span>
+<span class="go">   33.11545196   36.59823444   40.44730436   44.70118449   49.40244911</span>
+<span class="go">   54.59815003   60.3402876    66.68633104   73.6997937    81.45086866</span>
+<span class="go">   90.0171313    99.48431564  109.94717245  121.51041752  134.28977968]</span>
+</pre></div>
+</div>
+<p>Great, tons of numbers.
+Let&#8217;s see these numbers as points on a chart.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [8]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gh">Out[8]: </span><span class="go">&lt;matplotlib.collections.PathCollection at 0x1105d0b00&gt;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/intro_to_ml_1.png"><img alt="../_images/intro_to_ml_1.png" src="../_images/intro_to_ml_1.png" style="width: 6in;" /></a>
+<p>Joyful hallelujah!
+When making a scatter plot, there&#8217;s 3 things you&#8217;ll want to concern yourself with:</p>
+<ul class="simple">
+<li>point size</li>
+<li>point color</li>
+<li>point edge color</li>
+</ul>
+<p>You can control each of these using keyword arguments in <code class="docutils literal"><span class="pre">plt.scatter()</span></code>.
+Let&#8217;s alter this plot such that our points are big, red, and don&#8217;t have black edges as follows:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [9]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
+<span class="gh">Out[9]: </span><span class="go">&lt;matplotlib.collections.PathCollection at 0x11070f6a0&gt;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/intro_to_ml_2.png"><img alt="../_images/intro_to_ml_2.png" src="../_images/intro_to_ml_2.png" style="width: 6in;" /></a>
+<p>You can also change the point shape by using the keyword &#8220;marker&#8221;.
+The available markers are...</p>
+<ul class="simple">
+<li>s: Square</li>
+<li>o: Circle</li>
+<li>D: Diamond</li>
+<li>.: Point</li>
+<li>^, v, &gt;, &lt;: Triangles</li>
+<li>*: Star</li>
+<li>p: Pentagon</li>
+<li>+: Plus signs</li>
+<li>x: X&#8217;s</li>
+<li><a href="#id5"><span class="problematic" id="id6">|</span></a>: Vertical Lines</li>
+<li>_&#8217;: Horizontal Lines</li>
+</ul>
+<p>Figures are meaningless without some description of what they&#8217;re showing.
+Every figure should have axis labels.
+You can set those labels using the <code class="docutils literal"><span class="pre">plt.xlabel</span></code> and <code class="docutils literal"><span class="pre">plt.ylabel</span></code> methods.
+You can also add a title with <code class="docutils literal"><span class="pre">plt.title</span></code></p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [10]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of Bottles [$x$]&quot;</span><span class="p">)</span>
+<span class="gh">Out[10]: </span><span class="go">&lt;matplotlib.text.Text at 0x1107de358&gt;</span>
+
+<span class="gp">In [11]: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Level of Drunkeness [$y = e^x$]&quot;</span><span class="p">)</span>
+<span class="go">                                               Out[11]: &lt;matplotlib.text.Text at 0x1105e1898&gt;</span>
+
+<span class="gp">In [12]: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;This is a Scatter Plot&quot;</span><span class="p">)</span>
+<span class="go">                                                                                              Out[12]: &lt;matplotlib.text.Text at 0x10d99ed30&gt;</span>
+
+<span class="gp">In [13]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
+<span class="go">                                                                                                                                             Out[13]: &lt;matplotlib.collections.PathCollection at 0x1109611d0&gt;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/intro_to_ml_3.png"><img alt="../_images/intro_to_ml_3.png" src="../_images/intro_to_ml_3.png" style="width: 6in;" /></a>
+<p>You can also plot two data sets on top of each other.
+It helps of course to use different colors for each.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [14]: </span><span class="n">z</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">y</span>
+
+<span class="gp">In [15]: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;This is a Second Plot&quot;</span><span class="p">)</span>
+<span class="gh">Out[15]: </span><span class="go">&lt;matplotlib.text.Text at 0x10d99ed30&gt;</span>
+
+<span class="gp">In [16]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Flergs [$x$]&quot;</span><span class="p">)</span>
+<span class="go">                                               Out[16]: &lt;matplotlib.text.Text at 0x1107de358&gt;</span>
+
+<span class="gp">In [17]: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Blergs per Flerg [$y = e^x$]&quot;</span><span class="p">)</span>
+<span class="go">                                                                                              Out[17]: &lt;matplotlib.text.Text at 0x1105e1898&gt;</span>
+
+<span class="gp">In [18]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
+<span class="go">                                                                                                                                             Out[18]: &lt;matplotlib.collections.PathCollection at 0x11099fcf8&gt;</span>
+
+<span class="gp">In [19]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
+<span class="go">                                                                                                                                                                                                             Out[19]: &lt;matplotlib.collections.PathCollection at 0x110911be0&gt;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/intro_to_ml_4.png"><img alt="../_images/intro_to_ml_4.png" src="../_images/intro_to_ml_4.png" style="width: 6in;" /></a>
+<p>You don&#8217;t have to only use numpy arrays to plot your data.
+If it&#8217;s in a simple list, that works too.
+This time, let&#8217;s plot some data as lines instead of points.
+Let&#8217;s also limit the axes so that we&#8217;re only looking at a fraction of the data.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [20]: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Some Lines Instead of Points&quot;</span><span class="p">)</span>
+<span class="gh">Out[20]: </span><span class="go">&lt;matplotlib.text.Text at 0x10d99ed30&gt;</span>
+
+<span class="gp">In [21]: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="go">                                               Out[21]: [&lt;matplotlib.lines.Line2D at 0x1109b7be0&gt;]</span>
+
+<span class="gp">In [22]: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="go">                                                                                                   Out[22]: [&lt;matplotlib.lines.Line2D at 0x1109615c0&gt;]</span>
+
+<span class="gp">In [23]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Fizz&quot;</span><span class="p">)</span>
+<span class="go">                                                                                                                                                       Out[23]: &lt;matplotlib.text.Text at 0x1107de358&gt;</span>
+
+<span class="gp">In [24]: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Buzz&quot;</span><span class="p">)</span>
+<span class="go">                                                                                                                                                                                                      Out[24]: &lt;matplotlib.text.Text at 0x1105e1898&gt;</span>
+
+<span class="gp">In [25]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">                                                                                                                                                                                                                                                     Out[25]: (-0.5, 2)</span>
+
+<span class="gp">In [26]: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="go">                                                                                                                                                                                                                                                                        Out[26]: (1, 15)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/new_thing.png"><img alt="../_images/new_thing.png" src="../_images/new_thing.png" style="width: 6in;" /></a>
+<p>Typically when we want to simply show the plot without having the <code class="docutils literal"><span class="pre">repr</span></code> for the plotting object show up, we use <code class="docutils literal"><span class="pre">plt.show()</span></code>.
+If you want to save the figure to a file, use <code class="docutils literal"><span class="pre">plt.savefig(&quot;relative/or/absolute/path/to/file.png&quot;)</span></code>.
+You don&#8217;t have to save as <code class="docutils literal"><span class="pre">.png</span></code> either; a number of image formats including <code class="docutils literal"><span class="pre">.jpg</span></code> and even <code class="docutils literal"><span class="pre">.pdf</span></code> will work just fine.</p>
+</div>
+<div class="section" id="recap">
+<h2>Recap<a class="headerlink" href="#recap" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;re about to step into a different realm of Python, where we consider specifically how to work with data instead of how to serve it for a website.
+Machine Learning in Python allows us to use the same language we&#8217;ve been writing this entire class to make predictions.
+We can use known data to predict unknown data, or use entirely unknown data to find out interesting insights.</p>
+<p>Jupyter Notebook allows us to keep those insights in line with our executable code.
+We can even style those thoughts with Markdown, giving us a nice interactive environment for experimenting with code.</p>
+<p>We can use Python&#8217;s powerful <code class="docutils literal"><span class="pre">Numpy</span></code> library to do quick math operations and store data in semi-mutable data structures.
+We can also use <code class="docutils literal"><span class="pre">Numpy</span></code> to read data from file into neatly-organized arrays.</p>
+<p><code class="docutils literal"><span class="pre">Matplotlib</span></code> affords us the luxury of being able to visualize the data that we have.
+It&#8217;s a massive library so there&#8217;s no end to the things it can do, but for our purposes we can use it to plot points and lines to show trends in our data.</p>
+<p>Tonight you will get some practice applying these libraries.
+Tomorrow we&#8217;ll meet one more library, <code class="docutils literal"><span class="pre">Pandas</span></code>, and learn about how we can clean our data.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction to Machine Learning</a><ul>
+<li><a class="reference internal" href="#machine-learning-problems">Machine Learning Problems</a><ul>
+<li><a class="reference internal" href="#classification">Classification</a></li>
+<li><a class="reference internal" href="#regression">Regression</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#jupyter-notebook">Jupyter Notebook</a></li>
+<li><a class="reference internal" href="#numpy">Numpy</a><ul>
+<li><a class="reference internal" href="#numpy-arrays">Numpy Arrays</a></li>
+<li><a class="reference internal" href="#other-useful-numpy-things">Other Useful Numpy Things</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#matplotlib">Matplotlib</a></li>
+<li><a class="reference internal" href="#recap">Recap</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

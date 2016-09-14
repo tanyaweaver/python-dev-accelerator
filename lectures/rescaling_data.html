@@ -1,0 +1,391 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Rescaling Data &mdash; Python 401 2.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python 401 2.1 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+
+<link rel="stylesheet" href="../_static/custom.css" type="text/css" media="screen" charset="utf-8" />
+
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="rescaling-data">
+<h1>Rescaling Data<a class="headerlink" href="#rescaling-data" title="Permalink to this headline">¶</a></h1>
+<p>One issue with classification algorithms is that some of them are <strong>biased</strong> depending on how close data points are in their parameter space.
+For example, annual CEO salaries may range between $300 thousand to $30 million, but there isn&#8217;t much difference between a CEO making $29 million and one making $30 million.
+By contrast, length of CEO tenures will often be between 1 - 20 years.
+I should be able to use both characteristics together to classify CEOs, however if I&#8217;m basing my classification on how &#8220;close&#8221; two data points are in parameter space, the differences of millions in salary will dominate over differences of individual years.</p>
+<p>When we use a classification algorithm that relies on distances between points, we need to make sure those distances are on appropriately-similar scales.</p>
+<div class="section" id="simple-rescaling">
+<h2>Simple Rescaling<a class="headerlink" href="#simple-rescaling" title="Permalink to this headline">¶</a></h2>
+<p>The simplest rescaling one can do is to take a range of data and map it onto a zero-to-one scale.
+Take for example the following data:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">ages</span> <span class="o">=</span> <span class="p">[</span><span class="mf">44.9</span><span class="p">,</span> <span class="mf">35.1</span><span class="p">,</span> <span class="mf">28.2</span><span class="p">,</span> <span class="mf">19.4</span><span class="p">,</span> <span class="mf">28.9</span><span class="p">,</span> <span class="mf">33.5</span><span class="p">,</span> <span class="mf">22.0</span><span class="p">,</span> <span class="mf">21.7</span><span class="p">,</span> <span class="mf">30.9</span><span class="p">,</span> <span class="mf">27.9</span><span class="p">]</span>
+
+<span class="gp">In [2]: </span><span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">70.4</span><span class="p">,</span> <span class="mf">61.7</span><span class="p">,</span> <span class="mf">75.3</span><span class="p">,</span> <span class="mf">66.8</span><span class="p">,</span> <span class="mf">66.9</span><span class="p">,</span> <span class="mf">61.3</span><span class="p">,</span> <span class="mf">61.7</span><span class="p">,</span> <span class="mf">74.4</span><span class="p">,</span> <span class="mf">76.5</span><span class="p">,</span> <span class="mf">60.7</span><span class="p">]</span>
+
+<span class="gp">In [3]: </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="gp">In [4]: </span><span class="n">data_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;ages&quot;</span><span class="p">:</span> <span class="n">ages</span><span class="p">,</span> <span class="s2">&quot;heights&quot;</span><span class="p">:</span> <span class="n">heights</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>The range of ages spans across 25.5 years</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="k">print</span><span class="p">(</span><span class="n">data_df</span><span class="o">.</span><span class="n">ages</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">data_df</span><span class="o">.</span><span class="n">ages</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="go">25.5</span>
+</pre></div>
+</div>
+<p>while heights (in inches) go across 15.8 inches</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [6]: </span><span class="k">print</span><span class="p">(</span><span class="n">data_df</span><span class="o">.</span><span class="n">heights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">data_df</span><span class="o">.</span><span class="n">heights</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="go">15.8</span>
+</pre></div>
+</div>
+<p>These metrics are clearly not on the same scale.
+We can put them on the same scale by making their minimum be zero and their maximum be one.
+The procedure is as follows:</p>
+<ol class="arabic simple">
+<li>Subtract from every item in a column the minimum of that column</li>
+</ol>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [7]: </span><span class="n">tmp_ages</span> <span class="o">=</span> <span class="n">data_df</span><span class="o">.</span><span class="n">ages</span> <span class="o">-</span> <span class="n">data_df</span><span class="o">.</span><span class="n">ages</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Divide the resulting values by the maximum of those values.</li>
+</ol>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [8]: </span><span class="n">scaled_ages</span> <span class="o">=</span> <span class="n">tmp_ages</span> <span class="o">/</span> <span class="n">tmp_ages</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="gp">In [9]: </span><span class="k">print</span><span class="p">(</span><span class="n">scaled_ages</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">scaled_ages</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="go">0.0 1.0</span>
+</pre></div>
+</div>
+<p>Because we always want to avoid changing our source data, let&#8217;s make new columns for these rescaled values.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [10]: </span><span class="n">tmp_heights</span> <span class="o">=</span> <span class="n">data_df</span><span class="o">.</span><span class="n">heights</span> <span class="o">-</span> <span class="n">data_df</span><span class="o">.</span><span class="n">heights</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+<span class="gp">In [11]: </span><span class="n">scaled_heights</span> <span class="o">=</span> <span class="n">tmp_heights</span> <span class="o">/</span> <span class="n">tmp_heights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="gp">In [12]: </span><span class="n">data_df</span><span class="p">[</span><span class="s2">&quot;scaled_ages&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaled_ages</span>
+
+<span class="gp">In [13]: </span><span class="n">data_df</span><span class="p">[</span><span class="s2">&quot;scaled_heights&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaled_heights</span>
+</pre></div>
+</div>
+<p>Let&#8217;s check that our scaling hasn&#8217;t changed the overall distribution of data by visualizing it.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [14]: </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="gp">In [15]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="gh">Out[15]: </span><span class="go">&lt;matplotlib.figure.Figure at 0x11132fc88&gt;</span>
+
+<span class="gp">In [16]: </span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">                                                   Out[16]: &lt;matplotlib.axes._subplots.AxesSubplot at 0x1105ac710&gt;</span>
+
+<span class="gp">In [17]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_df</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span> <span class="n">data_df</span><span class="o">.</span><span class="n">heights</span><span class="p">)</span>
+<span class="go">                                                                                                                   Out[17]: &lt;matplotlib.collections.PathCollection at 0x110618ef0&gt;</span>
+
+<span class="gp">In [18]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Ages&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Heights&quot;</span><span class="p">)</span>
+<span class="go">                                                                                                                                                                                   Out[18]: &lt;matplotlib.text.Text at 0x1109a3be0&gt;</span>
+
+<span class="gp">In [19]: </span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">                                                                                                                                                                                                                                  Out[19]: &lt;matplotlib.axes._subplots.AxesSubplot at 0x110df5cf8&gt;</span>
+
+<span class="gp">In [20]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_df</span><span class="o">.</span><span class="n">scaled_ages</span><span class="p">,</span> <span class="n">data_df</span><span class="o">.</span><span class="n">scaled_heights</span><span class="p">)</span>
+<span class="go">                                                                                                                                                                                                                                                                                                  Out[20]: &lt;matplotlib.collections.PathCollection at 0x11125ef28&gt;</span>
+
+<span class="gp">In [21]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">                                                                                                                                                                                                                                                                                                                                                                  Out[21]: (0, 1)</span>
+
+<span class="gp">In [22]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Scaled Ages&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Scaled Heights&quot;</span><span class="p">)</span>
+<span class="go">                                                                                                                                                                                                                                                                                                                                                                                  Out[22]: &lt;matplotlib.text.Text at 0x1106f7048&gt;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/rescaling_1.png"><img alt="../_images/rescaling_1.png" src="../_images/rescaling_1.png" style="width: 8in;" /></a>
+<p>And now you&#8217;ve got the same distribution of data, but rescaled in such a way that distances between points won&#8217;t be biased by differences in scale.</p>
+<p>This technique is called <strong>Min-Max Scaling</strong>.
+Python&#8217;s <code class="docutils literal"><span class="pre">scikit-learn</span></code> library has a tool just for this called the <code class="docutils literal"><span class="pre">MinMaxScaler</span></code>.
+You can use that to rescale your values as well, if you&#8217;d like.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [23]: </span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+
+<span class="gp">In [24]: </span><span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+
+<span class="gp">In [25]: </span><span class="n">scaled_ages</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_df</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
+
+<span class="gp">In [26]: </span><span class="k">print</span><span class="p">(</span><span class="n">scaled_ages</span><span class="p">)</span>
+<span class="gh">Out[26]:</span>
+<span class="go">array([ 1.        ,  0.61568627,  0.34509804,  0.        ,  0.37254902,</span>
+<span class="go">    0.55294118,  0.10196078,  0.09019608,  0.45098039,  0.33333333])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="orders-of-magnitude">
+<h2>Orders of Magnitude<a class="headerlink" href="#orders-of-magnitude" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes data spans across many powers of 10.
+A great example is annual income.
+Looking at people in the United States, some folks (e.g. graduate students) make around $20,000 per year (<span class="math">\(2\times10^4\)</span>) while some CEOs make upwards of $100 million annually (<span class="math">\(1\times10^8\)</span>).
+That&#8217;s 4 orders of magnitude (powers of 10) in difference!
+Any other comparison that doesn&#8217;t span that same range of numbers will get washed out easily.
+Let&#8217;s see this with some data.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [27]: </span><span class="n">salaries</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1000.0</span><span class="p">,</span> <span class="mf">3593.8</span><span class="p">,</span> <span class="mf">12915.5</span><span class="p">,</span> <span class="mf">46415.9</span><span class="p">,</span> <span class="mf">166810.1</span><span class="p">,</span> <span class="mf">599484.3</span><span class="p">,</span> <span class="mf">2154434.7</span><span class="p">,</span> <span class="mf">7742636.8</span><span class="p">,</span> <span class="mf">27825594.0</span><span class="p">,</span> <span class="mf">100000000.0</span><span class="p">]</span>
+
+<span class="gp">In [28]: </span><span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+
+<span class="gp">In [29]: </span><span class="n">scaled_salaries</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">salaries</span><span class="p">)</span>
+
+<span class="gp">In [30]: </span><span class="k">print</span><span class="p">(</span><span class="n">scaled_salaries</span><span class="p">)</span>
+<span class="go">[  0.00000000e+00   2.59383960e-05   1.19156158e-04   4.54163425e-04</span>
+<span class="go">   1.65811712e-03   5.98490235e-03   2.15345622e-02   7.74171424e-02</span>
+<span class="go">   2.78248723e-01   1.00000000e+00]</span>
+</pre></div>
+</div>
+<p>If we use the same MinMaxScaler we used above, the scaling doesn&#8217;t really do much for making this range manageable.</p>
+<p>When we have data that goes across such a large dynamic range, we need to get a little fancy to make these values workable with our distance calculations.</p>
+<div class="section" id="logarithms">
+<h3>Logarithms<a class="headerlink" href="#logarithms" title="Permalink to this headline">¶</a></h3>
+<p>In math, a <strong>logarithm</strong> is the number (<span class="math">\(x\)</span>) to which some base number (<span class="math">\(b\)</span>) must be raised to produce the number we see (<span class="math">\(y\)</span>).</p>
+<div class="math">
+\[y = b^x\]</div>
+<p>So if our base is 10, then to get to 100 million, we have to raise 10 to the power 8.
+Thus, <span class="math">\(\log_{10}(100,000,000) = 8\)</span>.
+That function, <span class="math">\(\log_{10}\)</span> takes in a number and returns the power of 10 it corresponds to.</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [31]: </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="gp">In [32]: </span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
+<span class="gh">Out[32]: </span><span class="go">4.0</span>
+
+<span class="gp">In [33]: </span><span class="mi">10</span><span class="o">**</span><span class="mf">4.0</span>
+<span class="gh">Out[33]: </span><span class="go">10000</span>
+
+<span class="gp">In [34]: </span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="gh">Out[34]: </span><span class="go">1.4771212547196624</span>
+
+<span class="gp">In [35]: </span><span class="mi">10</span><span class="o">**</span><span class="n">_</span>
+<span class="gh">Out[35]: </span><span class="go">29.999999999999996 # issues with floats but you get the point</span>
+
+<span class="gp">In [36]: </span><span class="n">salaries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">salaries</span><span class="p">)</span>
+
+<span class="gp">In [37]: </span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">salaries</span><span class="p">)</span>
+<span class="gh">Out[37]:</span>
+<span class="go">array([ 3.        ,  3.55555556,  4.11111111,  4.66666667,  5.22222222,</span>
+<span class="go">        5.77777778,  6.33333333,  6.88888889,  7.44444444,  8.        ])</span>
+</pre></div>
+</div>
+<p>In that last line we&#8217;ve rescaled the salaries logarithmically.
+Now these values are more linear, and we can apply our standard MinMax scaling for use in our distance calculations.</p>
+<p>No matter which method you use, make it appropriate for your data.
+There are of course many more steps you can take, but these are good enough for now.
+Always inspect first, <em>then</em> decide on a preprocessing step.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Rescaling Data</a><ul>
+<li><a class="reference internal" href="#simple-rescaling">Simple Rescaling</a></li>
+<li><a class="reference internal" href="#orders-of-magnitude">Orders of Magnitude</a><ul>
+<li><a class="reference internal" href="#logarithms">Logarithms</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

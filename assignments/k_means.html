@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Implement the K-Means Classifier &mdash; Python 401 2.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Python 401 2.1 documentation" href="../index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+
+<link rel="stylesheet" href="../_static/custom.css" type="text/css" media="screen" charset="utf-8" />
+
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body role="document">
+<div class="header">
+  <div class="logo">
+    <a href="../index.html">
+      <img class="logo" src="../_static/cf_logo.png" alt="Logo"/>
+      <p>Code Fellows</p>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput > div,
+div.nbinput div[class^=highlight],
+div.nbinput div[class^=highlight] pre,
+div.nboutput,
+div.nboutput > div,
+div.nboutput div[class^=highlight],
+div.nboutput div[class^=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput > :first-child pre {
+    color: navy;
+}
+
+/* output prompt */
+div.nboutput > :first-child pre {
+    color: darkred;
+}
+
+/* all prompts */
+div.nbinput > :first-child[class^=highlight],
+div.nboutput > :first-child[class^=highlight],
+div.nboutput > :first-child {
+    min-width: 11ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+
+/* input/output area */
+div.nbinput > :nth-child(2)[class^=highlight],
+div.nboutput > :nth-child(2),
+div.nboutput > :nth-child(2)[class^=highlight] {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* input area */
+div.nbinput > :nth-child(2)[class^=highlight] {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput  > :nth-child(2).stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansiblack { color: black; }
+.ansired { color: darkred; }
+.ansigreen { color: darkgreen; }
+.ansiyellow { color: #c4a000; }
+.ansiblue { color: darkblue; }
+.ansipurple { color: darkviolet; }
+.ansicyan { color: steelblue; }
+/* See https://github.com/jupyter/nbconvert/issues/174 */
+.ansigray { color: gray; }  /* nbconvert CSS */
+.ansigrey { color: gray; }  /* nbconvert HTML output */
+
+.ansibgblack { background-color: black; }
+.ansibgred { background-color: red; }
+.ansibggreen { background-color: green; }
+.ansibgyellow { background-color: yellow; }
+.ansibgblue { background-color: blue; }
+.ansibgpurple { background-color: magenta; }
+.ansibgcyan { background-color: cyan; }
+.ansibggray { background-color: gray; }
+
+.ansibold { font-weight: bold; }
+</style>
+<div class="section" id="implement-the-k-means-classifier">
+<h1>Implement the K-Means Classifier<a class="headerlink" href="#implement-the-k-means-classifier" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>Create a new branch in your data structures repository called <code class="docutils literal"><span class="pre">kmeans</span></code>.
+You&#8217;ll use this branch to do your work for this assignment.
+Add a new file to your data-structures repository called <code class="docutils literal"><span class="pre">k_means.py</span></code>.
+In this file, implement a K-Means Classifier object.</p>
+<p>On initialization, your K-Means Classifier should take semi-optional parameters <code class="docutils literal"><span class="pre">max_iter</span></code> and <code class="docutils literal"><span class="pre">min_step</span></code>.
+If one is specified you don&#8217;t need the other.</p>
+<p>Your classifier should have the following public methods:</p>
+<ul class="simple">
+<li>clf.fit(self, data, k): Generates <cite>k</cite> centroids with which to classify the given data. <strong>Does not return anything</strong></li>
+<li>clf.predict(self, data): Returns classes for some data if <code class="docutils literal"><span class="pre">clf.fit</span></code> has already been called. This should be able to take in an iterable of data records (either a tuple of records, or a list of records, or Pandas DataFrame). If <code class="docutils literal"><span class="pre">clf.fit</span></code> has not yet been called, raise an appropriate error.</li>
+</ul>
+<p>The classifier should default to 2 centroids.
+We&#8217;ll also only work with two characteristics for this, though you can generalize your classifier if you want.
+Appropriately handle the case where <code class="docutils literal"><span class="pre">k</span></code> is provided with an invalid input (e.g. -1, or <code class="docutils literal"><span class="pre">k</span> <span class="pre">&gt;</span> <span class="pre">len(data)</span></code>)</p>
+<p>Your implementation must include tests.
+The tests must run in both Python 2 and Python 3.
+Ensure that your tests are properly connected to Travis CI and that you have a Travis badge displayed on your <code class="docutils literal"><span class="pre">README.md</span></code>.
+Expand your <code class="docutils literal"><span class="pre">README.md</span></code> to include notes about your classifier.
+Include any external sources used in its creation.</p>
+<p><a href="#id1"><span class="problematic" id="id2">:download:`Click here &lt;/downloads/flowers_data.csv&gt;`_</span></a> for a data file of classified flowers which you may use to test your classifier.
+You can either use the column named &#8220;target&#8221; or &#8220;class_name&#8221; as your class label.
+They each map directly to each other.</p>
+<p>You can also use the <a href="#id3"><span class="problematic" id="id4">:download:`lean_stars_and_galaxies.csv &lt;/downloads/lean_stars_and_galaxies.csv&gt;`_</span></a> data shown in the notes.
+If you do, ask for help.</p>
+<div class="section" id="stretch-goal">
+<h3>Stretch Goal<a class="headerlink" href="#stretch-goal" title="Permalink to this headline">¶</a></h3>
+<p>Enable your classifier to use as many characteristics as you provide.
+For example, if your input data from <code class="docutils literal"><span class="pre">flowers_data.csv</span></code> looks like (petal_length, petal_width, sepal_length, sepal_width), your classifier should be using the total distance between points.
+If unclear, ask.</p>
+</div>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>When you&#8217;ve completed your work and all your tests are passing, submit a pull request from the <code class="docutils literal"><span class="pre">kmeans</span></code> branch back to <code class="docutils literal"><span class="pre">master</span></code>.
+Copy the URL for that pull request and submit it using the URL input on Canvas.
+Once submitted you may merge your branch back to <code class="docutils literal"><span class="pre">master</span></code>.</p>
+<p>Use the comment function to submit quests, comments, and reflections on the work you&#8217;ve done.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Implement the K-Means Classifier</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#stretch-goal">Stretch Goal</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Cris Ewing.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>
