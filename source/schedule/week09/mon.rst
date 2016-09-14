@@ -32,14 +32,11 @@ Review
 
 Concepts
 ========
-.. toctree::
-   :maxdepth: 1
 
-   /lectures/rescaling_data
-
-* The K-Nearest Neighbors Algorithm
 * Pagination in Django Apps
-
+* Supervised Classification
+* The Decision Tree Classifier
+* Whiteboard Challenge
 
 Demo
 ====

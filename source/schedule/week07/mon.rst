@@ -24,8 +24,8 @@ Django Views
 ------------
 
 .. include:: /readings/django_readings.rst
-    :start-line: 34
-    :end-line: 54
+    :start-line: 36
+    :end-line: 56
 
 * Hash Tables at `VisuAlgo <http://visualgo.net/hashtable>`_
 * (Read *ONLY!* Do not *do* yet!) `Creating a Database Server <http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/getting-started-create-rds.html>`_
@@ -66,8 +66,8 @@ Demo
 Assignments
 ===========
 
-.. * :doc:`/assignments/django_2_registration`
-.. * :doc:`/assignments/bst_4_balancing` (Due Wednesday)
+* :doc:`/assignments/django_2_registration`
+* :doc:`/assignments/bst_4_balancing` (Due Wednesday)
 
 * :doc:`/assignments/hash_table`
 * :doc:`/assignments/django_3_data_views` (adding class-based views)

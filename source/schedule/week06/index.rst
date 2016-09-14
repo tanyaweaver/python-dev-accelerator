@@ -10,7 +10,7 @@ Week Six
 
     This document contains no slides.
 
-The themes for the week are Django and Binary Search Trees.
+The theme for the week is Django Models.
 
 .. toctree::
    :maxdepth: 1

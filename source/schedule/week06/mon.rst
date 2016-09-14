@@ -20,10 +20,6 @@ Objectives
 Readings
 ========
 
-.. **Please read and follow** the :doc:`installation instructions for conda at the top of this page </lectures/data_overview>`
-
-.. Questions about Pandas?  Read :doc:`Nick's quick Pandas tutorial </readings/pandas_introduction>`.
-.. (And you can :download:`download the Titanic data as a CSV file </downloads/titanic_data.csv>` to work with it)
 
 * Walk through how to add and insert nodes to a binary search tree at `VisuAlgo <http://visualgo.net/bst>`_
 * `Travis CI Tutorial: Getting Started <https://www.raywenderlich.com/109418/travis-ci-tutorial>`_
@@ -31,7 +27,7 @@ Readings
 
 .. include:: /readings/django_readings.rst
     :start-line: 17
-    :end-line: 29
+    :end-line: 31
 
 
 Review
@@ -43,14 +39,10 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    .. /lectures/data_overview
-    .. /lectures/stats_day1
     /lectures/django_models
     /lectures/binary_search_tree1
     /lectures/jenkins
 
-.. K-Nearest-Neighbor `lecture notes <https://github.com/sternshus/datafellows>`_.
-.. (Click on the "binder" link to open an Jupyter Notebook in the cloud, or download the repository and run it locally in your Conda env)
 
 Demo
 ====
@@ -60,10 +52,7 @@ Demo
 Assignments
 ===========
 
-.. * :doc:`/assignments/statistics_problem_set1`
-.. * :doc:`/assignments/recitation_assignment`
-
 * :doc:`/assignments/django_0_tutorial`
-* :doc:`/assignments/django_1_data_model`
-* :doc:`/assignments/bst_1`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/bst_1` (Due Tuesday)
+* :doc:`/assignments/django_1_data_model` (Due Friday)

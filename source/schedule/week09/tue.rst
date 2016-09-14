@@ -17,8 +17,10 @@ Objectives
 Readings
 ========
 
-.. Review
-.. ======
+
+Review
+======
+
 
 Concepts
 ========

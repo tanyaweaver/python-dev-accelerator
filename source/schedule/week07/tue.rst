@@ -20,8 +20,8 @@ Readings
 ========
 
 .. include:: /readings/django_readings.rst
-    :start-line: 57
-    :end-line: 70
+    :start-line: 59
+    :end-line: 72
 
 * `Trie Trees <https://www.youtube.com/watch?v=RIUY7ieyH40>`_
 
