@@ -49,3 +49,4 @@ Assignments
 
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/bst_3_delete` (Due Friday)
+* :doc:`/assignments/django_1_data_model` (Due Friday)

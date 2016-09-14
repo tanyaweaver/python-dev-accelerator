@@ -51,8 +51,6 @@ Managing relationships in the Django ORM
 Assignments
 ===========
 
-.. * :doc:`/assignments/statistics_problem_set3`
-.. * :doc:`/assignments/django_1_data_model`
-
 * :doc:`/assignments/bst_2_traversal`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/django_1_data_model` (Due Friday)
