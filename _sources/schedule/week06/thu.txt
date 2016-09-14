@@ -30,11 +30,6 @@ Review
 Concepts
 ========
 
-.. toctree::
-    :maxdepth: 2
-
-    /lectures/django_views
-    /lectures/simple_wsgi_deployment
 
 * Binary Search Tree: Node Deletion
 

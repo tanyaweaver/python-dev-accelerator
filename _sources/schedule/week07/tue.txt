@@ -37,9 +37,7 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    .. /lectures/django_views
-
-    /lectures/django_forms
+    /lectures/django_cbv
     /lectures/trie
 
 Demo

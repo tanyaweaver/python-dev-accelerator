@@ -47,10 +47,12 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    .. /lectures/django_relationships
-    .. /lectures/django_files
 
-    /lectures/django_cbv
+.. toctree::
+    :maxdepth: 2
+
+    /lectures/django_views
+    /lectures/simple_wsgi_deployment
 
 * AWS Database Management: RDS
 

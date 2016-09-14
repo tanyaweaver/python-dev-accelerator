@@ -35,7 +35,7 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    .. /lectures/django_cbv
+    /lectures/django_forms
 
 * Django Security and Permissions
 * The Insertion Sort algorithm
