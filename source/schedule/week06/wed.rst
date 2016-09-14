@@ -40,7 +40,6 @@ Concepts
     :maxdepth: 2
 
     /lectures/django_relationships
-    /lectures/django_files
     /lectures/intro_to_python_9_generators
 
 Demo

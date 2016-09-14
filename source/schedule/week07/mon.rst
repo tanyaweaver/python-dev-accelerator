@@ -27,6 +27,10 @@ Django Views
     :start-line: 36
     :end-line: 56
 
+
+
+* `Writing Views in Django <https://docs.djangoproject.com/en/1.9/topics/http/views/>`_
+* (Read *ONLY!* Don't *do* this yet) `Deploying a Django App to Amazon AWS <https://ashokfernandez.wordpress.com/2014/03/11/deploying-a-django-app-to-amazon-aws-with-nginx-gunicorn-git/>`_
 * Hash Tables at `VisuAlgo <http://visualgo.net/hashtable>`_
 * (Read *ONLY!* Do not *do* yet!) `Creating a Database Server <http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/getting-started-create-rds.html>`_
 * Be aware of the `security controls for Amazon RDS <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html>`_
@@ -38,8 +42,8 @@ Review
 .. * Node Deletion in the Binary Search Tree
 .. * Django Models (the ``ImagerProfile``)
 
-* Django Urls and Views
 * Binary Search Tree
+* Django Data Model
 
 Concepts
 ========
