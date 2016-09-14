@@ -56,5 +56,4 @@ Assignments
 
 * :doc:`/assignments/bst_2_traversal`
 * :doc:`/assignments/aws_account`
-* :doc:`/assignments/django_2_registration`
 * :doc:`/assignments/daily_lj_entry`

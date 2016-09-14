@@ -66,8 +66,8 @@ Demo
 Assignments
 ===========
 
-.. * :doc:`/assignments/django_2_registration`
-.. * :doc:`/assignments/bst_4_balancing` (Due Wednesday)
+* :doc:`/assignments/django_2_registration`
+* :doc:`/assignments/bst_4_balancing` (Due Wednesday)
 
 * :doc:`/assignments/hash_table`
 * :doc:`/assignments/django_3_data_views` (adding class-based views)
