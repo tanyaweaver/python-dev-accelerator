@@ -55,5 +55,4 @@ Assignments
 .. * :doc:`/assignments/django_1_data_model`
 
 * :doc:`/assignments/bst_2_traversal`
-* :doc:`/assignments/aws_account`
 * :doc:`/assignments/daily_lj_entry`
