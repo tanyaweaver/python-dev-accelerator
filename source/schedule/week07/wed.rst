@@ -13,21 +13,18 @@ Wednesday
 Objectives
 ==========
 
-* Learn more about traversing a trie tree
-* Get introduced to the simplest of sorting algorithms
-* Learn about how authentication and authorization work in a Django app
+* Learn how text can be handled as a tree with the Trie Tree
+* Understand how Merge Sort works
+* Learn about how authorization works in a Django app
 
 Readings
 ========
 
-* `Insertion Sort <http://www.tutorialspoint.com/data_structures_algorithms/insertion_sort_algorithm.htm>`_
-* Read about using `Django's Authentication Systems <https://docs.djangoproject.com/es/1.9/topics/auth/default/>`_
+* `Trie Trees <https://www.youtube.com/watch?v=RIUY7ieyH40>`_
 
 Review
 ======
 
-.. * Django Views: Login, Registration and Home Page
-.. * Self-Balancing Binary Search Trees
 
 Concepts
 ========
@@ -44,8 +41,8 @@ Concepts
 Demo
 ====
 
-.. Setting up EC2 and RDS to communicate with each-other
 
+* Be comfortable working with Django forms and form handling
 * Merge Sort!!
 
 Assignments

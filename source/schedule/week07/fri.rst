@@ -16,5 +16,6 @@ Assignments
 ===========
 
 * :doc:`/assignments/daily_lj_entry`
-* :doc:`/assignments/web_app_security_assignment1` (Due Monday)
+* :doc:`/assignments/aws_2_ansible_imager` (Due Monday)
+* :doc:`/assignments/django_5_complete_frontend` (Due Monday)
 * :doc:`/assignments/kata_autocomplete` (Due Monday)
