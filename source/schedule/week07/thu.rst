@@ -67,11 +67,22 @@ Demo
 Assignments
 ===========
 
-.. * :doc:`/assignments/hash_table`
-.. * :doc:`/assignments/django_4_data_editing`
-
-* :doc:`/assignments/aws_2_ansible_imager` 
+* :doc:`/assignments/trie_traversal`
+* :doc:`/assignments/django_4_data_editing`
+* :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/sort_2_mergesort`
+* :doc:`/assignments/aws_2_ansible_imager` (Due Monday)
+* :doc:`/assignments/django_5_complete_frontend` (Due Monday)
+
+.. * :doc:`/assignments/hash_table`
+
+
 * :doc:`/assignments/web_app_security_assignment1` (Due Monday)
 * :doc:`/assignments/trie_autocomplete` (Due Monday)
-* :doc:`/assignments/daily_lj_entry`
+
+
+
+
+
+* :doc:`/assignments/django_4_data_editing`
+* :doc:`/assignments/hash_table`

@@ -10,12 +10,11 @@ Friday
 
     This document contains no slides.
 
-Code Fellows Professional Development Workshop
+Whiteboard Challenge
 
 Assignments
 ===========
 
-* :doc:`/assignments/kata_spell_check`
-* :doc:`/assignments/web_app_security_assignment1` (Due Monday)
-* :doc:`/assignments/trie_autocomplete` (Due Monday)
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/web_app_security_assignment1` (Due Monday)
+* :doc:`/assignments/kata_autocomplete` (Due Monday)

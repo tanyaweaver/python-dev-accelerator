@@ -38,7 +38,7 @@ Concepts
     /lectures/django_forms
 
 * Django Security and Permissions
-* The Insertion Sort algorithm
+* The Merge Sort algorithm
 * Trie Tree Traversals
 
 Demo
@@ -46,16 +46,14 @@ Demo
 
 .. Setting up EC2 and RDS to communicate with each-other
 
-* Insertion Sort!!
+* Merge Sort!!
 
 Assignments
 ===========
 
-.. * :doc:`/assignments/aws_0_deploy_wsgi_app`
-.. * :doc:`/assignments/django_3_data_views`
-.. * :doc:`/assignments/bst_4_balancing`
-
-* :doc:`/assignments/trie_traversal`
-* :doc:`/assignments/sort_1_insertion`
-* :doc:`/assignments/django_5_complete_frontend`
+* :doc:`/assignments/trie_implementation`
+* :doc:`/assignments/django_3_data_views`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/aws_1_deploy_imager`
+* :doc:`/assignments/sort_2_mergesort` (Due Thursday)
+* :doc:`/assignments/django_5_complete_frontend` (Due Monday)

@@ -50,10 +50,11 @@ Demo
 Assignments
 ===========
 
-.. * :doc:`/assignments/django_2_registration`
-.. * :doc:`/assignments/aws_account`
-.. * :doc:`/assignments/bst_4_balancing` (Due Wednesday)
 
-* :doc:`/assignments/trie_implementation`
-* :doc:`/assignments/django_4_data_editing`
+* :doc:`/assignments/django_3_data_views`
+* :doc:`/assignments/bst_4_balancing`
+* :doc:`/assignments/sort_1_insertion`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/aws_1_deploy_imager` (Due Wednesday)
+* :doc:`/assignments/django_5_complete_frontend` (Due Monday)
+

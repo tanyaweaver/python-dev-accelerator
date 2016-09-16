@@ -67,15 +67,11 @@ Demo
 * Using django-configurations to achieve 12-factor Nirvana
 * Hashing and The Hash Table
 
-.. Managing relationships in the Django ORM
-
 Assignments
 ===========
 
+* :doc:`/assignments/aws_0_deploy_wsgi_app`
 * :doc:`/assignments/django_2_registration`
-* :doc:`/assignments/bst_4_balancing` (Due Wednesday)
-
-* :doc:`/assignments/hash_table`
-* :doc:`/assignments/django_3_data_views` (adding class-based views)
-* :doc:`/assignments/aws_1_deploy_imager`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/bst_4_balancing` (Due Tuesday)
+* :doc:`/assignments/django_5_complete_frontend` (Due Monday)
