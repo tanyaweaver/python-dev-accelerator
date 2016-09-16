@@ -13,8 +13,9 @@ Tuesday
 Objectives
 ==========
 
-* Be comfortable working with Django forms and form handling
-* Learn how text can be handled as a tree with the Trie Tree
+
+* Learn about the Insertion Sort algorithm
+* Investigate Django's Class-Based Views (CBV) and how they work
 
 Readings
 ========
@@ -23,7 +24,7 @@ Readings
     :start-line: 59
     :end-line: 72
 
-* `Trie Trees <https://www.youtube.com/watch?v=RIUY7ieyH40>`_
+* `Insertion Sort <http://www.tutorialspoint.com/data_structures_algorithms/insertion_sort_algorithm.htm>`_
 
 Review
 ======
@@ -43,17 +44,17 @@ Concepts
 Demo
 ====
 
-.. Deploying a basic WSGI app to AWS
-
-* Interacting with Django Forms.
+* Insertion Sort
+* Setting up EC2 and RDS to communicate with each-other
 
 Assignments
 ===========
 
-.. * :doc:`/assignments/django_2_registration`
-.. * :doc:`/assignments/aws_account`
-.. * :doc:`/assignments/bst_4_balancing` (Due Wednesday)
 
-* :doc:`/assignments/trie_implementation`
-* :doc:`/assignments/django_4_data_editing`
+* :doc:`/assignments/django_3_data_views`
+* :doc:`/assignments/bst_4_balancing`
+* :doc:`/assignments/sort_1_insertion`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/aws_1_deploy_imager` (Due Wednesday)
+* :doc:`/assignments/django_5_complete_frontend` (Due Monday)
+

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Unsupervised Classification &mdash; Python 401 2.1 documentation</title>
+    <title>Python Practice: Autocomplete &mdash; Python 401 2.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -174,55 +174,59 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="unsupervised-classification">
-<h1>Unsupervised Classification<a class="headerlink" href="#unsupervised-classification" title="Permalink to this headline">¶</a></h1>
-<p>Real-world data rarely comes in labeled.
-However, data tends to naturally cluster around like-things.
-Consider the following data about stars and galaxies.</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-
-<span class="gp">In [2]: </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;source/downloads/lean_stars_and_galaxies.csv&quot;</span><span class="p">)</span>
-
-<span class="gp">In [3]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
-<span class="go">          ra     decl   CLASS      w3  col12</span>
-<span class="go">0  342.68700  1.27016  GALAXY   9.203  0.270</span>
-<span class="go">1  355.89400  1.26540  GALAXY  10.579  0.021</span>
-<span class="go">2    1.97410  1.26642  GALAXY  10.678  0.302</span>
-<span class="go">3    3.19715  1.26200  GALAXY   9.662  0.596</span>
-<span class="go">4    4.66683  1.26086  GALAXY   9.531  0.406</span>
-<span class="go">5    5.40616  1.26758  GALAXY   8.836  0.197</span>
-<span class="go">6    6.32845  1.26694  GALAXY  11.931  0.196</span>
-<span class="go">7    6.89934  1.26141  GALAXY  10.165  0.169</span>
-<span class="go">8    8.19103  1.25947  GALAXY   9.922  0.242</span>
-<span class="go">9   16.55700  1.26696  GALAXY   9.561  0.061</span>
+<div class="section" id="python-practice-autocomplete">
+<h1>Python Practice: Autocomplete<a class="headerlink" href="#python-practice-autocomplete" title="Permalink to this headline">¶</a></h1>
+<span class="admonition-python-practice-autocomplete"></span><p>A common feature in websites is &#8220;autocomplete&#8221;.
+Typically, a user is entering input into a form field, and the system provides a list of suggested completions.
+Each new character typed reduces the list of suggestions.
+The completions are typically drawn from a vocabulary of available values.
+If the user is typing a sequence that is not matched in the list of available values, no completions are suggested.</p>
+<div class="section" id="your-task">
+<h2>Your Task<a class="headerlink" href="#your-task" title="Permalink to this headline">¶</a></h2>
+<p>Write a callable Python class which will implement autocomplete functionality.
+Your class should take a list of words to be a vocabulary as an argument on initialization.
+It should also accept a <code class="docutils literal"><span class="pre">max_completions</span></code> argument, which controls the maximum number of suggested completions for a given string.
+The <code class="docutils literal"><span class="pre">max_completions</span></code> argument should default to 5.</p>
+<p>The input to the call method for the class will be the string the user has typed.
+When called, this class should return a list of at most <code class="docutils literal"><span class="pre">max_completions</span></code> suggested words.
+If there are more available completions than allowed, you are free to decide which to return.
+If there are no completions available, you should return an empty list.
+Your class should handle inappropriate inputs correctly.</p>
+<p>In the end, your class should be usable like so:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">autocomplete</span> <span class="kn">import</span> <span class="n">AutoCompleter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vocabulary</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fix&#39;</span><span class="p">,</span> <span class="s1">&#39;fax&#39;</span><span class="p">,</span> <span class="s1">&#39;fit&#39;</span><span class="p">,</span> <span class="s1">&#39;fist&#39;</span><span class="p">,</span> <span class="s1">&#39;full&#39;</span><span class="p">,</span> <span class="s1">&#39;finch&#39;</span><span class="p">,</span> <span class="s1">&#39;final&#39;</span><span class="p">,</span> <span class="s1">&#39;finial&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">complete_me</span> <span class="o">=</span> <span class="n">AutoCompleter</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">,</span> <span class="n">max_completions</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">complete_me</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+<span class="go">[&#39;fix&#39;, &#39;fax&#39;, &#39;fit&#39;, &#39;fist&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">complete_me</span><span class="p">(</span><span class="s1">&#39;fi&#39;</span><span class="p">)</span>
+<span class="go">[&#39;fix&#39;, &#39;fit&#39;, &#39;fist&#39;, &#39;finch&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">complete_me</span><span class="p">(</span><span class="s1">&#39;fin&#39;</span><span class="p">)</span>
+<span class="go">[&#39;finch&#39;, &#39;final&#39;, &#39;finial&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">complete_me</span><span class="p">(</span><span class="s1">&#39;finally&#39;</span><span class="p">)</span>
+<span class="go">[]</span>
 </pre></div>
 </div>
-<p>If I were to visualize this data, I would see that although there&#8217;s a ton of it that might wash out clumpy structure there are still some natural clusters in the data.</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-
-<span class="gp">In [5]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">col12</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">w3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">&lt;matplotlib.collections.PathCollection at 0x10c278be0&gt;</span>
-
-<span class="gp">In [6]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
-
-<span class="gp">In [7]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Infrared Color&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Brightness&quot;</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">&lt;matplotlib.text.Text at 0x10bd6efd0&gt;</span>
-</pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/unsupervised_1.png"><img alt="../_images/unsupervised_1.png" src="../_images/unsupervised_1.png" style="width: 8in;" /></a>
-<p>An unsupervised classification algorithm would allow me to pick out these clusters.
-Although it wouldn&#8217;t be able to tell me anything about the data (as it doesn&#8217;t know anything aside from the numbers it receives), it would give me a starting point for further study.</p>
-<p>With this example my algorithm may decide that a good simple classification boundary is &#8220;Infrared Color = 0.6&#8221;.
-This would separate my data into left (IR color &lt; 0.6) and right (IR color &gt; 0.6).
-From there I can investigate further and study this data to see what might be the cause for this clear separation.</p>
-<p>Here are examples of some unsupervised classification algorithms that are used to find clusters in data:</p>
-<ul class="simple">
-<li><strong>K-Means Clustering</strong></li>
-<li>Gaussian Mixture Models</li>
-<li>Mean Shift</li>
-<li>Hierarchical Clustering</li>
-<li>Neural Networks</li>
-</ul>
+<div class="section" id="stretch-goal">
+<h2>Stretch Goal<a class="headerlink" href="#stretch-goal" title="Permalink to this headline">¶</a></h2>
+<p>Update the <code class="docutils literal"><span class="pre">__init__</span></code> method of your class to accept a filename instead of a list.
+If the provided value is a list, then operate as before.
+If it is a file, then the vocabulary should be read from the file.
+You may assume that the file is formatted with one word per line.
+You may assume that there are no blank lines in the file.
+You <strong>may not</strong> assume that there is no extra whitespace on any line.</p>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>Create a <code class="docutils literal"><span class="pre">autocomplete</span></code> branch in your <code class="docutils literal"><span class="pre">code-katas</span></code> repository.
+Do all of your work on this branch.</p>
+<p>Add documentation about your code in the repo&#8217;s <code class="docutils literal"><span class="pre">README.md</span></code>.
+Write appropriate tests for your code, and save them in a <code class="docutils literal"><span class="pre">test_autocomplete.py</span></code> file.</p>
+<p>After you&#8217;ve pushed your code solution over into GitHub, send a pull request
+to your master branch.
+<strong>Submit the URL of that pull request to Canvas.</strong></p>
+<p>Use the comment box in Canvas to talk about your thought process, as well as any difficulty you had with this code kata.</p>
+</div>
 </div>
 
 
@@ -231,6 +235,16 @@ From there I can investigate further and study this data to see what might be th
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python Practice: Autocomplete</a><ul>
+<li><a class="reference internal" href="#your-task">Your Task</a></li>
+<li><a class="reference internal" href="#stretch-goal">Stretch Goal</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">

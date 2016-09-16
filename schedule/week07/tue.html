@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python 401 2.1 documentation" href="../../index.html" />
+    <link rel="next" title="sea_d35_day27_django_CBV" href="../../lectures/django_cbv.html" />
+    <link rel="prev" title="Deploying a Simple WSGI Application on AWS" href="../../lectures/simple_wsgi_deployment.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 
@@ -51,6 +53,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../lectures/django_cbv.html" title="sea_d35_day27_django_CBV"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../../lectures/simple_wsgi_deployment.html" title="Deploying a Simple WSGI Application on AWS"
+             accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -179,21 +187,21 @@ div.nboutput  > :nth-child(2).stderr {
 <span class="admonition-course-presentations"></span><div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Be comfortable working with Django forms and form handling</li>
-<li>Learn how text can be handled as a tree with the Trie Tree</li>
+<li>Learn about the Insertion Sort algorithm</li>
+<li>Investigate Django&#8217;s Class-Based Views (CBV) and how they work</li>
 </ul>
 </div>
 <div class="section" id="readings">
 <h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
 <p>To support creating and editing objects in Django, you&#8217;ll need to learn about Django Forms.  Here are some readings to keep in mind as you progress:</p>
 <ul class="simple">
-<li>Start by learning how to <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/forms/">work with forms</a> in general</li>
-<li>Follow that up with reading about <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/forms/modelforms/">ModelForms</a> and what they provide</li>
-<li>Make sure you understand <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/forms/validation/">form and field validation</a> so you can ensure proper data is submitted</li>
-<li>Particularly complex forms, or forms which require javascript or special css, will need to utilize <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/forms/media/">form assets</a></li>
-<li>You&#8217;ll want to keep a reference open for the <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/forms/api/">Forms API</a></li>
+<li>Start by learning how to <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/forms/">work with forms</a> in general</li>
+<li>Follow that up with reading about <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/forms/modelforms/">ModelForms</a> and what they provide</li>
+<li>Make sure you understand <a class="reference external" href="https://docs.djangoproject.com/en/1.10/ref/forms/validation/">form and field validation</a> so you can ensure proper data is submitted</li>
+<li>Particularly complex forms, or forms which require javascript or special css, will need to utilize <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/forms/media/">form assets</a></li>
+<li>You&#8217;ll want to keep a reference open for the <a class="reference external" href="https://docs.djangoproject.com/en/1.10/ref/forms/api/">Forms API</a></li>
 <li>Keep in mind that the custom form field you imagine may already have been created and check <a class="reference external" href="https://www.djangopackages.com/grids/g/forms/">the Forms category</a> on <a class="reference external" href="http://www.djangopackages.com">http://www.djangopackages.com</a></li>
-<li><a class="reference external" href="https://www.youtube.com/watch?v=RIUY7ieyH40">Trie Trees</a></li>
+<li><a class="reference external" href="http://www.tutorialspoint.com/data_structures_algorithms/insertion_sort_algorithm.htm">Insertion Sort</a></li>
 </ul>
 </div>
 <div class="section" id="review">
@@ -211,28 +219,25 @@ div.nboutput  > :nth-child(2).stderr {
 <li class="toctree-l2"><a class="reference internal" href="../../lectures/django_cbv.html#dispatch">(21:23) <code class="docutils literal"><span class="pre">dispatch()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../lectures/trie.html">Trie</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/trie.html#Motivation">Motivation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/trie.html#Definition">Definition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/trie.html#Attributes">Attributes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/trie.html#Operations">Operations</a></li>
-</ul>
-</li>
 </ul>
 </div>
 </div>
 <div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Interacting with Django Forms.</li>
+<li>Insertion Sort</li>
+<li>Setting up EC2 and RDS to communicate with each-other</li>
 </ul>
 </div>
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../../assignments/trie_implementation.html"><em>Implement a Trie in Python</em></a></li>
-<li><a class="reference internal" href="../../assignments/django_4_data_editing.html"><em>Django Imager: Data Editing</em></a></li>
+<li><a class="reference internal" href="../../assignments/django_3_data_views.html"><em>Django Imager: Data Views</em></a></li>
+<li><a class="reference internal" href="../../assignments/bst_4_balancing.html"><em>Binary Search Tree: Self-Balancing</em></a></li>
+<li><a class="reference internal" href="../../assignments/sort_1_insertion.html"><em>Implement Insertion Sort</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
+<li><a class="reference internal" href="../../assignments/aws_1_deploy_imager.html"><em>Deploy the Imager app to AWS</em></a> (Due Wednesday)</li>
+<li><a class="reference internal" href="../../assignments/django_5_complete_frontend.html"><em>Django Imager: Complete Front-End</em></a> (Due Monday)</li>
 </ul>
 </div>
 </div>
@@ -256,6 +261,12 @@ div.nboutput  > :nth-child(2).stderr {
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../../lectures/simple_wsgi_deployment.html"
+                        title="previous chapter">Deploying a Simple WSGI Application on AWS</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../lectures/django_cbv.html"
+                        title="next chapter">sea_d35_day27_django_CBV</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
@@ -279,6 +290,12 @@ div.nboutput  > :nth-child(2).stderr {
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../../lectures/django_cbv.html" title="sea_d35_day27_django_CBV"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../../lectures/simple_wsgi_deployment.html" title="Deploying a Simple WSGI Application on AWS"
+             >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>

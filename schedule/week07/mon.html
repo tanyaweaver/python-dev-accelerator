@@ -179,9 +179,10 @@ div.nboutput  > :nth-child(2).stderr {
 <span class="admonition-course-presentations"></span><div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Learn about the Hash Table data structure</li>
-<li>Understand the difference between (and increased utility of) class-based views from function-based views</li>
-<li>Get practice setting up your own Relational Database Server (RDS) on AWS</li>
+<li>Learn about Django Views, URLs and the urlconf</li>
+<li>Learn about the services offered by Amazon Web Services (AWS)</li>
+<li>Learn to provision a web server in AWS</li>
+<li>Learn about AVL rotations and how to build a self-balancing Binary Search Tree</li>
 </ul>
 </div>
 <div class="section" id="readings">
@@ -191,19 +192,19 @@ div.nboutput  > :nth-child(2).stderr {
 <p>For your tasks this week, you&#8217;ll need to create a number of views in Django.
 Please refer to the following readings for help in answering your quesitons:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/http/views/">Writing Views in Django</a></li>
-<li>An overview of <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/class-based-views/">Django&#8217;s Class-Based Views</a></li>
-<li>Full <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/class-based-views/">API Documentation</a> for Class-Based Views</li>
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/http/views/">Writing Views in Django</a></li>
+<li>An overview of <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/class-based-views/">Django&#8217;s Class-Based Views</a></li>
+<li>Full <a class="reference external" href="https://docs.djangoproject.com/en/1.10/ref/class-based-views/">API Documentation</a> for Class-Based Views</li>
 </ul>
 <p>You may also wish to refer to the following materials for help in writing templates in Django:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/templates/language/">An overview</a> of the Django Template Language</li>
-<li>Django <a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/templates/">Templates Configuration</a> (including configuration of template lookup and engine selection)</li>
-<li>The <a class="reference external" href="https://docs.djangoproject.com/en/1.9/ref/templates/builtins/">built-in template tags and filters</a> in Django</li>
-<li>Creating your own <a class="reference external" href="https://docs.djangoproject.com/en/1.9/howto/custom-template-tags/">custom template tags and filters</a></li>
-<li><a class="reference external" href="https://docs.djangoproject.com/en/1.9/topics/http/views/">Writing Views in Django</a></li>
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.10/ref/templates/language/">An overview</a> of the Django Template Language</li>
+<li>Django <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/templates/">Templates Configuration</a> (including configuration of template lookup and engine selection)</li>
+<li>The <a class="reference external" href="https://docs.djangoproject.com/en/1.10/ref/templates/builtins/">built-in template tags and filters</a> in Django</li>
+<li>Creating your own <a class="reference external" href="https://docs.djangoproject.com/en/1.10/howto/custom-template-tags/">custom template tags and filters</a></li>
+<li>Read about using <a class="reference external" href="https://docs.djangoproject.com/es/1.10/topics/auth/default/">Django&#8217;s Authentication Systems</a></li>
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/http/views/">Writing Views in Django</a></li>
 <li>(Read <em>ONLY!</em> Don&#8217;t <em>do</em> this yet) <a class="reference external" href="https://ashokfernandez.wordpress.com/2014/03/11/deploying-a-django-app-to-amazon-aws-with-nginx-gunicorn-git/">Deploying a Django App to Amazon AWS</a></li>
-<li>Hash Tables at <a class="reference external" href="http://visualgo.net/hashtable">VisuAlgo</a></li>
 <li>(Read <em>ONLY!</em> Do not <em>do</em> yet!) <a class="reference external" href="http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/getting-started-create-rds.html">Creating a Database Server</a></li>
 <li>Be aware of the <a class="reference external" href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html">security controls for Amazon RDS</a></li>
 <li>In particular, learn about <a class="reference external" href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html">RDS Security Groups</a> and controlling access between RDS and EC2</li>
@@ -213,16 +214,12 @@ Please refer to the following readings for help in answering your quesitons:</p>
 <div class="section" id="review">
 <h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Binary Search Tree</li>
+<li>Binary Search Tree Deletion</li>
 <li>Django Data Model</li>
 </ul>
 </div>
 <div class="section" id="concepts">
 <h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul class="simple">
-</ul>
-</div>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../lectures/django_views.html">Django URLs, Views and Templates</a><ul>
@@ -238,26 +235,21 @@ Please refer to the following readings for help in answering your quesitons:</p>
 </ul>
 </div>
 <ul class="simple">
-<li>AWS Database Management: RDS</li>
+<li>Tree Rotations and self-balancing Binary Search Trees</li>
 </ul>
 </div>
 <div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Setting up EC2 and RDS to Communicate With Each Other</li>
-<li>Using django-configurations to achieve 12-factor Nirvana</li>
-<li>Hashing and The Hash Table</li>
-</ul>
+<p>Interacting with AWS through the web, an introduction to AWS web services.</p>
 </div>
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><a class="reference internal" href="../../assignments/aws_0_deploy_wsgi_app.html"><em>Deploy a WSGI app to AWS</em></a></li>
 <li><a class="reference internal" href="../../assignments/django_2_registration.html"><em>Django Imager: Registration, Login and Home</em></a></li>
-<li><a class="reference internal" href="../../assignments/bst_4_balancing.html"><em>Binary Search Tree: Self-Balancing</em></a> (Due Wednesday)</li>
-<li><a class="reference internal" href="../../assignments/hash_table.html"><em>Implement a Hash Table in Python</em></a></li>
-<li><a class="reference internal" href="../../assignments/django_3_data_views.html"><em>Django Imager: Data Views</em></a> (adding class-based views)</li>
-<li><a class="reference internal" href="../../assignments/aws_1_deploy_imager.html"><em>Deploy the Imager app to AWS</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
+<li><a class="reference internal" href="../../assignments/bst_4_balancing.html"><em>Binary Search Tree: Self-Balancing</em></a> (Due Tuesday)</li>
+<li><a class="reference internal" href="../../assignments/django_5_complete_frontend.html"><em>Django Imager: Complete Front-End</em></a> (Due Monday)</li>
 </ul>
 </div>
 </div>
@@ -277,9 +269,7 @@ Please refer to the following readings for help in answering your quesitons:</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#review">Review</a></li>
-<li><a class="reference internal" href="#concepts">Concepts</a><ul>
-</ul>
-</li>
+<li><a class="reference internal" href="#concepts">Concepts</a></li>
 <li><a class="reference internal" href="#demo">Demo</a></li>
 <li><a class="reference internal" href="#assignments">Assignments</a></li>
 </ul>
