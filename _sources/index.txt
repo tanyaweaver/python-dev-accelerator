@@ -21,9 +21,9 @@ Overview
 .. sidebar:: This Week
     :subtitle: quick links to daily schedules
 
-    **Week 06**
+    **Week 07**
 
-    .. include:: schedule/week06/index.rst
+    .. include:: schedule/week07/index.rst
         :start-line: 12
 
 

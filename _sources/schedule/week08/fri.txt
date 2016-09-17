@@ -13,7 +13,8 @@ Friday
 Concepts
 ========
 
-Code Fellows Professional Development Workshop
+.. * Get-A-Job curriculum, Day 2
+* Whiteboarding
 
 Assignments
 ===========
