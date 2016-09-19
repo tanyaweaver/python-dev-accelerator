@@ -13,16 +13,15 @@ Tuesday
 Objectives
 ==========
 
-* Learn how to incorporate a Django add-on.
+* Gain a cursory understanding of what Machine Learning is and what Python tools can be used to do it.
 
 Readings
 ========
 
-* `Documentation for Django Taggit <https://django-taggit.readthedocs.io/en/latest/>`_
+* `Machine Learning (wikipedia) <https://en.wikipedia.org/wiki/Machine_learning>`_
+* `Introduction to Machine Learning in Python with scikit-learn <http://ipython-books.github.io/featured-04/>`_ (down to but not including Getting Started with scikit-learn)
+* `matplotlib.pyplot tutorial <http://matplotlib.org/users/pyplot_tutorial.html>`_
 
-.. * Read about using `Django's Authentication Systems <https://docs.djangoproject.com/es/1.9/topics/auth/default/>`_
-.. * Be aware of the `security controls for Amazon RDS <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html>`_
-.. * In particular, learn about `RDS Security Groups <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html>`_ and controlling access between RDS and EC2
 
 Review
 ======
@@ -33,11 +32,10 @@ Review
 Concepts
 ========
 
-.. * Django Security and Permissions
-.. * The Mergesort algorithm
-.. * AWS Database Management: RDS
-* The Radix Sort Algorithm
-* Tagging Photos in the Django Imager
+.. toctree::
+    :maxdepth: 2
+
+    /lectures/intro_to_machine_learning
 
 Demo
 ====
@@ -49,11 +47,11 @@ Demo
 Assignments
 ===========
 
-.. * :doc:`/assignments/sort_2_mergesort`
-.. * :doc:`/assignments/django_5_complete_frontend`
-* :doc:`/assignments/project_02_idea`
-* :doc:`/assignments/sort_4_radix`
+
 * :doc:`/assignments/django_7_drf_tutorial_b`
-* Add Tagging to the Django Imager (Due Friday)
-* :doc:`/assignments/blog_post_publish` (Due Friday)
+* :doc:`/assignments/sort_3_quicksort`
+* :doc:`/assignments/web_app_security_assignment1`
+* :doc:`/assignments/project_02_idea`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/ml_1_visualizing_data.rst` (Due Wednesday)
+* :doc:`/assignments/blog_post_publish` (Due **Next** Friday)

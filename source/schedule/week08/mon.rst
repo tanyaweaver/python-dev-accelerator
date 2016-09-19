@@ -54,18 +54,12 @@ Demo
 * Quick Sort!!!
 * Use a DRF-based api to connect to an existing Django application
 
-.. * Interacting with Django Forms.
-.. * Insertion Sort!!
-
 Assignments
 ===========
 
-.. * :doc:`/assignments/hash_table`
-.. * :doc:`/assignments/sort_1_insertion`
-.. * :doc:`/assignments/django_4_data_editing`
-* :doc:`/assignments/sort_3_quicksort`
 * :doc:`/assignments/django_6_drf_tutorial_a`
 * :doc:`/assignments/project_01_pitch`
-* :doc:`/assignments/web_app_security_assignment2`
-* :doc:`/assignments/blog_post_publish` (Due Friday)
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/sort_3_quicksort` (Due Tuesday)
+* :doc:`/assignments/web_app_security_assignment1` (Due Tuesday)
+* :doc:`/assignments/blog_post_publish` (Due **Next** Friday)
