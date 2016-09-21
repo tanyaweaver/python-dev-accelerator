@@ -47,10 +47,11 @@ Demo
 Assignments
 ===========
 
-* :doc:`/assignments/decision_tree`
+* :doc:`/assignments/sort_4_radix`
 * :doc:`/assignments/project_04_readme`
-* Add Tagging to the Django Imager (Due Friday)
-* :doc:`/assignments/blog_post_publish` (Due Friday)
-* :doc:`/assignments/django_8_api` (Due Monday)
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/web_app_security_assignment2` (Due Friday)
+* :doc:`/assignments/decision_tree` (Due Friday)
+* :doc:`/assignments/django_8_api` (Due Monday)
+* :doc:`/assignments/blog_post_publish` (Due **Next** Friday)
 
