@@ -39,9 +39,9 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    .. /lectures/django_forms
     /lectures/web_app_security_2
 
+* Configuration Management with Ansible
 * The Quick Sort algorithm
 * Implementing REST for existing Django Projects
 
@@ -62,4 +62,5 @@ Assignments
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/sort_3_quicksort` (Due Tuesday)
 * :doc:`/assignments/web_app_security_assignment1` (Due Tuesday)
+* :doc:`/assignments/aws_2_ansible_imager` (Due Friday)
 * :doc:`/assignments/blog_post_publish` (Due **Next** Friday)

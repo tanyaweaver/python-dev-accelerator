@@ -54,4 +54,5 @@ Assignments
 * :doc:`/assignments/project_02_idea`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/ml_1_visualizing_data.rst` (Due Wednesday)
+* :doc:`/assignments/aws_2_ansible_imager` (Due Friday)
 * :doc:`/assignments/blog_post_publish` (Due **Next** Friday)

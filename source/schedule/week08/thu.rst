@@ -50,6 +50,7 @@ Assignments
 * :doc:`/assignments/sort_4_radix`
 * :doc:`/assignments/project_04_readme`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/aws_2_ansible_imager` (Due Friday)
 * :doc:`/assignments/web_app_security_assignment2` (Due Friday)
 * :doc:`/assignments/decision_tree` (Due Friday)
 * :doc:`/assignments/django_8_api` (Due Monday)

@@ -32,7 +32,9 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    /lectures/django_forms
+
+    /lectures/django_cbv
+    /lectures/trie
 
 * Django Security and Permissions
 * The Merge Sort algorithm

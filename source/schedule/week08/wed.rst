@@ -36,6 +36,7 @@ Assignments
 * :doc:`/assignments/project_03_repo`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/sort_4_radix` (Due Thursday)
+* :doc:`/assignments/aws_2_ansible_imager` (Due Friday)
 * :doc:`/assignments/web_app_security_assignment2` (Due Friday)
 * :doc:`/assignments/django_8_api` (Due Monday)
 * :doc:`/assignments/blog_post_publish` (Due **Next** Friday)
