@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Unsupervised Classification &mdash; Python 401 2.1 documentation</title>
+    <title>Analyze a Data Set &mdash; Python 401 2.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -174,55 +174,47 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="unsupervised-classification">
-<h1>Unsupervised Classification<a class="headerlink" href="#unsupervised-classification" title="Permalink to this headline">¶</a></h1>
-<p>Real-world data rarely comes in labeled.
-However, data tends to naturally cluster around like-things.
-Consider the following data about stars and galaxies.</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-
-<span class="gp">In [2]: </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;source/downloads/lean_stars_and_galaxies.csv&quot;</span><span class="p">)</span>
-
-<span class="gp">In [3]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
-<span class="go">          ra     decl   CLASS      w3  col12</span>
-<span class="go">0  342.68700  1.27016  GALAXY   9.203  0.270</span>
-<span class="go">1  355.89400  1.26540  GALAXY  10.579  0.021</span>
-<span class="go">2    1.97410  1.26642  GALAXY  10.678  0.302</span>
-<span class="go">3    3.19715  1.26200  GALAXY   9.662  0.596</span>
-<span class="go">4    4.66683  1.26086  GALAXY   9.531  0.406</span>
-<span class="go">5    5.40616  1.26758  GALAXY   8.836  0.197</span>
-<span class="go">6    6.32845  1.26694  GALAXY  11.931  0.196</span>
-<span class="go">7    6.89934  1.26141  GALAXY  10.165  0.169</span>
-<span class="go">8    8.19103  1.25947  GALAXY   9.922  0.242</span>
-<span class="go">9   16.55700  1.26696  GALAXY   9.561  0.061</span>
-</pre></div>
-</div>
-<p>If I were to visualize this data, I would see that although there&#8217;s a ton of it that might wash out clumpy structure there are still some natural clusters in the data.</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-
-<span class="gp">In [5]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">col12</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">w3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">&lt;matplotlib.collections.PathCollection at 0x11682c8d0&gt;</span>
-
-<span class="gp">In [6]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
-
-<span class="gp">In [7]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Infrared Color&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Brightness&quot;</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">&lt;matplotlib.text.Text at 0x1164586a0&gt;</span>
-</pre></div>
-</div>
-<a class="reference internal image-reference" href="../_images/unsupervised_1.png"><img alt="../_images/unsupervised_1.png" src="../_images/unsupervised_1.png" style="width: 8in;" /></a>
-<p>An unsupervised classification algorithm would allow me to pick out these clusters.
-Although it wouldn&#8217;t be able to tell me anything about the data (as it doesn&#8217;t know anything aside from the numbers it receives), it would give me a starting point for further study.</p>
-<p>With this example my algorithm may decide that a good simple classification boundary is &#8220;Infrared Color = 0.6&#8221;.
-This would separate my data into left (IR color &lt; 0.6) and right (IR color &gt; 0.6).
-From there I can investigate further and study this data to see what might be the cause for this clear separation.</p>
-<p>Here are examples of some unsupervised classification algorithms that are used to find clusters in data:</p>
+<div class="section" id="analyze-a-data-set">
+<h1>Analyze a Data Set<a class="headerlink" href="#analyze-a-data-set" title="Permalink to this headline">¶</a></h1>
+<p>Today we&#8217;ve learned about how to use <code class="docutils literal"><span class="pre">Numpy</span></code>, <code class="docutils literal"><span class="pre">Matplotlib</span></code>, and <code class="docutils literal"><span class="pre">Jupyter</span> <span class="pre">Notebook</span></code> to read and present data.
+Now let&#8217;s use it with an actual data set.
+<a href="#id1"><span class="problematic" id="id2">:download:`Here &lt;/downloads/boston_housing_data.csv&gt;`_</span></a> is a link to a data set compiling data on home values in suburbs in Boston from 1993.
+You can read more about it <a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/Housing">here</a>, where there is a description of the columns.</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>If you haven&#8217;t already, start a new virtual environment and create a repository named <code class="docutils literal"><span class="pre">machine-learning</span></code>.
+Within that repository start a branch called <code class="docutils literal"><span class="pre">analyze</span></code>.</p>
+<p>Open a new Jupyter Notebook entitled <strong>Analyze a Data Set</strong>.
+Beneath that title, put the date and your name.</p>
+<p>Download the above data set and read it into your Jupyter Notebook.
+Briefly describe the data in a cell above all your code.
+Then, from this data set, find:</p>
 <ul class="simple">
-<li><strong>K-Means Clustering</strong></li>
-<li>Gaussian Mixture Models</li>
-<li>Mean Shift</li>
-<li>Hierarchical Clustering</li>
-<li>Neural Networks</li>
+<li>The median and average home values across all Boston Suburbs in dollars.</li>
+<li>The median home value of the suburb with the newest houses.</li>
 </ul>
+<p>Visualize the following appropriately (as either points or lines):</p>
+<ul class="simple">
+<li>The relationship between per-capita crime rate and the pupil-teacher ratio. Differentiate between whether or not the suburb is bounded by the Charles River.</li>
+<li>The relationship between the proportion of black citizens and the distance to employment centers in Boston.</li>
+<li>The relationship between median value of owner-occuped homes and nitric oxide concentration along with median home value and the proportion of non-retail business (on the same plot).</li>
+</ul>
+<p>In text, describe the figures you create and any conclusions that you may draw from your visualizations.
+Make sure that all your figures have axis labels, as well as titles for each plot.</p>
+<p>Finally, come up with a question of your own about this data set.
+Try to use the data to answer that question.
+Write both the question and your data-driven answer to that question in your Jupyter Notebook.</p>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>Once you&#8217;re done with the above questions, reset your Notebook and run all of the cells from top to bottom.
+When it&#8217;s done, your cells should start with <code class="docutils literal"><span class="pre">[1]</span></code> and every sequent cell should have numbering <code class="docutils literal"><span class="pre">[N</span> <span class="pre">+</span> <span class="pre">1]</span></code>.</p>
+<p>Include in your README.md a link to the original data source at <code class="docutils literal"><span class="pre">uci.edu</span></code>.
+Describe what&#8217;s in the data set you investigated and what steps you took to look into it.</p>
+<p>When your Notebook is clean of unnecessary comments and is well organized from top to bottom, push your Notebook <strong>and only your Notebook</strong> (not the <code class="docutils literal"><span class="pre">.ipynb-checkpoints</span></code> directory or your data) to GitHub and open a pull request to your <code class="docutils literal"><span class="pre">master</span></code> branch.
+Submit the link to that pull request to Canvas.
+When you&#8217;re done, merge your <code class="docutils literal"><span class="pre">analyze</span></code> branch to <code class="docutils literal"><span class="pre">master</span></code>.</p>
+</div>
 </div>
 
 
@@ -231,6 +223,15 @@ From there I can investigate further and study this data to see what might be th
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Analyze a Data Set</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">

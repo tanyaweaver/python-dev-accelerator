@@ -38,8 +38,7 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-    /lectures/django_cbv
-    /lectures/trie
+    /lectures/django_views
 
 Demo
 ====

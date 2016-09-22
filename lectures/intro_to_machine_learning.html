@@ -550,7 +550,7 @@ Let&#8217;s start with creating some data showing exponential growth.</p>
 <p>Great, tons of numbers.
 Let&#8217;s see these numbers as points on a chart.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [8]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="gh">Out[8]: </span><span class="go">&lt;matplotlib.collections.PathCollection at 0x106ad0dd8&gt;</span>
+<span class="gh">Out[8]: </span><span class="go">&lt;matplotlib.collections.PathCollection at 0x111c92f60&gt;</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="../_images/intro_to_ml_1.png"><img alt="../_images/intro_to_ml_1.png" src="../_images/intro_to_ml_1.png" style="width: 6in;" /></a>
@@ -564,7 +564,7 @@ When making a scatter plot, there&#8217;s 3 things you&#8217;ll want to concern 
 <p>You can control each of these using keyword arguments in <code class="docutils literal"><span class="pre">plt.scatter()</span></code>.
 Let&#8217;s alter this plot such that our points are big, red, and don&#8217;t have black edges as follows:</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [9]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
-<span class="gh">Out[9]: </span><span class="go">&lt;matplotlib.collections.PathCollection at 0x106d94a90&gt;</span>
+<span class="gh">Out[9]: </span><span class="go">&lt;matplotlib.collections.PathCollection at 0x110a8b1d0&gt;</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="../_images/intro_to_ml_2.png"><img alt="../_images/intro_to_ml_2.png" src="../_images/intro_to_ml_2.png" style="width: 6in;" /></a>
@@ -588,16 +588,16 @@ Every figure should have axis labels.
 You can set those labels using the <code class="docutils literal"><span class="pre">plt.xlabel</span></code> and <code class="docutils literal"><span class="pre">plt.ylabel</span></code> methods.
 You can also add a title with <code class="docutils literal"><span class="pre">plt.title</span></code></p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [10]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of Bottles [$x$]&quot;</span><span class="p">)</span>
-<span class="gh">Out[10]: </span><span class="go">&lt;matplotlib.text.Text at 0x106bd4cf8&gt;</span>
+<span class="gh">Out[10]: </span><span class="go">&lt;matplotlib.text.Text at 0x112f40470&gt;</span>
 
 <span class="gp">In [11]: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Level of Drunkeness [$y = e^x$]&quot;</span><span class="p">)</span>
-<span class="go">                                               Out[11]: &lt;matplotlib.text.Text at 0x106be9940&gt;</span>
+<span class="go">                                               Out[11]: &lt;matplotlib.text.Text at 0x112fd5a90&gt;</span>
 
 <span class="gp">In [12]: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;This is a Scatter Plot&quot;</span><span class="p">)</span>
-<span class="go">                                                                                              Out[12]: &lt;matplotlib.text.Text at 0x106adf438&gt;</span>
+<span class="go">                                                                                              Out[12]: &lt;matplotlib.text.Text at 0x112f9f0b8&gt;</span>
 
 <span class="gp">In [13]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
-<span class="go">                                                                                                                                             Out[13]: &lt;matplotlib.collections.PathCollection at 0x10412beb8&gt;</span>
+<span class="go">                                                                                                                                             Out[13]: &lt;matplotlib.collections.PathCollection at 0x11589f6d8&gt;</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="../_images/intro_to_ml_3.png"><img alt="../_images/intro_to_ml_3.png" src="../_images/intro_to_ml_3.png" style="width: 6in;" /></a>
@@ -606,19 +606,19 @@ It helps of course to use different colors for each.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [14]: </span><span class="n">z</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">y</span>
 
 <span class="gp">In [15]: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;This is a Second Plot&quot;</span><span class="p">)</span>
-<span class="gh">Out[15]: </span><span class="go">&lt;matplotlib.text.Text at 0x106adf438&gt;</span>
+<span class="gh">Out[15]: </span><span class="go">&lt;matplotlib.text.Text at 0x112f9f0b8&gt;</span>
 
 <span class="gp">In [16]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Flergs [$x$]&quot;</span><span class="p">)</span>
-<span class="go">                                               Out[16]: &lt;matplotlib.text.Text at 0x106bd4cf8&gt;</span>
+<span class="go">                                               Out[16]: &lt;matplotlib.text.Text at 0x112f40470&gt;</span>
 
 <span class="gp">In [17]: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Blergs per Flerg [$y = e^x$]&quot;</span><span class="p">)</span>
-<span class="go">                                                                                              Out[17]: &lt;matplotlib.text.Text at 0x106be9940&gt;</span>
+<span class="go">                                                                                              Out[17]: &lt;matplotlib.text.Text at 0x112fd5a90&gt;</span>
 
 <span class="gp">In [18]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
-<span class="go">                                                                                                                                             Out[18]: &lt;matplotlib.collections.PathCollection at 0x101d56390&gt;</span>
+<span class="go">                                                                                                                                             Out[18]: &lt;matplotlib.collections.PathCollection at 0x115a52080&gt;</span>
 
 <span class="gp">In [19]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
-<span class="go">                                                                                                                                                                                                             Out[19]: &lt;matplotlib.collections.PathCollection at 0x10401ae10&gt;</span>
+<span class="go">                                                                                                                                                                                                             Out[19]: &lt;matplotlib.collections.PathCollection at 0x115a42320&gt;</span>
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="../_images/intro_to_ml_4.png"><img alt="../_images/intro_to_ml_4.png" src="../_images/intro_to_ml_4.png" style="width: 6in;" /></a>
@@ -627,19 +627,19 @@ If it&#8217;s in a simple list, that works too.
 This time, let&#8217;s plot some data as lines instead of points.
 Let&#8217;s also limit the axes so that we&#8217;re only looking at a fraction of the data.</p>
 <div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [20]: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Some Lines Instead of Points&quot;</span><span class="p">)</span>
-<span class="gh">Out[20]: </span><span class="go">&lt;matplotlib.text.Text at 0x106adf438&gt;</span>
+<span class="gh">Out[20]: </span><span class="go">&lt;matplotlib.text.Text at 0x112f9f0b8&gt;</span>
 
 <span class="gp">In [21]: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
-<span class="go">                                               Out[21]: [&lt;matplotlib.lines.Line2D at 0x101d56b38&gt;]</span>
+<span class="go">                                               Out[21]: [&lt;matplotlib.lines.Line2D at 0x115a17f28&gt;]</span>
 
 <span class="gp">In [22]: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
-<span class="go">                                                                                                   Out[22]: [&lt;matplotlib.lines.Line2D at 0x101d56e48&gt;]</span>
+<span class="go">                                                                                                   Out[22]: [&lt;matplotlib.lines.Line2D at 0x115a17cc0&gt;]</span>
 
 <span class="gp">In [23]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Fizz&quot;</span><span class="p">)</span>
-<span class="go">                                                                                                                                                       Out[23]: &lt;matplotlib.text.Text at 0x106bd4cf8&gt;</span>
+<span class="go">                                                                                                                                                       Out[23]: &lt;matplotlib.text.Text at 0x112f40470&gt;</span>
 
 <span class="gp">In [24]: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Buzz&quot;</span><span class="p">)</span>
-<span class="go">                                                                                                                                                                                                      Out[24]: &lt;matplotlib.text.Text at 0x106be9940&gt;</span>
+<span class="go">                                                                                                                                                                                                      Out[24]: &lt;matplotlib.text.Text at 0x112fd5a90&gt;</span>
 
 <span class="gp">In [25]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">                                                                                                                                                                                                                                                     Out[25]: (-0.5, 2)</span>

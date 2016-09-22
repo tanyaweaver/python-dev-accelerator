@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Unsupervised Classification &mdash; Python 401 2.1 documentation</title>
+    <title>Implement the Decision Tree Classifier &mdash; Python 401 2.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -174,55 +174,51 @@ div.nboutput  > :nth-child(2).stderr {
 
 .ansibold { font-weight: bold; }
 </style>
-<div class="section" id="unsupervised-classification">
-<h1>Unsupervised Classification<a class="headerlink" href="#unsupervised-classification" title="Permalink to this headline">¶</a></h1>
-<p>Real-world data rarely comes in labeled.
-However, data tends to naturally cluster around like-things.
-Consider the following data about stars and galaxies.</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-
-<span class="gp">In [2]: </span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;source/downloads/lean_stars_and_galaxies.csv&quot;</span><span class="p">)</span>
-
-<span class="gp">In [3]: </span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
-<span class="go">          ra     decl   CLASS      w3  col12</span>
-<span class="go">0  342.68700  1.27016  GALAXY   9.203  0.270</span>
-<span class="go">1  355.89400  1.26540  GALAXY  10.579  0.021</span>
-<span class="go">2    1.97410  1.26642  GALAXY  10.678  0.302</span>
-<span class="go">3    3.19715  1.26200  GALAXY   9.662  0.596</span>
-<span class="go">4    4.66683  1.26086  GALAXY   9.531  0.406</span>
-<span class="go">5    5.40616  1.26758  GALAXY   8.836  0.197</span>
-<span class="go">6    6.32845  1.26694  GALAXY  11.931  0.196</span>
-<span class="go">7    6.89934  1.26141  GALAXY  10.165  0.169</span>
-<span class="go">8    8.19103  1.25947  GALAXY   9.922  0.242</span>
-<span class="go">9   16.55700  1.26696  GALAXY   9.561  0.061</span>
-</pre></div>
-</div>
-<p>If I were to visualize this data, I would see that although there&#8217;s a ton of it that might wash out clumpy structure there are still some natural clusters in the data.</p>
-<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-
-<span class="gp">In [5]: </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">col12</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">w3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">&lt;matplotlib.collections.PathCollection at 0x11682c8d0&gt;</span>
-
-<span class="gp">In [6]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
-
-<span class="gp">In [7]: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Infrared Color&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Brightness&quot;</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">&lt;matplotlib.text.Text at 0x1164586a0&gt;</span>
-</pre></div>
-</div>
-<a class="reference internal image-reference" href="../_images/unsupervised_1.png"><img alt="../_images/unsupervised_1.png" src="../_images/unsupervised_1.png" style="width: 8in;" /></a>
-<p>An unsupervised classification algorithm would allow me to pick out these clusters.
-Although it wouldn&#8217;t be able to tell me anything about the data (as it doesn&#8217;t know anything aside from the numbers it receives), it would give me a starting point for further study.</p>
-<p>With this example my algorithm may decide that a good simple classification boundary is &#8220;Infrared Color = 0.6&#8221;.
-This would separate my data into left (IR color &lt; 0.6) and right (IR color &gt; 0.6).
-From there I can investigate further and study this data to see what might be the cause for this clear separation.</p>
-<p>Here are examples of some unsupervised classification algorithms that are used to find clusters in data:</p>
+<div class="section" id="implement-the-decision-tree-classifier">
+<h1>Implement the Decision Tree Classifier<a class="headerlink" href="#implement-the-decision-tree-classifier" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>Create a new branch in your data structures repository called <code class="docutils literal"><span class="pre">decision-tree</span></code>.
+You&#8217;ll use this branch to do your work for this assignment.
+Add a new file to your data-structures repository called <code class="docutils literal"><span class="pre">decision_tree.py</span></code>.
+In this file, implement a Decision Tree Classifier object.
+Your classifier should have the following public methods:</p>
 <ul class="simple">
-<li><strong>K-Means Clustering</strong></li>
-<li>Gaussian Mixture Models</li>
-<li>Mean Shift</li>
-<li>Hierarchical Clustering</li>
-<li>Neural Networks</li>
+<li>clf.fit(self, data): construct a decision tree based on some incoming data set; returns nothing</li>
+<li>clf.predict(self, data): returns labels for your test data.</li>
 </ul>
+<p>This should be able to take in an iterable of data records (either a tuple of records, or a list of records, or Pandas DataFrame).</p>
+<p>The tree should take two optional parameters: <code class="docutils literal"><span class="pre">max_depth</span></code> and <code class="docutils literal"><span class="pre">min_leaf_size</span></code>.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">max_depth</span></code> will limit the maximum number of steps your tree can take down any decision chain.</li>
+</ul>
+<p>If not specified, it&#8217;ll walk down the chain until a region of parameter space has 100% of one type of class OR only 1 data point.
+* <code class="docutils literal"><span class="pre">min_leaf_size</span></code> will limit the minimum number of data points that may exist within a region before ending a decision chain.
+If not specified, it&#8217;ll also walk down the chain until a region of parameter space has 100% of one type of class OR only 1 data point.</p>
+<p>Your implementation should only work on two characteristics total.
+Keep the scope narrow.
+To decide which characteristics to use, try visualizing your data and figuring out where the best separation between classes lies.</p>
+<p>Your implementation must include tests.
+The tests must run in both Python 2 and Python 3.
+Ensure that your tests are properly connected to Travis CI and that you have a Travis badge displayed on your <code class="docutils literal"><span class="pre">README.md</span></code>.
+Expand your <code class="docutils literal"><span class="pre">README.md</span></code> to include notes about your classifier.
+Include any external sources used in its creation.</p>
+<p><a href="#id1"><span class="problematic" id="id2">:download:`Click here &lt;/downloads/flowers_data.csv&gt;`_</span></a> for a data file of classified flowers which you may use to test your tree.
+You can either use the column named &#8220;target&#8221; or &#8220;class_name&#8221; as your class label.
+They each map directly to each other.</p>
+<div class="section" id="stretch-goal">
+<h3>Stretch Goal<a class="headerlink" href="#stretch-goal" title="Permalink to this headline">¶</a></h3>
+<p>Enable your classifier to use as many characteristics as you provide.
+For example, if your input data from <code class="docutils literal"><span class="pre">flowers_data.csv</span></code> looks like (petal_length, petal_width, sepal_length, sepal_width), your tree should be able to split along any one of those characteristics.</p>
+</div>
+</div>
+<div class="section" id="submitting-your-work">
+<h2>Submitting Your Work<a class="headerlink" href="#submitting-your-work" title="Permalink to this headline">¶</a></h2>
+<p>When you&#8217;ve completed your work and all your tests are passing, submit a pull request from the <code class="docutils literal"><span class="pre">decision-tree</span></code> branch back to <code class="docutils literal"><span class="pre">master</span></code>.
+Copy the URL for that pull request and submit it using the URL input on Canvas.
+Once submitted you may merge your branch back to <code class="docutils literal"><span class="pre">master</span></code>.</p>
+<p>Use the comment function to submit quests, comments, and reflections on the work you&#8217;ve done.</p>
+</div>
 </div>
 
 
@@ -231,6 +227,18 @@ From there I can investigate further and study this data to see what might be th
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Implement the Decision Tree Classifier</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#stretch-goal">Stretch Goal</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#submitting-your-work">Submitting Your Work</a></li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">

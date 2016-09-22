@@ -37,7 +37,7 @@ Demo
 Assignments
 ===========
 
-* Implement and Apply the K-Means Algorithm
+* :doc:`/assignments/k_means`
 * :doc:`/assignments/project_08_stories_continue`
 * :doc:`/assignments/daily_lj_entry`
 

@@ -44,8 +44,8 @@ Demo
 Assignments
 ===========
 
-* Sign up for the Whiteboarding Schedule
+* :doc:`/assignments/whiteboard`
 * Django Imager: Add Pagination to your Photos and Albums
-* Implement the K-Nearest Neighbors Algorithm
+* :doc:`/assignments/k_nearest_neighbors`
 * :doc:`/assignments/project_06_wireframe_end`
 * :doc:`/assignments/daily_lj_entry`

@@ -45,7 +45,7 @@ Concepts
 .. toctree::
     :maxdepth: 2
 
-* Configuration Management with Ansible
+    /lectures/django_forms
 * The Mergesort Algorithm
 
 Demo
@@ -63,5 +63,4 @@ Assignments
 * :doc:`/assignments/django_4_data_editing`
 * :doc:`/assignments/sort_2_mergesort`
 * :doc:`/assignments/daily_lj_entry`
-* :doc:`/assignments/aws_2_ansible_imager` (Due Monday)
 * :doc:`/assignments/django_5_complete_frontend` (Due Monday)
