@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Python 401 2.1 documentation" href="../../index.html" />
+    <link rel="next" title="Tuesday" href="tue.html" />
+    <link rel="prev" title="Code Fellows 401 Python" href="../../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 
@@ -51,6 +53,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tue.html" title="Tuesday"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../../index.html" title="Code Fellows 401 Python"
+             accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -178,55 +186,68 @@ div.nboutput  > :nth-child(2).stderr {
 <h1>Monday<a class="headerlink" href="#monday" title="Permalink to this headline">¶</a></h1>
 <span class="admonition-course-presentations"></span><div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Understand RESTful APIs and how to connect to them</li>
-</ul>
+<p>Review Django testing</p>
 </div>
 <div class="section" id="readings">
 <h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="django-testing">
+<h3>Django Testing<a class="headerlink" href="#django-testing" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference external" href="http://www.restapitutorial.com/lessons/whatisrest.html">What Is REST?</a></li>
-<li><a class="reference external" href="https://www.predic8.com/rest-demo.htm">Online REST Web Service Demo</a></li>
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/testing/">Django Testing</a> (familiarize yourself both with <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/testing/overview/">writing and running tests</a> and with the <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/testing/tools/">tools Django provides</a> for testing.</li>
+<li>Using Dynamic Test Fixtures with <a class="reference external" href="http://factoryboy.readthedocs.org/">Factory Boy</a> (in particular pay attention to <a class="reference external" href="http://factoryboy.readthedocs.org/en/latest/orms.html#django">using Factory Boy with Django</a>)</li>
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/migrations/#data-migrations">Django Migrations</a></li>
 </ul>
+</div>
+<div class="section" id="django-views">
+<h3>Django Views<a class="headerlink" href="#django-views" title="Permalink to this headline">¶</a></h3>
+<p>For your tasks this week, you&#8217;ll need to create a number of views in Django.
+Please refer to the following readings for help in answering your quesitons:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/http/views/">Writing Views in Django</a></li>
+<li>An overview of <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/class-based-views/">Django&#8217;s Class-Based Views</a></li>
+<li>Full <a class="reference external" href="https://docs.djangoproject.com/en/1.10/ref/class-based-views/">API Documentation</a> for Class-Based Views</li>
+</ul>
+<p>You may also wish to refer to the following materials for help in writing templates in Django:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.10/ref/templates/language/">An overview</a> of the Django Template Language</li>
+<li>Django <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/templates/">Templates Configuration</a> (including configuration of template lookup and engine selection)</li>
+<li>The <a class="reference external" href="https://docs.djangoproject.com/en/1.10/ref/templates/builtins/">built-in template tags and filters</a> in Django</li>
+<li>Creating your own <a class="reference external" href="https://docs.djangoproject.com/en/1.10/howto/custom-template-tags/">custom template tags and filters</a></li>
+<li>Read about using <a class="reference external" href="https://docs.djangoproject.com/es/1.10/topics/auth/default/">Django&#8217;s Authentication Systems</a></li>
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/http/views/">Writing Views in Django</a></li>
+<li>(Read <em>ONLY!</em> Don&#8217;t <em>do</em> this yet) <a class="reference external" href="https://ashokfernandez.wordpress.com/2014/03/11/deploying-a-django-app-to-amazon-aws-with-nginx-gunicorn-git/">Deploying a Django App to Amazon AWS</a></li>
+<li>(Read <em>ONLY!</em> Do not <em>do</em> yet!) <a class="reference external" href="http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/getting-started-create-rds.html">Creating a Database Server</a></li>
+<li>Be aware of the <a class="reference external" href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html">security controls for Amazon RDS</a></li>
+<li>In particular, learn about <a class="reference external" href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html">RDS Security Groups</a> and controlling access between RDS and EC2</li>
+</ul>
+</div>
 </div>
 <div class="section" id="review">
 <h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<p>Trie Traversal</p>
 </div>
 <div class="section" id="concepts">
 <h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../lectures/web_app_security_2.html">Web App Security: More Vulnerabilities and Best Practices</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/web_app_security_2.html#top-web-app-vulnerabilities">Top Web App Vulnerabilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/web_app_security_2.html#basic-vulnerability-protection">Basic Vulnerability Protection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lectures/web_app_security_2.html#best-practices">Best Practices</a></li>
-</ul>
-</li>
-</ul>
-</div>
 <ul class="simple">
-<li>Configuration Management with Ansible</li>
 <li>The Quick Sort algorithm</li>
-<li>Implementing REST for existing Django Projects</li>
+<li>Remedial Django, Testing models and views</li>
 </ul>
 </div>
 <div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Quick Sort!!!</li>
-<li>Use a DRF-based api to connect to an existing Django application</li>
 </ul>
 </div>
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../../assignments/django_6_drf_tutorial_a.html"><em>Django: Django REST Framework Tutorial, Parts 1-3</em></a></li>
+<li><a class="reference internal" href="../../assignments/django_2_registration.html"><em>Django Imager: Registration, Login and Home</em></a></li>
 <li><a class="reference internal" href="../../assignments/project_01_pitch.html"><em>Group Project: Pitch Ideas</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
 <li><a class="reference internal" href="../../assignments/sort_3_quicksort.html"><em>Implement Quick Sort</em></a> (Due Tuesday)</li>
-<li><a class="reference internal" href="../../assignments/web_app_security_assignment1.html"><em>Break the Site/Fix the Site</em></a> (Due Tuesday)</li>
-<li><a class="reference internal" href="../../assignments/aws_2_ansible_imager.html"><em>Automate Deploying Imager with Ansible</em></a> (Due Friday)</li>
-<li><a class="reference internal" href="../../assignments/blog_post_publish.html"><em>Technical Blog Post: Publish Your Post</em></a> (Due <strong>Next</strong> Friday)</li>
+<li><a class="reference internal" href="../../assignments/django_5_complete_frontend.html"><em>Django Imager: Complete Front-End</em></a> (Due Friday)</li>
+<li><a class="reference internal" href="../../assignments/blog_post_publish.html"><em>Technical Blog Post: Publish Your Post</em></a> (Due <strong>Next Friday</strong>)</li>
 </ul>
 </div>
 </div>
@@ -241,7 +262,11 @@ div.nboutput  > :nth-child(2).stderr {
   <ul>
 <li><a class="reference internal" href="#">Monday</a><ul>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
-<li><a class="reference internal" href="#readings">Readings</a></li>
+<li><a class="reference internal" href="#readings">Readings</a><ul>
+<li><a class="reference internal" href="#django-testing">Django Testing</a></li>
+<li><a class="reference internal" href="#django-views">Django Views</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#review">Review</a></li>
 <li><a class="reference internal" href="#concepts">Concepts</a></li>
 <li><a class="reference internal" href="#demo">Demo</a></li>
@@ -250,6 +275,12 @@ div.nboutput  > :nth-child(2).stderr {
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../../index.html"
+                        title="previous chapter">Code Fellows 401 Python</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tue.html"
+                        title="next chapter">Tuesday</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
@@ -273,6 +304,12 @@ div.nboutput  > :nth-child(2).stderr {
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="tue.html" title="Tuesday"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../../index.html" title="Code Fellows 401 Python"
+             >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Python 401 2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>

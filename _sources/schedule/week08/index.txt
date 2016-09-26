@@ -10,7 +10,7 @@ Week Eight
 
     This document contains no slides.
 
-The theme for the week is REST and Django Add-Ons.
+The theme for the week is Deployment and Django Review (with a touch of REST, perhaps)
 
 .. toctree::
    :maxdepth: 1

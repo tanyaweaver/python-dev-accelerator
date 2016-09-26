@@ -178,33 +178,68 @@ div.nboutput  > :nth-child(2).stderr {
 <h1>Wednesday<a class="headerlink" href="#wednesday" title="Permalink to this headline">¶</a></h1>
 <span class="admonition-course-presentations"></span><div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this headline">¶</a></h2>
+<p>Review form handling and permissions in Django</p>
+<p>Learn a bit about REST</p>
 </div>
 <div class="section" id="readings">
 <h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="django-testing">
+<h3>Django Testing<a class="headerlink" href="#django-testing" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/testing/">Django Testing</a> (familiarize yourself both with <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/testing/overview/">writing and running tests</a> and with the <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/testing/tools/">tools Django provides</a> for testing.</li>
+<li>Using Dynamic Test Fixtures with <a class="reference external" href="http://factoryboy.readthedocs.org/">Factory Boy</a> (in particular pay attention to <a class="reference external" href="http://factoryboy.readthedocs.org/en/latest/orms.html#django">using Factory Boy with Django</a>)</li>
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/migrations/#data-migrations">Django Migrations</a></li>
+</ul>
+</div>
+<div class="section" id="django-views">
+<h3>Django Views<a class="headerlink" href="#django-views" title="Permalink to this headline">¶</a></h3>
+<p>To support creating and editing objects in Django, you&#8217;ll need to learn about Django Forms.  Here are some readings to keep in mind as you progress:</p>
+<ul class="simple">
+<li>Start by learning how to <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/forms/">work with forms</a> in general</li>
+<li>Follow that up with reading about <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/forms/modelforms/">ModelForms</a> and what they provide</li>
+<li>Make sure you understand <a class="reference external" href="https://docs.djangoproject.com/en/1.10/ref/forms/validation/">form and field validation</a> so you can ensure proper data is submitted</li>
+<li>Particularly complex forms, or forms which require javascript or special css, will need to utilize <a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/forms/media/">form assets</a></li>
+<li>You&#8217;ll want to keep a reference open for the <a class="reference external" href="https://docs.djangoproject.com/en/1.10/ref/forms/api/">Forms API</a></li>
+<li>Keep in mind that the custom form field you imagine may already have been created and check <a class="reference external" href="https://www.djangopackages.com/grids/g/forms/">the Forms category</a> on <a class="reference external" href="http://www.djangopackages.com">http://www.djangopackages.com</a></li>
+<li>Read about using <a class="reference external" href="https://docs.djangoproject.com/es/1.10/topics/auth/default/">Django&#8217;s Authentication Systems</a></li>
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.10/topics/http/views/">Writing Views in Django</a></li>
+<li>(Read <em>ONLY!</em> Don&#8217;t <em>do</em> this yet) <a class="reference external" href="https://ashokfernandez.wordpress.com/2014/03/11/deploying-a-django-app-to-amazon-aws-with-nginx-gunicorn-git/">Deploying a Django App to Amazon AWS</a></li>
+<li>(Read <em>ONLY!</em> Do not <em>do</em> yet!) <a class="reference external" href="http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/getting-started-create-rds.html">Creating a Database Server</a></li>
+<li>Be aware of the <a class="reference external" href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html">security controls for Amazon RDS</a></li>
+<li>In particular, learn about <a class="reference external" href="http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html">RDS Security Groups</a> and controlling access between RDS and EC2</li>
+</ul>
+<p>RESTful Web Services</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.restapitutorial.com/lessons/whatisrest.html">What Is REST?</a></li>
+<li><a class="reference external" href="https://www.predic8.com/rest-demo.htm">Online REST Web Service Demo</a></li>
+</ul>
+</div>
 </div>
 <div class="section" id="review">
 <h2>Review<a class="headerlink" href="#review" title="Permalink to this headline">¶</a></h2>
+<p>Quick Sort Implementations</p>
+<p>Django Views</p>
 </div>
 <div class="section" id="concepts">
 <h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Django Miscellany</li>
-</ul>
+<p>Django Forms and Form handling</p>
 </div>
 <div class="section" id="demo">
 <h2>Demo<a class="headerlink" href="#demo" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Radix Sort!!</li>
+</ul>
 </div>
 <div class="section" id="assignments">
 <h2>Assignments<a class="headerlink" href="#assignments" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><code class="xref doc docutils literal"><span class="pre">/assignments/ml_1_visualizing_data.rst</span></code></li>
+<li><a class="reference internal" href="../../assignments/django_3_data_views.html"><em>Django Imager: Data Views</em></a></li>
+<li><a class="reference internal" href="../../assignments/django_6_drf_tutorial_a.html"><em>Django: Django REST Framework Tutorial, Parts 1-3</em></a></li>
 <li><a class="reference internal" href="../../assignments/project_03_repo.html"><em>Group Project: Create a Repository</em></a></li>
 <li><a class="reference internal" href="../../assignments/daily_lj_entry.html"><em>Today I learned...</em></a></li>
 <li><a class="reference internal" href="../../assignments/sort_4_radix.html"><em>Implement Radix Sort</em></a> (Due Thursday)</li>
-<li><a class="reference internal" href="../../assignments/aws_2_ansible_imager.html"><em>Automate Deploying Imager with Ansible</em></a> (Due Friday)</li>
-<li><a class="reference internal" href="../../assignments/web_app_security_assignment2.html"><em>Break the Site/Fix Your Site</em></a> (Due Friday)</li>
-<li><a class="reference internal" href="../../assignments/django_8_api.html"><em>Django: Implement a REST API for Imager</em></a> (Due Monday)</li>
-<li><a class="reference internal" href="../../assignments/blog_post_publish.html"><em>Technical Blog Post: Publish Your Post</em></a> (Due <strong>Next</strong> Friday)</li>
+<li><a class="reference internal" href="../../assignments/django_5_complete_frontend.html"><em>Django Imager: Complete Front-End</em></a> (Due Friday)</li>
+<li><a class="reference internal" href="../../assignments/blog_post_publish.html"><em>Technical Blog Post: Publish Your Post</em></a> (Due <strong>Next Friday</strong>)</li>
 </ul>
 </div>
 </div>
@@ -219,7 +254,11 @@ div.nboutput  > :nth-child(2).stderr {
   <ul>
 <li><a class="reference internal" href="#">Wednesday</a><ul>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
-<li><a class="reference internal" href="#readings">Readings</a></li>
+<li><a class="reference internal" href="#readings">Readings</a><ul>
+<li><a class="reference internal" href="#django-testing">Django Testing</a></li>
+<li><a class="reference internal" href="#django-views">Django Views</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#review">Review</a></li>
 <li><a class="reference internal" href="#concepts">Concepts</a></li>
 <li><a class="reference internal" href="#demo">Demo</a></li>

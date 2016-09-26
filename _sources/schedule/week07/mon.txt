@@ -62,7 +62,5 @@ Assignments
 ===========
 
 * :doc:`/assignments/aws_0_deploy_wsgi_app`
-* :doc:`/assignments/django_2_registration`
 * :doc:`/assignments/daily_lj_entry`
 * :doc:`/assignments/bst_4_balancing` (Due Tuesday)
-* :doc:`/assignments/django_5_complete_frontend` (Due Monday)

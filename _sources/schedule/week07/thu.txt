@@ -19,18 +19,6 @@ Objectives
 Readings
 ========
 
-.. Django Forms
-.. ------------
-
-.. .. include:: /readings/django_readings.rst
-..     :start-line: 59
-..     :end-line: 72
-
-* Introduction to Ansible
-    * `The Introduction <http://docs.ansible.com/ansible/intro.html>`_
-    * `Playbooks <http://docs.ansible.com/ansible/playbooks.html>`_
-    * `About Modules <http://docs.ansible.com/ansible/modules.html>`_ (ignore the Python API)
-    * `Module Index <http://docs.ansible.com/ansible/modules_by_category.html>`_ (glance through)
 * `Merge Sort <http://www.tutorialspoint.com/data_structures_algorithms/merge_sort_algorithm.htm>`_
 
 
