@@ -18,6 +18,13 @@ Review Django testing
 Readings
 ========
 
+Django Testing
+--------------
+
+.. include:: /readings/django_readings.rst
+    :start-line: 26
+    :end-line: 32
+
 Django Views
 ------------
 

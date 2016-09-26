@@ -15,8 +15,17 @@ Objectives
 
 Review form handling and permissions in Django
 
+Learn a bit about REST
+
 Readings
 ========
+
+Django Testing
+--------------
+
+.. include:: /readings/django_readings.rst
+    :start-line: 26
+    :end-line: 32
 
 Django Views
 ------------
@@ -32,6 +41,12 @@ Django Views
 * (Read *ONLY!* Do not *do* yet!) `Creating a Database Server <http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/getting-started-create-rds.html>`_
 * Be aware of the `security controls for Amazon RDS <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html>`_
 * In particular, learn about `RDS Security Groups <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html>`_ and controlling access between RDS and EC2
+
+RESTful Web Services
+
+* `What Is REST? <http://www.restapitutorial.com/lessons/whatisrest.html>`_
+* `Online REST Web Service Demo <https://www.predic8.com/rest-demo.htm>`_
+
 
 Review
 ======

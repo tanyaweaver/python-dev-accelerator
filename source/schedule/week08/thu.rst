@@ -15,6 +15,8 @@ Objectives
 
 Understand the steps required to deploy a Django application to a remote server.
 
+More About RESTful Web Services
+
 Readings
 ========
 
@@ -22,6 +24,12 @@ Readings
 * `Creating a Database Server <http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/getting-started-create-rds.html>`_
 * Be aware of the `security controls for Amazon RDS <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html>`_
 * In particular, learn about `RDS Security Groups <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html>`_ and controlling access between RDS and EC2
+
+RESTful Web Services
+
+* `What Is REST? <http://www.restapitutorial.com/lessons/whatisrest.html>`_
+* `Online REST Web Service Demo <https://www.predic8.com/rest-demo.htm>`_
+
 
 Review
 ======
