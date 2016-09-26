@@ -21,10 +21,13 @@ Tasks
 
 The key to a solid implementation of a hash table is a good hashing function.
 Read quickly over this `list of hashing functions <http://www.eternallyconfuzzled.com/tuts/algorithms/jsw_tut_hashing.aspx>`_ to get some sense of the variety available, and the issues involved in designing one.
-For the purposes of this assignment you can use a naive hashing function, such as the "Additive Hash" described in that reading.
-For a stretch goal, try one of the more complex hashing functions instead.
+For the purposes of this assignment you will use two different hashing functions.
+The first should be a naive hashing function, such as the "Additive Hash" described in that reading.
+For the second, try one of the more complex hashing functions instead.
 
-For an extra credit point, design your hash table to accept different hashing function at construction time, and add tests demonstrating the differences between them.
+To simplify testing with your two different hashing functions, design your hash table class to accept different hashing functions at construction time.
+Add tests demonstrating the differences between them.
+You might consider testing the distribution of keys among the buckets in your hash table.
 
 Your table should have the following properties:
 
@@ -41,7 +44,6 @@ Your table should implement the following methods:
 * **_hash(key)** - should hash the key provided (note that this is an *internal* api)
 
 Add tests to your data-structures repository to verify that your hash table works properly.
-Ensure that your data-structures tests are hooked up to Travis CI so that you are covered by continuous integration tests as you add this new structure.
 
 Add notes to the README explaining your approach and listing any resources and collaborations you used.
 
@@ -55,7 +57,6 @@ Add notes to the README explaining your approach and listing any resources and c
           For your tests, use this file.
           Insert all the words from the file into your hash table, with the key and the value being the same (in other words, ``my_table.set('pear', 'pear')``).
           Then, you can test by using each word as a key, and verify that the result you get back is the same word.
-
 
 
 Submitting Your Work
