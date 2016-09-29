@@ -141,17 +141,17 @@ Week 08
 .. include:: schedule/week08/index.rst
     :start-line: 12
 
-.. Week 09
-.. -------
+Week 09
+-------
 
-.. .. include:: schedule/week09/index.rst
-..     :start-line: 12
+.. include:: schedule/week09/index.rst
+    :start-line: 12
 
-.. Week 10
-.. -------
+Week 10
+-------
 
-.. .. include:: schedule/week10/index.rst
-..     :start-line: 12
+.. include:: schedule/week10/index.rst
+    :start-line: 12
 
 .. All Course materials
 .. ====================

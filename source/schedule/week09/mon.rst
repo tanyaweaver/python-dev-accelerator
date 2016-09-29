@@ -13,30 +13,25 @@ Monday
 Objectives
 ==========
 
-* Add pagination to the images/albums in our Django app.
-* Learn about when it's appropriate to rescale data.
-* Become a boss at the K-Nearest Neighbors algorithm.
+* Learn the basics of working with Ansible
+* Learn how to work with AWS through Ansible using the boto library
+* Learn how a hash table works
 
 
 Readings
 ========
 
-* `Feature Scaling <https://www.udacity.com/course/viewer#!/c-ud120/l-2864738562/e-3125078537/m-3136558541>`_ (up to and including Feature Scaling Formula Quiz 3)
-* `How kNN Algorithm Works <https://www.youtube.com/watch?v=UqYde-LULfs>`_
-* `Introduction to K Nearest Neighbor <https://www.youtube.com/watch?v=SQOdBjjA2y8>`_ (apologies for sound quality)
-* `Pagination in Django <https://docs.djangoproject.com/en/1.9/topics/pagination/>`_
+* Read this `Ansible Tutorial <https://serversforhackers.com/an-ansible-tutorial>`_ to learn a bit about how Ansible works.
 
 Review
 ======
 
-
 Concepts
 ========
 
-* Pagination in Django Apps
-* Supervised Classification
-* The Decision Tree Classifier
-* Whiteboard Challenge
+* Ansible Basics
+* Provisioning AWS Resources with Ansible
+* Hash Table Basics
 
 Demo
 ====
@@ -45,7 +40,8 @@ Assignments
 ===========
 
 * :doc:`/assignments/whiteboard`
-* Django Imager: Add Pagination to your Photos and Albums
-* :doc:`/assignments/k_nearest_neighbors`
 * :doc:`/assignments/project_06_wireframe_end`
 * :doc:`/assignments/daily_lj_entry`
+* :doc:`/assignments/aws_2_ansible_imager` (Due Friday)
+* :doc:`/assignments/hash_table` (Due Friday)
+* :doc:`/assignments/django_8_api` (Due Friday)
