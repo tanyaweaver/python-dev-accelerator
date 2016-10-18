@@ -8,7 +8,7 @@ Tasks
 Create a new branch in your data structures repository called ``trie-traversal``.
 Add the following method:
 
-* **trie.traversal(start)**: Perform a full depth-first traversal of the graph beginning at start. 
+* **trie.traversal(start)**: Perform a full depth-first traversal of the graph beginning at start. The argument "start" should be a string, which may or may not be the beginning of a string or strings contained in the Trie.
 Return a generator containing all tokens in the trie.
 
 Your work should include unit tests that fully demonstrate the method you’ve added. 
